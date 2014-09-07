@@ -10,15 +10,15 @@
 # Alexander Saprykin <xelfium@gmail.com>, 2009.
 # Alexander Saprykin <xelfium@gmail.com>, 2010.
 # Yuri Kozlov <yuray@komyakino.ru>, 2010.
-# Yuri Myasoedov <omerta13@yandex.ru>, 2012.
+# Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-07-02 10:36+0000\n"
-"PO-Revision-Date: 2014-07-02 18:26+0400\n"
+"POT-Creation-Date: 2014-09-06 22:49+0000\n"
+"PO-Revision-Date: 2014-09-07 10:49+0300\n"
 "Last-Translator: Yuri Myasoedov <ymyasoedov@yandex.ru>\n"
 "Language-Team: русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -27,7 +27,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
+msgstr ""
+"Приложение Totem (также известное как приложение «Видео») является "
+"официальным видеопроигрывателем для среды рабочего стола GNOME. "
+"Видеопроигрыватель поддерживает список локальных видеофайлов и DVD с "
+"возможностью поиска, доступ к видео по сети (с помощью UPnP/DLNA), а также "
+"видео с веб-сайтов."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"Totem включает в себя дополнительную функциональность: загрузчик субтитров, "
+"запись DCD."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "Миниатюризатор для файлового менеджера"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+msgid "Files properties tab"
+msgstr "Вкладка свойств файлов"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
+#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
+msgid "Videos"
+msgstr "Видео"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Воспроизведение фильмов"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Видео;Ролик;Фильм;Клип;Серии;Проигрыватель;Плеер;DVD;ТВ;TV;Диск;"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
 msgid "The brightness of the video"
@@ -182,7 +224,6 @@ msgid "Preferences"
 msgstr "Параметры"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Text Subtitles"
 msgid "External Subtitles"
 msgstr "Внешние субтитры"
 
@@ -320,56 +361,6 @@ msgstr "Частота дискретизации:"
 msgid "Channels:"
 msgstr "Каналы:"
 
-#: ../data/appdata/totem.appdata.xml.in.h:1
-#| msgid ""
-#| "Totem, also known as Videos, is the official movie player of the GNOME "
-#| "desktop environment. It features a playlist, a full-screen mode, seek and "
-#| "volume controls, as well as keyboard navigation."
-msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
-msgstr ""
-"Приложение Totem (также известное как приложение «Видео») является "
-"официальным видеопроигрывателем для среды рабочего стола GNOME. "
-"Видеопроигрыватель поддерживает список локальных видеофайлов и DVD с "
-"возможностью поиска, доступ к видео по сети (с помощью UPnP/DLNA), а также "
-"видео с веб-сайтов."
-
-#: ../data/appdata/totem.appdata.xml.in.h:2
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, "
-#| "support to watch live TV and VCD recording."
-msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
-"support for recording DVDs."
-msgstr ""
-"Totem включает в себя дополнительную функциональность: загрузчик субтитров, "
-"запись DCD."
-
-#: ../data/appdata/totem.appdata.xml.in.h:3
-msgid "Video thumbnailer for the file manager"
-msgstr "Миниатюризатор для файлового менеджера"
-
-#: ../data/appdata/totem.appdata.xml.in.h:4
-#| msgid "Nautilus properties tab"
-msgid "Files properties tab"
-msgstr "Вкладка свойств файлов"
-
-#: ../data/totem.desktop.in.in.in.h:1 ../src/totem.c:241 ../src/totem.c:247
-#: ../src/totem-object.c:3520 ../src/totem-grilo.c:1860
-msgid "Videos"
-msgstr "Видео"
-
-#: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Воспроизведение фильмов"
-
-#: ../data/totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Видео;Ролик;Фильм;Клип;Серии;Проигрыватель;Плеер;DVD;ТВ;TV;Диск;"
-
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "_Параметры"
@@ -405,8 +396,10 @@ msgid "Square"
 msgstr "Квадрат"
 
 #: ../data/totem.ui.h:9
+#| msgctxt "Aspect ratio"
+#| msgid "4:3 (TV)"
 msgctxt "Aspect ratio"
-msgid "4:3 (TV)"
+msgid "4∶3 (TV)"
 msgstr "4:3 (ТВ)"
 
 #: ../data/totem.ui.h:10
@@ -742,19 +735,56 @@ msgstr[0] "%d кадр в секунду"
 msgstr[1] "%d кадра в секунду"
 msgstr[2] "%d кадров в секунду"
 
+#: ../src/grilo.ui.h:1
+msgid "Select All"
+msgstr "Выбрать все"
+
+#: ../src/grilo.ui.h:2
+msgid "Select None"
+msgstr "Отменить выбор"
+
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Предварительное прослушивание"
 
-#: ../src/totem.c:242
+#: ../src/totem.c:244
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Не удалось инициализировать библиотеки с поддержкой потоков."
 
-#: ../src/totem.c:242
+#: ../src/totem.c:244
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Проверьте, правильно ли установлена ваша система. Totem завершает свою "
 "работу."
+
+#: ../src/totem-grilo.c:280
+#, c-format
+msgid "Season %d Episode %d"
+msgstr "Сезон %d эпизод %d"
+
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:317
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (сезон %d эпизод %d)"
+
+#: ../src/totem-grilo.c:687
+msgid "Browse Error"
+msgstr "Ошибка обзора"
+
+#: ../src/totem-grilo.c:824
+msgid "Search Error"
+msgstr "Ошибка поиска"
+
+# Источник
+#: ../src/totem-grilo.c:1275
+msgid "Local"
+msgstr "Локальный"
+
+#: ../src/totem-grilo.c:1871
+msgid "Channels"
+msgstr "Каналы"
 
 #: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
@@ -770,6 +800,39 @@ msgstr "Файл не существует."
 msgid "Make sure that Totem is properly installed."
 msgstr "Проверьте правильность установки Totem."
 
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "Нажмите на элемент, чтобы выбрать его"
+
+#: ../src/totem-main-toolbar.c:137
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "Выбран %d"
+msgstr[1] "Выбрано %d"
+msgstr[2] "Выбрано %d"
+
+#: ../src/totem-main-toolbar.c:159
+#, c-format
+msgid "Results for “%s”"
+msgstr "Результаты для «%s»"
+
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Назад"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "Выбрать"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "Отменить"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "Поиск"
+
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 #: ../src/totem-menu.c:391
 msgid "None"
@@ -781,7 +844,7 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Авто"
 
-#: ../src/totem-object.c:156
+#: ../src/totem-object.c:175
 #, c-format
 msgid ""
 "%s\n"
@@ -790,46 +853,46 @@ msgstr ""
 "%s\n"
 "Запустите '%s --help' чтобы увидеть полный список доступных команд.\n"
 
-#: ../src/totem-object.c:1310 ../src/totem-options.c:52
+#: ../src/totem-object.c:1334 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1315 ../src/totem-object.c:1325
+#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
 #: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../src/totem-object.c:1392 ../src/totem-object.c:1419
-#: ../src/totem-object.c:1931
+#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
+#: ../src/totem-object.c:1955
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не удалось воспроизвести «%s»."
 
-#: ../src/totem-object.c:2073
+#: ../src/totem-object.c:2097
 msgid "Totem could not display the help contents."
 msgstr "Не удалось отобразить содержимое справки."
 
-#: ../src/totem-object.c:2313
+#: ../src/totem-object.c:2337
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
-#: ../src/totem-object.c:3617
+#: ../src/totem-object.c:3641
 msgid "Previous Chapter/Movie"
 msgstr "Предыдущий фрагмент/фильм"
 
-#: ../src/totem-object.c:3623
+#: ../src/totem-object.c:3647
 msgid "Play / Pause"
 msgstr "Воспроизведение / Пауза"
 
-#: ../src/totem-object.c:3629
+#: ../src/totem-object.c:3653
 msgid "Next Chapter/Movie"
 msgstr "Следующий фрагмент/фильм"
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3867
 msgid "Totem could not startup."
 msgstr "Не удалось запустить Totem."
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3867
 msgid "No reason."
 msgstr "Нет причины."
 
@@ -988,6 +1051,18 @@ msgstr "Н/Д"
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "Н/Д"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+msgid "Add to Favourites"
+msgstr "Добавить в избранное"
+
+#: ../src/totemselectiontoolbar.ui.h:3
+msgid "Shuffle"
+msgstr "В случайном порядке"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Delete"
+msgstr "Удалить"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1409,88 +1484,6 @@ msgstr "Свойство «%s» недоступно для записи."
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Объект MediaPlayer 2 запросил неизвестное свойство «%s»"
 
-#: ../src/grilo.ui.h:1
-msgid "Select All"
-msgstr "Выбрать все"
-
-#: ../src/grilo.ui.h:2
-msgid "Select None"
-msgstr "Отменить выбор"
-
-#: ../src/totem-grilo.c:278
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Сезон %d эпизод %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:315
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (сезон %d эпизод %d)"
-
-#: ../src/totem-grilo.c:685
-msgid "Browse Error"
-msgstr "Ошибка обзора"
-
-#: ../src/totem-grilo.c:822
-msgid "Search Error"
-msgstr "Ошибка поиска"
-
-# Источник
-#: ../src/totem-grilo.c:1273
-msgid "Local"
-msgstr "Локальный"
-
-#: ../src/totem-grilo.c:1869
-msgid "Channels"
-msgstr "Каналы"
-
-#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
-msgid "Click on items to select them"
-msgstr "Нажмите на элемент, чтобы выбрать его"
-
-#: ../src/totem-main-toolbar.c:137
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "Выбран %d"
-msgstr[1] "Выбрано %d"
-msgstr[2] "Выбрано %d"
-
-#: ../src/totem-main-toolbar.c:156
-#, c-format
-msgid "Results for “%s”"
-msgstr "Результаты для «%s»"
-
-#: ../src/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Назад"
-
-#: ../src/totemmaintoolbar.ui.h:2
-msgid "Select"
-msgstr "Выбрать"
-
-#: ../src/totemmaintoolbar.ui.h:3
-msgid "Cancel"
-msgstr "Отменить"
-
-#: ../src/totemmaintoolbar.ui.h:4
-msgid "Search"
-msgstr "Поиск"
-
-#: ../src/totemselectiontoolbar.ui.h:1
-msgid "Add to Favourites"
-msgstr "Добавить в избранное"
-
-#: ../src/totemselectiontoolbar.ui.h:3
-msgid "Shuffle"
-msgstr "В случайном порядке"
-
-#: ../src/totemselectiontoolbar.ui.h:4
-msgid "Delete"
-msgstr "Удалить"
-
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
 msgstr "Аннотации средствами Gromit"
@@ -1729,7 +1722,7 @@ msgstr "Сохранить копию, воспроизводимого в да�
 msgid "Movie"
 msgstr "Фильм"
 
-#: ../src/plugins/save-file/totem-save-file.c:352
+#: ../src/plugins/save-file/totem-save-file.c:355
 msgid "Make Available Offline"
 msgstr "Сделать доступным в автономном режиме"
 
@@ -1879,614 +1872,3 @@ msgstr "Модуль Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Модуль, отправляющий события для Zeitgeist"
-
-#~ msgid "No URI to play"
-#~ msgstr "Отсутствует URI для воспроизведения"
-
-#~ msgid "_Open with \"%s\""
-#~ msgstr "Открыть _с помощью «%s»"
-
-#~ msgid "Totem Movie Player"
-#~ msgstr "Видеопроигрыватель Totem"
-
-#~ msgid "No playlist or playlist empty"
-#~ msgstr "Нет списка воспроизведения или он пуст"
-
-#~ msgid "Movie browser plugin"
-#~ msgstr "Модуль браузера для фильмов"
-
-#~ msgid "Verify your system installation. The Totem plugin will now exit."
-#~ msgstr ""
-#~ "Проверьте, правильно ли установлена ваша система. Модуль Totem завершает "
-#~ "свою работу."
-
-#~ msgid "Show visual effects when no video is displayed"
-#~ msgstr "Показывать эффекты визуализации при отсутствии видео"
-
-#~ msgid "Show visual effects when playing an audio only file."
-#~ msgstr ""
-#~ "Показывать эффекты визуализации при воспроизведении звукового файла."
-
-#~ msgid "Name of the visual effects plugin"
-#~ msgstr "Название модуля визуальных эффектов"
-
-#~ msgid "Visualization quality setting"
-#~ msgstr "Качество визуализации"
-
-#~ msgid "Quality setting for the audio visualization."
-#~ msgstr "Качество визуализации звука."
-
-#~ msgid "Normal"
-#~ msgstr "Обычный"
-
-#~ msgid "Large"
-#~ msgstr "Большой"
-
-#~ msgid "Extra Large"
-#~ msgstr "Очень большой"
-
-#~ msgid "Visual Effects"
-#~ msgstr "Визуальные эффекты"
-
-#~ msgid "Show _visual effects when an audio file is played"
-#~ msgstr "Показывать _визуальные эффекты при воспроизведении звуковых файлов"
-
-#~ msgid "_Type of visualization:"
-#~ msgstr "_Тип визуализации:"
-
-#~ msgid "Visualization _size:"
-#~ msgstr "Размер _визуализации:"
-
-#~ msgid "Mozilla (Firefox) plugin to view movies inside your browser"
-#~ msgstr "Модуль Mozilla (Firefox) для просмотра фильмов в браузере"
-
-#~ msgid "Command-line video properties helper (for indexers)"
-#~ msgstr ""
-#~ "Помощник для получения свойств видео из командной строки (для "
-#~ "индексаторов)"
-
-#~ msgid "Play / P_ause"
-#~ msgstr "Воспроизведение / _Пауза"
-
-#~ msgid "Play or pause the movie"
-#~ msgstr "Воспроизведение или приостановка фильма"
-
-#~ msgid "_Next Chapter/Movie"
-#~ msgstr "С_ледующий фрагмент/фильм"
-
-#~ msgid "Next chapter or movie"
-#~ msgstr "Следующий фрагмент или фильм"
-
-#~ msgid "_Previous Chapter/Movie"
-#~ msgstr "_Предыдущий фрагмент/фильм"
-
-#~ msgid "Previous chapter or movie"
-#~ msgstr "Предыдущий фрагмент или фильм"
-
-#~ msgid "Audio files"
-#~ msgstr "Звуковые файлы"
-
-#~| msgid "Recent files"
-#~ msgid "Recent"
-#~ msgstr "Недавние файлы"
-
-#~ msgid "Stopped"
-#~ msgstr "Остановлено"
-
-#~ msgid "Paused"
-#~ msgstr "Приостановлено"
-
-#~ msgid "Playing"
-#~ msgstr "Воспроизведение"
-
-#~ msgid "Leave Fullscreen"
-#~ msgstr "Выйти из полноэкранного режима"
-
-#~ msgid "Time:"
-#~ msgstr "Время:"
-
-#~ msgid "Allow the screensaver to activate when playing audio"
-#~ msgstr "Не выключать хранитель экрана при проигрывании аудио"
-
-#~ msgid ""
-#~ "Allow the screensaver to activate when playing audio. Disable if you have "
-#~ "monitor-powered speakers."
-#~ msgstr ""
-#~ "Не выключать хранитель экрана при проигрывании аудио. Выключите, если "
-#~ "колонки встроены в монитор."
-
-#~ msgid "Resize the canvas automatically on file load"
-#~ msgstr "Автоматически менять размер экрана при загрузке файла"
-
-#~ msgid "Shuffle mode"
-#~ msgstr "В случайном порядке"
-
-#~ msgid ""
-#~ "Whether to remember the position of played audio/video files when pausing "
-#~ "or closing them"
-#~ msgstr ""
-#~ "Запоминать ли место воспроизведения аудио- и видеофайлов при приостановке "
-#~ "или закрытии"
-
-#~ msgid "_Remove"
-#~ msgstr "_Удалить"
-
-#~ msgid "Remove file from playlist"
-#~ msgstr "Удалить файл из списка воспроизведения"
-
-#~ msgid "_Copy Location"
-#~ msgstr "_Копировать адрес"
-
-#~ msgid "Copy the location to the clipboard"
-#~ msgstr "Копировать адрес в буфер обмена"
-
-#~ msgid "_Select Text Subtitles..."
-#~ msgstr "Выбрать _текстовые субтитры…"
-
-#~ msgid "Select a file to use for text subtitles"
-#~ msgstr "Выберите файл текстовых субтитров"
-
-#~ msgid "Add..."
-#~ msgstr "Добавить…"
-
-#~ msgid "Remove"
-#~ msgstr "Удалить"
-
-#~ msgid "Save Playlist..."
-#~ msgstr "Сохранить список воспроизведения…"
-
-#~ msgid "Move Up"
-#~ msgstr "Переместить вверх"
-
-#~ msgid "Move Down"
-#~ msgstr "Переместить вниз"
-
-#~ msgid "Totem Preferences"
-#~ msgstr "Параметры Totem"
-
-#~ msgid "Playback"
-#~ msgstr "Воспроизведение"
-
-#~ msgid "Start playing files from last position"
-#~ msgstr "Воспроизведение файлов с последней позиции"
-
-#~ msgid "_Resize the window when a new video is loaded"
-#~ msgstr "Изменять _размер окна после загрузки нового видео"
-
-#~ msgid "Disable screensaver when playing "
-#~ msgstr "Выключить хранитель экрана при воспроизведении"
-
-#~ msgid "Video or Audio"
-#~ msgstr "Видео и звук"
-
-#~ msgid "Open _Location"
-#~ msgstr "Открыть _адрес"
-
-#~ msgid "_Fullscreen"
-#~ msgstr "_Во весь экран"
-
-#~ msgid "_Movie"
-#~ msgstr "_Фильм"
-
-#~ msgid "Eject the current disc"
-#~ msgstr "Извлечь текущий диск"
-
-#~ msgid "View the properties of the current stream"
-#~ msgstr "Просмотр свойств текущего потока"
-
-#~ msgid "_Edit"
-#~ msgstr "_Правка"
-
-#~ msgid "_Clear Playlist"
-#~ msgstr "_Очистить список воспроизведения"
-
-#~ msgid "Clear the playlist"
-#~ msgstr "Очистить список воспроизведения"
-
-#~ msgid "Configure plugins to extend the application"
-#~ msgstr "Настройка модулей"
-
-#~ msgid "_View"
-#~ msgstr "_Вид"
-
-#~ msgid "Fit Window to Movie"
-#~ msgstr "Окно по размеру фильма"
-
-#~ msgid "_Resize 1:2"
-#~ msgstr "_Масштаб 1:2"
-
-#~ msgid "Resize to half the original video size"
-#~ msgstr "Сделать размер окна равным половине размера видео"
-
-#~ msgid "Resize _1:1"
-#~ msgstr "Масштаб _1:1"
-
-#~ msgid "Resize to the original video size"
-#~ msgstr "Сделать размер окна равным размеру видео"
-
-#~ msgid "Resize _2:1"
-#~ msgstr "Масштаб _2:1"
-
-#~ msgid "Resize to double the original video size"
-#~ msgstr "Сделать размер окна равным удвоенному размеру видео"
-
-#~ msgid "Switch camera angles"
-#~ msgstr "Переключить ракурс камеры"
-
-#~ msgid "_Go"
-#~ msgstr "П_ереход"
-
-#~ msgid "Go to the DVD menu"
-#~ msgstr "Перейти к меню DVD"
-
-#~ msgid "Go to the title menu"
-#~ msgstr "Перейти к меню эпизода"
-
-#~ msgid "Go to the audio menu"
-#~ msgstr "Перейти к меню звука"
-
-#~ msgid "Go to the angle menu"
-#~ msgstr "Перейти к меню ракурсов"
-
-#~ msgid "Go to the chapter menu"
-#~ msgstr "Перейти к меню фрагментов"
-
-#~ msgid "_Sound"
-#~ msgstr "_Звук"
-
-#~ msgid "Volume _Up"
-#~ msgstr "_Увеличить громкость"
-
-#~ msgid "Increase volume"
-#~ msgstr "Увеличить громкость"
-
-#~ msgid "Volume _Down"
-#~ msgstr "У_меньшить громкость"
-
-#~ msgid "Decrease volume"
-#~ msgstr "Уменьшить громкость"
-
-#~ msgid "_Contents"
-#~ msgstr "_Содержание"
-
-#~ msgid "Help contents"
-#~ msgstr "Содержание справки"
-
-#~ msgid "_About"
-#~ msgstr "_O программе"
-
-#~ msgid "About this application"
-#~ msgstr "О программе"
-
-#~ msgid "Show _Controls"
-#~ msgstr "П_оказывать средства управления"
-
-#~ msgid "Show controls"
-#~ msgstr "Показывать средства управления"
-
-#~ msgid "S_idebar"
-#~ msgstr "_Боковая панель"
-
-#~ msgid "Show or hide the sidebar"
-#~ msgstr "Показать или скрыть боковую панель"
-
-#~ msgid "Sets automatic aspect ratio"
-#~ msgstr "Установить автоматическую пропорцию изображения"
-
-#~ msgid "Sets square aspect ratio"
-#~ msgstr "Установить квадратную пропорцию изображения"
-
-#~ msgid "Sets 4:3 (TV) aspect ratio"
-#~ msgstr "Установить пропорцию изображения 4:3 (ТВ)"
-
-#~ msgid "Sets 16:9 (widescreen) aspect ratio"
-#~ msgstr "Установить пропорцию изображения 16:9 (широкоэкранное)"
-
-#~ msgid "Sets 2.11:1 (DVB) aspect ratio"
-#~ msgstr "Установить пропорцию изображения 2.11:1 (DVB)"
-
-#~ msgid "Zoom in"
-#~ msgstr "Увеличить"
-
-#~ msgid "Skip _Forward"
-#~ msgstr "Пропустить _вперёд"
-
-#~ msgid "Skip forward"
-#~ msgstr "Пропустить вперёд"
-
-#~ msgid "Skip _Backwards"
-#~ msgstr "Пропустить _назад"
-
-#~ msgid "Skip backwards"
-#~ msgstr "Пропустить назад"
-
-#~ msgid "Time seek bar"
-#~ msgstr "Полоса хронометража"
-
-#~ msgid "_Add to Playlist"
-#~ msgstr "_Добавить в список воспроизведения"
-
-#~ msgid "Add the video to the playlist"
-#~ msgstr "Добавить видео в список воспроизведения"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Файл не является корректным файлом формата .desktop"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Файл .desktop неизвестной версии «%s»"
-
-#~ msgid "Starting %s"
-#~ msgstr "Запуск %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr ""
-#~ "Приложение не поддерживает открытие документов через командную строку"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Неизвестный параметр запуска: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Не удалось передать URI документа элементу рабочего стола, он является "
-#~ "ссылкой"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Элемент не является запускаемым"
-
-#~ msgid "File _Format: %s"
-#~ msgstr "_Формат файла: %s"
-
-#~ msgid "All Files"
-#~ msgstr "Все файлы"
-
-#~ msgid "All Supported Files"
-#~ msgstr "Все поддерживаемые файлы"
-
-#~ msgid "By Extension"
-#~ msgstr "По расширению"
-
-#~ msgid "File Format"
-#~ msgstr "Формат файла"
-
-#~ msgid "Extension(s)"
-#~ msgstr "Расширение(я)"
-
-#~ msgid ""
-#~ "The program was not able to find out the file format you want to use for `"
-#~ "%s'. Please make sure to use a known extension for that file or manually "
-#~ "choose a file format from the list below."
-#~ msgstr ""
-#~ "Не удалось определить формат файла для: «%s». Убедитесь, что используется "
-#~ "правильное расширение для данного файла, или вручную выберите формат "
-#~ "файла из списка ниже."
-
-#~ msgid "File format not recognized"
-#~ msgstr "Неизвестный формат файла"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Не соединяться с менеджером сеансов"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Задать файл с сохранённой конфигурацией"
-
-#~ msgid "FILE"
-#~ msgstr "ФАЙЛ"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Задать идентификатор сеанса"
-
-#~ msgid "ID"
-#~ msgstr "ИДЕНТИФИКАТОР"
-
-#~ msgid "Session management options:"
-#~ msgstr "Параметры сеанса:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Показать параметры управления сеансом"
-
-#~ msgid "Unknown video"
-#~ msgstr "Неизвестное видео"
-
-#~ msgid "_Play Now"
-#~ msgstr "_Воспроизвести"
-
-#~ msgid "No File"
-#~ msgstr "Нет файла"
-
-#~ msgid ""
-#~ "Totem is free software; you can redistribute it and/or modify it under "
-#~ "the terms of the GNU General Public License as published by the Free "
-#~ "Software Foundation; either version 2 of the License, or (at your option) "
-#~ "any later version."
-#~ msgstr ""
-#~ "Totem — свободное программное обеспечение; вы можете распространять и/или "
-#~ "изменять его на условиях лицензии GNU General Public License, "
-#~ "опубликованной Фондом свободного программного обеспечения; либо версии 2 "
-#~ "этой лицензии, либо (по вашему выбору) любой более поздней версии."
-
-#~ msgid ""
-#~ "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
-#~ "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-#~ "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#~ "details."
-#~ msgstr ""
-#~ "Totem распространяется в надежде, что он может быть полезен, но БЕЗ "
-#~ "КАКОГО-ЛИБО ВИДА ГАРАНТИЙ, ВЫРАЖЕННЫХ ЯВНО ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ, "
-#~ "НО НЕ ОГРАНИЧИВАЯСЬ ПОДРАЗУМЕВАЕМЫМИ ГАРАНТИЯМИ КОММЕРЧЕСКОЙ ЦЕННОСТИ И "
-#~ "ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ. Для получения дополнительных сведений "
-#~ "обратитесь к лицензии GNU General Public License."
-
-#~ msgid ""
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with Totem; if not, write to the Free Software Foundation, Inc., 59 "
-#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-#~ msgstr ""
-#~ "Вы должны были получить копию лицензии GNU General Public License c "
-#~ "программой Totem. Если это не так, известите об этом Фонд свободного "
-#~ "программного обеспечения по адресу: Free Software Foundation, Inc., 59 "
-#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-
-#~ msgid ""
-#~ "Totem contains an exception to allow the use of proprietary GStreamer "
-#~ "plugins."
-#~ msgstr ""
-#~ "Totem содержит исключение, позволяющее использовать собственнические "
-#~ "модули GStreamer."
-
-#~ msgid "Copyright © 2002-2009 Bastien Nocera"
-#~ msgstr "Авторское право © 2002—2009 Bastien Nocera"
-
-#~ msgid "translator-credits"
-#~ msgstr ""
-#~ "Nail Abdrahmanov <nail@gella.com.ru>\n"
-#~ "Leonid Kanter <leon@asplinux.ru>\n"
-#~ "Василий Фаронов <qvvx@yandex.ru>, 2008\n"
-#~ "Alexander Saprykin <xelfium@gmail.com>, 2009-2010"
-
-#~ msgid "Totem Website"
-#~ msgstr "Веб-сайт Totem"
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
-
-#~ msgid "No error message"
-#~ msgstr "Отсутствуют данные об ошибке"
-
-#~ msgid "Fullscreen"
-#~ msgstr "Во весь экран"
-
-#~ msgid "Open Location..."
-#~ msgstr "Открыть адрес…"
-
-#~ msgid "Show/Hide Controls"
-#~ msgstr "Показать/скрыть средства управления"
-
-#~ msgid "Playlist index"
-#~ msgstr "Индекс списка воспроизведения"
-
-#~ msgid "MP3 ShoutCast playlist"
-#~ msgstr "Список воспроизведения MP3 ShoutCast"
-
-#~ msgid "MP3 audio (streamed)"
-#~ msgstr "MP3 аудио (поток)"
-
-#~ msgid "MP3 audio (streamed, DOS format)"
-#~ msgstr "MP3 аудио (поток, формат DOS)"
-
-#~ msgid "XML Shareable Playlist"
-#~ msgstr "Список воспроизведения XML Shareable"
-
-#~ msgid "Could not save the playlist"
-#~ msgstr "Не удалось сохранить список воспроизведения"
-
-#~ msgid "Save Playlist"
-#~ msgstr "Сохранить список воспроизведения"
-
-#~ msgid "Playlist"
-#~ msgstr "Список воспроизведения"
-
-#~ msgid "Playlist error"
-#~ msgstr "Ошибка списка воспроизведения"
-
-#~ msgid "0:00 / 0:00"
-#~ msgstr "0:00 / 0:00"
-
-#~ msgid "%s (Streaming)"
-#~ msgstr "%s (поток)"
-
-#~ msgid "Buffering"
-#~ msgstr "Буферизация"
-
-#~ msgid "%lf %%"
-#~ msgstr "%lf %%"
-
-#~ msgid "%s, %s"
-#~ msgstr "%s, %s"
-
-#~ msgid "%s, %f %%"
-#~ msgstr "%s, %f %%"
-
-#~ msgid "Select Movies or Playlists"
-#~ msgstr "Выбор фильмов или списков воспроизведения"
-
-#~ msgid "Add Directory"
-#~ msgstr "Добавить каталог"
-
-#~ msgid "No video URI"
-#~ msgstr "Отсутствует URI видео"
-
-#~ msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-#~ msgstr "Создать видео DVD или (S)VCD из фильма, открытого в данный момент"
-
-#~ msgid "Copy the currently playing video DVD"
-#~ msgstr "Копировать видео DVD, проигрываемый в данный момент"
-
-#~ msgid "Copy the currently playing (S)VCD"
-#~ msgstr "Копировать (S)VCD, проигрываемый в данный момент"
-
-#~ msgid "Add Chapter..."
-#~ msgstr "Добавить фрагмент…"
-
-#~ msgid "Failed to parse CMML file"
-#~ msgstr "Сбой при разборе файла CMML"
-
-#~ msgid "D-Bus Service"
-#~ msgstr "Служба D-Bus"
-
-#~ msgid "The URI ‘%s’ is not supported."
-#~ msgstr "URI «%s» не поддерживается."
-
-#~ msgid "Grilo Browser"
-#~ msgstr "Браузер Grilo"
-
-#~ msgid "A plugin to let you browse media content from various sources"
-#~ msgstr ""
-#~ "Модуль, позволяющий просматривать медиаконтент из различных источников"
-
-#~ msgid "Copy Location"
-#~ msgstr "Копировать адрес"
-
-#~ msgid "Browse"
-#~ msgstr "Обзор"
-
-#~ msgid "Download movie subtitles from OpenSubtitles"
-#~ msgstr "Загрузить субтитры к фильму с OpenSubtitles"
-
-#~ msgid "Python Console Menu"
-#~ msgstr "Меню консоли Python"
-
-#~ msgid "Show Totem's Python console"
-#~ msgstr "Показать консоль Python видеопроигрывателя Totem"
-
-#~ msgid "Enable remote Python debugging with rpdb2"
-#~ msgstr "Включить удалённую отладку Python с помощью rpdb2"
-
-#~ msgid "_Rotate Clockwise"
-#~ msgstr "По _часовой стрелке"
-
-#~ msgid "Rotate Counterc_lockwise"
-#~ msgstr "_Против часовой стрелки"
-
-#~ msgid "Save a Copy..."
-#~ msgstr "Сохранить копию…"
-
-#~ msgid "Save a copy of the movie"
-#~ msgstr "Сохранить копию фильма"
-
-#~ msgid "Save a Copy"
-#~ msgstr "Сохранить копию"
-
-#~ msgid "Movie stream"
-#~ msgstr "Поток фильма"
-
-#~ msgid "Take a screenshot"
-#~ msgstr "Сохранить кадр с экрана"
-
-#~ msgid "Create a gallery of screenshots"
-#~ msgstr "Создать серию кадров"
-
-#~ msgid "_Skip To..."
-#~ msgstr "_Перейти к…"
-
-#~ msgid "Skip to a specific time"
-#~ msgstr "Перейти к указанному времени"
