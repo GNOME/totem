@@ -745,7 +745,7 @@ set_controls_visibility (BaconVideoWidget *bvw,
   clutter_actor_set_opacity (bvw->priv->controls, opacity);
 
   set_show_cursor (bvw, visible);
-  if (animate)
+  if (visible && animate)
     schedule_hiding_popup (bvw);
 
   bvw->priv->reveal_controls = visible;
