@@ -605,8 +605,15 @@ leave_notify_cb (GtkWidget        *widget,
   if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
     return res;
 
-  if (bvw->priv->reveal_controls)
-    set_controls_visibility (bvw, FALSE, TRUE);
+  if (bvw->priv->reveal_controls) {
+    gboolean not_busy;
+
+    not_busy = g_hash_table_size (bvw->priv->busy_popup_ht) == 0;
+    if (not_busy) {
+      GST_DEBUG ("will hide because we're not busy and cursor left");
+      set_controls_visibility (bvw, FALSE, TRUE);
+    }
+  }
 
   return res;
 }
