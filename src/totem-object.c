@@ -3561,11 +3561,11 @@ popup_menu_shown_cb (GtkToggleButton *button,
 }
 
 static void
-volume_button_menu_shown_cb (GObject     *volume_button,
+volume_button_menu_shown_cb (GObject     *popover,
 			     GParamSpec  *pspec,
 			     TotemObject *totem)
 {
-	if (gtk_widget_is_visible (GTK_WIDGET (volume_button)))
+	if (gtk_widget_is_visible (GTK_WIDGET (popover)))
 		bacon_video_widget_mark_popup_busy (totem->bvw, "volume menu visible");
 	else
 		bacon_video_widget_unmark_popup_busy (totem->bvw, "volume menu visible");
