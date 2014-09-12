@@ -3645,11 +3645,8 @@ void
 bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
 				    const char       *reason)
 {
-  gboolean was_busy;
-
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  was_busy = (g_hash_table_size (bvw->priv->busy_popup_ht) > 0);
   g_hash_table_insert (bvw->priv->busy_popup_ht,
 		       g_strdup (reason),
 		       GINT_TO_POINTER (1));
@@ -3658,10 +3655,7 @@ bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
 
   GST_DEBUG ("Adding popup busy for reason %s", reason);
 
-  if (!was_busy) {
-    GST_DEBUG ("Will not hide popup due to timeout");
-    unschedule_hiding_popup (bvw);
-  }
+  unschedule_hiding_popup (bvw);
 }
 
 void
