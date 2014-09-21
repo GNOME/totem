@@ -93,7 +93,7 @@ GST_PLUG_BASE_REQS=1.4.2
 GSTPLUG_REQS=0.11.93
 CLUTTER_REQS=1.17.3
 CLUTTER_GST_REQS=1.5.5
-CLUTTER_GTK_REQS=1.5.2
+CLUTTER_GTK_REQS=1.5.5
 
 dnl Check for the required GStreamer versions for missing plugins
 dnl installation, unless this has been disabled.
