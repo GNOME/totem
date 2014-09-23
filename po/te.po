@@ -6,7 +6,7 @@
 #
 #
 # Prajasakti Localisation Team <localisation@prajasakti.com>, 2005.
-# Krishna Babu K <kkrothap@redhat.com>, 2009, 2010, 2013.
+# Krishna Babu K <kkrothap@redhat.com>, 2009, 2010, 2013, 2014.
 # Hari Krishna <hari@swecha.net>, 2011.
 # Sasi Bhushan Boddepalli <sasi@swecha.net>, 2012.
 # Praveen Illa <mail2ipn@gmail.com>, 2011, 2012.
@@ -15,10 +15,10 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-05-08 17:21+0000\n"
-"PO-Revision-Date: 2013-05-09 17:35+0530\n"
+"POT-Creation-Date: 2014-09-23 10:51+0000\n"
+"PO-Revision-Date: 2014-09-24 01:01+0530\n"
 "Last-Translator: Krishnababu Krothapalli <kkrothap@redhat.com>\n"
-"Language-Team: Telugu <Fedora-trans-te@redhat.com>\n"
+"Language-Team: Telugu <kde-i18n-doc@kde.org>\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,122 +26,86 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:328
-#: ../src/plugins/screensaver/totem-screensaver.c:97
-msgid "Playing a movie"
-msgstr "చలనచిత్రమును ఆడిస్తున్నది"
-
-#: ../browser-plugin/totem-plugin-viewer.c:397
-msgid "No URI to play"
-msgstr "ఆడించుటకు ఏ URI లేదు"
-
-#. translators: this is:
-#. * Open With ApplicationName
-#. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1096
-#, c-format
-msgid "_Open with \"%s\""
-msgstr "\"%s\"తో తెరువు (_O)"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2369
-msgid "An error occurred"
-msgstr "ఒక దోషం ఎదురైంది"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1675
-msgid "Totem Movie Player"
-msgstr "టొటెమ్ చలనచిత్ర ప్రదర్శకం"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1993
-msgid "No playlist or playlist empty"
-msgstr "ప్రదర్శనజాబితా లేదు లేదా ప్రదర్శనజాబితా ఖాళీగావుంది"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2224
-msgid "Movie browser plugin"
-msgstr "చలనచిత్ర విహారకం చొప్పింత"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2240 ../src/totem.c:246
-msgid "Could not initialize the thread-safe libraries."
-msgstr "సురక్షిత మార్గ గ్రంథాలయాలను సంసిద్ధపరచలేకపోయింది."
-
-#: ../browser-plugin/totem-plugin-viewer.c:2240
-msgid "Verify your system installation. The Totem plugin will now exit."
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
 msgstr ""
-"మీ వ్యవస్థ స్థాపనను సరిచూసుకోండి. టోటెమ్ చొప్పింత ఇప్పుడు నిష్క్రమిస్తున్నది."
+"వీడియోలు, ఇంకా టోటెమ్ గా కూడా తెలియును, ఇది గ్నోమ్ డెస్కుటాప్ ఎన్విరాన్మెంట్ "
+"అధికారిక మూవీ ప్లేయర్. ఇది వెతకడానికి అనువైన స్థానిక వీడియోల, మరియు DVDల, "
+"స్థానిక నెట్వర్కు వీడియో భాగస్వామ్యాల (UPnP/DLNA ఉపయోగించి) మరియు పలు వెబ్‌ "
+"సైట్లనుండి వీడియో ఉద్దీపనాల జాబితాను అందించును."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"టోటెమ్ నందు అదనపు ఫంక్షనాలిటీ కూడా ఉంది: ఉపశీర్షికలు దింపేది, మరియు DVDల "
+"కొరకు రికార్డింగ్ తోడ్పాటు."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "దస్త్ర నిర్వాహిక కొరకు వీడియో థంబ్‌నైలర్"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#| msgid "Movie Properties"
+msgid "Files properties tab"
+msgstr "దస్త్రాల లక్షణాల టాబ్"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
+#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
+msgid "Videos"
+msgstr "వీడియోలు"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "చలనచిత్రాలను ప్రదర్శించు"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr ""
+"వీడియో; సినిమా; సినిమా; క్లిప్; సిరీస్; ప్లేయర్; డివిడి; టి.వి; డిస్క్;"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
-msgid "Allow the screensaver to activate when playing audio"
-msgstr "ఆడియో ప్లే అవుచున్నప్పుడు స్క్రీన్‌సేవర్‌ క్రియాశీలము అగుటకు అనుమతించు"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
-msgid ""
-"Allow the screensaver to activate when playing audio. Disable if you have "
-"monitor-powered speakers."
-msgstr ""
-"ఆడియో ప్లే అవుచున్నప్పుడు స్క్రీన్‌సేవర్‌ క్రియాశీలము అగుటకు అనుమతించు. మీకు "
-"మానిటర్-స్పీకర్లు వుంటే "
-"అచేతనము చేయి."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
-msgid "Show visual effects when no video is displayed"
-msgstr "ఎటువంటి వీడియో ప్రదర్శించబడనప్పుడు దృశ్యనీయ ప్రభావాలను చూపించు"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
-msgid "Show visual effects when playing an audio only file."
-msgstr "ఆడియో దస్త్రం ఆడుతున్నపుడు మాత్రమే దృశ్యనీయ ప్రభావాలను చూపించు"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
-msgid "Name of the visual effects plugin"
-msgstr "దృశ్యత ప్రభావాల చొప్పింత యొక్క పేరు"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
 msgid "The brightness of the video"
 msgstr "వీడియో యొక్క కాంతిప్రకాశము"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
 msgid "The contrast of the video"
 msgstr "వీడియో యొక్క మంధ్రత"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
 msgid "The hue of the video"
 msgstr "వీడియో యొక్క హ్యూ"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
 msgid "The saturation of the video"
 msgstr "వీడియోయొక్క సాట్యురేషన్"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
 msgid "Repeat mode"
 msgstr "పునరావృత విధము"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
-msgid "Shuffle mode"
-msgstr "యాదృచ్ఛిక విధం"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "అంతర్వల్లుకోబడిన చలనచిత్రాలకు విజాలీకరణను అచేతనము చేయవలెనావద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
 msgid "Whether to enable debug for the playback engine"
 msgstr "ప్లేబ్యాక్ యంత్రం కొరకు డీబగ్‌ను చేతనము చేయవలెనావద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
 msgid "Type of audio output to use"
 msgstr "ఉపయోగించుటకు ఆడియో అవుట్‌పుట్ యొక్క రకము"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
-msgid "Visualization quality setting"
-msgstr "దృశ్యనీయ నాణ్యతా అమరిక"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
-msgid "Quality setting for the audio visualization."
-msgstr "ఆడియో దృశ్యమానతకు నాణ్యతా అమరిక."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
 msgid "Network buffering threshold"
 msgstr "నెట్‌వర్కు బఫరింగ్ త్రెష్‌హోల్డ్"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -149,74 +113,67 @@ msgstr ""
 "ప్రవాహాన్ని ప్రదర్శించుటకు ముందు నెట్‌వర్కు ప్రవాహాల కొరకు బఫర్ చేయవలసిన డేటా "
 "మొత్తం (సెకనులలో)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
 msgid "Subtitle font"
 msgstr "ఉపశీర్షిక ఖతి"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
 msgid "Pango font description for subtitle rendering."
 msgstr "ఉపశీర్షిక రెండరింగు కొరకు పాంగో ఖతి వివరణ."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
 msgid "Subtitle encoding"
 msgstr "ఉపశీర్షిక ఎన్కోడింగ్"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "ఉపశీర్షిక కొరకు అక్షరసమితి ఎన్కోడింగు."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "\"తెరువు...\" డైలాగుల కొరకు అప్రమేయ స్థానం"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
 msgstr ""
 "\"తెరువు...\" సంభాషణల కొరకు అప్రమేయ స్థానం, ప్రస్తుత డైరెక్టరీ అప్రమేయం."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "\"తెరపట్టు తీయి\" డైలాగ్స్ కొరకు అప్రమేయ స్థానం"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
 msgstr ""
 "\"తెరపట్టును తీయి\" సంభాషణలకు అప్రమేయ స్థానం. చిత్రాల డైరెక్టరీ అప్రమేయం."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "వాడుకరి నివాస సంచయంలోని చొప్పింతలు అచేతనము చేయవలెనా వద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "కీబోర్డు అడ్డదారులను అచేతనం చేయలా వద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "చలనచిత్రము లోడైనప్పుడు పాఠ్య ఉపశీర్షిక దస్త్రాలు స్వయంచాలకంగా లోడవ్వాలా వద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
 "చలనచిత్రము లోడైనప్పుడు బాహ్య అధ్యాయ దస్త్రాలను స్వయంచాలకంగా లోడవ్వాలా వద్దా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid ""
-"Whether to remember the current playlist, the playing track and position."
-msgstr ""
-"ప్రస్తుతం నడుపుతున్న ప్లేలిస్టును, నడుపుతున్న ట్రాక్‌ను మరియు స్థానాన్ని "
-"గుర్తుపెట్టుకోవాలా."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
 msgid "Active plugins list"
 msgstr "క్రియాశీల చొప్పింతల జాబితా"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -224,212 +181,123 @@ msgstr ""
 "ప్రస్తుతం క్రియాశీలకంగా ఉన్న చొప్పింతల యొక్క పేర్ల జాబితా (లోడైనవి మరియు "
 "నడుస్తున్నవి)."
 
-#: ../data/playlist.ui.h:1
-msgid "_Remove"
-msgstr "తీసివేయి (_R)"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+msgid "Directories to show"
+msgstr "చూపుటకు నిఘంటువులు"
 
-#: ../data/playlist.ui.h:2
-msgid "Remove file from playlist"
-msgstr "ప్రదర్శనజాబితా నుండి దస్త్రాన్ని తీసివేయి"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+msgid "Directories to show in the browse interface, none by default"
+msgstr "విహారణి ఇంటర్ఫేస్ నందు చూపుటకు నిఘంటువులు, అప్రమేయంగా ఏవీ కావు"
 
-#: ../data/playlist.ui.h:3
-msgid "_Copy Location"
-msgstr "స్థానమును నకలుతీయి (_C)"
-
-#: ../data/playlist.ui.h:4
-msgid "Copy the location to the clipboard"
-msgstr "స్థానమును క్లిప్‌బోర్డుకు నకలుతీయి"
-
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:47
-msgid "_Select Text Subtitles..."
-msgstr "పాఠ్య ఉపశీర్షికలను ఎంచుకోండి...(_S)"
-
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:48
-msgid "Select a file to use for text subtitles"
-msgstr "పాఠ్య ఉపశీర్షికల కొరకు వాడుటకు ఒక దస్త్రాన్ని ఎంచుకోండి"
-
-#: ../data/playlist.ui.h:7
-msgid "Add..."
-msgstr "జతచేయి..."
-
-#: ../data/playlist.ui.h:8
-msgid "Remove"
-msgstr "తీసివేయి"
-
-#: ../data/playlist.ui.h:9
-msgid "Save Playlist..."
-msgstr "ప్రదర్శనజాబితాను భద్రపర్చు..."
-
-#: ../data/playlist.ui.h:10
-msgid "Move Up"
-msgstr "పైకి జరుపు"
-
-#: ../data/playlist.ui.h:11
-msgid "Move Down"
-msgstr "క్రిందకు జరుపు"
-
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:2
-msgid "Normal"
-msgstr "సాధారణం"
-
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:4
-msgid "Large"
-msgstr "పెద్ద"
-
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:6
-msgid "Extra Large"
-msgstr "మరీ పెద్దది"
-
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5591
-#: ../src/totem-properties-view.c:232
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5481
+#: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "స్టీరియో"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:2
 msgid "4-channel"
 msgstr "4-ఛానల్"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:3
 msgid "4.1-channel"
 msgstr "4.1-ఛానల్"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:4
 msgid "5.0-channel"
 msgstr "5.0-ఛానల్"
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:5
 msgid "5.1-channel"
 msgstr "5.1-ఛానల్"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:6
 msgid "AC3 Passthrough"
 msgstr "AC3 Passthrough"
 
-#: ../data/preferences.ui.h:13
-msgid "Totem Preferences"
-msgstr "టోటెమ్ ప్రాధాన్యతలు"
+#: ../data/preferences.ui.h:7
+msgid "Preferences"
+msgstr "ప్రాధాన్యతలు"
 
-#: ../data/preferences.ui.h:14
-msgid "Playback"
-msgstr "ప్లేబాక్"
+#: ../data/preferences.ui.h:8
+#| msgid "Text Subtitles"
+msgid "External Subtitles"
+msgstr "బాహ్యం స"
 
-#: ../data/preferences.ui.h:15
-msgid "Remember last played movies"
-msgstr "చివరిగా నడిపిన మూవీలను గుర్తుంచుకో"
-
-#: ../data/preferences.ui.h:16
-msgid "Text Subtitles"
-msgstr "పాఠ్య ఉపశీర్షికలు"
-
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:9
 msgid "_Load subtitle files when movie is loaded"
 msgstr "చలనచిత్రం లోడైనప్పుడు ఉపశీర్షిక దస్త్రాలను లోడుచేయి (_L)"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:10
 msgid "_Font:"
 msgstr "ఫాంటు (_F):"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:11
 msgid "_Encoding:"
 msgstr "ఎన్కోడింగ్ (_E):"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:12
 msgid "External Chapters"
 msgstr "బాహ్య అధ్యాయాలు"
 
-#: ../data/preferences.ui.h:21
+#: ../data/preferences.ui.h:13
 msgid "Load _chapter files when movie is loaded"
 msgstr "చలనచిత్రం లోడైనప్పుడు అధ్యాయ దస్త్రాలను లోడుచేయి (_c)"
 
-#: ../data/preferences.ui.h:22
-#| msgid "Plugin"
+#: ../data/preferences.ui.h:14
 msgid "Plugins"
 msgstr "చొప్పింతలు"
 
-#: ../data/preferences.ui.h:23
+#: ../data/preferences.ui.h:15
 msgid "Plugins..."
 msgstr "చొప్పింతలు..."
 
-#: ../data/preferences.ui.h:24 ../data/properties.ui.h:1
+#: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
 msgid "General"
 msgstr "సాధారణం"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:26
+#: ../data/preferences.ui.h:18
 msgid "Display"
 msgstr "ప్రదర్శించు"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:19
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "అంతర్వల్లిక వీడియోల యొక్క విజాలీకరణను అచేతనపరుచు (_d)"
 
-#: ../data/preferences.ui.h:28
-msgid "Disable screensaver when playing"
-msgstr "ఆడుతున్నపుడు తెరకాపరిని అచేతపరుచు"
-
-#: ../data/preferences.ui.h:29
-msgctxt "Screensaver disable"
-msgid "Video"
-msgstr "వీడియో"
-
-#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
-#: ../data/preferences.ui.h:31
-msgid "Video or Audio"
-msgstr "ఆడియో లేదా వీడియో"
-
-#: ../data/preferences.ui.h:32
-msgid "Visual Effects"
-msgstr "దృశ్య ప్రభావాలు"
-
-#: ../data/preferences.ui.h:33
-msgid "Show _visual effects when an audio file is played"
-msgstr "ఆడియో దస్త్రాలను ఆడిస్తున్నపుడు దృశ్య ప్రభావాలను చూపించు (_v)"
-
-#: ../data/preferences.ui.h:34
-msgid "_Type of visualization:"
-msgstr "దృశ్యనీయత యొక్క రకము (_T):"
-
-#: ../data/preferences.ui.h:35
-msgid "Visualization _size:"
-msgstr "దృశ్యనీయత పరిమాణము (_s):"
-
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:20
 msgid "Color Balance"
 msgstr "వర్ణ సమతుల్యత"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:21
 msgid "_Brightness:"
 msgstr "ప్రకాశత (_B):"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:22
 msgid "Co_ntrast:"
 msgstr "వ్యత్యాసం (_n):"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:23
 msgid "Sat_uration:"
 msgstr "సాచురేషన్ (_u):"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:24
 msgid "_Hue:"
 msgstr "లేతఛాయ (_H):"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:25
 msgid "Reset to _Defaults"
 msgstr "అప్రమేయాలకు తిరిగివుంచు (_D)"
 
-#: ../data/preferences.ui.h:42
+#: ../data/preferences.ui.h:26
 msgid "Audio Output"
 msgstr "ఆడియో అవుట్‌పుట్"
 
-#: ../data/preferences.ui.h:43
+#: ../data/preferences.ui.h:27
 msgid "_Audio output type:"
 msgstr "ఆడియో అవుట్‌పుట్ రకము (_A):"
 
-#: ../data/preferences.ui.h:44 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:273
+#: ../data/preferences.ui.h:28 ../data/properties.ui.h:14
+#: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "ఆడియో"
 
@@ -461,7 +329,7 @@ msgstr "వ్యాఖ్య:"
 msgid "Container:"
 msgstr "కంటైనర్:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
 msgid "Video"
 msgstr "వీడియో"
 
@@ -489,270 +357,166 @@ msgstr "మాదిరి రేటు:"
 msgid "Channels:"
 msgstr "ఛానళ్ళు:"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:52 ../src/totem.c:245
-#: ../src/totem.c:251
-msgid "Videos"
-msgstr "వీడియోలు"
-
-#: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "చలనచిత్రాలను ప్రదర్శించు"
-
-#: ../data/totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr ""
-"వీడియో; సినిమా; సినిమా; క్లిప్; సిరీస్; ప్లేయర్; డివిడి; టి.వి; డిస్క్;"
-
 #: ../data/totem.ui.h:1
-msgid "_Open"
-msgstr "తెరువు(_O)"
-
-#: ../data/totem.ui.h:2
-msgid "Open _Location"
-msgstr "స్థానమును తెరువు(_L)"
-
-#: ../data/totem.ui.h:3
-msgid "_Fullscreen"
-msgstr "పూర్తితెర (_F)"
-
-#: ../data/totem.ui.h:4
 msgid "Prefere_nces"
 msgstr "ప్రాధాన్యతలు (_n)"
 
-#: ../data/totem.ui.h:5
-msgid "Shuff_le"
-msgstr "యాదృచ్ఛిక రీతి (_l)"
-
-#: ../data/totem.ui.h:6
-msgid "_Repeat"
-msgstr "పునరావృతము(_R)"
-
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:2
 msgid "_Help"
 msgstr "సహాయం (_H)"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:3
 msgid "_Quit"
 msgstr "నిష్క్రమించు (_Q)"
 
-#: ../data/totem.ui.h:9
-msgid "_DVD Menu"
-msgstr "డీవీడీ మెనూ (_D)"
+#: ../data/totem.ui.h:4
+msgid "Add _Local Video…"
+msgstr "స్థానిక వీడియో జతచేయి... (_L)"
 
-#: ../data/totem.ui.h:10
-msgid "_Title Menu"
-msgstr "శీర్షిక మెనూ (_T)"
+#: ../data/totem.ui.h:5
+msgid "Add _Web Video…"
+msgstr "వెబ్ వీడియో జతచేయి... (_W)"
 
-#: ../data/totem.ui.h:11
-msgid "A_udio Menu"
-msgstr "ఆడియో మెనూ (_u)"
-
-#: ../data/totem.ui.h:12
-msgid "_Angle Menu"
-msgstr "కోణము మెనూ (_A)"
-
-#: ../data/totem.ui.h:13
-msgid "_Chapter Menu"
-msgstr "అధ్యాయం మెనూ (_C)"
-
-#: ../data/totem.ui.h:14
-msgid "_Movie"
-msgstr "చలనచిత్రం (_M)"
-
-#: ../data/totem.ui.h:15
-msgid "_Eject"
-msgstr "బయటకునెట్టు (_E)"
-
-#: ../data/totem.ui.h:16
-msgid "Eject the current disc"
-msgstr "ప్రస్తుత డిస్కును బయటకునెట్టు"
-
-#: ../data/totem.ui.h:17
-msgid "_Properties"
-msgstr "లక్షణాలు (_P)"
-
-#: ../data/totem.ui.h:18
-msgid "View the properties of the current stream"
-msgstr "ప్రస్తుత ప్రవాహం యొక్క లక్షణములను చూడు"
-
-#: ../data/totem.ui.h:19
-msgid "Play / P_ause"
-msgstr "ఆడించు / నిలిపివేయి (_a)"
-
-#: ../data/totem.ui.h:20
-msgid "Play or pause the movie"
-msgstr "చలనచిత్రమును ఆడించు లేదా నిలిపివేయి"
-
-#: ../data/totem.ui.h:21
-msgid "_Edit"
-msgstr "సవరణ (_E)"
-
-#: ../data/totem.ui.h:22
-msgid "_Clear Playlist"
-msgstr "ప్రదర్శనజాబితాను శుభ్రపరుచు (_C)"
-
-#: ../data/totem.ui.h:23
-msgid "Clear the playlist"
-msgstr "ప్రదర్శనజాబితాను శుభ్రపరుచు"
-
-#: ../data/totem.ui.h:24
-msgid "_View"
-msgstr "వీక్షణం (_V)"
-
-#: ../data/totem.ui.h:25
-msgid "Fit Window to Movie"
-msgstr "విండోను చలనచిత్రమనకు అమర్చు"
-
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:6
 msgid "_Aspect Ratio"
 msgstr "రూప నిష్పత్తి (_A)"
 
-#: ../data/totem.ui.h:27
-msgid "Switch An_gles"
-msgstr "కోణములు మార్చు (_g)"
-
-#: ../data/totem.ui.h:28
-msgid "Switch camera angles"
-msgstr "కెమేరా కోణములు మార్చు"
-
-#: ../data/totem.ui.h:29
-msgid "_Next Chapter/Movie"
-msgstr "తరువాతి అధ్యాయము/చలనచిత్రము (_N)"
-
-#: ../data/totem.ui.h:30
-msgid "Next chapter or movie"
-msgstr "తరువాతి అధ్యాయము లేదా చలనచిత్రం"
-
-#: ../data/totem.ui.h:31
-msgid "_Previous Chapter/Movie"
-msgstr "మునుపటి అధ్యాయము/చలనచిత్రము (_P)"
-
-#: ../data/totem.ui.h:32
-msgid "Previous chapter or movie"
-msgstr "మునుపటి అధ్యాయము లేదా చలనచిత్రం"
-
-#: ../data/totem.ui.h:33
-msgid "_Sound"
-msgstr "శబ్దం (_S)"
-
-#: ../data/totem.ui.h:34
-msgid "S_idebar"
-msgstr "ప్రక్కపట్టీ (_i)"
-
-#: ../data/totem.ui.h:35
-msgid "Show or hide the sidebar"
-msgstr "ప్రక్కపట్టీను చూపించు లేదా దాయి"
-
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:7
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "స్వయం"
 
-#: ../data/totem.ui.h:37
-msgid "Sets automatic aspect ratio"
-msgstr "స్వయంచాలక రూప నిష్పత్తికి అమర్చుతుంది"
-
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:8
+#| msgid "Square"
+msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "చతురస్రం"
 
-#: ../data/totem.ui.h:39
-msgid "Sets square aspect ratio"
-msgstr "చతురస్త్ర రూప నిష్పత్తికి అమర్చుతుంది"
-
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:9
+#| msgid "4∶3 (TV)"
+msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (టివి)"
 
-#: ../data/totem.ui.h:41
-msgid "Sets 4∶3 (TV) aspect ratio"
-msgstr "4:3 (TV) రూప నిష్పత్తికి అమర్చును"
-
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:10
+#| msgid "16∶9 (Widescreen)"
+msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
-msgstr "16:9 (విస్తృతతెర)"
+msgstr "16:9 (వెడల్పుతెర)"
 
-#: ../data/totem.ui.h:43
-msgid "Sets 16∶9 (widescreen) aspect ratio"
-msgstr "16:9 (విస్తృతతెర) రూప నిష్పత్తికి అమర్చును"
-
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:11
+#| msgid "2.11∶1 (DVB)"
+msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:45
-msgid "Sets 2.11∶1 (DVB) aspect ratio"
-msgstr "2.11:1 (DVB) రూప నిష్పత్తికి అమర్చును"
-
-#: ../data/totem.ui.h:46
-msgid "S_ubtitles"
-msgstr "ఉపశీర్షికలు (_u)"
-
-#: ../data/totem.ui.h:49
-msgid "_Languages"
-msgstr "భాషలు (_L)"
-
-#: ../data/totem.ui.h:50
+#: ../data/totem.ui.h:12
 msgid "Zoom In"
 msgstr "అతిరూపించు"
 
-#: ../data/totem.ui.h:51
-msgid "Zoom in"
-msgstr "అతిరూపించు"
+#: ../data/totem.ui.h:13
+msgid "Switch An_gles"
+msgstr "కోణములు మార్చు (_g)"
+
+#: ../data/totem.ui.h:14
+msgid "_Languages"
+msgstr "భాషలు (_L)"
+
+#: ../data/totem.ui.h:15
+msgid "S_ubtitles"
+msgstr "ఉపశీర్షికలు (_u)"
+
+#: ../data/totem.ui.h:16
+#| msgid "Select Text Subtitles"
+msgid "_Select Text Subtitles…"
+msgstr "పాఠం ఉపశీర్షికలను ఎంచుకోండి... (_S)"
+
+#: ../data/totem.ui.h:17
+msgid "_Eject"
+msgstr "బయటకునెట్టు (_E)"
+
+#: ../data/totem.ui.h:18
+msgid "_Repeat"
+msgstr "పునరావృతము(_R)"
+
+#: ../data/totem.ui.h:19
+msgid "_DVD Menu"
+msgstr "డీవీడీ మెనూ (_D)"
+
+#: ../data/totem.ui.h:20
+msgid "_Title Menu"
+msgstr "శీర్షిక మెనూ (_T)"
+
+#: ../data/totem.ui.h:21
+msgid "A_udio Menu"
+msgstr "ఆడియో మెనూ (_u)"
+
+#: ../data/totem.ui.h:22
+msgid "_Angle Menu"
+msgstr "కోణము మెనూ (_A)"
+
+#: ../data/totem.ui.h:23
+msgid "_Chapter Menu"
+msgstr "అధ్యాయం మెనూ (_C)"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "మీరు తెరువాలనుకుంటున్న దస్త్రము యొక్క చిరునామాను ప్రవేశపెట్టండి (_a):"
 
-#: ../src/backend/bacon-video-widget.c:1712
+#. translators: Unknown remaining time
+#: ../src/backend/bacon-time-label.c:113
+msgid "--:--"
+msgstr "--:--"
+
+#: ../src/backend/bacon-video-widget.c:1906
 msgid "Password requested for RTSP server"
 msgstr "RTSP సేవకం కొరకు సంకేతపదమును అభ్యర్థించింది"
 
-#: ../src/backend/bacon-video-widget.c:3076
+#: ../src/backend/bacon-video-widget.c:3277
 #, c-format
 msgid "Audio Track #%d"
 msgstr "ఆడియో ట్రాక్ #%d"
 
-#: ../src/backend/bacon-video-widget.c:3080
+#: ../src/backend/bacon-video-widget.c:3281
 #, c-format
 msgid "Subtitle #%d"
 msgstr "ఉపశీర్షిక #%d"
 
-#: ../src/backend/bacon-video-widget.c:3513
+#: ../src/backend/bacon-video-widget.c:3737
 msgid "The server you are trying to connect to is not known."
 msgstr "మీరు అనుసంధానించుటకు ప్రయత్నిస్తున్న సేవకం తెలియదు."
 
-#: ../src/backend/bacon-video-widget.c:3516
+#: ../src/backend/bacon-video-widget.c:3740
 msgid "The connection to this server was refused."
 msgstr "ఈ సేవకానికి అనుసంధానము తిరస్కరించబడింది."
 
-#: ../src/backend/bacon-video-widget.c:3519
+#: ../src/backend/bacon-video-widget.c:3743
 msgid "The specified movie could not be found."
 msgstr "పేర్కొన్న చలనచిత్రం కనపడలేదు."
 
-#: ../src/backend/bacon-video-widget.c:3526
+#: ../src/backend/bacon-video-widget.c:3750
 msgid "The server refused access to this file or stream."
 msgstr "సేవకము ఈ దస్త్రం లేదా ప్రవాహం ప్రాప్తిని నిరాకరించింది."
 
-#: ../src/backend/bacon-video-widget.c:3532
+#: ../src/backend/bacon-video-widget.c:3756
 msgid "Authentication is required to access this file or stream."
 msgstr "ఈ దస్త్రాన్ని లేక ప్రవాహాన్ని ప్రాప్తించుటకై ధృవీకరణ అవసరం."
 
-#: ../src/backend/bacon-video-widget.c:3539
+#: ../src/backend/bacon-video-widget.c:3763
 msgid "You are not allowed to open this file."
 msgstr "ఈ దస్త్రాన్ని ఆడించుటకు మీకు అనుమతిలేదు."
 
-#: ../src/backend/bacon-video-widget.c:3544
+#: ../src/backend/bacon-video-widget.c:3768
 msgid "This location is not a valid one."
 msgstr "స్థానము సరియైనది కాదు."
 
-#: ../src/backend/bacon-video-widget.c:3552
+#: ../src/backend/bacon-video-widget.c:3776
 msgid "The movie could not be read."
 msgstr "చలనచిత్రము చదువుట వీలుకాదు."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3575
-#: ../src/backend/bacon-video-widget.c:3583
+#: ../src/backend/bacon-video-widget.c:3799
+#: ../src/backend/bacon-video-widget.c:3807
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -767,7 +531,12 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3594
+#: ../src/backend/bacon-video-widget.c:3819
+msgid ""
+"This stream cannot be played. It's possible that a firewall is blocking it."
+msgstr "ఈ స్ట్రీమ్ ప్లే చేయలేదు. ఒక ఫైర్‌వాల్ దీనిని బ్లాక్ చేయడం సంభవమే."
+
+#: ../src/backend/bacon-video-widget.c:3822
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -776,7 +545,7 @@ msgstr ""
 "రకాల సినిమాలను ఆడించాలంటే అదనపు "
 "చొప్పంతలు స్థాపించాలి"
 
-#: ../src/backend/bacon-video-widget.c:3604
+#: ../src/backend/bacon-video-widget.c:3833
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -784,73 +553,25 @@ msgstr ""
 "ఈ దస్త్రాన్ని నెట్‌వర్కుపై ఆడించలేదు.  దీనిని ముందు డిస్కునకు దించుకుని "
 "ప్రయత్నించండి."
 
-#: ../src/backend/bacon-video-widget.c:5587 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "చుట్టూ"
 
-#: ../src/backend/bacon-video-widget.c:5589 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5479 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "ఒంటరి"
 
-#: ../src/backend/bacon-video-widget.c:5876
+#: ../src/backend/bacon-video-widget.c:5766
 msgid "Media contains no supported video streams."
 msgstr "మాధ్యమం యెటువంటి మద్దతిచ్చు వీడియో స్ట్రీమ్సును కలిగిలేదు."
 
-#: ../src/backend/bacon-video-widget.c:6059
+#: ../src/backend/bacon-video-widget.c:5924
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "కొన్ని అవసరమైన చొప్పింతలు తప్పిపోయినవి. కార్యక్రమం సరిగ్గా స్థాపించబడితే "
 "నిర్ధారించుకోండి."
-
-#. translators: Unknown remaining time
-#: ../src/backend/bacon-time-label.c:115
-msgid "--:--"
-msgstr "--:--"
-
-#: ../src/eggfileformatchooser.c:240
-#, c-format
-msgid "File _Format: %s"
-msgstr "దస్త్ర ఆకృతి (_F): %s"
-
-#: ../src/eggfileformatchooser.c:379
-msgid "All Files"
-msgstr "అన్ని దస్త్రాలు"
-
-#: ../src/eggfileformatchooser.c:380
-msgid "All Supported Files"
-msgstr "అన్ని మద్దతునిచ్చు దస్త్రాలు"
-
-#: ../src/eggfileformatchooser.c:389
-msgid "By Extension"
-msgstr "పొడిగింతను బట్టి"
-
-#: ../src/eggfileformatchooser.c:404
-msgid "File Format"
-msgstr "దస్త్ర ఆకృతి"
-
-#: ../src/eggfileformatchooser.c:422
-msgid "Extension(s)"
-msgstr "పొడిగింత(లు)"
-
-#. Translators: the parameter is a filename
-#: ../src/eggfileformatchooser.c:657
-#, c-format
-msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
-"choose a file format from the list below."
-msgstr ""
-"`%s' కొరకు మీరు వుపయోగించాలని అనుకొనుచున్న దస్త్ర ఆకృతులను ఈ కార్యక్రమం "
-"గుర్తించలేదు. దయచేసి ఆ "
-"దస్త్రానికి తెలిసిన పొడిగింతను ఉపయోగించునట్లు చూడండి లేదా మానవీయంగా దస్త్ర "
-"ఆకృతిని క్రింది జాబితా నుండి "
-"ఎంచుకోండి."
-
-#: ../src/eggfileformatchooser.c:664
-msgid "File format not recognized"
-msgstr "దస్త్ర ఆకృతి గుర్తించబడలేదు"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -873,8 +594,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:71
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
@@ -887,8 +606,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:82
 #, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
@@ -910,73 +627,73 @@ msgstr "%d:%02d"
 #. Album
 #. Year
 #. Container
-#: ../src/properties/bacon-video-widget-properties.c:107
-#: ../src/properties/bacon-video-widget-properties.c:109
-#: ../src/properties/bacon-video-widget-properties.c:111
-#: ../src/properties/bacon-video-widget-properties.c:113
-#: ../src/properties/bacon-video-widget-properties.c:119
+#: ../src/properties/bacon-video-widget-properties.c:106
+#: ../src/properties/bacon-video-widget-properties.c:108
+#: ../src/properties/bacon-video-widget-properties.c:110
+#: ../src/properties/bacon-video-widget-properties.c:112
+#: ../src/properties/bacon-video-widget-properties.c:118
 msgid "Unknown"
 msgstr "తెలియదు"
 
 #. Dimensions
-#: ../src/properties/bacon-video-widget-properties.c:122
+#: ../src/properties/bacon-video-widget-properties.c:121
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "వర్తించదు"
 
 #. Video Codec
-#: ../src/properties/bacon-video-widget-properties.c:124
+#: ../src/properties/bacon-video-widget-properties.c:123
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/properties/bacon-video-widget-properties.c:127
+#: ../src/properties/bacon-video-widget-properties.c:126
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/properties/bacon-video-widget-properties.c:130
-#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:129
+#: ../src/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/properties/bacon-video-widget-properties.c:134
+#: ../src/properties/bacon-video-widget-properties.c:133
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "వర్తించదు"
 
 #. Audio Codec
-#: ../src/properties/bacon-video-widget-properties.c:136
+#: ../src/properties/bacon-video-widget-properties.c:135
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "వర్తించదు"
 
 #. Sample rate
-#: ../src/properties/bacon-video-widget-properties.c:138
+#: ../src/properties/bacon-video-widget-properties.c:137
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: ../src/properties/bacon-video-widget-properties.c:140
+#: ../src/properties/bacon-video-widget-properties.c:139
 msgid "0 Channels"
 msgstr "0 ఛానళ్ళు"
 
-#: ../src/properties/bacon-video-widget-properties.c:156
+#: ../src/properties/bacon-video-widget-properties.c:155
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d గంట"
 msgstr[1] "%d గంటలు"
 
-#: ../src/properties/bacon-video-widget-properties.c:158
+#: ../src/properties/bacon-video-widget-properties.c:157
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d నిమిషం"
 msgstr[1] "%d నిమిషాలు"
 
-#: ../src/properties/bacon-video-widget-properties.c:161
+#: ../src/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -984,120 +701,142 @@ msgstr[0] "%d సెకన్"
 msgstr[1] "%d సెకన్లు"
 
 #. 5 hours 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:167
+#: ../src/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:170
+#: ../src/properties/bacon-video-widget-properties.c:169
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: ../src/properties/bacon-video-widget-properties.c:176
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 seconds"
 msgstr "0 సెకన్లు"
 
-#: ../src/properties/bacon-video-widget-properties.c:237
+#: ../src/properties/bacon-video-widget-properties.c:236
 #, c-format
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
 msgstr[0] "సెకనుకు %d  చట్రం"
 msgstr[1] "సెకనుకు %d చట్రములు"
 
-#: ../src/totem-audio-preview.c:138
+#: ../src/grilo.ui.h:1
+#| msgid "Select a folder"
+msgid "Select All"
+msgstr "అన్నిటిని ఎంచుకొనుము"
+
+#: ../src/grilo.ui.h:2
+#| msgid "Select a folder"
+msgid "Select None"
+msgstr "ఏదీ ఎంపికచేయవద్దు"
+
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "ఆడియో మునుజూపు"
 
-#: ../src/totem.c:246
+#: ../src/totem.c:244
+msgid "Could not initialize the thread-safe libraries."
+msgstr "సురక్షిత మార్గ గ్రంథాలయాలను సంసిద్ధపరచలేకపోయింది."
+
+#: ../src/totem.c:244
 msgid "Verify your system installation. Totem will now exit."
 msgstr " మీ  నెలకొల్పిన వ్యవస్థను పరీక్షించండి. టోటెమ్ బయటకుపోతొంది"
 
-#: ../src/totem-dnd-menu.c:94
-msgid "_Play Now"
-msgstr "ఇప్పుడు ఆడించు (_P)"
+#: ../src/totem-grilo.c:280
+#, c-format
+msgid "Season %d Episode %d"
+msgstr "సీజన్ %d ఎపిసోడ్ %d"
 
-#: ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "ప్రదర్శనజాబితాకు జతచేయి (_A)"
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:317
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (సీజన్ %d ఎపిసోడ్ %d)"
 
-#: ../src/totem-dnd-menu.c:103
-msgid "Cancel"
-msgstr "రద్దుచేయి"
+#: ../src/totem-grilo.c:687
+msgid "Browse Error"
+msgstr "విహార దోషము"
 
-#: ../src/totem-interface.c:181 ../src/totem-interface.c:224
+#: ../src/totem-grilo.c:824
+msgid "Search Error"
+msgstr "శోధన దోషము"
+
+#: ../src/totem-grilo.c:1275
+msgid "Local"
+msgstr "స్థానిక"
+
+#: ../src/totem-grilo.c:1871
+#| msgid "Channels:"
+msgid "Channels"
+msgstr "ఛానళ్ళు"
+
+#: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "'%s' అంతరవర్తిని లోడుచేయలేకపోయింది. %s"
 
-#: ../src/totem-interface.c:181
+#: ../src/totem-interface.c:179
 msgid "The file does not exist."
 msgstr "దస్త్రం ఉనికిలో లేదు."
 
-#: ../src/totem-interface.c:183 ../src/totem-interface.c:185
-#: ../src/totem-interface.c:226 ../src/totem-interface.c:228
+#: ../src/totem-interface.c:181 ../src/totem-interface.c:183
+#: ../src/totem-interface.c:224 ../src/totem-interface.c:226
 msgid "Make sure that Totem is properly installed."
 msgstr "టోటెమ్ సక్రమంగా స్థాపించబడిందో లేదో సరిచూడండి."
 
-#: ../src/totem-interface.c:357
-msgid ""
-"Totem is free software; you can redistribute it and/or modify it under the "
-"terms of the GNU General Public License as published by the Free Software "
-"Foundation; either version 2 of the License, or (at your option) any later "
-"version."
-msgstr ""
-"టోటెమ్ ఒక ఉచిత సాఫ్ట్‍వేర్; మీరు దానిని మరలపంచవచ్చు ఫ్రీ సాఫ్ట్‍వేర్ ఫౌండేషన్ "
-"వెలువరిచిన గ్నూ సర్వసామన్యమైన "
-"ప్రజా లైసెన్సు వివరణం 2 లైసెన్సు లేదా వేరే (మీ ఐచ్చికం వద్ద) వివరణల ప్రకారం "
-"మార్చవచ్చు."
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "అంశాలను ఎంపిక చేసేందుకు వాటిపై నొక్కండి"
 
-#: ../src/totem-interface.c:361
-msgid ""
-"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details."
-msgstr ""
-"టోటెమ్ ఉపయోగపడుతుందనే నమ్మకంతో పంపిణీచేయబడుతోంది, అయితే ఏ హామీ లేకుండా; "
-"వ్యాపారసంబందంగా కాని లేదా ఒక "
-"నిర్దిష్ట అవసరానికిచెందినదని కాని హామీ లేదు. ఎక్కువ సమాచారం కొరకు GNU జనరల్ "
-"పబ్లిక్ లైసెన్స్ ను చూడండి."
+#: ../src/totem-main-toolbar.c:137
+#, c-format
+#| msgid "%d second"
+#| msgid_plural "%d seconds"
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d ఎంపికచేయబడింది"
+msgstr[1] "%d ఎంచుకోబడ్డాయి"
 
-#: ../src/totem-interface.c:365
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
-"Suite 330, Boston, MA  02111-1307  USA"
-msgstr ""
-"మీరు టోటెమ్ నకలు తోటి ఒక GNU జనరల్ పబ్లిక్ లైసెన్స్  నకలు కూడా పొందివుంటారు; "
-"ఒకవేళ పొందకపోతే, Free "
-"Software Foundation, Inc., 59 Temple place, Suite 330, Boston, MA  "
-"02111-1307  USA కి వ్రాయండి."
+#: ../src/totem-main-toolbar.c:159
+#, c-format
+msgid "Results for “%s”"
+msgstr "“%s” కొరకు ఫలితాలు"
 
-#: ../src/totem-interface.c:368
-msgid ""
-"Totem contains an exception to allow the use of proprietary GStreamer "
-"plugins."
-msgstr ""
-"యాజమాన్య జిస్ట్రీమర్ చొప్పింతల వాడకం అనుమతించుటకు టోటెమ్ మినహాయింపు "
-"కలిగివుంటుంది."
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "వెనుకకు"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "ఎంచుకోండి"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "రద్దుచేయి"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "శోధించు"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:321
+#: ../src/totem-menu.c:391
 msgid "None"
 msgstr "ఏదీకాదు"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:326
+#: ../src/totem-menu.c:395
 msgctxt "Language"
 msgid "Auto"
 msgstr "స్వయం"
 
-#: ../src/totem-object.c:159
+#: ../src/totem-object.c:175
 #, c-format
 msgid ""
 "%s\n"
@@ -1106,59 +845,67 @@ msgstr ""
 "%s\n"
 "అందుబాటులోవున్న మొత్తం ఆదేశ వరుస ఐచ్చికముల జాబితాకొరకు '%s --help' నడుపండి.\n"
 
-#. Translators: %s is the totem version number
-#: ../src/totem-object.c:604
-#, c-format
-msgid "Totem %s"
-msgstr "టోటెమ్ %s"
-
-#: ../src/totem-object.c:1219 ../src/totem-options.c:52
+#: ../src/totem-object.c:1334 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "నిలిపివేయి"
 
-#: ../src/totem-object.c:1224 ../src/totem-object.c:1234
-#: ../src/totem-options.c:51
+#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
+#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "ఆడించు"
 
-#: ../src/totem-object.c:1315 ../src/totem-object.c:1342
-#: ../src/totem-object.c:1875
+#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
+#: ../src/totem-object.c:1955
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "'%s'ను టోటెమ్ ఆడించలేదు."
 
-#: ../src/totem-object.c:2017
+#: ../src/totem-object.c:2097
 msgid "Totem could not display the help contents."
 msgstr "టోటెమ్ సహాయ సారంను ప్రదర్శించలేకపోయింది."
 
-#: ../src/totem-object.c:3837
+#: ../src/totem-object.c:2337
+msgid "An error occurred"
+msgstr "ఒక దోషం ఎదురైంది"
+
+#: ../src/totem-object.c:3641
 msgid "Previous Chapter/Movie"
 msgstr "మునుపటి అధ్యాయం/చలనచిత్రము"
 
-#: ../src/totem-object.c:3842
+#: ../src/totem-object.c:3647
 msgid "Play / Pause"
 msgstr "నడుపు / నిలిపివుంచు"
 
-#: ../src/totem-object.c:3847
+#: ../src/totem-object.c:3653
 msgid "Next Chapter/Movie"
 msgstr "తరువాతి అధ్యాయం/చలనచిత్రము"
 
-#: ../src/totem-object.c:3910 ../src/plugins/grilo/totem-grilo.c:1302
-#: ../src/plugins/grilo/totem-grilo.c:1312
-msgid "Back"
-msgstr "వెనుకకు"
-
-#: ../src/totem-object.c:3981
+#: ../src/totem-object.c:3867
 msgid "Totem could not startup."
 msgstr "టోటెమ్ ప్రారంభించలేకపోయింది."
 
-#: ../src/totem-object.c:3981
+#: ../src/totem-object.c:3867
 msgid "No reason."
 msgstr "కారణం లేదు"
 
-#: ../src/totem-open-location.c:182
-msgid "Open Location..."
-msgstr "స్థానమును తెరువు..."
+#: ../src/totem-open-location.c:183
+msgid "Add Web Video"
+msgstr "వెబ్ వీడియో జతచేయి"
+
+#: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
+#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
+#: ../src/plugins/chapters/totem-edit-chapter.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/plugins/screenshot/totem-gallery-progress.c:103
+#: ../src/plugins/skipto/totem-skipto.c:198
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "రద్దుచేయి (_C)"
+
+#: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
+#: ../src/plugins/chapters/totem-edit-chapter.c:99
+msgid "_Add"
+msgstr "జతచేయు(_A)"
 
 #: ../src/totem-options.c:49
 msgid "Enable debug"
@@ -1228,110 +975,88 @@ msgstr "- చలనచిత్రములను మరియు పాటల�
 msgid "Can't enqueue and replace at the same time"
 msgstr "వరుసలో చేర్చుట మరియు ఒకే సమయంలో ప్రతిస్థాపించుట కుదరదు"
 
-#. By extension entry
-#: ../src/totem-playlist.c:175
-msgid "MP3 ShoutCast playlist"
-msgstr "MP3 ShoutCast ప్రదర్శనజాబితా"
-
-#: ../src/totem-playlist.c:176
-msgid "MP3 audio (streamed)"
-msgstr "ఎంపీ3 ఆడియో (streamed)"
-
-#: ../src/totem-playlist.c:177
-msgid "MP3 audio (streamed, DOS format)"
-msgstr "MP3 audio (streamed, DOS format)"
-
-#: ../src/totem-playlist.c:178
-msgid "XML Shareable Playlist"
-msgstr "XML పంచుకోదగిన ప్రదర్శనజాబితా"
-
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:335
+#: ../src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "శీర్షిక %d"
 
-#: ../src/totem-playlist.c:489
-msgid "Could not save the playlist"
-msgstr "ప్రదర్శనజాబితాను దాచలేకపోయింది"
-
-#: ../src/totem-playlist.c:1063
-msgid "Save Playlist"
-msgstr "ప్రదర్శనజాబితాను భద్రపరుచు"
-
-#. translators: Playlist is the default saved playlist filename,
-#. * without the suffix
-#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
-#: ../src/totem-sidebar.c:142
-msgid "Playlist"
-msgstr "ప్రదర్శనజాబితా"
-
-#: ../src/totem-playlist.c:1902
+#: ../src/totem-playlist.c:1001
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "ప్రదర్శనజాబితా '%s' పార్స్ చేయలేకపోయింది, బహుశా అది పాడైవుండవచ్చు."
 
-#: ../src/totem-playlist.c:1903
-msgid "Playlist error"
-msgstr "ప్రదర్శనజాబితాలో దోషం"
-
-#: ../src/totem-preferences.c:292
+#: ../src/totem-preferences.c:184
 msgid "Configure Plugins"
 msgstr "చొప్పింతలను స్వరూపించు"
 
-#: ../src/totem-preferences.c:351
-msgid "Preferences"
-msgstr "ప్రాధాన్యతలు"
+#: ../src/totem-preferences.c:187
+msgid "_Close"
+msgstr "మూసివేయి (_C)"
 
-#: ../src/totem-preferences.c:498
+#: ../src/totem-preferences.c:303
 msgid "Select Subtitle Font"
 msgstr "ఉపశీర్షిక ఫాంటును ఎంచుకొను"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
 msgid "Audio/Video"
 msgstr "ఆడియో/వీడియో"
 
-#: ../src/totem-properties-view.c:131
+#: ../src/totem-properties-view.c:141
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/totem-properties-view.c:160
-#: ../src/plugins/properties/totem-movie-properties.c:152
-#: ../src/plugins/properties/totem-movie-properties.c:163
+#: ../src/totem-properties-view.c:170
+#: ../src/plugins/properties/totem-movie-properties.c:154
+#: ../src/plugins/properties/totem-movie-properties.c:165
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/totem-properties-view.c:163
-#: ../src/plugins/properties/totem-movie-properties.c:152
-#: ../src/plugins/properties/totem-movie-properties.c:163
+#: ../src/totem-properties-view.c:173
+#: ../src/plugins/properties/totem-movie-properties.c:154
+#: ../src/plugins/properties/totem-movie-properties.c:165
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/totem-properties-view.c:180
-#: ../src/plugins/properties/totem-movie-properties.c:149
+#: ../src/totem-properties-view.c:190
+#: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:212
-#: ../src/plugins/properties/totem-movie-properties.c:166
+#: ../src/totem-properties-view.c:222
+#: ../src/plugins/properties/totem-movie-properties.c:168
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:220
-#: ../src/plugins/properties/totem-movie-properties.c:166
+#: ../src/totem-properties-view.c:230
+#: ../src/plugins/properties/totem-movie-properties.c:168
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "వర్తించదు"
 
-#: ../src/totem-properties-view.c:241
+#: ../src/totem-properties-view.c:251
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "వర్తించదు"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+#| msgid "Add to Playlist"
+msgid "Add to Favourites"
+msgstr "అభీష్టాలకు జతచేయి"
+
+#: ../src/totemselectiontoolbar.ui.h:3
+#| msgid "Shuff_le"
+msgid "Shuffle"
+msgstr "గుళకరించు"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Delete"
+msgstr "తొలగించు"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1488,42 +1213,35 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr " %s / %s కు లాగు"
 
-#: ../src/totem-uri.c:331 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
 msgid "All files"
 msgstr "అన్ని దస్త్రాలు"
 
-#: ../src/totem-uri.c:336 ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "సహకార దస్త్రాలు"
-
-#: ../src/totem-uri.c:348
-msgid "Audio files"
-msgstr "ఆడియో దస్త్రాలు"
-
-#: ../src/totem-uri.c:356
+#: ../src/totem-uri.c:335
 msgid "Video files"
 msgstr "వీడియో దస్త్రాలు"
 
-#: ../src/totem-uri.c:366
+#: ../src/totem-uri.c:346
 msgid "Subtitle files"
 msgstr "ఉపశీర్షిక దస్త్రాలు"
 
-#: ../src/totem-uri.c:418
+#: ../src/totem-uri.c:396
 msgid "Select Text Subtitles"
 msgstr "పాఠ్య ఉపశీర్షికలను ఎంచుకోండి"
 
-#: ../src/totem-uri.c:483
-msgid "Select Movies or Playlists"
-msgstr "చలనచిత్రాలు లేక ప్రదర్శనజాబితాను ఎంచుకోండి"
+#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+msgid "_Open"
+msgstr "తెరువు(_O)"
 
-#: ../src/totem-uri.c:487
-msgid "Add Directory"
-msgstr "సంచయాన్ని జతచేయి"
+#: ../src/totem-uri.c:457
+#| msgid "Videos"
+msgid "Add Videos"
+msgstr "వీడియోలు జతచేయి"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:838
+#: ../src/totem-video-thumbnailer.c:785
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1534,15 +1252,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:839
+#: ../src/totem-video-thumbnailer.c:786
 msgid "Filename"
 msgstr "దస్త్రంపేరు"
 
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:788
 msgid "Resolution"
 msgstr "విభాజకత"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:791
 msgid "Duration"
 msgstr "వ్యవధి"
 
@@ -1585,16 +1303,19 @@ msgstr "చలనచిత్రం రికార్డు కాలేక ప
 msgid "Unable to write a project."
 msgstr "ప్రోజెక్టును వ్రాయలేకపోయింది."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:380
-msgid "_Create Video Disc..."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
+#| msgid "_Create Video Disc..."
+msgid "_Create Video Disc…"
 msgstr "వీడియో డిస్కును సృష్టించు... (_C)"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:381
-msgid "Copy Vide_o DVD..."
-msgstr "వీడియో DVD నకలుతీయి.. (_o)"
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
+#| msgid "Copy Vide_o DVD..."
+msgid "Copy Vide_o DVD…"
+msgstr "వీడియో DVD నకలుతీయి... (_o)"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:382
-msgid "Copy (S)VCD..."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
+#| msgid "Copy (S)VCD..."
+msgid "Copy (S)VCD…"
 msgstr "(S)VCD నకలుతీయి..."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
@@ -1618,7 +1339,8 @@ msgid "Go to the chapter in the movie"
 msgstr "చలనచిత్రంలోని అధ్యాయానికి వెళ్ళు"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter..."
+#| msgid "Add Chapter"
+msgid "Add Chapter…"
 msgstr "అధ్యాయాన్ని జతచేయి..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
@@ -1638,7 +1360,8 @@ msgid "No chapter data"
 msgstr "అధ్యాయనం డేటా లేదు"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters..."
+#| msgid "Load Chapters..."
+msgid "Load Chapters…"
 msgstr "అధ్యాయాలను ఎక్కించు..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
@@ -1702,6 +1425,10 @@ msgstr ""
 msgid "Open Chapter File"
 msgstr "అధ్యాయం దస్త్రాన్ని తెరువు"
 
+#: ../src/plugins/chapters/totem-chapters.c:979
+msgid "Supported files"
+msgstr "సహకార దస్త్రాలు"
+
 #: ../src/plugins/chapters/totem-chapters.c:1076
 msgid "Chapter Screenshot"
 msgstr "అధ్యాయం తెరపట్టు"
@@ -1734,64 +1461,35 @@ msgid "Add Chapter"
 msgstr "అధ్యాయాన్ని జతచేయి"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
-msgid "D-Bus Service"
-msgstr "D-Bus సేవ"
+msgid "MPRIS D-Bus Interface"
+msgstr "MPRIS D-Bus ఇంటర్ఫేస్"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
+#| msgid ""
+#| "Plugin for sending notifications of currently playing movies to the D-Bus "
+#| "subsystem."
 msgid ""
-"Plugin for sending notifications of currently playing movies to the D-Bus "
-"subsystem."
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
 msgstr ""
-"D-Bus ఉపవ్యవస్థకు ప్రస్తుతం-ఆడుచున్న చలనచిత్రముల ప్రకటనలను పంపుటకు చొప్పింత."
+"ప్రస్తుతం-నడుపుతన్న వీడియోల ప్రకటనలను పంపు మరియు రిమోట్ నియంత్రణను MPRIS "
+"ఉపయోగించి అనుమతించుము."
 
-#: ../src/plugins/dbusservice/dbusservice.py:213
-#: ../src/plugins/dbusservice/dbusservice.py:243
+#: ../src/plugins/dbusservice/dbusservice.py:208
+#: ../src/plugins/dbusservice/dbusservice.py:236
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "మాధ్యమ ప్రదర్శకం2 విషయం ‘%s’ అంతరవర్తిని అమలుపరుచలేదు"
 
-#: ../src/plugins/dbusservice/dbusservice.py:222
+#: ../src/plugins/dbusservice/dbusservice.py:218
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "లక్షణం ‘%s’ వ్రాయదగినది కాదు."
 
-#: ../src/plugins/dbusservice/dbusservice.py:238
+#: ../src/plugins/dbusservice/dbusservice.py:231
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "తెలియని లక్షణం ‘%s’ మాధ్యమప్రదర్శకం 2 ఆబ్జెక్టును అభ్యర్ధించినది"
-
-#: ../src/plugins/grilo/grilo.plugin.in.h:1
-msgid "Grilo Browser"
-msgstr "గ్రిలో విహారకం"
-
-#: ../src/plugins/grilo/grilo.plugin.in.h:2
-msgid "A plugin to let you browse media content from various sources"
-msgstr "వివిధ వనరుల నుండి మాధ్యమ అంశాలను మిమ్మల్ని విహరింపచేయు చొప్పింత"
-
-#: ../src/plugins/grilo/grilo.ui.h:1
-msgid "Add to Playlist"
-msgstr "ప్రదర్శనజాబితాకు జతచేయి"
-
-#: ../src/plugins/grilo/grilo.ui.h:2
-msgid "Copy Location"
-msgstr "స్థానమును నకలుచేయి"
-
-#: ../src/plugins/grilo/grilo.ui.h:3
-msgid "Search"
-msgstr "శోధించు"
-
-#: ../src/plugins/grilo/totem-grilo.c:494
-msgid "Browse Error"
-msgstr "విహార దోషము"
-
-#: ../src/plugins/grilo/totem-grilo.c:664
-msgid "Search Error"
-msgstr "శోధన దోషము"
-
-#: ../src/plugins/grilo/totem-grilo.c:949
-#| msgid "Recent files"
-msgid "Recent"
-msgstr "ఇటీవలి"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1801,7 +1499,7 @@ msgstr "Gromit ఎన్నోటేషన్లు"
 msgid "Presentation helper to make annotations on screen"
 msgstr "తెరపైన సూచనలు ఇచ్చుటకు సమర్పణ సహాయకం"
 
-#: ../src/plugins/gromit/totem-gromit.c:231
+#: ../src/plugins/gromit/totem-gromit.c:232
 msgid "The gromit binary was not found."
 msgstr "gromit బైనరీ కనుగొనబడింది"
 
@@ -1822,11 +1520,11 @@ msgstr "ఇన్ఫ్రారెడ్ సుదూర నియంత్ర�
 msgid "Support infrared remote control"
 msgstr "ఇన్ఫ్రారెడ్ సుదూర నియంత్రణను మద్దతీయండి"
 
-#: ../src/plugins/lirc/totem-lirc.c:242
+#: ../src/plugins/lirc/totem-lirc.c:239
 msgid "Couldn't initialize lirc."
 msgstr "lircను సిద్దముచేయలేక పోయింది."
 
-#: ../src/plugins/lirc/totem-lirc.c:254
+#: ../src/plugins/lirc/totem-lirc.c:251
 msgid "Couldn't read lirc configuration."
 msgstr "lirc ఆకృతీకరణను చదువలేక పోయింది."
 
@@ -1854,57 +1552,53 @@ msgstr "ఉపశీర్షికలు దింపునది"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "ప్రస్తుతం ప్రదర్శితమవుతున్న చలనచిత్రము ఉపశీర్షికల కొరకు చూస్తుంది"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:40
+#: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
 msgstr "బ్రెజిలియన్ పోర్చుగీస్"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:175
+#: ../src/plugins/opensubtitles/opensubtitles.py:178
 msgid "Searching for subtitles…"
 msgstr "ఉపశీర్షికల కోసం శోధించుచున్నది"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:223
-#: ../src/plugins/opensubtitles/opensubtitles.py:643
+#: ../src/plugins/opensubtitles/opensubtitles.py:226
+#: ../src/plugins/opensubtitles/opensubtitles.py:605
 msgid "Downloading the subtitles…"
 msgstr "ఉపశీర్షికలను దింపుకుంటున్నది..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:288
+#: ../src/plugins/opensubtitles/opensubtitles.py:291
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles వెబ్‌సైటును సంప్రదించలేకపోయింది"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:321
-#: ../src/plugins/opensubtitles/opensubtitles.py:339
+#: ../src/plugins/opensubtitles/opensubtitles.py:324
+#: ../src/plugins/opensubtitles/opensubtitles.py:342
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles వెబ్‌సైటును సంప్రదించలేకపోయింది."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:327
+#: ../src/plugins/opensubtitles/opensubtitles.py:330
 msgid "No results found."
 msgstr "ఏ ఫలితాలు కనబడలేదు."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:476
+#: ../src/plugins/opensubtitles/opensubtitles.py:472
 msgid "Subtitles"
 msgstr "ఉపశీర్షికలు"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:482
+#: ../src/plugins/opensubtitles/opensubtitles.py:478
 msgid "Format"
 msgstr "ఆకృతి"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:487
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Rating"
 msgstr "రేటింగు"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:523
-msgid "Download movie subtitles from OpenSubtitles"
-msgstr "చలనచిత్ర ఉపశీర్షికలను OpenSubtitles నుండి దింపుకొను"
-
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
+#: ../src/plugins/opensubtitles/opensubtitles.py:522
 msgid "_Download Movie Subtitles…"
 msgstr "చలనచిత్ర ఉపశీర్షికలను దింపుకొను (_D)"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:587
+#: ../src/plugins/opensubtitles/opensubtitles.py:562
 msgid "Searching subtitles…"
 msgstr "ఉపశీర్షికలను శోధించుచున్నది"
 
@@ -1933,12 +1627,17 @@ msgid "Movie Properties"
 msgstr "చలనచిత్ర లక్షణాలు"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
-msgid "Adds movie properties to the sidebar"
-msgstr "చలనచిత్ర లక్షణాలను ప్రక్కపట్టీకీ జతచేయును"
+#| msgid "Adds movie properties to the sidebar"
+msgid "Adds movie properties menu item"
+msgstr "చలనచిత్ర లక్షణాలను మెనూ అంశముకు జతచేయును"
 
-#: ../src/plugins/properties/totem-movie-properties.c:246
+#: ../src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
 msgstr "లక్షణాలు"
+
+#: ../src/plugins/properties/totem-movie-properties.c:286
+msgid "_Properties"
+msgstr "లక్షణాలు (_P)"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
 msgid "rpdb2 password"
@@ -1961,37 +1660,26 @@ msgstr "పైథాన్ కన్సోల్"
 msgid "Interactive Python console"
 msgstr "ఇంటరాక్టివ్ పైథాన్ కన్సోల్"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
-msgid "Python Console Menu"
-msgstr "పైథాన్ కన్సోల్ మెనూ"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:93
+#: ../src/plugins/pythonconsole/pythonconsole.py:73
 msgid "_Python Console"
 msgstr "పైథాన్ కన్సోల్ (_P)"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
-msgid "Show Totem's Python console"
-msgstr "టోటెమ్ యొక్క పైథాన్ కన్సోల్ చూపించు"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:100
+#: ../src/plugins/pythonconsole/pythonconsole.py:79
 msgid "Python Debugger"
 msgstr "పైథాన్ డీబగ్గర్"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Enable remote Python debugging with rpdb2"
-msgstr "సుదూర పైథాన్ డీబగ్గింగ్‌ను rpdb2తో చేతనముచేయండి"
-
 #. pylint: disable-msg=E1101
-#: ../src/plugins/pythonconsole/pythonconsole.py:123
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "మీరు టోటెమ్‌ను ఆబ్జక్టు 'totem_object' ద్వారా వాడగలరు :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:127
+#: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
 msgstr "టోటెమ్ పైథాన్ కన్సోల్"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:137
+#. pylint: disable-msg=W0613
+#: ../src/plugins/pythonconsole/pythonconsole.py:104
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -2000,8 +1688,8 @@ msgstr ""
 "మీరు సరే నొక్కిన తర్వాత, మీరు winpdb లేదా rpdb2తో అనుసంధానం అగునంతవరకు టోటెమ్ "
 "వేచివుంటుంది. "
 "ఒకవేళ మీరు డీబగ్గర్ సంకేతపదమును GConfనందు అమర్చివుండకపోతే, అది అప్రమేయ "
-"సంకేతపదమయిన ('totem')"
-"ను ఉపయోగిస్తుంది."
+"సంకేతపదమయిన "
+"('totem')ను ఉపయోగిస్తుంది."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -2021,13 +1709,13 @@ msgstr ""
 "ఒకవేళ వీడియోలు తప్పుడు దగ్విన్యాసంలో ఉంటే వాటిని సరైన స్థితిలో ఉంచుటకు "
 "అనుమతిస్తుంది"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
-msgid "_Rotate Clockwise"
-msgstr "సవ్యదిశలో త్రిప్పు (_R)"
-
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:52
-msgid "Rotate Counterc_lockwise"
-msgstr "అపసవ్యదిశలో త్రిప్పు (_l)"
+msgid "_Rotate ↷"
+msgstr "తిప్పు ↷ (_R)"
+
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:56
+msgid "Rotate ↶"
+msgstr "తిప్పు ↶"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:1
 msgid "Save Copy"
@@ -2037,23 +1725,15 @@ msgstr "నకలును భద్రపరుచు"
 msgid "Save a copy of the currently playing movie"
 msgstr "ప్రస్తుతం ప్రదర్శించబడుతున్న చలనచిత్రపు నకలును భద్రపరుచు"
 
-#: ../src/plugins/save-file/totem-save-file.c:119
-msgid "Save a Copy"
-msgstr "ఒక నకలును భద్రపరుచు"
-
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:151
+#: ../src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "చలనచిత్రం"
 
-#: ../src/plugins/save-file/totem-save-file.c:173
-msgid "Movie stream"
-msgstr "చలనచిత్ర ప్రవాహం"
-
-#: ../src/plugins/save-file/totem-save-file.c:275
-msgid "Save a Copy..."
-msgstr "ఒక నకలును భద్రపరుచు..."
+#: ../src/plugins/save-file/totem-save-file.c:366
+msgid "Make Available Offline"
+msgstr "ఆఫ్‌లైన్ నందు అందుబాటులో ఉంచుము"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:1
 msgid "Screen Saver"
@@ -2062,6 +1742,10 @@ msgstr "తెర కాపరి"
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "చలనచిత్రం ప్రదర్శించబడుతున్నపుడు తెరకాపరిని అచేతపరుచును"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:79
+msgid "Playing a movie"
+msgstr "చలనచిత్రమును ఆడిస్తున్నది"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
@@ -2102,6 +1786,11 @@ msgstr "తెరపట్టులు మరియు చిత్రశాల�
 msgid "Save Gallery"
 msgstr "చిత్రశాలను భద్రపరుచు"
 
+#: ../src/plugins/screenshot/totem-gallery.c:98
+#| msgid "Save"
+msgid "_Save"
+msgstr "భద్రపరుచు (_S)"
+
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
@@ -2113,7 +1802,8 @@ msgstr "చిత్రశాల-%s-%d.jpg"
 
 #. Set up the window
 #: ../src/plugins/screenshot/totem-gallery-progress.c:101
-msgid "Creating Gallery..."
+#| msgid "Creating Gallery..."
+msgid "Creating Gallery…"
 msgstr "చిత్రశాలను సృష్టించుచున్నది..."
 
 #. Set the progress label
@@ -2122,22 +1812,23 @@ msgstr "చిత్రశాలను సృష్టించుచున్�
 msgid "Saving gallery as \"%s\""
 msgstr "చిత్రశాలను \"%s\"వలె భద్రపరుస్తున్నది"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:222
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:231
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
 msgstr "టోటెమ్ వీడియో యొక్క తెరపట్టును పొందలేకపోయింది."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:231
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "ఇది జరుగవలిసింది కాదు; దయచేసి బగ్ నమోదు చేయండి."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:367
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
 msgstr "తెరపట్టు తీయి (_S)"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:370
-msgid "Create Screenshot _Gallery..."
-msgstr "తెరపట్టు చిత్రశాలను సృష్టించు...(_G)"
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
+#| msgid "Create Screenshot _Gallery..."
+msgid "Create Screenshot _Gallery…"
+msgstr "తెరపట్టు చిత్రశాలను సృష్టించు... (_G)"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -2169,18 +1860,391 @@ msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
+#: ../src/plugins/skipto/totem-skipto.c:199
+#| msgid "Skip To"
+msgid "_Skip To"
+msgstr "ఇక్కడకు దాటవేయి (_S)"
+
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
-msgid "_Skip To..."
-msgstr "ఇక్కడకు దాటవేయి...(_S)"
+#| msgid "Skip To"
+msgid "_Skip To…"
+msgstr "ఇక్కడకు దాటవేయి... (_S)"
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+msgid "Vimeo"
+msgstr "విమియో"
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+#| msgid "Sets the user agent for the Apple Trailers site"
+msgid "Sets the user agent for the Vimeo site"
+msgstr "వీమియో సైట్ కొరకు వాడుకరి ప్రతినిధిని అమర్చును"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-#| msgid "Configure Plugins"
 msgid "Zeitgeist Plugin"
 msgstr "Zeitgeist చొప్పింత"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zeitgeist కు ఘటనలను పంపు చొప్పింత"
+
+#~ msgid "No URI to play"
+#~ msgstr "ఆడించుటకు ఏ URI లేదు"
+
+#~ msgid "_Open with \"%s\""
+#~ msgstr "\"%s\"తో తెరువు (_O)"
+
+#~ msgid "Totem Movie Player"
+#~ msgstr "టొటెమ్ చలనచిత్ర ప్రదర్శకం"
+
+#~ msgid "No playlist or playlist empty"
+#~ msgstr "ప్రదర్శనజాబితా లేదు లేదా ప్రదర్శనజాబితా ఖాళీగావుంది"
+
+#~ msgid "Movie browser plugin"
+#~ msgstr "చలనచిత్ర విహారకం చొప్పింత"
+
+#~ msgid "Verify your system installation. The Totem plugin will now exit."
+#~ msgstr "మీ వ్యవస్థ స్థాపనను సరిచూసుకోండి. టోటెమ్ చొప్పింత ఇప్పుడు నిష్క్రమిస్తున్నది."
+
+#~ msgid "Allow the screensaver to activate when playing audio"
+#~ msgstr "ఆడియో ప్లే అవుచున్నప్పుడు స్క్రీన్‌సేవర్‌ క్రియాశీలము అగుటకు అనుమతించు"
+
+#~ msgid ""
+#~ "Allow the screensaver to activate when playing audio. Disable if you have "
+#~ "monitor-powered speakers."
+#~ msgstr ""
+#~ "ఆడియో ప్లే అవుచున్నప్పుడు స్క్రీన్‌సేవర్‌ క్రియాశీలము అగుటకు అనుమతించు. మీకు మానిటర్-స్పీకర్లు వుంటే "
+#~ "అచేతనము చేయి."
+
+#~ msgid "Show visual effects when no video is displayed"
+#~ msgstr "ఎటువంటి వీడియో ప్రదర్శించబడనప్పుడు దృశ్యనీయ ప్రభావాలను చూపించు"
+
+#~ msgid "Show visual effects when playing an audio only file."
+#~ msgstr "ఆడియో దస్త్రం ఆడుతున్నపుడు మాత్రమే దృశ్యనీయ ప్రభావాలను చూపించు"
+
+#~ msgid "Name of the visual effects plugin"
+#~ msgstr "దృశ్యత ప్రభావాల చొప్పింత యొక్క పేరు"
+
+#~ msgid "Shuffle mode"
+#~ msgstr "యాదృచ్ఛిక విధం"
+
+#~ msgid "Visualization quality setting"
+#~ msgstr "దృశ్యనీయ నాణ్యతా అమరిక"
+
+#~ msgid "Quality setting for the audio visualization."
+#~ msgstr "ఆడియో దృశ్యమానతకు నాణ్యతా అమరిక."
+
+#~ msgid ""
+#~ "Whether to remember the current playlist, the playing track and position."
+#~ msgstr ""
+#~ "ప్రస్తుతం నడుపుతున్న ప్లేలిస్టును, నడుపుతున్న ట్రాక్‌ను మరియు స్థానాన్ని గుర్తుపెట్టుకోవాలా."
+
+#~ msgid "_Remove"
+#~ msgstr "తీసివేయి (_R)"
+
+#~ msgid "Remove file from playlist"
+#~ msgstr "ప్రదర్శనజాబితా నుండి దస్త్రాన్ని తీసివేయి"
+
+#~ msgid "_Copy Location"
+#~ msgstr "స్థానమును నకలుతీయి (_C)"
+
+#~ msgid "Copy the location to the clipboard"
+#~ msgstr "స్థానమును క్లిప్‌బోర్డుకు నకలుతీయి"
+
+#~ msgid "_Select Text Subtitles..."
+#~ msgstr "పాఠ్య ఉపశీర్షికలను ఎంచుకోండి...(_S)"
+
+#~ msgid "Select a file to use for text subtitles"
+#~ msgstr "పాఠ్య ఉపశీర్షికల కొరకు వాడుటకు ఒక దస్త్రాన్ని ఎంచుకోండి"
+
+#~ msgid "Add..."
+#~ msgstr "జతచేయి..."
+
+#~ msgid "Remove"
+#~ msgstr "తీసివేయి"
+
+#~ msgid "Save Playlist..."
+#~ msgstr "ప్రదర్శనజాబితాను భద్రపర్చు..."
+
+#~ msgid "Move Up"
+#~ msgstr "పైకి జరుపు"
+
+#~ msgid "Move Down"
+#~ msgstr "క్రిందకు జరుపు"
+
+#~ msgid "Normal"
+#~ msgstr "సాధారణం"
+
+#~ msgid "Large"
+#~ msgstr "పెద్ద"
+
+#~ msgid "Extra Large"
+#~ msgstr "మరీ పెద్దది"
+
+#~ msgid "Totem Preferences"
+#~ msgstr "టోటెమ్ ప్రాధాన్యతలు"
+
+#~ msgid "Playback"
+#~ msgstr "ప్లేబాక్"
+
+#~ msgid "Remember last played movies"
+#~ msgstr "చివరిగా నడిపిన మూవీలను గుర్తుంచుకో"
+
+#~ msgid "Disable screensaver when playing"
+#~ msgstr "ఆడుతున్నపుడు తెరకాపరిని అచేతపరుచు"
+
+#~ msgctxt "Screensaver disable"
+#~ msgid "Video"
+#~ msgstr "వీడియో"
+
+#~ msgid "Video or Audio"
+#~ msgstr "ఆడియో లేదా వీడియో"
+
+#~ msgid "Visual Effects"
+#~ msgstr "దృశ్య ప్రభావాలు"
+
+#~ msgid "Show _visual effects when an audio file is played"
+#~ msgstr "ఆడియో దస్త్రాలను ఆడిస్తున్నపుడు దృశ్య ప్రభావాలను చూపించు (_v)"
+
+#~ msgid "_Type of visualization:"
+#~ msgstr "దృశ్యనీయత యొక్క రకము (_T):"
+
+#~ msgid "Visualization _size:"
+#~ msgstr "దృశ్యనీయత పరిమాణము (_s):"
+
+#~ msgid "Open _Location"
+#~ msgstr "స్థానమును తెరువు(_L)"
+
+#~ msgid "_Fullscreen"
+#~ msgstr "పూర్తితెర (_F)"
+
+#~ msgid "_Movie"
+#~ msgstr "చలనచిత్రం (_M)"
+
+#~ msgid "Eject the current disc"
+#~ msgstr "ప్రస్తుత డిస్కును బయటకునెట్టు"
+
+#~ msgid "View the properties of the current stream"
+#~ msgstr "ప్రస్తుత ప్రవాహం యొక్క లక్షణములను చూడు"
+
+#~ msgid "Play / P_ause"
+#~ msgstr "ఆడించు / నిలిపివేయి (_a)"
+
+#~ msgid "Play or pause the movie"
+#~ msgstr "చలనచిత్రమును ఆడించు లేదా నిలిపివేయి"
+
+#~ msgid "_Edit"
+#~ msgstr "సవరణ (_E)"
+
+#~ msgid "_Clear Playlist"
+#~ msgstr "ప్రదర్శనజాబితాను శుభ్రపరుచు (_C)"
+
+#~ msgid "Clear the playlist"
+#~ msgstr "ప్రదర్శనజాబితాను శుభ్రపరుచు"
+
+#~ msgid "_View"
+#~ msgstr "వీక్షణం (_V)"
+
+#~ msgid "Fit Window to Movie"
+#~ msgstr "విండోను చలనచిత్రమనకు అమర్చు"
+
+#~ msgid "Switch camera angles"
+#~ msgstr "కెమేరా కోణములు మార్చు"
+
+#~ msgid "_Next Chapter/Movie"
+#~ msgstr "తరువాతి అధ్యాయము/చలనచిత్రము (_N)"
+
+#~ msgid "Next chapter or movie"
+#~ msgstr "తరువాతి అధ్యాయము లేదా చలనచిత్రం"
+
+#~ msgid "_Previous Chapter/Movie"
+#~ msgstr "మునుపటి అధ్యాయము/చలనచిత్రము (_P)"
+
+#~ msgid "Previous chapter or movie"
+#~ msgstr "మునుపటి అధ్యాయము లేదా చలనచిత్రం"
+
+#~ msgid "_Sound"
+#~ msgstr "శబ్దం (_S)"
+
+#~ msgid "S_idebar"
+#~ msgstr "ప్రక్కపట్టీ (_i)"
+
+#~ msgid "Show or hide the sidebar"
+#~ msgstr "ప్రక్కపట్టీను చూపించు లేదా దాయి"
+
+#~ msgid "Sets automatic aspect ratio"
+#~ msgstr "స్వయంచాలక రూప నిష్పత్తికి అమర్చుతుంది"
+
+#~ msgid "Sets square aspect ratio"
+#~ msgstr "చతురస్త్ర రూప నిష్పత్తికి అమర్చుతుంది"
+
+#~ msgid "Sets 4∶3 (TV) aspect ratio"
+#~ msgstr "4:3 (TV) రూప నిష్పత్తికి అమర్చును"
+
+#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
+#~ msgstr "16:9 (విస్తృతతెర) రూప నిష్పత్తికి అమర్చును"
+
+#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
+#~ msgstr "2.11:1 (DVB) రూప నిష్పత్తికి అమర్చును"
+
+#~ msgid "Zoom in"
+#~ msgstr "అతిరూపించు"
+
+#~ msgid "File _Format: %s"
+#~ msgstr "దస్త్ర ఆకృతి (_F): %s"
+
+#~ msgid "All Files"
+#~ msgstr "అన్ని దస్త్రాలు"
+
+#~ msgid "All Supported Files"
+#~ msgstr "అన్ని మద్దతునిచ్చు దస్త్రాలు"
+
+#~ msgid "By Extension"
+#~ msgstr "పొడిగింతను బట్టి"
+
+#~ msgid "File Format"
+#~ msgstr "దస్త్ర ఆకృతి"
+
+#~ msgid "Extension(s)"
+#~ msgstr "పొడిగింత(లు)"
+
+#~ msgid ""
+#~ "The program was not able to find out the file format you want to use for `"
+#~ "%s'. Please make sure to use a known extension for that file or manually "
+#~ "choose a file format from the list below."
+#~ msgstr ""
+#~ "`%s' కొరకు మీరు వుపయోగించాలని అనుకొనుచున్న దస్త్ర ఆకృతులను ఈ కార్యక్రమం గుర్తించలేదు. "
+#~ "దయచేసి ఆ దస్త్రానికి తెలిసిన పొడిగింతను ఉపయోగించునట్లు చూడండి లేదా మానవీయంగా దస్త్ర ఆకృతిని క్రింది "
+#~ "జాబితా నుండి ఎంచుకోండి."
+
+#~ msgid "File format not recognized"
+#~ msgstr "దస్త్ర ఆకృతి గుర్తించబడలేదు"
+
+#~ msgid "_Play Now"
+#~ msgstr "ఇప్పుడు ఆడించు (_P)"
+
+#~ msgid "_Add to Playlist"
+#~ msgstr "ప్రదర్శనజాబితాకు జతచేయి (_A)"
+
+#~ msgid ""
+#~ "Totem is free software; you can redistribute it and/or modify it under "
+#~ "the terms of the GNU General Public License as published by the Free "
+#~ "Software Foundation; either version 2 of the License, or (at your option) "
+#~ "any later version."
+#~ msgstr ""
+#~ "టోటెమ్ ఒక ఉచిత సాఫ్ట్‍వేర్; మీరు దానిని మరలపంచవచ్చు ఫ్రీ సాఫ్ట్‍వేర్ ఫౌండేషన్ వెలువరిచిన గ్నూ సర్వసామన్యమైన "
+#~ "ప్రజా లైసెన్సు వివరణం 2 లైసెన్సు లేదా వేరే (మీ ఐచ్చికం వద్ద) వివరణల ప్రకారం మార్చవచ్చు."
+
+#~ msgid ""
+#~ "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+#~ "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+#~ "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+#~ "details."
+#~ msgstr ""
+#~ "టోటెమ్ ఉపయోగపడుతుందనే నమ్మకంతో పంపిణీచేయబడుతోంది, అయితే ఏ హామీ లేకుండా; వ్యాపారసంబందంగా కాని లేదా "
+#~ "ఒక నిర్దిష్ట అవసరానికిచెందినదని కాని హామీ లేదు. ఎక్కువ సమాచారం కొరకు GNU జనరల్ పబ్లిక్ లైసెన్స్ ను "
+#~ "చూడండి."
+
+#~ msgid ""
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with Totem; if not, write to the Free Software Foundation, Inc., 59 "
+#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+#~ msgstr ""
+#~ "మీరు టోటెమ్ నకలు తోటి ఒక GNU జనరల్ పబ్లిక్ లైసెన్స్  నకలు కూడా పొందివుంటారు; ఒకవేళ పొందకపోతే, "
+#~ "Free Software Foundation, Inc., 59 Temple place, Suite 330, Boston, MA  "
+#~ "02111-1307  USA కి వ్రాయండి."
+
+#~ msgid ""
+#~ "Totem contains an exception to allow the use of proprietary GStreamer "
+#~ "plugins."
+#~ msgstr "యాజమాన్య జిస్ట్రీమర్ చొప్పింతల వాడకం అనుమతించుటకు టోటెమ్ మినహాయింపు కలిగివుంటుంది."
+
+#~ msgid "Totem %s"
+#~ msgstr "టోటెమ్ %s"
+
+#~ msgid "Open Location..."
+#~ msgstr "స్థానమును తెరువు..."
+
+#~ msgid "MP3 ShoutCast playlist"
+#~ msgstr "MP3 ShoutCast ప్రదర్శనజాబితా"
+
+#~ msgid "MP3 audio (streamed)"
+#~ msgstr "ఎంపీ3 ఆడియో (streamed)"
+
+#~ msgid "MP3 audio (streamed, DOS format)"
+#~ msgstr "MP3 audio (streamed, DOS format)"
+
+#~ msgid "XML Shareable Playlist"
+#~ msgstr "XML పంచుకోదగిన ప్రదర్శనజాబితా"
+
+#~ msgid "Could not save the playlist"
+#~ msgstr "ప్రదర్శనజాబితాను దాచలేకపోయింది"
+
+#~ msgid "Save Playlist"
+#~ msgstr "ప్రదర్శనజాబితాను భద్రపరుచు"
+
+#~ msgid "Playlist"
+#~ msgstr "ప్రదర్శనజాబితా"
+
+#~ msgid "Playlist error"
+#~ msgstr "ప్రదర్శనజాబితాలో దోషం"
+
+#~ msgid "Audio files"
+#~ msgstr "ఆడియో దస్త్రాలు"
+
+#~ msgid "Select Movies or Playlists"
+#~ msgstr "చలనచిత్రాలు లేక ప్రదర్శనజాబితాను ఎంచుకోండి"
+
+#~ msgid "Add Directory"
+#~ msgstr "సంచయాన్ని జతచేయి"
+
+#~ msgid "Add Chapter..."
+#~ msgstr "అధ్యాయాన్ని జతచేయి..."
+
+#~ msgid "D-Bus Service"
+#~ msgstr "D-Bus సేవ"
+
+#~ msgid "Grilo Browser"
+#~ msgstr "గ్రిలో విహారకం"
+
+#~ msgid "A plugin to let you browse media content from various sources"
+#~ msgstr "వివిధ వనరుల నుండి మాధ్యమ అంశాలను మిమ్మల్ని విహరింపచేయు చొప్పింత"
+
+#~ msgid "Copy Location"
+#~ msgstr "స్థానమును నకలుచేయి"
+
+#~| msgid "Recent files"
+#~ msgid "Recent"
+#~ msgstr "ఇటీవలి"
+
+#~ msgid "Download movie subtitles from OpenSubtitles"
+#~ msgstr "చలనచిత్ర ఉపశీర్షికలను OpenSubtitles నుండి దింపుకొను"
+
+#~ msgid "Python Console Menu"
+#~ msgstr "పైథాన్ కన్సోల్ మెనూ"
+
+#~ msgid "Show Totem's Python console"
+#~ msgstr "టోటెమ్ యొక్క పైథాన్ కన్సోల్ చూపించు"
+
+#~ msgid "Enable remote Python debugging with rpdb2"
+#~ msgstr "సుదూర పైథాన్ డీబగ్గింగ్‌ను rpdb2తో చేతనముచేయండి"
+
+#~ msgid "_Rotate Clockwise"
+#~ msgstr "సవ్యదిశలో త్రిప్పు (_R)"
+
+#~ msgid "Rotate Counterc_lockwise"
+#~ msgstr "అపసవ్యదిశలో త్రిప్పు (_l)"
+
+#~ msgid "Save a Copy"
+#~ msgstr "ఒక నకలును భద్రపరుచు"
+
+#~ msgid "Movie stream"
+#~ msgstr "చలనచిత్ర ప్రవాహం"
+
+#~ msgid "Save a Copy..."
+#~ msgstr "ఒక నకలును భద్రపరుచు..."
+
+#~ msgid "_Skip To..."
+#~ msgstr "ఇక్కడకు దాటవేయి...(_S)"
 
 #~ msgid "Stopped"
 #~ msgstr "ఆపివేయబడింది"
@@ -2536,9 +2600,6 @@ msgstr "Zeitgeist కు ఘటనలను పంపు చొప్పిం�
 #~ msgid "Save in _folder:"
 #~ msgstr "సంచయంలో భద్రపరుచు (_f):"
 
-#~ msgid "Select a folder"
-#~ msgstr "ఒక సంచయమును ఎంచుకోండి"
-
 #~ msgid "There was an error saving the screenshot."
 #~ msgstr "తెరపట్టును భద్రపరుచుటలో అక్కడ ఒక దోషం ఉన్నది."
 
@@ -2673,9 +2734,10 @@ msgstr "Zeitgeist కు ఘటనలను పంపు చొప్పిం�
 #~ msgid ""
 #~ "A format string used to build the network service name used when "
 #~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by g_get_application_name"
-#~ "() • %h: the machine's host name in title case • %u: the user's login "
-#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ "can be used: • %a: the program name as returned by "
+#~ "g_get_application_name() • %h: the machine's host name in title case • "
+#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
+#~ "the percent sign"
 #~ msgstr ""
 #~ "నెట్‌వర్క్ పై ప్రదర్శనజాబితా ప్రచురించునపుడు నెట్‌వర్క్ సేవ పేరును నిర్మించుటకు వాడే ఫార్మేట్ పదబంధం. "
 #~ "ఈ క్రింది ప్లేస్ హోల్దర్ల ఫార్మేట్ ఉపయోగించవచ్చును: \n"
@@ -2912,9 +2974,6 @@ msgstr "Zeitgeist కు ఘటనలను పంపు చొప్పిం�
 
 #~ msgid "%s"
 #~ msgstr "%s"
-
-#~ msgid "Delete"
-#~ msgstr "తొలగించు"
 
 #~ msgid "Coherence DLNA/UPnP Client"
 #~ msgstr "కొహెరెన్సు DLNA/UPnP కక్షిదారి"
