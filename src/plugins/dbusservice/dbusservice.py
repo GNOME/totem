@@ -193,7 +193,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                 'MaximumRate': 1.0,
                 'Metadata': self.__calculate_metadata (),
                 'Volume': self.totem.get_volume (), # TODO: Notifications
-                'Position': self.totem.props.current_time * 1000,
+                'Position': dbus.Int64(self.totem.props.current_time * 1000),
                 'CanGoNext': True, # TODO
                 'CanGoPrevious': True, # TODO
                 'CanPlay': (self.totem.props.current_mrl != None),
