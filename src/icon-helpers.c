@@ -125,6 +125,32 @@ get_stream_thumbnail_cb (GObject *source_object,
 }
 
 static void
+save_bookmark_thumbnail (GrlMedia *media,
+			 const char *uri)
+{
+	char *thumb_path, *thumb_url;
+	GrlRegistry *registry;
+	GrlSource *source;
+
+	if (g_strcmp0 (grl_media_get_source (media), "grl-bookmarks") != 0)
+		return;
+
+	thumb_path = gnome_desktop_thumbnail_path_for_uri (uri, GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE);
+	thumb_url = g_filename_to_uri (thumb_path, NULL, NULL);
+	g_free (thumb_path);
+	grl_media_set_thumbnail (media, thumb_url);
+	g_free (thumb_url);
+
+	registry = grl_registry_get_default ();
+	source = grl_registry_lookup_source (registry, "grl-bookmarks");
+	grl_source_store_sync (source,
+			       NULL,
+			       media,
+			       GRL_WRITE_NORMAL,
+			       NULL);
+}
+
+static void
 thumbnail_media_async_thread (GTask    *task,
 			      gpointer  user_data)
 {
@@ -166,6 +192,10 @@ thumbnail_media_async_thread (GTask    *task,
 	}
 
 	gnome_desktop_thumbnail_factory_save_thumbnail (factory, pixbuf, uri, g_date_time_to_unix (mtime));
+
+	/* Save the thumbnail URL for the bookmarks source */
+	save_bookmark_thumbnail (media, uri);
+
 	g_task_return_pointer (task, pixbuf, g_object_unref);
 	g_object_unref (task);
 }
