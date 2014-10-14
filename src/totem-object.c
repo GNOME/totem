@@ -1562,6 +1562,9 @@ update_toolbar_visibility (TotemObject *totem,
 		duration = animate ? 250 : 0;
 	}
 
+	if (visible)
+		gtk_widget_show (totem->revealer);
+
 	/* We don't change the transition type, because it causes
 	 * a queue resize, and it might short-circuit the animation */
 	gtk_revealer_set_transition_duration (GTK_REVEALER (totem->revealer), duration);
@@ -3802,6 +3805,18 @@ grilo_widget_setup (TotemObject *totem)
 }
 
 static void
+child_revealed_changed_cb (GObject      *object,
+			   GParamSpec   *pspec,
+			   gpointer      user_data)
+{
+	gboolean val;
+
+	g_object_get (object, "child-revealed", &val, NULL);
+	if (!val)
+		gtk_widget_hide (GTK_WIDGET (object));
+}
+
+static void
 add_fullscreen_toolbar (TotemObject *totem)
 {
 	GtkWidget *item;
@@ -3842,7 +3857,10 @@ add_fullscreen_toolbar (TotemObject *totem)
 	totem->fullscreen_gear_button = item;
 
 	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
-	gtk_widget_show_all (totem->revealer);
+	gtk_widget_show_all (totem->fullscreen_header);
+
+	g_signal_connect (totem->revealer, "notify::child-revealed",
+			  G_CALLBACK (child_revealed_changed_cb), NULL);
 }
 
 void
