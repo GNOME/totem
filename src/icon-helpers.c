@@ -46,6 +46,19 @@ static GThreadPool *thumbnail_pool;
 static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
 
+static gboolean
+media_is_local (GrlMedia *media)
+{
+	const char *id;
+
+	id = grl_media_get_source (media);
+	if (g_strcmp0 (id, "grl-tracker-source") == 0 ||
+	    g_strcmp0 (id, "grl-filesystem") == 0 ||
+	    g_strcmp0 (id, "grl-bookmarks") == 0)
+		return TRUE;
+	return FALSE;
+}
+
 GdkPixbuf *
 totem_grilo_get_thumbnail_finish (GObject       *source_object,
 				  GAsyncResult  *res,
@@ -186,19 +199,6 @@ thumbnail_media_cb (GObject      *source_object,
 	else
 		g_task_return_pointer (task, pixbuf, g_object_unref);
 	g_object_unref (task);
-}
-
-static gboolean
-media_is_local (GrlMedia *media)
-{
-	const char *id;
-
-	id = grl_media_get_source (media);
-	if (g_strcmp0 (id, "grl-tracker-source") == 0 ||
-	    g_strcmp0 (id, "grl-filesystem") == 0 ||
-	    g_strcmp0 (id, "grl-bookmarks") == 0)
-		return TRUE;
-	return FALSE;
 }
 
 void
