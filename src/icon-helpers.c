@@ -140,7 +140,16 @@ thumbnail_media_async_thread (GTask    *task,
 
 	media = GRL_MEDIA (g_task_get_source_object (task));
 	uri = grl_media_get_url (media);
+
 	mtime = grl_media_get_modification_date (media);
+	if (!mtime) {
+		GrlRegistry *registry;
+		GrlKeyID key_id;
+
+		registry = grl_registry_get_default ();
+		key_id = grl_registry_lookup_metadata_key (registry, "bookmark-date");
+		mtime = grl_data_get_boxed (GRL_DATA (media), key_id);
+	}
 
 	if (!uri || !mtime) {
 		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI or mtime missing");
