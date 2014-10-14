@@ -192,6 +192,12 @@
                       <object class="GtkOverlay" id="tmw_bvw_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <child type="overlay">
+                          <object class="GtkRevealer" id="toolbar-revealer">
+                            <property name="halign">fill</property>
+                            <property name="valign">start</property>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>

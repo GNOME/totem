@@ -3804,17 +3804,10 @@ grilo_widget_setup (TotemObject *totem)
 static void
 add_fullscreen_toolbar (TotemObject *totem)
 {
-	GtkWidget *overlay;
 	GtkWidget *item;
 	GMenuModel *menu;
 
-	overlay = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
-	totem->revealer = gtk_revealer_new ();
-	g_object_set (G_OBJECT (totem->revealer),
-		      "halign", GTK_ALIGN_FILL,
-		      "valign", GTK_ALIGN_START,
-		      NULL);
-
+	totem->revealer = GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar-revealer"));
 	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
 						 "show-search-button", FALSE,
 						 "show-select-button", FALSE,
@@ -3850,8 +3843,6 @@ add_fullscreen_toolbar (TotemObject *totem)
 
 	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
 	gtk_widget_show_all (totem->revealer);
-
-	gtk_overlay_add_overlay (GTK_OVERLAY (overlay), totem->revealer);
 }
 
 void
