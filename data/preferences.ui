@@ -256,7 +256,6 @@
 			  <child>
 			    <object class="GtkComboBox" id="subtitle_encoding_combo">
 			      <property name="visible">True</property>
-			      <property name="add_tearoffs">False</property>
 			      <property name="focus_on_click">True</property>
 			      <signal name="changed" handler="encoding_set_cb"/>
 			    </object>
@@ -1000,7 +999,6 @@
 				<object class="GtkComboBox" id="tpw_sound_output_combobox">
 				  <property name="visible">True</property>
 				  <property name="model">tpw_sound_output_liststore</property>
-				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
 				  <child>
 				    <object class="GtkCellRendererText" id="tpw_sound_output_cell"/>
