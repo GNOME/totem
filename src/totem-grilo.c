@@ -2382,7 +2382,6 @@ create_debug_window (TotemGrilo       *self,
 
 	tree = gtk_tree_view_new ();
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree), TRUE);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
 	gtk_widget_grab_focus (GTK_WIDGET (tree));
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 
