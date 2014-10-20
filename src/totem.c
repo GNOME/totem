@@ -54,14 +54,6 @@ static gboolean startup_called = FALSE;
 static void
 app_init (Totem *totem, char **argv)
 {
-	GtkSettings *gtk_settings;
-
-	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
-		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
-
-	gtk_settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
-
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
@@ -236,7 +228,6 @@ main (int argc, char **argv)
 			      "application-id", "org.gnome.Totem",
 			      "flags", G_APPLICATION_HANDLES_COMMAND_LINE | G_APPLICATION_HANDLES_OPEN,
 			      NULL);
-	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
 	g_signal_connect (G_OBJECT (totem), "startup",
 			  G_CALLBACK (app_startup), totem);

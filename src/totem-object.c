@@ -429,7 +429,15 @@ totem_object_class_init (TotemObjectClass *klass)
 static void
 totem_object_init (TotemObject *totem)
 {
-	//FIXME nothing yet
+	GtkSettings *gtk_settings;
+
+	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
+		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
+
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+
+	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 }
 
 static void
