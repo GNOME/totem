@@ -31,7 +31,6 @@ G_BEGIN_DECLS
 
 /* Stores the state of the command line options */
 typedef struct {
-	gboolean debug;
 	gboolean playpause;
 	gboolean play;
 	gboolean pause;

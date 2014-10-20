@@ -51,23 +51,6 @@
 
 static gboolean startup_called = FALSE;
 
-/* Debug log message handler: discards debug messages unless Totem is run with TOTEM_DEBUG=1.
- * If we're building in the source tree, enable debug messages by default. */
-static void
-debug_handler (const char *log_domain,
-               GLogLevelFlags log_level,
-               const char *message,
-               GSettings *settings)
-{
-	static int debug = -1;
-
-	if (debug < 0)
-		debug = g_settings_get_boolean (settings, "debug");
-
-	if (debug)
-		g_log_default_handler (log_domain, log_level, message, NULL);
-}
-
 static void
 app_init (Totem *totem, char **argv)
 {
@@ -78,9 +61,6 @@ app_init (Totem *totem, char **argv)
 
 	gtk_settings = gtk_settings_get_default ();
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
-
-	/* Debug log handling */
-	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, totem->settings);
 
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);

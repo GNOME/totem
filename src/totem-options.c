@@ -46,7 +46,6 @@ option_version_cb (const gchar *option_name,
 }
 
 const GOptionEntry all_options[] = {
-	{"debug", '\0', 0, G_OPTION_ARG_NONE, &optionstate.debug, N_("Enable debug"), NULL},
 	{"play-pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.playpause, N_("Play/Pause"), NULL},
 	{"play", '\0', 0, G_OPTION_ARG_NONE, &optionstate.play, N_("Play"), NULL},
 	{"pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.pause, N_("Pause"), NULL},
@@ -97,8 +96,6 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 		gdk_notify_startup_complete ();
 		exit (0);
 	}
-
-	g_settings_set_boolean (totem->settings, "debug", options->debug);
 }
 
 void
