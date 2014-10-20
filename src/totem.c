@@ -52,8 +52,13 @@
 static gboolean startup_called = FALSE;
 
 static void
-app_init (Totem *totem, char **argv)
+app_activate (GApplication *app,
+	      Totem        *totem)
 {
+	/* Already init'ed? */
+	if (totem->xml != NULL)
+		return;
+
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
