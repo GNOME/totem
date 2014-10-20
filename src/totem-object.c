@@ -438,6 +438,8 @@ totem_object_init (TotemObject *totem)
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+
+	totem_app_actions_setup (totem);
 }
 
 static void

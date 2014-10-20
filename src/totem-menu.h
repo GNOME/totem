@@ -28,6 +28,7 @@
 G_BEGIN_DECLS
 
 void totem_app_menu_setup (Totem *totem);
+void totem_app_actions_setup (Totem *totem);
 
 void totem_sublang_update (Totem *totem);
 void totem_sublang_exit (Totem *totem);

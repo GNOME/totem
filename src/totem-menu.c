@@ -321,12 +321,16 @@ static GActionEntry app_entries[] = {
 };
 
 void
+totem_app_actions_setup (Totem *totem)
+{
+	g_action_map_add_action_entries (G_ACTION_MAP (totem), app_entries, G_N_ELEMENTS (app_entries), totem);
+}
+
+void
 totem_app_menu_setup (Totem *totem)
 {
 	GMenuModel *appmenu;
 	char *accels[] = { NULL, NULL };
-
-	g_action_map_add_action_entries (G_ACTION_MAP (totem), app_entries, G_N_ELEMENTS (app_entries), totem);
 
 	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
 	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
