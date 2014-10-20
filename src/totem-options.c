@@ -66,28 +66,6 @@ const GOptionEntry all_options[] = {
 	{NULL} /* end the list */
 };
 
-GOptionContext *
-totem_options_get_context (void)
-{
-	GOptionContext *context;
-	GOptionGroup *baconoptiongroup;
-
-	context = g_option_context_new (N_("- Play movies and songs"));
-	baconoptiongroup = bacon_video_widget_get_option_group ();
-	if (baconoptiongroup == NULL) {
-		g_warning ("Clutter or GTK+ failed to initialise properly");
-		g_option_context_free (context);
-		return NULL;
-	}
-	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
-	g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
-	g_option_context_add_group (context, baconoptiongroup);
-
-	g_option_context_add_group (context, gtk_get_option_group (FALSE));
-
-	return context;
-}
-
 void
 totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 {
