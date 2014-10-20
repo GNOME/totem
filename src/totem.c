@@ -49,120 +49,6 @@
 #include "totem-preferences.h"
 #include "totem-session.h"
 
-static void
-app_activate (GApplication *app,
-	      Totem        *totem)
-{
-	/* Already init'ed? */
-	if (totem->xml != NULL)
-		return;
-
-	/* Main window */
-	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
-	if (totem->xml == NULL)
-		totem_object_exit (NULL);
-
-	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
-
-	/* Menubar */
-	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
-
-	/* The sidebar */
-	playlist_widget_setup (totem);
-
-	/* The rest of the widgets */
-	totem->state = STATE_STOPPED;
-
-	totem->seek_lock = FALSE;
-
-	totem_setup_file_monitoring (totem);
-	totem_setup_file_filters ();
-	totem_app_menu_setup (totem);
-	/* totem_callback_connect (totem); XXX we do this later now, so it might look ugly for a short while */
-
-	totem_setup_window (totem);
-
-	/* Show ! (again) the video widget this time. */
-	video_widget_create (totem);
-	grilo_widget_setup (totem);
-
-	/* Show ! */
-	if (optionstate.fullscreen == FALSE) {
-		gtk_widget_show (totem->win);
-		g_application_mark_busy (G_APPLICATION (totem));
-	} else {
-		gtk_widget_realize (totem->win);
-	}
-
-	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
-
-	totem->seek = g_object_get_data (totem->controls, "seek_scale");
-	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
-	totem->volume = g_object_get_data (totem->controls, "volume_button");
-	totem->time_label = g_object_get_data (totem->controls, "time_label");
-	totem->time_rem_label = g_object_get_data (totem->controls, "time_rem_label");
-	totem->pause_start = optionstate.pause;
-
-	totem_callback_connect (totem);
-
-	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-
-	if (optionstate.fullscreen != FALSE) {
-		gtk_widget_show (totem->win);
-		gdk_flush ();
-		totem_object_set_fullscreen (totem, TRUE);
-	}
-
-	/* The prefs after the video widget is connected */
-	totem->prefs_xml = totem_interface_load ("preferences.ui", TRUE, NULL, totem);
-	totem->prefs = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "totem_preferences_window"));
-
-	gtk_window_set_modal (GTK_WINDOW (totem->prefs), TRUE);
-	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
-
-	totem_setup_preferences (totem);
-
-	/* Initialise all the plugins, and set the default page, in case
-	 * it comes from a plugin */
-	totem_object_plugins_init (totem);
-
-	if (optionstate.filenames == NULL) {
-		totem_object_set_main_page (totem, "grilo");
-		if (totem_session_try_restore (totem) == FALSE)
-			totem_object_set_mrl (totem, NULL, NULL);
-	} else {
-		totem_object_set_main_page (totem, "player");
-		if (totem_object_open_files (totem, optionstate.filenames))
-			totem_object_play_pause (totem);
-		else
-			totem_object_set_mrl (totem, NULL, NULL);
-	}
-
-	/* Set the logo at the last minute so we won't try to show it before a video */
-	bacon_video_widget_set_logo (totem->bvw, "totem");
-
-	if (optionstate.fullscreen == FALSE)
-		g_application_unmark_busy (G_APPLICATION (totem));
-
-	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
-}
-
-static int
-handle_local_options (GApplication *application,
-		      GVariantDict *options,
-		      TotemObject  *totem)
-{
-	GError *error = NULL;
-
-	if (!g_application_register (application, NULL, &error)) {
-		g_warning ("Failed to register application: %s", error->message);
-		g_error_free (error);
-		return 1;
-	}
-	totem_options_process_for_server (totem, &optionstate);
-	return 0;
-}
-
 int
 main (int argc, char **argv)
 {
@@ -193,11 +79,6 @@ main (int argc, char **argv)
 			      "application-id", "org.gnome.Totem",
 			      "flags", G_APPLICATION_HANDLES_OPEN,
 			      NULL);
-
-	g_signal_connect (G_OBJECT (totem), "handle-local-options",
-			  G_CALLBACK (handle_local_options), totem);
-	g_signal_connect (G_OBJECT (totem), "activate",
-			  G_CALLBACK (app_activate), totem);
 
 	g_application_run (G_APPLICATION (totem), argc, argv);
 
