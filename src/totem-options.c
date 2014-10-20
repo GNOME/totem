@@ -98,6 +98,17 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 	}
 }
 
+static void
+totem_send_remote_command (Totem              *totem,
+			   TotemRemoteCommand  action,
+			   const char         *url)
+{
+	GVariant *variant;
+
+	variant = g_variant_new ("(is)", action, url ? url : "");
+	g_action_group_activate_action (G_ACTION_GROUP (totem), "remote-command", variant);
+}
+
 void
 totem_options_process_for_server (Totem                     *totem,
 				  const TotemCmdLineOptions *options)
@@ -111,7 +122,7 @@ totem_options_process_for_server (Totem                     *totem,
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
+		totem_send_remote_command (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
@@ -132,7 +143,7 @@ totem_options_process_for_server (Totem                     *totem,
 		filename = options->filenames[i];
 		full_path = totem_create_full_path (filename);
 
-		totem_object_remote_command (totem, action, full_path ? full_path : filename);
+		totem_send_remote_command (totem, action, full_path ? full_path : filename);
 
 		g_free (full_path);
 
@@ -199,14 +210,15 @@ totem_options_process_for_server (Totem                     *totem,
 	}
 
 	/* No commands, no files, show ourselves */
-	if (commands == NULL) {
-		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
+	if (commands == NULL &&
+	    !(g_application_get_flags (G_APPLICATION (totem)) & G_APPLICATION_IS_SERVICE)) {
+		totem_send_remote_command (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		totem_object_remote_command (totem, GPOINTER_TO_INT (l->data), NULL);
+		totem_send_remote_command (totem, GPOINTER_TO_INT (l->data), NULL);
 	}
 
 	g_list_free (commands);
