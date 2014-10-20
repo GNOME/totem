@@ -54,8 +54,6 @@ extern const GOptionEntry all_options[];
 extern TotemCmdLineOptions optionstate;
 
 void totem_options_register_remote_commands (Totem *totem);
-void totem_options_process_late (Totem *totem, 
-				 const TotemCmdLineOptions* options);
 void totem_options_process_for_server (Totem *totem,
 				       const TotemCmdLineOptions* options);
 
