@@ -7,7 +7,6 @@
               <object class="GtkAction" id="remove">
                  <property name="label" translatable="yes">_Remove Chapter</property>
                  <property name="tooltip" translatable="yes">Remove the chapter from the list</property>
-                 <property name="stock-id">gtk-remove</property>
                  <signal name="activate" handler="popup_remove_action_cb"/>
               </object>
            </child>
@@ -15,7 +14,6 @@
               <object class="GtkAction" id="goto">
                  <property name="label" translatable="yes">_Go to Chapter</property>
                  <property name="tooltip" translatable="yes">Go to the chapter in the movie</property>
-                 <property name="stock-id">gtk-jump-to</property>
                  <signal name="activate" handler="popup_goto_action_cb"/>
               </object>
            </child>
@@ -92,7 +90,7 @@
             <child>
               <object class="GtkImage" id="image1">
                 <property name="visible">True</property>
-                <property name="stock">gtk-add</property>
+                <property name="icon-name">gtk-add</property>
               </object>
             </child>
           </object>
@@ -112,7 +110,7 @@
             <child>
               <object class="GtkImage" id="image2">
                 <property name="visible">True</property>
-                <property name="stock">gtk-remove</property>
+                <property name="icon-name">gtk-remove</property>
               </object>
             </child>
           </object>
@@ -132,7 +130,7 @@
             <child>
               <object class="GtkImage" id="image3">
                 <property name="visible">True</property>
-                <property name="stock">gtk-jump-to</property>
+                <property name="icon-name">gtk-jump-to</property>
               </object>
             </child>
           </object>
@@ -152,7 +150,7 @@
             <child>
               <object class="GtkImage" id="image4">
                 <property name="visible">True</property>
-                <property name="stock">gtk-save</property>
+                <property name="icon-name">gtk-save</property>
               </object>
             </child>
           </object>
