@@ -66,16 +66,6 @@ const GOptionEntry all_options[] = {
 	{NULL} /* end the list */
 };
 
-void
-totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
-{
-	if (options->quit) {
-		/* If --quit is one of the commands, just quit */
-		gdk_notify_startup_complete ();
-		exit (0);
-	}
-}
-
 static void
 totem_send_remote_command (Totem              *totem,
 			   TotemRemoteCommand  action,
