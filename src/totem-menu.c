@@ -267,6 +267,24 @@ previous_chapter_action_cb (GSimpleAction *action,
 	TOTEM_PROFILE (totem_object_seek_previous (TOTEM_OBJECT (user_data)));
 }
 
+static void
+remote_command_cb (GSimpleAction *action,
+		   GVariant      *parameter,
+		   gpointer       user_data)
+{
+	TotemObject *totem;
+	TotemRemoteCommand cmd;
+	const char *url;
+
+	totem = TOTEM_OBJECT (user_data);
+	g_variant_get (parameter, "(i&s)", &cmd, &url);
+
+	if (url && *url == '\0')
+		totem_object_remote_command (totem, cmd, NULL);
+	else
+		totem_object_remote_command (totem, cmd, url);
+}
+
 static GActionEntry app_entries[] = {
 	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
@@ -297,6 +315,9 @@ static GActionEntry app_entries[] = {
 	{ "play", play_action_cb, NULL, NULL, NULL },
 	{ "next-chapter", next_chapter_action_cb, NULL, NULL, NULL },
 	{ "previous-chapter", previous_chapter_action_cb, NULL, NULL, NULL },
+
+	/* Remote command handling */
+	{ "remote-command", remote_command_cb, "(is)", NULL, NULL },
 };
 
 void
