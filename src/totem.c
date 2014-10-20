@@ -49,8 +49,6 @@
 #include "totem-preferences.h"
 #include "totem-session.h"
 
-static gboolean startup_called = FALSE;
-
 static void
 app_activate (GApplication *app,
 	      Totem        *totem)
@@ -149,57 +147,19 @@ app_activate (GApplication *app,
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 
-static void
-app_startup (GApplication *application,
-	     Totem        *totem)
-{
-	/* We don't do anything here, as we need to know the options
-	 * when we set everything up.
-	 * Note that this will break D-Bus activation of the application */
-	startup_called = TRUE;
-}
-
 static int
-app_command_line (GApplication             *app,
-		  GApplicationCommandLine  *command_line,
-		  Totem                    *totem)
+handle_local_options (GApplication *application,
+		      GVariantDict *options,
+		      TotemObject  *totem)
 {
-	GOptionContext *context;
-	int argc;
-	char **argv;
+	GError *error = NULL;
 
-	argv = g_application_command_line_get_arguments (command_line, &argc);
-
-	/* Reset the options, if they were used before */
-	memset (&optionstate, 0, sizeof (optionstate));
-
-	/* Options parsing */
-	context = totem_options_get_context ();
-	g_option_context_set_help_enabled (context, FALSE);
-	if (g_option_context_parse (context, &argc, &argv, NULL) == FALSE) {
-	        g_option_context_free (context);
-	        return 1;
+	if (!g_application_register (application, NULL, &error)) {
+		g_warning ("Failed to register application: %s", error->message);
+		g_error_free (error);
+		return 1;
 	}
-	g_option_context_free (context);
-
-	totem_options_process_early (totem, &optionstate);
-
-	/* Don't create another window if we're remote.
-	 * We can't use g_application_get_is_remote() because it's not registered yet */
-	if (startup_called != FALSE) {
-		app_init (totem, argv);
-
-		gdk_notify_startup_complete ();
-
-		/* Don't add files again through totem_options_process_for_server() */
-		g_clear_pointer (&optionstate.filenames, g_strfreev);
-		startup_called = FALSE;
-	}
-
-	/* Now do something with it */
 	totem_options_process_for_server (totem, &optionstate);
-
-	g_strfreev (argv);
 	return 0;
 }
 
@@ -231,13 +191,13 @@ main (int argc, char **argv)
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT,
 			      "application-id", "org.gnome.Totem",
-			      "flags", G_APPLICATION_HANDLES_COMMAND_LINE | G_APPLICATION_HANDLES_OPEN,
+			      "flags", G_APPLICATION_HANDLES_OPEN,
 			      NULL);
 
-	g_signal_connect (G_OBJECT (totem), "startup",
-			  G_CALLBACK (app_startup), totem);
-	g_signal_connect (G_OBJECT (totem), "command-line",
-			  G_CALLBACK (app_command_line), totem);
+	g_signal_connect (G_OBJECT (totem), "handle-local-options",
+			  G_CALLBACK (handle_local_options), totem);
+	g_signal_connect (G_OBJECT (totem), "activate",
+			  G_CALLBACK (app_activate), totem);
 
 	g_application_run (G_APPLICATION (totem), argc, argv);
 

@@ -145,6 +145,8 @@ totem_object_app_open (GApplication  *application,
 	GSList *slist = NULL;
 	int i;
 
+	g_application_activate (application);
+
 	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
 
 	for (i = 0 ; i < n_files; i++)
@@ -153,62 +155,6 @@ totem_object_app_open (GApplication  *application,
 	slist = g_slist_reverse (slist);
 	totem_object_open_files_list (TOTEM_OBJECT (application), slist);
 	g_slist_free_full (slist, g_free);
-}
-
-static gboolean
-totem_object_local_command_line (GApplication              *application,
-				 gchar                   ***arguments,
-				 int                       *exit_status)
-{
-	GOptionContext *context;
-	GError *error = NULL;
-	char **argv;
-	int argc;
-
-	/* Dupe so that the remote arguments are listed, but
-	 * not removed from the list */
-	argv = g_strdupv (*arguments);
-	argc = g_strv_length (argv);
-
-	context = totem_options_get_context ();
-	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
-		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
-				error->message, argv[0]);
-		g_error_free (error);
-	        *exit_status = 1;
-	        goto bail;
-	}
-
-	/* Replace relative paths with absolute URIs */
-	if (optionstate.filenames != NULL) {
-		guint n_files;
-		int i, n_args;
-
-		n_args = g_strv_length (*arguments);
-		n_files = g_strv_length (optionstate.filenames);
-
-		i = n_args - n_files;
-		for ( ; i < n_args; i++) {
-			char *new_path;
-
-			new_path = totem_create_full_path ((*arguments)[i]);
-			if (new_path == NULL)
-				continue;
-
-			g_free ((*arguments)[i]);
-			(*arguments)[i] = new_path;
-		}
-	}
-
-	g_strfreev (optionstate.filenames);
-	optionstate.filenames = NULL;
-
-	*exit_status = 0;
-bail:
-	g_option_context_free (context);
-	g_strfreev (argv);
-
-	return FALSE;
 }
 
 static gboolean
@@ -239,7 +185,6 @@ totem_object_class_init (TotemObjectClass *klass)
 	object_class->get_property = totem_object_get_property;
 	object_class->finalize = totem_object_finalize;
 
-	app_class->local_command_line = totem_object_local_command_line;
 	app_class->open = totem_object_app_open;
 
 	/**
@@ -438,6 +383,9 @@ totem_object_init (TotemObject *totem)
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+
+	g_application_add_main_option_entries (G_APPLICATION (totem), all_options);
+	g_application_add_option_group (G_APPLICATION (totem), bacon_video_widget_get_option_group ());
 
 	totem_app_actions_setup (totem);
 }
