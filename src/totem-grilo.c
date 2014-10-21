@@ -420,7 +420,7 @@ out:
 
 static void
 set_thumbnail_async (TotemGrilo   *self,
-		     GrlMedia     *media,
+		     GObject      *object,
 		     GtkTreeModel *model,
 		     GtkTreePath  *path)
 {
@@ -429,31 +429,15 @@ set_thumbnail_async (TotemGrilo   *self,
 	/* Let's read the thumbnail stream and set the thumbnail */
 	thumb_data = g_slice_new0 (SetThumbnailData);
 	thumb_data->totem_grilo = g_object_ref (self);
-	thumb_data->media = g_object_ref (media);
+	if (GRL_IS_SOURCE (object))
+		thumb_data->source = GRL_SOURCE (g_object_ref (object));
+	else
+		thumb_data->media = GRL_MEDIA (g_object_ref (object));
 	thumb_data->model = g_object_ref (model);
 	thumb_data->reference = gtk_tree_row_reference_new (model, path);
 
 	//FIXME cancellable?
-	totem_grilo_get_thumbnail (G_OBJECT (media), NULL, get_thumbnail_cb, thumb_data);
-}
-
-static void
-set_thumbnail_source_async (TotemGrilo   *self,
-			    GrlSource    *source,
-			    GtkTreeModel *model,
-			    GtkTreePath  *path)
-{
-	SetThumbnailData *thumb_data;
-
-	/* Let's read the thumbnail stream and set the thumbnail */
-	thumb_data = g_slice_new0 (SetThumbnailData);
-	thumb_data->totem_grilo = g_object_ref (self);
-	thumb_data->source = g_object_ref (source);
-	thumb_data->model = g_object_ref (model);
-	thumb_data->reference = gtk_tree_row_reference_new (model, path);
-
-	//FIXME cancellable?
-	totem_grilo_get_thumbnail (G_OBJECT (source), NULL, get_thumbnail_cb, thumb_data);
+	totem_grilo_get_thumbnail (object, NULL, get_thumbnail_cb, thumb_data);
 }
 
 static gboolean
@@ -511,10 +495,7 @@ update_search_thumbnails_idle (TotemGrilo *self)
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, &is_prethumbnail,
 		                    -1);
 		if ((media != NULL || source != NULL) && is_prethumbnail) {
-			if (media)
-				set_thumbnail_async (self, media, model, path);
-			else
-				set_thumbnail_source_async (self, source, model, path);
+			set_thumbnail_async (self, media ? G_OBJECT (media) : G_OBJECT (source), model, path);
 			gtk_tree_store_set (GTK_TREE_STORE (model),
 			                    &iter,
 			                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
