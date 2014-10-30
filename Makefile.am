@@ -35,7 +35,7 @@ DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
 	--with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck' \
 	--enable-introspection \
-	--enable-appdata-validate
+	--enable-appstream-util
 
 # Build ChangeLog from GIT history
 ChangeLog:

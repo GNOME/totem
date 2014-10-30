@@ -495,7 +495,7 @@ GNOME_CXX_WARNINGS
 GNOME_MAINTAINER_MODE_DEFINES
 GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
 
-APPDATA_XML
+APPSTREAM_XML
 
 # This macro expands DIR and assigns it to RET.
 # If DIR is NONE, then it's replaced by DEFAULT.
