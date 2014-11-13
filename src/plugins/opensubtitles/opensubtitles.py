@@ -517,6 +517,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._action = Gio.SimpleAction.new ("opensubtitles", None)
         self._action.connect ('activate', self._show_dialog)
         self._totem.add_action (self._action)
+        self._totem.set_accels_for_action ("app.opensubtitles",
+                                           ["<Primary><Shift>s"])
 
         menu = self._totem.get_menu_section ("subtitle-download-placeholder")
         menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
