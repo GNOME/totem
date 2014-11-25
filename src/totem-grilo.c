@@ -116,6 +116,8 @@ struct _TotemGriloPrivate {
 	/* Selection toolbar */
 	GtkWidget *selection_bar;
 	GtkWidget *selection_revealer;
+
+	GCancellable *thumbnail_cancellable;
 };
 
 enum {
@@ -436,8 +438,7 @@ set_thumbnail_async (TotemGrilo   *self,
 	thumb_data->model = g_object_ref (model);
 	thumb_data->reference = gtk_tree_row_reference_new (model, path);
 
-	//FIXME cancellable?
-	totem_grilo_get_thumbnail (object, NULL, get_thumbnail_cb, thumb_data);
+	totem_grilo_get_thumbnail (object, self->priv->thumbnail_cancellable, get_thumbnail_cb, thumb_data);
 }
 
 static gboolean
@@ -2444,6 +2445,9 @@ totem_grilo_finalize (GObject *object)
 		self->priv->thumbnail_update_id = 0;
 	}
 
+	g_cancellable_cancel (self->priv->thumbnail_cancellable);
+	g_clear_object (&self->priv->thumbnail_cancellable);
+
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
@@ -2724,6 +2728,7 @@ totem_grilo_init (TotemGrilo *self)
 	self->priv = totem_grilo_get_instance_private (self);
 	priv = self->priv;
 
+	priv->thumbnail_cancellable = g_cancellable_new ();
 	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
 							 GRL_METADATA_KEY_AUTHOR,
 							 GRL_METADATA_KEY_DURATION,
