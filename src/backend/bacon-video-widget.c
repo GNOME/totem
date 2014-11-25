@@ -904,7 +904,7 @@ bacon_video_widget_tap (ClutterTapAction *action,
 }
 
 static gboolean
-bacon_video_widget_swipe (ClutterTapAction      *action,
+bacon_video_widget_swipe (ClutterSwipeAction    *action,
 			  ClutterActor          *actor,
 			  ClutterSwipeDirection  direction,
 			  BaconVideoWidget      *bvw)
