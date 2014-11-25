@@ -1013,12 +1013,15 @@ totem_object_set_main_page (TotemObject *totem,
 	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0) {
 		if (g_strcmp0 (page_id, "grilo") == 0)
 			totem_grilo_start (TOTEM_GRILO (totem->grilo));
+		else
+			totem_grilo_pause (TOTEM_GRILO (totem->grilo));
 		return;
 	}
 
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 
 	if (g_strcmp0 (page_id, "player") == 0) {
+		totem_grilo_pause (TOTEM_GRILO (totem->grilo));
 		g_object_get (totem->header,
 			      "title", &totem->title,
 			      "subtitle", &totem->subtitle,
@@ -1041,6 +1044,7 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_hide (totem->add_button);
 		bacon_video_widget_show_popup (totem->bvw);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
+		totem_grilo_start (TOTEM_GRILO (totem->grilo));
 		g_object_set (totem->header,
 			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
 			      "show-select-button", TRUE,
