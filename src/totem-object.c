@@ -1252,6 +1252,7 @@ reset_seek_status (TotemObject *totem)
 
 	if (totem->seek_lock != FALSE) {
 		totem->seek_lock = FALSE;
+		bacon_video_widget_unmark_popup_busy (totem->bvw, "seek started");
 		bacon_video_widget_seek (totem->bvw, 0, NULL);
 		totem_object_stop (totem);
 	}
@@ -2569,6 +2570,7 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *t
 	event->button = GDK_BUTTON_PRIMARY;
 
 	totem->seek_lock = TRUE;
+	bacon_video_widget_mark_popup_busy (totem->bvw, "seek started");
 
 	return FALSE;
 }
@@ -2606,6 +2608,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	/* set to FALSE here to avoid triggering a final seek when
 	 * syncing the adjustments while being in direct seek mode */
 	totem->seek_lock = FALSE;
+	bacon_video_widget_unmark_popup_busy (totem->bvw, "seek started");
 
 	/* sync both adjustments */
 	adj = gtk_range_get_adjustment (GTK_RANGE (widget));
