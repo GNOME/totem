@@ -919,12 +919,23 @@ bacon_video_widget_swipe (ClutterSwipeAction    *action,
       return CLUTTER_EVENT_PROPAGATE;
   }
 
-  if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
-  if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
+  if (direction & CLUTTER_SWIPE_DIRECTION_LEFT) {
+    if (clutter_gesture_action_get_n_touch_points (CLUTTER_GESTURE_ACTION (action)) == 1)
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
+		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
+    else
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_TRACK_SKIP_REQUESTED], 0,
+		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
+  }
+
+  if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT) {
+    if (clutter_gesture_action_get_n_touch_points (CLUTTER_GESTURE_ACTION (action)) == 1)
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
+		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
+    else
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_TRACK_SKIP_REQUESTED], 0,
+		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
+  }
 
   return CLUTTER_EVENT_STOP;
 }
@@ -6004,6 +6015,13 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   action = clutter_swipe_action_new ();
   clutter_gesture_action_set_threshold_trigger_distance (CLUTTER_GESTURE_ACTION (action), 80.0, 80.0);
+  clutter_actor_add_action (bvw->priv->texture, action);
+  g_signal_connect (action, "swipe",
+		    G_CALLBACK (bacon_video_widget_swipe), bvw);
+
+  action = clutter_swipe_action_new ();
+  clutter_gesture_action_set_threshold_trigger_distance (CLUTTER_GESTURE_ACTION (action), 80.0, 80.0);
+  clutter_gesture_action_set_n_touch_points (CLUTTER_GESTURE_ACTION (action), 2);
   clutter_actor_add_action (bvw->priv->texture, action);
   g_signal_connect (action, "swipe",
 		    G_CALLBACK (bacon_video_widget_swipe), bvw);
