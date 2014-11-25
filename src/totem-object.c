@@ -3446,6 +3446,14 @@ on_seek_requested_event (BaconVideoWidget *bvw,
 }
 
 static void
+on_track_skip_requested_event (BaconVideoWidget *bvw,
+			       gboolean          is_forward,
+			       TotemObject      *totem)
+{
+	totem_object_direction (totem, is_forward ? TOTEM_PLAYLIST_DIRECTION_NEXT : TOTEM_PLAYLIST_DIRECTION_PREVIOUS);
+}
+
+static void
 on_volume_change_requested_event (BaconVideoWidget *bvw,
 				  gboolean          increase,
 				  TotemObject      *totem)
@@ -4003,6 +4011,10 @@ video_widget_create (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			  "seek-requested",
 			  G_CALLBACK (on_seek_requested_event),
+			  totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			  "track-skip-requested",
+			  G_CALLBACK (on_track_skip_requested_event),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			  "volume-change-requested",
