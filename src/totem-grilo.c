@@ -2477,6 +2477,8 @@ totem_grilo_finalize (GObject *object)
 void
 totem_grilo_start (TotemGrilo *self)
 {
+	totem_grilo_resume_icon_thumbnailing ();
+
 	if (self->priv->plugins_loaded)
 		return;
 
@@ -2484,6 +2486,12 @@ totem_grilo_start (TotemGrilo *self)
 
 	load_grilo_plugins (self);
 	self->priv->plugins_loaded = TRUE;
+}
+
+void
+totem_grilo_pause (TotemGrilo *self)
+{
+	totem_grilo_pause_icon_thumbnailing ();
 }
 
 static void
