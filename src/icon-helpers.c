@@ -30,6 +30,7 @@
 #define GNOME_DESKTOP_USE_UNSTABLE_API 1
 #include <libgnome-desktop/gnome-desktop-thumbnail.h>
 
+#define DEFAULT_MAX_THREADS   5
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
 
@@ -430,5 +431,19 @@ totem_grilo_setup_icons (Totem *totem)
 						  g_object_unref);
 
 	factory = gnome_desktop_thumbnail_factory_new (GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE);
-	thumbnail_pool = g_thread_pool_new ((GFunc) thumbnail_media_async_thread, NULL, 5, TRUE, NULL);
+	thumbnail_pool = g_thread_pool_new ((GFunc) thumbnail_media_async_thread, NULL, DEFAULT_MAX_THREADS, TRUE, NULL);
+}
+
+void
+totem_grilo_pause_icon_thumbnailing (void)
+{
+	g_return_if_fail (thumbnail_pool != NULL);
+	g_thread_pool_set_max_threads (thumbnail_pool, 0, NULL);
+}
+
+void
+totem_grilo_resume_icon_thumbnailing (void)
+{
+	g_return_if_fail (thumbnail_pool != NULL);
+	g_thread_pool_set_max_threads (thumbnail_pool, DEFAULT_MAX_THREADS, NULL);
 }
