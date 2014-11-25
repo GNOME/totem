@@ -130,6 +130,7 @@ enum
   SIGNAL_MISSING_PLUGINS,
   SIGNAL_DOWNLOAD_BUFFERING,
   SIGNAL_SEEK_REQUESTED,
+  SIGNAL_TRACK_SKIP_REQUESTED,
   SIGNAL_VOLUME_CHANGE_REQUESTED,
   LAST_SIGNAL
 };
@@ -1379,6 +1380,20 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    **/
   bvw_signals[SIGNAL_SEEK_REQUESTED] =
     g_signal_new ("seek-requested",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+
+  /**
+   * BaconVideoWidget::track-skip-requested:
+   * @forward: whether the track change requested is a forward or backward skip.
+   *
+   * Emitted when a gesture, our mouse movement that should seek is made.
+   **/
+  bvw_signals[SIGNAL_TRACK_SKIP_REQUESTED] =
+    g_signal_new ("track-skip-requested",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   0,
