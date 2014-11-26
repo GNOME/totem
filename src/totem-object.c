@@ -3223,6 +3223,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_B:
 	case GDK_KEY_b:
 		totem_object_seek_previous (totem);
+		bacon_video_widget_show_popup (totem->bvw);
 		break;
 	case GDK_KEY_C:
 	case GDK_KEY_c:
@@ -3254,6 +3255,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_n:
 	case GDK_KEY_End:
 		totem_object_seek_next (totem);
+		bacon_video_widget_show_popup (totem->bvw);
 		break;
 	case GDK_KEY_OpenURL:
 		totem_object_set_fullscreen (totem, FALSE);
@@ -3340,8 +3342,10 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 			if (switch_rtl && gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 				is_forward = !is_forward;
 
-			if (totem_object_is_seekable (totem))
+			if (totem_object_is_seekable (totem)) {
 				totem_object_handle_seek (totem, event, is_forward);
+				bacon_video_widget_show_popup (totem->bvw);
+			}
 		} else {
 			if (event->keyval == GDK_KEY_Left || event->keyval == GDK_KEY_Page_Down)
 				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_LEFT);
@@ -3351,6 +3355,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_Home:
 		totem_object_seek (totem, 0);
+		bacon_video_widget_show_popup (totem->bvw);
 		break;
 	case GDK_KEY_Up:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
@@ -3404,6 +3409,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_KP_Add:
 		if (mask != GDK_CONTROL_MASK) {
 			totem_object_seek_next (totem);
+			bacon_video_widget_show_popup (totem->bvw);
 		} else {
 			totem_object_set_zoom (totem, TRUE);
 		}
@@ -3412,6 +3418,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_KP_Subtract:
 		if (mask != GDK_CONTROL_MASK) {
 			totem_object_seek_previous (totem);
+			bacon_video_widget_show_popup (totem->bvw);
 		} else {
 			totem_object_set_zoom (totem, FALSE);
 		}
