@@ -315,16 +315,29 @@ load_icon (Totem      *totem,
 	   int         size,
 	   gboolean    with_border)
 {
+	GApplication *app;
 	GdkScreen *screen;
+	GIcon *icon;
+	GList *windows;
+	GtkIconInfo *info;
 	GtkIconTheme *theme;
-	GdkPixbuf *icon, *ret;
+	GtkStyleContext *context;
+	GdkPixbuf *pixbuf, *ret;
 	guchar *pixels;
 	int rowstride;
 	int x, y;
 
+	app = g_application_get_default ();
+	windows = gtk_application_get_windows (GTK_APPLICATION (app));
+	if (windows == NULL)
+		return NULL;
+
+	icon = g_themed_icon_new (name);
 	screen = gdk_screen_get_default ();
 	theme = gtk_icon_theme_get_for_screen (screen);
-	icon = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
+	info = gtk_icon_theme_lookup_by_gicon (theme, icon, size, GTK_ICON_LOOKUP_FORCE_SYMBOLIC);
+	context = gtk_widget_get_style_context (GTK_WIDGET (windows->data));
+	pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
 
 	ret = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
 			      TRUE,
@@ -352,12 +365,14 @@ load_icon (Totem      *totem,
 	}
 
 	/* Put the icon in the middle */
-	gdk_pixbuf_copy_area (icon, 0, 0,
-			      gdk_pixbuf_get_width (icon), gdk_pixbuf_get_height (icon),
+	gdk_pixbuf_copy_area (pixbuf, 0, 0,
+			      gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf),
 			      ret,
-			      (THUMB_SEARCH_SIZE - gdk_pixbuf_get_width (icon)) / 2,
-			      (THUMB_SEARCH_HEIGHT - gdk_pixbuf_get_height (icon)) / 2);
+			      (THUMB_SEARCH_SIZE - gdk_pixbuf_get_width (pixbuf)) / 2,
+			      (THUMB_SEARCH_HEIGHT - gdk_pixbuf_get_height (pixbuf)) / 2);
 
+	g_object_unref (pixbuf);
+	g_object_unref (info);
 	g_object_unref (icon);
 
 	return ret;
