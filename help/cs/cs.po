@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem gnome-2-28\n"
-"POT-Creation-Date: 2014-01-10 18:56+0000\n"
+"POT-Creation-Date: 2014-11-27 06:20+0000\n"
 "PO-Revision-Date: 2013-07-14 21:39+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
@@ -174,8 +174,8 @@ msgstr ""
 "Mnoho názvů použitých firmami k zviditelnění produktů nebo služeb jsou "
 "ochranné známky. Na místech, kde jsou tyto názvy v dokumentaci použity a "
 "členové Dokumentačního projektu GNOME jsou si vědomi skutečnosti, že se "
-"jedná o ochrannou známku, je takovýto název psán velkými písmeny celý nebo "
-"s velkým písmenem na začátku."
+"jedná o ochrannou známku, je takovýto název psán velkými písmeny celý nebo s "
+"velkým písmenem na začátku."
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:35 C/legal.xml:35
@@ -312,7 +312,7 @@ msgstr "Ohlasy"
 
 #. (itstool) path: legalnotice/para
 #. (itstool) path: sect1/para
-#: C/index.docbook:136 C/index.docbook:1100
+#: C/index.docbook:136 C/index.docbook:1103
 msgid ""
 "To report a bug or make a suggestion regarding the <application>Totem Movie "
 "Player</application> application or this manual, follow the directions in "
@@ -688,9 +688,9 @@ msgstr ""
 "Snažíte-li se přehrát formát souboru, se kterým <application>přehrávač filmů "
 "Totem</application> neumí pracovat, aplikace zobrazí chybovou zprávu. Chyba "
 "nejčastěji nastává, nemáte-li nainstalovány příslušné kodeky. Informace o "
-"získávání kodeků lze najít na <ulink "
-"url=\"https://wiki.gnome.org/Apps/Videos/Codecs\" type=\"http\">stránkách "
-"<application>přehrávače filmů Totem</application></ulink>."
+"získávání kodeků lze najít na <ulink url=\"https://wiki.gnome.org/Apps/"
+"Videos/Codecs\" type=\"http\">stránkách <application>přehrávače filmů Totem</"
+"application></ulink>."
 
 #. (itstool) path: tip/para
 #: C/index.docbook:367
@@ -1990,20 +1990,22 @@ msgstr ""
 msgid ""
 "Subtitles can only be downloaded for local movies; not audio files, DVDs, "
 "DVB streams, VCDs or HTTP streams. To search for subtitles for the currently "
-"playing movie, choose <menuchoice><guimenu>View</"
-"guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, "
-"which will display the <application>Download Movie Subtitles</application> "
-"dialog."
+"playing movie, choose <menuchoice> <shortcut><keycombo><keycap>Ctrl</"
+"keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut> "
+"<guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></"
+"menuchoice>, which will display the <application>Download Movie Subtitles</"
+"application> dialog."
 msgstr ""
 "Titulky mohou být stahovány pouze pro místní filmy, nikoli pro huební "
 "soubory, disky DVD, vysílání DVB, disky VCD nebo proudy HTTP. Chcete-li "
-"najít titulky pro právě přehrávaný film, vyberte "
-"<menuchoice><guimenu>Zobrazit</guimenu><guimenuitem>Stáhnout titulky</"
-"guimenuitem></menuchoice> – zobrazí se dialogové okno <application>Stáhnout "
-"titulky</application>."
+"najít titulky pro právě přehrávaný film, vyberte <menuchoice><shortcut>"
+"<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap>"
+"</keycombo></shortcut> <guimenu>Zobrazit</guimenu> <guimenuitem>Stáhnout "
+"titulky</guimenuitem></menuchoice> – zobrazí se dialogové okno <application>"
+"Stáhnout titulky</application>."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:900
+#: C/index.docbook:903
 msgid ""
 "Select the language in which you wish to have your subtitles from the drop-"
 "down list at the top of the dialog, then click on the <guibutton>Find</"
@@ -2016,7 +2018,7 @@ msgstr ""
 "Titulky jsou hledány podle obsahu filmu, ne podle názvu souboru nebo štítků."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:903
+#: C/index.docbook:906
 msgid ""
 "Search results are listed in the tree view in the middle of the dialog. "
 "Currently, subtitles can only be used with a movie by <emphasis>reloading</"
@@ -2031,7 +2033,7 @@ msgstr ""
 "a film znovu načetl."
 
 #. (itstool) path: note/para
-#: C/index.docbook:906
+#: C/index.docbook:909
 msgid ""
 "Downloaded subtitle files are cached (in <filename>~/.cache/totem/subtitles</"
 "filename>, by default) so that they do not need to be downloaded again when "
@@ -2044,12 +2046,12 @@ msgstr ""
 "pro určitý film jsou všechny dříve stažené titulky pro tento film odstraněny."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:910
+#: C/index.docbook:913
 msgid "Thumbnail"
 msgstr "Náhled"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:911
+#: C/index.docbook:914
 msgid ""
 "The <guilabel>Thumbnail</guilabel> plugin sets <application>Totem Movie "
 "Player</application>'s main window icon to a thumbnail of the current movie, "
@@ -2060,7 +2062,7 @@ msgstr ""
 "přehrávaného filmu. Při načtení dalšího filmu se ikonka aktualizuje."
 
 #. (itstool) path: note/para
-#: C/index.docbook:913
+#: C/index.docbook:916
 msgid ""
 "If a thumbnail doesn't exist for the current movie (or if you're playing an "
 "audio file), the main window icon will be reset to the <application>Totem "
@@ -2071,12 +2073,12 @@ msgstr ""
 "Totem</application>."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:917
+#: C/index.docbook:920
 msgid "Video Disc Recorder"
 msgstr "Vypalování filmových disků"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:918
+#: C/index.docbook:921
 msgid ""
 "The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the "
 "current playlist to a DVD or VCD using <application>Brasero</application>."
@@ -2086,7 +2088,7 @@ msgstr ""
 "<application>Brasero</application>."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:919
+#: C/index.docbook:922
 msgid ""
 "To burn the current playlist, choose <menuchoice><guimenu>Movie</"
 "guimenu><guimenuitem>Create Video Disc</guimenuitem></menuchoice>. A "
@@ -2104,12 +2106,12 @@ msgstr ""
 "\">příručku k aplikaci Brasero</ulink>."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:924
+#: C/index.docbook:927
 msgid "YouTube Browser"
 msgstr "Prohlížeč YouTube"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:925
+#: C/index.docbook:928
 msgid ""
 "The <guilabel>YouTube Browser</guilabel> plugin allows you to search and "
 "browse <ulink type=\"http\" url=\"http://www.youtube.com/\">YouTube</ulink>, "
@@ -2132,7 +2134,7 @@ msgstr ""
 "postranní lišty zvolte <guilabel>YouTube</guilabel>."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:931
+#: C/index.docbook:934
 msgid ""
 "To search for a YouTube video, enter your search terms in the entry at the "
 "top of the sidebar, then click <guibutton>Find</guibutton>. The search "
@@ -2145,7 +2147,7 @@ msgstr ""
 "budou automaticky načteny při posouvání seznamu dolů."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:933
+#: C/index.docbook:936
 msgid ""
 "To play a video, double-click it in the results list, or choose "
 "<menuchoice><guimenuitem>Add to Playlist</guimenuitem></menuchoice> from its "
@@ -2159,7 +2161,7 @@ msgstr ""
 "<guilabel>Podobná videa</guilabel> načten seznam podobných videí."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:936
+#: C/index.docbook:939
 msgid ""
 "YouTube videos can be opened in a web browser by choosing "
 "<menuchoice><guimenuitem>Open in Web Browser</guimenuitem></menuchoice> from "
@@ -2172,12 +2174,12 @@ msgstr ""
 "videa na webové stránce YouTube."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:940
+#: C/index.docbook:943
 msgid "D-Bus Service"
 msgstr "Služba D-Bus"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:941
+#: C/index.docbook:944
 msgid ""
 "The <guilabel>D-Bus Service</guilabel> plugin broadcasts notifications of "
 "which track is playing in <application>Totem Movie Player</application> on "
@@ -2194,12 +2196,12 @@ msgstr ""
 "se právě v <application>Přehrávači film Totem</application> přehrává."
 
 #. (itstool) path: sect1/title
-#: C/index.docbook:952
+#: C/index.docbook:955
 msgid "Preferences"
 msgstr "Předvolby"
 
 #. (itstool) path: sect1/para
-#: C/index.docbook:953
+#: C/index.docbook:956
 msgid ""
 "To modify the preferences of <application>Totem Movie Player</application>, "
 "choose <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Preferences</"
@@ -2210,17 +2212,17 @@ msgstr ""
 "<guimenuitem>Předvolby</guimenuitem></menuchoice>."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:960
+#: C/index.docbook:963
 msgid "General"
 msgstr "Obecné"
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:963
+#: C/index.docbook:966
 msgid "Networking"
 msgstr "Síť"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:965
+#: C/index.docbook:968
 msgid ""
 "Select network connection speed from the <guilabel>Connection speed</"
 "guilabel> drop-down list."
@@ -2229,12 +2231,12 @@ msgstr ""
 "rychlost připojení k síti."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:971
+#: C/index.docbook:974
 msgid "Text Subtitles"
 msgstr "Textové titulky"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:975
+#: C/index.docbook:978
 msgid ""
 "<guilabel>Automatically load subtitle files</guilabel>: select this option "
 "to automatically load any subtitle files with the same filename as a movie "
@@ -2245,7 +2247,7 @@ msgstr ""
 "názvem souboru, jako má soubor s filmem."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:979
+#: C/index.docbook:982
 msgid ""
 "<guilabel>Font</guilabel>: select this option to change the font used to "
 "display subtitles."
@@ -2254,7 +2256,7 @@ msgstr ""
 "zobrazování titulků."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:983
+#: C/index.docbook:986
 msgid ""
 "<guilabel>Encoding</guilabel>: select this option to change the encoding "
 "used to display subtitles."
@@ -2264,12 +2266,12 @@ msgstr ""
 
 #. (itstool) path: sect2/title
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:992 C/index.docbook:995
+#: C/index.docbook:995 C/index.docbook:998
 msgid "Display"
 msgstr "Zobrazení"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:999
+#: C/index.docbook:1002
 msgid ""
 "Select the resize option if you want <application>Totem Movie Player</"
 "application> to automatically resize the window to the size of the video "
@@ -2280,7 +2282,7 @@ msgstr ""
 "automaticky měnil velikost okna na velikost filmu."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1004
+#: C/index.docbook:1007
 msgid ""
 "Select the screensaver option if you want to allow the screensaver to "
 "activate when playing audio files. Some monitors with integrated speakers "
@@ -2292,12 +2294,12 @@ msgstr ""
 "obrazovky."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1011
+#: C/index.docbook:1014
 msgid "Visual Effects"
 msgstr "Vizuální efekty"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1015
+#: C/index.docbook:1018
 msgid ""
 "<guilabel>Visual</guilabel>: select this option to show visual effects while "
 "an audio file is playing."
@@ -2306,7 +2308,7 @@ msgstr ""
 "přehrávání hudby zobrazovat vizuální efekty."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1020
+#: C/index.docbook:1023
 msgid ""
 "<guilabel>Type of visualization</guilabel>: select type of visualization "
 "from the drop-down list."
@@ -2315,7 +2317,7 @@ msgstr ""
 "vizualizace."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1025
+#: C/index.docbook:1028
 msgid ""
 "<guilabel>Visualization size</guilabel>: select visualization size from the "
 "drop-down list."
@@ -2324,38 +2326,38 @@ msgstr ""
 "velikost vizualizace."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1033
+#: C/index.docbook:1036
 msgid "Color balance"
 msgstr "Vyvážení barev"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1037
+#: C/index.docbook:1040
 msgid ""
 "<guilabel>Brightness</guilabel>: use the slider to specify the level of "
 "brightness."
 msgstr "<guilabel>Jas</guilabel> – použijte táhlo k nastavení jasu."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1040
+#: C/index.docbook:1043
 msgid ""
 "<guilabel>Contrast</guilabel>: use the slider to specify the level of "
 "contrast."
 msgstr "<guilabel>Kontrast</guilabel> – použijte táhlo k nastavení kontrastu."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1043
+#: C/index.docbook:1046
 msgid ""
 "<guilabel>Saturation</guilabel>: use the slider to specify the level of "
 "saturation."
 msgstr "<guilabel>Sytost</guilabel> – použijte táhlo k nastavení sytosti."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1047
+#: C/index.docbook:1050
 msgid "<guilabel>Hue</guilabel>: use the slider to specify the level of hue."
 msgstr "<guilabel>Odstín</guilabel> – použijte táhlo k nastavení odstínu."
 
 #. (itstool) path: tip/para
-#: C/index.docbook:1051
+#: C/index.docbook:1054
 msgid ""
 "You may use the <guilabel>Reset to Defaults</guilabel> button to reset the "
 "color balance controls to their default positions."
@@ -2364,17 +2366,17 @@ msgstr ""
 "<guilabel>Vrátit na výchozí</guilabel>."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1058
+#: C/index.docbook:1061
 msgid "Audio"
 msgstr "Zvuk"
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1061
+#: C/index.docbook:1064
 msgid "Audio Output"
 msgstr "Zvukový výstup"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1063
+#: C/index.docbook:1066
 msgid ""
 "Select audio output type from the <guilabel>Audio output type</guilabel> "
 "drop-down list."
@@ -2383,12 +2385,12 @@ msgstr ""
 "zvukového výstupu."
 
 #. (itstool) path: sect1/title
-#: C/index.docbook:1091
+#: C/index.docbook:1094
 msgid "About <application>Totem Movie Player</application>"
 msgstr "O aplikaci <application>přehrávač filmů Totem</application>"
 
 #. (itstool) path: sect1/para
-#: C/index.docbook:1092
+#: C/index.docbook:1095
 msgid ""
 "<application>Totem Movie Player</application> is written by Bastien Nocera "
 "(<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</"
@@ -2407,7 +2409,7 @@ msgstr ""
 "stránky</ulink>."
 
 #. (itstool) path: sect1/para
-#: C/index.docbook:1105
+#: C/index.docbook:1108
 msgid ""
 "This program is distributed under the terms of the GNU General Public "
 "license as published by the Free Software Foundation; either version 2 of "
