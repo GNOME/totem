@@ -2748,6 +2748,7 @@ totem_grilo_init (TotemGrilo *self)
 							 GRL_METADATA_KEY_SHOW,
 							 GRL_METADATA_KEY_SEASON,
 							 GRL_METADATA_KEY_EPISODE,
+							 GRL_METADATA_KEY_TITLE_FROM_FILENAME,
 							 NULL);
 
 	gtk_widget_init_template (GTK_WIDGET (self));
