@@ -257,7 +257,7 @@ source_is_recent (GrlSource *source)
 }
 
 static gboolean
-source_is_adult (GrlSource *source)
+source_is_forbidden (GrlSource *source)
 {
 	const char **tags;
 
@@ -265,7 +265,8 @@ source_is_adult (GrlSource *source)
 	if (!tags)
 		return FALSE;
 
-	return strv_has_prefix (tags, "adult");
+	return strv_has_prefix (tags, "adult") ||
+		strv_has_prefix (tags, "torrent");
 }
 
 static gchar *
@@ -1243,7 +1244,7 @@ source_added_cb (GrlRegistry *registry,
 	const char *id;
 
 	if (source_is_blacklisted (source) ||
-	    source_is_adult (source) ||
+	    source_is_forbidden (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
 		grl_registry_unregister_source (registry,
 		                                source,
