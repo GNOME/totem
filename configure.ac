@@ -62,6 +62,7 @@ PYGOBJECT_REQS=2.90.3
 GRILO_REQS=0.2.10
 GRILO_PLS_REQS=0.2.1
 LIBXML_REQS=2.6.0
+CAIRO_REQS=1.14.0
 
 # Used in the pkg-config file for plugins
 AC_SUBST(GLIB_REQS)
@@ -130,7 +131,7 @@ fi
 # Backend requirements
 # ================================================================
 
-BACKEND_MODULES="gstreamer-1.0 >= $GST_REQS gstreamer-base-1.0 >= $GST_REQS gstreamer-plugins-base-1.0 >= $GST_PLUG_BASE_REQS $MISSING_PLUGINS_MODULES gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-audio-1.0 gstreamer-video-1.0 clutter-1.0 >= $CLUTTER_REQS clutter-gst-3.0 >= $CLUTTER_GST_REQS clutter-gtk-1.0 cairo gsettings-desktop-schemas"
+BACKEND_MODULES="gstreamer-1.0 >= $GST_REQS gstreamer-base-1.0 >= $GST_REQS gstreamer-plugins-base-1.0 >= $GST_PLUG_BASE_REQS $MISSING_PLUGINS_MODULES gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-audio-1.0 gstreamer-video-1.0 clutter-1.0 >= $CLUTTER_REQS clutter-gst-3.0 >= $CLUTTER_GST_REQS clutter-gtk-1.0 cairo >= $CAIRO_REQS gsettings-desktop-schemas"
 
 PKG_CHECK_MODULES(BACKEND, $BACKEND_MODULES)
 PKG_CHECK_MODULES(BACKEND_TEST, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS)
