@@ -116,9 +116,6 @@ CLEANFILES += \
 gsettings_ENUM_NAMESPACE = org.gnome.totem
 gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/backend/*.h
 gsettings_SCHEMAS = org.gnome.totem.gschema.xml
-CLEANFILES += $(gsettings_SCHEMAS)
-
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 convertdir = $(datadir)/GConf/gsettings

@@ -9,11 +9,8 @@ uidir = $(plugindir)
 ui_DATA = opensubtitles.ui
 EXTRA_DIST += $(ui_DATA)
 
-@INTLTOOL_XML_NOMERGE_RULE@
-@GSETTINGS_RULES@
-
 gsettings_SCHEMAS = org.gnome.totem.plugins.opensubtitles.gschema.xml
-CLEANFILES += $(gsettings_SCHEMAS)
+@GSETTINGS_RULES@
 
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = opensubtitles.convert

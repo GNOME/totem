@@ -29,7 +29,7 @@ dnl Add the languages which your application supports to po/LINGUAS
 GETTEXT_PACKAGE=totem
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define to the Gettext package name])
 AC_SUBST(GETTEXT_PACKAGE)
-IT_PROG_INTLTOOL([0.40.0])
+IT_PROG_INTLTOOL([0.50.1])
 
 # User Documentation
 YELP_HELP_INIT
@@ -562,7 +562,7 @@ src/plugins/gromit/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
 src/plugins/opensubtitles/Makefile
-src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in
+src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml
 src/plugins/properties/Makefile
 src/plugins/recent/Makefile
 src/plugins/rotation/Makefile
@@ -571,14 +571,14 @@ src/plugins/skipto/Makefile
 src/plugins/samplepython/Makefile
 src/plugins/sample-vala/Makefile
 src/plugins/pythonconsole/Makefile
-src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
+src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml
 src/plugins/brasero-disc-recorder/Makefile
 src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
 src/plugins/vimeo/Makefile
 src/backend/Makefile
 data/Makefile
-data/org.gnome.totem.gschema.xml.in
+data/org.gnome.totem.gschema.xml
 data/org.gnome.Totem.desktop.in.in
 data/totem.pc
 data/appdata/Makefile

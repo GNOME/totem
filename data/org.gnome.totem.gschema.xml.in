@@ -3,41 +3,41 @@
 	<schema id="org.gnome.totem" path="/org/gnome/Totem/" gettext-domain="@GETTEXT_PACKAGE@">
 		<key name="brightness" type="i">
 			<default>32767</default>
-			<_summary>The brightness of the video</_summary>
+			<summary>The brightness of the video</summary>
 		</key>
 		<key name="contrast" type="i">
 			<default>32767</default>
-			<_summary>The contrast of the video</_summary>
+			<summary>The contrast of the video</summary>
 		</key>
 		<key name="hue" type="i">
 			<default>32767</default>
-			<_summary>The hue of the video</_summary>
+			<summary>The hue of the video</summary>
 		</key>
 		<key name="saturation" type="i">
 			<default>32767</default>
-			<_summary>The saturation of the video</_summary>
+			<summary>The saturation of the video</summary>
 		</key>
 		<key name="repeat" type="b">
 			<default>false</default>
-			<_summary>Repeat mode</_summary>
+			<summary>Repeat mode</summary>
 		</key>
 		<key name="disable-deinterlacing" type="b">
 			<default>false</default>
-			<_summary>Whether to disable deinterlacing for interlaced movies</_summary>
+			<summary>Whether to disable deinterlacing for interlaced movies</summary>
 		</key>
 		<key name="audio-output-type" enum="org.gnome.totem.BvwAudioOutputType">
 			<default>'stereo'</default>
-			<_summary>Type of audio output to use</_summary>
+			<summary>Type of audio output to use</summary>
 		</key>
 		<key name="network-buffer-threshold" type="d">
 			<default>2</default>
-			<_summary>Network buffering threshold</_summary>
-			<_description>Amount of data to buffer for network streams before starting to display the stream (in seconds).</_description>
+			<summary>Network buffering threshold</summary>
+			<description>Amount of data to buffer for network streams before starting to display the stream (in seconds).</description>
 		</key>
 		<key name="subtitle-font" type="s">
 			<default>'Sans Bold 20'</default>
-			<_summary>Subtitle font</_summary>
-			<_description>Pango font description for subtitle rendering.</_description>
+			<summary>Subtitle font</summary>
+			<description>Pango font description for subtitle rendering.</description>
 		</key>
 		<key name="subtitle-encoding" type="s">
 			<default l10n="messages" context="subtitle-encoding">
@@ -46,44 +46,44 @@
 				     encoding for fansub subtitles in your language. File a bug
 				     against Totem, and leave UTF-8 as the default if in doubt. -->
 				'UTF-8'</default>
-			<_summary>Subtitle encoding</_summary>
-			<_description>Encoding character set for subtitle.</_description>
+			<summary>Subtitle encoding</summary>
+			<description>Encoding character set for subtitle.</description>
 		</key>
 		<key name="open-uri" type="s">
 			<default>''</default>
-			<_summary>Default location for the "Open..." dialogs</_summary>
-			<_description>Default location for the "Open..." dialogs. Default is the current directory.</_description>
+			<summary>Default location for the "Open..." dialogs</summary>
+			<description>Default location for the "Open..." dialogs. Default is the current directory.</description>
 		</key>
 		<key name="screenshot-save-uri" type="s">
 			<default>''</default>
-			<_summary>Default location for the "Take Screenshot" dialogs</_summary>
-			<_description>Default location for the "Take Screenshot" dialogs. Default is the Pictures directory.</_description>
+			<summary>Default location for the "Take Screenshot" dialogs</summary>
+			<description>Default location for the "Take Screenshot" dialogs. Default is the Pictures directory.</description>
 		</key>
 		<key name="disable-user-plugins" type="b">
 			<default>false</default>
-			<_summary>Whether to disable the plugins in the user's home directory</_summary>
+			<summary>Whether to disable the plugins in the user's home directory</summary>
 		</key>
 		<key name="disable-keyboard-shortcuts" type="b">
 			<default>false</default>
-			<_summary>Whether to disable the keyboard shortcuts</_summary>
+			<summary>Whether to disable the keyboard shortcuts</summary>
 		</key>
 		<key name="autoload-subtitles" type="b">
 			<default>false</default>
-			<_summary>Whether to autoload text subtitle files when a movie is loaded</_summary>
+			<summary>Whether to autoload text subtitle files when a movie is loaded</summary>
 		</key>
 		<key name="autoload-chapters" type="b">
 			<default>true</default>
-			<_summary>Whether to autoload external chapter files when a movie is loaded</_summary>
+			<summary>Whether to autoload external chapter files when a movie is loaded</summary>
 		</key>
 		<key name="active-plugins" type="as">
 			<default>['skipto','chapters','screenshot','media_player_keys','screensaver','movie-properties','save-file']</default>
-			<_summary>Active plugins list</_summary>
-			<_description>A list of the names of the plugins which are currently active (loaded and running).</_description>
+			<summary>Active plugins list</summary>
+			<description>A list of the names of the plugins which are currently active (loaded and running).</description>
 		</key>
 		<key name="filesystem-paths" type="as">
 			<default>[]</default>
-			<_summary>Directories to show</_summary>
-			<_description>Directories to show in the browse interface, none by default</_description>
+			<summary>Directories to show</summary>
+			<description>Directories to show in the browse interface, none by default</description>
 		</key>
 	</schema>
 </schemalist>
