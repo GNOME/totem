@@ -247,6 +247,9 @@ totem_object_app_activate (GApplication *app)
 			totem_object_play_pause (totem);
 		else
 			totem_object_set_mrl (totem, NULL, NULL);
+
+		g_strfreev (optionstate.filenames);
+		optionstate.filenames = NULL;
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
