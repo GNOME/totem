@@ -36,6 +36,7 @@
 #include <gst/gst.h>
 #include <totem-disc.h>
 
+#include <locale.h>
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
@@ -966,6 +967,11 @@ int main (int argc, char *argv[])
 	GdkPixbuf *pixbuf;
 	const char *input, *output;
 	ThumbApp app;
+
+	setlocale (LC_ALL, "");
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
 
 	context = g_option_context_new ("Thumbnail movies");
 	options = gst_init_get_option_group ();
