@@ -33,6 +33,8 @@
 #define DEFAULT_MAX_THREADS   5
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
+#define SOURCES_MAX_HEIGHT    32
+#define VIDEO_ICON_SIZE       16
 
 typedef enum {
 	ICON_BOX = 0,
@@ -46,6 +48,12 @@ static GnomeDesktopThumbnailFactory *factory;
 static GThreadPool *thumbnail_pool;
 static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
+
+static GdkPixbuf *load_icon (GdkPixbuf *pixbuf, gboolean with_border, gboolean resize);
+static GdkPixbuf *load_named_icon (Totem      *totem,
+				   const char *name,
+				   int         size,
+				   gboolean    with_border);
 
 static gboolean
 media_is_local (GrlMedia *media)
@@ -90,6 +98,16 @@ load_thumbnail_cb (GObject *source_object,
 	/* Cache it */
 	file = g_task_get_task_data (task);
 	if (file) {
+		gboolean is_source;
+
+		is_source = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (task), "is-source"));
+		if (is_source) {
+			GdkPixbuf *new_pixbuf;
+
+			new_pixbuf = load_icon (pixbuf, TRUE, TRUE);
+			g_object_unref (pixbuf);
+			pixbuf = new_pixbuf;
+		}
 		g_hash_table_insert (cache_thumbnails,
 				     g_file_get_uri (G_FILE (file)),
 				     g_object_ref (pixbuf));
@@ -107,6 +125,7 @@ get_stream_thumbnail_cb (GObject *source_object,
 	GTask *task = user_data;
 	GFileInputStream *stream;
 	GError *error = NULL;
+	gboolean is_source;
 
 	stream = g_file_read_finish (G_FILE (source_object), res, &error);
 	if (!stream) {
@@ -115,9 +134,10 @@ get_stream_thumbnail_cb (GObject *source_object,
 		return;
 	}
 
+	is_source = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (task), "is-source"));
 	gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (stream),
-						   THUMB_SEARCH_SIZE,
-						   THUMB_SEARCH_HEIGHT,
+						   is_source ? -1 : THUMB_SEARCH_SIZE,
+						   is_source ? -1 : THUMB_SEARCH_HEIGHT,
 						   TRUE,
 						   g_task_get_cancellable (task),
 						   load_thumbnail_cb,
@@ -276,6 +296,8 @@ totem_grilo_get_thumbnail (GObject             *object,
 			file = g_file_icon_get_file (G_FILE_ICON (icon));
 			url_thumb = g_file_get_uri (file);
 			g_object_unref (file);
+
+			g_object_set_data (G_OBJECT (task), "is-source", GUINT_TO_POINTER (TRUE));
 		}
 	}
 	if (url_thumb == NULL) {
@@ -310,10 +332,85 @@ put_pixel (guchar *p)
 }
 
 static GdkPixbuf *
-load_icon (Totem      *totem,
-	   const char *name,
-	   int         size,
-	   gboolean    with_border)
+load_icon (GdkPixbuf  *pixbuf,
+	   gboolean    with_border,
+	   gboolean    resize)
+{
+	GdkPixbuf *ret;
+	guchar *pixels;
+	int rowstride;
+	int x, y;
+	int width, height;
+	gdouble offset_x, offset_y, scale;
+	int dest_x, dest_y;
+
+	ret = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+			      TRUE,
+			      8, THUMB_SEARCH_SIZE, THUMB_SEARCH_HEIGHT);
+	pixels = gdk_pixbuf_get_pixels (ret);
+	rowstride = gdk_pixbuf_get_rowstride (ret);
+
+	/* Clean up and draw a border */
+	if (with_border) {
+		gdk_pixbuf_fill (ret, 0x00000088);
+
+		/* top */
+		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+			put_pixel (pixels + x * 4);
+		/* bottom */
+		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
+		/* left */
+		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+			put_pixel (pixels + y * rowstride);
+		/* right */
+		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
+	} else {
+		gdk_pixbuf_fill (ret, 0x00000000);
+	}
+
+	width = gdk_pixbuf_get_width (pixbuf);
+	height = gdk_pixbuf_get_height (pixbuf);
+
+	if (resize &&
+	    (width > (THUMB_SEARCH_SIZE / 4 * 3) ||
+	     height > SOURCES_MAX_HEIGHT)) {
+		gdouble scale_x, scale_y;
+		scale_x = ((gdouble) THUMB_SEARCH_SIZE / 4.0 * 3.0) / (gdouble) width;
+		scale_y = (gdouble) SOURCES_MAX_HEIGHT / (gdouble) height;
+		if (scale_y < 1.0)
+			scale = scale_y;
+		else
+			scale = MIN(MIN(scale_x, scale_y), 1.0);
+	} else {
+		scale = 1.0;
+	}
+
+	/* Put the icon in the middle, with help from this post:
+	 * http://permalink.gmane.org/gmane.comp.desktop.rox.devel/9065 */
+	offset_x = (THUMB_SEARCH_SIZE - width * scale) / 2;
+	offset_y = (THUMB_SEARCH_HEIGHT - height * scale) / 2;
+	dest_x = MAX(offset_x, 0);
+	dest_y = MAX(offset_y, 0);
+	gdk_pixbuf_composite (pixbuf, ret,
+			      dest_x, dest_y,
+			      MIN(THUMB_SEARCH_SIZE, width * scale),
+			      MIN(THUMB_SEARCH_HEIGHT, height * scale),
+			      offset_x,
+			      offset_y,
+			      scale, scale,
+			      GDK_INTERP_BILINEAR,
+			      255);
+
+	return ret;
+}
+
+static GdkPixbuf *
+load_named_icon (Totem      *totem,
+		 const char *name,
+		 int         size,
+		 gboolean    with_border)
 {
 	GApplication *app;
 	GdkScreen *screen;
@@ -323,9 +420,6 @@ load_icon (Totem      *totem,
 	GtkIconTheme *theme;
 	GtkStyleContext *context;
 	GdkPixbuf *pixbuf, *ret;
-	guchar *pixels;
-	int rowstride;
-	int x, y;
 
 	app = g_application_get_default ();
 	windows = gtk_application_get_windows (GTK_APPLICATION (app));
@@ -339,37 +433,7 @@ load_icon (Totem      *totem,
 	context = gtk_widget_get_style_context (GTK_WIDGET (windows->data));
 	pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
 
-	ret = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			      TRUE,
-			      8, THUMB_SEARCH_SIZE, THUMB_SEARCH_HEIGHT);
-	pixels = gdk_pixbuf_get_pixels (ret);
-	rowstride = gdk_pixbuf_get_rowstride (ret);
-
-	/* Clean up */
-	gdk_pixbuf_fill (ret, 0x00000000);
-
-	/* Draw a border */
-	if (with_border) {
-		/* top */
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + x * 4);
-		/* bottom */
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
-		/* left */
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride);
-		/* right */
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
-	}
-
-	/* Put the icon in the middle */
-	gdk_pixbuf_copy_area (pixbuf, 0, 0,
-			      gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf),
-			      ret,
-			      (THUMB_SEARCH_SIZE - gdk_pixbuf_get_width (pixbuf)) / 2,
-			      (THUMB_SEARCH_HEIGHT - gdk_pixbuf_get_height (pixbuf)) / 2);
+	ret = load_icon (pixbuf, with_border, FALSE);
 
 	g_object_unref (pixbuf);
 	g_object_unref (info);
@@ -435,10 +499,10 @@ totem_grilo_clear_icons (void)
 void
 totem_grilo_setup_icons (Totem *totem)
 {
-	icons[ICON_BOX] = load_icon (totem, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
-	icons[ICON_VIDEO] = load_icon (totem, "folder-videos-symbolic", 16, TRUE);
-	icons[ICON_VIDEO_THUMBNAILING] = load_icon (totem, "content-loading-symbolic", 16, TRUE);
-	icons[ICON_OPTICAL] = load_icon (totem, "media-optical-dvd-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	icons[ICON_BOX] = load_named_icon (totem, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	icons[ICON_VIDEO] = load_named_icon (totem, "folder-videos-symbolic", VIDEO_ICON_SIZE, TRUE);
+	icons[ICON_VIDEO_THUMBNAILING] = load_named_icon (totem, "content-loading-symbolic", VIDEO_ICON_SIZE, TRUE);
+	icons[ICON_OPTICAL] = load_named_icon (totem, "media-optical-dvd-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 
 	cache_thumbnails = g_hash_table_new_full (g_str_hash,
 						  g_str_equal,
