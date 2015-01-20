@@ -1849,6 +1849,7 @@ setup_source_switcher (TotemGrilo *self)
 	GtkStyleContext *context;
 
 	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_set_homogeneous (GTK_BOX (self->priv->switcher), TRUE);
 
 	self->priv->recent = create_switcher_button (self, _("Videos"), "recent");
 	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
