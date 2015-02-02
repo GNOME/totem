@@ -284,6 +284,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 	}
 
 	install_ctx = gst_install_plugins_context_new ();
+	gst_install_plugins_context_set_desktop_id (install_ctx, "org.gnome.Totem.desktop");
 
 #ifdef GDK_WINDOWING_X11
 	display = gdk_display_get_default ();
