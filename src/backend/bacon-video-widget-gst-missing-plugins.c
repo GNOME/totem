@@ -34,6 +34,8 @@
 #include <gst/pbutils/pbutils.h>
 #include <gst/pbutils/install-plugins.h>
 
+#include <gio/gdesktopappinfo.h>
+#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_X11
@@ -236,8 +238,19 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 	bacon_video_widget_gst_codec_install_context_free (ctx);
 }
 
+#ifdef GDK_WINDOWING_X11
+static gchar *
+make_startup_notification_id ()
+{
+	guint32 timestamp;
+
+	timestamp = gtk_get_current_event_time ();
+	return g_strdup_printf ("_TIME%u", timestamp);
+}
+#endif
+
 static gboolean
-bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx)
+bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx, gboolean confirm_search)
 {
 	GstInstallPluginsContext *install_ctx;
 	GstInstallPluginsReturn status;
@@ -247,6 +260,7 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx)
 
 	install_ctx = gst_install_plugins_context_new ();
 	gst_install_plugins_context_set_desktop_id (install_ctx, "org.gnome.Totem.desktop");
+	gst_install_plugins_context_set_confirm_search (install_ctx, confirm_search);
 
 #ifdef GDK_WINDOWING_X11
 	display = gdk_display_get_default ();
@@ -255,7 +269,12 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx)
 	    gtk_widget_get_window (GTK_WIDGET (ctx->bvw)) != NULL &&
 	    gtk_widget_get_realized (GTK_WIDGET (ctx->bvw)))
 	{
+		gchar *startup_id;
 		gulong xid = 0;
+
+		startup_id = make_startup_notification_id ();
+		gst_install_plugins_context_set_startup_notification_id (install_ctx, startup_id);
+		g_free (startup_id);
 
 		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (ctx->bvw));
 		gst_install_plugins_context_set_xid (install_ctx, xid);
@@ -285,6 +304,56 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx)
 	}
 
 	return TRUE;
+}
+
+static gchar *
+build_comma_separated_list (gchar **items)
+{
+	guint len;
+
+	len = g_strv_length (items);
+	if (len == 2) {
+		/* TRANSLATORS: separator for a list of items */
+		return g_strjoinv (_(" and "), items);
+	} else {
+		/* TRANSLATORS: separator for a list of items */
+		return g_strjoinv (_(", "), items);
+	}
+}
+
+static gboolean
+does_gnome_software_exist (void)
+{
+	GDesktopAppInfo *app_info;
+	gboolean ret = FALSE;
+
+	app_info = g_desktop_app_info_new ("org.gnome.Software.desktop");
+	if (app_info != NULL) {
+		g_object_unref (app_info);
+		ret = TRUE;
+	}
+
+	return ret;
+}
+
+static void
+bacon_video_widget_find_in_gnome_software_cb (GtkDialog *dialog,
+                                              GtkResponseType response_type,
+                                              gpointer user_data)
+{
+	TotemCodecInstallContext *ctx = user_data;
+
+	switch (response_type) {
+	case GTK_RESPONSE_ACCEPT:
+		bacon_video_widget_start_plugin_installation (ctx, FALSE);
+		break;
+	case GTK_RESPONSE_CANCEL:
+	case GTK_RESPONSE_DELETE_EVENT:
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+	gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static gboolean
@@ -329,8 +398,51 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 		return FALSE;
 	}
 
-	if (!bacon_video_widget_start_plugin_installation (ctx))
-		return FALSE;
+	/* if gnome-software exists, show a gnome-software specific
+	 * dialog, asking for confirmation before plugin installation */
+	if (does_gnome_software_exist ())
+	{
+		GtkWidget *button;
+		GtkWidget *dialog;
+		GtkWidget *toplevel;
+		gchar *descriptions_text;
+		gchar *message_text;
+
+		toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+
+		dialog = gtk_message_dialog_new (GTK_WINDOW (toplevel),
+		                                 GTK_DIALOG_MODAL |
+		                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+		                                 GTK_MESSAGE_ERROR,
+		                                 GTK_BUTTONS_CANCEL,
+		                                 _("Unable to play the file"));
+
+		descriptions_text = build_comma_separated_list (ctx->descriptions);
+		message_text = g_strdup_printf (ngettext ("%s is required to play the file, but is not installed.",
+		                                          "%s are required to play the file, but are not installed.",
+		                                          num),
+		                                descriptions_text);
+
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", message_text);
+		button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+		                                /* TRANSLATORS: this is a button to launch gnome-software */
+		                                _("_Find in Software"),
+		                                GTK_RESPONSE_ACCEPT);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
+		gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
+		g_signal_connect (dialog, "response",
+		                  G_CALLBACK (bacon_video_widget_find_in_gnome_software_cb),
+		                  ctx);
+
+		gtk_window_present (GTK_WINDOW (dialog));
+
+		g_free (descriptions_text);
+		g_free (message_text);
+	} else {
+		/* otherwise start the installation immediately */
+		if (!bacon_video_widget_start_plugin_installation (ctx, TRUE))
+			return FALSE;
+	}
 
 	/* if we managed to start playing, pause playback, since some install
 	 * wizard should now take over in a second anyway and the user might not
