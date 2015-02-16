@@ -125,6 +125,16 @@ if test "x$enable_easy_codec_installation" != "xno"; then
 		AC_DEFINE([ENABLE_MISSING_PLUGIN_INSTALLATION], 1,
 		          [Whether we can and want to do installation of missing plugins])
 	])
+
+	# Check for gst_install_plugins_context_set_desktop_id, as we don't
+	# want to hard depend on this until there is a stable gst-plugins-base
+	# release with it.
+	save_CFLAGS="$CFLAGS"
+	save_LIBS="$LIBS"
+	CFLAGS="`$PKG_CONFIG --cflags gstreamer-pbutils-1.0` $CFLAGS"
+	LIBS="`$PKG_CONFIG --libs gstreamer-pbutils-1.0` $LIBS"
+	AC_CHECK_FUNCS(gst_install_plugins_context_set_desktop_id)
+	LIBS="$save_LIBS"
 fi
 
 # ================================================================

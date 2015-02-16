@@ -239,6 +239,7 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 }
 
 #ifdef GDK_WINDOWING_X11
+#ifdef HAVE_GST_INSTALL_PLUGINS_CONTEXT_SET_DESKTOP_ID
 static gchar *
 make_startup_notification_id ()
 {
@@ -247,6 +248,7 @@ make_startup_notification_id ()
 	timestamp = gtk_get_current_event_time ();
 	return g_strdup_printf ("_TIME%u", timestamp);
 }
+#endif
 #endif
 
 static gboolean
@@ -259,8 +261,10 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx, gbo
 #endif
 
 	install_ctx = gst_install_plugins_context_new ();
+#ifdef HAVE_GST_INSTALL_PLUGINS_CONTEXT_SET_DESKTOP_ID
 	gst_install_plugins_context_set_desktop_id (install_ctx, "org.gnome.Totem.desktop");
 	gst_install_plugins_context_set_confirm_search (install_ctx, confirm_search);
+#endif
 
 #ifdef GDK_WINDOWING_X11
 	display = gdk_display_get_default ();
@@ -269,12 +273,16 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx, gbo
 	    gtk_widget_get_window (GTK_WIDGET (ctx->bvw)) != NULL &&
 	    gtk_widget_get_realized (GTK_WIDGET (ctx->bvw)))
 	{
+#ifdef HAVE_GST_INSTALL_PLUGINS_CONTEXT_SET_DESKTOP_ID
 		gchar *startup_id;
+#endif
 		gulong xid = 0;
 
+#ifdef HAVE_GST_INSTALL_PLUGINS_CONTEXT_SET_DESKTOP_ID
 		startup_id = make_startup_notification_id ();
 		gst_install_plugins_context_set_startup_notification_id (install_ctx, startup_id);
 		g_free (startup_id);
+#endif
 
 		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (ctx->bvw));
 		gst_install_plugins_context_set_xid (install_ctx, xid);
