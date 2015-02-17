@@ -3,11 +3,6 @@ SUBDIRS = icons appdata
 EXTRA_DIST =
 CLEANFILES =
 
-# Bug reporting information script
-bugreportdir = $(libexecdir)/totem
-bugreport_SCRIPTS = totem-bugreport.py
-EXTRA_DIST += $(bugreport_SCRIPTS)
-
 # Man pages
 man_MANS = totem.1 totem-video-thumbnailer.1
 totem-video-thumbnailer.1: totem-video-thumbnailer.pod
