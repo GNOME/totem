@@ -578,7 +578,7 @@ add_local_metadata (TotemGrilo *self,
 	}
 
 	options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (options, GRL_RESOLVE_NORMAL);
+	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_NORMAL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
 				 media,
 				 self->priv->metadata_keys,
@@ -734,7 +734,7 @@ browse (TotemGrilo   *self,
 	caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
 	default_options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_resolution_flags (default_options, BROWSE_FLAGS);
 	if (page >= 1) {
 		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 		grl_operation_options_set_count (default_options, PAGE_SIZE);
@@ -843,7 +843,7 @@ get_search_options (TotemGrilo *self)
 	GrlOperationOptions *supported_options;
 
 	default_options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_resolution_flags (default_options, BROWSE_FLAGS);
 	grl_operation_options_set_skip (default_options, self->priv->search_page * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
 	grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
