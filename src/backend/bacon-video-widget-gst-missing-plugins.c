@@ -355,15 +355,15 @@ show_codec_confirmation_dialog (TotemCodecInstallContext *ctx,
 	                                 _("Unable to play the file"));
 
 	descriptions_text = g_strjoinv (", ", ctx->descriptions);
-	message_text = g_strdup_printf (ngettext ("%s is required to play the file, but is not installed.",
-	                                          "%s are required to play the file, but are not installed.",
+	message_text = g_strdup_printf (ngettext (N_("%s is required to play the file, but is not installed."),
+	                                          N_("%s are required to play the file, but are not installed."),
 	                                          g_strv_length (ctx->descriptions)),
 	                                descriptions_text);
 
 	/* TRANSLATORS: this is a button to launch a codec installer.
 	 * %s will be replaced with the software installer's name, e.g.
 	 * 'Software' in case of gnome-software. */
-	button_text = g_strdup_printf ("_Find in %s", install_helper_display_name);
+	button_text = g_strdup_printf (_("_Find in %s"), install_helper_display_name);
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", message_text);
 	button = gtk_dialog_add_button (GTK_DIALOG (dialog),
 	                                button_text,
