@@ -355,8 +355,8 @@ show_codec_confirmation_dialog (TotemCodecInstallContext *ctx,
 	                                 _("Unable to play the file"));
 
 	descriptions_text = g_strjoinv (", ", ctx->descriptions);
-	message_text = g_strdup_printf (ngettext (N_("%s is required to play the file, but is not installed."),
-	                                          N_("%s are required to play the file, but are not installed."),
+	message_text = g_strdup_printf (ngettext ("%s is required to play the file, but is not installed.",
+	                                          "%s are required to play the file, but are not installed.",
 	                                          g_strv_length (ctx->descriptions)),
 	                                descriptions_text);
 
