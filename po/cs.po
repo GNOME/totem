@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-02 12:12+0000\n"
-"PO-Revision-Date: 2015-03-02 22:13+0100\n"
+"POT-Creation-Date: 2015-03-04 08:23+0000\n"
+"PO-Revision-Date: 2015-03-04 12:51+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -593,13 +593,13 @@ msgstr "Nelze přehrát soubor"
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
 msgid "%s is required to play the file, but is not installed."
-msgstr ""
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] ""
 "K přehrání souboru je zapotřebí zásuvný modul %s, ale ten není nainstalován."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr ""
+msgstr[1] ""
+"K přehrání souboru jsou zapotřebí zásuvné moduly %s, ale ty nejsou "
+"nainstalovány."
+msgstr[2] ""
 "K přehrání souboru jsou zapotřebí zásuvné moduly %s, ale ty nejsou "
 "nainstalovány."
 
@@ -1933,3 +1933,8 @@ msgstr "Zásuvný modul Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zásuvný modul posílající události do Zeitgeist"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr ""
+#~ "K přehrání souboru jsou zapotřebí zásuvné moduly %s, ale ty nejsou "
+#~ "nainstalovány."
