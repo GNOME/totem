@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 13:04+0200\n"
-"PO-Revision-Date: 2015-02-24 13:06+0200\n"
+"POT-Creation-Date: 2015-03-04 16:55+0200\n"
+"PO-Revision-Date: 2015-03-04 16:58+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
@@ -21,6 +21,17 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "סרטונים"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "ניגון סרטים"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -31,29 +42,20 @@ msgstr ""
 "הוא כולל רשימת השמעה, מצב מסך־מלא, חיפוש ושליטה בעצמת השמע, כמו גם ניווט "
 "באמצעות מקלדת."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
 msgstr ""
 "‏Totem מגיע עם שימושיות נוספת כמו: הורדת כתוביות ותמיכה בהקלטת סרטי DVD."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "תצוגה מקדימה של סרטים למנהל קבצים."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "לשונית המאפיינים של קבצים"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
-msgid "Videos"
-msgstr "סרטונים"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "נגינת סרטים"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -559,12 +561,9 @@ msgstr "לא ניתן לנגן את הקובץ"
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
 msgid "%s is required to play the file, but is not installed."
-msgstr "%s נדרש על מנת לנגן את הקובץ, אך זה אינו מותקן."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr "%s נדרש על מנת לנגן את הקובץ, אך זה אינו מותקן"
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "‏%s דרוש לניגון הקובץ, אך זה אינו מותקן."
+msgstr[1] "‏%s דרושים לניגון הקובץ, אך אלה אינם מותקנים."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -1833,6 +1832,9 @@ msgstr "תוסף Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "תוסף ששולח אירועים ל־Zeitgeist"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr "%s נדרש על מנת לנגן את הקובץ, אך זה אינו מותקן"
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr "Whether to enable debug for the playback engine"
