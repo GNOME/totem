@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-21 00:49+0000\n"
+"POT-Creation-Date: 2015-03-04 08:23+0000\n"
 "PO-Revision-Date: 2015-02-21 10:46+0100\n"
 "Last-Translator: Guillaume Bernard <translate@filorin.fr>\n"
 "Language-Team: français <gnomefr@traduc.org>\n"
@@ -596,12 +596,9 @@ msgstr "Impossible de lire le fichier"
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
 msgid "%s is required to play the file, but is not installed."
-msgstr "%s est requis pour lire le fichier, mais il n'est pas installé."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr "%s sont requis pour lire le fichier, mais ils ne sont pas installés."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "%s est requis pour lire le fichier, mais il n'est pas installé."
+msgstr[1] "%s sont requis pour lire le fichier, mais il ne sont pas installés."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -1889,6 +1886,10 @@ msgstr "Greffon Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un greffon qui envoie les évènements à Zeitgeist"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr ""
+#~ "%s sont requis pour lire le fichier, mais ils ne sont pas installés."
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr "Indique s'il faut activer le débogage pour le moteur de lecture"
