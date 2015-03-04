@@ -1,19 +1,19 @@
 # Serbian translation of totem
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2013.
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2015.
 # This file is distributed under the same license as the totem package.
-# Maintainer: Miloš Popović <gpopac@gmail.com>
-# Prevous maintainer: Veljko M. Stanojević <veljko@vms.homelinux.net>
-# Reviewed on 2005-07-11 by Danilo Šegan <danilo@gnome.org>
-# Reviewed on 2005-09-03 by Andrija Zarić <andrija@gmail.com>
+# Miloš Popović <gpopac@gmail.com>
+# Veljko M. Stanojević <veljko@vms.homelinux.net>
+# Danilo Šegan <danilo@gnome.org> 2005.
+# Andrija Zarić <andrija@gmail.com> 2005.
 # Miloš Popović <gpopac@gmail.com>, 2010.
-# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2011—2014.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2011—2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&"
-"keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-23 22:54+0000\n"
-"PO-Revision-Date: 2014-09-24 12:03+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&k"
+"eywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-03-04 12:10+0000\n"
+"PO-Revision-Date: 2015-03-04 18:25+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -25,10 +25,17 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
-#| msgid ""
-#| "Totem, also known as Videos, is the official movie player of the GNOME "
-#| "desktop environment. It features a playlist, a full-screen mode, seek and "
-#| "volume controls, as well as keyboard navigation."
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Video snimci"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Puštajte filmove"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -36,14 +43,11 @@ msgid ""
 "highlights from a number of web sites."
 msgstr ""
 "Totem, takođe poznat kao Snimci, je zvanični puštač filmova za Gnomovo "
-"okruženje radne površi. Odlikuje ga pretraživi spisak mesnih snimaka, i "
-"DVD-a, kao i deljenje snimaka na mesnoj mreži (pomoću UPnP/DLNA) i isticanje "
+"okruženje radne površi. Odlikuje ga pretraživi spisak mesnih snimaka, i DVD-"
+"a, kao i deljenje snimaka na mesnoj mreži (pomoću UPnP/DLNA) i isticanje "
 "snimaka sa mnogobrojnih veb stranica."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, "
-#| "support to watch live TV and VCD recording."
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
@@ -51,65 +55,51 @@ msgstr ""
 "Totem dolazi sa dodatim funkcijama kao što je: preuzimanje prevoda, i podrška "
 "za snimanje DVD-a."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Video sličičar za upravnika datoteka"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
-#| msgid "Nautilus properties tab"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Jezičak svojstava datoteka"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
-msgid "Videos"
-msgstr "Video snimci"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Puštajte filmove"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "video;snimak;film;epizoda;serije;puštač;dvd;tv;disk;"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "Osvetljenje video snimka"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "Kontrast video snimka"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "Nijanse video snimka"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "Zasićenje video snimka"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "Režim ponavljanja"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Da li da isključi rasplitanje videa sa isprepletenim kadrovima"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
-msgid "Whether to enable debug for the playback engine"
-msgstr "Da li da uključi uklanjanje grešaka prilikom puštanja"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "Vrsta zvučnog izlaza koji se koristi"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "Prag za mrežno čitanje unapred"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -117,39 +107,44 @@ msgstr ""
 "Količina podataka koja će biti unapred učitana za mrežne tokove pre početka "
 "prikazivanja toka (u sekundama)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "Slovni lik za titl"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "Opis Pango slovnog lika za iscrtavanje teksta prevoda."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "„UTF-8“"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "Kodiranje za titl"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "Skup znakova kodiranja za titl."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Podrazumevana putanja za prozorče „Otvori...“"
 
 # bug: folder or directory?
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
 msgstr "Podrazumevana putanja za prozorče „Otvori...“, inače tekuća fascikla."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Podrazumevana putanja za prozorče „Napravi snimak ekrana“"
 
 # bug: folder or directory?
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -157,42 +152,42 @@ msgstr ""
 "Podrazumevana putanja za prozorče „Napravi snimak ekrana“, u suprotnom "
 "podrazumevana fascikla sa slikama."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Da li da isključi priključke u korisnikovom ličnom direktorijumu"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Da li da onemogućim prečice sa tastature"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Da li sam da učita tekstualne datoteke sa titlom pri učitavanju filma"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Da li sam da učita spoljne datoteke sa poglavljima pri učitavanju filma"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "Spisak aktivnih priključaka"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr ""
 "Spisak naziva priključaka koji su trenutno aktivni (učitani i pokrenuti)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "Direktorijumi za pokazivanje"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Direktorijumi za pokazivanje u sučelju razgledanja, ništa po osnovi"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5481
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5510
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -222,7 +217,6 @@ msgid "Preferences"
 msgstr "Postavke"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Text Subtitles"
 msgid "External Subtitles"
 msgstr "Spoljni prevodi"
 
@@ -395,8 +389,6 @@ msgid "Square"
 msgstr "Kvadrat"
 
 #: ../data/totem.ui.h:9
-#| msgctxt "Aspect ratio"
-#| msgid "4:3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
@@ -468,55 +460,55 @@ msgstr "Unesite _adresu datoteke koju želite da otvorite:"
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1906
+#: ../src/backend/bacon-video-widget.c:1935
 msgid "Password requested for RTSP server"
 msgstr "Zahtevana je lozinka za RTSP server"
 
-#: ../src/backend/bacon-video-widget.c:3277
+#: ../src/backend/bacon-video-widget.c:3306
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvučna numera #%d"
 
-#: ../src/backend/bacon-video-widget.c:3281
+#: ../src/backend/bacon-video-widget.c:3310
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Prevod #%d"
 
-#: ../src/backend/bacon-video-widget.c:3737
+#: ../src/backend/bacon-video-widget.c:3766
 msgid "The server you are trying to connect to is not known."
 msgstr "Nije poznat server na koji pokušavate da se povežete."
 
-#: ../src/backend/bacon-video-widget.c:3740
+#: ../src/backend/bacon-video-widget.c:3769
 msgid "The connection to this server was refused."
 msgstr "Veza sa ovim serverom je odbijena."
 
-#: ../src/backend/bacon-video-widget.c:3743
+#: ../src/backend/bacon-video-widget.c:3772
 msgid "The specified movie could not be found."
 msgstr "Ne mogu da nađem navedeni film."
 
-#: ../src/backend/bacon-video-widget.c:3750
+#: ../src/backend/bacon-video-widget.c:3779
 msgid "The server refused access to this file or stream."
 msgstr "Server je odbio pristup ovoj datoteci ili toku."
 
-#: ../src/backend/bacon-video-widget.c:3756
+#: ../src/backend/bacon-video-widget.c:3785
 msgid "Authentication is required to access this file or stream."
 msgstr "Potrebno je potvrđivanje identiteta za pristup ovoj datoteci ili toku."
 
-#: ../src/backend/bacon-video-widget.c:3763
+#: ../src/backend/bacon-video-widget.c:3792
 msgid "You are not allowed to open this file."
 msgstr "Vama nije dozvoljeno da otvorite ovu datoteku."
 
-#: ../src/backend/bacon-video-widget.c:3768
+#: ../src/backend/bacon-video-widget.c:3797
 msgid "This location is not a valid one."
 msgstr "Ova putanja nije ispravna."
 
-#: ../src/backend/bacon-video-widget.c:3776
+#: ../src/backend/bacon-video-widget.c:3805
 msgid "The movie could not be read."
 msgstr "Film ne može biti pročitan."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3799
-#: ../src/backend/bacon-video-widget.c:3807
+#: ../src/backend/bacon-video-widget.c:3828
+#: ../src/backend/bacon-video-widget.c:3836
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -538,12 +530,12 @@ msgstr[3] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3819
+#: ../src/backend/bacon-video-widget.c:3848
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr "Ovaj tok ne može biti pušten. Može biti da ga blokira mrežna barijera."
 
-#: ../src/backend/bacon-video-widget.c:3822
+#: ../src/backend/bacon-video-widget.c:3851
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -552,7 +544,7 @@ msgstr ""
 "Moraćete da instalirate dodatne priključke da biste mogli da puštate neke "
 "vrste filmova"
 
-#: ../src/backend/bacon-video-widget.c:3833
+#: ../src/backend/bacon-video-widget.c:3862
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -560,25 +552,46 @@ msgstr ""
 "Ne mogu da pustim ovu datoteku preko mreže. Pokušajte da je prvo prenesete "
 "na disk."
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5506 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Okruženje"
 
-#: ../src/backend/bacon-video-widget.c:5479 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5508 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5766
+#: ../src/backend/bacon-video-widget.c:5795
 msgid "Media contains no supported video streams."
 msgstr "Datoteka ne sadrži podržane video tokove."
 
-#: ../src/backend/bacon-video-widget.c:5924
+#: ../src/backend/bacon-video-widget.c:5954
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Neki neophodni priključci nedostaju. Uverite se da je program ispravno "
 "instaliran."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
+msgid "Unable to play the file"
+msgstr "Ne mogu da pustim datoteku"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "„%s“ je potreban za puštanje datoteke, ali nije instaliran."
+msgstr[1] "„%s“ su potrebni za puštanje datoteke, ali nisu instalirani."
+msgstr[2] "„%s“ su potrebni za puštanje datoteke, ali nisu instalirani."
+msgstr[3] ""
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#, c-format
+msgid "_Find in %s"
+msgstr "_Nađi u „%s“"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -756,39 +769,39 @@ msgstr "Zvučni pregled"
 
 # andrija: nepotpun prevod, a težak :)
 # danilo: niti i bezbedno, poslužiće ;)
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nisam uspeo da učitam biblioteke za bezbedan rad sa nitima."
 
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Proverite instalaciju sistema. Totem će se sada ugasiti."
 
-#: ../src/totem-grilo.c:280
+#: ../src/totem-grilo.c:284
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "%d. serijal %d. epizoda"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:317
+#: ../src/totem-grilo.c:321
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (%d. serijal %d. epizoda)"
 
-#: ../src/totem-grilo.c:687
+#: ../src/totem-grilo.c:671
 msgid "Browse Error"
 msgstr "Greška u razgledanju"
 
-#: ../src/totem-grilo.c:824
+#: ../src/totem-grilo.c:812
 msgid "Search Error"
 msgstr "Greška pretrage"
 
-#: ../src/totem-grilo.c:1275
+#: ../src/totem-grilo.c:1266
 msgid "Local"
 msgstr "Mesno"
 
-#: ../src/totem-grilo.c:1871
+#: ../src/totem-grilo.c:1863
 msgid "Channels"
 msgstr "Broj kanala"
 
@@ -841,66 +854,56 @@ msgid "Search"
 msgstr "Traži"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:391
+#: ../src/totem-menu.c:419
 msgid "None"
 msgstr "Ništa"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:395
+#: ../src/totem-menu.c:423
 msgctxt "Language"
 msgid "Auto"
 msgstr "Sam odredi"
 
-#: ../src/totem-object.c:175
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"Pokrenite „%s --help“ da ​​vidite potpun spisak dostupnih opcija linije "
-"naredbi.\n"
-
-#: ../src/totem-object.c:1334 ../src/totem-options.c:52
+#: ../src/totem-object.c:1418 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pauziraj"
 
-#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
-#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Pusti"
 
-#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
-#: ../src/totem-object.c:1955
+#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
+#: ../src/totem-object.c:2042
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ne može da pusti „%s“."
 
-#: ../src/totem-object.c:2097
+#: ../src/totem-object.c:2184
 msgid "Totem could not display the help contents."
 msgstr "Totem ne može da prikaže sadržaj pomoći."
 
-#: ../src/totem-object.c:2337
+#: ../src/totem-object.c:2424
 msgid "An error occurred"
 msgstr "Došlo je do greške"
 
-#: ../src/totem-object.c:3641
+#: ../src/totem-object.c:3755
 msgid "Previous Chapter/Movie"
 msgstr "Prethodno poglavlje/film"
 
-#: ../src/totem-object.c:3647
+#: ../src/totem-object.c:3761
 msgid "Play / Pause"
 msgstr "Pusti / Pauziraj"
 
-#: ../src/totem-object.c:3653
+#: ../src/totem-object.c:3767
 msgid "Next Chapter/Movie"
 msgstr "Sledeće poglavlje/film"
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3987
 msgid "Totem could not startup."
 msgstr "Totem ne može da se pokrene."
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3987
 msgid "No reason."
 msgstr "Bez razloga."
 
@@ -923,70 +926,62 @@ msgid "_Add"
 msgstr "_Dodaj"
 
 #: ../src/totem-options.c:49
-msgid "Enable debug"
-msgstr "Uključuje uklanjanje grešaka"
-
-#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "Pušta/pauzira"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Sledeće"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "Prethodno"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "Premotava unapred"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "Premotava unazad"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "Pojačava jačinu zvuka"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "Utišava jačinu zvuka"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "Potpuno utišava jačinu zvuka"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Okida režim preko celog ekrana"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Quit"
 msgstr "Zatvara program"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Enqueue"
 msgstr "Zakazuje puštanje"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Replace"
 msgstr "Vrši zamenu"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Seek"
 msgstr "Premotava"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Filmovi za puštanje"
 
-#: ../src/totem-options.c:76
-msgid "- Play movies and songs"
-msgstr "— puštajte filmove i pesme"
-
-#: ../src/totem-options.c:123
+#: ../src/totem-options.c:99
 msgid "Can't enqueue and replace at the same time"
 msgstr "Ne mogu da zakažem i da zamenim u isto vreme"
 
@@ -1251,7 +1246,7 @@ msgstr "Dodaj snimke"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:786
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1262,15 +1257,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:787
 msgid "Filename"
 msgstr "Naziv datoteke"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:789
 msgid "Resolution"
 msgstr "Rezolucija"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Duration"
 msgstr "Trajanje"
 
@@ -1565,7 +1560,7 @@ msgid "Searching for subtitles…"
 msgstr "Tražim prevode…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:605
+#: ../src/plugins/opensubtitles/opensubtitles.py:607
 msgid "Downloading the subtitles…"
 msgstr "Preuzimam prevode…"
 
@@ -1598,11 +1593,11 @@ msgstr "Format"
 msgid "Rating"
 msgstr "Ocena"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:524
 msgid "_Download Movie Subtitles…"
 msgstr "_Preuzmi prevode za film…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:564
 msgid "Searching subtitles…"
 msgstr "Pretražujem prevode…"
 
@@ -1618,11 +1613,11 @@ msgstr "Jezik tit_la:"
 msgid "_Play with Subtitle"
 msgstr "_Pusti sa titlom"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "Jezik prevoda"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "Jezik za pretraživanje za prevode filmova."
 
@@ -1642,11 +1637,11 @@ msgstr "Svojstva"
 msgid "_Properties"
 msgstr "_Svojstva"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "rpdb2 lozinka"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -1880,6 +1875,23 @@ msgstr "Priključak Cajtgajsta"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Priključak koji šalje događaje Cajtgajstu"
+
+#~ msgid "Whether to enable debug for the playback engine"
+#~ msgstr "Da li da uključi uklanjanje grešaka prilikom puštanja"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "Run '%s --help' to see a full list of available command line options.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "Pokrenite „%s --help“ da ​​vidite potpun spisak dostupnih opcija linije "
+#~ "naredbi.\n"
+
+#~ msgid "Enable debug"
+#~ msgstr "Uključuje uklanjanje grešaka"
+
+#~ msgid "- Play movies and songs"
+#~ msgstr "— puštajte filmove i pesme"
 
 #~ msgid "No URI to play"
 #~ msgstr "Nema adrese za puštanje"
