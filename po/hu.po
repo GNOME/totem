@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-01 00:08+0000\n"
-"PO-Revision-Date: 2015-03-01 12:01+0100\n"
+"POT-Creation-Date: 2015-03-05 12:06+0000\n"
+"PO-Revision-Date: 2015-03-06 00:18+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -23,6 +23,17 @@ msgstr ""
 "X-Generator: Lokalize 1.2\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Videók"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Filmek lejátszása"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -34,7 +45,7 @@ msgstr ""
 "valamint a helyi hálózaton elérhető videomegosztásokat (UPnP/DLNA "
 "használatával) és videokiemeléseket számos weboldalról."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
@@ -42,22 +53,13 @@ msgstr ""
 "A Totem további hozzáadott funkciókat is tartalmaz, mint például: "
 "feliratletöltő és DVD-felvételek támogatása."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Video-bélyegképek készítése a fájlkezelőhöz"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Fájltulajdonságok lap"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
-msgid "Videos"
-msgstr "Videók"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Filmek lejátszása"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -563,19 +565,16 @@ msgstr ""
 "megfelelően van telepítve."
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
-#| msgid "Failed to parse CMML file"
 msgid "Unable to play the file"
 msgstr "Nem lehet lejátszani a fájlt"
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
+#| msgid "%s is required to play the file, but is not installed."
 msgid "%s is required to play the file, but is not installed."
-msgstr "%s szükséges a fájl lejátszásához, de nincs telepítve."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr "%s szükségesek a fájl lejátszásához, de nincsenek telepítve."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "%s szükséges a fájl lejátszásához, de nincs telepítve."
+msgstr[1] "%s szükségesek a fájl lejátszásához, de nincsenek telepítve."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -1850,6 +1849,9 @@ msgstr "Zeitgeist bővítmény"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Egy bővítmény események küldéséhez a Zeitgeistbe"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr "%s szükségesek a fájl lejátszásához, de nincsenek telepítve."
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr "A hibakeresés engedélyezve legyen-e a lejátszómotornál"
