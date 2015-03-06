@@ -419,7 +419,6 @@ load_named_icon (const char *name,
 		 int         size,
 		 guint32     fill)
 {
-	GApplication *app;
 	GdkScreen *screen;
 	GIcon *icon;
 	GList *windows;
@@ -428,8 +427,7 @@ load_named_icon (const char *name,
 	GtkStyleContext *context;
 	GdkPixbuf *pixbuf, *ret;
 
-	app = g_application_get_default ();
-	windows = gtk_application_get_windows (GTK_APPLICATION (app));
+	windows = gtk_window_list_toplevels ();
 	if (windows == NULL)
 		return NULL;
 
