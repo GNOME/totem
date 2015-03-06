@@ -32,12 +32,13 @@
 
 #define DEFAULT_MAX_THREADS   5
 #define THUMB_SEARCH_SIZE     256
-#define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
-#define SOURCES_MAX_HEIGHT    32
-#define VIDEO_ICON_SIZE       16
+#define THUMB_SEARCH_HEIGHT   THUMB_SEARCH_SIZE
+#define SOURCES_MAX_HEIGHT    64
+#define VIDEO_ICON_SIZE       32
 
 typedef enum {
 	ICON_BOX = 0,
+	ICON_CHANNEL,
 	ICON_VIDEO,
 	ICON_VIDEO_THUMBNAILING,
 	ICON_OPTICAL,
@@ -49,11 +50,17 @@ static GThreadPool *thumbnail_pool;
 static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
 
-static GdkPixbuf *load_icon (GdkPixbuf *pixbuf, gboolean with_border, gboolean resize);
-static GdkPixbuf *load_named_icon (Totem      *totem,
-				   const char *name,
+#define STROKE           0x3b3c38ff
+#define FILL_DEFAULT     0x2d2d2dff
+#define FILL_TRANSPARENT 0x00000000
+#define FILL_MOVIE       0x000000ff
+
+static GdkPixbuf *load_icon (GdkPixbuf *pixbuf,
+			     gboolean   resize,
+			     guint32    fill);
+static GdkPixbuf *load_named_icon (const char *name,
 				   int         size,
-				   gboolean    with_border);
+				   guint32     fill);
 
 static gboolean
 media_is_local (GrlMedia *media)
@@ -104,7 +111,13 @@ load_thumbnail_cb (GObject *source_object,
 		if (is_source) {
 			GdkPixbuf *new_pixbuf;
 
-			new_pixbuf = load_icon (pixbuf, TRUE, TRUE);
+			new_pixbuf = load_icon (pixbuf, TRUE, FILL_DEFAULT);
+			g_object_unref (pixbuf);
+			pixbuf = new_pixbuf;
+		} else {
+			GdkPixbuf *new_pixbuf;
+
+			new_pixbuf = load_icon (pixbuf, FALSE, FILL_MOVIE);
 			g_object_unref (pixbuf);
 			pixbuf = new_pixbuf;
 		}
@@ -136,8 +149,8 @@ get_stream_thumbnail_cb (GObject *source_object,
 
 	is_source = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (task), "is-source"));
 	gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (stream),
-						   is_source ? -1 : THUMB_SEARCH_SIZE,
-						   is_source ? -1 : THUMB_SEARCH_HEIGHT,
+						   is_source ? -1 : THUMB_SEARCH_SIZE - 2,
+						   is_source ? -1 : THUMB_SEARCH_HEIGHT -2 ,
 						   TRUE,
 						   g_task_get_cancellable (task),
 						   load_thumbnail_cb,
@@ -325,16 +338,16 @@ totem_grilo_get_thumbnail (GObject             *object,
 static void
 put_pixel (guchar *p)
 {
-	p[0] = 46;
-	p[1] = 52;
-	p[2] = 54;
-	p[3] = 0xff;
+	p[0] = (STROKE & 0xff000000) >> 24;
+	p[1] = (STROKE & 0x00ff0000) >> 16;
+	p[2] = (STROKE & 0x0000ff00) >> 8;
+	p[3] = (STROKE & 0x000000ff);
 }
 
 static GdkPixbuf *
 load_icon (GdkPixbuf  *pixbuf,
-	   gboolean    with_border,
-	   gboolean    resize)
+	   gboolean    resize,
+	   guint32     fill)
 {
 	GdkPixbuf *ret;
 	guchar *pixels;
@@ -351,24 +364,20 @@ load_icon (GdkPixbuf  *pixbuf,
 	rowstride = gdk_pixbuf_get_rowstride (ret);
 
 	/* Clean up and draw a border */
-	if (with_border) {
-		gdk_pixbuf_fill (ret, 0x00000088);
+	gdk_pixbuf_fill (ret, fill);
 
-		/* top */
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + x * 4);
-		/* bottom */
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
-		/* left */
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride);
-		/* right */
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
-	} else {
-		gdk_pixbuf_fill (ret, 0x00000000);
-	}
+	/* top */
+	for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+		put_pixel (pixels + x * 4);
+	/* bottom */
+	for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+		put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
+	/* left */
+	for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+		put_pixel (pixels + y * rowstride);
+	/* right */
+	for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+		put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
 
 	width = gdk_pixbuf_get_width (pixbuf);
 	height = gdk_pixbuf_get_height (pixbuf);
@@ -377,12 +386,11 @@ load_icon (GdkPixbuf  *pixbuf,
 	    (width > (THUMB_SEARCH_SIZE / 4 * 3) ||
 	     height > SOURCES_MAX_HEIGHT)) {
 		gdouble scale_x, scale_y;
+
 		scale_x = ((gdouble) THUMB_SEARCH_SIZE / 4.0 * 3.0) / (gdouble) width;
 		scale_y = (gdouble) SOURCES_MAX_HEIGHT / (gdouble) height;
-		if (scale_y < 1.0)
-			scale = scale_y;
-		else
-			scale = MIN(MIN(scale_x, scale_y), 1.0);
+
+		scale = MIN(MIN(scale_x, scale_y), 1.0);
 	} else {
 		scale = 1.0;
 	}
@@ -407,10 +415,9 @@ load_icon (GdkPixbuf  *pixbuf,
 }
 
 static GdkPixbuf *
-load_named_icon (Totem      *totem,
-		 const char *name,
+load_named_icon (const char *name,
 		 int         size,
-		 gboolean    with_border)
+		 guint32     fill)
 {
 	GApplication *app;
 	GdkScreen *screen;
@@ -433,7 +440,7 @@ load_named_icon (Totem      *totem,
 	context = gtk_widget_get_style_context (GTK_WIDGET (windows->data));
 	pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
 
-	ret = load_icon (pixbuf, with_border, FALSE);
+	ret = load_icon (pixbuf, FALSE, fill);
 
 	g_object_unref (pixbuf);
 	g_object_unref (info);
@@ -477,6 +484,12 @@ totem_grilo_get_box_icon (void)
 }
 
 const GdkPixbuf *
+totem_grilo_get_channel_icon (void)
+{
+	return icons[ICON_CHANNEL];
+}
+
+const GdkPixbuf *
 totem_grilo_get_optical_icon (void)
 {
 	return icons[ICON_OPTICAL];
@@ -497,12 +510,13 @@ totem_grilo_clear_icons (void)
 }
 
 void
-totem_grilo_setup_icons (Totem *totem)
+totem_grilo_setup_icons (void)
 {
-	icons[ICON_BOX] = load_named_icon (totem, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
-	icons[ICON_VIDEO] = load_named_icon (totem, "folder-videos-symbolic", VIDEO_ICON_SIZE, TRUE);
-	icons[ICON_VIDEO_THUMBNAILING] = load_named_icon (totem, "content-loading-symbolic", VIDEO_ICON_SIZE, TRUE);
-	icons[ICON_OPTICAL] = load_named_icon (totem, "media-optical-dvd-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	icons[ICON_BOX] = load_named_icon ("folder-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
+	icons[ICON_CHANNEL] = load_named_icon ("tv-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
+	icons[ICON_VIDEO] = load_named_icon ("folder-videos-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
+	icons[ICON_VIDEO_THUMBNAILING] = load_named_icon ("content-loading-symbolic", VIDEO_ICON_SIZE, FILL_TRANSPARENT);
+	icons[ICON_OPTICAL] = load_named_icon ("media-optical-dvd-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
 
 	cache_thumbnails = g_hash_table_new_full (g_str_hash,
 						  g_str_equal,

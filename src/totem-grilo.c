@@ -383,7 +383,7 @@ get_thumbnail_cb (GObject *source_object,
 		if (thumb_data->media)
 			fallback_thumbnail = totem_grilo_get_video_icon ();
 		else
-			fallback_thumbnail = totem_grilo_get_box_icon ();
+			fallback_thumbnail = totem_grilo_get_channel_icon ();
 	}
 
 	gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
@@ -1286,7 +1286,7 @@ source_added_cb (GrlRegistry *registry,
 		} else if (!source_is_browse_blacklisted (source)) {
 			const GdkPixbuf *icon;
 
-			icon = totem_grilo_get_box_icon ();
+			icon = totem_grilo_get_channel_icon ();
 
 			gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 							   NULL, NULL, -1,
@@ -2416,7 +2416,7 @@ create_debug_window (TotemGrilo       *self,
 static void
 setup_ui (TotemGrilo *self)
 {
-	totem_grilo_setup_icons (self->priv->totem);
+	totem_grilo_setup_icons ();
 	setup_browse (self);
 
 	/* create_debug_window (self, self->priv->browser_model); */
