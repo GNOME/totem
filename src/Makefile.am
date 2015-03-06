@@ -3,6 +3,7 @@ SUBDIRS = gst backend properties . plugins
 bin_PROGRAMS = totem totem-video-thumbnailer totem-audio-preview
 lib_LTLIBRARIES = libtotem.la
 noinst_LTLIBRARIES = libtotem_player.la
+noinst_PROGRAMS = test-icons
 
 AM_CPPFLAGS = \
 	-D_REENTRANT					\
@@ -263,5 +264,13 @@ typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 CLEANFILES = $(gir_DATA) $(typelib_DATA)
 
 endif
+
+test_icons_SOURCES =			\
+	test-icons.c			\
+	icon-helpers.c icon-helpers.h
+test_icons_CFLAGS =			\
+	$(PLAYER_CFLAGS)		\
+	$(AM_CFLAGS)
+test_icons_LDADD = $(PLAYER_LIBS)
 
 -include $(top_srcdir)/git.mk
