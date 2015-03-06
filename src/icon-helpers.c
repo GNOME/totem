@@ -451,6 +451,8 @@ GdkPixbuf *
 totem_grilo_get_icon (GrlMedia *media,
 		      gboolean *thumbnailing)
 {
+	g_return_val_if_fail (thumbnailing != NULL, NULL);
+
 	*thumbnailing = FALSE;
 
 	if (GRL_IS_MEDIA_BOX (media)) {
