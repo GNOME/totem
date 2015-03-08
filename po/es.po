@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-23 12:04+0000\n"
-"PO-Revision-Date: 2015-02-23 19:06+0100\n"
+"POT-Creation-Date: 2015-03-08 12:08+0000\n"
+"PO-Revision-Date: 2015-03-08 21:22+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -28,6 +28,17 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Vídeos"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Reproducir películas"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -39,7 +50,7 @@ msgstr ""
 "en la que se puede buscar, así como comparticiones de vídeos en la red local "
 "(usando UpnP/DLNA) y vídeos destacados de varias páginas web."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
@@ -47,22 +58,13 @@ msgstr ""
 "Totem incluye funcionalidades adicionales, tales como: descargar subtítulos "
 "y soporte para grabar DVD."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Creador de miniaturas de vídeos para el gestor de archivos"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Pestaña de propiedades del archivo"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
-msgid "Videos"
-msgstr "Vídeos"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Reproducir películas"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -581,19 +583,17 @@ msgstr ""
 "instalado correctamente."
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
-#| msgid "Failed to parse CMML file"
 msgid "Unable to play the file"
 msgstr "No se puede reproducir el archivo"
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
+#| msgid "%s is required to play the file, but is not installed."
 msgid "%s is required to play the file, but is not installed."
-msgstr "Se necesita %s para reproducir el archivo, pero no está instalado."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr "Se necesitan %s para reproducir el archivo, pero no están instalados."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "Se necesita %s para reproducir el archivo, pero no está instalado."
+msgstr[1] ""
+"Se necesitan %s para reproducir el archivo, pero no están instalados."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -1872,6 +1872,10 @@ msgstr "Complemento Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un complemento para enviar eventos a Zeitgeist"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr ""
+#~ "Se necesitan %s para reproducir el archivo, pero no están instalados."
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr ""
