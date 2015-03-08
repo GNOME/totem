@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 12:01+0200\n"
-"PO-Revision-Date: 2015-02-27 12:04+0300\n"
+"POT-Creation-Date: 2015-03-08 13:27+0200\n"
+"PO-Revision-Date: 2015-03-08 13:28+0300\n"
 "Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
 "Language-Team: linux.org.ua\n"
 "Language: uk\n"
@@ -23,6 +23,17 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Відео"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Програти фільми"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -34,7 +45,7 @@ msgstr ""
 "оприлюднення відеозаписів у мережі (через UPnP/DLNA) і показ відеозаписів з "
 "декількох сайтів."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
@@ -42,22 +53,13 @@ msgstr ""
 "Totem набув нових можливостей, як-от: звантажувач субтитрів, підтримування "
 "запису DVD."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Мініатюри відеозаписів для файлового менеджера"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Вкладка властивостей Файла"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
-msgid "Videos"
-msgstr "Відео"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Програти фільми"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -570,12 +572,10 @@ msgstr "Неможливо програти файл"
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
 msgid "%s is required to play the file, but is not installed."
-msgstr "Потрібно %s, щоб програти файл, але його не встановлено."
-
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
-#, c-format
-msgid "%s are required to play the file, but are not installed."
-msgstr "Потрібно %s, щоб програти файл, але їх не встановлено."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "Потрібно %s, щоб програти файл, але його не встановлено."
+msgstr[1] "Потрібно %s, щоб програти файл, але їх не встановлено."
+msgstr[2] "Потрібно %s, щоб програти файл, але їх не встановлено."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -1857,6 +1857,9 @@ msgstr "Додаток Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Додаток для надсилання подій у Zeitgeist"
+
+#~ msgid "%s are required to play the file, but are not installed."
+#~ msgstr "Потрібно %s, щоб програти файл, але їх не встановлено."
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr "Чи увімкнути налагодження механізму відтворення"
