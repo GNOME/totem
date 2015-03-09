@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.15.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 19:19+0100\n"
-"PO-Revision-Date: 2015-02-09 19:19+0100\n"
-"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"POT-Creation-Date: 2015-03-09 20:14+0100\n"
+"PO-Revision-Date: 2015-03-09 20:15+0100\n"
+"Last-Translator: Åka Sikrom <a4NOSPAMPLEASETHANKYOU@hush.com>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
@@ -18,41 +18,41 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Filmer"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Spill av filmer"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
-"Totem, også kjent som Videoer, er den offisielle filmavspilleren for GNOME "
+"Totem, også kjent som Videoer, er den offisielle filmavspilleren for GNOME-"
 "skrivebordsmiljøet. Den har funksjoner som søkbar liste med lokale videoer "
 "og DVDer, lokalt delte ressurser for video (via UPnP/DLNA) og populære "
-"videoer fra et antall nettsteder."
+"videoer fra diverse nettsteder."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
-msgstr ""
-"Totem har også tilleggsfunksjoner som: undertekst, nedlasting av "
-"undertekster og støtte for å ta opp DVDer."
+msgstr "Totem kan også vise og laste ned undertekster, og ta opp DVD-er."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Videominiatyrer for filhåndterer"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Fane med egenskaper i Filer"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
-msgid "Videos"
-msgstr "Filmer"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Spill av filmer"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -123,29 +123,30 @@ msgstr "Tegnsett for koding av undertekst."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
-msgstr "Forvalgt lokasjon for «Åpne …»-dialoger"
+msgstr "Forvalgt plassering av «Åpne …»-dialoger"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
-msgstr "Forvalgt lokasjon for «Åpne …»-dialoger. Forvalg er aktiv katalog."
+msgstr ""
+"Forvalgt plassering av «Åpne …»-dialoger. Standardverdi er gjeldende mappe."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "Forvalgt lokasjon for «Ta skjermdump»-dialoger"
+msgstr "Forvalgt plassering av «Ta skjermbilde»-dialoger"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
 msgstr ""
-"Forvalgt lokasjon for «Ta skjermdump»-dialoger. Forvalg er brukerens "
-"bildekatalog."
+"Forvalgt plassering av «Ta skjermbilde»-dialoger. Standardverdi er brukerens "
+"bildemappe."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
-msgstr "Om tillegg i brukerens hjemmekatalog skal deaktiveres"
+msgstr "Om tillegg i brukerens hjemmemappe skal slås av"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
@@ -171,13 +172,13 @@ msgstr "En liste med navn på tillegg som er aktive (lastet og kjører)."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
-msgstr "Kataloger som skal vises"
+msgstr "Mapper som skal vises"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
-msgstr "Kataloger som skal vises i filgrensesnittet. Ingen som forvalg"
+msgstr "Mapper som skal vises i filgrensesnitt. Ingen som forvalg"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5496
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5510
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -450,55 +451,55 @@ msgstr "Oppgi _adressen for filen du ønsker å åpne:"
 msgid "--:--"
 msgstr "--.--"
 
-#: ../src/backend/bacon-video-widget.c:1921
+#: ../src/backend/bacon-video-widget.c:1935
 msgid "Password requested for RTSP server"
 msgstr "Passord forespurt for RTSP-tjener"
 
-#: ../src/backend/bacon-video-widget.c:3292
+#: ../src/backend/bacon-video-widget.c:3306
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Lydspor #%d"
 
-#: ../src/backend/bacon-video-widget.c:3296
+#: ../src/backend/bacon-video-widget.c:3310
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Undertekst #%d"
 
-#: ../src/backend/bacon-video-widget.c:3752
+#: ../src/backend/bacon-video-widget.c:3766
 msgid "The server you are trying to connect to is not known."
 msgstr "Tjeneren du prøver å koble til er ikke kjent."
 
-#: ../src/backend/bacon-video-widget.c:3755
+#: ../src/backend/bacon-video-widget.c:3769
 msgid "The connection to this server was refused."
 msgstr "Tilkobling til denne tjeneren ble nektet."
 
-#: ../src/backend/bacon-video-widget.c:3758
+#: ../src/backend/bacon-video-widget.c:3772
 msgid "The specified movie could not be found."
-msgstr "Spesifisert film ble ikke funnet."
+msgstr "Fant ikke valgt film."
 
-#: ../src/backend/bacon-video-widget.c:3765
+#: ../src/backend/bacon-video-widget.c:3779
 msgid "The server refused access to this file or stream."
 msgstr "Tjener nektet tilgang til denne filen eller strømmen."
 
-#: ../src/backend/bacon-video-widget.c:3771
+#: ../src/backend/bacon-video-widget.c:3785
 msgid "Authentication is required to access this file or stream."
-msgstr "Autentisering kreves for å aksessere denne filen eller strømmen."
+msgstr "Du må autentisere deg for å få tilgang til denne filen eller strømmen."
 
-#: ../src/backend/bacon-video-widget.c:3778
+#: ../src/backend/bacon-video-widget.c:3792
 msgid "You are not allowed to open this file."
 msgstr "Du har ikke tilgang til å åpne denne filen."
 
-#: ../src/backend/bacon-video-widget.c:3783
+#: ../src/backend/bacon-video-widget.c:3797
 msgid "This location is not a valid one."
-msgstr "Lokasjonen er ikke gyldig."
+msgstr "Plasseringen er ugyldig."
 
-#: ../src/backend/bacon-video-widget.c:3791
+#: ../src/backend/bacon-video-widget.c:3805
 msgid "The movie could not be read."
-msgstr "Filmen kunne ikke leses."
+msgstr "Klarte ikke å lese filmen."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3814
-#: ../src/backend/bacon-video-widget.c:3822
+#: ../src/backend/bacon-video-widget.c:3828
+#: ../src/backend/bacon-video-widget.c:3836
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -513,13 +514,13 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3834
+#: ../src/backend/bacon-video-widget.c:3848
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
 "Strømmen kan ikke spilles av. Det er mulig at den blokkeres av en brannmur."
 
-#: ../src/backend/bacon-video-widget.c:3837
+#: ../src/backend/bacon-video-widget.c:3851
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -527,30 +528,51 @@ msgstr ""
 "En lyd- eller videostrøm ble ikke håndtert pga manglende kodeker. Du må "
 "kanskje installere ekstra tillegg for å kunne spille av noen typer videoer"
 
-#: ../src/backend/bacon-video-widget.c:3848
+#: ../src/backend/bacon-video-widget.c:3862
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
-msgstr "Filen kan ikke spilles over nettverket. Prøv å laste den ned lokalt."
+msgstr ""
+"Denne filen kan ikke spilles av over nettverket. Prøv å laste den ned og "
+"spille den av lokalt."
 
-#: ../src/backend/bacon-video-widget.c:5492 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5506 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5494 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5508 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5781
+#: ../src/backend/bacon-video-widget.c:5795
 msgid "Media contains no supported video streams."
 msgstr "Medier inneholder ingen støttede videostrømmer."
 
-#: ../src/backend/bacon-video-widget.c:5940
+#: ../src/backend/bacon-video-widget.c:5954
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Noen nødvendige tillegg mangler. Sjekk at programmet er korrekt installert."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
+msgid "Unable to play the file"
+msgstr "Klarte ikke å spille av filen"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "%s er påkrevet for å spille av filen, men er ikke installert."
+msgstr[1] "%s er påkrevet for å spille av filen, men er ikke installert."
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#, c-format
+msgid "_Find in %s"
+msgstr "_Søk i %s"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -719,7 +741,7 @@ msgstr "Forhåndsvisning av lyd"
 
 #: ../src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
-msgstr "Kunne ikke initiere trådsikre biblioteker."
+msgstr "Klarte ikke å starte opp trådsikre biblioteker."
 
 #: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
@@ -756,7 +778,7 @@ msgstr "Kanaler"
 #: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
-msgstr "Kunne ikke laste grensesnitt for «%s». %s"
+msgstr "Klarte ikke å laste inn grensesnitt for «%s». %s"
 
 #: ../src/totem-interface.c:179
 msgid "The file does not exist."
@@ -823,15 +845,15 @@ msgstr "Spill av"
 #: ../src/totem-object.c:2042
 #, c-format
 msgid "Totem could not play '%s'."
-msgstr "Totem kunne ikke spille av «%s»."
+msgstr "Totem klarte ikke å spille av «%s»."
 
 #: ../src/totem-object.c:2184
 msgid "Totem could not display the help contents."
-msgstr "Totem kunne ikke vise hjelpinnhold."
+msgstr "Totem klarte ikke å vise hjelpinnhold."
 
 #: ../src/totem-object.c:2424
 msgid "An error occurred"
-msgstr "En feil oppsto"
+msgstr "Det oppstod en feil"
 
 #: ../src/totem-object.c:3755
 msgid "Previous Chapter/Movie"
@@ -847,7 +869,7 @@ msgstr "Neste kapittel/film"
 
 #: ../src/totem-object.c:3987
 msgid "Totem could not startup."
-msgstr "Totem kunne ikke starte opp."
+msgstr "Totem klarte ikke å starte opp."
 
 #: ../src/totem-object.c:3987
 msgid "No reason."
@@ -929,7 +951,7 @@ msgstr "Filmer som skal spilles av"
 
 #: ../src/totem-options.c:99
 msgid "Can't enqueue and replace at the same time"
-msgstr "Kan ikke legge i kø og erstatte samtidig"
+msgstr "Du kan ikke legge i kø og erstatte samtidig"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
@@ -941,11 +963,11 @@ msgstr "Tittel %d"
 #: ../src/totem-playlist.c:1001
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
-msgstr "Spilleliste «%s» kunne ikke leses. Den kan være skadet."
+msgstr "Klarte ikke å tolke spillelisten «%s». Den kan være skadet."
 
 #: ../src/totem-preferences.c:184
 msgid "Configure Plugins"
-msgstr "Konfigurer tillegg"
+msgstr "Sett opp tillegg"
 
 #: ../src/totem-preferences.c:187
 msgid "_Close"
@@ -1221,15 +1243,15 @@ msgstr "Apple Trailers"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
 msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Setter brukeragent for Apple Trailers nettstedet"
+msgstr "Endrer brukeragent for Apple Trailers-nettstedet"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
 msgid "Autoload Subtitles"
-msgstr "Last undertekst automatisk"
+msgstr "Last inn undertekst automatisk"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
 msgid "Autoloads text subtitles"
-msgstr "Laster undertekster automatisk"
+msgstr "Laster inn undertekster automatisk"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Video Disc Recorder"
@@ -1237,22 +1259,22 @@ msgstr "Opptak av videoplater"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Records (S)VCDs or video DVDs"
-msgstr "Tar opp (S)VCDer eller video-DVDer"
+msgstr "Tar opp (S)VCD-er eller video-DVD-er"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
 msgid "The video disc could not be duplicated."
-msgstr "Videoplaten kunne ikke kopieres."
+msgstr "Klarte ikke å kopiere videoplaten."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:122
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
 msgid "The movie could not be recorded."
-msgstr "Kunne ikke ta opp filmen."
+msgstr "Klarte ikke å ta opp filmen."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
 msgid "Unable to write a project."
-msgstr "Kan ikke skrive et prosjekt."
+msgstr "Klarte ikke å lagre et prosjekt."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
 msgid "_Create Video Disc…"
@@ -1358,7 +1380,7 @@ msgstr "Feil under skriving av fil med kapittel"
 
 #: ../src/plugins/chapters/totem-chapters.c:826
 msgid "Error occurred while saving chapters"
-msgstr "En feil oppsto under lagring av kapitler"
+msgstr "Det oppstod en feil under lagring av kapitler"
 
 #: ../src/plugins/chapters/totem-chapters.c:827
 msgid ""
@@ -1376,7 +1398,7 @@ msgstr "Støttede filer"
 
 #: ../src/plugins/chapters/totem-chapters.c:1076
 msgid "Chapter Screenshot"
-msgstr "Skjermdump for kapittel"
+msgstr "Skjermbilde av kapittel"
 
 #: ../src/plugins/chapters/totem-chapters.c:1087
 msgid "Chapter Title"
@@ -1398,7 +1420,7 @@ msgstr "Lagre"
 
 #: ../src/plugins/chapters/totem-chapters.c:1177
 msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "Hvis du ikke lagrer vil endringer i kapittellisten gå tapt."
+msgstr "Hvis du ikke lagrer, går endringer i kapittellisten tapt."
 
 #: ../src/plugins/chapters/totem-edit-chapter.c:95
 msgid "Add Chapter"
@@ -1441,7 +1463,7 @@ msgstr "Presentasjonshjelper for å lage annotasjoner på skjermen"
 
 #: ../src/plugins/gromit/totem-gromit.c:232
 msgid "The gromit binary was not found."
-msgstr "Binærfilen for gromit ble ikke funnet"
+msgstr "Fant ikke binærfil for gromit."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
 msgid "Instant Messenger Status"
@@ -1461,11 +1483,11 @@ msgstr "Støtte for infrarød fjernkontroll"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
 msgid "Couldn't initialize lirc."
-msgstr "Kunne ikke initiere lirc."
+msgstr "Klarte ikke å starte opp lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:251
 msgid "Couldn't read lirc configuration."
-msgstr "Kunne ikke lese konfigurasjon for lirc."
+msgstr "Klarte ikke å lese lirc-oppsett."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
 msgid "Media Player Keys"
@@ -1500,44 +1522,44 @@ msgid "Searching for subtitles…"
 msgstr "Søker etter undertekster …"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:607
+#: ../src/plugins/opensubtitles/opensubtitles.py:608
 msgid "Downloading the subtitles…"
 msgstr "Laster ned undertekster …"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:291
 msgid "Could not contact the OpenSubtitles website"
-msgstr "Kunne ikke kontakte nettstedet for OpenSubtitles"
+msgstr "Klarte ikke å kontakte OpenSubtitles-nettstedet"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:324
 #: ../src/plugins/opensubtitles/opensubtitles.py:342
 msgid "Could not contact the OpenSubtitles website."
-msgstr "Kunne ikke kontakte nettstedet for OpenSubtitles."
+msgstr "Klarte ikke å kontakte OpenSubtitles-nettstedet."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:330
 msgid "No results found."
-msgstr "Ingen resultater funnet."
+msgstr "Søket ga ingen treff."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "Undertekster"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "Kvalitet"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:524
+#: ../src/plugins/opensubtitles/opensubtitles.py:525
 msgid "_Download Movie Subtitles…"
 msgstr "Last ne_d undertekster for film …"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:564
+#: ../src/plugins/opensubtitles/opensubtitles.py:565
 msgid "Searching subtitles…"
 msgstr "Søker etter undertekster …"
 
@@ -1559,7 +1581,7 @@ msgstr "Språk for undertekst"
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
-msgstr "Språk du vil søke etter undertekster for filmer."
+msgstr "Språk som undertekster for filmer skal vises på."
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:1
 msgid "Movie Properties"
@@ -1587,8 +1609,7 @@ msgid ""
 "remote access. If this is empty, a default of 'totem' will be used."
 msgstr ""
 "Et passord som skal beskytte rpdb2-tjener for feilsøking av Totem fra "
-"uautorisert tilgang. Hvis dette er tomt vil forvalgt passord «totem» bli "
-"brukt."
+"uautorisert tilgang. Hvis dette er tomt, brukes forvalgt passord «totem»."
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Python Console"
@@ -1596,7 +1617,7 @@ msgstr "Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
 msgid "Interactive Python console"
-msgstr "Interaktivt Python-konsoll"
+msgstr "Interaktiv Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:73
 msgid "_Python Console"
@@ -1610,7 +1631,7 @@ msgstr "Python feilsøking"
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
-msgstr "Du kan aksessere Totem.Object gjennom 'totem_object' :\\n%s"
+msgstr "Du kan få tilgang til Totem.Object gjennom «totem_object» :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
@@ -1623,9 +1644,9 @@ msgid ""
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
-"Etter at du trykker OK vil Totem vente til du kobler til med winpdb eller "
-"rpdb2. Hvis du ikke har satt et passord for feilsøking i DConf vil forvalgt "
-"passord benyttes ('totem')."
+"Etter at du trykker OK, venter Totem til du kobler til med winpdb eller "
+"rpdb2. Hvis du ikke har valgt et passord for feilsøking i DConf, brukes "
+"forvalgt passord «totem»."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -1683,22 +1704,22 @@ msgstr "Spiller av en film"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
-msgstr "Bredde på skjermdump (i piksler):"
+msgstr "Bredde på skjermbilde (i piksler):"
 
 #: ../src/plugins/screenshot/gallery.ui.h:2
 msgid "Calculate the number of screenshots"
-msgstr "Beregne antall skjermdump"
+msgstr "Beregne antall skjermbilder"
 
 #: ../src/plugins/screenshot/gallery.ui.h:3
 msgid "Number of screenshots:"
-msgstr "Antall skjermdump:"
+msgstr "Antall skjermbilder:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
 #, c-format
 msgid "Screenshot from %s.png"
-msgstr "Skjermdump fra %s.png"
+msgstr "Skjermbilde fra %s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
@@ -1706,15 +1727,15 @@ msgstr "Skjermdump fra %s.png"
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "Skjermdump fra %s - %d.png"
+msgstr "Skjermbilde fra %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
 msgid "Screenshot"
-msgstr "Skjermdump"
+msgstr "Skjermbilde"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:2
 msgid "Allows screenshots and galleries to be taken of videos"
-msgstr "Muliggjør skjermdump og gallerier fra videoer"
+msgstr "Lar brukeren ta skjermbilder og lage gallerier av videoer"
 
 #: ../src/plugins/screenshot/totem-gallery.c:91
 msgid "Save Gallery"
@@ -1747,19 +1768,20 @@ msgstr "Lagrer galleri som «%s»"
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
-msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
+msgstr "Totem klarte ikke å ta skjermbilde av denne filmen."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Dette skal ikke skje. Vennligst rapporter feilen."
+msgstr ""
+"Dette skal ikke skje. Vi ber om at du rapporterer dette som en programfeil."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
-msgstr "Ta _skjermdump"
+msgstr "Ta _skjermbilde"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "Lag _galleri av skjermdump …"
+msgstr "Lag _galleri av skjermbilder …"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -1805,7 +1827,7 @@ msgstr "Vimeo"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
 msgid "Sets the user agent for the Vimeo site"
-msgstr "Setter brukeragent for nettstedet Vimeo"
+msgstr "Endrer brukeragent for nettstedet Vimeo"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
 msgid "Zeitgeist Plugin"
