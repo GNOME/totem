@@ -641,8 +641,8 @@ bacon_video_widget_realize (GtkWidget * widget)
 		    G_CALLBACK (leave_notify_cb), bvw);
 
   bvw->priv->missing_plugins_cancellable = g_cancellable_new ();
-  g_object_set_data (G_OBJECT (bvw), "missing-plugins-cancellable",
-		     bvw->priv->missing_plugins_cancellable);
+  g_object_set_data_full (G_OBJECT (bvw), "missing-plugins-cancellable",
+			  bvw->priv->missing_plugins_cancellable, g_object_unref);
   bacon_video_widget_gst_missing_plugins_setup (bvw);
 }
 
@@ -650,9 +650,21 @@ static void
 bacon_video_widget_unrealize (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GtkWidget *toplevel;
+
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+
+  gtk_widget_set_realized (widget, FALSE);
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gtk_widget_get_screen (widget)),
+					size_changed_cb, bvw);
+  toplevel = gtk_widget_get_toplevel (widget);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (toplevel),
+					leave_notify_cb, bvw);
 
   g_cancellable_cancel (bvw->priv->missing_plugins_cancellable);
-  g_clear_object (&bvw->priv->missing_plugins_cancellable);
+  bvw->priv->missing_plugins_cancellable = NULL;
+  g_object_set_data (G_OBJECT (bvw), "missing-plugins-cancellable", NULL);
 }
 
 static void
