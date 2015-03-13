@@ -3793,7 +3793,6 @@ totem_callback_connect (TotemObject *totem)
 									  gtk_menu_button_new (),
 									  "open-menu-symbolic",
 									  GTK_PACK_END);
-	g_object_set (G_OBJECT (totem->gear_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
@@ -3804,7 +3803,6 @@ totem_callback_connect (TotemObject *totem)
 									 gtk_menu_button_new (),
 									 "list-add-symbolic",
 									 GTK_PACK_START);
-	g_object_set (G_OBJECT (totem->add_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	gtk_widget_show (item);
@@ -3960,7 +3958,6 @@ add_fullscreen_toolbar (TotemObject *totem)
 						     gtk_menu_button_new (),
 						     "open-menu-symbolic",
 						     GTK_PACK_END);
-	g_object_set (G_OBJECT (item), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
