@@ -89,6 +89,17 @@ setup_object (BaconVideoControlsActor *controls,
 }
 
 static void
+disable_popover_transitions (BaconVideoControlsActor *controls)
+{
+	GtkPopover *popover;
+	GObject *obj;
+
+	obj = gtk_builder_get_object (controls->priv->builder, "volume_button");
+	popover = GTK_POPOVER (gtk_scale_button_get_popup (GTK_SCALE_BUTTON (obj)));
+	gtk_popover_set_transitions_enabled (popover, FALSE);
+}
+
+static void
 bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 {
 	const char *objects[] = { "toolbar", NULL };
@@ -107,6 +118,8 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 	setup_object (controls, "volume_button");
 	setup_object (controls, "time_label");
 	setup_object (controls, "time_rem_label");
+
+	disable_popover_transitions (controls);
 }
 
 ClutterActor *

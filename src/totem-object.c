@@ -3739,6 +3739,7 @@ totem_callback_connect (TotemObject *totem)
 	GtkBox *box;
 	GAction *gaction;
 	GMenuModel *menu;
+	GtkPopover *popover;
 
 	/* Menu items */
 	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
@@ -3786,6 +3787,8 @@ totem_callback_connect (TotemObject *totem)
 	item = g_object_get_data (totem->controls, "go_button");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	/* Cog wheel */
@@ -3795,6 +3798,8 @@ totem_callback_connect (TotemObject *totem)
 									  GTK_PACK_END);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 
