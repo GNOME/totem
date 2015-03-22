@@ -2,15 +2,15 @@
 # Copyright (C) 2002-20014 Free Software Foundation, Inc.
 # Pier Luigi Fiorini <plfiorini@supereva.it>, 2002.
 # Davide Patti <dpatti@diit.unict.it>, 2008.
-# Gianvito Cavasoli <gianvito@gmx.it>, 2008, 2009, 2010, 2011, 2012, 2013, 2014.
+# Gianvito Cavasoli <gianvito@gmx.it>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 3.14\n"
+"Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-15 10:45+0000\n"
-"PO-Revision-Date: 2014-09-15 13:35+0200\n"
+"POT-Creation-Date: 2015-03-21 12:09+0000\n"
+"PO-Revision-Date: 2015-03-21 13:26+0100\n"
 "Last-Translator: Gianvito Cavasoli <gianvito@gmx.it>\n"
 "Language-Team: Italiano <gnome-it-list@gnome.org>\n"
 "Language: \n"
@@ -21,10 +21,17 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
-#| msgid ""
-#| "Totem, also known as Videos, is the official movie player of the GNOME "
-#| "desktop environment. It features a playlist, a full-screen mode, seek and "
-#| "volume controls, as well as keyboard navigation."
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+msgid "Videos"
+msgstr "Video"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Riproduce filmati"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
@@ -36,10 +43,7 @@ msgstr ""
 "di video locali, DVD, così come le condivisioni di video nella rete locale "
 "(tramite UPnP/DLNA) e video evidenziati da un certo numero di siti web."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, "
-#| "support to watch live TV and VCD recording."
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
@@ -47,66 +51,52 @@ msgstr ""
 "Totem possiede funzionalità aggiuntive come: lo scaricatore di sottotitoli e "
 "il supporto per la registrazione di DVD."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "Anteprima video per il gestore dei file"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
-#| msgid "Nautilus properties tab"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "Scheda proprietà dei file"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
-msgid "Videos"
-msgstr "Video"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Riproduce filmati"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Video;Filmato;Film;Clip;Serie;Riproduttore;DVD;TV;Disco;"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "Il livello di luminosità del video"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "Il livello di contrasto del video"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "La tonalità del video"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "Il livello di saturazione del video"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "Riproduzione continua"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 "Indica se disabilitare il deinterlacciamento per i filmati interlacciati"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
-msgid "Whether to enable debug for the playback engine"
-msgstr "Indica se abilitare il debug per il motore di riproduzione"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "Il tipo di uscita audio da usare"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "Soglia per la bufferizzazione di rete"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -114,27 +104,32 @@ msgstr ""
 "Quantità di dati da memorizzare per i flussi di rete prima di iniziare la "
 "visualizzazione del flusso (in secondi)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "Carattere dei sottotitoli"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "Descrizione dei caratteri Pango per il rendering dei sottotitoli."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "\"UTF-8\""
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "Codifica dei sottotitoli"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "Set di caratteri per la codifica dei sottotitoli."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Posizione predefinita per i dialoghi \"Apri...\""
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
@@ -142,11 +137,11 @@ msgstr ""
 "La posizione predefinita per i dialoghi \"Apri...\". La directory attuale è "
 "quella predefinita."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Posizione predefinita per i dialoghi \"Cattura schermata\""
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -154,31 +149,31 @@ msgstr ""
 "La posizione predefinita per i dialoghi \"Cattura schermata\". La cartella "
 "Immagini è quella predefinita."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Indica se disabilitare i plugin nella cartella home dell'utente"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Indica se disabilitare le scorciatoie da tastiera"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Indica se caricare automaticamente i file dei sottotitoli all'apertura di un "
 "filmato"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
 "Indica se caricare automaticamente file di capitoli esterni all'apertura di "
 "un filmato"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "Elenco plugin attivi"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -186,17 +181,17 @@ msgstr ""
 "Un elenco dei nomi dei plugin che sono attualmente attivi (caricati e in "
 "esecuzione)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "Directory da mostrare"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Directory da mostrare nell'interfaccia dell'esploratore, nessuna "
 "predefinitamente"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5481
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5522
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -236,7 +231,6 @@ msgid "Preferences"
 msgstr "Preferenze"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Text Subtitles"
 msgid "External Subtitles"
 msgstr "Sottotitoli esterni"
 
@@ -388,11 +382,11 @@ msgstr "_Esci"
 
 #: ../data/totem.ui.h:4
 msgid "Add _Local Video…"
-msgstr "Aggiungi video _locale..."
+msgstr "Aggiungi video _locale…"
 
 #: ../data/totem.ui.h:5
 msgid "Add _Web Video…"
-msgstr "Aggiungi video _web..."
+msgstr "Aggiungi video _web…"
 
 #: ../data/totem.ui.h:6
 msgid "_Aspect Ratio"
@@ -409,8 +403,6 @@ msgid "Square"
 msgstr "Quadrato"
 
 #: ../data/totem.ui.h:9
-#| msgctxt "Aspect ratio"
-#| msgid "4:3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
@@ -443,7 +435,7 @@ msgstr "S_ottotitoli"
 
 #: ../data/totem.ui.h:16
 msgid "_Select Text Subtitles…"
-msgstr "_Seleziona testo sottotitoli..."
+msgstr "_Seleziona testo sottotitoli…"
 
 #: ../data/totem.ui.h:17
 msgid "_Eject"
@@ -480,57 +472,57 @@ msgstr "Inserire l'_indirizzo del file da aprire:"
 #. translators: Unknown remaining time
 #: ../src/backend/bacon-time-label.c:113
 msgid "--:--"
-msgstr "--.--"
+msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1906
+#: ../src/backend/bacon-video-widget.c:1947
 msgid "Password requested for RTSP server"
 msgstr "Richiesta la password per il server RTSP"
 
-#: ../src/backend/bacon-video-widget.c:3277
+#: ../src/backend/bacon-video-widget.c:3318
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Traccia audio n° %d"
 
-#: ../src/backend/bacon-video-widget.c:3281
+#: ../src/backend/bacon-video-widget.c:3322
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Sottotitolo n° %d"
 
-#: ../src/backend/bacon-video-widget.c:3737
+#: ../src/backend/bacon-video-widget.c:3778
 msgid "The server you are trying to connect to is not known."
 msgstr "Il server a cui si sta tentando di connettersi non è conosciuto."
 
-#: ../src/backend/bacon-video-widget.c:3740
+#: ../src/backend/bacon-video-widget.c:3781
 msgid "The connection to this server was refused."
 msgstr "La connessione a questo server è stata rifiutata."
 
-#: ../src/backend/bacon-video-widget.c:3743
+#: ../src/backend/bacon-video-widget.c:3784
 msgid "The specified movie could not be found."
 msgstr "Impossibile trovare il filmato specificato."
 
-#: ../src/backend/bacon-video-widget.c:3750
+#: ../src/backend/bacon-video-widget.c:3791
 msgid "The server refused access to this file or stream."
 msgstr "Il server ha rifiutato l'accesso a questo file o flusso."
 
-#: ../src/backend/bacon-video-widget.c:3756
+#: ../src/backend/bacon-video-widget.c:3797
 msgid "Authentication is required to access this file or stream."
 msgstr "È richiesta l'autenticazione per accedere a questo file o flusso."
 
-#: ../src/backend/bacon-video-widget.c:3763
+#: ../src/backend/bacon-video-widget.c:3804
 msgid "You are not allowed to open this file."
 msgstr "Non è consentito aprire questo file."
 
-#: ../src/backend/bacon-video-widget.c:3768
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "This location is not a valid one."
 msgstr "Questa posizione non è valida."
 
-#: ../src/backend/bacon-video-widget.c:3776
+#: ../src/backend/bacon-video-widget.c:3817
 msgid "The movie could not be read."
 msgstr "Impossibile leggere il filmato."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3799
-#: ../src/backend/bacon-video-widget.c:3807
+#: ../src/backend/bacon-video-widget.c:3840
+#: ../src/backend/bacon-video-widget.c:3848
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -546,14 +538,14 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3819
+#: ../src/backend/bacon-video-widget.c:3860
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
 "Questo flusso non può essere riprodotto. È possibile che un firewall lo stia "
 "bloccando."
 
-#: ../src/backend/bacon-video-widget.c:3822
+#: ../src/backend/bacon-video-widget.c:3863
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -562,7 +554,7 @@ msgstr ""
 "necessario installare ulteriori plugin per poter riprodurre alcuni tipi di "
 "filmati"
 
-#: ../src/backend/bacon-video-widget.c:3833
+#: ../src/backend/bacon-video-widget.c:3874
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -570,25 +562,44 @@ msgstr ""
 "Impossibile riprodurre questo file tramite la rete. Provare prima a "
 "scaricarlo localmente."
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5518 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5479 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5520 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5766
+#: ../src/backend/bacon-video-widget.c:5807
 msgid "Media contains no supported video streams."
 msgstr "Il file multimediale non contiene alcun flusso video supportato."
 
-#: ../src/backend/bacon-video-widget.c:5924
+#: ../src/backend/bacon-video-widget.c:5966
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Mancano alcuni plugin necessari. Assicurarsi che il programma sia "
 "correttamente installato."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
+msgid "Unable to play the file"
+msgstr "Impossibile riprodurre il file"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "%s è richiesto per riprodurre il file, ma non è installato."
+msgstr[1] "%s sono richiesti per riprodurre il file, ma non sono installati."
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#, c-format
+msgid "_Find in %s"
+msgstr "_Trovato in %s"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -601,7 +612,7 @@ msgstr ""
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
-msgstr "%d.%02d.%02d"
+msgstr "%d:%02d:%02d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -613,7 +624,7 @@ msgstr "%d.%02d.%02d"
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
-msgstr "-%d.%02d.%02d"
+msgstr "-%d:%02d:%02d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -625,7 +636,7 @@ msgstr "-%d.%02d.%02d"
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
-msgstr "-%d.%02d"
+msgstr "-%d:%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -637,7 +648,7 @@ msgstr "-%d.%02d"
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
-msgstr "%d.%02d"
+msgstr "%d:%02d"
 
 #. Title
 #. Artist
@@ -755,39 +766,39 @@ msgstr "Nessuna selezione"
 msgid "Audio Preview"
 msgstr "Anteprima audio"
 
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Impossibile inizializzare le librerie thread-safe."
 
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verificare l'installazione del sistema. Totem verrà chiuso."
 
-#: ../src/totem-grilo.c:280
+#: ../src/totem-grilo.c:284
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Stagione %d episodio %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:317
+#: ../src/totem-grilo.c:321
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (stagione %d episodio %d)"
 
-#: ../src/totem-grilo.c:687
+#: ../src/totem-grilo.c:671
 msgid "Browse Error"
 msgstr "Errore durante l'esplorazione"
 
-#: ../src/totem-grilo.c:824
+#: ../src/totem-grilo.c:812
 msgid "Search Error"
 msgstr "Errore durante la ricerca"
 
-#: ../src/totem-grilo.c:1275
+#: ../src/totem-grilo.c:1266
 msgid "Local"
 msgstr "Locale"
 
-#: ../src/totem-grilo.c:1871
+#: ../src/totem-grilo.c:1863
 msgid "Channels"
 msgstr "Canali"
 
@@ -838,66 +849,56 @@ msgid "Search"
 msgstr "Ricerca"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:391
+#: ../src/totem-menu.c:419
 msgid "None"
 msgstr "Nessuno"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:395
+#: ../src/totem-menu.c:423
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatico"
 
-#: ../src/totem-object.c:175
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"Usare «%s --help» per vedere un elenco completo delle opzioni disponibili "
-"dalla riga di comando.\n"
-
-#: ../src/totem-object.c:1334 ../src/totem-options.c:52
+#: ../src/totem-object.c:1418 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
-#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
-#: ../src/totem-object.c:1955
+#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
+#: ../src/totem-object.c:2042
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Impossibile riprodurre il file «%s»."
 
-#: ../src/totem-object.c:2097
+#: ../src/totem-object.c:2184
 msgid "Totem could not display the help contents."
 msgstr "Impossibile visualizzare il sommario della guida."
 
-#: ../src/totem-object.c:2337
+#: ../src/totem-object.c:2424
 msgid "An error occurred"
 msgstr "Si è verificato un errore"
 
-#: ../src/totem-object.c:3641
+#: ../src/totem-object.c:3756
 msgid "Previous Chapter/Movie"
 msgstr "Capitolo/Filmato precedente"
 
-#: ../src/totem-object.c:3647
+#: ../src/totem-object.c:3762
 msgid "Play / Pause"
 msgstr "Riproduci / Pausa"
 
-#: ../src/totem-object.c:3653
+#: ../src/totem-object.c:3768
 msgid "Next Chapter/Movie"
 msgstr "Capitolo/Filmato successivo"
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3989
 msgid "Totem could not startup."
 msgstr "Impossibile avviare Totem."
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3989
 msgid "No reason."
 msgstr "Motivo sconosciuto."
 
@@ -920,70 +921,62 @@ msgid "_Add"
 msgstr "_Aggiungi"
 
 #: ../src/totem-options.c:49
-msgid "Enable debug"
-msgstr "Abilita debug"
-
-#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "Riproduce/Mette in pausa"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Successivo"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "Precedente"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "Scorre avanti"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "Scorre indietro"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "Alza il volume"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "Abbassa il volume"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "Esclude l'audio"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Commuta schermo intero"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Quit"
 msgstr "Esce"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Enqueue"
 msgstr "Accoda"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Replace"
 msgstr "Sostituisce"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Seek"
 msgstr "Salta a"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Filmati da riprodurre"
 
-#: ../src/totem-options.c:76
-msgid "- Play movies and songs"
-msgstr "- Riproduce filmati e musica"
-
-#: ../src/totem-options.c:123
+#: ../src/totem-options.c:99
 msgid "Can't enqueue and replace at the same time"
 msgstr "Non è possibile accodare e rimpiazzare nello stesso momento"
 
@@ -1248,7 +1241,7 @@ msgstr "Aggiungi video"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:786
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1259,15 +1252,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:787
 msgid "Filename"
 msgstr "Nome file"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:789
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Duration"
 msgstr "Durata"
 
@@ -1312,15 +1305,15 @@ msgstr "Impossibile scrivere un progetto."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
 msgid "_Create Video Disc…"
-msgstr "_Crea disco video..."
+msgstr "_Crea disco video…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
 msgid "Copy Vide_o DVD…"
-msgstr "Copia DVD vide_o..."
+msgstr "Copia DVD vide_o…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
-msgstr "Copia (S)VCD..."
+msgstr "Copia (S)VCD…"
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
 msgid "Name for new chapter:"
@@ -1344,7 +1337,7 @@ msgstr "Va al capitolo nel filmato"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
 msgid "Add Chapter…"
-msgstr "Aggiungi capitolo..."
+msgstr "Aggiungi capitolo…"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
 msgid "Remove Chapter"
@@ -1364,7 +1357,7 @@ msgstr "Nessun dato di capitoli"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
 msgid "Load Chapters…"
-msgstr "Carica capitoli..."
+msgstr "Carica capitoli…"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "Load chapters from an external CMML file"
@@ -1561,12 +1554,12 @@ msgstr "Brasiliano portoghese"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:178
 msgid "Searching for subtitles…"
-msgstr "Ricerca sottotitoli..."
+msgstr "Ricerca sottotitoli…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:605
+#: ../src/plugins/opensubtitles/opensubtitles.py:608
 msgid "Downloading the subtitles…"
-msgstr "Scaricamento sottotitoli..."
+msgstr "Scaricamento sottotitoli…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:291
 msgid "Could not contact the OpenSubtitles website"
@@ -1581,7 +1574,7 @@ msgstr "Impossibile contattare il sito web di OpenSubtitles."
 msgid "No results found."
 msgstr "Nessun risultato trovato."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "Sottotitoli"
 
@@ -1589,23 +1582,23 @@ msgstr "Sottotitoli"
 # ripresa da totem 2.18
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "Giudizio"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:525
 msgid "_Download Movie Subtitles…"
-msgstr "_Scarica sottotitoli del filmato..."
+msgstr "_Scarica sottotitoli del filmato…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:565
 msgid "Searching subtitles…"
-msgstr "Ricerca sottotitoli..."
+msgstr "Ricerca sottotitoli…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
 msgid "Download Movie Subtitles"
@@ -1619,11 +1612,11 @@ msgstr "_Lingua sottotitoli:"
 msgid "_Play with Subtitle"
 msgstr "_Riproduci con sottotitoli"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "Lingua sottotitoli"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "La lingua da cercare per i sottotitoli del filmato."
 
@@ -1643,11 +1636,11 @@ msgstr "Proprietà"
 msgid "_Properties"
 msgstr "Pr_oprietà"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "Password rpdb2"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -1802,7 +1795,7 @@ msgstr "Galleria-%s-%d.jpg"
 #. Set up the window
 #: ../src/plugins/screenshot/totem-gallery-progress.c:101
 msgid "Creating Gallery…"
-msgstr "Creazione galleria..."
+msgstr "Creazione galleria…"
 
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
@@ -1825,7 +1818,7 @@ msgstr "Cattura _schermata"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "Crea _galleria schermate..."
+msgstr "Crea _galleria schermate…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -1863,7 +1856,7 @@ msgstr "_Salta a"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
-msgstr "_Salta a..."
+msgstr "_Salta a…"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
