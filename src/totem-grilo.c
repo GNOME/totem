@@ -1297,12 +1297,12 @@ source_added_cb (GrlRegistry *registry,
 							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
 							   MODEL_RESULTS_CAN_REMOVE, can_remove (source, NULL),
 							   -1);
-			monitor = TRUE;
+
+			if (g_str_equal (id, "grl-filesystem") == FALSE)
+				monitor = TRUE;
 		}
 
-		if (monitor &&
-		    (ops & GRL_OP_NOTIFY_CHANGE) &&
-		    g_str_equal (id, "grl-filesystem") == FALSE) {
+		if (monitor && (ops & GRL_OP_NOTIFY_CHANGE)) {
 			grl_source_notify_change_start (source, NULL);
 			g_signal_connect (G_OBJECT (source), "content-changed",
 					  G_CALLBACK (content_changed_cb), self);
