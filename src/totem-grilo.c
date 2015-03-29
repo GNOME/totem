@@ -1282,7 +1282,8 @@ source_added_cb (GrlRegistry *registry,
 		if (source_is_recent (source)) {
 			browse (self, self->priv->recent_model,
 				NULL, source, NULL, -1);
-			monitor = TRUE;
+			if (g_str_equal (id, "grl-tracker-source") == FALSE)
+				monitor = TRUE;
 		} else if (!source_is_browse_blacklisted (source)) {
 			const GdkPixbuf *icon;
 
