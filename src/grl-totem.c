@@ -351,6 +351,17 @@ add_local_metadata (GrlTotemSource *totem_source,
 	g_object_unref (options);
 }
 
+static gboolean
+filter_out_media (GrlMedia *media)
+{
+	if (grl_media_is_image (media) ||
+	    grl_media_is_audio (media)) {
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 static void
 browse_internal_cb (GrlSource    *source,
 		    guint         operation_id,
@@ -362,7 +373,7 @@ browse_internal_cb (GrlSource    *source,
 	GrlTotemSource *totem_source = GRL_TOTEM_SOURCE (user_data);
 	GrlTotemSourcePrivate *priv = totem_source->priv;
 
-	if (media) {
+	if (media && !filter_out_media (media)) {
 		add_local_metadata (totem_source, source, media);
 		g_ptr_array_add (priv->entries, g_object_ref (media));
 	}

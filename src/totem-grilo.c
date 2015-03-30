@@ -647,12 +647,6 @@ browse_cb (GrlSource    *source,
 					    -1);
 		}
 
-		if (grl_media_is_image (media) ||
-		    grl_media_is_audio (media)) {
-			/* This isn't supposed to happen as we filter for videos */
-			g_assert_not_reached ();
-		}
-
 		add_media_to_model (GTK_TREE_STORE (bud->model),
 				    bud->ref_parent ? &parent : NULL,
 				    source, media);
