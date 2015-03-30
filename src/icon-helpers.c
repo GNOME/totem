@@ -49,6 +49,7 @@ static GnomeDesktopThumbnailFactory *factory;
 static GThreadPool *thumbnail_pool;
 static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
+static GrlKeyID poster_key = GRL_METADATA_KEY_INVALID;
 
 #define STROKE           0x3b3c38ff
 #define FILL_DEFAULT     0x2d2d2dff
@@ -61,6 +62,20 @@ static GdkPixbuf *load_icon (GdkPixbuf *pixbuf,
 static GdkPixbuf *load_named_icon (const char *name,
 				   int         size,
 				   guint32     fill);
+
+static gboolean
+ensure_poster_key (void)
+{
+	GrlRegistry *registry;
+
+	if (poster_key != GRL_METADATA_KEY_INVALID)
+		return TRUE;
+
+	registry = grl_registry_get_default ();
+	poster_key = grl_registry_lookup_metadata_key (registry, "thetvdb-poster");
+
+	return (poster_key != GRL_METADATA_KEY_INVALID);
+}
 
 static gboolean
 media_is_local (GrlMedia *media)
@@ -294,7 +309,10 @@ totem_grilo_get_thumbnail (GObject             *object,
 			   callback,
 			   user_data);
 
-	if (GRL_IS_MEDIA (object)) {
+	if (GRL_IS_MEDIA (object) && grl_media_is_container (GRL_MEDIA (object))) {
+		//FIXME grab dat shit and cache it
+		g_message ("poster: %s", grl_data_get_string (GRL_DATA (object), poster_key));
+	} else if (GRL_IS_MEDIA (object)) {
 		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
 		if (!url_thumb && media_is_local (GRL_MEDIA (object))) {
 			totem_grilo_thumbnail_media (GRL_MEDIA (object),
@@ -316,6 +334,7 @@ totem_grilo_get_thumbnail (GObject             *object,
 			g_object_set_data (G_OBJECT (task), "is-source", GUINT_TO_POINTER (TRUE));
 		}
 	}
+
 	if (url_thumb == NULL) {
 		g_task_return_pointer (task, NULL, NULL);
 		g_object_unref (task);
@@ -459,6 +478,9 @@ totem_grilo_get_icon (GrlMedia *media,
 	*thumbnailing = FALSE;
 
 	if (grl_media_is_container (media)) {
+		if (ensure_poster_key () &&
+		    grl_data_has_key (GRL_DATA (media), poster_key))
+			*thumbnailing = TRUE;
 		return g_object_ref (icons[ICON_BOX]);
 	} else {
 		if (grl_media_get_thumbnail (media) ||
