@@ -239,23 +239,6 @@ source_is_search_blacklisted (GrlSource *source)
 }
 
 static gboolean
-source_is_recent (GrlSource *source)
-{
-	const char *id;
-	const char * const sources[] = {
-		"grl-tracker-source",
-		"grl-optical-media",
-		"grl-bookmarks",
-		NULL
-	};
-
-	id = grl_source_get_id (source);
-	g_assert (id);
-
-	return strv_has_prefix (sources, id);
-}
-
-static gboolean
 source_is_forbidden (GrlSource *source)
 {
 	const char **tags;
@@ -1189,7 +1172,7 @@ source_added_cb (GrlRegistry *registry,
 
 	/* FIXME: We should be using grl-bookmarks to store new
 	 * items through grl-totem, not directly */
-	if (source_is_recent (source) &&
+	if (grl_totem_plugin_wraps_source (source) &&
 	    g_strcmp0 (grl_source_get_id (source), "grl-bookmarks") != 0)
 		return;
 
