@@ -52,6 +52,7 @@ struct _GrlTotemSourceClass {
 };
 
 GrlPluginDescriptor *grl_totem_plugin_get_descriptor (void);
+gboolean             grl_totem_plugin_wraps_source   (GrlSource *source);
 GType                grl_totem_source_get_type       (void);
 
 #endif /* _GRL_TOTEM_SOURCE_H_ */

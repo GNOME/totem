@@ -180,6 +180,19 @@ grl_totem_plugin_init (GrlRegistry *registry,
 	return TRUE;
 }
 
+gboolean
+grl_totem_plugin_wraps_source (GrlSource *source)
+{
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (sources); i++) {
+		if (g_strcmp0 (grl_source_get_id (source), sources[i]) == 0) {
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 static GrlPluginDescriptor descriptor = {
 	.major_version = 0,
 	.minor_version = 3,
