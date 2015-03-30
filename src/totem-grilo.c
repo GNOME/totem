@@ -48,6 +48,7 @@
 #include "totem-main-toolbar.h"
 #include "totem-selection-toolbar.h"
 #include <libgd/gd.h>
+#include "grl-totem.h"
 
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
@@ -66,10 +67,8 @@ struct _TotemGriloPrivate {
 
 	gboolean plugins_loaded;
 
-	GrlSource *local_metadata_src;
-	GrlSource *title_parsing_src;
-	GrlSource *metadata_store_src;
 	GrlSource *bookmarks_src;
+	GrlSource *totem_src;
 	gboolean fs_plugin_configured;
 
 	TotemGriloPage current_page;
@@ -135,7 +134,6 @@ G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
 
 typedef struct {
 	TotemGrilo *totem_grilo;
-	gboolean ignore_boxes; /* For the recent view */
 	GtkTreeRowReference *ref_parent;
 	GtkTreeModel *model;
 } BrowseUserData;
@@ -553,51 +551,6 @@ update_media (GtkTreeStore *model,
 	g_free (secondary);
 }
 
-static void
-add_local_metadata (TotemGrilo *self,
-		    GrlSource  *source,
-		    GrlMedia   *media)
-{
-	GrlOperationOptions *options;
-
-	/* This is very slow and sync, so don't run it
-	 * for non-local media */
-	if (!source_is_recent (source))
-		return;
-
-	/* Avoid trying to get metadata for web radios */
-	if (source == self->priv->bookmarks_src) {
-		char *scheme;
-
-		scheme = g_uri_parse_scheme (grl_media_get_url (media));
-		if (g_strcmp0 (scheme, "http") == 0 ||
-		    g_strcmp0 (scheme, "https") == 0) {
-			g_free (scheme);
-			return;
-		}
-		g_free (scheme);
-	}
-
-	options = grl_operation_options_new (NULL);
-	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_NORMAL);
-	grl_source_resolve_sync (self->priv->title_parsing_src,
-				 media,
-				 self->priv->metadata_keys,
-				 options,
-				 NULL);
-	grl_source_resolve_sync (self->priv->local_metadata_src,
-				 media,
-				 self->priv->metadata_keys,
-				 options,
-				 NULL);
-	grl_source_resolve_sync (self->priv->metadata_store_src,
-				 media,
-				 self->priv->metadata_keys,
-				 options,
-				 NULL);
-	g_object_unref (options);
-}
-
 static int
 get_source_priority (GrlSource *source)
 {
@@ -700,14 +653,9 @@ browse_cb (GrlSource    *source,
 			g_assert_not_reached ();
 		}
 
-		if (grl_media_is_container (media) && bud->ignore_boxes) {
-			/* Ignore boxes for certain sources */
-		} else {
-			add_local_metadata (self, source, media);
-			add_media_to_model (GTK_TREE_STORE (bud->model),
-					    bud->ref_parent ? &parent : NULL,
-					    source, media);
-		}
+		add_media_to_model (GTK_TREE_STORE (bud->model),
+				    bud->ref_parent ? &parent : NULL,
+				    source, media);
 
 		g_object_unref (media);
 	}
@@ -754,7 +702,6 @@ browse (TotemGrilo   *self,
 
 	bud = g_slice_new0 (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
-	bud->ignore_boxes = source_is_recent (source);
 	if (path)
 		bud->ref_parent = gtk_tree_row_reference_new (model, path);
 	bud->model = g_object_ref (model);
@@ -827,7 +774,6 @@ search_cb (GrlSource    *source,
 			g_assert_not_reached ();
 		}
 
-		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (self->priv->search_results_model),
 				    NULL, source, media);
 
@@ -1138,7 +1084,7 @@ static GtkTreeModel *
 get_tree_model_for_source (TotemGrilo *self,
 			   GrlSource  *source)
 {
-	if (source_is_recent (source))
+	if (self->priv->totem_src == source)
 		return self->priv->recent_model;
 
 	return self->priv->browser_model;
@@ -1209,8 +1155,6 @@ content_added (TotemGrilo   *self,
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
-
-		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
 	}
 }
@@ -1249,6 +1193,12 @@ source_added_cb (GrlRegistry *registry,
 	GrlSupportedOps ops;
 	const char *id;
 
+	/* FIXME: We should be using grl-bookmarks to store new
+	 * items through grl-totem, not directly */
+	if (source_is_recent (source) &&
+	    g_strcmp0 (grl_source_get_id (source), "grl-bookmarks") != 0)
+		return;
+
 	if (source_is_blacklisted (source) ||
 	    source_is_forbidden (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
@@ -1273,13 +1223,8 @@ source_added_cb (GrlRegistry *registry,
 	else
 		name = grl_source_get_name (source);
 
-	/* Metadata */
-	if (g_str_equal (id, "grl-video-title-parsing"))
-		self->priv->title_parsing_src = source;
-	else if (g_str_equal (id, "grl-local-metadata"))
-		self->priv->local_metadata_src = source;
-	else if (g_str_equal (id, "grl-metadata-store"))
-		self->priv->metadata_store_src = source;
+	if (g_str_equal (id, "grl-totem"))
+		self->priv->totem_src = source;
 	else if (g_str_equal (id, "grl-bookmarks"))
 		self->priv->bookmarks_src = source;
 
@@ -1287,7 +1232,7 @@ source_added_cb (GrlRegistry *registry,
 	if (ops & GRL_OP_BROWSE) {
 		gboolean monitor = FALSE;
 
-		if (source_is_recent (source)) {
+		if (self->priv->totem_src == source) {
 			browse (self, self->priv->recent_model,
 				NULL, source, NULL, -1);
 			if (g_str_equal (id, "grl-tracker-source") == FALSE)
@@ -1432,6 +1377,11 @@ load_grilo_plugins (TotemGrilo *self)
 	                  G_CALLBACK (source_added_cb), self);
 	g_signal_connect (registry, "source-removed",
 	                  G_CALLBACK (source_removed_cb), self);
+
+	if (grl_registry_load_plugin_from_desc (registry, grl_totem_plugin_get_descriptor(), &error) == FALSE) {
+		g_warning ("Could not load builtin GrlTotem plugin: %s", error->message);
+		g_error_free (error);
+	}
 
 	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
 		g_warning ("Failed to load grilo plugins: %s", error->message);
