@@ -63,12 +63,17 @@ struct _GrlTotemSourcePrivate {
 	GPtrArray *pending_search;
 
 	GList *metadata_keys;
+	GList *show_metadata_keys;
 	GrlSource *local_metadata_src;
 	GrlSource *title_parsing_src;
 	GrlSource *metadata_store_src;
+	GrlSource *tvdb_src;
+	GrlKeyID tvdb_key, poster_key;
 
 	/* Top-level media (eg. anything that's not a series) */
 	GPtrArray *entries;
+	/* Items that could be grouped (eg. Series) */
+	GPtrArray *group_entries;
 };
 
 static const char * const sources[] = {
@@ -77,7 +82,8 @@ static const char * const sources[] = {
 	"grl-bookmarks",
 	"grl-local-metadata",
 	"grl-video-title-parsing",
-	"grl-metadata-store"
+	"grl-metadata-store",
+	"grl-thetvdb"
 };
 
 /* --- Data types --- */
@@ -253,6 +259,111 @@ grl_totem_source_class_init (GrlTotemSourceClass * klass)
 	g_type_class_add_private (klass, sizeof (GrlTotemSourcePrivate));
 }
 
+static char *
+get_show_name (GrlTotemSource  *totem_source,
+	       const char      *show,
+	       char           **id,
+	       char           **poster_url)
+{
+	GrlMedia *media;
+	GrlOperationOptions *options;
+	char *real_title;
+
+	media = grl_media_video_new ();
+	grl_media_set_show (media, show);
+
+	options = grl_operation_options_new (NULL);
+	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_FAST_ONLY);
+	grl_source_resolve_sync (totem_source->priv->tvdb_src,
+				 media,
+				 totem_source->priv->show_metadata_keys,
+				 options,
+				 NULL);
+	g_object_unref (options);
+
+	real_title = g_strdup (grl_media_get_show (media));
+	*id = g_strdup (grl_data_get_string (GRL_DATA (media), totem_source->priv->tvdb_key));
+	*poster_url = g_strdup (grl_data_get_string (GRL_DATA (media), totem_source->priv->poster_key));
+	g_object_unref (media);
+
+	return real_title;
+}
+
+typedef struct {
+	GPtrArray *array;
+	GrlTotemSource *totem_source;
+} SeriesGroupRet;
+
+static void
+create_series_group (const char     *show,
+		     gpointer        value,
+		     SeriesGroupRet *ret)
+{
+	GrlMedia *media;
+	char *title, *id, *poster_url;
+
+	media = grl_media_container_new ();
+	title = get_show_name (ret->totem_source, show, &id, &poster_url);
+	g_assert (title);
+
+	grl_media_set_id (media, id ? id : title);
+	g_free (id);
+
+	grl_media_set_title (media, title);
+	g_free (title);
+
+	grl_data_set_string (GRL_DATA (media),
+			     ret->totem_source->priv->poster_key,
+			     poster_url);
+	g_free (poster_url);
+
+	g_ptr_array_insert (ret->array, -1, media);
+}
+
+static GPtrArray *
+merge_media (GrlTotemSource *totem_source,
+	     GPtrArray      *entries,
+	     GPtrArray      *group_entries)
+{
+	SeriesGroupRet *data;
+	GPtrArray *ret;
+	GHashTable *ht;
+	guint i;
+
+	data = g_new0 (SeriesGroupRet, 1);
+	data->totem_source = totem_source;
+	data->array = g_ptr_array_new_full (entries->len, NULL);
+
+	/* Start by creating groups for entries */
+	ht = g_hash_table_new_full (g_str_hash, g_str_equal,
+				    g_free, NULL);
+
+	for (i = 0; i < group_entries->len; i++) {
+		GrlMedia *media = g_ptr_array_index (group_entries, i);
+		const char *show;
+		char *tmp;
+		guint num;
+
+		show = grl_media_get_show (media);
+		tmp = g_utf8_casefold (show, -1);
+		num = GPOINTER_TO_UINT (g_hash_table_lookup (ht, tmp));
+		num++;
+		g_hash_table_insert (ht, (gpointer) tmp, GUINT_TO_POINTER (num));
+	}
+
+	g_hash_table_foreach (ht, (GHFunc) create_series_group, data);
+
+	for (i = 0; i < entries->len; i++) {
+		GrlMedia *media = g_ptr_array_index (entries, i);
+		g_ptr_array_insert (data->array, -1, media);
+	}
+
+	ret = data->array;
+	g_free (data);
+
+	return ret;
+}
+
 static void
 grl_totem_source_process_search (GrlTotemSource      *source,
 				 GrlSourceSearchSpec *ss)
@@ -269,7 +380,9 @@ grl_totem_source_process_browse (GrlTotemSource      *source,
 	guint remaining;
 	GPtrArray *entries;
 
-	entries = source->priv->entries;
+	entries = merge_media (source,
+			       source->priv->entries,
+			       source->priv->group_entries);
 
 	if (entries->len) {
 		skip = grl_operation_options_get_skip (bs->options);
@@ -316,6 +429,8 @@ grl_totem_source_process_browse (GrlTotemSource      *source,
 			      bs->user_data,
 			      NULL);
 	}
+
+	g_ptr_array_free (entries, FALSE);
 }
 
 static gboolean
@@ -375,6 +490,12 @@ filter_out_media (GrlMedia *media)
 	return FALSE;
 }
 
+static gboolean
+is_episode (GrlMedia *media)
+{
+	return (grl_media_get_show (media) != NULL);
+}
+
 static void
 browse_internal_cb (GrlSource    *source,
 		    guint         operation_id,
@@ -388,7 +509,11 @@ browse_internal_cb (GrlSource    *source,
 
 	if (media && !filter_out_media (media)) {
 		add_local_metadata (totem_source, source, media);
-		g_ptr_array_add (priv->entries, g_object_ref (media));
+
+		if (!is_episode (media))
+			g_ptr_array_add (priv->entries, g_object_ref (media));
+		else
+			g_ptr_array_add (priv->group_entries, g_object_ref (media));
 	}
 
 	if (error != NULL || remaining == 0) {
@@ -419,6 +544,7 @@ content_changed_cb (GrlSource           *s,
 {
 	/* This will need fixing when we start monitoring tracker again */
 	grl_source_notify_change_list (GRL_SOURCE (source), changed_medias, change_type, location_unknown);
+	//FIXME, this needs to update our internal lists
 }
 
 static void
@@ -430,9 +556,14 @@ grl_totem_source_init (GrlTotemSource *source)
 
 	priv = source->priv = GRL_TOTEM_SOURCE_GET_PRIVATE(source);
 	priv->op_array = g_ptr_array_new ();
-	priv->entries = g_ptr_array_new_with_free_func (g_object_unref);
+	priv->entries = g_ptr_array_new ();
+	priv->group_entries = g_ptr_array_new_with_free_func (g_object_unref);
 	priv->pending_browse = g_ptr_array_new ();
 	priv->pending_search = g_ptr_array_new ();
+
+	registry = grl_registry_get_default ();
+	priv->tvdb_key = grl_registry_lookup_metadata_key (registry, "thetvdb-id");
+	priv->poster_key = grl_registry_lookup_metadata_key (registry, "thetvdb-poster");
 
 	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
 							 GRL_METADATA_KEY_AUTHOR,
@@ -446,9 +577,12 @@ grl_totem_source_init (GrlTotemSource *source)
 							 GRL_METADATA_KEY_SEASON,
 							 GRL_METADATA_KEY_EPISODE,
 							 GRL_METADATA_KEY_TITLE_FROM_FILENAME,
+							 priv->tvdb_key,
 							 NULL);
-
-	registry = grl_registry_get_default ();
+	priv->show_metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_SHOW,
+							      priv->poster_key,
+							      priv->tvdb_key,
+							      NULL);
 
 	for (i = 0; i < G_N_ELEMENTS (sources); i++) {
 		GrlOperationOptions *default_options;
@@ -469,6 +603,8 @@ grl_totem_source_init (GrlTotemSource *source)
 				source->priv->local_metadata_src = s;
 			else if (g_str_equal (id, "grl-metadata-store"))
 				source->priv->metadata_store_src = s;
+			else if (g_str_equal (id, "grl-thetvdb"))
+				source->priv->tvdb_src = s;
 			continue;
 		}
 
@@ -519,6 +655,7 @@ grl_totem_source_finalize (GObject *object)
 	g_ptr_array_unref (priv->entries);
 	g_ptr_array_unref (priv->pending_browse);
 	g_ptr_array_unref (priv->pending_search);
+	g_ptr_array_unref (priv->group_entries);
 
 	G_OBJECT_CLASS (grl_totem_source_parent_class)->finalize (object);
 }
