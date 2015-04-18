@@ -626,6 +626,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             return True
 
         subtitles = download_thread.get_subtitles ()
+        suburi = None
         if subtitles:
             subtitle_file = Gio.file_new_for_uri (self._filename)
             movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
