@@ -55,7 +55,7 @@ extern TotemCmdLineOptions optionstate;
 
 void totem_options_register_remote_commands (Totem *totem);
 void totem_options_process_for_server (Totem *totem,
-				       const TotemCmdLineOptions* options);
+				       TotemCmdLineOptions* options);
 
 G_END_DECLS
 
