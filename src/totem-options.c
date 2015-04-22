@@ -78,11 +78,12 @@ totem_send_remote_command (Totem              *totem,
 }
 
 void
-totem_options_process_for_server (Totem                     *totem,
-				  const TotemCmdLineOptions *options)
+totem_options_process_for_server (Totem               *totem,
+				  TotemCmdLineOptions *options)
 {
 	TotemRemoteCommand action;
 	GList *commands, *l;
+	char **filenames;
 	int i;
 
 	commands = NULL;
@@ -103,12 +104,15 @@ totem_options_process_for_server (Totem                     *totem,
 		action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 
+	filenames = options->filenames;
+	options->filenames = NULL;
+
 	/* Send the files to enqueue */
-	for (i = 0; options->filenames && options->filenames[i] != NULL; i++) {
+	for (i = 0; filenames && filenames[i] != NULL; i++) {
 		const char *filename;
 		char *full_path;
 
-		filename = options->filenames[i];
+		filename = filenames[i];
 		full_path = totem_create_full_path (filename);
 
 		totem_send_remote_command (totem, action, full_path ? full_path : filename);
@@ -121,6 +125,8 @@ totem_options_process_for_server (Totem                     *totem,
 			action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 		}
 	}
+
+	g_clear_pointer (&filenames, g_strfreev);
 
 	if (options->playpause) {
 		commands = g_list_append (commands, GINT_TO_POINTER
