@@ -2488,6 +2488,8 @@ totem_grilo_finalize (GObject *object)
 void
 totem_grilo_start (TotemGrilo *self)
 {
+	g_debug ("TotemGrilo: Resuming videos thumbnailing");
+
 	totem_grilo_resume_icon_thumbnailing ();
 
 	if (self->priv->plugins_loaded)
@@ -2502,6 +2504,7 @@ totem_grilo_start (TotemGrilo *self)
 void
 totem_grilo_pause (TotemGrilo *self)
 {
+	g_debug ("TotemGrilo: Pausing videos thumbnailing");
 	totem_grilo_pause_icon_thumbnailing ();
 }
 
