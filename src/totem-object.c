@@ -145,6 +145,8 @@ totem_object_app_open (GApplication  *application,
 	GSList *slist = NULL;
 	int i;
 
+	optionstate.had_filenames = (n_files > 0);
+
 	g_application_activate (application);
 
 	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
@@ -237,20 +239,22 @@ totem_object_app_activate (GApplication *app)
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
 
-	if (optionstate.filenames == NULL) {
-		totem_object_set_main_page (totem, "grilo");
-		if (totem_session_try_restore (totem) == FALSE)
+	/* We're only supposed to be called from totem_object_app_handle_local_options()
+	 * and totem_object_app_open() */
+	g_assert (optionstate.filenames == NULL);
+
+	if (!optionstate.had_filenames) {
+		if (totem_session_try_restore (totem) == FALSE) {
+			totem_object_set_main_page (totem, "grilo");
 			totem_object_set_mrl (totem, NULL, NULL);
+		} else {
+			totem_object_set_main_page (totem, "player");
+		}
 	} else {
 		totem_object_set_main_page (totem, "player");
-		if (totem_object_open_files (totem, optionstate.filenames))
-			totem_object_play_pause (totem);
-		else
-			totem_object_set_mrl (totem, NULL, NULL);
-
-		g_strfreev (optionstate.filenames);
-		optionstate.filenames = NULL;
 	}
+
+	optionstate.had_filenames = FALSE;
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
 	bacon_video_widget_set_logo (totem->bvw, "totem");
