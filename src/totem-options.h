@@ -48,6 +48,7 @@ typedef struct {
 	gboolean replace;
 	gint64 seek;
 	gchar **filenames;
+	gboolean had_filenames;
 } TotemCmdLineOptions;
 
 extern const GOptionEntry all_options[];

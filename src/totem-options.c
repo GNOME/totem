@@ -106,6 +106,7 @@ totem_options_process_for_server (Totem               *totem,
 
 	filenames = options->filenames;
 	options->filenames = NULL;
+	options->had_filenames = (filenames != NULL);
 
 	/* Send the files to enqueue */
 	for (i = 0; filenames && filenames[i] != NULL; i++) {
