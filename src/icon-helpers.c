@@ -296,7 +296,7 @@ totem_grilo_get_thumbnail (GObject             *object,
 
 	file = g_file_new_for_uri (url_thumb);
 	g_task_set_task_data (task, file, g_object_unref);
-	g_file_read_async (file, G_PRIORITY_DEFAULT, NULL,
+	g_file_read_async (file, G_PRIORITY_DEFAULT, cancellable,
 			   get_stream_thumbnail_cb, task);
 }
 
