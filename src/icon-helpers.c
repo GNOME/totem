@@ -30,7 +30,7 @@
 #define GNOME_DESKTOP_USE_UNSTABLE_API 1
 #include <libgnome-desktop/gnome-desktop-thumbnail.h>
 
-#define DEFAULT_MAX_THREADS   5
+#define DEFAULT_MAX_THREADS   1
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_SEARCH_HEIGHT   THUMB_SEARCH_SIZE
 #define SOURCES_MAX_HEIGHT    64
