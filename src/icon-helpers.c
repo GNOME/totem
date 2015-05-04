@@ -189,7 +189,7 @@ thumbnail_media_async_thread (GTask    *task,
 			      gpointer  user_data)
 {
 	GrlMedia *media;
-	GdkPixbuf *pixbuf;
+	GdkPixbuf *pixbuf, *tmp_pixbuf;
 	const char *uri;
 	GDateTime *mtime;
 
@@ -217,18 +217,22 @@ thumbnail_media_async_thread (GTask    *task,
 		return;
 	}
 
-	pixbuf = gnome_desktop_thumbnail_factory_generate_thumbnail (factory, uri, "video/x-totem-stream");
+	tmp_pixbuf = gnome_desktop_thumbnail_factory_generate_thumbnail (factory, uri, "video/x-totem-stream");
 
-	if (!pixbuf) {
+	if (!tmp_pixbuf) {
 		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "Thumbnailing failed");
 		g_object_unref (task);
 		return;
 	}
 
-	gnome_desktop_thumbnail_factory_save_thumbnail (factory, pixbuf, uri, g_date_time_to_unix (mtime));
+	gnome_desktop_thumbnail_factory_save_thumbnail (factory, tmp_pixbuf, uri, g_date_time_to_unix (mtime));
 
 	/* Save the thumbnail URL for the bookmarks source */
 	save_bookmark_thumbnail (media, uri);
+
+	/* Add frame */
+	pixbuf = load_icon (tmp_pixbuf, FALSE, FILL_MOVIE);
+	g_object_unref (tmp_pixbuf);
 
 	g_task_return_pointer (task, pixbuf, g_object_unref);
 	g_object_unref (task);
