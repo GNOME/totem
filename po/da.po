@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-15 14:53+0100\n"
-"PO-Revision-Date: 2015-03-14 03:23+0100\n"
+"POT-Creation-Date: 2015-05-24 18:07+0200\n"
+"PO-Revision-Date: 2015-05-24 16:30+0200\n"
 "Last-Translator: Kris Thomsen <mail@kristhomsen.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1855 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Videoer"
 
@@ -90,7 +90,7 @@ msgstr "Videoens mætning"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
-msgstr "Gentagelsestilstand"
+msgstr "Gentag"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
@@ -367,7 +367,7 @@ msgstr "Kanaler:"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
-msgstr "_Indstillinger for Totem"
+msgstr "_Indstillinger"
 
 #: ../data/totem.ui.h:2
 msgid "_Help"
@@ -392,7 +392,7 @@ msgstr "_Højde-/breddeforhold"
 #: ../data/totem.ui.h:7
 msgctxt "Aspect ratio"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisk"
 
 #: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
@@ -797,7 +797,7 @@ msgstr "Fejl ved søgning"
 msgid "Local"
 msgstr "Lokal"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1864
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -859,46 +859,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Afspil"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke afspille \"%s\"."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise indholdet af hjælp."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
-#: ../src/totem-object.c:3756
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapitel/film"
 
-#: ../src/totem-object.c:3762
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Afspil / pause"
 
-#: ../src/totem-object.c:3768
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "Næste kapitel/film"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte."
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Ingen begrundelse."
 
@@ -907,16 +907,13 @@ msgid "Add Web Video"
 msgstr "Tilføj web-video"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:198
 msgid "_Cancel"
 msgstr "_Annullér"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Tilføj"
 
@@ -976,7 +973,7 @@ msgstr "Søg"
 msgid "Movies to play"
 msgstr "Film til afspilning"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Kan ikke sætte i kø og erstatte på samme tid"
 
@@ -1216,7 +1213,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Søg til %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Alle filer"
 
@@ -1232,7 +1229,7 @@ msgstr "Undertekstfiler"
 msgid "Select Text Subtitles"
 msgstr "Vælg undertekster"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Åbn"
 
@@ -1316,145 +1313,6 @@ msgstr "Kopiér vide_o-dvd…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "Kopiér (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Navn på nyt kapitel:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Fjern kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Fjern kapitlet fra listen"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Gå til kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Gå til kapitlet i filmen"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Tilføj kapitel…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Fjern kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Gå til kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Gem ændringer"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Ingen kapiteldata"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Indlæs kapitler…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Indlæs kapitler fra ekstern CMML-fil"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Tilføj nye kapitler"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Opret en ny kapitelliste for filmen"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Kapitler"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Understøttelse for kapitelmarkører i film"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Titel: </b>%s\n"
-"<b>Starttidspunkt: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Fejl ved læsning af kapitelfil"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Kapitel med samme tidspunkt findes allerede"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Prøv et andet navn eller fjern et eksisterende kapitel."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Fejl ved skrivning af kapitelfil"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Der opstod en fejl ved gemning af kapitler"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr ""
-"Kontrollér venligst at du har rettigheder til at skrive til mappen, der "
-"indeholder filmen."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Åbn kapitelfil"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Understøttede filer"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Skærmbillede for kapitel"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Kapitelnavn"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Gem ændringer til kapitelliste før der lukkes?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Luk uden at gemme"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Gem"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "Hvis du ikke gemmer, vil ændringer til kapitellisten gå tabt."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Tilføj kapitel"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1803,7 +1661,7 @@ msgstr "Gemmer galleri som \"%s\""
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
-msgstr "Totem kunne ikke skaffe et skærmbillede af videoen."
+msgstr "Totem kunne ikke tage et skærmbillede af videoen."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
@@ -1870,6 +1728,110 @@ msgstr "Udvidelsesmodul til Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "Navn på nyt kapitel:"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "_Fjern kapitel"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Fjern kapitlet fra listen"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Gå til kapitel"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Gå til kapitlet i filmen"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Tilføj kapitel…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Fjern kapitel"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Gå til kapitel"
+
+#~ msgid "Save Changes"
+#~ msgstr "Gem ændringer"
+
+#~ msgid "No chapter data"
+#~ msgstr "Ingen kapiteldata"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Indlæs kapitler…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Indlæs kapitler fra ekstern CMML-fil"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Tilføj nye kapitler"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Opret en ny kapitelliste for filmen"
+
+#~ msgid "Chapters"
+#~ msgstr "Kapitler"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Understøttelse for kapitelmarkører i film"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Titel: </b>%s\n"
+#~ "<b>Starttidspunkt: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Fejl ved læsning af kapitelfil"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Kapitel med samme tidspunkt findes allerede"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Prøv et andet navn eller fjern et eksisterende kapitel."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Fejl ved skrivning af kapitelfil"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Der opstod en fejl ved gemning af kapitler"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Kontrollér venligst at du har rettigheder til at skrive til mappen, der "
+#~ "indeholder filmen."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Åbn kapitelfil"
+
+#~ msgid "Supported files"
+#~ msgstr "Understøttede filer"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Skærmbillede for kapitel"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Kapitelnavn"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Gem ændringer til kapitelliste før der lukkes?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Luk uden at gemme"
+
+#~ msgid "Save"
+#~ msgstr "Gem"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr "Hvis du ikke gemmer, vil ændringer til kapitellisten gå tabt."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Tilføj kapitel"
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr "Om fejlanalysering skal slåes til for afspilningsmotoren"
