@@ -6096,7 +6096,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
   g_object_set (bvw->priv->play, "audio-filter", bvw->priv->audio_pitchcontrol, NULL);
 
   /* Set default connection speed */
-  g_object_set (bvw->priv->play, "connection-speed", MAX_NETWORK_SPEED, NULL);
+  /* Cast the value to guint64 to match the type of the 'connection-speed'
+   * property to avoid problems reading variable arguments on 32-bit systems. */
+  g_object_set (bvw->priv->play, "connection-speed", (guint64) MAX_NETWORK_SPEED, NULL);
 
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);
