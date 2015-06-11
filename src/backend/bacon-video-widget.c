@@ -6001,6 +6001,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
                                                               "sink", video_sink,
                                                               NULL),
 				     "name", "texture",
+				     "reactive", TRUE,
 				     NULL);
 
   /* The logo */
