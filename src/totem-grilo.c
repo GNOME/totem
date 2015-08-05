@@ -52,7 +52,7 @@
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
-#define MAX_DURATION          5
+#define MIN_DURATION          5
 
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
@@ -743,7 +743,7 @@ browse (TotemGrilo   *self,
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	if (grl_caps_is_key_range_filter (caps, GRL_METADATA_KEY_DURATION))
 		grl_operation_options_set_key_range_filter (default_options,
-							    GRL_METADATA_KEY_DURATION, MAX_DURATION, NULL,
+							    GRL_METADATA_KEY_DURATION, MIN_DURATION, NULL,
 							    NULL);
 
 	bud = g_slice_new0 (BrowseUserData);
@@ -848,7 +848,7 @@ get_search_options (TotemGrilo *self)
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
 	grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	grl_operation_options_set_key_range_filter (default_options,
-						    GRL_METADATA_KEY_DURATION, MAX_DURATION, NULL,
+						    GRL_METADATA_KEY_DURATION, MIN_DURATION, NULL,
 						    NULL);
 
 	/* And now remove all the unsupported filters and options */
