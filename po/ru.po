@@ -10,7 +10,7 @@
 # Alexander Saprykin <xelfium@gmail.com>, 2009.
 # Alexander Saprykin <xelfium@gmail.com>, 2010.
 # Yuri Kozlov <yuray@komyakino.ru>, 2010.
-# Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2014.
+# Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2015.
 # Ivan Komaritsyn <vantu5z@mail.ru>, 2015.
 # Stas Solovey <whats_up@tut.by>, 2015.
 #
@@ -19,9 +19,9 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-11 12:12+0000\n"
+"POT-Creation-Date: 2015-08-08 12:12+0000\n"
 "PO-Revision-Date: 2015-03-12 01:13+0300\n"
-"Last-Translator: Stas Solovey <whats_up@tut.by>\n"
+"Last-Translator: Yuri Myasoedov <ymyasoedov@yandex.ru>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1855 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Видео"
 
@@ -587,7 +587,6 @@ msgstr "Не удалось воспроизвести файл"
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
-#| msgid "%s is required to play the file, but is not installed."
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
 msgstr[0] "%s требуется для воспроизведения файла, но не установлен."
@@ -806,7 +805,7 @@ msgstr "Ошибка поиска"
 msgid "Local"
 msgstr "Локальный"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1864
 msgid "Channels"
 msgstr "Каналы"
 
@@ -868,46 +867,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Авто"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не удалось воспроизвести «%s»."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Не удалось отобразить содержимое справки."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
-#: ../src/totem-object.c:3755
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Предыдущий фрагмент/фильм"
 
-#: ../src/totem-object.c:3761
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Воспроизведение / Пауза"
 
-#: ../src/totem-object.c:3767
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "Следующий фрагмент/фильм"
 
-#: ../src/totem-object.c:3987
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Не удалось запустить Totem."
 
-#: ../src/totem-object.c:3987
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Нет причины."
 
@@ -916,16 +915,13 @@ msgid "Add Web Video"
 msgstr "Добавить веб-видео"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:198
 msgid "_Cancel"
 msgstr "_Отмена"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Добавить"
 
@@ -985,7 +981,7 @@ msgstr "Поиск"
 msgid "Movies to play"
 msgstr "Фильмы для воспроизведения"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Невозможно одновременно поставить в очередь и заменить"
 
@@ -1224,7 +1220,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Перейти к %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Все файлы"
 
@@ -1240,7 +1236,7 @@ msgstr "Файлы субтитров"
 msgid "Select Text Subtitles"
 msgstr "Выбрать текстовые субтитры"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Открыть"
 
@@ -1324,144 +1320,6 @@ msgstr "Копировать в_идео DVD…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "Копировать (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Название нового фрагмента:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Удалить фрагмент"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Удалить фрагмент из списка"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Перейти к фрагменту"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Перейти к фрагменту в фильме"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Добавить фрагмент…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Удалить фрагмент"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Перейти к фрагменту"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Сохранить изменения"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Нет данных о фрагментах"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Загрузить фрагменты…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Загрузить фрагменты из внешнего файла CMML"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Добавить новые фрагменты…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Создать новый список фрагментов для фильма"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Фрагменты"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Поддержка указателей фрагментов в фильмах"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Заголовок: </b>%s\n"
-"<b>Время начала: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Ошибка чтения файла фрагментов"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Фрагмент с таким временем уже существует"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Используйте другое имя или удалите существующий фрагмент."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Ошибка записи файла с фрагментами"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Во время сохранения фрагментов произошла ошибка"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "Проверьте, достаточно ли у вас прав для записи в папку с фильмом."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Открыть файл фрагментов"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Поддерживаемые файлы"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Кадр фрагмента"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Заголовок фрагмента"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Сохранить изменения в списке фрагментов перед закрытием?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Закрыть без сохранения"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Сохранить"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr ""
-"Если не сохранить изменения в списке фрагментов, изменения будут утеряны."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Добавить фрагмент"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1823,7 +1681,7 @@ msgstr "Сохранить _кадр"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "Создать серию _кадров из снимков рабочего стола…"
+msgstr "Создать галерею из _кадров…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -1879,6 +1737,3 @@ msgstr "Модуль Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Модуль, отправляющий события для Zeitgeist"
-
-#~ msgid "%s are required to play the file, but are not installed."
-#~ msgstr "%s требуются для воспроизведения файла, но не установлены."
