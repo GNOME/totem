@@ -68,6 +68,10 @@
 #include "totem-mime-types.h"
 #include "totem-uri-schemes.h"
 
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif /* GDK_WINDOWING_WAYLAND */
+
 #define REWIND_OR_PREVIOUS 4000
 
 #define SEEK_FORWARD_SHORT_OFFSET 15
@@ -500,6 +504,22 @@ static void
 totem_object_init (TotemObject *totem)
 {
 	GtkSettings *gtk_settings;
+
+	gtk_init (NULL, NULL);
+
+#ifdef GDK_WINDOWING_WAYLAND
+	/* Work-around lack of sub-surface support in Clutter's
+	 * GDK backend:
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=752143
+	 * Also remove the include when that's fixed */
+	{
+		GdkDisplay *display;
+
+		display = gdk_display_get_default ();
+		if (GDK_IS_WAYLAND_DISPLAY (display))
+			g_setenv ("CLUTTER_BACKEND", "wayland", TRUE);
+	}
+#endif
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
