@@ -162,9 +162,18 @@ time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
 static void
 tstw_adjustment_value_changed_cb (GtkAdjustment *adjustment, TotemSkipto *skipto)
 {
+	int value;
+
+	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
+
+	if (skipto->priv->seconds_label == NULL)
+		return;
+
+	value = (int) gtk_adjustment_get_value (adjustment);
+
 	/* Update the "seconds" label so that it always has the correct singular/plural form */
 	/* Translators: label for the seconds selector in the "Skip to" dialogue */
-	gtk_label_set_label (skipto->priv->seconds_label, ngettext ("second", "seconds", (int) gtk_adjustment_get_value (adjustment)));
+	gtk_label_set_label (skipto->priv->seconds_label, ngettext ("second", "seconds", value));
 }
 
 GtkWidget *
