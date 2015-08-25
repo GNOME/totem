@@ -40,6 +40,7 @@
 #include "totem-dirs.h"
 #include "totem-skipto.h"
 #include "totem-uri.h"
+#include "totem-time-entry.h"
 #include "backend/bacon-video-widget.h"
 
 static void totem_skipto_dispose	(GObject *object);
@@ -54,6 +55,7 @@ struct TotemSkiptoPrivate {
 	GtkLabel *seconds_label;
 	gint64 time;
 	Totem *totem;
+	gpointer class_ref;
 };
 
 G_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
@@ -94,9 +96,13 @@ totem_skipto_dispose (GObject *object)
 	TotemSkipto *skipto;
 
 	skipto = TOTEM_SKIPTO (object);
-	if (skipto->priv && skipto->priv->xml != NULL) {
-		g_object_unref (skipto->priv->xml);
-		skipto->priv->xml = NULL;
+	if (skipto->priv) {
+		g_clear_object (&skipto->priv->xml);
+
+		if (skipto->priv->class_ref != NULL) {
+			g_type_class_unref (skipto->priv->class_ref);
+			skipto->priv->class_ref = NULL;
+		}
 	}
 
 	G_OBJECT_CLASS (totem_skipto_parent_class)->dispose (object);
@@ -167,6 +173,7 @@ totem_skipto_new (TotemObject *totem)
 	guint label_length;
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
+	skipto->priv->class_ref = g_type_class_ref (TOTEM_TYPE_TIME_ENTRY);
 
 	skipto->priv->totem = totem;
 	skipto->priv->xml = totem_plugin_load_interface ("skipto",
