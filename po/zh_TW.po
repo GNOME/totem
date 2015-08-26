@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: totem 3.3.92\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-15 00:06+0000\n"
+"POT-Creation-Date: 2015-07-21 11:55+0000\n"
 "PO-Revision-Date: 2015-03-17 20:27+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1855 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "影片"
 
@@ -64,7 +64,7 @@ msgstr "檔案屬性分頁"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr ""
 "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;視訊;影片;影片;剪輯;系列;影"
-"集;播放器;光碟;"
+"集;播放器;碟片;"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
@@ -143,7 +143,7 @@ msgstr "\"擷取畫面快照\" 對話視窗的預設位置"
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
-msgstr "「擷取螢幕截圖」對話視窗的預設位置。預設是圖片資料夾。"
+msgstr "「擷取螢幕截圖」對話視窗的預設位置。預設是影像資料夾。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
@@ -761,7 +761,7 @@ msgstr "搜尋錯誤"
 msgid "Local"
 msgstr "本地端"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1864
 msgid "Channels"
 msgstr "頻道"
 
@@ -821,46 +821,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "自動"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "暫停"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "播放"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem 無法播放「%s」。"
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem 無法顯示求助內容。"
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "發生錯誤"
 
-#: ../src/totem-object.c:3756
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "上一章/上一齣影片"
 
-#: ../src/totem-object.c:3762
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "播放/暫停"
 
-#: ../src/totem-object.c:3768
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "下一章/下一齣影片"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totem 無法啟動。"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "沒有原因。"
 
@@ -869,16 +869,13 @@ msgid "Add Web Video"
 msgstr "加入網路視訊.."
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:198
 msgid "_Cancel"
 msgstr "取消(_C)"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "加入(_A)"
 
@@ -938,7 +935,7 @@ msgstr "搜尋"
 msgid "Movies to play"
 msgstr "要播放的影片"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "不能同時加入佇列和取代"
 
@@ -1176,7 +1173,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "前往 %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "所有檔案"
 
@@ -1192,7 +1189,7 @@ msgstr "字幕檔案"
 msgid "Select Text Subtitles"
 msgstr "選擇文字字幕"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "開啟(_O)"
 
@@ -1244,7 +1241,7 @@ msgstr "自動載入文字字幕"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Video Disc Recorder"
-msgstr "影片光碟燒錄程式"
+msgstr "影片碟片燒錄程式"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Records (S)VCDs or video DVDs"
@@ -1252,7 +1249,7 @@ msgstr "錄製 (S)VCD 或影片 DVD"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
 msgid "The video disc could not be duplicated."
-msgstr "該影片光碟無法被重製。"
+msgstr "該影片碟片無法被重製。"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:122
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
@@ -1267,7 +1264,7 @@ msgstr "無法寫入為專案。"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
 msgid "_Create Video Disc…"
-msgstr "建立影片光碟(_C)…"
+msgstr "建立影片碟片(_C)…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
 msgid "Copy Vide_o DVD…"
@@ -1276,143 +1273,6 @@ msgstr "複製影片 DVD[_O]…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "複製 (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "新章節的名稱："
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "移除章節(_R)"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "從清單中移除章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "前往章節(_G)"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "前往影片中的章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "加入章節…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "移除章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "前往章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "儲存變更"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "沒有章節資料"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "載入章節…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "從外部的 CMML 檔案載入章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "加入新的章節"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "建立影片的新章節清單"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "章節"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "支援影片的章節標記"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>片名：</b>%s\n"
-"<b>開始時刻：</b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "讀取有章節的檔案時發生錯誤"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "相同名稱的章節已經存在"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "嘗試另一個名稱或移除現有的章節。"
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "寫入有章節的檔案時發生錯誤"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "當儲存章節時發生錯誤"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "請檢查您是否有寫入包含影片的資料夾的權限。"
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "開啟章節檔案"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "支援的檔案"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "章節螢幕截圖"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "章節標題"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "在關閉前將變更儲存到章節清單？"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "關閉但不儲存"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "儲存"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "如果您不儲存，所有對章節清單做的變更都會消失。"
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "加入章節"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1822,6 +1682,108 @@ msgstr "Zeitgeist 外掛"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "傳送事件給 Zeitgeist 的外掛"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "新章節的名稱："
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "移除章節(_R)"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "從清單中移除章節"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "前往章節(_G)"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "前往影片中的章節"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "加入章節…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "移除章節"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "前往章節"
+
+#~ msgid "Save Changes"
+#~ msgstr "儲存變更"
+
+#~ msgid "No chapter data"
+#~ msgstr "沒有章節資料"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "載入章節…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "從外部的 CMML 檔案載入章節"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "加入新的章節"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "建立影片的新章節清單"
+
+#~ msgid "Chapters"
+#~ msgstr "章節"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "支援影片的章節標記"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>片名：</b>%s\n"
+#~ "<b>開始時刻：</b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "讀取有章節的檔案時發生錯誤"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "相同名稱的章節已經存在"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "嘗試另一個名稱或移除現有的章節。"
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "寫入有章節的檔案時發生錯誤"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "當儲存章節時發生錯誤"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr "請檢查您是否有寫入包含影片的資料夾的權限。"
+
+#~ msgid "Open Chapter File"
+#~ msgstr "開啟章節檔案"
+
+#~ msgid "Supported files"
+#~ msgstr "支援的檔案"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "章節螢幕截圖"
+
+#~ msgid "Chapter Title"
+#~ msgstr "章節標題"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "在關閉前將變更儲存到章節清單？"
+
+#~ msgid "Close without Saving"
+#~ msgstr "關閉但不儲存"
+
+#~ msgid "Save"
+#~ msgstr "儲存"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr "如果您不儲存，所有對章節清單做的變更都會消失。"
+
+#~ msgid "Add Chapter"
+#~ msgstr "加入章節"
 
 #~ msgid "%s are required to play the file, but are not installed."
 #~ msgstr "需要有 %s 才能播放這份檔案，但尚未安裝。"
