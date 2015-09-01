@@ -1652,7 +1652,8 @@ selection_mode_requested (GdMainView  *view,
 
 	/* Don't allow selections when at the root of the
 	 * "Channels" view */
-	if (self->priv->browser_filter_model != NULL) {
+	if (self->priv->current_page == TOTEM_GRILO_PAGE_CHANNELS &&
+	    self->priv->browser_filter_model != NULL) {
 		g_object_get (self->priv->browser_filter_model,
 			      "virtual-root", &root,
 			      NULL);
