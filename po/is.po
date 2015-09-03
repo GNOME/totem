@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-09-02 00:01+0000\n"
-"PO-Revision-Date: 2015-09-02 17:31+0000\n"
+"PO-Revision-Date: 2015-09-03 12:12+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -40,12 +40,18 @@ msgid ""
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
+"Myndskeið (Videos), einnig þekkt sem Totem, er opinber myndskráaspilari GNOME "
+"skjáborðsumhverfisins. Meðal eiginleika hans eru leitanlegir listar yfir "
+"myndskeið á tölvunni, á DVD-diskum, auk netsameigna á staðarnetum (með "
+"UPnP/DLNA) ásamt því að fá ábendingar um kvikmyndað efni frá ýmsum vefsvæðum."
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
 msgstr ""
+"Totem er með endurbætta eiginleika á borð við: niðurhal skjátexta og stuðning "
+"við að taka upp DVD-diska."
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
@@ -118,43 +124,46 @@ msgstr "Stafatafla skjátexta"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
-msgstr ""
+msgstr "Stafatafla fyrir kóðun skjátexta."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
-msgstr ""
+msgstr "Sjálfgefin staðsetning \"Opna...\"-glugga"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
 msgstr ""
+"Sjálfgefin staðsetning \"Opna...\"-glugga. Sjálfgefið er núverandi mappa."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr ""
+msgstr "Sjálfgefin staðsetning \"Taka skjámynd\"-glugga"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
 msgstr ""
+"Sjálfgefin staðsetning \"Taka skjámynd\"-glugga. Sjálfgefið er núverandi "
+"mappa."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
-msgstr ""
+msgstr "Hvort gera eigi óvirkar þær viðbætur sem eru í heimamöppu notanda"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
-msgstr ""
+msgstr "Hvort gera eigi flýtilykla óvirka"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr ""
+msgstr "Hvort hlaða eigi inn skjátextaskrám þegar mynd er hlaðið inn"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr ""
+msgstr "Hvort hlaða eigi sjálfkrafa inn kaflaskrám þegar mynd er hlaðið inn"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
@@ -164,7 +173,7 @@ msgstr "Listi yfir virkar viðbætur"
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
-msgstr ""
+msgstr "Listi yfir nöfn virkra viðbóta (hlaðið inn og í keyrslu)."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
@@ -172,7 +181,7 @@ msgstr "Möppur sem á að sýna"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
-msgstr ""
+msgstr "Möppur sem á að sýna vafraviðmóti, sjálfgefið er engin"
 
 #: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5521
 #: ../src/totem-properties-view.c:242
@@ -226,7 +235,7 @@ msgstr "Utanaðkomandi kaflar"
 
 #: ../data/preferences.ui.h:13
 msgid "Load _chapter files when movie is loaded"
-msgstr ""
+msgstr "Hlaða inn _kaflaskrám þegar mynd er hlaðið inn"
 
 #: ../data/preferences.ui.h:14
 msgid "Plugins"
@@ -505,12 +514,18 @@ msgid_plural ""
 "\n"
 "%s"
 msgstr[0] ""
+"Afspilun þessa myndskeiðs krefst %s viðbótarinnar, sem ekki er uppsett."
 msgstr[1] ""
+"Afspilun þessara myndskeiða krefst eftirfarandi viðbóta, sem ekki eru "
+"uppsettar:\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget.c:3859
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
+"Ekki er hægt að spila þennan straum. Hugsanlega er eldveggur að hindra hann."
 
 #: ../src/backend/bacon-video-widget.c:3862
 msgid ""
@@ -526,6 +541,8 @@ msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
+"Þessi kvikmynd er ekki spilanleg yfir netið. Prófaðu að vista hana á tölvuna "
+"fyrst og spila hana þaðan."
 
 #: ../src/backend/bacon-video-widget.c:5517 ../src/totem-properties-view.c:238
 msgid "Surround"
@@ -537,7 +554,7 @@ msgstr "Einóma"
 
 #: ../src/backend/bacon-video-widget.c:5806
 msgid "Media contains no supported video streams."
-msgstr ""
+msgstr "Þessi miðill inniheldur ekki neina studda myndstrauma."
 
 #: ../src/backend/bacon-video-widget.c:5965
 msgid ""
@@ -549,14 +566,14 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
 msgid "Unable to play the file"
-msgstr ""
+msgstr "Gat ekki spilað skrána"
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s er nauðsynlegt til að spila skrána, en er ekki uppsett."
+msgstr[1] "%s eru nauðsynleg til að spila skrána, en eru ekki uppsett."
 
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
@@ -940,7 +957,7 @@ msgstr "Kvikmyndir sem á að spila"
 
 #: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
-msgstr ""
+msgstr "Get ekki bæði sett í bið og skipt út á sama tíma"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
@@ -1228,11 +1245,11 @@ msgstr "Lengd"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:1
 msgid "Apple Trailers"
-msgstr ""
+msgstr "Apple stiklur"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
 msgid "Sets the user agent for the Apple Trailers site"
-msgstr ""
+msgstr "Setur kennistreng vafra fyrir Apple Trailers vefsvæðið"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
 msgid "Autoload Subtitles"
@@ -1240,7 +1257,7 @@ msgstr "Sjálfvirk hleðsla skjátexta"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
 msgid "Autoloads text subtitles"
-msgstr ""
+msgstr "Hleður sjálfvirkt skjátextum"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Video Disc Recorder"
@@ -1248,7 +1265,7 @@ msgstr "Upptaka á mynddisk"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Records (S)VCDs or video DVDs"
-msgstr ""
+msgstr "Tekur upp (S)VCD eða DVD-mynddiska"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
 msgid "The video disc could not be duplicated."
@@ -1286,6 +1303,7 @@ msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
+"Senda tilkynningar um myndskeið í spilun og leyfa fjarstýringu með MPRIS."
 
 #: ../src/plugins/dbusservice/dbusservice.py:208
 #: ../src/plugins/dbusservice/dbusservice.py:236
@@ -1296,7 +1314,7 @@ msgstr ""
 #: ../src/plugins/dbusservice/dbusservice.py:218
 #, python-format
 msgid "The property ‘%s’ is not writeable."
-msgstr ""
+msgstr "Eigindið ‘%s’ er ekki skrifanlegt."
 
 #: ../src/plugins/dbusservice/dbusservice.py:231
 #, python-format
@@ -1305,23 +1323,23 @@ msgstr ""
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
-msgstr ""
+msgstr "Glósur í Gromit"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
-msgstr ""
+msgstr "Kynningaforrit til birtingar á athugasemdum á skjá"
 
 #: ../src/plugins/gromit/totem-gromit.c:232
 msgid "The gromit binary was not found."
-msgstr ""
+msgstr "Gromit tvíundarskráin fannst ekki."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
 msgid "Instant Messenger Status"
-msgstr ""
+msgstr "Staða í spjallforriti"
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr ""
+msgstr "Setja stöðu í spjallforriti sem 'fjarverandi' á meðan mynd er spiluð"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -1329,7 +1347,7 @@ msgstr "Innrauð fjarstýring"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:2
 msgid "Support infrared remote control"
-msgstr ""
+msgstr "Stuðningur við innrauða fjarstýringu"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
 msgid "Couldn't initialize lirc."
@@ -1345,7 +1363,7 @@ msgstr "Lyklar margmiðlunarspilara"
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
 msgid "Support additional media player keys"
-msgstr ""
+msgstr "Styður aukalykla fyrir margmiðlunarspilara"
 
 #: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
@@ -1361,7 +1379,7 @@ msgstr "Niðurhalsforrit skjátexta"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
 msgid "Look for subtitles for the currently playing movie"
-msgstr ""
+msgstr "Leita að skjátextum fyrir myndskeiðið sem er í afspilun"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
@@ -1431,7 +1449,7 @@ msgstr "Tungumál skjátexta"
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
-msgstr ""
+msgstr "Það tungumál sem leita skal eftir skjátextum fyrir myndina."
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:1
 msgid "Movie Properties"
@@ -1439,7 +1457,7 @@ msgstr "Eiginleikar myndskeiðs"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
 msgid "Adds movie properties menu item"
-msgstr ""
+msgstr "Bætir færslu um eiginleika myndskeiða á valmynd"
 
 #: ../src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
@@ -1499,7 +1517,7 @@ msgstr "Nýlegar skrár"
 
 #: ../src/plugins/recent/recent.plugin.in.h:2
 msgid "Adds files that have been played to recent files"
-msgstr ""
+msgstr "Bætir skrám sem hafa verið spilaðar í lista yfir nýlegar skrár"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:1
 msgid "Rotation Plugin"
@@ -1507,7 +1525,7 @@ msgstr "Snúningsviðbót"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
 msgid "Allows videos to be rotated if they are in the wrong orientation"
-msgstr ""
+msgstr "Gerir kleift að snúa myndskeiðum ef stefna þeirra er röng"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:52
 msgid "_Rotate ↷"
@@ -1541,7 +1559,7 @@ msgstr "Skjáhvíla"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
 msgid "Deactivates the screen saver when a movie is playing"
-msgstr ""
+msgstr "Gerir skjásvæfuna óvirka á meðan myndskeið er spilað"
 
 #: ../src/plugins/screensaver/totem-screensaver.c:79
 msgid "Playing a movie"
@@ -1580,7 +1598,7 @@ msgstr "Skjámynd"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:2
 msgid "Allows screenshots and galleries to be taken of videos"
-msgstr ""
+msgstr "Leyfir að gerðar séu skjámyndir og upptökur af myndskeiðum"
 
 #: ../src/plugins/screenshot/totem-gallery.c:91
 msgid "Save Gallery"
@@ -1617,7 +1635,7 @@ msgstr "Totem náði ekki skjámynd af myndskeiðinu."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
-msgstr ""
+msgstr "Þetta ætti ekki að geta gerst, sendu inn villuskýrslu."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
@@ -1634,11 +1652,11 @@ msgstr "Stökkva á"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
 msgid "Provides the \"Skip to\" dialog"
-msgstr ""
+msgstr "Útbýr \"Stökkva á\" glugga"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
-msgstr "_Stökkva til:"
+msgstr "_Stökkva á:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
@@ -1671,7 +1689,7 @@ msgstr "Vimeo"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
 msgid "Sets the user agent for the Vimeo site"
-msgstr ""
+msgstr "Setur kennistreng vafra fyrir Vimeo vefsvæðið"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
 msgid "Zeitgeist Plugin"
@@ -1679,7 +1697,7 @@ msgstr "Zeitgeist viðbót"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
-msgstr ""
+msgstr "Viðbót sem sendir atburði til Zeitgeist"
 
 #, fuzzy
 #~| msgid "Go to the chapter menu"
