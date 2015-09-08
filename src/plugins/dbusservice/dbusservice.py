@@ -179,7 +179,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             }
         elif interface_name == 'org.mpris.MediaPlayer2.Player':
             # Loop status (we don't support Track)
-            if self.totem.action_remote_get_setting (
+            if self.totem.remote_get_setting (
                 Totem.RemoteSetting.REPEAT):
                 loop_status = 'Playlist'
             else:
@@ -218,13 +218,13 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                 _('The property ‘%s’ is not writeable.'))
         elif interface_name == 'org.mpris.MediaPlayer2.Player':
             if property_name == 'LoopStatus':
-                self.totem.action_remote_set_setting (
+                self.totem.remote_set_setting (
                     Totem.RemoteSetting.REPEAT, (new_value == 'Playlist'))
             elif property_name == 'Rate':
                 # Ignore, since we don't support setting the rate
                 pass
             elif property_name == 'Volume':
-                self.totem.action_volume (new_value)
+                self.totem.set_volume (new_value)
 
             raise dbus.exceptions.DBusException (
                 'org.mpris.MediaPlayer2.ReadOnlyProperty',
@@ -254,7 +254,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Quit (self): # pylint: disable-msg=C0103
-        self.totem.action_exit ()
+        self.totem.exit ()
 
     # org.mpris.MediaPlayer2.Player interface
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
@@ -264,7 +264,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         if self.totem.is_playing () or self.totem.is_paused ():
             return
 
-        self.totem.action_next ()
+        self.totem.seek_next ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
@@ -273,25 +273,25 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         if self.totem.is_playing () or self.totem.is_paused ():
             return
 
-        self.totem.action_previous ()
+        self.totem.seek_previous ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Pause (self): # pylint: disable-msg=C0103
-        self.totem.action_pause ()
+        self.totem.pause ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def PlayPause (self): # pylint: disable-msg=C0103
-        self.totem.action_play_pause ()
+        self.totem.play_pause ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Stop (self): # pylint: disable-msg=C0103
-        self.totem.action_stop ()
+        self.totem.stop ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
@@ -302,13 +302,13 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         if self.totem.is_playing () or self.totem.props.current_mrl == None:
             return
 
-        self.totem.action_play ()
+        self.totem.play ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = 'x', # pylint: disable-msg=C0103
                           out_signature = '')
     def Seek (self, offset): # pylint: disable-msg=C0103
-        self.totem.action_seek_relative (offset / 1000, False)
+        self.totem.seek_relative (offset / 1000, False)
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = 'ox', # pylint: disable-msg=C0103
@@ -320,7 +320,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         if position < 0 or position > self.totem.props.stream_length:
             return
 
-        self.totem.action_seek_time (position, False)
+        self.totem.seek_time (position, False)
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = 's', # pylint: disable-msg=C0103
