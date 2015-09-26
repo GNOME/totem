@@ -176,6 +176,7 @@ struct BaconVideoWidgetPrivate
   BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
+  GstElement                  *video_sink;
   GstNavigation               *navigation;
 
   guint                        update_id;
@@ -5905,6 +5906,59 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
   return retval;
 }
 
+static gboolean
+navigation_event (ClutterActor *actor,
+                  ClutterEvent *event,
+                  BaconVideoWidget *bvw)
+{
+  ClutterGstFrame *frame =
+    clutter_gst_video_sink_get_frame (CLUTTER_GST_VIDEO_SINK (bvw->priv->video_sink));
+  gfloat actor_width, actor_height;
+  gfloat x, y;
+
+  if (frame == NULL)
+    return NULL;
+
+  /* Get event coordinates into the actor's coordinates. */
+  clutter_event_get_coords (event, &x, &y);
+  clutter_actor_transform_stage_point (actor, x, y, &x, &y);
+
+  clutter_actor_get_size (actor, &actor_width, &actor_height);
+
+  /* Convert event's coordinates into the frame's coordinates. */
+  x = x * frame->resolution.width / actor_width;
+  y = y * frame->resolution.height / actor_height;
+
+  if (event->type == CLUTTER_MOTION) {
+    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->video_sink),
+                                     "mouse-move", 0, x, y);
+  } else if (event->type == CLUTTER_BUTTON_PRESS ||
+             event->type == CLUTTER_BUTTON_RELEASE) {
+    ClutterButtonEvent *bevent = (ClutterButtonEvent *) event;
+    const char *type = (event->type == CLUTTER_BUTTON_PRESS) ?
+      "mouse-button-press" : "mouse-button-release";
+    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->video_sink), type,
+                                     bevent->button, x, y);
+  }
+
+  return CLUTTER_EVENT_PROPAGATE;
+}
+
+static void
+listen_navigation_events (ClutterActor *actor,
+                          BaconVideoWidget *bvw)
+{
+  const char const *events[] = {
+    "button-press-event",
+    "button-release-event",
+    "motion-event"
+  };
+  guint i;
+
+  for (i = 0; i < G_N_ELEMENTS (events); i++)
+    g_signal_connect (actor, events[i], G_CALLBACK (navigation_event), bvw);
+}
+
 static GstElement *
 element_make_or_warn (const char *plugin,
 		      const char *name)
@@ -5923,7 +5977,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
 {
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL;
-  ClutterGstVideoSink *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
   ClutterActor *layout;
@@ -5950,15 +6003,15 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin", "play");
   bvw->priv->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
-  video_sink = clutter_gst_video_sink_new ();
+  bvw->priv->video_sink = GST_ELEMENT (clutter_gst_video_sink_new ());
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->priv->play ||
       !bvw->priv->audio_pitchcontrol ||
-      !video_sink ||
+      !bvw->priv->video_sink ||
       !audio_sink) {
-    if (video_sink)
-      g_object_ref_sink (video_sink);
+    if (bvw->priv->video_sink)
+      g_object_ref_sink (bvw->priv->video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
@@ -5997,11 +6050,12 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* Video sink, with aspect frame */
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_ACTOR,
                                      "content", g_object_new (CLUTTER_GST_TYPE_CONTENT,
-                                                              "sink", video_sink,
+                                                              "sink", bvw->priv->video_sink,
                                                               NULL),
 				     "name", "texture",
 				     "reactive", TRUE,
 				     NULL);
+  listen_navigation_events (bvw->priv->texture, bvw);
 
   /* The logo */
   bvw->priv->logo_frame = clutter_actor_new ();
@@ -6074,7 +6128,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
 
   /* And tell playbin */
-  g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
+  g_object_set (bvw->priv->play, "video-sink", bvw->priv->video_sink, NULL);
 
   /* Link the audiopitch element */
   bvw->priv->audio_capsfilter =
