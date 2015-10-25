@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-19 12:10+0000\n"
-"PO-Revision-Date: 2015-03-19 19:35+0200\n"
+"POT-Creation-Date: 2015-10-25 01:34+0000\n"
+"PO-Revision-Date: 2015-10-25 12:23+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -29,11 +29,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Videot"
 
@@ -566,7 +566,7 @@ msgstr "Mono"
 msgid "Media contains no supported video streams."
 msgstr "Media ei sisällä tuettuja videomuotoja."
 
-#: ../src/backend/bacon-video-widget.c:5966
+#: ../src/backend/bacon-video-widget.c:6018
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -580,7 +580,6 @@ msgstr "Tiedoston toistaminen epäonnistui"
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
 #, c-format
-#| msgid "%s is required to play the file, but is not installed."
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
 msgstr[0] ""
@@ -793,7 +792,7 @@ msgstr "Hakuvirhe"
 msgid "Local"
 msgstr "Paikallinen"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1865
 msgid "Channels"
 msgstr "Kanavat"
 
@@ -854,46 +853,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automaattinen"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Tauko"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Toista"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia ”%s”."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../src/totem-object.c:3756
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: ../src/totem-object.c:3762
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Toista / keskeytä"
 
-#: ../src/totem-object.c:3768
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "Seuraava kappale/elokuva"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Ei syytä."
 
@@ -902,16 +901,13 @@ msgid "Add Web Video"
 msgstr "Lisää verkkovideo"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_Peru"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Lisää"
 
@@ -971,7 +967,7 @@ msgstr "Siirry"
 msgid "Movies to play"
 msgstr "Näytettävät elokuvat"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Ei voida lisätä jonon perään ja korvata samaan aikaan"
 
@@ -1049,11 +1045,17 @@ msgstr "-"
 msgid "Add to Favourites"
 msgstr "Lisää suosikkeihin"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+#| msgid "Play"
+msgctxt "button"
+msgid "Play"
+msgstr "Toista"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Satunnaistoisto"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Poista"
 
@@ -1210,7 +1212,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Kelaa kohtaan %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Kaikki tiedostot"
 
@@ -1226,7 +1228,7 @@ msgstr "Tekstitystiedostot"
 msgid "Select Text Subtitles"
 msgstr "Valitse tekstitys"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Avaa"
 
@@ -1237,7 +1239,7 @@ msgstr "Lisää videoita"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:793
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1248,15 +1250,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:787
+#: ../src/totem-video-thumbnailer.c:794
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Resolution"
 msgstr "Tarkkuus"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:799
 msgid "Duration"
 msgstr "Kesto"
 
@@ -1310,144 +1312,6 @@ msgstr "Kopioi vide_o-DVD…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "Kopioi (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Uuden kappaleen nimi:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Poista kappale"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Poista kappale listalta"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Siirry kappaleeseen"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Siirry tiettyyn kappaleeseen elokuvassa"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Lisää kappale…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Poista kappale"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Siirry kappaleeseen"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Tallenna muutokset"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Ei kappaletietoja"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Lisää kappaleita…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Lataa kappaleet CMML-tiedostosta"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Lisää uusia kappaleita"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Luo uusi kappalelista elokuvaan"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Kappaleet"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Tue kappalemerkintöjä elokuvissa"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Nimi: </b>%s\n"
-"<b>Aloitusaika: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Virhe luettaessa kappaleilla varustettua tiedostoa"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Kappale samalla ajalla on jo olemassa"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Anna toinen nimi tai poista olemassa oleva kappale."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Virhe kirjoittaessa kappaleilla varustettua tiedostoa"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Virhe tallennettaessa kappaleita"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "Tarkista onko sinulla kirjoitusoikeus elokuvan sisältävään kansioon."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Avaa kappaletiedosto"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Tuetut tiedostot"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Kappaleen kuvakaappaus"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Kappaleen nimi"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Tallennetaanko muutokset kappalelistaan ennen sulkemista?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Sulje tallentamatta"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Tallenna"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr ""
-"Jos et tallenna, kaikki kappalelistaan tehdyt muutokset jätetään huomiotta."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Lisää kappale"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1807,7 +1671,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Luo kuvakaappaus_galleria…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Siirry kohtaan"
 
@@ -1821,7 +1685,7 @@ msgstr "Siirry _kohtaan:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekunti"
@@ -1831,12 +1695,12 @@ msgstr[1] "sekuntia"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "Siirr_y kohtaan"
 
@@ -1859,6 +1723,111 @@ msgstr "Zeitgeist-liitännäinen"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zeitgeistille tapahtumia lähettävä liitännäinen"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "Uuden kappaleen nimi:"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "_Poista kappale"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Poista kappale listalta"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Siirry kappaleeseen"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Siirry tiettyyn kappaleeseen elokuvassa"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Lisää kappale…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Poista kappale"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Siirry kappaleeseen"
+
+#~ msgid "Save Changes"
+#~ msgstr "Tallenna muutokset"
+
+#~ msgid "No chapter data"
+#~ msgstr "Ei kappaletietoja"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Lisää kappaleita…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Lataa kappaleet CMML-tiedostosta"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Lisää uusia kappaleita"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Luo uusi kappalelista elokuvaan"
+
+#~ msgid "Chapters"
+#~ msgstr "Kappaleet"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Tue kappalemerkintöjä elokuvissa"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Nimi: </b>%s\n"
+#~ "<b>Aloitusaika: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Virhe luettaessa kappaleilla varustettua tiedostoa"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Kappale samalla ajalla on jo olemassa"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Anna toinen nimi tai poista olemassa oleva kappale."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Virhe kirjoittaessa kappaleilla varustettua tiedostoa"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Virhe tallennettaessa kappaleita"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Tarkista onko sinulla kirjoitusoikeus elokuvan sisältävään kansioon."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Avaa kappaletiedosto"
+
+#~ msgid "Supported files"
+#~ msgstr "Tuetut tiedostot"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Kappaleen kuvakaappaus"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Kappaleen nimi"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Tallennetaanko muutokset kappalelistaan ennen sulkemista?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Sulje tallentamatta"
+
+#~ msgid "Save"
+#~ msgstr "Tallenna"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr ""
+#~ "Jos et tallenna, kaikki kappalelistaan tehdyt muutokset jätetään "
+#~ "huomiotta."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Lisää kappale"
 
 #~ msgid "%s are required to play the file, but are not installed."
 #~ msgstr ""
