@@ -9,20 +9,20 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-14 00:08+0000\n"
-"PO-Revision-Date: 2015-03-09 01:28+0100\n"
-"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"POT-Creation-Date: 2015-11-02 02:35+0000\n"
+"PO-Revision-Date: 2015-11-02 13:31+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Videoklipp"
 
@@ -557,7 +557,7 @@ msgstr "Mono"
 msgid "Media contains no supported video streams."
 msgstr "Mediet innehåller inga videoströmmar som stöds."
 
-#: ../src/backend/bacon-video-widget.c:5966
+#: ../src/backend/bacon-video-widget.c:6018
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -781,7 +781,7 @@ msgstr "Sökfel"
 msgid "Local"
 msgstr "Lokalt"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1865
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -842,46 +842,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Gör paus"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Spela upp"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunde inte spela upp ”%s”."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem-object.c:3756
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Föregående kapitel/film"
 
-#: ../src/totem-object.c:3762
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Spela upp / Gör paus"
 
-#: ../src/totem-object.c:3768
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "Nästa kapitel/film"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Ingen orsak."
 
@@ -890,16 +890,13 @@ msgid "Add Web Video"
 msgstr "Lägg till webbvideo"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "A_vbryt"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Lägg till"
 
@@ -959,7 +956,7 @@ msgstr "Spola"
 msgid "Movies to play"
 msgstr "Filmer att spela upp"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Kan inte kölägga och ersätta samtidigt"
 
@@ -1036,11 +1033,16 @@ msgstr "-"
 msgid "Add to Favourites"
 msgstr "Lägg till i favoriter"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+msgctxt "button"
+msgid "Play"
+msgstr "Spela upp"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Blanda"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1197,7 +1199,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Spola till %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Alla filer"
 
@@ -1213,7 +1215,7 @@ msgstr "Undertextfiler"
 msgid "Select Text Subtitles"
 msgstr "Välj undertexter"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Öppna"
 
@@ -1224,7 +1226,7 @@ msgstr "Lägg till videoklipp"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:793
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1235,15 +1237,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:787
+#: ../src/totem-video-thumbnailer.c:794
 msgid "Filename"
 msgstr "Filnamn"
 
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Resolution"
 msgstr "Upplösning"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:799
 msgid "Duration"
 msgstr "Speltid"
 
@@ -1298,145 +1300,6 @@ msgstr "Kopiera vide_o-dvd…"
 msgid "Copy (S)VCD…"
 msgstr "Kopiera (s)vcd…"
 
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Namn för nytt kapitel:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Ta bort kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Ta bort kapitlet från listan"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Gå till kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Gå till kapitlet i filmen"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Lägg till kapitel…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Ta bort kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Gå till kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Spara ändringar"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Inget kapiteldata"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Läs in kapitel…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Läs in kapitel från en extern CMML-fil"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Lägg till nya kapitel"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Skapa en ny kapitellista för filmen"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Kapitel"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Stöd för kapitelmarkörer i filmer"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Titel: </b>%s\n"
-"<b>Starttid: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Fel vid inläsning av fil med kapitel"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Kapitel med samma tid finns redan"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Försök med ett annat namn eller ta bort ett befintligt kapitel."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Fel vid skrivning av kapitelfil"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Fel inträffade när kapitel sparades"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr ""
-"Kontrollera att du har behörighet att skriva till mappen som innehåller "
-"filmen."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Öppna kapitelfil"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Filer som stöds"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Kapitelskärmbild"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Kapiteltitel"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Spara ändringar till kapitellistan innan stängning?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Stäng utan att spara"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Spara"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "Om du inte sparar så går ändringarna i kapitellistan förlorade."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Lägg till kapitel"
-
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
 msgstr "D-Bus-gränssnitt för MPRIS"
@@ -1446,8 +1309,8 @@ msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
-"Skicka aviseringar för videor som spelas och tillåt fjärrstyrning med "
-"hjälp av MPRIS."
+"Skicka aviseringar för videor som spelas och tillåt fjärrstyrning med hjälp "
+"av MPRIS."
 
 #: ../src/plugins/dbusservice/dbusservice.py:208
 #: ../src/plugins/dbusservice/dbusservice.py:236
@@ -1800,7 +1663,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Skapa skärmbilds_galleri…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Hoppa till"
 
@@ -1814,7 +1677,7 @@ msgstr "_Hoppa till:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekund"
@@ -1824,12 +1687,12 @@ msgstr[1] "sekunder"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "_Hoppa till"
 
@@ -1852,6 +1715,110 @@ msgstr "Zeitgeist-insticksmodul"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "En insticksmodul som skickar händelser till Zeitgeist"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "Namn för nytt kapitel:"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "_Ta bort kapitel"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Ta bort kapitlet från listan"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Gå till kapitel"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Gå till kapitlet i filmen"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Lägg till kapitel…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Ta bort kapitel"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Gå till kapitel"
+
+#~ msgid "Save Changes"
+#~ msgstr "Spara ändringar"
+
+#~ msgid "No chapter data"
+#~ msgstr "Inget kapiteldata"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Läs in kapitel…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Läs in kapitel från en extern CMML-fil"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Lägg till nya kapitel"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Skapa en ny kapitellista för filmen"
+
+#~ msgid "Chapters"
+#~ msgstr "Kapitel"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Stöd för kapitelmarkörer i filmer"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Titel: </b>%s\n"
+#~ "<b>Starttid: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Fel vid inläsning av fil med kapitel"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Kapitel med samma tid finns redan"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Försök med ett annat namn eller ta bort ett befintligt kapitel."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Fel vid skrivning av kapitelfil"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Fel inträffade när kapitel sparades"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Kontrollera att du har behörighet att skriva till mappen som innehåller "
+#~ "filmen."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Öppna kapitelfil"
+
+#~ msgid "Supported files"
+#~ msgstr "Filer som stöds"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Kapitelskärmbild"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Kapiteltitel"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Spara ändringar till kapitellistan innan stängning?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Stäng utan att spara"
+
+#~ msgid "Save"
+#~ msgstr "Spara"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr "Om du inte sparar så går ändringarna i kapitellistan förlorade."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Lägg till kapitel"
 
 #~ msgid "%s are required to play the file, but are not installed."
 #~ msgstr "%s krävs för att spela upp filen, men är inte installerade."
