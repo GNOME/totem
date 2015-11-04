@@ -10,20 +10,20 @@ msgstr ""
 "Project-Id-Version: 3.12\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-07-03 23:52+0000\n"
-"PO-Revision-Date: 2015-07-04 07:59+0100\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@openmailbox.com>\n"
-"Language-Team: Português <palbuquerque73@openmailbox.com>\n"
+"POT-Creation-Date: 2015-11-03 14:43+0000\n"
+"PO-Revision-Date: 2015-11-04 07:22+0000\n"
+"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
+"Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1855 ../src/totem-object.c:3662
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -57,7 +57,6 @@ msgid "Video thumbnailer for the file manager"
 msgstr "Criador de miniaturas de vídeo para o gestor de ficheiros"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
-#| msgid "Nautilus properties tab"
 msgid "Files properties tab"
 msgstr "Separador de propriedades de ficheiros"
 
@@ -160,7 +159,8 @@ msgstr "Se desativar ou não os atalhos de teclado"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr "Se carregar automaticamente ou não o ficheiro de legendas ao carregar um "
+msgstr ""
+"Se carregar automaticamente ou não o ficheiro de legendas ao carregar um "
 "filme"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:22
@@ -391,8 +391,6 @@ msgid "Square"
 msgstr "Quadrado"
 
 #: ../data/totem.ui.h:9
-#| msgctxt "Aspect ratio"
-#| msgid "4:3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
@@ -564,7 +562,7 @@ msgstr "Mono"
 msgid "Media contains no supported video streams."
 msgstr "O suporte não contém qualquer fluxo de vídeo suportado."
 
-#: ../src/backend/bacon-video-widget.c:5966
+#: ../src/backend/bacon-video-widget.c:6018
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -788,7 +786,7 @@ msgstr "Erro de procura"
 msgid "Local"
 msgstr "Local"
 
-#: ../src/totem-grilo.c:1864
+#: ../src/totem-grilo.c:1865
 msgid "Channels"
 msgstr "Canais"
 
@@ -854,7 +852,7 @@ msgid "Pause"
 msgstr "Pausar"
 
 #: ../src/totem-object.c:1427 ../src/totem-object.c:1437
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Reproduzir"
 
@@ -899,7 +897,7 @@ msgstr "Adicionar vídeo Web"
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
 #: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -1041,11 +1039,16 @@ msgstr "N/D"
 msgid "Add to Favourites"
 msgstr "Adicionar aos favoritos"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+msgctxt "button"
+msgid "Play"
+msgstr "Reproduzir"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Baralhar"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -1229,7 +1232,7 @@ msgstr "Adicionar vídeos"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:793
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1240,15 +1243,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:787
+#: ../src/totem-video-thumbnailer.c:794
 msgid "Filename"
 msgstr "Nome do ficheiro"
 
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Resolution"
 msgstr "Resolução"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:799
 msgid "Duration"
 msgstr "Duração"
 
@@ -1393,53 +1396,53 @@ msgstr "Transferidor de legendas"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Procurar legendas para o filme atualmente a ser reproduzido"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Português do Brasil"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "A procurar legendas…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:608
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "A transferir as legendas…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Impossível contactar o servidor do OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Impossível contactar o servidor do OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:473
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Legendas"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:479
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:484
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Pontuação"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "Transferir as legendas do filme…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:565
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "A procurar legendas…"
 
@@ -1524,9 +1527,9 @@ msgid ""
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
-"Após clicar em Aceitar, o Totem vai aguardar até que se lhe ligue "
-"utilizando o winpdb ou rpdb2. Caso não tenha definido uma senha de depuração "
-"no DConf, utilizará a senha predefinida ('totem')."
+"Após clicar em Aceitar, o Totem vai aguardar até que se lhe ligue utilizando "
+"o winpdb ou rpdb2. Caso não tenha definido uma senha de depuração no DConf, "
+"utilizará a senha predefinida ('totem')."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -1663,7 +1666,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Criar _Galeria de capturas de ecrã..."
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Saltar para"
 
@@ -1677,7 +1680,7 @@ msgstr "_Saltar para:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
@@ -1687,12 +1690,12 @@ msgstr[1] "segundos"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "_Saltar para"
 
