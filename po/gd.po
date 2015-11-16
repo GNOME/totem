@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&"
 "keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-17 00:00+0000\n"
-"PO-Revision-Date: 2015-03-17 11:37+0100\n"
+"POT-Creation-Date: 2015-11-16 02:38+0000\n"
+"PO-Revision-Date: 2015-11-16 14:38+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Videothan"
 
@@ -583,7 +583,7 @@ msgstr "Mono"
 msgid "Media contains no supported video streams."
 msgstr "Chan eil sruth video am broinn a' mheadhainn ris an cuirear taic."
 
-#: ../src/backend/bacon-video-widget.c:5966
+#: ../src/backend/bacon-video-widget.c:6018
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -819,7 +819,7 @@ msgstr "Mearachd luirg"
 msgid "Local"
 msgstr "Ionadail"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1865
 msgid "Channels"
 msgstr "Seanailean"
 
@@ -882,46 +882,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Fèin-obrachail"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Cuir 'na stad"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Cluich"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Cha b' urrainn dha Totem \"%s\" a chluich."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Cha b' urrainn do Totem susbaint na cobharach a shealltainn."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Thachair mearachd"
 
-#: ../src/totem-object.c:3756
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Caibideil/Film roimhe"
 
-#: ../src/totem-object.c:3762
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Cluich/Cuir 'na stad"
 
-#: ../src/totem-object.c:3768
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "An ath caibideil/film"
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Cha b' urrainn dha Totem tòiseachadh."
 
-#: ../src/totem-object.c:3989
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Gun adhbhar."
 
@@ -930,16 +930,13 @@ msgid "Add Web Video"
 msgstr "Cuir video-lìn ris"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_Sguir dheth"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Cuir ris"
 
@@ -999,7 +996,7 @@ msgstr "Sireadh"
 msgid "Movies to play"
 msgstr "Fiolmaichean son cluich"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Chan urrainn dhuinn cur sa chiudha is cur 'na àite aig an aon àm"
 
@@ -1078,11 +1075,17 @@ msgstr "Chan eil seo iomchaidh"
 msgid "Add to Favourites"
 msgstr "Cuir ris a h-annsachdan"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+#| msgid "Play"
+msgctxt "button"
+msgid "Play"
+msgstr "Cluich"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Air thuaiream"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Sguab às"
 
@@ -1239,7 +1242,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Sir gu %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "A h-uile faidhle"
 
@@ -1255,7 +1258,7 @@ msgstr "Faidhlichean fo-thiotail"
 msgid "Select Text Subtitles"
 msgstr "Tagh fo-thiotalan teacsa"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "F_osgail"
 
@@ -1266,7 +1269,7 @@ msgstr "Cuir videothan ris"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:793
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1277,15 +1280,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:787
+#: ../src/totem-video-thumbnailer.c:794
 msgid "Filename"
 msgstr "Ainm an fhaidhle"
 
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Resolution"
 msgstr "Dùmhlachd-bhreacaidh"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:799
 msgid "Duration"
 msgstr "Faid"
 
@@ -1339,148 +1342,6 @@ msgstr "Dèan lethbhreac dhen DVD vide_o…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "Dèan lethbhreac dhe (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Ainm na caibideil ùire:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "Thoi_r an caibideil air falbh"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Thoir an caibideil air falbh on liosta"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Rach dhan chaibideil"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Rach dhan chaibideil san fhilm"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Cuir caibideil ris…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Thoir caibideil air falbh"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Rach dhan chaibideil"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Sàbhail na h-atharraichean"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Chan eil dàta caibideil ann"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Luchdaich caibideilean…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Luchdaich caibideilean o fhaidhle CMML taobh a-muigh"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Cuir caibideilean ùra ris"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Cruthaich liosta nan caibideilean ùr airson an fhilm"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Caibideilean"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Cuir taic ri comharran ceibideil ann am filmichean"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Tiotal: </b>%s\n"
-"<b>Ùine tòiseachaidh: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Thachair mearachd a' leughadh faidhle le caibideilean"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Cha caibideil leis an aon ùine ann mar-thà"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Feuch ri ainm eile no thoir caibideil a tha ann air falbh."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Thachair mearachd a' sgrìobhadh faidhle le caibideilean"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Thachair mearachd a' sàbhaladh faidhle le caibideilean"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr ""
-"Dearbhaich gu bheil cead agad airson sgrìobhadh sa phasgan sa bheil am film."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Fosgail faidhle caibideil"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Faidhlichean ris an cuirear taic"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Glacadh-sgrìn na caibideil"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Tiotal na caibideil"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr ""
-"A bheil thu airson na h-atharraichean air liosta nan caibideilean a "
-"shàbhaladh mus dùin thu seo?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Dùin gun sàbhaladh"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Sàbhail"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr ""
-"Mur sàbhail thu, thèid na h-atharraichean air liosta nan caibideilean air "
-"chall."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Cuir caibideil ris"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1574,53 +1435,53 @@ msgstr "Luchdaichear a-nuas fho-thiotalan"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Lorg fo-thiotalan airson an fhilm a tha 'ga chluich an-dràsta"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Portagailis Bhraisileach"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "A' lorg airson fo-thiotalan..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:608
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "A' luchdachadh a-nuas na fo-thiotalan..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Cha deach leinn conaltradh ris an làrach-lìn OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Cha deach leinn conaltradh ris an làrach-lìn OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Cha deach toradh a lorg."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:473
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Fo-thiotalan"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:479
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Fòrmat"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:484
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Rangachadh"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "Luch_daich a-nuas fo-thiotalan an fhilm..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:565
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "A' lorg airson fo-thiotalan..."
 
@@ -1850,7 +1711,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Cruthaich _gailearaidh nan glacaidhean-sgrìn…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Gearr leum gu"
 
@@ -1864,7 +1725,7 @@ msgstr "Gearr _leum gu:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "diog"
@@ -1876,12 +1737,12 @@ msgstr[3] "diog"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "6"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "Gearr _leum gu"
 
@@ -1904,6 +1765,114 @@ msgstr "Plugan Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Plugan a chuireas tachartasan gu Zeitgeist"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "Ainm na caibideil ùire:"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "Thoi_r an caibideil air falbh"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Thoir an caibideil air falbh on liosta"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Rach dhan chaibideil"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Rach dhan chaibideil san fhilm"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Cuir caibideil ris…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Thoir caibideil air falbh"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Rach dhan chaibideil"
+
+#~ msgid "Save Changes"
+#~ msgstr "Sàbhail na h-atharraichean"
+
+#~ msgid "No chapter data"
+#~ msgstr "Chan eil dàta caibideil ann"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Luchdaich caibideilean…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Luchdaich caibideilean o fhaidhle CMML taobh a-muigh"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Cuir caibideilean ùra ris"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Cruthaich liosta nan caibideilean ùr airson an fhilm"
+
+#~ msgid "Chapters"
+#~ msgstr "Caibideilean"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Cuir taic ri comharran ceibideil ann am filmichean"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Tiotal: </b>%s\n"
+#~ "<b>Ùine tòiseachaidh: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Thachair mearachd a' leughadh faidhle le caibideilean"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Cha caibideil leis an aon ùine ann mar-thà"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Feuch ri ainm eile no thoir caibideil a tha ann air falbh."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Thachair mearachd a' sgrìobhadh faidhle le caibideilean"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Thachair mearachd a' sàbhaladh faidhle le caibideilean"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Dearbhaich gu bheil cead agad airson sgrìobhadh sa phasgan sa bheil am "
+#~ "film."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Fosgail faidhle caibideil"
+
+#~ msgid "Supported files"
+#~ msgstr "Faidhlichean ris an cuirear taic"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Glacadh-sgrìn na caibideil"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Tiotal na caibideil"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr ""
+#~ "A bheil thu airson na h-atharraichean air liosta nan caibideilean a "
+#~ "shàbhaladh mus dùin thu seo?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Dùin gun sàbhaladh"
+
+#~ msgid "Save"
+#~ msgstr "Sàbhail"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr ""
+#~ "Mur sàbhail thu, thèid na h-atharraichean air liosta nan caibideilean air "
+#~ "chall."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Cuir caibideil ris"
 
 #~ msgid "Whether to enable debug for the playback engine"
 #~ msgstr ""
