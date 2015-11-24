@@ -2190,6 +2190,27 @@ totem_object_show_help (TotemObject *totem)
 	}
 }
 
+void
+totem_object_show_keyboard_shortcuts (TotemObject *totem)
+{
+	GtkBuilder *builder;
+
+	if (totem->shortcuts_win) {
+		gtk_window_present (totem->shortcuts_win);
+		return;
+	}
+
+	builder = totem_interface_load ("shortcuts.ui", FALSE, NULL, NULL);
+	totem->shortcuts_win = GTK_WINDOW (gtk_builder_get_object (builder, "shortcuts-totem"));
+	gtk_window_set_transient_for (totem->shortcuts_win, GTK_WINDOW (totem->win));
+
+	g_signal_connect (totem->shortcuts_win, "destroy",
+			  G_CALLBACK (gtk_widget_destroyed), &totem->shortcuts_win);
+
+	gtk_widget_show_all (GTK_WIDGET (totem->shortcuts_win));
+	g_object_unref (builder);
+}
+
 /* This is called in the main thread */
 static void
 totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, TotemObject *totem)
@@ -3251,6 +3272,13 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_g:
 	case GDK_KEY_G:
 		totem_object_next_angle (totem);
+		break;
+	case GDK_KEY_H:
+	case GDK_KEY_h:
+		totem_object_show_keyboard_shortcuts (totem);
+		break;
+	case GDK_KEY_question:
+		totem_object_show_keyboard_shortcuts (totem);
 		break;
 	case GDK_KEY_M:
 	case GDK_KEY_m:

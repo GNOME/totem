@@ -19,7 +19,8 @@ stuff_DATA =				\
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
-	controls.ui
+	controls.ui			\
+	shortcuts.ui
 EXTRA_DIST += $(stuff_DATA)
 
 # Icons

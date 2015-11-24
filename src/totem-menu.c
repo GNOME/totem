@@ -171,6 +171,14 @@ help_action_cb (GSimpleAction *action,
 }
 
 static void
+keyboard_shortcuts_action_cb (GSimpleAction *action,
+			      GVariant      *parameter,
+			      gpointer       user_data)
+{
+	totem_object_show_keyboard_shortcuts (TOTEM_OBJECT (user_data));
+}
+
+static void
 quit_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
@@ -295,6 +303,7 @@ static GActionEntry app_entries[] = {
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
+	{ "shortcuts", keyboard_shortcuts_action_cb, NULL, NULL, NULL },
 	{ "help", help_action_cb, NULL, NULL, NULL },
 	{ "quit", quit_action_cb, NULL, NULL, NULL },
 
