@@ -1635,30 +1635,6 @@ totem_object_pause (TotemObject *totem)
 	}
 }
 
-static void
-update_toolbar_visibility (TotemObject *totem,
-			   gboolean     animate)
-{
-	gboolean visible;
-	guint duration;
-
-	if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
-		visible = FALSE;
-		duration = 0;
-	} else {
-		g_object_get (G_OBJECT (totem->bvw), "reveal-controls", &visible, NULL);
-		duration = animate ? 250 : 0;
-	}
-
-	if (visible)
-		gtk_widget_show (totem->revealer);
-
-	/* We don't change the transition type, because it causes
-	 * a queue resize, and it might short-circuit the animation */
-	gtk_revealer_set_transition_duration (GTK_REVEALER (totem->revealer), duration);
-	gtk_revealer_set_reveal_child (GTK_REVEALER (totem->revealer), visible);
-}
-
 gboolean
 window_state_event_cb (GtkWidget           *window,
 		       GdkEventWindowState *event,
@@ -1682,7 +1658,8 @@ window_state_event_cb (GtkWidget           *window,
 		show_controls (totem, TRUE);
 	}
 
-	update_toolbar_visibility (totem, FALSE);
+	bacon_video_widget_set_fullscreen (totem->bvw,
+					   totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
@@ -2470,14 +2447,6 @@ update_fill (TotemObject *totem, gdouble level)
 		gtk_range_set_fill_level (GTK_RANGE (totem->seek), level * 65535.0f);
 		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), TRUE);
 	}
-}
-
-static void
-on_reveal_controls_changed (GObject     *gobject,
-			    GParamSpec  *pspec,
-			    TotemObject *totem)
-{
-	update_toolbar_visibility (totem, TRUE);
 }
 
 static void
@@ -3960,24 +3929,13 @@ grilo_widget_setup (TotemObject *totem)
 }
 
 static void
-child_revealed_changed_cb (GObject      *object,
-			   GParamSpec   *pspec,
-			   gpointer      user_data)
-{
-	gboolean val;
-
-	g_object_get (object, "child-revealed", &val, NULL);
-	if (!val)
-		gtk_widget_hide (GTK_WIDGET (object));
-}
-
-static void
 add_fullscreen_toolbar (TotemObject *totem)
 {
-	GtkWidget *item;
+	GtkWidget *container, *item;
 	GMenuModel *menu;
 
-	totem->revealer = GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar-revealer"));
+	container = GTK_WIDGET (bacon_video_widget_get_header_controls_object (totem->bvw));
+
 	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
 						 "show-search-button", FALSE,
 						 "show-select-button", FALSE,
@@ -4010,11 +3968,8 @@ add_fullscreen_toolbar (TotemObject *totem)
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
-	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
+	gtk_container_add (GTK_CONTAINER (container), totem->fullscreen_header);
 	gtk_widget_show_all (totem->fullscreen_header);
-
-	g_signal_connect (totem->revealer, "notify::child-revealed",
-			  G_CALLBACK (child_revealed_changed_cb), NULL);
 }
 
 void
@@ -4023,6 +3978,8 @@ video_widget_create (TotemObject *totem)
 	GError *err = NULL;
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
+	GdkWindow *window;
+	gboolean fullscreen;
 
 	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
@@ -4032,6 +3989,10 @@ video_widget_create (TotemObject *totem)
 			g_error_free (err);
 	}
 
+	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
+
+	window = gtk_widget_get_window (totem->win);
+	bacon_video_widget_set_fullscreen (totem->bvw, fullscreen);
 	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
@@ -4070,10 +4031,6 @@ video_widget_create (TotemObject *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			  "notify::reveal-controls",
-			  G_CALLBACK (on_reveal_controls_changed),
-			  totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			  "seek-requested",
 			  G_CALLBACK (on_seek_requested_event),

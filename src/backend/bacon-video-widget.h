@@ -186,6 +186,9 @@ gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
 						  gfloat new_rate);
 gfloat bacon_video_widget_get_rate		 (BaconVideoWidget *bvw);
 
+void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
+                                                  gboolean          fullscreen);
+
 /* Metadata */
 /**
  * BvwMetadataType:
@@ -433,6 +436,7 @@ void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
 						   const char       *reason);
 
 GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
+GObject * bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw);
 
 G_END_DECLS
 

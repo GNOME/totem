@@ -204,6 +204,7 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *stage;
   ClutterActor                *texture;
   ClutterActor                *frame;
+  ClutterActor                *header_controls;
   ClutterActor                *controls;
   ClutterActor                *spinner;
 
@@ -769,12 +770,24 @@ set_controls_visibility (BaconVideoWidget *bvw,
 			 gboolean          animate)
 {
   guint8 opacity = visible ? OVERLAY_OPACITY : 0;
+  gint header_controls_height;
+  gfloat header_controls_y;
+  guint duration;
+
+  gtk_widget_get_preferred_height (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (bvw->priv->header_controls)),
+                                   NULL,
+                                   &header_controls_height);
+  header_controls_y = visible ? 0 : -header_controls_height;
+
+  duration = animate ? 250 : 0;
 
   /* FIXME:
    * Using a show/hide seems to not trigger the
    * controls to redraw, so let's change the opacity instead */
-  clutter_actor_set_easing_duration (bvw->priv->controls, animate ? 250 : 0);
+  clutter_actor_set_easing_duration (bvw->priv->controls, duration);
+  clutter_actor_set_easing_duration (bvw->priv->header_controls, duration);
   clutter_actor_set_opacity (bvw->priv->controls, opacity);
+  clutter_actor_set_y (bvw->priv->header_controls, header_controls_y);
 
   set_show_cursor (bvw, visible);
   if (visible && animate)
@@ -3721,6 +3734,14 @@ bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
   return G_OBJECT (bvw->priv->controls);
 }
 
+GObject *
+bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+
+  return G_OBJECT (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (bvw->priv->header_controls)));
+}
+
 /* =========================================== */
 /*                                             */
 /*               Play/Pause, Stop              */
@@ -6095,6 +6116,20 @@ bacon_video_widget_initable_init (GInitable     *initable,
 					 bvw->priv->frame);
   clutter_actor_hide (bvw->priv->spinner);
 
+  /* Fullscreen header controls */
+  bvw->priv->header_controls = gtk_clutter_actor_new ();
+  clutter_actor_set_name (bvw->priv->header_controls, "header-controls");
+  clutter_actor_add_constraint (bvw->priv->header_controls,
+                                clutter_bind_constraint_new (bvw->priv->stage,
+                                                             CLUTTER_BIND_WIDTH,
+                                                             0));
+  layout = g_object_new (CLUTTER_TYPE_ACTOR,
+			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_CENTER, CLUTTER_BIN_ALIGNMENT_START),
+			 NULL);
+  clutter_actor_set_name (layout, "layout");
+  clutter_actor_add_child (layout, bvw->priv->header_controls);
+  clutter_actor_add_child (bvw->priv->stage, layout);
+
   /* The controls */
   bvw->priv->controls = bacon_video_controls_actor_new ();
   clutter_actor_set_name (bvw->priv->controls, "controls");
@@ -6248,6 +6283,23 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   }
 
   return retval;
+}
+
+/**
+ * bacon_video_widget_set_fullscreen:
+ * @bvw: a #BaconVideoWidget
+ * @fullscreen: the new fullscreen state
+ *
+ * Sets the fullscreen state, enabling a toplevel header bar sliding from
+ * the top of the video widget.
+ **/
+void
+bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw,
+                                   gboolean          fullscreen)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  g_object_set (bvw->priv->header_controls, "visible", fullscreen, NULL);
 }
 
 /*

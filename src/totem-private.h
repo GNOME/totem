@@ -87,7 +87,6 @@ struct _TotemObject {
 	BaconTimeLabel *time_rem_label;
 	GtkWidget *header;
 
-	GtkWidget *revealer;
 	GtkWidget *fullscreen_header;
 	GtkWidget *fullscreen_gear_button;
 

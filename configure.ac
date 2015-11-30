@@ -53,7 +53,7 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 # Requirements
 GLIB_REQS=2.35.0
 GIO_REQS=2.27.92
-GTK_REQS=3.19.3
+GTK_REQS=3.19.4
 TOTEM_PLPARSER_REQS=3.10.1
 VALA_REQS=0.14.1
 PEAS_REQS=1.1.0
@@ -93,7 +93,7 @@ GST_PLUG_BASE_REQS=1.6.0
 GSTPLUG_REQS=0.11.93
 CLUTTER_REQS=1.17.3
 CLUTTER_GST_REQS=2.99.2
-CLUTTER_GTK_REQS=1.5.5
+CLUTTER_GTK_REQS=1.7.1
 
 dnl Check for the required GStreamer versions for missing plugins
 dnl installation, unless this has been disabled.
