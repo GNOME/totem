@@ -1268,7 +1268,7 @@ source_added_cb (GrlRegistry *registry,
 		name = grl_source_get_name (source);
 
 	/* Metadata */
-	if (g_str_equal (id, "grl-local-metadata"))
+	if (g_str_equal (id, "grl-video-title-parsing"))
 		self->priv->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
 		self->priv->metadata_store_src = source;
