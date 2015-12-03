@@ -67,6 +67,7 @@ struct _TotemGriloPrivate {
 	gboolean plugins_loaded;
 
 	GrlSource *local_metadata_src;
+	GrlSource *title_parsing_src;
 	GrlSource *metadata_store_src;
 	GrlSource *bookmarks_src;
 	gboolean fs_plugin_configured;
@@ -579,6 +580,11 @@ add_local_metadata (TotemGrilo *self,
 
 	options = grl_operation_options_new (NULL);
 	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_NORMAL);
+	grl_source_resolve_sync (self->priv->title_parsing_src,
+				 media,
+				 self->priv->metadata_keys,
+				 options,
+				 NULL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
 				 media,
 				 self->priv->metadata_keys,
@@ -1269,6 +1275,8 @@ source_added_cb (GrlRegistry *registry,
 
 	/* Metadata */
 	if (g_str_equal (id, "grl-video-title-parsing"))
+		self->priv->title_parsing_src = source;
+	else if (g_str_equal (id, "grl-local-metadata"))
 		self->priv->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
 		self->priv->metadata_store_src = source;
