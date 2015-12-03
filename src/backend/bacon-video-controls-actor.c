@@ -61,6 +61,7 @@ bacon_video_controls_actor_constructed (GObject *object)
 
 	/* Theming */
 	gtk_style_context_add_class (gtk_widget_get_style_context (contents), "osd");
+	gtk_style_context_add_class (gtk_widget_get_style_context (contents), "bottom");
 	gtk_widget_override_background_color (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (object)), 0, &transparent);
 }
 

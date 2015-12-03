@@ -89,7 +89,6 @@
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
-#define CONTROLS_MARGIN 32.0                   /* Pixels from the bottom, left and right */
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 #define REWIND_OR_PREVIOUS 4000
@@ -1003,7 +1002,7 @@ bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *natural)
 {
   /* We could also make the actor a minimum width, based on its contents */
-  *minimum = *natural = DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN;
+  *minimum = *natural = DEFAULT_CONTROLS_WIDTH;
 }
 
 static void
@@ -1011,7 +1010,7 @@ bacon_video_widget_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum,
                                          gint      *natural)
 {
-  *minimum = *natural = (DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN) / 16 * 9;
+  *minimum = *natural = DEFAULT_CONTROLS_WIDTH / 16 * 9;
 }
 
 static gboolean
@@ -6108,12 +6107,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_add_child (layout, bvw->priv->controls);
 
   clutter_actor_add_child (bvw->priv->stage, layout);
-  g_object_set (G_OBJECT (bvw->priv->controls),
-		"margin-bottom", CONTROLS_MARGIN,
-		"margin-left", CONTROLS_MARGIN,
-		"margin-right", CONTROLS_MARGIN,
-		NULL);
-
   clutter_actor_set_child_above_sibling (bvw->priv->stage,
 					 layout,
 					 bvw->priv->logo_frame);
