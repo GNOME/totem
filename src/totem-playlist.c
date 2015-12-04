@@ -898,7 +898,6 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	GtkListStore *store;
 	GtkTreeIter iter;
 	char *filename_for_display, *uri, *escaped_filename;
-	GtkTreeRowReference *ref;
 	GFileMonitor *monitor;
 	GMount *mount;
 	GFile *file;
@@ -911,7 +910,6 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	else
 		filename_for_display = g_strdup (display_name);
 
-	ref = NULL;
 	uri = totem_create_full_path (mrl);
 
 	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %s\n", filename_for_display, uri, display_name, subtitle_uri, playing ? "true" : "false");
@@ -958,13 +956,6 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 
 	if (playlist->priv->current == NULL)
 		playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
-
-	/* And update current to point to the right file again */
-	if (ref != NULL) {
-		gtk_tree_path_free (playlist->priv->current);
-		playlist->priv->current = gtk_tree_row_reference_get_path (ref);
-		gtk_tree_row_reference_free (ref);
-	}
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
