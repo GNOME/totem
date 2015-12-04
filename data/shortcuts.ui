@@ -11,6 +11,81 @@
         <property name="section-name">shortcuts</property>
         <property name="max-height">12</property>
         <child>
+          <object class="GtkShortcutsGroup" id="general">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes">General</property>
+            <child>
+              <object class="GtkShortcutsShortcut" id="preferences">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;ctrl&gt;P</property>
+                <property name="title" translatable="yes">Preferences</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="quit">
+                <property name="visible">1</property>
+                <property name="accelerator">Q &lt;ctrl&gt;q</property>
+                <property name="title" translatable="yes">Quit</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup" id="volume">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes">Volume</property>
+            <child>
+              <object class="GtkShortcutsShortcut" id="increase-volume">
+                <property name="visible">1</property>
+                <property name="accelerator">Up</property>
+                <property name="title" translatable="yes">Increase volume by 8%</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="decrease-volume">
+                <property name="visible">1</property>
+                <property name="accelerator">Down</property>
+                <property name="title" translatable="yes">Decrease volume by 8%</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup" id="view">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes">View</property>
+            <child>
+              <object class="GtkShortcutsShortcut" id="fullscreen">
+                <property name="visible">1</property>
+                <property name="accelerator">F &lt;ctrl&gt;F</property>
+                <property name="title" translatable="yes">Toggle fullscreen</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="exit-fullscreen">
+                <property name="visible">1</property>
+                <property name="accelerator">Escape</property>
+                <property name="title" translatable="yes">Exit fullscreen</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="zoom-in">
+                <property name="visible">1</property>
+                <property name="accelerator">R</property>
+                <property name="title" translatable="yes">Zoom in</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="zoom-out">
+                <property name="visible">1</property>
+                <property name="accelerator">T &lt;ctrl&gt;0</property>
+                <property name="title" translatable="yes">Zoom out</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
           <object class="GtkShortcutsGroup" id="playback">
             <property name="visible">1</property>
             <property name="title" translatable="yes">Playback</property>
@@ -87,26 +162,6 @@
           </object>
         </child>
         <child>
-          <object class="GtkShortcutsGroup" id="volume">
-            <property name="visible">1</property>
-            <property name="title" translatable="yes">Volume</property>
-            <child>
-              <object class="GtkShortcutsShortcut" id="increase-volume">
-                <property name="visible">1</property>
-                <property name="accelerator">Up</property>
-                <property name="title" translatable="yes">Increase volume by 8%</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="decrease-volume">
-                <property name="visible">1</property>
-                <property name="accelerator">Down</property>
-                <property name="title" translatable="yes">Decrease volume by 8%</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
           <object class="GtkShortcutsGroup" id="dvd-menu">
             <property name="visible">1</property>
             <property name="title" translatable="yes">DVD menu navigation</property>
@@ -136,40 +191,6 @@
                 <property name="visible">1</property>
                 <property name="accelerator">KP_6 KP_Right</property>
                 <property name="title" translatable="yes">Navigate right</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkShortcutsGroup" id="view">
-            <property name="visible">1</property>
-            <property name="title" translatable="yes">View</property>
-            <child>
-              <object class="GtkShortcutsShortcut" id="fullscreen">
-                <property name="visible">1</property>
-                <property name="accelerator">F &lt;ctrl&gt;F</property>
-                <property name="title" translatable="yes">Toggle fullscreen</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="exit-fullscreen">
-                <property name="visible">1</property>
-                <property name="accelerator">Escape</property>
-                <property name="title" translatable="yes">Exit fullscreen</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="zoom-in">
-                <property name="visible">1</property>
-                <property name="accelerator">R</property>
-                <property name="title" translatable="yes">Zoom in</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="zoom-out">
-                <property name="visible">1</property>
-                <property name="accelerator">T &lt;ctrl&gt;0</property>
-                <property name="title" translatable="yes">Zoom out</property>
               </object>
             </child>
           </object>
