@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: totem 0.99\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-02 00:01+0000\n"
-"PO-Revision-Date: 2015-09-03 12:12+0000\n"
+"POT-Creation-Date: 2015-12-05 02:46+0000\n"
+"PO-Revision-Date: 2015-12-05 08:46+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3682
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
 msgid "Videos"
 msgstr "Myndskeið"
 
@@ -40,9 +40,9 @@ msgid ""
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
-"Myndskeið (Videos), einnig þekkt sem Totem, er opinber myndskráaspilari GNOME "
-"skjáborðsumhverfisins. Meðal eiginleika hans eru leitanlegir listar yfir "
-"myndskeið á tölvunni, á DVD-diskum, auk netsameigna á staðarnetum (með "
+"Myndskeið (Videos), einnig þekkt sem Totem, er opinber myndskráaspilari "
+"GNOME skjáborðsumhverfisins. Meðal eiginleika hans eru leitanlegir listar "
+"yfir myndskeið á tölvunni, á DVD-diskum, auk netsameigna á staðarnetum (með "
 "UPnP/DLNA) ásamt því að fá ábendingar um kvikmyndað efni frá ýmsum vefsvæðum."
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
@@ -50,8 +50,8 @@ msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
 msgstr ""
-"Totem er með endurbætta eiginleika á borð við: niðurhal skjátexta og stuðning "
-"við að taka upp DVD-diska."
+"Totem er með endurbætta eiginleika á borð við: niðurhal skjátexta og "
+"stuðning við að taka upp DVD-diska."
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
@@ -213,7 +213,6 @@ msgid "Preferences"
 msgstr "Kjörstillingar"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Subtitles"
 msgid "External Subtitles"
 msgstr "Utanaðkomandi skjátextar"
 
@@ -561,8 +560,8 @@ msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
-"Einhverjar nauðsynlegar viðbætur eru ekki til staðar. Athugaðu hvort forritið "
-"er rétt uppsett."
+"Einhverjar nauðsynlegar viðbætur eru ekki til staðar. Athugaðu hvort "
+"forritið er rétt uppsett."
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
 msgid "Unable to play the file"
@@ -841,46 +840,46 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Sjálfvirkt"
 
-#: ../src/totem-object.c:1442 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Í bið"
 
-#: ../src/totem-object.c:1447 ../src/totem-object.c:1457
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Afspilun"
 
-#: ../src/totem-object.c:1524 ../src/totem-object.c:1551
-#: ../src/totem-object.c:2066
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem tókst ekki að spila '%s'."
 
-#: ../src/totem-object.c:2208
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem tókst ekki að sýna hjálpina."
 
-#: ../src/totem-object.c:2448
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "Villa kom upp"
 
-#: ../src/totem-object.c:3780
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "Fyrri kafli/kvikmynd"
 
-#: ../src/totem-object.c:3786
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "Spila / Bíða"
 
-#: ../src/totem-object.c:3792
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "Næsti kafli/kvikmynd"
 
-#: ../src/totem-object.c:4013
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totem tókst ekki að ræsa sig."
 
-#: ../src/totem-object.c:4013
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "Engin ástæða gefin."
 
@@ -1309,7 +1308,7 @@ msgstr ""
 #: ../src/plugins/dbusservice/dbusservice.py:236
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr ""
+msgstr "MediaPlayer2 hluturinn skilgreinir ekki ‘%s’ viðmót"
 
 #: ../src/plugins/dbusservice/dbusservice.py:218
 #, python-format
@@ -1319,7 +1318,7 @@ msgstr "Eigindið ‘%s’ er ekki skrifanlegt."
 #: ../src/plugins/dbusservice/dbusservice.py:231
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr ""
+msgstr "Óþekktur eiginleiki ‘%s’ sem krafist var af MediaPlayer 2 hlut"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1476,6 +1475,8 @@ msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
 msgstr ""
+"Lykilorð til að verja rpdb2-miðlarann við aflúsun Totem í gegnum óvottaðan "
+"fjaraðgang. Ef þetta er autt, er sjálfgefið að nota 'totem'."
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Python Console"
@@ -1497,7 +1498,7 @@ msgstr "Python aflúsun"
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
-msgstr ""
+msgstr "Þú getur komist í Totem.Object í gegnum 'totem_object' :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
@@ -1510,6 +1511,9 @@ msgid ""
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
+"Eftir að þú ýtir á „Í lagi“, bíður Totem eftir tengingu við winpdb eða "
+"rpdb2. Ef þú hefur ekki lykilorð fyrir aflúsun í DConf, þá verður lykilorðið "
+"þitt ('totem')."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
