@@ -88,8 +88,8 @@ AC_SUBST(PLUGINDIR)
 dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions.
 GST_MAJORMINOR=1.0
-GST_REQS=1.3.1
-GST_PLUG_BASE_REQS=1.4.2
+GST_REQS=1.6.0
+GST_PLUG_BASE_REQS=1.6.0
 GSTPLUG_REQS=0.11.93
 CLUTTER_REQS=1.17.3
 CLUTTER_GST_REQS=2.99.2
