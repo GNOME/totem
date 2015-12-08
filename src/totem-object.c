@@ -2184,7 +2184,7 @@ totem_object_show_keyboard_shortcuts (TotemObject *totem)
 	g_signal_connect (totem->shortcuts_win, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed), &totem->shortcuts_win);
 
-	gtk_widget_show_all (GTK_WIDGET (totem->shortcuts_win));
+	gtk_widget_show (GTK_WIDGET (totem->shortcuts_win));
 	g_object_unref (builder);
 }
 
