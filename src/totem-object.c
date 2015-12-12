@@ -3989,9 +3989,9 @@ video_widget_create (TotemObject *totem)
 			g_error_free (err);
 	}
 
-	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
-
 	window = gtk_widget_get_window (totem->win);
+
+	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
 	bacon_video_widget_set_fullscreen (totem->bvw, fullscreen);
 	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
 
