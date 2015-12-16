@@ -338,7 +338,7 @@ can_remove (GrlSource *source,
 		return CAN_REMOVE_TRUE;
 	if (!media)
 		goto fallback;
-	if (GRL_IS_MEDIA_BOX (media))
+	if (grl_media_is_container (media))
 		return CAN_REMOVE_FALSE;
 	url = grl_media_get_url (media);
 	if (!url)
@@ -694,13 +694,13 @@ browse_cb (GrlSource    *source,
 					    -1);
 		}
 
-		if (GRL_IS_MEDIA_IMAGE (media) ||
-		    GRL_IS_MEDIA_AUDIO (media)) {
+		if (grl_media_is_image (media) ||
+		    grl_media_is_audio (media)) {
 			/* This isn't supposed to happen as we filter for videos */
 			g_assert_not_reached ();
 		}
 
-		if (GRL_IS_MEDIA_BOX (media) && bud->ignore_boxes) {
+		if (grl_media_is_container (media) && bud->ignore_boxes) {
 			/* Ignore boxes for certain sources */
 		} else {
 			add_local_metadata (self, source, media);
@@ -821,8 +821,8 @@ search_cb (GrlSource    *source,
 	if (media != NULL) {
 		self->priv->search_remaining--;
 
-		if (GRL_IS_MEDIA_IMAGE (media) ||
-		    GRL_IS_MEDIA_AUDIO (media)) {
+		if (grl_media_is_image (media) ||
+		    grl_media_is_audio (media)) {
 			/* This isn't supposed to happen as we filter for videos */
 			g_assert_not_reached ();
 		}
@@ -1006,7 +1006,7 @@ browser_activated_cb (GdMainView  *view,
 	                    -1);
 
 	/* Activate an item */
-	if (content != NULL && GRL_IS_MEDIA_BOX (content) == FALSE) {
+	if (content != NULL && grl_media_is_container (content) == FALSE) {
 		play (self, source, content, TRUE);
 		goto free_data;
 	}
@@ -1433,7 +1433,7 @@ load_grilo_plugins (TotemGrilo *self)
 	g_signal_connect (registry, "source-removed",
 	                  G_CALLBACK (source_removed_cb), self);
 
-	if (grl_registry_load_all_plugins (registry, &error) == FALSE) {
+	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
 		g_warning ("Failed to load grilo plugins: %s", error->message);
 		g_error_free (error);
 	}
@@ -1520,7 +1520,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		                    -1);
 		/* Skip non-boxes (they can not be browsed) */
 		if (container != NULL &&
-		    GRL_IS_MEDIA_BOX (container) == FALSE) {
+		    grl_media_is_container (container) == FALSE) {
 			goto free_elements;
 		}
 

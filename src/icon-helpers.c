@@ -459,7 +459,7 @@ totem_grilo_get_icon (GrlMedia *media,
 
 	*thumbnailing = FALSE;
 
-	if (GRL_IS_MEDIA_BOX (media)) {
+	if (grl_media_is_container (media)) {
 		return g_object_ref (icons[ICON_BOX]);
 	} else {
 		if (grl_media_get_thumbnail (media) ||
