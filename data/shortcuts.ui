@@ -97,6 +97,44 @@
               </object>
             </child>
             <child>
+              <object class="GtkShortcutsShortcut" id="previous-video">
+                <property name="visible">1</property>
+                <property name="accelerator">B &lt;alt&gt;Left minus</property>
+                <property name="direction">ltr</property>
+                <property name="title" translatable="yes">Previous video or chapter</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="next-video">
+                <property name="visible">1</property>
+                <property name="accelerator">N &lt;alt&gt;Right plus</property>
+                <property name="direction">ltr</property>
+                <property name="title" translatable="yes">Next video or chapter</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="previous-video-rtl">
+                <property name="visible">1</property>
+                <property name="accelerator">B &lt;alt&gt;Right minus</property>
+                <property name="direction">rtl</property>
+                <property name="title" translatable="yes">Previous video or chapter</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="next-video-rtl">
+                <property name="visible">1</property>
+                <property name="accelerator">N &lt;alt&gt;Left plus</property>
+                <property name="direction">rtl</property>
+                <property name="title" translatable="yes">Next video or chapter</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup" id="skip">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes">Skip</property>
+            <child>
               <object class="GtkShortcutsShortcut" id="go-back-15">
                 <property name="visible">1</property>
                 <property name="accelerator">Left</property>
@@ -145,22 +183,6 @@
               </object>
             </child>
             <child>
-              <object class="GtkShortcutsShortcut" id="previous-video">
-                <property name="visible">1</property>
-                <property name="accelerator">B &lt;alt&gt;Left minus</property>
-                <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Previous video or chapter</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="next-video">
-                <property name="visible">1</property>
-                <property name="accelerator">N &lt;alt&gt;Right plus</property>
-                <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Next video or chapter</property>
-              </object>
-            </child>
-            <child>
               <object class="GtkShortcutsShortcut" id="go-back-15-rtl">
                 <property name="visible">1</property>
                 <property name="accelerator">Right</property>
@@ -206,22 +228,6 @@
                 <property name="accelerator">&lt;ctrl&gt;Left</property>
                 <property name="direction">rtl</property>
                 <property name="title" translatable="yes">Go forward 10 minutes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="previous-video-rtl">
-                <property name="visible">1</property>
-                <property name="accelerator">B &lt;alt&gt;Right minus</property>
-                <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Previous video or chapter</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="next-video-rtl">
-                <property name="visible">1</property>
-                <property name="accelerator">N &lt;alt&gt;Left plus</property>
-                <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Next video or chapter</property>
               </object>
             </child>
             <child>
