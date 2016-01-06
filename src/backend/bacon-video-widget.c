@@ -6118,6 +6118,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* Fullscreen header controls */
   bvw->priv->header_controls = gtk_clutter_actor_new ();
+  clutter_actor_set_opacity (bvw->priv->header_controls, OVERLAY_OPACITY);
   clutter_actor_set_name (bvw->priv->header_controls, "header-controls");
   clutter_actor_add_constraint (bvw->priv->header_controls,
                                 clutter_bind_constraint_new (bvw->priv->stage,
