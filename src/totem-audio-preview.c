@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <locale.h>
 
 #include "totem-gst-helpers.h"
 #include "totem-resources.h"
