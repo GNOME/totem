@@ -13,19 +13,19 @@
         <child>
           <object class="GtkShortcutsGroup" id="general">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">General</property>
+            <property name="title" translatable="yes" context="shortcut window">General</property>
             <child>
               <object class="GtkShortcutsShortcut" id="preferences">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;P</property>
-                <property name="title" translatable="yes">Preferences</property>
+                <property name="title" translatable="yes" context="shortcut window">Preferences</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="quit">
                 <property name="visible">1</property>
                 <property name="accelerator">Q &lt;ctrl&gt;q &lt;ctrl&gt;w</property>
-                <property name="title" translatable="yes">Quit</property>
+                <property name="title" translatable="yes" context="shortcut window">Quit</property>
               </object>
             </child>
           </object>
@@ -33,19 +33,19 @@
         <child>
           <object class="GtkShortcutsGroup" id="volume">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">Volume</property>
+            <property name="title" translatable="yes" context="shortcut window">Volume</property>
             <child>
               <object class="GtkShortcutsShortcut" id="increase-volume">
                 <property name="visible">1</property>
                 <property name="accelerator">Up</property>
-                <property name="title" translatable="yes">Increase volume</property>
+                <property name="title" translatable="yes" context="shortcut window">Increase volume</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="decrease-volume">
                 <property name="visible">1</property>
                 <property name="accelerator">Down</property>
-                <property name="title" translatable="yes">Decrease volume</property>
+                <property name="title" translatable="yes" context="shortcut window">Decrease volume</property>
               </object>
             </child>
           </object>
@@ -53,33 +53,33 @@
         <child>
           <object class="GtkShortcutsGroup" id="view">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">View</property>
+            <property name="title" translatable="yes" context="shortcut window">View</property>
             <child>
               <object class="GtkShortcutsShortcut" id="fullscreen">
                 <property name="visible">1</property>
                 <property name="accelerator">F &lt;ctrl&gt;F</property>
-                <property name="title" translatable="yes">Toggle fullscreen</property>
+                <property name="title" translatable="yes" context="shortcut window">Toggle fullscreen</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="exit-fullscreen">
                 <property name="visible">1</property>
                 <property name="accelerator">Escape</property>
-                <property name="title" translatable="yes">Exit fullscreen</property>
+                <property name="title" translatable="yes" context="shortcut window">Exit fullscreen</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="zoom-in">
                 <property name="visible">1</property>
                 <property name="accelerator">R</property>
-                <property name="title" translatable="yes">Zoom in</property>
+                <property name="title" translatable="yes" context="shortcut window">Zoom in</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="zoom-out">
                 <property name="visible">1</property>
                 <property name="accelerator">T &lt;ctrl&gt;0</property>
-                <property name="title" translatable="yes">Zoom out</property>
+                <property name="title" translatable="yes" context="shortcut window">Zoom out</property>
               </object>
             </child>
           </object>
@@ -88,12 +88,12 @@
         <child>
           <object class="GtkShortcutsGroup" id="playback">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">Playback</property>
+            <property name="title" translatable="yes" context="shortcut window">Playback</property>
             <child>
               <object class="GtkShortcutsShortcut" id="play-pause">
                 <property name="visible">1</property>
                 <property name="accelerator">P &lt;ctrl&gt;space</property>
-                <property name="title" translatable="yes">Play/Pause</property>
+                <property name="title" translatable="yes" context="shortcut window">Play/Pause</property>
               </object>
             </child>
             <child>
@@ -101,7 +101,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">B &lt;alt&gt;Left minus</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Previous video or chapter</property>
+                <property name="title" translatable="yes" context="shortcut window">Previous video or chapter</property>
               </object>
             </child>
             <child>
@@ -109,7 +109,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">N &lt;alt&gt;Right plus</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Next video or chapter</property>
+                <property name="title" translatable="yes" context="shortcut window">Next video or chapter</property>
               </object>
             </child>
             <child>
@@ -117,7 +117,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">B &lt;alt&gt;Right minus</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Previous video or chapter</property>
+                <property name="title" translatable="yes" context="shortcut window">Previous video or chapter</property>
               </object>
             </child>
             <child>
@@ -125,7 +125,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">N &lt;alt&gt;Left plus</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Next video or chapter</property>
+                <property name="title" translatable="yes" context="shortcut window">Next video or chapter</property>
               </object>
             </child>
           </object>
@@ -133,13 +133,13 @@
         <child>
           <object class="GtkShortcutsGroup" id="skip">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">Skip</property>
+            <property name="title" translatable="yes" context="shortcut window">Skip</property>
             <child>
               <object class="GtkShortcutsShortcut" id="go-back-15">
                 <property name="visible">1</property>
                 <property name="accelerator">Left</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go back 15 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 15 seconds</property>
               </object>
             </child>
             <child>
@@ -147,7 +147,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">Right</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go forward 60 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 60 seconds</property>
               </object>
             </child>
             <child>
@@ -155,7 +155,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;shift&gt;Left</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go back 5 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 5 seconds</property>
               </object>
             </child>
             <child>
@@ -163,7 +163,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;shift&gt;Right</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go forward 15 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 15 seconds</property>
               </object>
             </child>
             <child>
@@ -171,7 +171,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;Left</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go back 3 minutes</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 3 minutes</property>
               </object>
             </child>
             <child>
@@ -179,7 +179,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;Right</property>
                 <property name="direction">ltr</property>
-                <property name="title" translatable="yes">Go forward 10 minutes</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 10 minutes</property>
               </object>
             </child>
             <child>
@@ -187,7 +187,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">Right</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go back 15 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 15 seconds</property>
               </object>
             </child>
             <child>
@@ -195,7 +195,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">Left</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go forward 60 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 60 seconds</property>
               </object>
             </child>
             <child>
@@ -203,7 +203,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;shift&gt;Right</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go back 5 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 5 seconds</property>
               </object>
             </child>
             <child>
@@ -211,7 +211,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;shift&gt;Left</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go forward 15 seconds</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 15 seconds</property>
               </object>
             </child>
             <child>
@@ -219,7 +219,7 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;Right</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go back 3 minutes</property>
+                <property name="title" translatable="yes" context="shortcut window">Go back 3 minutes</property>
               </object>
             </child>
             <child>
@@ -227,14 +227,14 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;Left</property>
                 <property name="direction">rtl</property>
-                <property name="title" translatable="yes">Go forward 10 minutes</property>
+                <property name="title" translatable="yes" context="shortcut window">Go forward 10 minutes</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="skipto">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;K</property>
-                <property name="title" translatable="yes">Skip to…</property>
+                <property name="title" translatable="yes" context="shortcut window">Skip to…</property>
               </object>
             </child>
           </object>
@@ -242,33 +242,33 @@
         <child>
           <object class="GtkShortcutsGroup" id="dvd-menu">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">DVD menu navigation</property>
+            <property name="title" translatable="yes" context="shortcut window">DVD menu navigation</property>
             <child>
               <object class="GtkShortcutsShortcut" id="nav-up">
                 <property name="visible">1</property>
                 <property name="accelerator">KP_8 KP_Up</property>
-                <property name="title" translatable="yes">Navigate up</property>
+                <property name="title" translatable="yes" context="shortcut window">Navigate up</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="nav-down">
                 <property name="visible">1</property>
                 <property name="accelerator">KP_2 KP_Down</property>
-                <property name="title" translatable="yes">Navigate down</property>
+                <property name="title" translatable="yes" context="shortcut window">Navigate down</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="nav-left">
                 <property name="visible">1</property>
                 <property name="accelerator">KP_4 KP_Left</property>
-                <property name="title" translatable="yes">Navigate left</property>
+                <property name="title" translatable="yes" context="shortcut window">Navigate left</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut" id="nav-right">
                 <property name="visible">1</property>
                 <property name="accelerator">KP_6 KP_Right</property>
-                <property name="title" translatable="yes">Navigate right</property>
+                <property name="title" translatable="yes" context="shortcut window">Navigate right</property>
               </object>
             </child>
           </object>
