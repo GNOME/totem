@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-16 03:02+0000\n"
-"PO-Revision-Date: 2016-01-16 09:42+0100\n"
+"POT-Creation-Date: 2016-02-06 03:00+0000\n"
+"PO-Revision-Date: 2016-02-06 10:00+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -257,7 +257,7 @@ msgid "AC3 Passthrough"
 msgstr "Preposielanie AC3"
 
 # dialog title
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Nastavenia"
 
@@ -302,7 +302,6 @@ msgstr "Zásuvné moduly…"
 
 # tab
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "Všeobecné"
 
@@ -435,111 +434,149 @@ msgstr "Vzorkovacia frekvencia:"
 msgid "Channels:"
 msgstr "Kanály:"
 
+# tab
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Všeobecné"
+
+# dialog title
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Nastavenia"
+
 # cmd desc
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Ukončí"
+msgstr "Ukončenie"
 
 #: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hlasitosť"
 
 #: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Zvýšenie hlasitosti"
 
 #: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Zníženie hlasitosti"
 
 #: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Zobrazenie"
 
 #: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Prepnutie režimu na celú obrazovku"
 
 #: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Ukončenie režimu na celú obrazovku"
 
 #: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Zväčšenie"
 
 #: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Zmenšenie"
 
 #: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Prehrávanie"
 
 # cmd desc
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
 msgid "Play/Pause"
-msgstr "Prehrá/Pozastaví"
+msgstr "Prehrávanie/Pozastavenie"
 
 #: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Predchádzajúce video alebo kapitola"
 
 # label
 #: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Nasledujúce video alebo kapitola"
 
 #: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Preskočenie"
 
 #: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Prejdenie dozadu o 15 sekúnd"
 
 #: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Prejdenie dopredu o 60 sekúnd"
 
 #: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Prejdenie dozadu o 5 sekúnd"
 
 # http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
 #: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Prejdenie dopredu o 15 sekúnd"
 
 #: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Prejdenie dozadu o 3 minúty"
 
 #: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Prejdenie dopredu o 10 minút"
 
 #: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Preskočenie na…"
 
 #: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Navigovanie v ponuke disku DVD"
 
 #: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navigovanie hore"
 
 #: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navigovanie dole"
 
 #: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navigovanie doľava"
 
 #: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navigovanie doprava"
 
@@ -1145,6 +1182,11 @@ msgstr "_Zrušiť"
 msgid "_Add"
 msgstr "P_ridať"
 
+# cmd desc
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Prehrá/Pozastaví"
+
 # PK: lebo to moze byt aj film aj pesnicka => polozka
 # cmd desc
 #: ../src/totem-options.c:52
@@ -1186,6 +1228,11 @@ msgstr "Stlmí zvuk"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Prepne zobrazenie na celú obrazovku"
+
+# cmd desc
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Ukončí"
 
 # cmd desc
 #: ../src/totem-options.c:61
