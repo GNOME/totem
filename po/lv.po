@@ -9,14 +9,14 @@
 # Raivis Dejus <orvils@gmail.com>, 2006, 2007, 2009.
 # Peteris Krisjanis <pecisk@gmail.com>, 2010.
 # Rudolfs <rudolfs.mazurs@gmail.com>, 2011.
-# Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015.
+# Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-08 12:08+0000\n"
-"PO-Revision-Date: 2015-03-12 21:59+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&"
+"keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-02-04 14:58+0000\n"
+"PO-Revision-Date: 2016-02-06 20:53+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -25,11 +25,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2009-01-04 12:56+0000\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1854 ../src/totem-object.c:3658
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3668
 msgid "Videos"
 msgstr "Video"
 
@@ -118,7 +118,6 @@ msgid "Pango font description for subtitle rendering."
 msgstr "Pango fonta apraksts subtitru renderēšanai"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:12
-#| msgid "UTF-8"
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
@@ -189,7 +188,7 @@ msgstr "Direktorijas, kuras rādīt"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Direktorijas, kuras rādīt pārlūka saskarnē, pēc noklusējuma nevienu"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5510
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5540
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -255,9 +254,10 @@ msgid "General"
 msgstr "Vispārīgi"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:18
-msgid "Display"
-msgstr "Attēlot"
+#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:285
+msgid "Video"
+msgstr "Video"
 
 #: ../data/preferences.ui.h:19
 msgid "Disable _deinterlacing of interlaced videos"
@@ -288,14 +288,18 @@ msgid "Reset to _Defaults"
 msgstr "Atstatīt uz _noklusējuma parametriem"
 
 #: ../data/preferences.ui.h:26
+msgid "Display"
+msgstr "Attēlot"
+
+#: ../data/preferences.ui.h:27
 msgid "Audio Output"
 msgstr "Audio izvade"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
 msgstr "_Audio izvades tips:"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Audio"
@@ -328,10 +332,6 @@ msgstr "Komentārs:"
 msgid "Container:"
 msgstr "Konteineris:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
-msgid "Video"
-msgstr "Video"
-
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Izmēri:"
@@ -356,100 +356,265 @@ msgstr "Nolases biežums:"
 msgid "Channels:"
 msgstr "Kanāli:"
 
+#: ../data/shortcuts.ui.h:1
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Vispārīgi"
+
+#: ../data/shortcuts.ui.h:2
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Iestatījumi"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Iziet"
+
+#: ../data/shortcuts.ui.h:4
+#| msgid "Volume Up"
+msgctxt "shortcut window"
+msgid "Volume"
+msgstr "Skaļums"
+
+#: ../data/shortcuts.ui.h:5
+#| msgid "Increase volume"
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Palielināt skaļumu"
+
+#: ../data/shortcuts.ui.h:6
+#| msgid "Decrease volume"
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Samazināt skaļumu"
+
+#: ../data/shortcuts.ui.h:7
+#| msgid "_View"
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Skats"
+
+#: ../data/shortcuts.ui.h:8
+#| msgid "Toggle Fullscreen"
+msgctxt "shortcut window"
+msgid "Toggle fullscreen"
+msgstr "Pārslēgt pilnekrānu"
+
+#: ../data/shortcuts.ui.h:9
+#| msgid "Switch to fullscreen"
+msgctxt "shortcut window"
+msgid "Exit fullscreen"
+msgstr "Pamest pilnekrānu"
+
+#: ../data/shortcuts.ui.h:10
+#| msgid "Zoom in"
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Tuvināt"
+
+#: ../data/shortcuts.ui.h:11
+#| msgid "Zoom out"
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Tālināt"
+
+#: ../data/shortcuts.ui.h:12
+#| msgid "Playback"
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr "Atskaņošana"
+
+#: ../data/shortcuts.ui.h:13
+#| msgid "Play/Pause"
+msgctxt "shortcut window"
+msgid "Play/Pause"
+msgstr "Atskaņot / pauzēt"
+
+#: ../data/shortcuts.ui.h:14
+#| msgid "No video to capture."
+msgctxt "shortcut window"
+msgid "Previous video or chapter"
+msgstr "Iepriekšējais video vai nodaļa"
+
+#: ../data/shortcuts.ui.h:15
+#| msgid "No video to capture."
+msgctxt "shortcut window"
+msgid "Next video or chapter"
+msgstr "Nākamais video vai nodaļa"
+
+#: ../data/shortcuts.ui.h:16
+#| msgid "Skipto"
+msgctxt "shortcut window"
+msgid "Skip"
+msgstr "Izlaist"
+
+#: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
+msgid "Go back 15 seconds"
+msgstr "Iet 15 sekundes atpakaļ"
+
+#: ../data/shortcuts.ui.h:18
+#| msgid "0 seconds"
+msgctxt "shortcut window"
+msgid "Go forward 60 seconds"
+msgstr "Iet 60 sekundes uz priekšu"
+
+#: ../data/shortcuts.ui.h:19
+#| msgid "0 seconds"
+msgctxt "shortcut window"
+msgid "Go back 5 seconds"
+msgstr "Iet 5 sekundes atpakaļ"
+
+#: ../data/shortcuts.ui.h:20
+#| msgid "%d frame per second"
+#| msgid_plural "%d frames per second"
+msgctxt "shortcut window"
+msgid "Go forward 15 seconds"
+msgstr "Iet 15 sekundes uz priekšu"
+
+#: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
+msgid "Go back 3 minutes"
+msgstr "Iet 3 minūtes atpakaļ"
+
+#: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
+msgid "Go forward 10 minutes"
+msgstr "Iet uz priekšu 10 minūtes"
+
+#: ../data/shortcuts.ui.h:23
+#| msgid "_Skip To…"
+msgctxt "shortcut window"
+msgid "Skip to…"
+msgstr "Pārlekt uz…"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "DVD menu navigation"
+msgstr "DVD izvēlnes navigācija"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
+msgid "Navigate up"
+msgstr "Iet uz augšu"
+
+#: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
+msgid "Navigate down"
+msgstr "Iet uz leju"
+
+#: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
+msgid "Navigate left"
+msgstr "Iet pa kreisi"
+
+#: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
+msgid "Navigate right"
+msgstr "Iet pa labi"
+
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "Iestatīju_mi"
 
 #: ../data/totem.ui.h:2
+msgid "_Keyboard Shortcuts"
+msgstr "_Tastatūras īsinājumtaustiņi"
+
+#: ../data/totem.ui.h:3
 msgid "_Help"
 msgstr "_Palīdzība"
 
-#: ../data/totem.ui.h:3
+#: ../data/totem.ui.h:4
 msgid "_Quit"
 msgstr "_Iziet"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:5
 msgid "Add _Local Video…"
 msgstr "Pievienot _lokālu video…"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
 msgstr "Pievienot tīmekļa _video…"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
 msgstr "Izmēru _attiecība"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Kvadrāts"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (platekrāns)"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:12
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:13
 msgid "Zoom In"
 msgstr "Tuvināt"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:14
 msgid "Switch An_gles"
 msgstr "Pārslē_gt leņķus"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:15
 msgid "_Languages"
 msgstr "Va_lodas"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:16
 msgid "S_ubtitles"
 msgstr "S_ubtitri"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
 msgstr "Izvēlieties _subtitrus…"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:18
 msgid "_Eject"
 msgstr "_Izgrūst"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:19
 msgid "_Repeat"
 msgstr "Atkā_rtot"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:20
 msgid "_DVD Menu"
 msgstr "_DVD izvēlne"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:21
 msgid "_Title Menu"
 msgstr "_Nosaukumu izvēlne"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:22
 msgid "A_udio Menu"
 msgstr "A_udio izvēlne"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:23
 msgid "_Angle Menu"
 msgstr "Leņķ_a izvēlne"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "_Nodaļu izvēlne"
 
@@ -462,55 +627,55 @@ msgstr "Ievadiet _adresi (URI) datnei, ko vēlaties atvērt:"
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1935
+#: ../src/backend/bacon-video-widget.c:1959
 msgid "Password requested for RTSP server"
 msgstr "RTSP serveris pieprasa paroli"
 
-#: ../src/backend/bacon-video-widget.c:3306
+#: ../src/backend/bacon-video-widget.c:3328
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Audio celiņš #%d"
 
-#: ../src/backend/bacon-video-widget.c:3310
+#: ../src/backend/bacon-video-widget.c:3332
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtitri #%d"
 
-#: ../src/backend/bacon-video-widget.c:3766
+#: ../src/backend/bacon-video-widget.c:3796
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, kuram jūs mēģinat piekļūt, nav atrodams."
 
-#: ../src/backend/bacon-video-widget.c:3769
+#: ../src/backend/bacon-video-widget.c:3799
 msgid "The connection to this server was refused."
 msgstr "Piekļuve serverim tika aizliegta."
 
-#: ../src/backend/bacon-video-widget.c:3772
+#: ../src/backend/bacon-video-widget.c:3802
 msgid "The specified movie could not be found."
 msgstr "Norādītā filma nav atrasta."
 
-#: ../src/backend/bacon-video-widget.c:3779
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "The server refused access to this file or stream."
 msgstr "Serveris aizliedza pieeju šai datnei vai straumei."
 
-#: ../src/backend/bacon-video-widget.c:3785
+#: ../src/backend/bacon-video-widget.c:3815
 msgid "Authentication is required to access this file or stream."
 msgstr "Lai piekļūtu šai datnei vai straumei, nepieciešama autentifikācija."
 
-#: ../src/backend/bacon-video-widget.c:3792
+#: ../src/backend/bacon-video-widget.c:3822
 msgid "You are not allowed to open this file."
 msgstr "Jums nav atļaujas atvērt šo datni."
 
-#: ../src/backend/bacon-video-widget.c:3797
+#: ../src/backend/bacon-video-widget.c:3827
 msgid "This location is not a valid one."
 msgstr "Atrašanās vieta nav derīga."
 
-#: ../src/backend/bacon-video-widget.c:3805
+#: ../src/backend/bacon-video-widget.c:3835
 msgid "The movie could not be read."
 msgstr "Filmu nevarēja nolasīt."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3828
-#: ../src/backend/bacon-video-widget.c:3836
+#: ../src/backend/bacon-video-widget.c:3858
+#: ../src/backend/bacon-video-widget.c:3866
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -531,12 +696,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3848
+#: ../src/backend/bacon-video-widget.c:3878
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr "Šo straumi nevar atskaņot. Iespējams, ka to bloķē ugunsmūris."
 
-#: ../src/backend/bacon-video-widget.c:3851
+#: ../src/backend/bacon-video-widget.c:3881
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -544,7 +709,7 @@ msgstr ""
 "Audio vai video straume nav apstrādāta trūkstošo kodeku dēļ. Jums vajadzētu "
 "uzinstalēt papildu spraudņus, lai spētu atskaņot dažu formātu filmas."
 
-#: ../src/backend/bacon-video-widget.c:3862
+#: ../src/backend/bacon-video-widget.c:3892
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -552,19 +717,19 @@ msgstr ""
 "Nevar atskaņot šo datni caur tīklu. Pamēģiniet to vispirms lejupielādēt uz "
 "diska."
 
-#: ../src/backend/bacon-video-widget.c:5506 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5536 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5508 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5538 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5795
+#: ../src/backend/bacon-video-widget.c:5825
 msgid "Media contains no supported video streams."
 msgstr "Datu nesējs nesatur atbalstītas video straumes."
 
-#: ../src/backend/bacon-video-widget.c:5954
+#: ../src/backend/bacon-video-widget.c:6036
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -572,12 +737,11 @@ msgstr ""
 "Daži nepieciešamie spraudņi nav atrodami. Pārliecinieties, ka programma ir "
 "pareizi uzinstalēta."
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
-#| msgid "Failed to parse CMML file"
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
 msgid "Unable to play the file"
 msgstr "Neizdevās atskaņot datni"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -588,7 +752,7 @@ msgstr[2] "Lai atskaņotu datni, nepieciešami %s, bet tie nav uzinstalēti."
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
 #, c-format
 msgid "_Find in %s"
 msgstr "_Meklēt mapē %s"
@@ -770,31 +934,31 @@ msgstr "Nevarēja inicializēt pavediendrošās bibliotēkas."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Pārbaudiet savu sistēmas instalāciju. Totem tūlīt beigs darbu."
 
-#: ../src/totem-grilo.c:284
+#: ../src/totem-grilo.c:285
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "%d. sezona %d. sērija"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:321
+#: ../src/totem-grilo.c:322
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (%d. sezona %d. sērija)"
 
-#: ../src/totem-grilo.c:671
+#: ../src/totem-grilo.c:677
 msgid "Browse Error"
 msgstr "Pārlūka kļūda"
 
-#: ../src/totem-grilo.c:812
+#: ../src/totem-grilo.c:818
 msgid "Search Error"
 msgstr "Meklēšanas kļūda"
 
-#: ../src/totem-grilo.c:1266
+#: ../src/totem-grilo.c:1272
 msgid "Local"
 msgstr "Lokāls"
 
-#: ../src/totem-grilo.c:1863
+#: ../src/totem-grilo.c:1873
 msgid "Channels"
 msgstr "Kanāli"
 
@@ -846,48 +1010,48 @@ msgid "Search"
 msgstr "Meklēt"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:419
+#: ../src/totem-menu.c:428
 msgid "None"
 msgstr "Nekas"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:423
+#: ../src/totem-menu.c:432
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../src/totem-object.c:1418 ../src/totem-options.c:51
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pauzēt"
 
-#: ../src/totem-object.c:1423 ../src/totem-object.c:1433
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Atskaņot"
 
-#: ../src/totem-object.c:1500 ../src/totem-object.c:1527
-#: ../src/totem-object.c:2042
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2023
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nevarēja atskaņot “%s”."
 
-#: ../src/totem-object.c:2184
+#: ../src/totem-object.c:2165
 msgid "Totem could not display the help contents."
 msgstr "Totem nevarēja parādīt palīdzības saturu."
 
-#: ../src/totem-object.c:2424
+#: ../src/totem-object.c:2426
 msgid "An error occurred"
 msgstr "Gadījās kļūda"
 
-#: ../src/totem-object.c:3755
+#: ../src/totem-object.c:3766
 msgid "Previous Chapter/Movie"
 msgstr "Iepriekšējā nodaļa / filma"
 
-#: ../src/totem-object.c:3761
+#: ../src/totem-object.c:3772
 msgid "Play / Pause"
 msgstr "Atskaņot / pauzēt"
 
-#: ../src/totem-object.c:3767
+#: ../src/totem-object.c:3778
 msgid "Next Chapter/Movie"
 msgstr "Nākošā nodaļa / filma"
 
@@ -904,16 +1068,13 @@ msgid "Add Web Video"
 msgstr "Pievienot tīmekļa video"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "At_celt"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Pievienot"
 
@@ -973,7 +1134,7 @@ msgstr "Meklēt"
 msgid "Movies to play"
 msgstr "Atskaņojamās filmas"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Nevar ievietot rindā un aizvietot vienlaicīgi"
 
@@ -984,7 +1145,7 @@ msgstr "Nevar ievietot rindā un aizvietot vienlaicīgi"
 msgid "Title %d"
 msgstr "Nosaukums %d"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:992
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Nevarēja apstrādāt repertuāru “%s” . Iespējams, ka tas ir bojāts."
@@ -1050,11 +1211,17 @@ msgstr "N/P"
 msgid "Add to Favourites"
 msgstr "Pievienot iecienītajiem"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+#| msgid "Play"
+msgctxt "button"
+msgid "Play"
+msgstr "Atskaņot"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Sajaukt"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Dzēst"
 
@@ -1211,7 +1378,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Meklēt %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Visas datnes"
 
@@ -1227,7 +1394,7 @@ msgstr "Subtitru datnes"
 msgid "Select Text Subtitles"
 msgstr "Izvēlieties subtitrus"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Atvērt"
 
@@ -1238,7 +1405,7 @@ msgstr "Pievienot video"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:789
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1249,15 +1416,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:787
+#: ../src/totem-video-thumbnailer.c:790
 msgid "Filename"
 msgstr "Datnes nosaukums"
 
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Resolution"
 msgstr "Izšķirtspēja"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:795
 msgid "Duration"
 msgstr "Ilgums"
 
@@ -1311,144 +1478,6 @@ msgstr "Kopēt vide_o DVD…"
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "Kopēt (S)VCD…"
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Jaunās nodaļas nosaukums:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Izņemt nodaļu"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Izņemt nodaļu no repertuāra"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Iet uz nodaļu"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Iet uz nodaļu filmā"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Pievienot nodaļu…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Izņemt nodaļu"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Iet uz nodaļu"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Saglabāt izmaiņas"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Nav nodaļu datu"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Ielādēt nodaļas…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Ielādēt nodaļas no ārējas CMML datnes"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Pievienot jaunas nodaļas"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Izveidot jaunu nodaļu sarakstu filmai"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Nodaļas"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Atbalstīt nodaļu veidotājus filmās"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Nosaukums: </b>%s\n"
-"<b>Sākuma laiks: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Kļūda, lasot datni ar nodaļām"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Nodaļa ar tādu pašu laiku jau ir"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Mēģiniet citu nosaukumu, vai izņemiet esošo nodaļu."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Gadījās kļūda, rakstot datnē ar nodaļām"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Gadījās kļūda, saglabājot nodaļas."
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr ""
-"Lūdzu, pārliecinieties, ka jums ir tiesības rakstīt mapē, kurā ir filma."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Atvērt nodaļu datni"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Atbalstītās datnes"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Nodaļu ekrānattēls"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Nodaļas virsraksts"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Pirms aizvēršanas saglabāt izmaiņas nodaļu sarakstā?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Aizvērt bez saglabāšanas"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Saglabāt"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "Ja nesaglabāsiet, izmaiņas nodaļās tiks pazaudētas."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Pievienot nodaļu"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1538,53 +1567,53 @@ msgstr "Subtitru lejupielādētājs"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Meklēt pašlaik atskaņotās filmas subtitrus"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Brazīlijas portugāļu"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "Meklē subtitrus..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:607
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "Lejupielādē subtitrus..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nevarēja sazināties ar OpenSubtitles tīmekļa vietni"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nevarēja sazināties ar OpenSubtitles tīmekļa vietni."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Nav atrastu rezultātu."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Subtitri"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Formāts"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Reitings"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:524
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "Lejupielā_dēt filmas subtitrus..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:564
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "Meklē subtitrus..."
 
@@ -1809,7 +1838,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Izveidot ekrānattēlu _galeriju…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Pārlekt uz"
 
@@ -1823,7 +1852,7 @@ msgstr "Pā_rlekt uz:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekunde"
@@ -1834,12 +1863,12 @@ msgstr[2] "sekunžu"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "Pā_rlekt uz"
 
@@ -1862,1628 +1891,3 @@ msgstr "Zeitgeist spraudnis"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Spraudnis, kas sūta notikumus uz Zeitgeist"
-
-#~ msgid "Whether to enable debug for the playback engine"
-#~ msgstr "Vai aktivēt atskaņošanas dzinēja atkļūdošanu"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Run '%s --help' to see a full list of available command line options.\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Palaidiet '%s --help', lai redzētu pilnu komandrindas opciju sarakstu.\n"
-
-#~ msgid "Enable debug"
-#~ msgstr "Aktivēt atkļūdošanu"
-
-#~ msgid "- Play movies and songs"
-#~ msgstr "- Atskaņot filmas un dziesmas"
-
-#~ msgid "No URI to play"
-#~ msgstr "Nav URI, ko atskaņot"
-
-#~ msgid "_Open with \"%s\""
-#~ msgstr "_Atvērt ar “%s”"
-
-#~ msgid "Totem Movie Player"
-#~ msgstr "Totem filmu atskaņotājs"
-
-#~ msgid "No playlist or playlist empty"
-#~ msgstr "Nav repertuāra vai arī repertuārs ir tukšs"
-
-#~ msgid "Movie browser plugin"
-#~ msgstr "Filmu pārlūka spraudnis"
-
-#~ msgid "Verify your system installation. The Totem plugin will now exit."
-#~ msgstr "Pārbaudiet savas sistēmas instalāciju. Totem tagad aizvērsies."
-
-#~ msgid "Show visual effects when no video is displayed"
-#~ msgstr "Rādīt vizuālos efektus, kad video netiek attēlots"
-
-#~ msgid "Show visual effects when playing an audio only file."
-#~ msgstr "Rādīt vizuālos efektus, kad tiek atskaņotas tikai audio datnes."
-
-#~ msgid "Name of the visual effects plugin"
-#~ msgstr "Vizuālā efekta spraudņa nosaukums"
-
-#~ msgid "Visualization quality setting"
-#~ msgstr "Vizualizācijas kvalitātes iestatījumi"
-
-#~ msgid "Quality setting for the audio visualization."
-#~ msgstr "Skaņas vizualizācijas kvalitātes iestatījumi."
-
-#~ msgid "Normal"
-#~ msgstr "Normāls"
-
-#~ msgid "Large"
-#~ msgstr "Liels"
-
-#~ msgid "Extra Large"
-#~ msgstr "Īpaši liels"
-
-#~ msgid "Visual Effects"
-#~ msgstr "Vizuālie efekti"
-
-#~ msgid "Show _visual effects when an audio file is played"
-#~ msgstr "Rādīt _vizuālos efektus, kad tiek atskaņota audio datne"
-
-#~ msgid "_Type of visualization:"
-#~ msgstr "Vizualizācijas _tips:"
-
-#~ msgid "Visualization _size:"
-#~ msgstr "Vizualizācija_s izmērs:"
-
-#~ msgid "Mozilla (Firefox) plugin to view movies inside your browser"
-#~ msgstr "“Mozilla” (Firefox) spraudnis, lai filmas skatītos pārlūkā"
-
-#~ msgid "Command-line video properties helper (for indexers)"
-#~ msgstr "Komandrindas video īpašību palīgs (indeksētājiem)"
-
-#~ msgid "Play / P_ause"
-#~ msgstr "Atskaņot / p_auzēt"
-
-#~ msgid "Play or pause the movie"
-#~ msgstr "Spēlēt vai pauzēt filmu"
-
-#~ msgid "_Next Chapter/Movie"
-#~ msgstr "_Nākošā nodaļa/filma"
-
-#~ msgid "Next chapter or movie"
-#~ msgstr "Nākošā nodaļa vai filma"
-
-#~ msgid "_Previous Chapter/Movie"
-#~ msgstr "Ie_priekšējā nodaļa/filma"
-
-#~ msgid "Previous chapter or movie"
-#~ msgstr "Iepriekšējā nodaļa vai filma"
-
-#~ msgid "Audio files"
-#~ msgstr "Audio datnes"
-
-#~| msgid "Recent files"
-#~ msgid "Recent"
-#~ msgstr "Nesenie"
-
-#~ msgid "Stopped"
-#~ msgstr "Apturēts"
-
-#~ msgid "Paused"
-#~ msgstr "Pauzēts"
-
-#~ msgid "Playing"
-#~ msgstr "Atskaņo"
-
-#~ msgid "Leave Fullscreen"
-#~ msgstr "Iziet no pilnekrāna režīma"
-
-#~ msgid "Time:"
-#~ msgstr "Laiks:"
-
-#~ msgid "Allow the screensaver to activate when playing audio"
-#~ msgstr "Atļaut aktivizēties ekrānsaudzētājam, kad skan tikai audio"
-
-#~ msgid ""
-#~ "Allow the screensaver to activate when playing audio. Disable if you have "
-#~ "monitor-powered speakers."
-#~ msgstr ""
-#~ "Atļaut aktivizēties ekrānsaudzētājam, kad skan tikai audio. Atslēdziet, "
-#~ "ja skaļruņu darbību nodrošina monitors."
-
-#~ msgid "Resize the canvas automatically on file load"
-#~ msgstr "Automātiski mainīt audekla izmēru pie faila ielādes"
-
-#~ msgid "Shuffle mode"
-#~ msgstr "Jaukšanas režīms"
-
-#~ msgid ""
-#~ "Whether to remember the position of played audio/video files when pausing "
-#~ "or closing them"
-#~ msgstr "Vai iegaumēt pēdējo faila atskaņošanas vietu pauzējot vai aizverot"
-
-#~ msgid "_Remove"
-#~ msgstr "_Izņemt"
-
-#~ msgid "Remove file from playlist"
-#~ msgstr "Izņemt no repertuāra"
-
-#~ msgid "_Copy Location"
-#~ msgstr "_Kopēt atrašanās vietu"
-
-#~ msgid "Copy the location to the clipboard"
-#~ msgstr "Kopēt atrašanās vietu uz starpliktuvi"
-
-#~ msgid "_Select Text Subtitles..."
-#~ msgstr "_Izvēlieties subtitrus..."
-
-#~ msgid "Select a file to use for text subtitles"
-#~ msgstr "Izvēlieties failu, no kura ielasīt subtitrus"
-
-#~ msgid "Add..."
-#~ msgstr "Pievienot..."
-
-#~ msgid "Remove"
-#~ msgstr "Izņemt"
-
-#~ msgid "Save Playlist..."
-#~ msgstr "Saglabāt repertuāru..."
-
-#~ msgid "Move Up"
-#~ msgstr "Pārvietot augšup"
-
-#~ msgid "Move Down"
-#~ msgstr "Pārvietot lejup"
-
-#~ msgid "Totem Preferences"
-#~ msgstr "Totem iestatījumi"
-
-#~ msgid "Playback"
-#~ msgstr "Atskaņošana"
-
-#~ msgid "Start playing files from last position"
-#~ msgstr "Sākt atskaņot no pēdējās atskaņošanas vietas"
-
-#~ msgid "_Resize the window when a new video is loaded"
-#~ msgstr "Mainīt loga izmē_ru, kad tiek ielādēts jauns video"
-
-#~ msgid "Disable screensaver when playing"
-#~ msgstr "Deaktivēt ekrānsaudzētāju atskaņošanas laikā"
-
-#~ msgctxt "Screensaver disable"
-#~ msgid "Video"
-#~ msgstr "Video"
-
-#~ msgid "Video or Audio"
-#~ msgstr "Video vai audio"
-
-#~ msgid "Open _Location"
-#~ msgstr "Atvērt _vietu"
-
-#~ msgid "_Fullscreen"
-#~ msgstr "_Pilnekrāns"
-
-#~ msgid "_Movie"
-#~ msgstr "Fil_ma"
-
-#~ msgid "Eject the current disc"
-#~ msgstr "Izgrūst pašreizējo disku"
-
-#~ msgid "View the properties of the current stream"
-#~ msgstr "Apskatīt pašreizējās plūsmas īpašības"
-
-#~ msgid "_Edit"
-#~ msgstr "R_ediģēt"
-
-#~ msgid "_Clear Playlist"
-#~ msgstr "_Attīrīt repertuāru"
-
-#~ msgid "Clear the playlist"
-#~ msgstr "Attīrīt repertuāru"
-
-#~ msgid "Configure plugins to extend the application"
-#~ msgstr "Konfigurēt spraudņus, lai paplašinātu lietotni"
-
-#~ msgid "_View"
-#~ msgstr "_Skats"
-
-#~ msgid "Fit Window to Movie"
-#~ msgstr "Pielāgot loga izmēru filmai"
-
-#~ msgid "_Resize 1∶2"
-#~ msgstr "Mainīt _attiecību uz 1∶2"
-
-#~ msgid "Resize to half the original video size"
-#~ msgstr "Mainīt sākotnējā video izmēru uz divreiz mazāku"
-
-#~ msgid "Resize _1∶1"
-#~ msgstr "Mainīt attiecību uz _1∶1"
-
-#~ msgid "Resize to the original video size"
-#~ msgstr "Mainīt video izmēru uz sākotnējo"
-
-#~ msgid "Resize _2∶1"
-#~ msgstr "Mainīt attiecību uz _2∶1"
-
-#~ msgid "Resize to double the original video size"
-#~ msgstr "Mainīt oriģinālā video izmēru uz divreiz lielāku"
-
-#~ msgid "Switch camera angles"
-#~ msgstr "Mainīt kameras leņķus"
-
-#~ msgid "_Go"
-#~ msgstr "_Iet"
-
-#~ msgid "Go to the DVD menu"
-#~ msgstr "Iet uz DVD izvēlni"
-
-#~ msgid "Go to the title menu"
-#~ msgstr "Iet uz nosaukumu izvēlni"
-
-#~ msgid "Go to the audio menu"
-#~ msgstr "Iet uz audio izvēlni"
-
-#~ msgid "Go to the angle menu"
-#~ msgstr "Iet uz leņķu izvēlni"
-
-#~ msgid "Go to the chapter menu"
-#~ msgstr "Iet uz nodaļu izvēlni"
-
-#~ msgid "_Sound"
-#~ msgstr "_Skaņa"
-
-#~ msgid "Volume _Up"
-#~ msgstr "Palielināt skaļ_umu"
-
-#~ msgid "Increase volume"
-#~ msgstr "Palielināt skaļumu"
-
-#~ msgid "Volume _Down"
-#~ msgstr "_Samazināt skaļumu"
-
-#~ msgid "Decrease volume"
-#~ msgstr "Samazināt skaļumu"
-
-#~ msgid "_Contents"
-#~ msgstr "_Saturs"
-
-#~ msgid "Help contents"
-#~ msgstr "Palīdzības saturs"
-
-#~ msgid "_About"
-#~ msgstr "P_ar"
-
-#~ msgid "About this application"
-#~ msgstr "Par šo lietotni"
-
-#~ msgid "Show _Controls"
-#~ msgstr "Rādīt _vadīklas"
-
-#~ msgid "Show controls"
-#~ msgstr "Rādīt vadības paneli"
-
-#~ msgid "S_idebar"
-#~ msgstr "Sānu _josla"
-
-#~ msgid "Show or hide the sidebar"
-#~ msgstr "Rādīt vai slēpt sānu joslu"
-
-#~ msgid "Sets automatic aspect ratio"
-#~ msgstr "Iestata automātisko izmēru attiecību"
-
-#~ msgid "Sets square aspect ratio"
-#~ msgstr "Iestata kvadrātveida izmēru attiecību"
-
-#~ msgid "Sets 4∶3 (TV) aspect ratio"
-#~ msgstr "Iestata 4∶3 (TV) izmēru attiecību"
-
-#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
-#~ msgstr "Iestata 16∶9 (platekrāna) izmēru attiecību"
-
-#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
-#~ msgstr "Iestata 2.11∶1 (DVB) izmēru attiecību"
-
-#~ msgid "Zoom in"
-#~ msgstr "Tuvināt"
-
-#~ msgid "Skip _Forward"
-#~ msgstr "Pārlekt _uz priekšu"
-
-#~ msgid "Skip forward"
-#~ msgstr "Pārlekt uz priekšu"
-
-#~ msgid "Skip _Backwards"
-#~ msgstr "Pārlek_t atpakaļ"
-
-#~ msgid "Skip backwards"
-#~ msgstr "Pārlekt atpakaļ"
-
-#~ msgid "Time seek bar"
-#~ msgstr "Laika meklēšanas josla"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Fails nav derīgs .desktop fails"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Neatpazīta darbvirsmas faila versija '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Palaiž %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Lietotne nepieņem dokumentus no komandrindas"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Neatpazīta palaišanas opcija: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Nevar padot dokumenta URI darbvirsmas ierakstam 'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nav palaižams vienums"
-
-#~ msgid "File _Format: %s"
-#~ msgstr "Faila _formāts — %s"
-
-#~ msgid "All Files"
-#~ msgstr "Visi faili"
-
-#~ msgid "All Supported Files"
-#~ msgstr "Visi atbalstītie faili"
-
-#~ msgid "By Extension"
-#~ msgstr "Pēc paplašinājuma"
-
-#~ msgid "File Format"
-#~ msgstr "Faila formāts"
-
-#~ msgid "Extension(s)"
-#~ msgstr "Paplašinājums(-i)"
-
-#~ msgid ""
-#~ "The program was not able to find out the file format you want to use for `"
-#~ "%s'. Please make sure to use a known extension for that file or manually "
-#~ "choose a file format from the list below."
-#~ msgstr ""
-#~ "Lietotne nespēja noteikt, kuru faila formātu jūs vēlaties izmantot failam "
-#~ "“%s”. Pārliecinieties, ka izmantojat pareizu faila paplašinājumu, vai arī "
-#~ "pašrocīgi izvēlieties faila formātu no apakšā esošā saraksta."
-
-#~ msgid "File format not recognized"
-#~ msgstr "Faila formāts nav atpazīts"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Deaktivēt savienojumu ar sesijas pārvaldnieku"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Norādīt failu, kas satur saglabāto konfigurāciju"
-
-#~ msgid "FILE"
-#~ msgstr "FAILS"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Norādiet sesiju pārvaldības ID"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Sesiju pārvaldības opcijas:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Rādīt sesiju pārvaldības opcijas"
-
-#~ msgid "_Play Now"
-#~ msgstr "_Atskaņot"
-
-#~ msgid "_Add to Playlist"
-#~ msgstr "Pievienot repertuār_am"
-
-#~ msgid "No File"
-#~ msgstr "Nav faila"
-
-#~ msgid ""
-#~ "Totem is free software; you can redistribute it and/or modify it under "
-#~ "the terms of the GNU General Public License as published by the Free "
-#~ "Software Foundation; either version 2 of the License, or (at your option) "
-#~ "any later version."
-#~ msgstr ""
-#~ "Totem ir brīvā programmatūra; jūs varat izplatīt un/vai modificēt to "
-#~ "saskaņā ar Free Software Foundation publicētās GNU Vispārējās Publiskās "
-#~ "Licences 2, vai kādas vēlākas versijas noteikumiem."
-
-#~ msgid ""
-#~ "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
-#~ "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-#~ "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#~ "details."
-#~ msgstr ""
-#~ "Totem tiek izplatīts ar cerību, ka tas būs noderīgs. Tas tiek izplatīts "
-#~ "BEZ jebkādas garantijas vai iekļautas ražotāja atbildības par šo "
-#~ "produktu. Sīkāku informāciju meklējiet GNU Vispārējās Publiskās Licences "
-#~ "tekstā."
-
-#~ msgid ""
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with Totem; if not, write to the Free Software Foundation, Inc., 59 "
-#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-#~ msgstr ""
-#~ "GNU Vispārējās Publiskās Licence ir pieejama kopā ar Totem. Ja tā jums "
-#~ "nav pieejama, jūs to varat iegūt no Free Software Foundation, Inc., 59 "
-#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-
-#~ msgid ""
-#~ "Totem contains an exception to allow the use of proprietary GStreamer "
-#~ "plugins."
-#~ msgstr ""
-#~ "Totēm ir pieejams izņēmums, kas ļauj izmantot īpašnieka GStreamer "
-#~ "spraudņus."
-
-#~ msgid "Copyright © 2002-2009 Bastien Nocera"
-#~ msgstr "Autortiesības © 2002-2009 Bastien Nocera"
-
-#~ msgid "translator-credits"
-#~ msgstr ""
-#~ "Raivis Dejus <orvils@gmail.com>\n"
-#~ "Pēteris Krišjānis <peteris.krisjanis@os.lv>\n"
-#~ "Artis Trops <hornet@navigator.lv>\n"
-#~ "Lauma Pretkalninja <lauma.pret@gmail.com> \n"
-#~ "Aigars Krūmiņš <akols@inbox.lv>\n"
-#~ "\n"
-#~ "Launchpad Contributions:\n"
-#~ "  Agris Bombiza https://launchpad.net/~gris\n"
-#~ "  Aigars Mahinovs https://launchpad.net/~aigarius\n"
-#~ "  Artis Trops https://launchpad.net/~hornet-navigator\n"
-#~ "  Mārtiņš Bruņenieks https://launchpad.net/~papuass\n"
-#~ "  Pēteris Caune https://launchpad.net/~cuu508\n"
-#~ "  Raivis Dejus https://launchpad.net/~orvils\n"
-#~ "  Viesturs Zariņš https://launchpad.net/~viesturs-zarins\n"
-#~ "  ZXpower https://launchpad.net/~nfoworm"
-
-#~ msgid "Totem Website"
-#~ msgstr "Totem tīmekļa vietne"
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
-
-#~ msgid "Fullscreen"
-#~ msgstr "Pilnekrāns"
-
-#~ msgid "Open Location..."
-#~ msgstr "Atvērt vietu..."
-
-#~ msgid "Show/Hide Controls"
-#~ msgstr "Rādīt / slēpt vadības paneli"
-
-#~ msgid "Playlist index"
-#~ msgstr "Repertuāra indeks"
-
-#~ msgid "MP3 ShoutCast playlist"
-#~ msgstr "MP3 ShoutCast repertuārs"
-
-#~ msgid "MP3 audio (streamed)"
-#~ msgstr "MP3 audio (straumēts)"
-
-#~ msgid "MP3 audio (streamed, DOS format)"
-#~ msgstr "MP3 audio (straumēts, DOS formāts)"
-
-#~ msgid "XML Shareable Playlist"
-#~ msgstr "XML koplietojamais repertuārs"
-
-#~ msgid "Could not save the playlist"
-#~ msgstr "Nevarēja saglabāt repertuāru"
-
-#~ msgid "Save Playlist"
-#~ msgstr "Saglabāt repertuāru"
-
-#~ msgid "Playlist"
-#~ msgstr "Repertuārs"
-
-#~ msgid "Playlist error"
-#~ msgstr "Repertuāra kļūda"
-
-#~ msgid "0:00 / 0:00"
-#~ msgstr "0:00 / 0:00"
-
-#~ msgid "%s (Streaming)"
-#~ msgstr "%s (straumē)"
-
-#~ msgid "Buffering"
-#~ msgstr "Buferē"
-
-#~ msgid "%lf %%"
-#~ msgstr "%lf %%"
-
-#~ msgid "%s, %s"
-#~ msgstr "%s, %s"
-
-#~ msgid "%s, %f %%"
-#~ msgstr "%s, %f %%"
-
-#~ msgid "Select Movies or Playlists"
-#~ msgstr "Izvēlieties filmas vai repertuārus"
-
-#~ msgid "Add Directory"
-#~ msgstr "Pievienot direktoriju"
-
-#~ msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-#~ msgstr "Izveidot DVD vai (S)VCD no pašlaik atvērtās filmas"
-
-#~ msgid "Copy the currently playing video DVD"
-#~ msgstr "Kopēt pašlaik atskaņoto video DVD"
-
-#~ msgid "Copy the currently playing (S)VCD"
-#~ msgstr "Kopēt pašlaik atskaņoto (S)VCD"
-
-#~ msgid "Add Chapter..."
-#~ msgstr "Pievienot nodaļu..."
-
-#~ msgid "D-Bus Service"
-#~ msgstr "D-Bus serviss"
-
-#~ msgid "The URI ‘%s’ is not supported."
-#~ msgstr "URI “%s” nav atbalstīts."
-
-#~ msgid "Grilo Browser"
-#~ msgstr "Grilo pārlūks"
-
-#~ msgid "A plugin to let you browse media content from various sources"
-#~ msgstr "Spraudnis, lai pārlūkotu audio un video no dažādiem avotiem"
-
-#~ msgid "Copy Location"
-#~ msgstr "Kopēt atrašanās vietu"
-
-#~ msgid "Browse"
-#~ msgstr "Pārlūkot"
-
-#~ msgid "Download movie subtitles from OpenSubtitles"
-#~ msgstr "Lejupielādēt filmas subtitrus no OpenSubtitles"
-
-#~ msgid "Python Console Menu"
-#~ msgstr "Python konsoles izvēlne"
-
-#~ msgid "Show Totem's Python console"
-#~ msgstr "Rādīt Totem Python konsoli"
-
-#~ msgid "Enable remote Python debugging with rpdb2"
-#~ msgstr "Aktivēt attālināto Python atkļūdošanu ar rpdb2"
-
-#~ msgid "_Rotate Clockwise"
-#~ msgstr "Pag_riezt pulksteņrādītāja virzienā"
-
-#~ msgid "Rotate Counterc_lockwise"
-#~ msgstr "Pagriezt pretēji pu_lksteņrādītāja virzienam"
-
-#~ msgid "Save a Copy..."
-#~ msgstr "Saglabāt kopiju..."
-
-#~ msgid "Save a copy of the movie"
-#~ msgstr "Saglabāt filmas kopiju..."
-
-#~ msgid "Save a Copy"
-#~ msgstr "Saglabāt kopiju"
-
-#~ msgid "Movie stream"
-#~ msgstr "Filmas straume"
-
-#~ msgid "Take a screenshot"
-#~ msgstr "Uzņemt ekrānattēlu"
-
-#~ msgid "Create a gallery of screenshots"
-#~ msgstr "Izveidot ekrānattēlu galeriju"
-
-#~ msgid "_Skip To..."
-#~ msgstr "Pā_rlekt uz..."
-
-#~ msgid "Skip to a specific time"
-#~ msgstr "Pārlekt uz norādīto laiku"
-
-#~ msgid "No error message"
-#~ msgstr "Nav kļūdu paziņojumu"
-
-#~ msgid "Add the video to the playlist"
-#~ msgstr "Pievienot video repertuāram"
-
-#~ msgid "Location not found."
-#~ msgstr "Norādītā vieta nav atrasta."
-
-#~ msgid ""
-#~ "Could not open location; you might not have permission to open the file."
-#~ msgstr "Nevarēja atvērt vietu. Iespējams, jums nav tiesību atvērt failu."
-
-#~ msgid ""
-#~ "Failed to create a GStreamer play object. Please check your GStreamer "
-#~ "installation."
-#~ msgstr ""
-#~ "Kļūda, veidojot GStreamer atskaņošanas objektu. Lūdzu, pārbaudiet savu "
-#~ "GStreamer instalāciju."
-
-#~ msgid "Unknown video"
-#~ msgstr "Nezināms video"
-
-#~ msgid "%d %%"
-#~ msgstr "%d %%"
-
-#~ msgid "No video URI"
-#~ msgstr "Nav video URI"
-
-#~ msgid "<no reason given>"
-#~ msgstr "<iemesls netika dots>"
-
-#~ msgid "Programme unavailable (\"%s\")"
-#~ msgstr "Raidījums nav pieejams (“%s”)"
-
-#~ msgid "BBC iPlayer"
-#~ msgstr "BBC iPlayer"
-
-#~| msgid ""
-#~| "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-#~ msgid ""
-#~ "Stream BBC programs from the last 7 days from the BBC iPlayer service"
-#~ msgstr ""
-#~ "Straumēt pēdējo septiņu dienu BBC raidījumus no BBC iPlayer pakalpojuma."
-
-#~ msgid "Error listing channel categories"
-#~ msgstr "Kļūda, izdrukājot kanālu kategorijas"
-
-#~ msgid ""
-#~ "There was an unknown error getting the list of television channels "
-#~ "available on BBC iPlayer."
-#~ msgstr ""
-#~ "Gadījās negaidīta kļūda, saņemot pieejamo televīzijas kanālu sarakstu uz "
-#~ "BBC iPlayer."
-
-#~ msgid "Loading…"
-#~ msgstr "Ielādē..."
-
-#~ msgid "Error getting programme feed"
-#~ msgstr "Kļūda, saņemot raidījumu plūsmu"
-
-#~ msgid ""
-#~ "There was an error getting the list of programmes for this channel and "
-#~ "category combination."
-#~ msgstr ""
-#~ "Gadījās nezināma kļūda, saņemot raidījumu sarakstu šai kanālu un "
-#~ "kategoriju kombinācijai."
-
-#~ msgid "_Name:"
-#~ msgstr "_Nosaukums:"
-
-#~ msgid "Save in _folder:"
-#~ msgstr "Saglabāt _mapē:"
-
-#~ msgid "There was an error saving the screenshot."
-#~ msgstr "Gadījās kļūda, saglabājot ekrānattēlu."
-
-#~ msgid "Save Screenshot"
-#~ msgstr "Saglabāt ekrānattēlu"
-
-#~ msgid "Movie Player"
-#~ msgstr "Filmu atskaņotājs"
-
-#~ msgid "Play movies and songs"
-#~ msgstr "Atskaņot filmas un dziesmas"
-
-#~ msgid "Open a file"
-#~ msgstr "Atvērt failu"
-
-#~ msgid "Open a non-local file"
-#~ msgstr "Atvērt nevietējo failu"
-
-#~ msgid "Quit the program"
-#~ msgstr "Iziet no programmas"
-
-#~ msgid "Configure the application"
-#~ msgstr "Konfigurēt lietotni"
-
-#~ msgid "Switch to fullscreen"
-#~ msgstr "Pārslēgties uz pilnekrānu"
-
-#~ msgid "Set the repeat mode"
-#~ msgstr "Iestatīt atkārtošanas režīmu"
-
-#~ msgid "Set the shuffle mode"
-#~ msgstr "Iestatīt jaukšanas režīmu"
-
-#~ msgid "14.4 Kbps Modem"
-#~ msgstr "14.4 Kbps modems"
-
-#~ msgid "19.2 Kbps Modem"
-#~ msgstr "19.2 Kbps modems"
-
-#~ msgid "28.8 Kbps Modem"
-#~ msgstr "28.8 Kbps modems"
-
-#~ msgid "33.6 Kbps Modem"
-#~ msgstr "33.6 Kbps modems"
-
-#~ msgid "34.4 Kbps Modem"
-#~ msgstr "34.4 Kbps modems"
-
-#~ msgid "56 Kbps Modem/ISDN"
-#~ msgstr "56 Kbps modems/ISDN"
-
-#~ msgid "112 Kbps Dual ISDN/DSL"
-#~ msgstr "112 Kbps duālais ISDN/DSL"
-
-#~ msgid "256 Kbps DSL/Cable"
-#~ msgstr "256 Kbps DSL/kabelis"
-
-#~ msgid "384 Kbps DSL/Cable"
-#~ msgstr "384 Kbps DSL/kabelis"
-
-#~ msgid "512 Kbps DSL/Cable"
-#~ msgstr "512 Kbps DSL/kabelis"
-
-#~ msgid "1.5 Mbps T1/Intranet/LAN"
-#~ msgstr "1.5 Mbps T1/Intranet/LAN"
-
-#~ msgid "Intranet/LAN"
-#~ msgstr "Intranet/LAN"
-
-#~ msgid "Networking"
-#~ msgstr "Tīkls"
-
-#~ msgid "Connection _speed:"
-#~ msgstr "_Savienojuma ātrums:"
-
-#~ msgid "Network connection speed"
-#~ msgstr "Tīkla _savienojuma ātrums:"
-
-#~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network."
-#~ msgstr ""
-#~ "Aptuvenais tīkla savienojuma ātrums, ko izmanto, lai izvēlētos kvalitāti "
-#~ "datiem, kurus sūta caur tīklu."
-
-#~ msgid "Play Image '%s'"
-#~ msgstr "Spēlēt diska attēlu '%s'"
-
-#~ msgid "device%d"
-#~ msgstr "ierīce%d"
-
-#~ msgid "Play Disc '%s'"
-#~ msgstr "Spēlēt disku '%s'"
-
-#~ msgid "Movie Player using %s"
-#~ msgstr "Filmu Atskaņotājs lieto %s"
-
-#~ msgid ""
-#~ "Totem could not play this media (%s) although a plugin is present to "
-#~ "handle it."
-#~ msgstr ""
-#~ "Totem nevar atskaņot šī tipa (%s) saturu, lai arī vajadzīgais spraudnis "
-#~ "ir instalēts."
-
-#~ msgid ""
-#~ "You might want to check that a disc is present in the drive and that it "
-#~ "is correctly configured."
-#~ msgstr ""
-#~ "Jūs varētu gribēt pārliecināties, vai disks ir iekārtā un ka tā ir "
-#~ "pareizi nokonfigurēta."
-
-#~ msgid "More information about media plugins"
-#~ msgstr "Vairāk informācijas par failu veidu spraudņiem"
-
-#~ msgid ""
-#~ "Please install the necessary plugins and restart Totem to be able to play "
-#~ "this media."
-#~ msgstr ""
-#~ "Uzinstalējiet nepieciešamos spraudņus un pārstartējiet Totem, lai varētu "
-#~ "spēlēt šī tipa saturu."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because it does not have the "
-#~ "appropriate plugins to be able to read from the disc."
-#~ msgstr ""
-#~ "Totem nevar atskaņot šo failu veidu (%s), jo nav pieejams atbilstošs "
-#~ "spraudnis tā nolasīšanai no diska."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because you do not have the "
-#~ "appropriate plugins to handle it."
-#~ msgstr ""
-#~ "Totem nevar atskaņot šī tipa (%s) saturu, jo nav nepieciešamo spraudņu, "
-#~ "lai to paveiktu."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because it is not supported."
-#~ msgstr "Totem nevar atskaņot šī tipa failus (%s), jo tas nav atbalstīts."
-
-#~ msgid "Please insert another disc to play back."
-#~ msgstr "Lūdzu ievietojiet citu disku, lai turpinātu atskaņot."
-
-#~ msgid "Totem was not able to play this disc."
-#~ msgstr "Totem nevarēja atskaņot šo disku."
-
-#~ msgid "Totem does not support playback of Audio CDs"
-#~ msgstr "Totem neatbalsta Audio CD atskaņošanu"
-
-#~ msgid ""
-#~ "Please consider using a music player or a CD extractor to play this CD"
-#~ msgstr ""
-#~ "Lūdzu izmantojiet audio atskaņotāju vai CD ekstraktoru, lai atskaņotu šo "
-#~ "CD"
-
-#~ msgid ""
-#~ "The requested audio output was not found. Please select another audio "
-#~ "output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "Pieprasītā audio izeja netika atrasta. Lūdzu izvēlieties citu audio izeju "
-#~ "Multimediju sistēmas izvēlētājs."
-
-#~ msgid ""
-#~ "The video output is in use by another application. Please close other "
-#~ "video applications, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Video izvadu lieto kāda cita programma. Lūdzu aizveriet citas video "
-#~ "programmas vai izvēlēties citu video izvadu iekš Multimedia Systems "
-#~ "Selector."
-
-#~ msgid ""
-#~ "The audio output is in use by another application. Please select another "
-#~ "audio output in the Multimedia Systems Selector. You may want to consider "
-#~ "using a sound server."
-#~ msgstr ""
-#~ "Audio izvadu lieto kāda cita programma. Lūdzu izvēlēties citu video "
-#~ "izvadu iekš Multimedia Systems Selector. Jūs varētu arī apsvērt audio "
-#~ "servera izmantošanu."
-
-#~ msgid ""
-#~ "Failed to open audio output. You may not have permission to open the "
-#~ "sound device, or the sound server may not be running. Please select "
-#~ "another audio output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "Kļūda atverot audio izvadu. Jums varētu nebūt pilnvaru, lai atvērtu "
-#~ "skaņas iekārtu vai arī skaņas serveris varētu būt aktīvs. Lūdzu "
-#~ "izvēlieties citu audio izvadu ar Multimedia Systems Selector palīdzību."
-
-#~ msgid ""
-#~ "Could not find the audio output. You may need to install additional "
-#~ "GStreamer plugins, or select another audio output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Neizdevās atrast audio izeju. Jums, iespējams, nepieciešams uzinstalēt "
-#~ "papildus Gstreamer spraudņus vai arī izvēlēties citu audio izeju "
-#~ "Multimedia Systems Selector."
-
-#~ msgid "Publisher protocol to use"
-#~ msgstr "Izmantojamais publicēšanas protokols"
-
-#~ msgid ""
-#~ "The transport protocol to use when publishing playlists over the network."
-#~ msgstr "Transporta protokols, ko izmantot, kad publicē repertuāru tīklā."
-
-#~ msgid "Format for network service name"
-#~ msgstr "Tīkla servisa nosaukuma formāts"
-
-#~ msgid ""
-#~ "A format string used to build the network service name used when "
-#~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by "
-#~ "g_get_application_name() • %h: the machine's host name in title case • "
-#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
-#~ "the percent sign"
-#~ msgstr ""
-#~ "Formatēšanas virkne, kuru izmanto, lai veidotu tīkla pakalpojuma "
-#~ "nosaukumu, kuru izmanto publicējot repertuāru tīklā. Sekojošie formātu "
-#~ "vietturi var tikt izmantoti: • %a: programmas nosaukums, kādu atgriež "
-#~ "g_get_application_name() • %h: datora nosaukums virsraksta reģistrā • %u: "
-#~ "lietotāja vārds virsraksta reģistrā • %U: lietotāja īstais vārds • %%: "
-#~ "procentu zīme"
-
-#~ msgid "Neighbors"
-#~ msgstr "Kaimiņi"
-
-#~ msgid "Publish Playlist"
-#~ msgstr "Publicēt repertuāru"
-
-#~ msgid "Share the current playlist via HTTP"
-#~ msgstr "Koplietot izvēlēto repertuāru izmantojot HTTP"
-
-#~ msgid "Service _Name:"
-#~ msgstr "Pakalpojuma _nosaukums:"
-
-#~ msgid ""
-#~ "The name used for announcing the playlist service on the network.\n"
-#~ "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-#~ "and <b>%h</b> will be replaced by your computer's host name."
-#~ msgstr ""
-#~ "Nosaukums, kurš tiks izmantots paziņojot repertuāra servisu tīklā.\n"
-#~ "Visās vietās, kur parādās virkne <b>%u</b>, tiks ierakstīts jūsu vārds,\n"
-#~ "un <b>%h</b> vietā tiks ierakstīts datora vārds."
-
-#~ msgid "Use _encrypted transport protocol (HTTPS)"
-#~ msgstr "Izmantot šifrētu _transporta protokolu (HTTPS)"
-
-#~ msgid "Bemused"
-#~ msgstr "Bemused"
-
-#~ msgid "Control Totem through a mobile phone with a Bemused client"
-#~ msgstr "Kontrolējiet Totem ar mobilā telefona un Bemused klienta palīdzību"
-
-#~ msgid "Untitled %d"
-#~ msgstr "Nenosaukta %d"
-
-#~ msgid "Totem Bemused Server"
-#~ msgstr "Totem Bemused serveris"
-
-#~ msgid "Totem Bemused Server version 1.0"
-#~ msgstr "Totem Bemused serveris versija 1.0"
-
-#~ msgid "A plugin to let you browse YouTube videos."
-#~ msgstr "Spraudnis, lai aplūkotu YouTube video."
-
-#~ msgid "YouTube Browser"
-#~ msgstr "YouTube pārlūks"
-
-#~ msgid "Related Videos"
-#~ msgstr "Saistītie video"
-
-#~ msgid "Search Results"
-#~ msgstr "Meklēšanas rezultāti"
-
-#~ msgid "_Open in Web Browser"
-#~ msgstr "_Atvērt tīmekļa pārlūkā"
-
-#~ msgid "Open the video in your web browser"
-#~ msgstr "Atvērt video jūsu tīmekļa pārlūkā"
-
-#~ msgid "YouTube"
-#~ msgstr "YouTube"
-
-#~ msgid "Cancelling query…"
-#~ msgstr "Atceļ vaicājumu..."
-
-#~ msgid "Error Searching for Videos"
-#~ msgstr "Gadījās kļūda meklējot video"
-
-#~ msgid ""
-#~ "The response from the server could not be understood. Please check you "
-#~ "are running the latest version of libgdata."
-#~ msgstr ""
-#~ "Nevar saprast servera atbildi. Pārliecinieties, ka izmantojat jaunāko "
-#~ "libgdata versiju."
-
-#~ msgid "Fetching search results…"
-#~ msgstr "Saņemu meklēšanas rezultātus..."
-
-#~ msgid "Fetching related videos…"
-#~ msgstr "Saņemu saistītos video..."
-
-#~ msgid "Error Opening Video in Web Browser"
-#~ msgstr "Gadījās kļūda atverot video tīmekļa pārlūkā"
-
-#~ msgid "Fetching more videos…"
-#~ msgstr "Saņemu vēl vairāk video..."
-
-#~ msgid "Video Format Not Supported"
-#~ msgstr "Video formāts nav atbalstīts"
-
-#~ msgid ""
-#~ "This video is not available in any formats which Totem supports. Would "
-#~ "you like to open it in your web browser instead?"
-#~ msgstr ""
-#~ "Šis video nav pieejams nevienā no Totem atbalstītajiem formātiem. Vai "
-#~ "vēlaties to atvērt tīmekļa pārlūkā?"
-
-#~ msgid "0 frames per second"
-#~ msgstr "0 kadri sekundē"
-
-#~ msgid "0 kbps"
-#~ msgstr "0 kbps"
-
-#~ msgid "0 x 0"
-#~ msgstr "0 x 0"
-
-#~ msgid "Browser Plugin using %s"
-#~ msgstr "Pārlūka papildinājums izmanto %s"
-
-#~ msgid "Totem Browser Plugin"
-#~ msgstr "Totem pārlūka papildinājums"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Tālināt"
-
-#~ msgid "Zoom Reset"
-#~ msgstr "Tālummaiņas atiestate"
-
-#~ msgid "Zoom out"
-#~ msgstr "Tālināt"
-
-#~ msgid "Zoom reset"
-#~ msgstr "Tālummaiņas atiestate"
-
-#~ msgid ""
-#~ "The playback of this movie requires the following decoders which are not "
-#~ "installed:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Šīs filmas atskaņošanai ir nepieciešami sekojoši kodeki, kas nav "
-#~ "uzinstalēti:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Media file could not be played."
-#~ msgstr "Mēdiju fails nevar tikt atskaņots."
-
-#~ msgid "Too old version of GStreamer installed."
-#~ msgstr "Uzinstalētā GStreamer versija ir pārāk veca."
-
-#~ msgid ""
-#~ "Failed to open video output. It may not be available. Please select "
-#~ "another video output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "Kļūda atverot video izvadu. Izvēlētais video izvads varētu būt "
-#~ "nepieejams. Lūdzu izvēlieties citu video izvadu ar Multimedia Systems "
-#~ "Selector palīdzību."
-
-#~ msgid ""
-#~ "Could not find the video output. You may need to install additional "
-#~ "GStreamer plugins, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Neizdevās atvērt video izeju. Jums, iespējams, nepieciešami papildus "
-#~ "GStreamer spraudņi vai arī izvēlieties citu video izeju Multimedia "
-#~ "Systems Selector."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "Coherence DLNA/UPnP Client"
-#~ msgstr "Coherence DLNA/UPnP klients"
-
-#~ msgid "A DLNA/UPnP client for Totem powered by Coherence"
-#~ msgstr "DLNA/UPnP klienta darbību nodrošina Coherence"
-
-#~ msgid "By artist"
-#~ msgstr "Pēc izpildītāja"
-
-#~ msgid "By tag"
-#~ msgstr "Pēc birkas"
-
-#~ msgid "Jamendo Album Page"
-#~ msgstr "Jamendo albuma lapa"
-
-#~ msgid "Latest Releases"
-#~ msgstr "Jaunākie laidieni"
-
-#~ msgid "Number of albums to _retrieve:"
-#~ msgstr "_Saņemamo albumu skaits:"
-
-#~ msgid "Popular"
-#~ msgstr "Populārs"
-
-#~ msgid "Preferred audio _format:"
-#~ msgstr "Vēlamais audio _formāts:"
-
-#~ msgid "_Open Jamendo Album Page in Browser"
-#~ msgstr "_Atvērt Jamendo albuma lapu pārlūkā"
-
-#~ msgid "Jamendo"
-#~ msgstr "Jamendo"
-
-#~ msgid ""
-#~ "Listen to the large collection of Creative Commons licensed music on "
-#~ "Jamendo."
-#~ msgstr ""
-#~ "Klausīties lielu, Creative Commons licencētu, mūzikas kolekciju no "
-#~ "Jamendo."
-
-#~ msgid "You need to install the Python simplejson module."
-#~ msgstr "Ir jāuzinstalē Python simplejson modulis."
-
-#~ msgid "Artist: %s"
-#~ msgstr "Izpildītājs: %s"
-
-#~ msgid "%Y-%m-%d"
-#~ msgstr "%Y-%m-%d"
-
-#~ msgid "%x"
-#~ msgstr "%x"
-
-#~ msgid "Genre: %s"
-#~ msgstr "Žanrs: %s"
-
-#~ msgid "Released on: %s"
-#~ msgstr "Izdots: %s"
-
-#~ msgid "License: %s"
-#~ msgstr "Licence: %s"
-
-#~ msgid "%02d. %s"
-#~ msgstr "%02d. %s"
-
-#~ msgid "Album: %s"
-#~ msgstr "Albums: %s"
-
-#~ msgid "Duration: %s"
-#~ msgstr "Ilgums: %s"
-
-#~ msgid "Fetching albums, please wait…"
-#~ msgstr "Saņem albumus, lūdzu uzgaidiet..."
-
-#~ msgid ""
-#~ "Failed to connect to Jamendo server.\n"
-#~ "%s."
-#~ msgstr ""
-#~ "Neizdevās pieslēgties Jamendo serverim.\n"
-#~ "%s"
-
-#~ msgid "The Jamendo server returned code %s."
-#~ msgstr "Jamendo serveris atgrieza kodu %s"
-
-#~ msgid "An error occurred while fetching albums."
-#~ msgstr "Gadījās kļūda saņemot albumus."
-
-#~ msgid "%H:%M:%S"
-#~ msgstr "%H:%M:%S"
-
-#~ msgid "%M:%S"
-#~ msgstr "%M:%S"
-
-#~ msgid "en"
-#~ msgstr "en"
-
-#~ msgid "Audio format to download from Jamendo"
-#~ msgstr "Audio formāts, ko lejupielādēt no Jamendo"
-
-#~ msgid "Number of results per page"
-#~ msgstr "Rezultātu skaits lapā"
-
-#~ msgid ""
-#~ "The number of Jamendo search results to display in each page of results."
-#~ msgstr ""
-#~ "Jamendo meklēšanas rezultātu skaits, ko attēlot katrā rezultātu lapā."
-
-#~ msgid "The preferred audio format to download tracks from Jamendo in."
-#~ msgstr "Vēlamais audio formāts celiņiem, kurus lejupielādē no Jamendo."
-
-#~ msgid "Language"
-#~ msgstr "Valoda"
-
-#~ msgid "Could not connect to Tracker"
-#~ msgstr "Neizdevās pieslēgties Tracker"
-
-#~ msgid "No results"
-#~ msgstr "Nav rezultātu"
-
-#~ msgid "Showing %i - %i of %i match"
-#~ msgid_plural "Showing %i - %i of %i matches"
-#~ msgstr[0] "Rāda %i - %i no %i rezultāta"
-#~ msgstr[1] "Rāda %i - %i no %i rezultātiem"
-#~ msgstr[2] "Rāda %i - %i no %i rezultātiem"
-
-#~ msgid "Page"
-#~ msgstr "Lappuse"
-
-#~ msgid "Local Search"
-#~ msgstr "Lokālā meklēšana"
-
-#~ msgid "Set the window icon to the thumbnail of the playing movie"
-#~ msgstr "Kā loga ikonu rādīt atskaņojamās filmas sīktēlu"
-
-#~ msgid "Thumbnail"
-#~ msgstr "Sīktēls"
-
-#~ msgid "Search for local videos using Tracker"
-#~ msgstr "Meklēt lokālos video izmantojot Tracker"
-
-#~ msgid "Enable visual effects?"
-#~ msgstr "Ieslēgt vizuālos efektus?"
-
-#~ msgid ""
-#~ "It seems you are running Totem remotely.\n"
-#~ "Are you sure you want to enable the visual effects?"
-#~ msgstr ""
-#~ "Izskatās, ka jūs darbināt Totem attālināti.\n"
-#~ "Vai tiešām jūs vēlaties ieslēgt vizuālos efektus?"
-
-#~ msgid "Error loading Galago plugin"
-#~ msgstr "Kļūda, ielādējot Galago spraudni"
-
-#~ msgid "Could not connect to the Galago daemon."
-#~ msgstr "Nevarēju pieslēgties Galago dēmonam."
-
-#~ msgid "Author:"
-#~ msgstr "Autors:"
-
-#~ msgid "C_onfigure..."
-#~ msgstr "K_onfigurēt..."
-
-#~ msgid "Copyright:"
-#~ msgstr "Autortiesības:"
-
-#~ msgid "Description:"
-#~ msgstr "Apraksts:"
-
-#~ msgid "Site:"
-#~ msgstr "Vietne:"
-
-#~ msgid "Deinterlace"
-#~ msgstr "Pārklāšanās"
-
-#~ msgid "_Deinterlace"
-#~ msgstr "_Pārklāšanās"
-
-#~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
-#~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
-#~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
-#~ "LAN."
-#~ msgstr ""
-#~ "Aptuvenais tīkla pieslēguma ātrums, tiek izmantots lai izvēlētos "
-#~ "kvalitāti caur tīklu sūtītajam saturam: \"0\" - 14.4 Kbps Modēms, \"1\" - "
-#~ "19.2 Kbps Modēms, \"2\" - 28.8 Kbps Modēms, \"3\" - 33.6 Kbps Modēms, "
-#~ "\"4\" - 34.4 Kbps Modēms, \"5\" - 56 Kbps Modēms/ISDN, \"6\" - 112 Kbps "
-#~ "Dual ISDN/DSL, \"7\" - 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, "
-#~ "\"9\" for 512 Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" "
-#~ "for Intranet/LAN."
-
-#~ msgid "Buffer size"
-#~ msgstr "Bufera izmērs"
-
-#~ msgid "Enable deinterlacing"
-#~ msgstr "Ieslēgt atpīšanu (deinterlace)"
-
-#~ msgid "Maximum amount of data to decode ahead of display (in seconds)"
-#~ msgstr "Maksimālais datu daudzums, ko dekodēt, pirms rādīšanas (sekundēs)"
-
-#~ msgid ""
-#~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-#~ "normal, \"2\" for large, \"3\" for extra large."
-#~ msgstr ""
-#~ "Kvalitātes iestatījumi audio vizualizācijai: \"0\" - zema, \"1\" - "
-#~ "normāla, \"2\" - augsta, \"3\" - sevišķi augsta."
-
-#~ msgid ""
-#~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
-#~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
-#~ "for AC3 Passthrough."
-#~ msgstr ""
-#~ "Audio izvada tips ko lietos: \"0\" - stereo, \"1\" - 4 kanālu izvadam, "
-#~ "\"2\" - 5.0 kanālu izvadam, \"3\" - 5.1 kanālu izvadam, \"4\" - AC3 "
-#~ "Passthrough."
-
-#~ msgid "Whether the main window should stay on top"
-#~ msgstr "Vai galvenajam logam jābūt virspusē"
-
-#~ msgid "Whether the main window should stay on top of the other ones"
-#~ msgstr "Vai galvenajam logam jābūt virs citiem logiem"
-
-#~ msgid "Could not launch URL \"%s\": %s"
-#~ msgstr "Nevarēja palaist URL \"%s\": %s"
-
-#~ msgid "Default browser not configured"
-#~ msgstr "Nav uzstādīts noklusētais pārlūks"
-
-#~ msgid "Error launching URI"
-#~ msgstr "Kļūda palaižot URI"
-
-#~ msgid "Don't connect to an already-running instance"
-#~ msgstr "Nepieslēgties iepriekš palaistai instancei"
-
-#~ msgid ""
-#~ "Changing the visuals effect type will require a restart to take effect."
-#~ msgstr ""
-#~ "Vizuālo efektu tipa maiņai nepieciešams programmas restarts, lai tas "
-#~ "stātos spēkā."
-
-#~ msgid ""
-#~ "The change of audio output type will only take effect when Totem is "
-#~ "restarted."
-#~ msgstr ""
-#~ "Audio izvada tipa izmaiņas stāsies spēkā tikai pēc Totem restartēšanas."
-
-#~ msgid "Could not open link"
-#~ msgstr "Nevarēja atvērt saiti"
-
-#~ msgid "Totem could not initialize the configuration engine."
-#~ msgstr "Totem nevarēja inicializēt konfigurācijas dzinēju."
-
-#~ msgid "Make sure that GNOME is properly installed."
-#~ msgstr "Pārliecinieties, vai GNOME ir pareizi uzinstalēta."
-
-#~ msgid "Enabled"
-#~ msgstr "Aktivizēts"
-
-#~ msgid ""
-#~ "Unable to activate plugin %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Nespēj aktivizēt spraudni %s.\n"
-#~ " %s"
-
-#~ msgid "Unable to activate plugin %s"
-#~ msgstr "Nespēj aktivizēt spraudni %s"
-
-#~ msgid "Plugin Error"
-#~ msgstr "Spraudņa kļūda"
-
-#~ msgid "Jamendo Plugin Configuration"
-#~ msgstr "Jamendo spraudņa konfigurācija"
-
-#~ msgid "Recordings"
-#~ msgstr "Ieraksti"
-
-#~ msgid "MythTV Recordings"
-#~ msgstr "MythTV ieraksti"
-
-#~ msgid "MythTV LiveTV"
-#~ msgstr "MythTV LiveTV"
-
-#~ msgid "_Download Movie Subtitles..."
-#~ msgstr "_Lejupielādēt filmas subtitrus..."
-
-#~ msgid "Could not load the \"Skip to\" dialog interface."
-#~ msgstr "Neizdevās ielādēt \"Pārlēkt uz\" loga saskarni."
-
-#~| msgid "Could not get metadata for file %s: %s"
-#~ msgid "Could not get name and thumbnail for %s: %s"
-#~ msgstr "Neizdevās iegūt %s nosaukumu un sīkattēlu: %s"
-
-#~ msgid "Error Looking Up Video URI"
-#~ msgstr "Gadījās kļūda uzmeklējot video URI"
-
-#~ msgid "Sound volume"
-#~ msgstr "Skaņas skaļums"
-
-#~ msgid "Sound volume, in percent, between 0 and 100"
-#~ msgstr "Skaņas skaļums procentos (starp 0 un 100)"
-
-#~ msgid "DVB Adapter %u"
-#~ msgstr "DVB adapteris %u"
-
-#~ msgid "Watch TV on '%s'"
-#~ msgstr "Skatīties TV '%s'"
-
-#~ msgid "Sets 16:9 (Anamorphic) aspect ratio"
-#~ msgstr "Uzstāda 16:9 (Platekrāna) izskata attiecību"
-
-#~| msgid ""
-#~| "Totem cannot play this type of media (%s) because it is not supported."
-#~ msgid ""
-#~ "Totem cannot play TV, because no TV adapters are present or they are not "
-#~ "supported."
-#~ msgstr ""
-#~ "Totem nevar atskaņot TV, jo nav pieslēgti TV adapteri vai arī tie nav "
-#~ "atbalstīti."
-
-#~| msgid "Please insert another disc to play back."
-#~ msgid "Please insert a supported TV adapter."
-#~ msgstr "Lūdzu ievietojiet atbalstītu TV adapteri."
-
-#~ msgid "More information about watching TV"
-#~ msgstr "Sīkāka informācija par to kā skatīties TV"
-
-#~ msgid "Totem is missing a channels listing to be able to tune the receiver."
-#~ msgstr "Totem trūkst kanālu saraksta, lai tas varētu rādīt TV."
-
-#~ msgid ""
-#~ "Please follow the instructions provided in the link to create a channels "
-#~ "listing."
-#~ msgstr ""
-#~ "Lūdzu sekojiet norādītājā saitē atrodamajām instrukcijām, lai izveidotu "
-#~ "kanālu sarakstu."
-
-#~| msgid ""
-#~| "Totem cannot play this type of media (%s) because it is not supported."
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because the TV device is busy."
-#~ msgstr ""
-#~ "Totem nevar atskaņot šī tipa failus (%s), jo TV iekārta ir aizņemta."
-
-#~ msgid "Please try again later."
-#~ msgstr "Lūdzu pamēģiniet atkal vēlāk."
-
-#~ msgid "TV signal lost"
-#~ msgstr "Pazudis TV signāls"
-
-#~ msgid "Please verify your hardware setup."
-#~ msgstr "Pārbaudiet aparatūras uzstādījumus."
-
-#~| msgid "_Languages"
-#~ msgid "<b>Language</b>"
-#~ msgstr "<b>Valodas</b>"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~| msgid "Screenshot%d.png"
-#~ msgid "Screenshot%d.jpg"
-#~ msgstr "Ekranattels%d.jpg"
-
-#~ msgid "Totem could not play '%s'"
-#~ msgstr "Totem neizdevās atskaņot '%s'"
-
-#~ msgid "The Totem plugin could not be started."
-#~ msgstr "Nevarēja palaist Totem spraudni."
-
-#~ msgid "Could not initialise the thread-safe libraries."
-#~ msgstr "Neizdevās inicializēt thread-safe bibliotēkas."
-
-#~ msgid "GTK+"
-#~ msgstr "GTK+"
-
-#~ msgid "GNOME"
-#~ msgstr "GNOME"
-
-#~ msgid "Play / Pa_use"
-#~ msgstr "Spēlēt / Pa_uzēt"
-
-#~ msgid "Resize to half the video size"
-#~ msgstr "Samazināt uz pusi no video izmēra"
-
-#~ msgid "Resize to video size"
-#~ msgstr "Mainīt izmēru uz uz video izmēru"
-
-#~ msgid "Resize to twice the video size"
-#~ msgstr "Mainīt izmēru uz divkāršu video izmēru"
-
-#~ msgid "Switch angles"
-#~ msgstr "Pārslēgt stūrus"
-
-#~ msgid "Volume up"
-#~ msgstr "Skaļāk"
-
-#~ msgid "Volume down"
-#~ msgstr "Klusāk"
-
-#~ msgid "_Sidebar"
-#~ msgstr "_Sānjosla"
-
-#~ msgid "Couldn't load the 'ui description' file"
-#~ msgstr "Neizdevās ielādēt 'ui description' failu"
-
-#~ msgid "Print playing movie"
-#~ msgstr "Drukāt atskaņojamo filmu"
-
-#~ msgid "Unknown file extension."
-#~ msgstr "Nezināms faila paplašinājums."
-
-#~ msgid ""
-#~ "The change of this setting will only take effect for the next movie, or "
-#~ "when Totem is restarted."
-#~ msgstr ""
-#~ "Šī uzstādījuma izmainīšana stāsies spēkā nākošajai filmai vai arī, kad "
-#~ "tiks pārstartēts Totem."
-
-#~ msgid "Totem could not eject the optical media."
-#~ msgstr "Totem neizdevās izgrūst optisko mēdiju."
-
-#~ msgid "Totem could not parse the command-line options"
-#~ msgstr "Totem neizdevās apstrādāt komandrindas parametrus"
-
-#~ msgid "Failed to retrieve working directory"
-#~ msgstr "Nevarēja atvērt darba mapi"
-
-#~ msgid ""
-#~ "Couldn't load the '%s' audio driver\n"
-#~ "Check that the device is not busy."
-#~ msgstr ""
-#~ "Nevarēja ielādēt '%s' audio draiveri\n"
-#~ "\n"
-#~ "Pārbaudiet, vai iekārta nav aizņemta."
-
-#~ msgid "The device name you specified (%s) seems to be invalid."
-#~ msgstr "Iekārtas vārds, ko jūs norādījāt (%s), izskatās, ka nav pareizs."
-
-#~ msgid "The server you are trying to connect to (%s) is unreachable."
-#~ msgstr "Serveris, kuram jūs mēģinat piekļūt (%s), ir nesasniedzams."
-
-#~ msgid ""
-#~ "The source seems encrypted, and can't be read. Are you trying to play an "
-#~ "encrypted DVD without libdvdcss?"
-#~ msgstr ""
-#~ "Saturs, šķiet, ir šifrēts un nevar tikt nolasīts. Vai jūs mēģinat "
-#~ "atskaņot šifrētu DVD bez libdvdcss?"
-
-#~ msgid "A problem occurred while loading a library or a decoder (%s)."
-#~ msgstr "Kļūme ielādējot bibliotēku vai dekoderi (%s)"
-
-#~ msgid "This file is encrypted and cannot be played back."
-#~ msgstr "Šis fails ir šifrēts un nevar tikt atskaņots."
-
-#~ msgid "For security reasons, this movie can not be played back."
-#~ msgstr "Drošības nolūkos šī filma nevar tikt atskaņota."
-
-#~ msgid "The audio device is busy. Is another application using it?"
-#~ msgstr "Audio ierīce ir aizņemta. Varbūt to izmanto cita programma?"
-
-#~ msgid "The file you tried to play is an empty file."
-#~ msgstr "Fails, ko jūs meģinat atskaņot, ir tukšs."
-
-#~ msgid "There is no input plugin to handle the location of this movie"
-#~ msgstr "Nav ievada spraudņa, kas nodrošinātu piekļuvi šai filmai"
-
-#~ msgid "There is no plugin to handle this movie."
-#~ msgstr "Nav atrasts neviens spraudnis, lai apstrādātu šo filmu."
-
-#~ msgid "This movie is broken and can not be played further."
-#~ msgstr "Šī filma ir sabojāta un nevar tikt spēlēta tālāk."
-
-#~ msgid "This movie could not be opened."
-#~ msgstr "Šo filmu nevar atvērt."
-
-#~ msgid ""
-#~ "Video codec '%s' is not handled. You might need to install additional "
-#~ "plugins to be able to play some types of movies"
-#~ msgstr ""
-#~ "Video kodekss '%s' netiek apstrādāts. Jums būtu nepieciešams uzstādīt "
-#~ "papildus spraudņus, lai varētu atskaņot dažu tipu filmas"
-
-#~ msgid "This is an audio-only file, and there is no audio output available."
-#~ msgstr "Šis ir tikai audio fails un turklāt tajā nav nekāda audio izvada."
-
-#~ msgid "Language %d"
-#~ msgstr "Valoda %d"
-
-#~ msgid "No video to capture."
-#~ msgstr "Nav video, ko uzņemt."
-
-#~ msgid "Video codec is not handled."
-#~ msgstr "Video kodekss netiek apstrādāts."
-
-#~ msgid "Movie is not playing."
-#~ msgstr "Filma netiek rādīta."
-
-#~ msgid "long time format|%d:%02d:%02d"
-#~ msgstr "%d:%02d:%02d"
-
-#~ msgid "short time format|%d:%02d"
-#~ msgstr "%d:%02d"
-
-#~ msgid "Failed to find mountpoint for device %s"
-#~ msgstr "Neizdevās atrast montējamo punktu priekš %s"
-
-#~ msgid "Please check that a disc is present in the drive."
-#~ msgstr "Lūdzu pārliecinieties, ka disks vēl aiz vien ir ierīcē."
-
-#~ msgid "Failed to find mountpoint for %s"
-#~ msgstr "Neizdevās atrast %s montējamo punktu"
-
-#~ msgid "Audio CD"
-#~ msgstr "Audio CD"
-
-#~ msgid "Video CD"
-#~ msgstr "Video  CD"
-
-#~ msgid "DVD"
-#~ msgstr "DVD"
-
-#~ msgid "Couldn't write parser: %s"
-#~ msgstr "Neizdevās ierakstīt parsētāju: %s"
-
-#~ msgid "Skipto"
-#~ msgstr "Pārlēkt uz"
-
-#~ msgid "Opening %s"
-#~ msgstr "Atver %s"
-
-#~ msgid "The Totem plugin could not startup."
-#~ msgstr "Totem spraudnis nevarēja palaisties."
-
-#~ msgid "TV-Out"
-#~ msgstr "TV-izeja"
-
-#~ msgid "TV-out in fullscreen by Nvidia (NTSC)"
-#~ msgstr "Nvidia (NTSC) TV izeja pilnekrāna režīmā"
-
-#~ msgid "TV-out in fullscreen by Nvidia (PAL)"
-#~ msgstr "Nvidia (PAL) TV izeja pilnekrāna režīmē"
-
-#~ msgid "_Allow the screensaver to activate even when audio-only is playing"
-#~ msgstr "_Atļaut aktivizēties ekrānsaudzētājam pat, ja skan tikai audio"
-
-#~ msgid "_No TV-out"
-#~ msgstr "_Nav TV-out"
-
-#~ msgid "Copyright © 2002-2007 Bastien Nocera"
-#~ msgstr "Autortiesības © 2002-2007 Bastien Nocera"
-
-#~ msgid "Authentication is required to access this file."
-#~ msgstr "Lai piekļūtu šim failam nepieciešama autentifikācija."
