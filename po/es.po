@@ -8,15 +8,15 @@
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-18 02:55+0000\n"
-"PO-Revision-Date: 2015-12-18 09:51+0100\n"
+"POT-Creation-Date: 2016-02-04 02:56+0000\n"
+"PO-Revision-Date: 2016-02-04 09:34+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -225,7 +225,7 @@ msgstr "5.1 canales"
 msgid "AC3 Passthrough"
 msgstr "Pasada AC3"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -262,7 +262,6 @@ msgid "Plugins..."
 msgstr "Complementos…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "General"
 
@@ -369,109 +368,171 @@ msgstr "Frec. de muestreo:"
 msgid "Channels:"
 msgstr "Canales:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "General"
+
+#: ../data/shortcuts.ui.h:2
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Quit"
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Salir"
 
 #: ../data/shortcuts.ui.h:4
+#| msgid "Volume"
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volumen"
 
 #: ../data/shortcuts.ui.h:5
+#| msgid "Increase volume"
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Aumentar volumen"
 
 #: ../data/shortcuts.ui.h:6
+#| msgid "Decrease volume"
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Disminuir volumen"
 
 #: ../data/shortcuts.ui.h:7
+#| msgid "View"
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Ver"
 
 #: ../data/shortcuts.ui.h:8
+#| msgid "Toggle fullscreen"
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Conmutar el modo a pantalla completa"
 
 #: ../data/shortcuts.ui.h:9
+#| msgid "Exit fullscreen"
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Salir del modo a pantalla completa"
 
 #: ../data/shortcuts.ui.h:10
+#| msgid "Zoom in"
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Ampliar"
 
 #: ../data/shortcuts.ui.h:11
+#| msgid "Zoom out"
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Reducir"
 
 #: ../data/shortcuts.ui.h:12
+#| msgid "Playback"
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Reproducir"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+#| msgid "Play/Pause"
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Reproducir / Pausar"
 
 #: ../data/shortcuts.ui.h:14
+#| msgid "Previous video or chapter"
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Vídeo o capítulo anterior"
 
 #: ../data/shortcuts.ui.h:15
+#| msgid "Next video or chapter"
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Siguiente vídeo o capítulo"
 
 #: ../data/shortcuts.ui.h:16
-#| msgid "Skip To"
+#| msgid "Skip"
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Saltar"
 
 #: ../data/shortcuts.ui.h:17
+#| msgid "Go back 15 seconds"
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Retroceder 15 segundos"
 
 #: ../data/shortcuts.ui.h:18
+#| msgid "Go forward 60 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Avanzar 60 segundos"
 
 #: ../data/shortcuts.ui.h:19
+#| msgid "Go back 5 seconds"
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Retroceder 5 segundos"
 
 #: ../data/shortcuts.ui.h:20
+#| msgid "Go forward 15 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Avanzar 15 segundos"
 
 #: ../data/shortcuts.ui.h:21
+#| msgid "Go back 3 minutes"
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Retroceder 3 minutos"
 
 #: ../data/shortcuts.ui.h:22
+#| msgid "Go forward 10 minutes"
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Avanzar 10 minutos"
 
 #: ../data/shortcuts.ui.h:23
-#| msgid "_Skip To…"
+#| msgid "Skip to…"
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Saltar a…"
 
 #: ../data/shortcuts.ui.h:24
+#| msgid "DVD menu navigation"
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Menú de navegación del DVD"
 
 #: ../data/shortcuts.ui.h:25
+#| msgid "Navigate up"
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navegar hacia arriba"
 
 #: ../data/shortcuts.ui.h:26
+#| msgid "Navigate down"
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navegar hacia abajo"
 
 #: ../data/shortcuts.ui.h:27
+#| msgid "Navigate left"
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navegar a la izquierda"
 
 #: ../data/shortcuts.ui.h:28
+#| msgid "Navigate right"
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navegar a la derecha"
 
@@ -875,7 +936,7 @@ msgstr "Selecccionar todo"
 msgid "Select None"
 msgstr "No seleccionar nada"
 
-#: ../src/totem-audio-preview.c:170
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Vista previa del sonido"
 
@@ -1030,6 +1091,10 @@ msgstr "Cancelar"
 msgid "_Add"
 msgstr "_Añadir"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Reproducir / Pausar"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Siguiente"
@@ -1061,6 +1126,10 @@ msgstr "Silenciar sonido"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Pantalla completa"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Salir"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
