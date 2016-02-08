@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-13 02:57+0000\n"
-"PO-Revision-Date: 2016-01-13 12:30+0200\n"
+"POT-Creation-Date: 2016-02-08 14:56+0000\n"
+"PO-Revision-Date: 2016-02-08 22:54+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -219,7 +219,7 @@ msgstr "5.1-kanava"
 msgid "AC3 Passthrough"
 msgstr "AC3-läpivienti"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Asetukset"
 
@@ -256,7 +256,6 @@ msgid "Plugins..."
 msgstr "Liitännäiset…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "Yleistä"
 
@@ -363,109 +362,171 @@ msgstr "Näytetaajuus:"
 msgid "Channels:"
 msgstr "Kanavat:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Yleiset"
+
+#: ../data/shortcuts.ui.h:2
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Quit"
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Lopeta"
 
 #: ../data/shortcuts.ui.h:4
+#| msgid "Volume"
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Äänenvoimakkuus"
 
 #: ../data/shortcuts.ui.h:5
+#| msgid "Increase volume"
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Lisää äänenvoimakkuutta"
 
 #: ../data/shortcuts.ui.h:6
+#| msgid "Decrease volume"
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Vähennä äänenvoimakkuutta"
 
 #: ../data/shortcuts.ui.h:7
+#| msgid "View"
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Näkymä"
 
 #: ../data/shortcuts.ui.h:8
+#| msgid "Toggle fullscreen"
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Koko näyttö päälle/pois"
 
 #: ../data/shortcuts.ui.h:9
+#| msgid "Exit fullscreen"
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Poistu koko näytön tilasta"
 
 #: ../data/shortcuts.ui.h:10
-#| msgid "Zoom In"
+#| msgid "Zoom in"
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Lähennä"
 
 #: ../data/shortcuts.ui.h:11
-#| msgid "Zoom In"
+#| msgid "Zoom out"
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Loitonna"
 
 #: ../data/shortcuts.ui.h:12
+#| msgid "Playback"
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Toisto"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+#| msgid "Play/Pause"
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Toista/pidä tauko"
 
 #: ../data/shortcuts.ui.h:14
+#| msgid "Previous video or chapter"
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Edellinen video tai kappale"
 
 #: ../data/shortcuts.ui.h:15
+#| msgid "Next video or chapter"
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Seuraava video tai kappale"
 
 #: ../data/shortcuts.ui.h:16
+#| msgid "Skip"
+msgctxt "shortcut window"
 msgid "Skip"
-msgstr "Siirtyminen"
+msgstr "Ohita"
 
 #: ../data/shortcuts.ui.h:17
+#| msgid "Go back 15 seconds"
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Siirry 15 sekuntia taakse"
 
 #: ../data/shortcuts.ui.h:18
+#| msgid "Go forward 60 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Siirry 60 sekuntia eteen"
 
 #: ../data/shortcuts.ui.h:19
+#| msgid "Go back 5 seconds"
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Siirry 5 sekuntia taakse"
 
 #: ../data/shortcuts.ui.h:20
+#| msgid "Go forward 15 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Siirry 15 sekuntia eteen"
 
 #: ../data/shortcuts.ui.h:21
+#| msgid "Go back 3 minutes"
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Siirry 3 minuuttia taakse"
 
 #: ../data/shortcuts.ui.h:22
+#| msgid "Go forward 10 minutes"
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Siirry 10 minuuttia eteen"
 
 #: ../data/shortcuts.ui.h:23
+#| msgid "Skip to…"
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Siirry kohtaan…"
 
 #: ../data/shortcuts.ui.h:24
+#| msgid "DVD menu navigation"
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD-valikossa liikkuminen"
 
 #: ../data/shortcuts.ui.h:25
+#| msgid "Navigate up"
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Liiku ylös"
 
 #: ../data/shortcuts.ui.h:26
+#| msgid "Navigate down"
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Liiku alas"
 
 #: ../data/shortcuts.ui.h:27
+#| msgid "Navigate left"
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Liiku vasemmalle"
 
 #: ../data/shortcuts.ui.h:28
+#| msgid "Navigate right"
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Liiku oikealle"
 
@@ -1023,6 +1084,10 @@ msgstr "_Peru"
 msgid "_Add"
 msgstr "_Lisää"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Toista/pidä tauko"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Seuraava"
@@ -1054,6 +1119,10 @@ msgstr "Vaimenna ääni"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Koko näyttö"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Lopeta"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
