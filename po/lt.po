@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-05 02:57+0000\n"
-"PO-Revision-Date: 2016-01-05 15:19+0200\n"
+"POT-Creation-Date: 2016-02-09 15:00+0000\n"
+"PO-Revision-Date: 2016-02-10 01:18+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -212,7 +212,7 @@ msgstr "5.1 kanalų"
 msgid "AC3 Passthrough"
 msgstr "AC3 Passthrough"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Nuostatos"
 
@@ -249,7 +249,6 @@ msgid "Plugins..."
 msgstr "Įskiepiai..."
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "Bendrosios"
 
@@ -356,109 +355,145 @@ msgstr "Garso elementų dažnis:"
 msgid "Channels:"
 msgstr "Kanalai:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Bendrosios"
+
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Nuostatos"
+
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Išeiti"
 
 #: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Garsumas"
 
 #: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
 msgid "Increase volume"
-msgstr "Didinti garsumą"
+msgstr "Pagarsinti"
 
 #: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
 msgid "Decrease volume"
-msgstr "Mažinti garsumą"
+msgstr "Tildyti"
 
 #: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Rodinys"
 
 #: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Perjungti viso ekrano veikseną"
 
 #: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Išeiti iš viso ekrano"
 
 #: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Didinti"
 
 #: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Mažinti"
 
 #: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Grojimas"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Groti arba pristabdyti"
 
 #: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Ankstesnis vaizdo įrašas ar dalis"
 
 #: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Kitas vaizdo įrašas ar dalis"
 
 #: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Peršokti"
 
 #: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Grįžti 15 sekundžių atgal"
 
 #  0 seconds
 #: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Pereiti 60 sekundžių pirmyn"
 
 #  0 seconds
 #: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Grįžti 5 sekundes atgal"
 
 #: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Pereiti 15 sekundžių pirmyn"
 
 #: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Grįžti 3 minutes atgal"
 
 #: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Pereiti 10 minučių pirmyn"
 
 #: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Peršokti iki…"
 
 #: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD meniu naršymas"
 
 #: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Naršyti aukštyn"
 
 #: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Naršyti žemyn"
 
 #: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Naršyti kairėn"
 
 #: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Naršyti dešinėn"
 
@@ -883,7 +918,7 @@ msgstr "Pasirinkti viską"
 msgid "Select None"
 msgstr "Nepasirinkti nieko"
 
-#: ../src/totem-audio-preview.c:170
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Garso įrašo peržiūra"
 
@@ -1040,6 +1075,10 @@ msgstr "_Atsisakyti"
 msgid "_Add"
 msgstr "_Pridėti"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Groti arba pristabdyti"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Kitas"
@@ -1071,6 +1110,10 @@ msgstr "Nutildyti garsą"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Perjungti viso ekrano veikseną"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Išeiti"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
