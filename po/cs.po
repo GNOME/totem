@@ -15,15 +15,15 @@
 # Pavel Šefránek <ps@pjoul.cz>, 2008.
 # Martin Picek <picek.martin@gnome-cesko.cz>, 2009.
 # Lucas Lommer <llommer@svn.gnome.org>, 2009. (just fixes)
-# Marek Černocký <marek@manet.cz>, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
+# Marek Černocký <marek@manet.cz>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-24 02:53+0000\n"
-"PO-Revision-Date: 2015-12-24 15:30+0100\n"
+"POT-Creation-Date: 2016-02-27 02:55+0000\n"
+"PO-Revision-Date: 2016-02-27 12:58+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -222,7 +222,7 @@ msgstr "5.1kanálový"
 msgid "AC3 Passthrough"
 msgstr "Průchod AC3"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Předvolby"
 
@@ -259,7 +259,6 @@ msgid "Plugins..."
 msgstr "Zásuvné moduly…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "Obecné"
 
@@ -367,120 +366,143 @@ msgstr "Vzorkování:"
 msgid "Channels:"
 msgstr "Kanály:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Obecné"
+
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončit"
 
 #: ../data/shortcuts.ui.h:4
-#| msgid "Volume Up"
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hlasitost"
 
 #: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Zvýšit hlasitost"
 
 #: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Snížit hlasitost"
 
 #: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Zobrazení"
 
 #: ../data/shortcuts.ui.h:8
-#| msgid "Toggle Fullscreen"
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Přepnout režim celé obrazovky"
 
 #: ../data/shortcuts.ui.h:9
-#| msgid "Toggle Fullscreen"
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Opustit celou obrazovku"
 
 #: ../data/shortcuts.ui.h:10
-#| msgid "Zoom In"
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Přiblížit"
 
 #: ../data/shortcuts.ui.h:11
-#| msgid "Zoom In"
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Oddálit"
 
 #: ../data/shortcuts.ui.h:12
-#| msgid "Play"
+msgctxt "shortcut window"
 msgid "Playback"
-msgstr "Přehrát"
+msgstr "Přehrávání"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Přehrát/pozastavit"
 
 #: ../data/shortcuts.ui.h:14
-#| msgid "Previous Chapter/Movie"
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Předchozí video či kapitola"
 
 #: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Následující video či kapitola"
 
 #: ../data/shortcuts.ui.h:16
-#| msgid "Skip To"
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Přeskočit"
 
 #: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Přeskočit zpět o 15 vteřin"
 
 #: ../data/shortcuts.ui.h:18
-#| msgid "0 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Přeskočit vpřed o 60 vteřin"
 
 #: ../data/shortcuts.ui.h:19
-#| msgid "0 seconds"
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Přeskočit zpět o 5 vteřin"
 
 #: ../data/shortcuts.ui.h:20
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Přeskočit vpřed o 15 vteřin"
 
 #: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Přeskočit zpět o 3 minuty"
 
 #: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Přeskočit vpřed o 10 minut"
 
 #: ../data/shortcuts.ui.h:23
-#| msgid "_Skip To…"
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Přeskočit na…"
 
 #: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Pohyb v nabídce DVD"
 
 #: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Pohyb nahoru"
 
 #: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Pohyb dolů"
 
 #: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Pohyb doleva"
 
 #: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Pohyb doprava"
 
@@ -905,7 +927,7 @@ msgstr "Vybrat vše"
 msgid "Select None"
 msgstr "Zrušit výběr"
 
-#: ../src/totem-audio-preview.c:170
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Ukázka zvuku"
 
@@ -1064,6 +1086,10 @@ msgstr "_Zrušit"
 msgid "_Add"
 msgstr "Přid_at"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Přehrát/pozastavit"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Následující"
@@ -1096,6 +1122,10 @@ msgstr "Ztlumit zvuk"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Celá obrazovka"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Ukončit"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
