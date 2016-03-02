@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-15 13:37+0200\n"
-"PO-Revision-Date: 2016-01-15 13:42+0200\n"
-"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"POT-Creation-Date: 2016-03-02 14:00+0200\n"
+"PO-Revision-Date: 2016-03-02 14:01+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gnome.org>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -207,7 +207,7 @@ msgstr "5.1 ערוצים"
 msgid "AC3 Passthrough"
 msgstr "מעבר AC3"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "העדפות"
 
@@ -244,7 +244,6 @@ msgid "Plugins..."
 msgstr "תוספים..."
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "כללי"
 
@@ -351,107 +350,143 @@ msgstr "קצב דגימה:"
 msgid "Channels:"
 msgstr "ערוצים:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "כללי"
+
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "העדפות"
+
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "יציאה"
 
 #: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "עצמת קול"
 
 #: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "הגברת עצמת קול"
 
 #: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "הפחתת עצמת השמע"
 
 #: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
 msgid "View"
 msgstr "תצוגה"
 
 #: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "מסך מלא"
 
 #: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "יציאה ממסך מלא"
 
 #: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "התקרבות"
 
 #: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "התרחקות"
 
 #: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "ניגון"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "ניגון/השהיה"
 
 #: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "סרטון או פרק קודם"
 
 #: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "סרטון או פרק הבא"
 
 #: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "דילוג"
 
 #: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "לחזור 15 שניות לאחור"
 
 #: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "לעבור 60 שניות קדימה"
 
 #: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "לחזור 5 שניות לאחור"
 
 #: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "לעבור 15 שניות קדימה"
 
 #: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "לחזור 3 שניות לאחור"
 
 #: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "לעבור 10 דקות קדימה"
 
 #: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "דילוג אל…"
 
 #: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "ניווט תפריט DVD"
 
 #: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "נייוט מעלה"
 
 #: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "ניווט מטה"
 
 #: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "ניווט שמאלה"
 
 #: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "ניווט ימינה"
 
@@ -999,6 +1034,10 @@ msgstr "_ביטול"
 msgid "_Add"
 msgstr "הו_ספה"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "ניגון/השהיה"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Next"
@@ -1030,6 +1069,10 @@ msgstr "Mute sound"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Toggle Fullscreen"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "יציאה"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
