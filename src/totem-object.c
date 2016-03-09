@@ -2065,6 +2065,35 @@ totem_object_set_volume (TotemObject *totem, double volume)
 }
 
 /**
+ * totem_object_get_rate:
+ * @totem: a #TotemObject
+ *
+ * Gets the current playback rate, with `1.0` being the normal playback rate.
+ *
+ * Return value: the volume level
+ **/
+float
+totem_object_get_rate (TotemObject *totem)
+{
+	return bacon_video_widget_get_rate (totem->bvw);
+}
+
+/**
+ * totem_object_set_rate:
+ * @totem: a #TotemObject
+ * @rate: the new absolute playback rate
+ *
+ * Sets the playback rate, with `1.0` being the normal playback rate.
+ *
+ * Return value: %TRUE on success, %FALSE on failure.
+ **/
+gboolean
+totem_object_set_rate (TotemObject *totem, float rate)
+{
+	return bacon_video_widget_set_rate (totem->bvw, rate);
+}
+
+/**
  * totem_object_set_volume_relative:
  * @totem: a #TotemObject
  * @off_pct: the value by which to increase or decrease the volume

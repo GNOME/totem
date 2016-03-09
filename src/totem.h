@@ -191,6 +191,9 @@ GMenu *totem_object_get_menu_section		(TotemObject *totem,
 void totem_object_empty_menu_section		(TotemObject *totem,
 						 const char  *id);
 
+float		totem_object_get_rate		(TotemObject *totem);
+gboolean	totem_object_set_rate		(TotemObject *totem, float rate);
+
 GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
 
 /* Database handling */
