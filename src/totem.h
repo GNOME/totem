@@ -215,14 +215,6 @@ void	totem_object_add_to_playlist		(TotemObject *totem,
 char *  totem_object_get_current_mrl		(TotemObject *totem);
 void	totem_object_set_current_subtitle	(TotemObject *totem,
 						 const char *subtitle_uri);
-/* Sidebar handling */
-void    totem_object_add_sidebar_page		(TotemObject *totem,
-						 const char *page_id,
-						 const char *title,
-						 GtkWidget *main_widget);
-void    totem_object_remove_sidebar_page	(TotemObject *totem,
-						 const char *page_id);
-
 /* Remote actions */
 void    totem_object_remote_command		(TotemObject *totem,
 						 TotemRemoteCommand cmd,

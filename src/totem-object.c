@@ -180,7 +180,7 @@ totem_object_app_activate (GApplication *app)
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
 
-	/* The sidebar */
+	/* The playlist widget */
 	playlist_widget_setup (totem);
 
 	/* The rest of the widgets */
@@ -975,42 +975,6 @@ void
 totem_object_set_current_subtitle (TotemObject *totem, const char *subtitle_uri)
 {
 	totem_playlist_set_current_subtitle (totem->playlist, subtitle_uri);
-}
-
-/**
- * totem_object_add_sidebar_page:
- * @totem: a #TotemObject
- * @page_id: a string used to identify the page
- * @title: the page's title
- * @main_widget: the main widget for the page
- *
- * Adds a sidebar page to Totem's sidebar with the given @page_id.
- * @main_widget is added into the page and shown automatically, while
- * @title is displayed as the page's title in the tab bar.
- **/
-void
-totem_object_add_sidebar_page (TotemObject *totem,
-			       const char *page_id,
-			       const char *title,
-			       GtkWidget *main_widget)
-{
-	g_warning ("totem_object_add_sidebar_page is obsolete");
-}
-
-/**
- * totem_object_remove_sidebar_page:
- * @totem: a #TotemObject
- * @page_id: a string used to identify the page
- *
- * Removes the page identified by @page_id from Totem's sidebar.
- * If @page_id doesn't exist in the sidebar, this function does
- * nothing.
- **/
-void
-totem_object_remove_sidebar_page (TotemObject *totem,
-			   const char *page_id)
-{
-	/* Empty */
 }
 
 void

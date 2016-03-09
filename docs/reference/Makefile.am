@@ -51,7 +51,6 @@ CFILE_GLOB=$(top_srcdir)/src/*.c
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES = \
 	totem-private.h			\
-	ev-sidebar.h			\
 	eggdesktopfile.h		\
 	eggfileformatchooser.h		\
 	egg-macros.h			\
@@ -75,7 +74,6 @@ IGNORE_HFILES = \
 	totem-properties-view.h				\
 	totem-open-location.h				\
 	totem-statusbar.h				\
-	totem-sidebar.h					\
 	totem-session.h					\
 	totem-resources.h				\
 	totem-plugins-engine.h				\
