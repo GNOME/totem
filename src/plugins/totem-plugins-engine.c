@@ -93,65 +93,13 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 	peas_activatable_deactivate (PEAS_ACTIVATABLE (exten));
 }
 
-static gboolean
-get_active_plugins_mapping (GValue   *value,
-			    GVariant *variant,
-			    gpointer  user_data)
-{
-	TotemPluginsEngine *engine = user_data;
-	GPtrArray *plugins;
-	const GList *list;
-	GVariantIter it;
-	gchar *name;
-
-	plugins = g_ptr_array_new ();
-
-	for (list = peas_engine_get_plugin_list (PEAS_ENGINE (engine)); list; list = list->next) {
-		PeasPluginInfo *info = list->data;
-		if (peas_plugin_info_is_builtin (info))
-			g_ptr_array_add (plugins, g_strdup (peas_plugin_info_get_name (info)));
-	}
-
-	g_variant_iter_init (&it, variant);
-	while (g_variant_iter_next (&it, "s", &name))
-		g_ptr_array_add (plugins, name); /* consumes name */
-
-	g_ptr_array_add (plugins, NULL);
-
-	g_value_take_boxed (value, g_ptr_array_free (plugins, FALSE));
-	return TRUE;
-}
-
-static GVariant *
-set_active_plugins_mapping (const GValue       *value,
-			    const GVariantType *expected_type,
-			    gpointer            user_data)
-{
-	TotemPluginsEngine *engine = user_data;
-	gchar **loaded_plugins;
-	GVariantBuilder builder;
-	gint i;
-
-	loaded_plugins = g_value_get_boxed (value);
-	g_variant_builder_init (&builder, G_VARIANT_TYPE ("as"));
-
-	for (i = 0; loaded_plugins[i]; i++) {
-		PeasPluginInfo *info;
-
-		info = peas_engine_get_plugin_info (PEAS_ENGINE (engine), loaded_plugins[i]);
-		if (!peas_plugin_info_is_builtin (info))
-			g_variant_builder_add (&builder, "s", loaded_plugins[i]);
-	}
-
-	return g_variant_ref_sink (g_variant_builder_end (&builder));
-}
-
 TotemPluginsEngine *
 totem_plugins_engine_get_default (TotemObject *totem)
 {
 	static TotemPluginsEngine *engine = NULL;
 	char **paths;
 	guint i;
+	const GList *plugin_infos, *l;
 
 	if (G_LIKELY (engine != NULL))
 		return g_object_ref (engine);
@@ -190,12 +138,18 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_signal_connect (engine->priv->activatable_extensions, "extension-removed",
 			  G_CALLBACK (on_activatable_extension_removed), engine);
 
-	/* bind to settings, but don't write out built-in plugins */
-	g_settings_bind_with_mapping (engine->priv->settings, "active-plugins",
-				      engine, "loaded-plugins",
-				      G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY,
-				      get_active_plugins_mapping, set_active_plugins_mapping,\
-				      g_object_ref (engine), g_object_unref);
+	g_settings_bind (engine->priv->settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	/* Load builtin plugins */
+	plugin_infos = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
+
+	for (l = plugin_infos; l != NULL; l = l->next) {
+		PeasPluginInfo *plugin_info = PEAS_PLUGIN_INFO (l->data);
+
+		if (peas_plugin_info_is_builtin (plugin_info)) {
+			peas_engine_load_plugin (PEAS_ENGINE (engine), plugin_info);
+		}
+	}
 
 	return engine;
 }
