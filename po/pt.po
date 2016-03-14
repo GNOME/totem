@@ -4,22 +4,23 @@
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 # Tiago S. <almosthumane@portugalmail.pt>, 2014, 2015.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+# Sérgio Cardeira <cardeira.sergio@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.12\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-19 02:53+0000\n"
-"PO-Revision-Date: 2015-12-19 07:28+0000\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Language-Team: Português <palbuquerque73@gmail.com>\n"
+"POT-Creation-Date: 2016-02-21 15:01+0000\n"
+"PO-Revision-Date: 2016-02-22 01:16-0100\n"
+"Last-Translator: Sérgio Cardeira <cardeira.sergio@gmail.com>\n"
+"Language-Team: Português <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\\n\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "X-Project-Style: gnome\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
@@ -215,7 +216,7 @@ msgstr "5.1-canais"
 msgid "AC3 Passthrough"
 msgstr "Passagem AC3"
 
-#: ../data/preferences.ui.h:7 ../data/shortcuts.ui.h:2
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -225,7 +226,7 @@ msgstr "Legendas externas"
 
 #: ../data/preferences.ui.h:9
 msgid "_Load subtitle files when movie is loaded"
-msgstr "Carregar os _Ficheiros de legendas ao carregar o filme"
+msgstr "Carregar os _ficheiros de legendas ao carregar o filme"
 
 #: ../data/preferences.ui.h:10
 msgid "_Font:"
@@ -241,7 +242,7 @@ msgstr "Capítulos externos"
 
 #: ../data/preferences.ui.h:13
 msgid "Load _chapter files when movie is loaded"
-msgstr "Carregar os ficheiros de ca_Pítulos ao carregar o filme"
+msgstr "Carregar os ficheiros de ca_pítulos ao carregar o filme"
 
 #: ../data/preferences.ui.h:14
 msgid "Plugins"
@@ -252,7 +253,6 @@ msgid "Plugins..."
 msgstr "Extensões..."
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
-#: ../data/shortcuts.ui.h:1
 msgid "General"
 msgstr "Geral"
 
@@ -276,11 +276,11 @@ msgstr "_Brilho:"
 
 #: ../data/preferences.ui.h:22
 msgid "Co_ntrast:"
-msgstr "Co_Ntraste:"
+msgstr "Co_ntraste:"
 
 #: ../data/preferences.ui.h:23
 msgid "Sat_uration:"
-msgstr "Sat_Uração:"
+msgstr "Sat_uração:"
 
 #: ../data/preferences.ui.h:24
 msgid "_Hue:"
@@ -288,7 +288,7 @@ msgstr "_Matiz:"
 
 #: ../data/preferences.ui.h:25
 msgid "Reset to _Defaults"
-msgstr "Repor valores pre_Definidos"
+msgstr "Repor valores pre_definidos"
 
 #: ../data/preferences.ui.h:26
 msgid "Display"
@@ -300,7 +300,7 @@ msgstr "Saída áudio"
 
 #: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
-msgstr "Tipo de saída á_Udio:"
+msgstr "Tipo de saída á_udio:"
 
 #: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
@@ -359,115 +359,177 @@ msgstr "Rácio de amostra:"
 msgid "Channels:"
 msgstr "Canais:"
 
-#: ../data/shortcuts.ui.h:3 ../src/totem-options.c:60
+#: ../data/shortcuts.ui.h:1
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Geral"
+
+#: ../data/shortcuts.ui.h:2
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Preferências"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Quit"
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Sair"
 
 #: ../data/shortcuts.ui.h:4
+#| msgid "Volume"
+msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volume"
 
 #: ../data/shortcuts.ui.h:5
+#| msgid "Increase volume"
+msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Aumentar o volume"
 
 #: ../data/shortcuts.ui.h:6
+#| msgid "Decrease volume"
+msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Reduzir o volume"
 
 #: ../data/shortcuts.ui.h:7
+#| msgid "View"
+msgctxt "shortcut window"
 msgid "View"
 msgstr "Ver"
 
 #: ../data/shortcuts.ui.h:8
+#| msgid "Toggle fullscreen"
+msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Alternar ecrã completo"
 
 #: ../data/shortcuts.ui.h:9
+#| msgid "Exit fullscreen"
+msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Sair do ecrã completo"
 
 #: ../data/shortcuts.ui.h:10
+#| msgid "Zoom in"
+msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Ampliar"
 
 #: ../data/shortcuts.ui.h:11
+#| msgid "Zoom out"
+msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Reduzir"
 
 #: ../data/shortcuts.ui.h:12
+#| msgid "Playback"
+msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Reproduzir"
 
-#: ../data/shortcuts.ui.h:13 ../src/totem-options.c:49
+#: ../data/shortcuts.ui.h:13
+#| msgid "Play/Pause"
+msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Reproduzir/Pausar"
 
 #: ../data/shortcuts.ui.h:14
+#| msgid "Previous video or chapter"
+msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Vídeo ou capítulo anterior"
 
 #: ../data/shortcuts.ui.h:15
+#| msgid "Next video or chapter"
+msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Vídeo ou capítulo seguinte"
 
 #: ../data/shortcuts.ui.h:16
-#| msgid "Skip To"
+#| msgid "Skip"
+msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Saltar"
 
 #: ../data/shortcuts.ui.h:17
+#| msgid "Go back 15 seconds"
+msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Recuar 15 segundos"
 
 #: ../data/shortcuts.ui.h:18
+#| msgid "Go forward 60 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Avançar 60 segundos"
 
 #: ../data/shortcuts.ui.h:19
+#| msgid "Go back 5 seconds"
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Recuar 5 segundos"
 
 #: ../data/shortcuts.ui.h:20
+#| msgid "Go forward 15 seconds"
+msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Avançar 15 segundos"
 
 #: ../data/shortcuts.ui.h:21
+#| msgid "Go back 3 minutes"
+msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Recuar 3 minutos"
 
 #: ../data/shortcuts.ui.h:22
+#| msgid "Go forward 10 minutes"
+msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Avançar 10 minutos"
 
 #: ../data/shortcuts.ui.h:23
-#| msgid "_Skip To…"
+#| msgid "Skip to…"
+msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Saltar para…"
 
 #: ../data/shortcuts.ui.h:24
+#| msgid "DVD menu navigation"
+msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Menu de navegação do DVD"
 
 #: ../data/shortcuts.ui.h:25
+#| msgid "Navigate up"
+msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navegar acima"
 
 #: ../data/shortcuts.ui.h:26
+#| msgid "Navigate down"
+msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navegar abaixo"
 
 #: ../data/shortcuts.ui.h:27
+#| msgid "Navigate left"
+msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navegar à esquerda"
 
 #: ../data/shortcuts.ui.h:28
+#| msgid "Navigate right"
+msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navegar à direita"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
-msgstr "Preferê_Ncias"
+msgstr "Preferê_ncias"
 
 #: ../data/totem.ui.h:2
 msgid "_Keyboard Shortcuts"
@@ -475,7 +537,7 @@ msgstr "_Atalhos de teclado"
 
 #: ../data/totem.ui.h:3
 msgid "_Help"
-msgstr "A_Juda"
+msgstr "A_juda"
 
 #: ../data/totem.ui.h:4
 msgid "_Quit"
@@ -483,7 +545,7 @@ msgstr "_Sair"
 
 #: ../data/totem.ui.h:5
 msgid "Add _Local Video…"
-msgstr "Adicionar vídeo _Local…"
+msgstr "Adicionar vídeo _local…"
 
 #: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
@@ -524,7 +586,7 @@ msgstr "Ampliar"
 
 #: ../data/totem.ui.h:14
 msgid "Switch An_gles"
-msgstr "Alternar ân_Gulos"
+msgstr "Alternar ân_gulos"
 
 #: ../data/totem.ui.h:15
 msgid "_Languages"
@@ -532,7 +594,7 @@ msgstr "_Idiomas"
 
 #: ../data/totem.ui.h:16
 msgid "S_ubtitles"
-msgstr "Le_Gendas"
+msgstr "Le_gendas"
 
 #: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
@@ -556,7 +618,7 @@ msgstr "Menu de _Título"
 
 #: ../data/totem.ui.h:22
 msgid "A_udio Menu"
-msgstr "Menu de á_Udio"
+msgstr "Menu de á_udio"
 
 #: ../data/totem.ui.h:23
 msgid "_Angle Menu"
@@ -564,11 +626,11 @@ msgstr "_Menu de ângulo"
 
 #: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
-msgstr "Menu de _Capítulos"
+msgstr "Menu de _capítulos"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
-msgstr "Insira a _Localização do ficheiro que deseja abrir:"
+msgstr "Insira a _localização do ficheiro que deseja abrir:"
 
 #. translators: Unknown remaining time
 #: ../src/backend/bacon-time-label.c:113
@@ -863,7 +925,7 @@ msgstr "Selecionar tudo"
 msgid "Select None"
 msgstr "Não selecionar nada"
 
-#: ../src/totem-audio-preview.c:170
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Antevisão áudio"
 
@@ -1018,6 +1080,10 @@ msgstr "_Cancelar"
 msgid "_Add"
 msgstr "_Adicionar"
 
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Reproduzir/Pausar"
+
 #: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Seguinte"
@@ -1049,6 +1115,10 @@ msgstr "Silenciar o som"
 #: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Alternar ecrã completo"
+
+#: ../src/totem-options.c:60
+msgid "Quit"
+msgstr "Sair"
 
 #: ../src/totem-options.c:61
 msgid "Enqueue"
@@ -1405,7 +1475,7 @@ msgstr "_Criar disco de vídeo…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
 msgid "Copy Vide_o DVD…"
-msgstr "Copiar _O DVD de vídeo…"
+msgstr "Copiar _o DVD de vídeo…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
@@ -1764,11 +1834,11 @@ msgstr "Não é suposto isto acontecer; por favor, faça um relatório de erro."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
-msgstr "Capturar _Ecrã"
+msgstr "Capturar _ecrã"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "Criar _Galeria de capturas de ecrã..."
+msgstr "Criar _galeria de capturas de ecrã..."
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:219
