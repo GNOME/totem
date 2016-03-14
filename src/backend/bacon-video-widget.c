@@ -6271,10 +6271,10 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   /* set upper and lower limit for rate */
-  if (new_rate <= 0.5)
-	return TRUE;
-  if (new_rate >= 2.0)
-	return TRUE;
+  if (new_rate < 0.5)
+    return retval;
+  if (new_rate > 2.0)
+    return retval;
 
   if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
     GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
