@@ -5935,7 +5935,7 @@ navigation_event (ClutterActor *actor,
   gfloat x, y;
 
   if (frame == NULL)
-    return NULL;
+    return CLUTTER_EVENT_PROPAGATE;
 
   /* Get event coordinates into the actor's coordinates. */
   clutter_event_get_coords (event, &x, &y);
