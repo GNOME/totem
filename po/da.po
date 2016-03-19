@@ -1,5 +1,5 @@
 # Danish translation of Totem.
-# Copyright (C) 2002-2011, 2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011, 2015-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
 # Ole Laursen <olau@hardworking.dk>, 2002, 03.
 # Martin Willemoes Hansen <mwh@sysrq.dk>, 2005.
@@ -7,8 +7,8 @@
 # flemming christensen <fc@stromata.dk>, 2011.
 # Kenneth Nielsen <k.nielsen81@gmail.com>, 2013.
 # Kris Thomsen <mail@kristhomsen.dk>, 2014.
-# Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09, 10, 11, 12, 14, 15.
-# scootergrisen, 2015.
+# Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09, 10, 11, 12, 14, 15, 16.
+# scootergrisen, 2015, 2016.
 #
 # Konventioner:
 #
@@ -18,11 +18,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-08 12:06+0000\n"
-"PO-Revision-Date: 2015-09-08 17:28+0200\n"
-"Last-Translator: scootergrisen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-19 02:14+0100\n"
+"PO-Revision-Date: 2016-03-19 02:13+0100\n"
+"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +31,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3682
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3632
 msgid "Videos"
 msgstr "Videoer"
 
@@ -196,7 +195,7 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Kataloger, der skal vises i gennemsynsgrænsefladen; none som standard (ingen)"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5521
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5540
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -263,8 +262,9 @@ msgid "General"
 msgstr "Generelt"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:18
-msgid "Display"
+#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:285
+msgid "Video"
 msgstr "Video"
 
 #: ../data/preferences.ui.h:19
@@ -299,14 +299,18 @@ msgid "Reset to _Defaults"
 msgstr "Nulstil til fo_rvalg"
 
 #: ../data/preferences.ui.h:26
+msgid "Display"
+msgstr "Video"
+
+#: ../data/preferences.ui.h:27
 msgid "Audio Output"
 msgstr "Lyd-ud"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
 msgstr "_Lyduddata-type:"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Lyd"
@@ -339,10 +343,6 @@ msgstr "Kommentar:"
 msgid "Container:"
 msgstr "Beholder:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
-msgid "Video"
-msgstr "Video"
-
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Dimensioner:"
@@ -367,100 +367,244 @@ msgstr "Samplefrekvens:"
 msgid "Channels:"
 msgstr "Kanaler:"
 
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Generelt"
+
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Indstillinger"
+
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Afslut"
+
+#: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
+msgid "Volume"
+msgstr "Lydstyrke"
+
+#: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Forøg lydstyrken"
+
+#: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Mindsk lydstyrken"
+
+#: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Vis"
+
+#: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
+msgid "Toggle fullscreen"
+msgstr "Fuldskærm"
+
+#: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
+msgid "Exit fullscreen"
+msgstr "Afslut fuldskærm"
+
+#: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Zoom ind"
+
+#: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Zoom ud"
+
+#: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr "Afspilning"
+
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
+msgid "Play/Pause"
+msgstr "Afspil/pause"
+
+#: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
+msgid "Previous video or chapter"
+msgstr "Forrige kapitel eller film"
+
+#: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
+msgid "Next video or chapter"
+msgstr "Næste video eller kapitel"
+
+#: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
+msgid "Skip"
+msgstr "Spring over"
+
+#: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
+msgid "Go back 15 seconds"
+msgstr "Gå 15 sekunder tilbage"
+
+#: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
+msgid "Go forward 60 seconds"
+msgstr "Gå 60 sekunder fremad"
+
+#: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
+msgid "Go back 5 seconds"
+msgstr "Gå 5 sekunder tilbage"
+
+#: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
+msgid "Go forward 15 seconds"
+msgstr "Gå 15 sekunder fremad"
+
+#: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
+msgid "Go back 3 minutes"
+msgstr "Gå 3 minutter tilbage"
+
+#: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
+msgid "Go forward 10 minutes"
+msgstr "Gå 10 minutter fremad"
+
+#: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
+msgid "Skip to…"
+msgstr "Spring til…"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "DVD menu navigation"
+msgstr "Navigation for dvd-menu"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
+msgid "Navigate up"
+msgstr "Navigér op"
+
+#: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
+msgid "Navigate down"
+msgstr "Navigér ned"
+
+#: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
+msgid "Navigate left"
+msgstr "Navigér til venstre"
+
+#: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
+msgid "Navigate right"
+msgstr "Navigér til højre"
+
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "_Indstillinger"
 
 #: ../data/totem.ui.h:2
+msgid "_Keyboard Shortcuts"
+msgstr "_Tastaturgenveje"
+
+#: ../data/totem.ui.h:3
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: ../data/totem.ui.h:3
+#: ../data/totem.ui.h:4
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:5
 msgid "Add _Local Video…"
 msgstr "Tilføj _lokal video…"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
 msgstr "Tilføj _web-video…"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
 msgstr "_Højde-/breddeforhold"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Automatisk"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Kvadrat"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (tv)"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (bredskærm)"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:12
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:13
 msgid "Zoom In"
 msgstr "Zoom ind"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:14
 msgid "Switch An_gles"
 msgstr "Skift vi_nkler"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:15
 msgid "_Languages"
 msgstr "_Sprog"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:16
 msgid "S_ubtitles"
 msgstr "_Undertekster"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
 msgstr "_Vælg undertekster…"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:18
 msgid "_Eject"
 msgstr "_Skub ud"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:19
 msgid "_Repeat"
 msgstr "_Gentag"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:20
 msgid "_DVD Menu"
 msgstr "_Dvd-menu"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:21
 msgid "_Title Menu"
 msgstr "_Titelmenu"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:22
 msgid "A_udio Menu"
 msgstr "_Lydmenu"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:23
 msgid "_Angle Menu"
 msgstr "_Vinkelmenu"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "_Kapitelmenu"
 
@@ -473,55 +617,55 @@ msgstr "Angiv _adressen på den fil du ønsker at åbne:"
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1946
+#: ../src/backend/bacon-video-widget.c:1959
 msgid "Password requested for RTSP server"
 msgstr "Adgangskode afventes for RTSP-server"
 
-#: ../src/backend/bacon-video-widget.c:3317
+#: ../src/backend/bacon-video-widget.c:3328
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Lydspor #%d"
 
-#: ../src/backend/bacon-video-widget.c:3321
+#: ../src/backend/bacon-video-widget.c:3332
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Undertekst #%d"
 
-#: ../src/backend/bacon-video-widget.c:3777
+#: ../src/backend/bacon-video-widget.c:3796
 msgid "The server you are trying to connect to is not known."
 msgstr "Den server du forsøger at tilkoble til, er ikke kendt."
 
-#: ../src/backend/bacon-video-widget.c:3780
+#: ../src/backend/bacon-video-widget.c:3799
 msgid "The connection to this server was refused."
 msgstr "Forbindelses til denne server blev nægtet."
 
-#: ../src/backend/bacon-video-widget.c:3783
+#: ../src/backend/bacon-video-widget.c:3802
 msgid "The specified movie could not be found."
 msgstr "Den angivne film blev ikke fundet."
 
-#: ../src/backend/bacon-video-widget.c:3790
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "The server refused access to this file or stream."
 msgstr "Serveren nægtede adgang til denne fil eller strøm."
 
-#: ../src/backend/bacon-video-widget.c:3796
+#: ../src/backend/bacon-video-widget.c:3815
 msgid "Authentication is required to access this file or stream."
 msgstr "Denne fil eller strøm kan ikke tilgås uden godkendelse."
 
-#: ../src/backend/bacon-video-widget.c:3803
+#: ../src/backend/bacon-video-widget.c:3822
 msgid "You are not allowed to open this file."
 msgstr "Du har ikke rettigheder til at åbne denne fil."
 
-#: ../src/backend/bacon-video-widget.c:3808
+#: ../src/backend/bacon-video-widget.c:3827
 msgid "This location is not a valid one."
 msgstr "Denne placering er ikke gyldig."
 
-#: ../src/backend/bacon-video-widget.c:3816
+#: ../src/backend/bacon-video-widget.c:3835
 msgid "The movie could not be read."
 msgstr "Filmen kunne ikke læses."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3839
-#: ../src/backend/bacon-video-widget.c:3847
+#: ../src/backend/bacon-video-widget.c:3858
+#: ../src/backend/bacon-video-widget.c:3866
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -538,14 +682,14 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3859
+#: ../src/backend/bacon-video-widget.c:3878
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
 "Denne strøm kan ikke afspilles. Det er muligt at en firewall blokerer for "
 "den."
 
-#: ../src/backend/bacon-video-widget.c:3862
+#: ../src/backend/bacon-video-widget.c:3881
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -554,26 +698,26 @@ msgstr ""
 "bliver muligvis nødt til at installere yderligere udvidelsesmoduler for at "
 "afspille visse typer film"
 
-#: ../src/backend/bacon-video-widget.c:3873
+#: ../src/backend/bacon-video-widget.c:3892
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "Denne fil kan ikke afspilles over netværket. Prøv at hente den lokalt først."
 
-#: ../src/backend/bacon-video-widget.c:5517 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5536 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5519 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5538 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5806
+#: ../src/backend/bacon-video-widget.c:5825
 msgid "Media contains no supported video streams."
 msgstr "Medie indeholder ingen understøttede video-strømme."
 
-#: ../src/backend/bacon-video-widget.c:5965
+#: ../src/backend/bacon-video-widget.c:6036
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -581,11 +725,11 @@ msgstr ""
 "Der mangler visse nødvendige udvidelsesmoduler. Kontrollér at programmet er "
 "korrekt installeret."
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
 msgid "Unable to play the file"
 msgstr "Kan ikke afspille filen"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -597,7 +741,7 @@ msgstr[1] ""
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
 #, c-format
 msgid "_Find in %s"
 msgstr "_Find i %s"
@@ -775,31 +919,31 @@ msgstr "Kunne ikke klargøre de trådsikre biblioteker."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollér din systeminstallation. Totem vil nu afslutte."
 
-#: ../src/totem-grilo.c:284
+#: ../src/totem-grilo.c:285
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Sæson %d afsnit %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:321
+#: ../src/totem-grilo.c:322
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Sæson %d afsnit %d)"
 
-#: ../src/totem-grilo.c:671
+#: ../src/totem-grilo.c:677
 msgid "Browse Error"
 msgstr "Fejl ved gennemsyn"
 
-#: ../src/totem-grilo.c:812
+#: ../src/totem-grilo.c:818
 msgid "Search Error"
 msgstr "Fejl ved søgning"
 
-#: ../src/totem-grilo.c:1266
+#: ../src/totem-grilo.c:1272
 msgid "Local"
 msgstr "Lokalt"
 
-#: ../src/totem-grilo.c:1865
+#: ../src/totem-grilo.c:1873
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -851,56 +995,56 @@ msgid "Search"
 msgstr "Søg"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:419
+#: ../src/totem-menu.c:428
 msgid "None"
 msgstr "Ingen"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:423
+#: ../src/totem-menu.c:432
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../src/totem-object.c:1442 ../src/totem-options.c:51
+#: ../src/totem-object.c:1386 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/totem-object.c:1447 ../src/totem-object.c:1457
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Afspil"
 
-#: ../src/totem-object.c:1524 ../src/totem-object.c:1551
-#: ../src/totem-object.c:2066
+#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
+#: ../src/totem-object.c:1987
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke afspille \"%s\"."
 
-#: ../src/totem-object.c:2208
+#: ../src/totem-object.c:2129
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise indholdet af hjælp."
 
-#: ../src/totem-object.c:2448
+#: ../src/totem-object.c:2390
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
-#: ../src/totem-object.c:3780
+#: ../src/totem-object.c:3730
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapitel/film"
 
-#: ../src/totem-object.c:3786
+#: ../src/totem-object.c:3736
 msgid "Play / Pause"
 msgstr "Afspil / pause"
 
-#: ../src/totem-object.c:3792
+#: ../src/totem-object.c:3742
 msgid "Next Chapter/Movie"
 msgstr "Næste kapitel/film"
 
-#: ../src/totem-object.c:4013
+#: ../src/totem-object.c:3951
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte."
 
-#: ../src/totem-object.c:4013
+#: ../src/totem-object.c:3951
 msgid "No reason."
 msgstr "Ingen begrundelse."
 
@@ -986,7 +1130,7 @@ msgstr "Kan ikke sætte i kø og erstatte på samme tid"
 msgid "Title %d"
 msgstr "Titel %d"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:992
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
@@ -1053,11 +1197,16 @@ msgstr "Ikke tilgængelig"
 msgid "Add to Favourites"
 msgstr "Føj til favoritter"
 
-#: ../src/totemselectiontoolbar.ui.h:3
+#: ../src/totemselectiontoolbar.ui.h:2
+msgctxt "button"
+msgid "Play"
+msgstr "Afspil"
+
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Shuffle"
 msgstr "Bland"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Slet"
 
@@ -1091,12 +1240,12 @@ msgstr "Centraleuropæisk"
 #: ../src/totem-subtitle-encoding.c:190 ../src/totem-subtitle-encoding.c:192
 #: ../src/totem-subtitle-encoding.c:194 ../src/totem-subtitle-encoding.c:196
 msgid "Chinese Simplified"
-msgstr "Forenklet kinesisk"
+msgstr "Kinesisk (forenklet)"
 
 #: ../src/totem-subtitle-encoding.c:199 ../src/totem-subtitle-encoding.c:201
 #: ../src/totem-subtitle-encoding.c:203
 msgid "Chinese Traditional"
-msgstr "Traditionelt kinesisk"
+msgstr "Kinesisk (traditionel)"
 
 #: ../src/totem-subtitle-encoding.c:206
 msgid "Croatian"
@@ -1141,7 +1290,7 @@ msgstr "Hebraisk"
 # Jeg ved intet om Hebraisk, ejheller hvad "visual" betyder i denne sammenhæng, men forhåbentlig er det meningsfuldt
 #: ../src/totem-subtitle-encoding.c:255
 msgid "Hebrew Visual"
-msgstr "Hebraisk visuelt"
+msgstr "Hebraisk (visuel)"
 
 #: ../src/totem-subtitle-encoding.c:258
 msgid "Hindi"
@@ -1242,7 +1391,7 @@ msgstr "Tilføj videoer"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:793
+#: ../src/totem-video-thumbnailer.c:789
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1253,15 +1402,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:794
+#: ../src/totem-video-thumbnailer.c:790
 msgid "Filename"
 msgstr "Filnavn"
 
-#: ../src/totem-video-thumbnailer.c:796
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Resolution"
 msgstr "Opløsning"
 
-#: ../src/totem-video-thumbnailer.c:799
+#: ../src/totem-video-thumbnailer.c:795
 msgid "Duration"
 msgstr "Varighed"
 
@@ -1406,53 +1555,53 @@ msgstr "Underteksthenter"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Kig efter undertekster for filmen, der afspilles nu"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Brasiliansk portugisisk"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "Søger efter undertekster…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:608
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "Henter undertekster…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Kunne ikke kontakte hjemmesiden for OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Kunne ikke komme i forbindelse med websiden OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Ingen resultater fundet."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:473
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Undertekster"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:479
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:484
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Bedømmelse"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "_Hent undertekster til film…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:565
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "Søger i undertekster…"
 
@@ -1539,8 +1688,8 @@ msgid ""
 "default password ('totem')."
 msgstr ""
 "Efter du har trykket OK, ventes indtil du forbinder til Totem med winpdb "
-"eller rpdb2. Hvis du ikke har indstillet en fejlsøgeradgangskode i DConf, vil "
-"standardadgangskoden blive benyttet (\"totem\")."
+"eller rpdb2. Hvis du ikke har indstillet en fejlsøgeradgangskode i DConf, "
+"vil standardadgangskoden blive benyttet (\"totem\")."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -1731,127 +1880,6 @@ msgstr "Udvidelsesmodul til Zeitgeist"
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
-#~ msgid "Name for new chapter:"
-#~ msgstr "Navn på nyt kapitel:"
-
-#~ msgid "_Remove Chapter"
-#~ msgstr "_Fjern kapitel"
-
-#~ msgid "Remove the chapter from the list"
-#~ msgstr "Fjern kapitlet fra listen"
-
-#~ msgid "_Go to Chapter"
-#~ msgstr "_Gå til kapitel"
-
-#~ msgid "Go to the chapter in the movie"
-#~ msgstr "Gå til kapitlet i filmen"
-
-#~ msgid "Add Chapter…"
-#~ msgstr "Tilføj kapitel…"
-
-#~ msgid "Remove Chapter"
-#~ msgstr "Fjern kapitel"
-
-#~ msgid "Go to Chapter"
-#~ msgstr "Gå til kapitel"
-
-#~ msgid "Save Changes"
-#~ msgstr "Gem ændringer"
-
-#~ msgid "No chapter data"
-#~ msgstr "Ingen kapiteldata"
-
-#~ msgid "Load Chapters…"
-#~ msgstr "Indlæs kapitler…"
-
-#~ msgid "Load chapters from an external CMML file"
-#~ msgstr "Indlæs kapitler fra ekstern CMML-fil"
-
-#~ msgid "Add New Chapters"
-#~ msgstr "Tilføj nye kapitler"
-
-#~ msgid "Create a new chapter list for the movie"
-#~ msgstr "Opret en ny kapitelliste for filmen"
-
-#~ msgid "Chapters"
-#~ msgstr "Kapitler"
-
-#~ msgid "Support chapter markers in movies"
-#~ msgstr "Understøttelse for kapitelmarkører i film"
-
-#~ msgid ""
-#~ "<b>Title: </b>%s\n"
-#~ "<b>Start time: </b>%s"
-#~ msgstr ""
-#~ "<b>Titel: </b>%s\n"
-#~ "<b>Starttidspunkt: </b>%s"
-
-#~ msgid "Error while reading file with chapters"
-#~ msgstr "Fejl ved læsning af kapitelfil"
-
-#~ msgid "Chapter with the same time already exists"
-#~ msgstr "Kapitel med samme tidspunkt findes allerede"
-
-#~ msgid "Try another name or remove an existing chapter."
-#~ msgstr "Prøv et andet navn eller fjern et eksisterende kapitel."
-
-#~ msgid "Error while writing file with chapters"
-#~ msgstr "Fejl ved skrivning af kapitelfil"
-
-#~ msgid "Error occurred while saving chapters"
-#~ msgstr "Der opstod en fejl ved gemning af kapitler"
-
-#~ msgid ""
-#~ "Please check you have permission to write to the folder containing the "
-#~ "movie."
-#~ msgstr ""
-#~ "Kontrollér venligst at du har rettigheder til at skrive til mappen, der "
-#~ "indeholder filmen."
-
-#~ msgid "Open Chapter File"
-#~ msgstr "Åbn kapitelfil"
-
-#~ msgid "Supported files"
-#~ msgstr "Understøttede filer"
-
-#~ msgid "Chapter Screenshot"
-#~ msgstr "Skærmbillede for kapitel"
-
-#~ msgid "Chapter Title"
-#~ msgstr "Kapitelnavn"
-
-#~ msgid "Save changes to chapter list before closing?"
-#~ msgstr "Gem ændringer til kapitelliste før der lukkes?"
-
-#~ msgid "Close without Saving"
-#~ msgstr "Luk uden at gemme"
-
-#~ msgid "Save"
-#~ msgstr "Gem"
-
-#~ msgid "If you don't save, changes to the chapter list will be lost."
-#~ msgstr "Hvis du ikke gemmer, vil ændringer til kapitellisten gå tabt."
-
-#~ msgid "Add Chapter"
-#~ msgstr "Tilføj kapitel"
-
-#~ msgid "Whether to enable debug for the playback engine"
-#~ msgstr "Om fejlanalysering skal slåes til for afspilningsmotoren"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Run '%s --help' to see a full list of available command line options.\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Kør \"%s --help\" for at se en fuldstændig liste af "
-#~ "kommandolinjetilvalg.\n"
-
-#~ msgid "Enable debug"
-#~ msgstr "Aktiver fejlsøgning"
-
-#~ msgid "- Play movies and songs"
-#~ msgstr "- Afspil film og sange"
-
 #~ msgid "No URI to play"
 #~ msgstr "Ingen URI at afspille"
 
@@ -1940,19 +1968,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Recent"
 #~ msgstr "Seneste"
 
-#~ msgid "Allow the screensaver to activate when playing audio"
-#~ msgstr "Tillad aktivering af pauseskærmen når der afspilles lyd"
-
-#~ msgid ""
-#~ "Allow the screensaver to activate when playing audio. Disable if you have "
-#~ "monitor-powered speakers."
-#~ msgstr ""
-#~ "Tillad aktivering af pauseskærm når der afspilles lyd. Slå fra, hvis du "
-#~ "har højttalere, der får strøm fra skærmen."
-
-#~ msgid "Shuffle mode"
-#~ msgstr "Blandingstilstand"
-
 #~ msgid "_Remove"
 #~ msgstr "_Fjern"
 
@@ -1989,9 +2004,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Totem Preferences"
 #~ msgstr "Indstillinger for Totem"
 
-#~ msgid "Playback"
-#~ msgstr "Afspilning"
-
 #~ msgid "Disable screensaver when playing"
 #~ msgstr "Deaktivér pauseskærm når der afspilles"
 
@@ -2025,9 +2037,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Clear the playlist"
 #~ msgstr "Ryd afspilningslisten"
-
-#~ msgid "_View"
-#~ msgstr "_Vis"
 
 #~ msgid "Fit Window to Movie"
 #~ msgstr "Tilpas vinduet til filmen"
@@ -2080,103 +2089,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "_Add to Playlist"
 #~ msgstr "_Føj til afspilningsliste"
-
-#~ msgid ""
-#~ "Totem is free software; you can redistribute it and/or modify it under "
-#~ "the terms of the GNU General Public License as published by the Free "
-#~ "Software Foundation; either version 2 of the License, or (at your option) "
-#~ "any later version."
-#~ msgstr ""
-#~ "Totem er fri software; det kan distribueres og/eller modificeres som "
-#~ "betinget af GNU General Public License, udarbejdet af Free Software "
-#~ "Foundation; enten version 2 af licensen eller, efter eget valg, enhver "
-#~ "nyere version."
-
-#~ msgid ""
-#~ "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
-#~ "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-#~ "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#~ "details."
-#~ msgstr ""
-#~ "Totem distribueres i håb om at det viser sig nyttigt, men UDEN NOGEN "
-#~ "GARANTI; selv uden de underforståede garantier SALGBARHED eller EGNETHED "
-#~ "TIL ET BESTEMT FORMÅL, idet der henvises til GNU General Public License "
-#~ "for detaljer."
-
-#~ msgid ""
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with Totem; if not, write to the Free Software Foundation, Inc., 59 "
-#~ "Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-#~ msgstr ""
-#~ "Du bør have modtaget en kopi af GNU General Public License sammen med "
-#~ "Totem; er dette ikke tilfældet, så skriv til Free Software Foundation, "
-#~ "Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-
-#~ msgid ""
-#~ "Totem contains an exception to allow the use of proprietary GStreamer "
-#~ "plugins."
-#~ msgstr ""
-#~ "Totem indeholder en undtagelse for at tillade brug af proprietære "
-#~ "GStreamer-udvidelsesmoduler."
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
-
-#~ msgid "Open Location..."
-#~ msgstr "Åbn placering..."
-
-#~ msgid "MP3 ShoutCast playlist"
-#~ msgstr "Afspilningsliste for MP3-ShoutCast"
-
-#~ msgid "MP3 audio (streamed)"
-#~ msgstr "MP3-audio (strøm)"
-
-#~ msgid "MP3 audio (streamed, DOS format)"
-#~ msgstr "MP3-audio (strøm, DOS-format)"
-
-#~ msgid "XML Shareable Playlist"
-#~ msgstr "Delelig XML-afspilningsliste"
-
-#~ msgid "Could not save the playlist"
-#~ msgstr "Kunne ikke gemme afspilningslisten"
-
-#~ msgid "Save Playlist"
-#~ msgstr "Gem afspilningsliste"
-
-#~ msgid "Playlist"
-#~ msgstr "Afspilningsliste"
-
-#~ msgid "Playlist error"
-#~ msgstr "Afspilningslistefejl"
-
-#~ msgid "Select Movies or Playlists"
-#~ msgstr "Vælg film eller afspilningslister"
-
-#~ msgid "Add Directory"
-#~ msgstr "Tilføj mappe"
-
-#~ msgid "Add Chapter..."
-#~ msgstr "Tilføj kapitel..."
-
-#~ msgid "D-Bus Service"
-#~ msgstr "D-Bus-tjeneste"
-
-#~ msgid "Grilo Browser"
-#~ msgstr "Grillo-læser"
-
-#~ msgid "A plugin to let you browse media content from various sources"
-#~ msgstr ""
-#~ "Et udvidelsesmodul, der lader dig gennemse medieindhold fra forskellige "
-#~ "kilder"
-
-#~ msgid "Copy Location"
-#~ msgstr "Kopiér placering"
-
-#~ msgid "Download movie subtitles from OpenSubtitles"
-#~ msgstr "Hent filmundertekster fra OpenSubtitles"
-
-#~ msgid "Python Console Menu"
-#~ msgstr "Python-konsolmenu"
 
 #~ msgid "Show Totem's Python console"
 #~ msgstr "Vis Totems Python-konsol"
@@ -2254,132 +2166,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Resize to double the original video size"
 #~ msgstr "Anvend videoens dobbelte originalstørrelse"
-
-#~ msgid "_Go"
-#~ msgstr "_Start"
-
-#~ msgid "Go to the DVD menu"
-#~ msgstr "Gå til dvd-menuen"
-
-#~ msgid "Go to the title menu"
-#~ msgstr "Gå til titelmenuen"
-
-#~ msgid "Go to the audio menu"
-#~ msgstr "Gå til lydmenuen"
-
-#~ msgid "Go to the angle menu"
-#~ msgstr "Gå til vinkelmenuen"
-
-#~ msgid "Go to the chapter menu"
-#~ msgstr "Gå til kapitelmenuen"
-
-#~ msgid "Volume _Up"
-#~ msgstr "Lydstyrke _op"
-
-#~ msgid "Increase volume"
-#~ msgstr "Forøg lydstyrken"
-
-#~ msgid "Volume _Down"
-#~ msgstr "Lydstyrke _ned"
-
-#~ msgid "Decrease volume"
-#~ msgstr "Mindsk lydstyrken"
-
-#~ msgid "_Contents"
-#~ msgstr "_Indhold"
-
-#~ msgid "Help contents"
-#~ msgstr "Indhold af hjælp"
-
-#~ msgid "_About"
-#~ msgstr "_Om"
-
-#~ msgid "About this application"
-#~ msgstr "Om dette program"
-
-#~ msgid "Show _Controls"
-#~ msgstr "Vis _kontroller"
-
-#~ msgid "Show controls"
-#~ msgstr "Vis kontroller"
-
-#~ msgid "Sets automatic aspect ratio"
-#~ msgstr "Sætter højde-/breddeforholdet automatisk"
-
-#~ msgid "Sets square aspect ratio"
-#~ msgstr "Sætter kvadratisk højde-/breddeforhold"
-
-#~ msgid "Sets 4∶3 (TV) aspect ratio"
-#~ msgstr "Sætter højde-/breddeforholdet til 4∶3 (TV)"
-
-#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
-#~ msgstr "Sætter højde-/breddeforholdet til 16∶9 (bredskærm)"
-
-#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
-#~ msgstr "Sætter højde-/breddeforholdet til 2.11∶1 (DVB)"
-
-#~ msgid "Zoom in"
-#~ msgstr "Zoom ind"
-
-#~ msgid "Skip _Forward"
-#~ msgstr "Spring f_remad"
-
-#~ msgid "Skip forward"
-#~ msgstr "Spring fremad"
-
-#~ msgid "Skip _Backwards"
-#~ msgstr "Spring t_ilbage"
-
-#~ msgid "Skip backwards"
-#~ msgstr "Spring tilbage"
-
-#~ msgid "Time seek bar"
-#~ msgstr "Søgebjælke"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Filen er ikke en gyldig .desktop-fil"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Ukendt version af skrivebordsfil \"%s\""
-
-#~ msgid "Starting %s"
-#~ msgstr "Starter %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Programmet accepterer ikke dokumenter på kommandolinjen"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Ukendt opstartstilvalg: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Kan ikke give dokument-URI'er til en \"Type=Link\"-skrivebordspost"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Ikke et kørbart element"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Deaktivér forbindelse til sessionshåndtering"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Angiv fil indeholdende gemt konfiguration"
-
-#~ msgid "FILE"
-#~ msgstr "FIL"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Angiv ID for sessionshåndtering"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Indstillinger for sessionshåndtering:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Vis indstillinger for sessionshåndtering"
-
-#~ msgid "No File"
-#~ msgstr "Ingen fil"
 
 #~ msgid "Copyright © 2002-2009 Bastien Nocera"
 #~ msgstr "Copyright © 2002-2009 Bastien Nocera"
@@ -2532,9 +2318,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Set the shuffle mode"
 #~ msgstr "Angiv blandingstilstanden"
 
-#~ msgid "Switch to fullscreen"
-#~ msgstr "Skift til fuldskærm"
-
 #~ msgid ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network."
@@ -2633,111 +2416,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr ""
 #~ "Kunne ikke åbne sted; du har muligvis ikke rettigheder til at åbne filen."
 
-#~ msgid ""
-#~ "The video output is in use by another application. Please close other "
-#~ "video applications, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Video-uddata er i brug af et andet program. Luk venligst andre video-"
-#~ "programmer, eller vælg en anden video-uddata i multimediesystems-vælgeren."
-
-#~ msgid ""
-#~ "The audio output is in use by another application. Please select another "
-#~ "audio output in the Multimedia Systems Selector. You may want to consider "
-#~ "using a sound server."
-#~ msgstr ""
-#~ "Lyd-uddata bruges af et andet program. Vælg venligst en anden lyd-uddata "
-#~ "i multimediesystems-vælgeren. Du bør overveje at bruge en lydserver."
-
-#~ msgid ""
-#~ "Failed to create a GStreamer play object. Please check your GStreamer "
-#~ "installation."
-#~ msgstr ""
-#~ "Det mislykkedes at oprette et GStreamer-spilleobjekt. Kontrollér venligst "
-#~ "din installation af GStreamer."
-
-#~ msgid ""
-#~ "Failed to open audio output. You may not have permission to open the "
-#~ "sound device, or the sound server may not be running. Please select "
-#~ "another audio output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "Det mislykkedes at åbne lyd-uddata. Du har muligvis ikke rettigheder til "
-#~ "at åbne lydenheden, eller lydserveren er ikke startet. Vælg venligst en "
-#~ "anden lyd-uddata i multimediesystems-vælgeren."
-
-#~ msgid ""
-#~ "Could not find the audio output. You may need to install additional "
-#~ "GStreamer plugins, or select another audio output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Kunne ikke finde lyd-uddata. Du er muligvis nødt til at installere "
-#~ "yderligere GStreamer-udvidelsesmoduler, eller vælge en anden lyd-uddata i "
-#~ "multimediesystems-vælgeren."
-
-#~ msgid "BBC iPlayer"
-#~ msgstr "BBC iPlayer"
-
-#~ msgid ""
-#~ "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-#~ msgstr ""
-#~ "Stream BBC-programmer fra de sidste syv dage fra BBC's iPlayer-tjeneste."
-
-#~ msgid "Error listing channel categories"
-#~ msgstr "Fejl ved visning af kanalkategorier"
-
-#~ msgid ""
-#~ "There was an unknown error getting the list of television channels "
-#~ "available on BBC iPlayer."
-#~ msgstr ""
-#~ "Der opstod en ukendt fejl ved indhentning af listen af tilgængelige "
-#~ "fjernsynskanaler på BBC iPlayer."
-
-#~ msgid "Loading…"
-#~ msgstr "Indlæser…"
-
-#~ msgid "Error getting programme feed"
-#~ msgstr "Fejl under indhentning af programkilde"
-
-#~ msgid ""
-#~ "There was an error getting the list of programmes for this channel and "
-#~ "category combination."
-#~ msgstr ""
-#~ "Der opstod en fejl ved indhentning af listen af programmer for denne "
-#~ "kombination af kanal og kategori."
-
-#~ msgid "<no reason given>"
-#~ msgstr "<ingen årsag givet>"
-
-#~ msgid "Programme unavailable (\"%s\")"
-#~ msgstr "Programmet er utilgængeligt (\"%s\")"
-
-#~ msgid ""
-#~ "A format string used to build the network service name used when "
-#~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by "
-#~ "g_get_application_name() • %h: the machine's host name in title case • "
-#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
-#~ "the percent sign"
-#~ msgstr ""
-#~ "En formatstreng, der bruges til at bygge netværkstjenestenavnet, der "
-#~ "bruges når der udgives afspilningslister over netværket. Følgende "
-#~ "erstatningskoder kan bruges: • %a: programnavnet, som returneres af "
-#~ "g_get_application_name() • %h: maskinens værtsnavn med store forbogstaver "
-#~ "• %i: brugerens logindnavn med store forbogstaver • %U: brugerens "
-#~ "virkelige navn • %%: procenttegn"
-
-#~ msgid "Format for network service name"
-#~ msgstr "Format for netværkstjenestenavn"
-
-#~ msgid "Publisher protocol to use"
-#~ msgstr "Udgiverprotokol, der skal bruges"
-
-#~ msgid ""
-#~ "The transport protocol to use when publishing playlists over the network."
-#~ msgstr ""
-#~ "Transportprotokollen der skal bruges, når der udgives afspilningslister "
-#~ "over netværket."
-
 #~ msgid "Neighbors"
 #~ msgstr "Naboer"
 
@@ -2749,70 +2427,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Service _Name:"
 #~ msgstr "Tjeneste_navn:"
-
-#~ msgid ""
-#~ "The name used for announcing the playlist service on the network.\n"
-#~ "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-#~ "and <b>%h</b> will be replaced by your computer's host name."
-#~ msgstr ""
-#~ "Navnet der bruges til at annoncere spilleliste-tjenesten på netværket.\n"
-#~ "Alle forekomster af strengen <b>%u</b> vil bliver erstattet med dit "
-#~ "navn,\n"
-#~ "og <b>%h</b> vil blive erstattet med din computers værtsnavn."
-
-#~ msgid "Use _encrypted transport protocol (HTTPS)"
-#~ msgstr "Brug _krypteret transportprotokol (HTTPS)"
-
-#~ msgid "Save in _folder:"
-#~ msgstr "Gem i _mappe:"
-
-#~ msgid "_Name:"
-#~ msgstr "_Navn:"
-
-#~ msgid "There was an error saving the screenshot."
-#~ msgstr "Der opstod en fejl ved gemning af fejlbilledet."
-
-#~ msgid "Save Screenshot"
-#~ msgstr "Gem skærmbillede"
-
-#~ msgid "Bemused"
-#~ msgstr "Bemused"
-
-#~ msgid "Control Totem through a mobile phone with a Bemused client"
-#~ msgstr "Betjen Totem gennem en mobiltelefon med en Bemused-klient"
-
-#~ msgid "Untitled %d"
-#~ msgstr "Unavngiven %d"
-
-#~ msgid "Totem Bemused Server"
-#~ msgstr "Totem Bemused Server"
-
-#~ msgid "Totem Bemused Server version 1.0"
-#~ msgstr "Totem Bemused Server version 1.0"
-
-#~ msgid "A plugin to let you browse YouTube videos."
-#~ msgstr "Et udvidelsesmodul, der lader dig gennemse YouTube-videoer."
-
-#~ msgid "YouTube Browser"
-#~ msgstr "YouTube-læser"
-
-#~ msgid "Related Videos"
-#~ msgstr "Relaterede videoer"
-
-#~ msgid "Search Results"
-#~ msgstr "Søgeresultater"
-
-#~ msgid "_Open in Web Browser"
-#~ msgstr "_Åbn i webbrowser"
-
-#~ msgid "Open the video in your web browser"
-#~ msgstr "Åbn videoen i din webbrowser"
-
-#~ msgid "YouTube"
-#~ msgstr "YouTube"
-
-#~ msgid "Cancelling query…"
-#~ msgstr "Annullerer forespørgsel…"
 
 #~ msgid "Error Searching for Videos"
 #~ msgstr "Fejl ved søgning efter videoer"
@@ -2861,9 +2475,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Zoom Reset"
 #~ msgstr "Nulstil zoom"
 
-#~ msgid "Zoom out"
-#~ msgstr "Zoom ud"
-
 #~ msgid "Zoom reset"
 #~ msgstr "Nulstil zoom"
 
@@ -2883,58 +2494,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Too old version of GStreamer installed."
 #~ msgstr "Den installerede version af GStreamer er for gammel."
-
-#~ msgid ""
-#~ "Failed to open video output. It may not be available. Please select "
-#~ "another video output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "Det mislykkedes at åbne video-uddata. Den er muligvis ikke tilgængelig. "
-#~ "Vælg venligst en anden video-uddata i multimediesystems-vælgeren."
-
-#~ msgid ""
-#~ "Could not find the video output. You may need to install additional "
-#~ "GStreamer plugins, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "Kunne ikke finde video-uddata. Du er muligvis nødt til at installere "
-#~ "yderligere GStreamer-udvidelsesmoduler, eller vælge en anden video-uddata "
-#~ "i multimediesystems-vælgeren."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "Coherence DLNA/UPnP Client"
-#~ msgstr "Coherence DLNA/UPnP-klient"
-
-#~ msgid "A DLNA/UPnP client for Totem powered by Coherence"
-#~ msgstr "En DLNA/UPnP-klient til Totem drevet af Coherence"
-
-#~ msgid "By artist"
-#~ msgstr "Efter kunstner"
-
-#~ msgid "By tag"
-#~ msgstr "Efter mærke"
-
-#~ msgid "Jamendo Album Page"
-#~ msgstr "Jamendo-albumside"
-
-#~ msgid "Latest Releases"
-#~ msgstr "Sidste udgivelser"
-
-#~ msgid "Number of albums to _retrieve:"
-#~ msgstr "Antal album, der skal _hentes:"
-
-#~ msgid "Popular"
-#~ msgstr "Populære"
-
-#~ msgid "Preferred audio _format:"
-#~ msgstr "Foretrukne lyd_format:"
-
-#~ msgid "_Open Jamendo Album Page in Browser"
-#~ msgstr "_Åbn Jamendo-albumside i browser"
-
-#~ msgid "Jamendo"
-#~ msgstr "Jamendo"
 
 #~ msgid ""
 #~ "Listen to the large collection of Creative Commons licensed music on "
@@ -3050,131 +2609,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Totem browser-udvidelsesmodul"
 
 #~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
-#~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
-#~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
-#~ "LAN."
-#~ msgstr ""
-#~ "Tilnærmet hastighed af netværksforbindelse, som bruges til at vælge "
-#~ "kvalitet for medieafspilning over netværket: \"0\" for 14.4 Kb/s modem, "
-#~ "\"1\" for 19.2 Kb/s modem, \"2\" for 28.8 Kb/s modem, \"3\" for 33.6 Kb/s "
-#~ "modem, \"4\" for 34.4 Kb/s modem, \"5\" for 56 Kb/s modem/ISDN, \"6\" for "
-#~ "112 Kb/s Dual ISDN/DSL, \"7\" for 256 Kb/s DSL/kabel, \"8\" for 384 Kb/s "
-#~ "DSL/kabel, \"9\" for 512 Kb/s DSL/kabel, \"10\" for 1.5 Mb/s T1/intranet/"
-#~ "LAN, \"11\" for Intranet/LAN."
-
-#~ msgid ""
-#~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-#~ "normal, \"2\" for large, \"3\" for extra large."
-#~ msgstr ""
-#~ "Kvalitetsindstillinger for lydvisualiseringen: \"0\" for lille, \"1\" for "
-#~ "normal, \"2\" for stor, \"3\" for ekstra stor."
-
-#~ msgid ""
-#~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
-#~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
-#~ "for AC3 Passthrough."
-#~ msgstr ""
-#~ "Type lyduddata der skal benyttes: \"0\" for stereo, \"1\" for 4-kanals "
-#~ "uddata, \"2\" for 5.0-kanals uddata, \"3\" for 5.1-kanals uddata, \"4\" "
-#~ "for AC3-gennemslutning."
-
-#~ msgid "Whether to autoload external chapter files when a movie is loaded."
-#~ msgstr ""
-#~ "Om eksterne kapitelfiler skal hentes automatisk når en film indlæses."
-
-#~ msgid "Don't connect to an already-running instance"
-#~ msgstr "Forbind ikke til en allerede kørende instans"
-
-#~ msgid "Enable visual effects?"
-#~ msgstr "Aktivér visuelle effekter?"
-
-#~ msgid ""
-#~ "It seems you are running Totem remotely.\n"
-#~ "Are you sure you want to enable the visual effects?"
-#~ msgstr ""
-#~ "Det ser ud til at du kører Totem via et netværk.\n"
-#~ "Er du sikker på du vil aktivere de visuelle effekter?"
-
-#~ msgid ""
-#~ "Changing the visuals effect type will require a restart to take effect."
-#~ msgstr ""
-#~ "Skift af typen af visuel effekt kræver en genstart for at træde i kraft."
-
-#~ msgid ""
-#~ "The change of audio output type will only take effect when Totem is "
-#~ "restarted."
-#~ msgstr ""
-#~ "Ændringen af lyduddatatype træder først i kraft når Totem bliver "
-#~ "genstartet."
-
-#~ msgid "Could not open link"
-#~ msgstr "Kunne ikke åbne link"
-
-#~ msgid "Totem could not initialize the configuration engine."
-#~ msgstr "Totem kunne ikke klargøre konfigurationsmotoren."
-
-#~ msgid "Make sure that GNOME is properly installed."
-#~ msgstr "Kontrollér at Gnome er korrekt installeret."
-
-#~ msgid "Chapters support"
-#~ msgstr "Understøttelse af kapitler"
-
-#~ msgid "Continue to watch movie without loaded chapters"
-#~ msgstr "Fortsæt med at se film uden indlæste kapitler"
-
-#~ msgid "_Go to"
-#~ msgstr "_Hop til"
-
-#~ msgid "Please check you rights and free space"
-#~ msgstr "Kontrollér venligst dine rettigheder og frigør diskplads"
-
-#~ msgid "Could not connect to the Galago daemon."
-#~ msgstr "Kunne ikke forbinde til Galago-dæmonen."
-
-#~ msgid "Recordings"
-#~ msgstr "Optagelser"
-
-#~ msgid "MythTV Recordings"
-#~ msgstr "MythTV-optagelser"
-
-#~ msgid "MythTV LiveTV"
-#~ msgstr "MythTV LiveTV"
-
-#~ msgid "_Download Movie Subtitles..."
-#~ msgstr "_Hent filmundertekster..."
-
-#~ msgid "seconds"
-#~ msgstr "sekunder"
-
-#~ msgid "Could not get name and thumbnail for %s: %s"
-#~ msgstr "Kunne ikke hente navn og miniature %s: %s"
-
-#~ msgid "Error Looking Up Video URI"
-#~ msgstr "Fejl ved opslag af video-URI"
-
-#~ msgid "Author:"
-#~ msgstr "Forfatter:"
-
-#~ msgid "C_onfigure..."
-#~ msgstr "K_onfigurér..."
-
-#~ msgid "Copyright:"
-#~ msgstr "Ophavsret:"
-
-#~ msgid "Description:"
-#~ msgstr "Beskrivelse:"
-
-#~ msgid "Site:"
-#~ msgstr "Sted:"
-
-#~ msgid "Enabled"
-#~ msgstr "Aktiveret"
-
-#~ msgid ""
 #~ "Unable to activate plugin %s.\n"
 #~ "%s"
 #~ msgstr ""
@@ -3254,18 +2688,6 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Totem is missing a channels listing to be able to tune the receiver."
 #~ msgstr "Totem mangler en kanaloversigt for at kunne tune modtageren."
 
-#~ msgid ""
-#~ "Please follow the instructions provided in the link to create a channels "
-#~ "listing."
-#~ msgstr ""
-#~ "Følg venligst instruktionerne fra henvisningen for at oprette en "
-#~ "kanaloversigt."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because the TV device is busy."
-#~ msgstr ""
-#~ "Totem kan ikke afspille denne medietype (%s), fordi TV-enheden er optaget."
-
 #~ msgid "Please try again later."
 #~ msgstr "Prøv venligst igen senere."
 
@@ -3281,102 +2703,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Screenshot%d.jpg"
 #~ msgstr "Skærmbillede%d.jpg"
 
-#~ msgid "Totem could not play '%s'"
-#~ msgstr "Totem kunne ikke afspille \"%s\""
-
-#~ msgid "The Totem plugin could not be started."
-#~ msgstr "Totem-udvidelsesmodulet kunne ikke startes."
-
-#~ msgid "Could not initialise the thread-safe libraries."
-#~ msgstr "Kunne ikke klargøre de trådsikre biblioteker."
-
-#~ msgid "_Allow the screensaver to activate even when audio-only is playing"
-#~ msgstr "_Tillad aktivering af pauseskærm selv når der kun afspilles lyd"
-
-#~ msgid "Failed to retrieve working directory"
-#~ msgstr "Kunne ikke finde arbejdskatalog"
-
-# Enten "afspilning af (en) film" eller "afspiller en film". Lad os håbe sidstnævnte er korrekt...
-#~ msgid "Print playing movie"
-#~ msgstr "Udskriv afspillende film"
-
-#~ msgid ""
-#~ "Couldn't load the '%s' audio driver\n"
-#~ "Check that the device is not busy."
-#~ msgstr ""
-#~ "Kunne ikke indlæse lyddriveren \"%s\".\n"
-#~ "Kontrollér at enheden ikke benyttes af et andet program."
-
-#~ msgid ""
-#~ "The TV adapter could not tune into the channel. Please check your "
-#~ "hardware setup and channel configuration."
-#~ msgstr ""
-#~ "TV-adapteren kunne ikke tune ind på kanalen. Kontrollér venligst din "
-#~ "hardwareopsætning samt kanalkonfiguration."
-
-#~ msgid "The device name you specified (%s) seems to be invalid."
-#~ msgstr "Det enhedsnavn du angav (%s), ser ud til at være ugyldigt."
-
-#~ msgid "The server you are trying to connect to (%s) is unreachable."
-#~ msgstr "Den server du forsøger at tilkoble til (%s), kan ikke nås."
-
-#~ msgid ""
-#~ "The source seems encrypted and can't be read. Are you trying to play an "
-#~ "encrypted DVD without libdvdcss?"
-#~ msgstr ""
-#~ "Kilden ser ud til at være krypteret og kan ikke læses. Måske prøver du at "
-#~ "afspille en krypteret dvd uden libdvdcss?"
-
-#~ msgid "A problem occurred while loading a library or a decoder (%s)."
-#~ msgstr ""
-#~ "Der opstod et problem under indlæsning af et bibliotek eller en afkoder "
-#~ "(%s)."
-
-#~ msgid "This file is encrypted and cannot be played back."
-#~ msgstr "Denne film er krypteret og kan ikke afspilles."
-
-#~ msgid "For security reasons, this movie can not be played back."
-#~ msgstr "Af sikkerhedsgrunde kan denne film afspilles."
-
-#~ msgid "The audio device is busy. Is another application using it?"
-#~ msgstr "Lydenheden er optaget. Bruges denne af et andet program?"
-
-#~ msgid "Authentication is required to access this file."
-#~ msgstr "Denne fil kan ikke tilgås uden godkendelse."
-
-#~ msgid "The file you tried to play is an empty file."
-#~ msgstr "Filen du prøvede at spille, er tom."
-
-#~ msgid "There is no input plugin to handle the location of this movie"
-#~ msgstr ""
-#~ "Der er intet inddata-udvidelsesmodul til at håndtere placeringen af denne "
-#~ "film"
-
-#~ msgid "There is no plugin to handle this movie."
-#~ msgstr "Der er intet udvidelsesmodul til at håndtere denne film."
-
-#~ msgid "This movie is broken and can not be played further."
-#~ msgstr "Denne film er ødelagt og kan ikke afspilles yderligere."
-
-#~ msgid "This movie could not be opened."
-#~ msgstr "Denne film kan ikke åbnes."
-
-#~ msgid ""
-#~ "Video codec '%s' is not handled. You might need to install additional "
-#~ "plugins to be able to play some types of movies"
-#~ msgstr ""
-#~ "Videokodningen \"%s\" er ikke håndteret. Du bliver muligvis nødt til at "
-#~ "installere yderligere udvidelsesmoduler for at afspille nogle typer film"
-
-#~ msgid "This is an audio-only file and there is no audio output available."
-#~ msgstr ""
-#~ "Dette er en fil med kun lyd, og der er ikke nogen lydudgang tilgængelig."
-
 #~ msgid "Language %d"
 #~ msgstr "Sprog %d"
-
-#~ msgid "No video to capture."
-#~ msgstr "Ingen video at optage."
 
 #~ msgid "Video codec is not handled."
 #~ msgstr "Videokodningen håndteres ikke."
@@ -3477,295 +2805,3 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Totem could not eject the optical media."
 #~ msgstr "Totem kunne ikke skubbe det optiske medium ud."
-
-#~ msgid "Skipto"
-#~ msgstr "Spring til"
-
-#~ msgid ""
-#~ "Small\n"
-#~ "Normal\n"
-#~ "Large\n"
-#~ "Extra Large"
-#~ msgstr ""
-#~ "Lille\n"
-#~ "Normal\n"
-#~ "Stor\n"
-#~ "Ekstra stor"
-
-#~ msgid ""
-#~ "Stereo\n"
-#~ "4-channel\n"
-#~ "4.1-channel\n"
-#~ "5.0-channel\n"
-#~ "5.1-channel\n"
-#~ "AC3 Passthrough"
-#~ msgstr ""
-#~ "Stereo\n"
-#~ "4-kanaler\n"
-#~ "4.1-kanaler\n"
-#~ "5.0-kanaler\n"
-#~ "5.1-kanaler\n"
-#~ "AC3-gennemgående"
-
-#~ msgid "Volume"
-#~ msgstr "Lydstyrke"
-
-#~ msgid "+"
-#~ msgstr "+"
-
-#~ msgid "-"
-#~ msgstr "-"
-
-#~ msgid "Full Volume"
-#~ msgstr "Fuld lydstyrke"
-
-#~ msgid "playlist"
-#~ msgstr "afspilningsliste"
-
-#~ msgid "main window"
-#~ msgstr "hovedvindue"
-
-#~ msgid "Plugins Manager"
-#~ msgstr "Udvidelsesmoduler"
-
-#~ msgid "Properties dialog"
-#~ msgstr "Vindue over egenskaber"
-
-#~ msgid "<b>Audio</b>"
-#~ msgstr "<b>Lyd</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Generelt</b>"
-
-#~ msgid "<b>Video</b>"
-#~ msgstr "<b>Video</b>"
-
-#~ msgid "<i>Channels:</i>"
-#~ msgstr "<i>Kanaler:</i>"
-
-#~ msgid "<i>Duration:</i>"
-#~ msgstr "<i>Varighed:</i>"
-
-#~ msgid "<i>Title:</i>"
-#~ msgstr "<i>Titel:</i>"
-
-#~ msgid "<i>Year:</i>"
-#~ msgstr "<i>År:</i>"
-
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>Eksempel</b>"
-
-#~ msgid "Save screenshot"
-#~ msgstr "Gem skærmbillede"
-
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "Gem skærmbillede på _skrivebordet"
-
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "Gem skærmbillede i _fil:"
-
-#~ msgid "<b>Display</b>"
-#~ msgstr "<b>Fremvisning</b>"
-
-#~ msgid "<span size=\"medium\"><b>No file</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
-
-#~ msgid "Vanity Webcam utility"
-#~ msgstr "Vanity - netkameraværktøj"
-
-#~ msgid "View live webcam and upload pictures"
-#~ msgstr "Vis live-netkamera og overfør billeder"
-
-#~ msgid "Vanity"
-#~ msgstr "Vanity"
-
-#~ msgid "Vanity Preferences"
-#~ msgstr "Indstillinger for Vanity "
-
-#~ msgid "Zoom 1:1"
-#~ msgstr "Zoom 1:1"
-
-#~ msgid "Zoom 1:2"
-#~ msgstr "Zoom 1:2"
-
-#~ msgid "Zoom 2:1"
-#~ msgstr "Zoom 2:1"
-
-#~ msgid "Zoom _1:1"
-#~ msgstr "Zoom _1:1"
-
-#~ msgid "Zoom _2:1"
-#~ msgstr "Zoom _2:1"
-
-#~ msgid "_Picture"
-#~ msgstr "_Billede"
-
-#~ msgid "_Zoom 1:2"
-#~ msgstr "_Zoom 1:2"
-
-#~ msgid "Unnamed CDROM"
-#~ msgstr "Unavngiven cd-rom"
-
-#~ msgid "Always on top"
-#~ msgstr "Altid øverst"
-
-#~ msgid "File '%s' already exists."
-#~ msgstr "Filen \"%s\" eksisterer allerede."
-
-#~ msgid "The screenshot was not saved"
-#~ msgstr "Skærmbilledet blev ikke gemt."
-
-#~ msgid "Shadow type"
-#~ msgstr "Skyggetype"
-
-#~ msgid "Style of bevel around the statusbar text"
-#~ msgstr "Afrundingstypen omkring statuslinjeteksten"
-
-#~ msgid "Totem could not seek in '%s'."
-#~ msgstr "Totem kunne ikke søge i \"%s\"."
-
-#~ msgid "Webcam utility using %s"
-#~ msgstr "Netkamera-værktøj via %s"
-
-#~ msgid "Copyright © 2002-2005 Bastien Nocera"
-#~ msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#~ msgid ""
-#~ "Vanity could not startup:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Vanity kunne ikke starte:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Vanity could not play video from the webcam.\n"
-#~ "Reason: %s"
-#~ msgstr ""
-#~ "Vanity kunne ikke afspille video fra netkameraet.\n"
-#~ "Grund: %s"
-
-#~ msgid "Debug mode on"
-#~ msgstr "Fejlanalyseringstilstand til"
-
-#~ msgid ""
-#~ "Could not initialize the thread-safe libraries.\n"
-#~ "Verify your system installation. Vanity will now exit."
-#~ msgstr ""
-#~ "Kunne ikke klargøre de tråd-sikre biblioteker.\n"
-#~ "Kontrollér din systeminstallation. Vanity vil nu afslutte."
-
-#~ msgid "Vanity Webcam Utility"
-#~ msgstr "Vanity - netkamera-værktøj"
-
-#~ msgid ""
-#~ "Vanity could not initialize the \n"
-#~ "configuration engine:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Vanity kunne ikke klargøre\n"
-#~ "konfigurationsmotoren:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Couldn't load the main interface (vanity.glade).\n"
-#~ "Make sure that Vanity is properly installed."
-#~ msgstr ""
-#~ "Kunne ikke indlæse hovedgrænsefladen (vanity.glade).\n"
-#~ "Sikr dig at Vanity er korrekt installeret."
-
-#~ msgid "    "
-#~ msgstr "    "
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "No Language Selection Available"
-#~ msgstr "Intet sprogvalg tilgængeligt"
-
-#~ msgid "No subtitles selection available"
-#~ msgstr "Intet undertitelvalg tilgængeligt"
-
-#~ msgid "Set the aspect ratio"
-#~ msgstr "Sæt højde-/breddeforholdet"
-
-#~ msgid "_DXR3 TV-out"
-#~ msgstr "_DXR3 tv-ud"
-
-#~ msgid "Height of the video widget"
-#~ msgstr "Højde af videokontrollen"
-
-#~ msgid "Whether the sidebar is shown"
-#~ msgstr "Om sidepanelet vises"
-
-#~ msgid "Width of the video widget"
-#~ msgstr "Bredde af videokontrollen"
-
-#~ msgid "Empty"
-#~ msgstr "Tom"
-
-#~ msgid "Backend options"
-#~ msgstr "Motorindstillinger"
-
-#~ msgid "Option '%s' is unknown and was ignored\n"
-#~ msgstr "Valgmuligheden \"%s\" er ukendt og blev ignoreret\n"
-
-#~ msgid "Overwrite file?"
-#~ msgstr "Overskriv fil?"
-
-#~ msgid ""
-#~ "A file named '%s' already exists.  Are you sure you want to overwrite it?"
-#~ msgstr ""
-#~ "Filen \"%s\" findes allerede. Er du sikker på du vil overskrive den?"
-
-#~ msgid ""
-#~ "Switching on or off this type of TV-Out requires a restart to take effect."
-#~ msgstr ""
-#~ "Aktivering/deaktivering af denne type tv-ud kræver en genstart for at "
-#~ "træde i kraft."
-
-#~ msgid "Totem couldn't show the movie properties window."
-#~ msgstr "Totem kunne ikke vise filmegenskabsvinduet."
-
-#~ msgid "Make sure that Totem is correctly installed."
-#~ msgstr "Kontrollér at Totem er korrekt installeret."
-
-#~ msgid "video popup menu"
-#~ msgstr "video pop op-menu"
-
-#~ msgid "Totem Video Window"
-#~ msgstr "Totem-videovindue"
-
-#~ msgid "Failed to open media file; unknown error"
-#~ msgstr "Det mislykkedes at åbne medie-filen; ukendt fejl"
-
-#~ msgid "unknown error"
-#~ msgstr "Ukendt fejl"
-
-#~ msgid "This movie is a still image. You can open it with an image viewer."
-#~ msgstr ""
-#~ "Denne film er et stillbillede. Du kan åbne den med et "
-#~ "billedvisningsprogram."
-
-#~ msgid "Failed to find real device node for %s: %s"
-#~ msgstr "Kunne ikke finde korrekt enhedsknude for %s: %s"
-
-#~ msgid "Failed to read symbolic link %s: %s"
-#~ msgstr "Kunne ikke læse symbolsk henvisning %s: %s"
-
-#~ msgid "Failed to find mountpoint for device %s in /etc/fstab"
-#~ msgstr "Kunne ikke finde monteringspunktet for enheden %s i /etc/fstab"
-
-#~ msgid "Failed to open device %s for reading: %s"
-#~ msgstr "Kunne ikke åbne enheden %s for læsning: %s"
-
-#~ msgid "Failed to retrieve capabilities of device %s: %s"
-#~ msgstr "Kunne ikke hente egenskaber for enheden %s: %s"
-
-#~ msgid "Drive status 0x%x (%s) - check disc"
-#~ msgstr "Drevstatus 0x%x (%s) - kontrollér disken"
-
-#~ msgid "Error getting %s disc status: %s"
-#~ msgstr "Fejl ved henting %s diskstatus: %s"
-
-#~ msgid "Unexpected/unknown cd type 0x%x (%s)"
-#~ msgstr "Uventet/ukendt cd-type 0x%x (%s)"
