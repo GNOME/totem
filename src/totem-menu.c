@@ -343,6 +343,12 @@ totem_app_menu_setup (Totem *totem)
 {
 	GMenuModel *appmenu;
 	char *accels[] = { NULL, NULL };
+	const char const *shortcuts_accels[] = {
+		"<Ctrl>H",
+		"<Ctrl>question",
+		"<Ctrl>F1",
+		NULL
+	};
 
 	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
 	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
@@ -354,6 +360,7 @@ totem_app_menu_setup (Totem *totem)
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.root-menu", (const char * const *) accels);
 	accels[0] = "<Primary>E";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.eject", (const char * const *) accels);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.shortcuts", shortcuts_accels);
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 
