@@ -13,7 +13,8 @@ bvw_test_CPPFLAGS = \
 
 bvw_test_CFLAGS =		\
 	$(BACKEND_CFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	$(WARN_FLAGS)
 
 bvw_test_LDADD =					\
 	libbaconvideowidget.la				\
@@ -66,7 +67,8 @@ libbaconvideowidget_la_CPPFLAGS = \
 
 libbaconvideowidget_la_CFLAGS =	\
 	$(BACKEND_CFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	$(WARN_CFLAGS)
 
 libbaconvideowidget_la_LIBADD =					\
 	$(top_builddir)/src/gst/libtotemgsthelpers.la		\
