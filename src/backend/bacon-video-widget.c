@@ -3312,6 +3312,19 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
   return FALSE;
 }
 
+static char *
+get_label_for_type (const char *type_name,
+		    int         num)
+{
+  if (g_str_equal (type_name, "AUDIO")) {
+    return g_strdup_printf (_("Audio Track #%d"), num);
+  } else if (g_str_equal (type_name, "TEXT")) {
+    return g_strdup_printf (_("Subtitle #%d"), num);
+  }
+
+  g_assert_not_reached ();
+}
+
 static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
@@ -3320,16 +3333,13 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
   gint i, n;
   const char *prop;
   const char *signal;
-  const char *text;
 
   if (g_str_equal (type_name, "AUDIO")) {
     prop = "n-audio";
     signal = "get-audio-tags";
-    text = N_("Audio Track #%d");
   } else if (g_str_equal (type_name, "TEXT")) {
     prop = "n-text";
     signal = "get-text-tags";
-    text = N_("Subtitle #%d");
   } else {
     g_critical ("Invalid stream type '%s'", type_name);
     return NULL;
@@ -3357,11 +3367,11 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
       } else if (cd) {
 	ret = g_list_prepend (ret, cd);
       } else {
-	  ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
+	  ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
       }
       gst_tag_list_unref (tags);
     } else {
-      ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
+      ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
     }
   }
 
