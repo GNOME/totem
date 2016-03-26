@@ -19,48 +19,51 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-12 12:56+0000\n"
-"PO-Revision-Date: 2014-08-03 17:47+0800\n"
-"Last-Translator: Tong Hui <tonghuix@gmail.com>\n"
+"POT-Creation-Date: 2016-01-12 00:51+0000\n"
+"PO-Revision-Date: 2015-11-13 01:23+0800\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1856 ../src/totem-object.c:3662
+msgid "Videos"
+msgstr "视频"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "播放电影"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
-"视频(Videos)，也叫 Totem，是 GNOME 桌面环境下的官方视频播放器。它支持搜索本"
-"地视频，DVD以及本地网络共享（基于 UPnP/DLNA），并支持大量网站上的精华视频。"
+"视频(Videos)，也叫 Totem，是 GNOME 桌面环境下的官方视频播放器。它支持搜索本地"
+"视频，DVD以及本地网络共享（基于 UPnP/DLNA），并支持大量网站上的精华视频。"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
 msgstr "Totem 还有其他一些功能，比如：字幕下载器，以及 DVD 刻录。"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
 msgstr "文件浏览器的视频缩略图生成器"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
 msgstr "文件属性标签"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
-msgid "Videos"
-msgstr "视频"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "播放电影"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -68,119 +71,120 @@ msgstr ""
 "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;视频;电影;影片;剪辑;系列节目;"
 "播放器;DVD;电视;唱片;"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "视频亮度"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "视频对比度"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "视频色调"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "视频饱和度"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "重复模式"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "是否为隔行扫描的电影禁用逐行扫描"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
-msgid "Whether to enable debug for the playback engine"
-msgstr "是否启用回放引擎的调试功能"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "使用的音频输出类型"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "网络缓冲区阀值"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
 msgstr "网络流媒体开始显示之前要缓存的数据量(以秒计)。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "字幕字体"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "字幕渲染所用的 Pango 字体描述。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "'UTF-8'"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "字幕编码"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "字幕的编码字符集。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "“打开...”对话框的默认位置"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
 msgstr "“打开...”对话框的默认位置，默认为当前目录。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "“抓取屏幕截图” 对话框的默认位置"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
 msgstr "“抓取屏幕截图”对话框的默认位置，默认为图片目录。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "是否禁用用户主目录中的插件"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "是否禁用键盘快捷键"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "在载入电影时是否自动加载字幕文件"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "在加载电影时是否自动加载外部章节文件"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "活动插件列表"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "当前使用中的(已加载和运行中的)插件名称列表。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "要显示的目录"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
 msgstr "要在浏览界面显示的目录，默认为无"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5481
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5521
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "立体声"
@@ -453,55 +457,55 @@ msgstr "输入您想要打开的文件的地址(_A)："
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1906
+#: ../src/backend/bacon-video-widget.c:1946
 msgid "Password requested for RTSP server"
 msgstr "RTSP 服务器需要密码"
 
-#: ../src/backend/bacon-video-widget.c:3277
+#: ../src/backend/bacon-video-widget.c:3317
 #, c-format
 msgid "Audio Track #%d"
 msgstr "音轨 #%d"
 
-#: ../src/backend/bacon-video-widget.c:3281
+#: ../src/backend/bacon-video-widget.c:3321
 #, c-format
 msgid "Subtitle #%d"
 msgstr "字幕 #%d"
 
-#: ../src/backend/bacon-video-widget.c:3737
+#: ../src/backend/bacon-video-widget.c:3777
 msgid "The server you are trying to connect to is not known."
 msgstr "您试图连接的服务器未知。"
 
-#: ../src/backend/bacon-video-widget.c:3740
+#: ../src/backend/bacon-video-widget.c:3780
 msgid "The connection to this server was refused."
 msgstr "到此服务器的连接被拒绝。"
 
-#: ../src/backend/bacon-video-widget.c:3743
+#: ../src/backend/bacon-video-widget.c:3783
 msgid "The specified movie could not be found."
 msgstr "找不到指定电影。"
 
-#: ../src/backend/bacon-video-widget.c:3750
+#: ../src/backend/bacon-video-widget.c:3790
 msgid "The server refused access to this file or stream."
 msgstr "此服务器拒绝访问此文件或流。"
 
-#: ../src/backend/bacon-video-widget.c:3756
+#: ../src/backend/bacon-video-widget.c:3796
 msgid "Authentication is required to access this file or stream."
 msgstr "读取此文件或流需要权限认证。"
 
-#: ../src/backend/bacon-video-widget.c:3763
+#: ../src/backend/bacon-video-widget.c:3803
 msgid "You are not allowed to open this file."
 msgstr "您无权打开此文件。"
 
-#: ../src/backend/bacon-video-widget.c:3768
+#: ../src/backend/bacon-video-widget.c:3808
 msgid "This location is not a valid one."
 msgstr "此地址无效。"
 
-#: ../src/backend/bacon-video-widget.c:3776
+#: ../src/backend/bacon-video-widget.c:3816
 msgid "The movie could not be read."
 msgstr "无法读取电影。"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3799
-#: ../src/backend/bacon-video-widget.c:3807
+#: ../src/backend/bacon-video-widget.c:3839
+#: ../src/backend/bacon-video-widget.c:3847
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -514,12 +518,12 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3819
+#: ../src/backend/bacon-video-widget.c:3859
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr "此流文件不能播放。可能已被防火墙隔离。"
 
-#: ../src/backend/bacon-video-widget.c:3822
+#: ../src/backend/bacon-video-widget.c:3862
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -527,29 +531,47 @@ msgstr ""
 "因缺少编解码器无法处理音频/视频流。您可能需要安装额外的插件才能播放某些类型的"
 "电影"
 
-#: ../src/backend/bacon-video-widget.c:3833
+#: ../src/backend/bacon-video-widget.c:3873
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "该文件无法通过网络播放。请先尝试先将它下载到本地。"
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5517 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "环绕声"
 
-#: ../src/backend/bacon-video-widget.c:5479 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5519 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "单声道"
 
-#: ../src/backend/bacon-video-widget.c:5766
+#: ../src/backend/bacon-video-widget.c:5806
 msgid "Media contains no supported video streams."
 msgstr "媒体不包含支持的视频流。"
 
-#: ../src/backend/bacon-video-widget.c:5924
+#: ../src/backend/bacon-video-widget.c:5965
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr "缺少必要的插件。请确保程序已正确安装。"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:355
+msgid "Unable to play the file"
+msgstr "无法播放文件"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:358
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "播放此文件需要 %s，但是没有安装。"
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:366
+#, c-format
+msgid "_Find in %s"
+msgstr "在 %s 中寻找(_F)"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -708,43 +730,43 @@ msgstr "选择全部"
 msgid "Select None"
 msgstr "全部不选"
 
-#: ../src/totem-audio-preview.c:172
+#: ../src/totem-audio-preview.c:174
 msgid "Audio Preview"
 msgstr "音频预听"
 
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr "无法初始化线程安全库。"
 
-#: ../src/totem.c:244
+#: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr "请检查您的系统安装。Totem 现将退出。"
 
-#: ../src/totem-grilo.c:280
+#: ../src/totem-grilo.c:284
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "第 %d 季第 %d 集"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:317
+#: ../src/totem-grilo.c:321
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (第 %d 季第 %d 集)"
 
-#: ../src/totem-grilo.c:687
+#: ../src/totem-grilo.c:671
 msgid "Browse Error"
 msgstr "浏览错误"
 
-#: ../src/totem-grilo.c:824
+#: ../src/totem-grilo.c:812
 msgid "Search Error"
 msgstr "搜索错误"
 
-#: ../src/totem-grilo.c:1275
+#: ../src/totem-grilo.c:1266
 msgid "Local"
 msgstr "本地"
 
-#: ../src/totem-grilo.c:1871
+#: ../src/totem-grilo.c:1865
 msgid "Channels"
 msgstr "频道"
 
@@ -794,65 +816,56 @@ msgid "Search"
 msgstr "搜索"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:391
+#: ../src/totem-menu.c:419
 msgid "None"
 msgstr "无"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:395
+#: ../src/totem-menu.c:423
 msgctxt "Language"
 msgid "Auto"
 msgstr "自动"
 
-#: ../src/totem-object.c:175
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"请运行“%s --help”查看完整的命令行选项列表。\n"
-
-#: ../src/totem-object.c:1334 ../src/totem-options.c:52
+#: ../src/totem-object.c:1422 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "暂停"
 
-#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
-#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "播放"
 
-#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
-#: ../src/totem-object.c:1955
+#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
+#: ../src/totem-object.c:2046
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem 无法播放“%s”。"
 
-#: ../src/totem-object.c:2097
+#: ../src/totem-object.c:2188
 msgid "Totem could not display the help contents."
 msgstr "Totem 无法显示帮助内容。"
 
-#: ../src/totem-object.c:2337
+#: ../src/totem-object.c:2428
 msgid "An error occurred"
 msgstr "发生了一个错误"
 
-#: ../src/totem-object.c:3641
+#: ../src/totem-object.c:3760
 msgid "Previous Chapter/Movie"
 msgstr "上一章/电影"
 
-#: ../src/totem-object.c:3647
+#: ../src/totem-object.c:3766
 msgid "Play / Pause"
 msgstr "播放/暂停"
 
-#: ../src/totem-object.c:3653
+#: ../src/totem-object.c:3772
 msgid "Next Chapter/Movie"
 msgstr "下一章/电影"
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3993
 msgid "Totem could not startup."
 msgstr "Totem 无法启动。"
 
-#: ../src/totem-object.c:3867
+#: ../src/totem-object.c:3993
 msgid "No reason."
 msgstr "无原因。"
 
@@ -861,84 +874,73 @@ msgid "Add Web Video"
 msgstr "添加网络视频"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "取消(_C)"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "添加(_A)"
 
 #: ../src/totem-options.c:49
-msgid "Enable debug"
-msgstr "启用调试"
-
-#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "播放/暂停"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "下一首"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "上一首"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "快进"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "快退"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "增加音量"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "降低音量"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "静音"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "切换全屏"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Quit"
 msgstr "退出"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Enqueue"
 msgstr "加入队列"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Replace"
 msgstr "替换"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Seek"
 msgstr "搜索"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Movies to play"
 msgstr "要播放的电影"
 
-#: ../src/totem-options.c:76
-msgid "- Play movies and songs"
-msgstr "- 播放电影和歌曲"
-
-#: ../src/totem-options.c:123
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "不能同时添加到队列和替换"
 
@@ -1176,7 +1178,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "跳到 %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "全部文件"
 
@@ -1192,7 +1194,7 @@ msgstr "字幕文件"
 msgid "Select Text Subtitles"
 msgstr "选择文本字幕"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "打开(_O)"
 
@@ -1203,7 +1205,7 @@ msgstr "添加视频"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:793
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1214,15 +1216,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:794
 msgid "Filename"
 msgstr "文件名"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Resolution"
 msgstr "分辨率"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:799
 msgid "Duration"
 msgstr "持续时间"
 
@@ -1276,143 +1278,6 @@ msgstr "复制视频 DVD(_O)..."
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD…"
 msgstr "复制 (S)VCD..."
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "新章节的名称："
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "移除章节(_R)"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "从列表中移除该章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "转到章节(_G)"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "转到电影中该章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "添加章节..."
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "移除章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "转到章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "保存更改"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "没有章节数据"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "加载章节..."
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "从外部 CMML 文件中加载章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "添加新章节"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "为该电影创建新的章节列表"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "章节"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "支持在电影中使用章节标记"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>标题： </b>%s\n"
-"<b>起始时间：</b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "使用章节读取文件时出错"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "有相同时间的章节已经存在"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "尝试其它名称或移除已经存在的章节。"
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "使用章节写入文件时出错"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "保存章节时发生错误"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "请检查您是否对包含电影的目录拥有写权限。"
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "打开章节文件"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "支持的文件"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "章节截图"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "章节标题"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "是否在关闭前保存章节列表的更改？"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "关闭但不保存"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "保存"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "如果您放弃保存，对章节列表所做的更改将会丢失。"
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "添加章节"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
@@ -1509,7 +1374,7 @@ msgid "Searching for subtitles…"
 msgstr "正在搜索字幕..."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:605
+#: ../src/plugins/opensubtitles/opensubtitles.py:608
 msgid "Downloading the subtitles…"
 msgstr "正在下载字幕..."
 
@@ -1526,27 +1391,27 @@ msgstr "无法连接 OpenSubtitles 网站。"
 msgid "No results found."
 msgstr "没有找到结果。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "格式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "评分"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:525
 msgid "_Download Movie Subtitles…"
 msgstr "下载影片字幕(_D)..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:565
 msgid "Searching subtitles…"
 msgstr "正在搜索字幕..."
 
@@ -1562,11 +1427,11 @@ msgstr "字幕语言(_L)："
 msgid "_Play with Subtitle"
 msgstr "随字幕播放(_P)"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "字幕语言"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "搜索影片字幕所使用的语言。"
 
@@ -1586,11 +1451,11 @@ msgstr "属性"
 msgid "_Properties"
 msgstr "属性(_P)"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "rpdb2 密码"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -1770,7 +1635,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "创建屏幕截图画册(_G)..."
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "跳至"
 
@@ -1784,7 +1649,7 @@ msgstr "跳至(_S)："
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
@@ -1793,12 +1658,12 @@ msgstr[0] "秒"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "跳至(_S)"
 
@@ -1821,6 +1686,124 @@ msgstr "Zeitgeist 插件"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "向  Zeitgeist 发送事件的插件"
+
+#~ msgid "Whether to enable debug for the playback engine"
+#~ msgstr "是否启用回放引擎的调试功能"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "Run '%s --help' to see a full list of available command line options.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "请运行“%s --help”查看完整的命令行选项列表。\n"
+
+#~ msgid "Enable debug"
+#~ msgstr "启用调试"
+
+#~ msgid "- Play movies and songs"
+#~ msgstr "- 播放电影和歌曲"
+
+#~ msgid "Name for new chapter:"
+#~ msgstr "新章节的名称："
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "移除章节(_R)"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "从列表中移除该章节"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "转到章节(_G)"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "转到电影中该章节"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "添加章节..."
+
+#~ msgid "Remove Chapter"
+#~ msgstr "移除章节"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "转到章节"
+
+#~ msgid "Save Changes"
+#~ msgstr "保存更改"
+
+#~ msgid "No chapter data"
+#~ msgstr "没有章节数据"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "加载章节..."
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "从外部 CMML 文件中加载章节"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "添加新章节"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "为该电影创建新的章节列表"
+
+#~ msgid "Chapters"
+#~ msgstr "章节"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "支持在电影中使用章节标记"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>标题： </b>%s\n"
+#~ "<b>起始时间：</b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "使用章节读取文件时出错"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "有相同时间的章节已经存在"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "尝试其它名称或移除已经存在的章节。"
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "使用章节写入文件时出错"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "保存章节时发生错误"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr "请检查您是否对包含电影的目录拥有写权限。"
+
+#~ msgid "Open Chapter File"
+#~ msgstr "打开章节文件"
+
+#~ msgid "Supported files"
+#~ msgstr "支持的文件"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "章节截图"
+
+#~ msgid "Chapter Title"
+#~ msgstr "章节标题"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "是否在关闭前保存章节列表的更改？"
+
+#~ msgid "Close without Saving"
+#~ msgstr "关闭但不保存"
+
+#~ msgid "Save"
+#~ msgstr "保存"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr "如果您放弃保存，对章节列表所做的更改将会丢失。"
+
+#~ msgid "Add Chapter"
+#~ msgstr "添加章节"
 
 #~ msgid "No URI to play"
 #~ msgstr "无可播放的 URI"
@@ -2399,9 +2382,6 @@ msgstr "向  Zeitgeist 发送事件的插件"
 
 #~ msgid "Copy the currently playing (S)VCD"
 #~ msgstr "复制正在播放的 (S)VCD"
-
-#~ msgid "Failed to parse CMML file"
-#~ msgstr "解析 CMML 文件失败"
 
 #~ msgid "D-Bus Service"
 #~ msgstr "D-Bus 服务"
