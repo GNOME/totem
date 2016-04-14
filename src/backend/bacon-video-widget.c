@@ -2334,7 +2334,7 @@ parse:
     if (!gst_toc_entry_get_start_stop_times (entry, &start, &stop)) {
       GST_DEBUG ("Chapter #%d (couldn't get times)", i);
     } else {
-      GST_DEBUG ("Chapter #%d (start: %li stop: %li)", i, start, stop);
+      GST_DEBUG ("Chapter #%d (start: %" G_GINT64_FORMAT " stop: %" G_GINT64_FORMAT ")", i, start, stop);
     }
   }
 
