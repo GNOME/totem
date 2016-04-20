@@ -119,7 +119,7 @@ save_file_create_ready_cb (GObject *source,
 					 G_OUTPUT_STREAM (stream),
 					 "png", NULL,
 					 save_pixbuf_ready_cb, job,
-					 "tEXt::Software", "totem",
+					 "tEXt::Software", "org.gnome.Totem",
 					 NULL);
 
 	g_object_unref (stream);
