@@ -1,5 +1,5 @@
 icondir = $(datadir)/icons/hicolor/22x22/apps
-icon_DATA = totem.png
+icon_DATA = org.gnome.Totem.png
 
 EXTRA_DIST = $(icon_DATA)
 

@@ -257,7 +257,7 @@ totem_object_app_activate (GApplication *app)
 	optionstate.had_filenames = FALSE;
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
-	bacon_video_widget_set_logo (totem->bvw, "totem");
+	bacon_video_widget_set_logo (totem->bvw, "org.gnome.Totem");
 
 	if (optionstate.fullscreen == FALSE)
 		g_application_unmark_busy (G_APPLICATION (totem));

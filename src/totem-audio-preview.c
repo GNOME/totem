@@ -170,7 +170,7 @@ int main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	g_set_application_name (_("Audio Preview"));
-	g_setenv("PULSE_PROP_application.icon_name", "totem", TRUE);
+	g_setenv("PULSE_PROP_application.icon_name", "org.gnome.Totem", TRUE);
 	g_setenv("PULSE_PROP_media.role", "music", TRUE);
 
 	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");
