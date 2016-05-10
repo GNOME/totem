@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-03 14:58+0000\n"
-"PO-Revision-Date: 2016-02-25 21:15+0200\n"
+"POT-Creation-Date: 2016-04-29 14:40+0000\n"
+"PO-Revision-Date: 2016-05-08 18:53+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3668
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3661
 msgid "Videos"
 msgstr "Vidèos"
 
@@ -184,7 +184,7 @@ msgstr ""
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5540
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5550
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Esterèo"
@@ -353,97 +353,81 @@ msgid "Channels:"
 msgstr "Canals :"
 
 #: ../data/shortcuts.ui.h:1
-#| msgid "General"
 msgctxt "shortcut window"
 msgid "General"
 msgstr "General"
 
 #: ../data/shortcuts.ui.h:2
-#| msgid "Preferences"
 msgctxt "shortcut window"
 msgid "Preferences"
 msgstr "Preferéncias"
 
 #: ../data/shortcuts.ui.h:3
-#| msgid "Quit"
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Quitar"
 
 #: ../data/shortcuts.ui.h:4
-#| msgid "Volume Up"
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volum +"
 
 #: ../data/shortcuts.ui.h:5
-#| msgid "Increase volume"
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Aumenta lo volum"
 
 #: ../data/shortcuts.ui.h:6
-#| msgid "Decrease volume"
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Baissa lo volum"
 
 #: ../data/shortcuts.ui.h:7
-#| msgid "_View"
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Afichatge"
 
 #: ../data/shortcuts.ui.h:8
-#| msgid "Toggle Fullscreen"
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Bascular en mòde ecran complet"
 
 #: ../data/shortcuts.ui.h:9
-#| msgid "Switch to fullscreen"
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Quitar lo mòde ecran complet"
 
 #: ../data/shortcuts.ui.h:10
-#| msgid "Zoom in"
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Zoom avant"
 
 #: ../data/shortcuts.ui.h:11
-#| msgid "Zoom In"
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Zoom arrièr"
 
 #: ../data/shortcuts.ui.h:12
-#| msgid "Playback"
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Playback"
 
 #: ../data/shortcuts.ui.h:13
-#| msgid "Play/Pause"
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Lectura/Pausa"
 
 #: ../data/shortcuts.ui.h:14
-#| msgid "Previous chapter or movie"
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Capítol o filme precedent"
 
 #: ../data/shortcuts.ui.h:15
-#| msgid "Name for new chapter:"
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Vidèo o capítol novèl :"
 
 #: ../data/shortcuts.ui.h:16
-#| msgid "Skip To"
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Sautar"
@@ -454,20 +438,16 @@ msgid "Go back 15 seconds"
 msgstr "Recular de 15 segondas"
 
 #: ../data/shortcuts.ui.h:18
-#| msgid "0 seconds"
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Avançar de 60 segondas"
 
 #: ../data/shortcuts.ui.h:19
-#| msgid "0 seconds"
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Recular de 5 segondas"
 
 #: ../data/shortcuts.ui.h:20
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Avançar de 15 segondas"
@@ -483,7 +463,6 @@ msgid "Go forward 10 minutes"
 msgstr "Avançar de 10 minutas"
 
 #: ../data/shortcuts.ui.h:23
-#| msgid "_Skip to:"
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Sautar cap a :"
@@ -511,7 +490,7 @@ msgstr "Navigar cap a esquèrra"
 #: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "Navigate right"
-msgstr "Navigar cap a drecha"
+msgstr "Navigar cap a dreita"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
@@ -627,52 +606,52 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "Senhal demandat pel servidor RTSP"
 
-#: ../src/backend/bacon-video-widget.c:3328
+#: ../src/backend/bacon-video-widget.c:3320
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista àudio n°%d"
 
-#: ../src/backend/bacon-video-widget.c:3332
+#: ../src/backend/bacon-video-widget.c:3322
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Sostítol n°%d"
 
-#: ../src/backend/bacon-video-widget.c:3796
+#: ../src/backend/bacon-video-widget.c:3806
 msgid "The server you are trying to connect to is not known."
 msgstr "Lo servidor al qual temptatz de vos connectar es desconegut."
 
-#: ../src/backend/bacon-video-widget.c:3799
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "The connection to this server was refused."
 msgstr "La connexion a aqueste servidor es estada refusada."
 
-#: ../src/backend/bacon-video-widget.c:3802
+#: ../src/backend/bacon-video-widget.c:3812
 msgid "The specified movie could not be found."
 msgstr "Lo filme especificat a pas pogut èsser trobat."
 
-#: ../src/backend/bacon-video-widget.c:3809
+#: ../src/backend/bacon-video-widget.c:3819
 msgid "The server refused access to this file or stream."
 msgstr "Lo servidor a refusat l'accès a aqueste fichièr o aqueste flux."
 
-#: ../src/backend/bacon-video-widget.c:3815
+#: ../src/backend/bacon-video-widget.c:3825
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Es necessari de s'autentificar per accedir a aqueste fichièr o aqueste flux."
 
-#: ../src/backend/bacon-video-widget.c:3822
+#: ../src/backend/bacon-video-widget.c:3832
 msgid "You are not allowed to open this file."
 msgstr "La dobertura d'aqueste fichièr es pas permesa."
 
-#: ../src/backend/bacon-video-widget.c:3827
+#: ../src/backend/bacon-video-widget.c:3837
 msgid "This location is not a valid one."
 msgstr "L'emplaçament es pas valid."
 
-#: ../src/backend/bacon-video-widget.c:3835
+#: ../src/backend/bacon-video-widget.c:3845
 msgid "The movie could not be read."
 msgstr "Lo filme a pas pogut èsser legit."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3858
-#: ../src/backend/bacon-video-widget.c:3866
+#: ../src/backend/bacon-video-widget.c:3868
+#: ../src/backend/bacon-video-widget.c:3876
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -687,12 +666,12 @@ msgstr[1] ""
 "\r\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3878
+#: ../src/backend/bacon-video-widget.c:3888
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
 
-#: ../src/backend/bacon-video-widget.c:3881
+#: ../src/backend/bacon-video-widget.c:3891
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -701,7 +680,7 @@ msgstr ""
 "vos calga installar d\"empeutons suplementaris per èsser capable de "
 "visualizar d'unes tipes de filmes"
 
-#: ../src/backend/bacon-video-widget.c:3892
+#: ../src/backend/bacon-video-widget.c:3902
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -709,24 +688,24 @@ msgstr ""
 "Impossible de legir aqueste fichièr via la ret. Ensajatz de lo telecargar "
 "sus disc de per abans."
 
-#: ../src/backend/bacon-video-widget.c:5536 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5546 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5538 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5548 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5825
+#: ../src/backend/bacon-video-widget.c:5835
 msgid "Media contains no supported video streams."
 msgstr "Lo mèdia conten pas de flux vidèo pres en carga."
 
-#: ../src/backend/bacon-video-widget.c:6036
+#: ../src/backend/bacon-video-widget.c:6046
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
-"D'empeutons indispensables mancan. Asseguratz-vous que lo programa es "
+"D'empeutons indispensables mancan. Asseguratz-vos que lo programa es "
 "installat corrèctament."
 
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
@@ -740,8 +719,8 @@ msgid_plural "%s are required to play the file, but are not installed."
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: this is a button to launch a codec installer.
-#. * %s will be replaced with the software installer's name, e.g.
+#. TRANSLATORS: this is a button to launch a codec installar.
+#. * %s will be replaced with the software installar's name, e.g.
 #. * 'Software' in case of gnome-software.
 #: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
 #, c-format
@@ -967,14 +946,14 @@ msgstr "Verificatz que Totem es installat corrèctament."
 msgid "Click on items to select them"
 msgstr "Clicar sus un element per lo seleccionar"
 
-#: ../src/totem-main-toolbar.c:137
+#: ../src/totem-main-toolbar.c:136
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d seleccionat"
 msgstr[1] "%d seleccionats"
 
-#: ../src/totem-main-toolbar.c:159
+#: ../src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
 msgstr "Resultats per “%s”"
@@ -996,56 +975,56 @@ msgid "Search"
 msgstr "Recercar"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:428
+#: ../src/totem-menu.c:435
 msgid "None"
 msgstr "Pas cap"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:432
+#: ../src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatic"
 
-#: ../src/totem-object.c:1422 ../src/totem-options.c:51
+#: ../src/totem-object.c:1386 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1427 ../src/totem-object.c:1437
+#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Legir"
 
-#: ../src/totem-object.c:1504 ../src/totem-object.c:1531
-#: ../src/totem-object.c:2023
+#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
+#: ../src/totem-object.c:1987
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem a pas pogut legir '%s'."
 
-#: ../src/totem-object.c:2165
+#: ../src/totem-object.c:2158
 msgid "Totem could not display the help contents."
 msgstr "Totem pòt pas afichar lo contengut de l'ajuda."
 
-#: ../src/totem-object.c:2426
+#: ../src/totem-object.c:2419
 msgid "An error occurred"
 msgstr "I a agut una error"
 
-#: ../src/totem-object.c:3766
+#: ../src/totem-object.c:3759
 msgid "Previous Chapter/Movie"
 msgstr "Capítol/Filme precedent"
 
-#: ../src/totem-object.c:3772
+#: ../src/totem-object.c:3765
 msgid "Play / Pause"
 msgstr "Lectura / pausa"
 
-#: ../src/totem-object.c:3778
+#: ../src/totem-object.c:3771
 msgid "Next Chapter/Movie"
 msgstr "Capítol/Filme seguent"
 
-#: ../src/totem-object.c:3987
+#: ../src/totem-object.c:3980
 msgid "Totem could not startup."
 msgstr "Totem a pas pogut aviar."
 
-#: ../src/totem-object.c:3987
+#: ../src/totem-object.c:3980
 msgid "No reason."
 msgstr "Pas de rason."
 
@@ -1199,7 +1178,6 @@ msgid "Add to Favourites"
 msgstr "Apondre als favorits"
 
 #: ../src/totemselectiontoolbar.ui.h:2
-#| msgid "Play"
 msgctxt "button"
 msgid "Play"
 msgstr "Legir"
@@ -1512,8 +1490,8 @@ msgstr "Estat de la messatjariá instantanèa"
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
-"Definís vòstre estat de messatjariá instantanèa a « pas disponible » quand "
-"un filme est legit"
+"Definís vòstre estat de messatjariá instantanèa a « pas disponibla » quand "
+"un filme es legit"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -1947,13 +1925,13 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 
 #~ msgid "Error occurred while saving chapters"
 #~ msgstr ""
-#~ "Una error s'es producha al moment de l'enregistrament del capitolatge"
+#~ "Una error s'es produita al moment de l'enregistrament del capitolatge"
 
 #~ msgid ""
 #~ "Please check you have permission to write to the folder containing the "
 #~ "movie."
 #~ msgstr ""
-#~ "Verificatz qu'avètz los dreches d'escritura dins lo dorsièr que conten la "
+#~ "Verificatz qu'avètz los dreits d'escritura dins lo dorsièr que conten la "
 #~ "vidèo."
 
 #~ msgid "Open Chapter File"
@@ -2081,7 +2059,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "Dobrir un emplaçament..."
 
 #~ msgid "Totem Website"
-#~ msgstr "Sit web de Totem"
+#~ msgstr "Site web de Totem"
 
 #~ msgid "_Fullscreen"
 #~ msgstr "Ecran _complet"
@@ -2090,7 +2068,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "A prepaus d'aquesta aplicacion"
 
 #~ msgid "Visual Effects"
-#~ msgstr "Efièches visuals"
+#~ msgstr "Efèits visuals"
 
 #~ msgid "Go to the angle menu"
 #~ msgstr "Anar al menú angle"
@@ -2183,7 +2161,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "_Avança rapida"
 
 #~ msgid "Show _visual effects when an audio file is played"
-#~ msgstr "Afichar d'efièches _visuals a la lectura d'un fichièr àudio"
+#~ msgstr "Afichar d'efèits _visuals a la lectura d'un fichièr àudio"
 
 #~ msgid "Show controls"
 #~ msgstr "Aficha los contraròtles"
@@ -2204,7 +2182,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "Barra de navigacion temporala"
 
 #~ msgid "View the properties of the current stream"
-#~ msgstr "Aficha las proprietats del flus actual"
+#~ msgstr "Aficha las proprietats del flux actual"
 
 #~ msgid "Text Subtitles"
 #~ msgstr "Sostítols"
@@ -2262,7 +2240,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "Mòstra d'efèctes visuals quand se legís un fichièr audiò"
 
 #~ msgid "Show visual effects when no video is displayed"
-#~ msgstr "Mòstra d'efèctes visuals en l'absencia de videò"
+#~ msgstr "Mòstra d'efèctes visuals en l'abséncia de vidèo"
 
 #~ msgid "Shuffle mode"
 #~ msgstr "Mòde aleatòri"
@@ -2315,10 +2293,10 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "FICHIÈR"
 
 #~ msgid "Specify session management ID"
-#~ msgstr "Indica l'ID de gestion de sesilha"
+#~ msgstr "Indica l'ID de gestion de session"
 
 #~ msgid "Disable connection to session manager"
-#~ msgstr "Desactiva la connexion amb lo gestionari de sesilhas"
+#~ msgstr "Desactiva la connexion amb lo gestionari de sessions"
 
 #~ msgid "Specify file containing saved configuration"
 #~ msgstr "Indica lo fichièr que conten la configuracion enregistrada"
@@ -2333,10 +2311,10 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ msgstr "L'element es pas executable"
 
 #~ msgid "Session management options:"
-#~ msgstr "Opcions de gestion de sesilha :"
+#~ msgstr "Opcions de gestion de session :"
 
 #~ msgid "Show session management options"
-#~ msgstr "Afichar las opcions de gestion de sesilha"
+#~ msgstr "Afichar las opcions de gestion de session"
 
 #~ msgid "_Play Now"
 #~ msgstr "_Legir ara"
@@ -2525,7 +2503,7 @@ msgstr "Un empeuton que manda d'eveniments a Zeitgeist"
 #~ "àudio a la mesa en pausa o a la tampadura"
 
 #~ msgid "Name of the visual effects plugin"
-#~ msgstr "Nom dels empeutons d'efièches visuals"
+#~ msgstr "Nom dels empeutons d'efèits visuals"
 
 #~ msgid "Load Chapters..."
 #~ msgstr "Cargar lo capitolatge..."
