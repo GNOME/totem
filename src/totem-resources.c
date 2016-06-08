@@ -41,7 +41,7 @@
 
 #include "totem-resources.h"
 
-#define MAX_HELPER_MEMORY (256 * 1024 * 1024)	/* 256 MB */
+#define MAX_HELPER_MEMORY (512 * 1024 * 1024)	/* 512 MB */
 #define MAX_HELPER_SECONDS (15)			/* 15 seconds */
 #define DEFAULT_SLEEP_TIME (30 * G_USEC_PER_SEC) /* 30 seconds */
 
