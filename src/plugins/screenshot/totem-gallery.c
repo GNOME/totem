@@ -38,8 +38,7 @@
 
 static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self);
 
-/* GtkBuilder callbacks */
-void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
+static void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
 
 struct _TotemGalleryPrivate {
 	Totem *totem;
@@ -85,6 +84,8 @@ totem_gallery_new (Totem *totem)
 	gallery->priv->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));
 	gallery->priv->screenshot_count = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_count"));
 	gallery->priv->screenshot_width = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_width"));
+	g_signal_connect (gtk_builder_get_object (builder, "default_screenshot_count"), "toggled",
+			  G_CALLBACK (default_screenshot_count_toggled_callback), gallery);
 
 	gallery->priv->totem = totem;
 
@@ -133,7 +134,7 @@ totem_gallery_new (Totem *totem)
 	return gallery;
 }
 
-void
+static void
 default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self)
 {
 	/* Only have the screenshot count spin button sensitive when the default screenshot count
