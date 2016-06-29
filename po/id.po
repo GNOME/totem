@@ -9,11 +9,11 @@
 # Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: totem gnome-3-20\n"
+"Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-03 12:20+0000\n"
-"PO-Revision-Date: 2016-06-29 19:08+0700\n"
+"POT-Creation-Date: 2016-06-29 12:09+0000\n"
+"PO-Revision-Date: 2016-06-29 19:13+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -369,7 +369,6 @@ msgid "Quit"
 msgstr "Keluar"
 
 #: ../data/shortcuts.ui.h:4
-#| msgid "Volume Up"
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volume"
@@ -594,6 +593,10 @@ msgstr "Menu S_udut Kamera"
 #: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "Menu _Bab"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Kecepatan"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1026,7 +1029,7 @@ msgid "Add Web Video"
 msgstr "Tambah Video Web"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1750,11 +1753,11 @@ msgstr "Cuplikan"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Mengizinkan cuplikan layar dan galeri atas video diambil"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Simpan Galeri"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Simpan"
 
@@ -1762,7 +1765,7 @@ msgstr "_Simpan"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galeri-%s-%d.jpg"
@@ -1831,6 +1834,50 @@ msgstr "_Lompat ke"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Lompat Ke…"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#| msgid "Format"
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Normal"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1,1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1,25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1,5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Kecepatan: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Laju Variabel"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Menyediakan butir menu laju variabel"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
