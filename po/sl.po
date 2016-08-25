@@ -9,18 +9,18 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-02 20:44+0200\n"
-"PO-Revision-Date: 2016-05-02 20:46+0200\n"
+"POT-Creation-Date: 2016-08-21 21:31+0200\n"
+"PO-Revision-Date: 2016-08-21 21:34+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: sl\n"
+"Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
@@ -438,32 +438,32 @@ msgstr "Preskoči"
 #: ../data/shortcuts.ui.h:17
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
-msgstr ""
+msgstr "Skoči nazaj za 15 sekund"
 
 #: ../data/shortcuts.ui.h:18
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
-msgstr ""
+msgstr "Skoči naprej za 60 sekund"
 
 #: ../data/shortcuts.ui.h:19
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
-msgstr ""
+msgstr "Skoči nazaj za 5 sekund"
 
 #: ../data/shortcuts.ui.h:20
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
-msgstr ""
+msgstr "Skoči naprej za 15 sekund"
 
 #: ../data/shortcuts.ui.h:21
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
-msgstr ""
+msgstr "Skoči nazaj za 3 minute"
 
 #: ../data/shortcuts.ui.h:22
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
-msgstr ""
+msgstr "Skoči naprej za 10 minut"
 
 #: ../data/shortcuts.ui.h:23
 msgctxt "shortcut window"
@@ -473,27 +473,27 @@ msgstr "Preskoči na ..."
 #: ../data/shortcuts.ui.h:24
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
-msgstr ""
+msgstr "Krmarjenje po meniju DVD"
 
 #: ../data/shortcuts.ui.h:25
 msgctxt "shortcut window"
 msgid "Navigate up"
-msgstr ""
+msgstr "Pomik navzgor"
 
 #: ../data/shortcuts.ui.h:26
 msgctxt "shortcut window"
 msgid "Navigate down"
-msgstr ""
+msgstr "Pomik navzdol"
 
 #: ../data/shortcuts.ui.h:27
 msgctxt "shortcut window"
 msgid "Navigate left"
-msgstr ""
+msgstr "Pomik levo"
 
 #: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "Navigate right"
-msgstr ""
+msgstr "Pomik desno"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
@@ -595,6 +595,10 @@ msgstr "Meni _kota"
 #: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "Meni pog_lavij"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Hitrost"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1069,7 +1073,7 @@ msgid "Add Web Video"
 msgstr "Dodaj spletni posnetek"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1794,11 +1798,11 @@ msgstr "Zaslonska slika"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Dovoli zajemanje zaslonskih slik iz posnetkov"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Shrani galerijo"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Shrani"
 
@@ -1806,7 +1810,7 @@ msgstr "_Shrani"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "galerija-%s-%d.jpg"
@@ -1878,6 +1882,49 @@ msgstr "_Skoči na"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Skoči na ..."
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Običajna"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1,1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1,25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1,5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Hitrosti: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Spremenljiva hitrost predvajanja"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Pokaže možnosti spremenljive hitrosti predvajanja v meniju"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
