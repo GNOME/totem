@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-09 08:18+0300\n"
-"PO-Revision-Date: 2016-04-09 08:17+0300\n"
+"POT-Creation-Date: 2016-09-08 06:36+0300\n"
+"PO-Revision-Date: 2016-09-08 06:36+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -523,7 +523,7 @@ msgstr "Добавяне на _локален филм"
 
 #: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
-msgstr "Добавяне на филм от_мрежата"
+msgstr "Добавяне на филм от _мрежата"
 
 #: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
@@ -601,6 +601,10 @@ msgstr "Меню за избор на _ъгъл"
 #: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "Меню за избор на _глава"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Скорост"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -960,14 +964,14 @@ msgstr "Проверете дали Totem е инсталиран правилн
 msgid "Click on items to select them"
 msgstr "За избиране на обекти ги натиснете"
 
-#: ../src/totem-main-toolbar.c:137
+#: ../src/totem-main-toolbar.c:136
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d избран"
 msgstr[1] "%d избрани"
 
-#: ../src/totem-main-toolbar.c:159
+#: ../src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
 msgstr "Резултати за „%s“"
@@ -1047,7 +1051,7 @@ msgid "Add Web Video"
 msgstr "Добавяне на уеб клип"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1773,11 +1777,11 @@ msgstr "Филмов_кадър"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Разрешаване на заснемането на кадри и галерии от филми"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Запазване на галерията"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Запазване"
 
@@ -1785,7 +1789,7 @@ msgstr "_Запазване"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Галерия-%s-%d.jpg"
@@ -1855,6 +1859,49 @@ msgstr "_Прескачане до"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Прескачане до…"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "нормална"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1,1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1,25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1,5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Скорост: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Променлива скорост"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Осигурява менюто за променлива скорост"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
