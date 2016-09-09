@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-08 14:36+0000\n"
-"PO-Revision-Date: 2016-04-09 01:08+0430\n"
+"POT-Creation-Date: 2016-08-17 11:08+0000\n"
+"PO-Revision-Date: 2016-09-09 17:56+0430\n"
 "Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66 ../src/totem.c:72
@@ -594,6 +594,10 @@ msgstr "منوی _زاویه"
 msgid "_Chapter Menu"
 msgstr "منوی _فصل‌ها"
 
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "سرعت"
+
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "_نشانی پرونده‌ای را که می‌خواهید باز کنید وارد کنید:"
@@ -937,14 +941,14 @@ msgstr "اطمینان حاصل کنید که توتم درست نصب شده ا
 msgid "Click on items to select them"
 msgstr "بر روی موارد کلیک کنید تا انتخاب شوند"
 
-#: ../src/totem-main-toolbar.c:137
+#: ../src/totem-main-toolbar.c:136
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%Id مورد انتخاب شد"
 msgstr[1] "%Id مورد انتخاب شد"
 
-#: ../src/totem-main-toolbar.c:159
+#: ../src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
 msgstr "نتایج برای «%s»"
@@ -1023,7 +1027,7 @@ msgid "Add Web Video"
 msgstr "اضافه کردن ویدئو وب"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399 ../src/totem-uri.c:460
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1745,11 +1749,11 @@ msgstr "عکس‌صفحه"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "اجازه می‌دهد از ویدئوها عکس‌صفحه و گالری تهیه شود"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "ذخیره‌ی گالری"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_ذخیره"
 
@@ -1757,7 +1761,7 @@ msgstr "_ذخیره"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Gallery-%s-%d.jpg"
@@ -1827,6 +1831,49 @@ msgstr "_پرش به"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_پرش به..."
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× ۰٫۷۵"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "معمولی"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× ۱٫۱"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× ۱٫۲۵"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× ۱٫۵"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× ۱٫۷۵"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "سرعت: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "نرخ متغیر"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "گزینه منو برای نرخ متغیر را فراهم می‌کند"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
@@ -2063,9 +2110,6 @@ msgstr "یک پلاگین برای ارسال اتفاقات به Zeitgeist"
 
 #~ msgid "Move Down"
 #~ msgstr "پایین رفتن"
-
-#~ msgid "Normal"
-#~ msgstr "معمولی"
 
 #~ msgid "Large"
 #~ msgstr "بزرگ"
@@ -2963,9 +3007,6 @@ msgstr "یک پلاگین برای ارسال اتفاقات به Zeitgeist"
 
 #~ msgid "%x"
 #~ msgstr "%x"
-
-#~ msgid "Genre: %s"
-#~ msgstr "سبک: %s"
 
 #~ msgid "Released on: %s"
 #~ msgstr "منتشر شده در: %s"
