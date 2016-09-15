@@ -1,5 +1,5 @@
-icondir = $(datadir)/icons/hicolor/scalable/apps
-icon_DATA = totem-symbolic.svg
+icondir = $(datadir)/icons/hicolor/symbolic/apps
+icon_DATA = org.gnome.Totem-symbolic.svg
 
 EXTRA_DIST = $(icon_DATA)
 
