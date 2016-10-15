@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 3.20.x\n"
+"Project-Id-Version: totem 3.22.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-01 18:14+0200\n"
-"PO-Revision-Date: 2016-05-01 18:15+0200\n"
+"POT-Creation-Date: 2016-10-15 15:04+0200\n"
+"PO-Revision-Date: 2016-10-15 15:06+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -587,6 +587,10 @@ msgstr "_Vinkelmeny"
 msgid "_Chapter Menu"
 msgstr "_Kapittelmeny"
 
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Hastighet"
+
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Oppgi _adressen for filen du ønsker å åpne:"
@@ -1025,7 +1029,7 @@ msgid "Add Web Video"
 msgstr "Legg til video på nettet"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1361,7 +1365,7 @@ msgstr "Legg til filmer"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:790
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1372,15 +1376,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:790
+#: ../src/totem-video-thumbnailer.c:791
 msgid "Filename"
 msgstr "Filnavn"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:793
 msgid "Resolution"
 msgstr "Oppløsning"
 
-#: ../src/totem-video-thumbnailer.c:795
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Duration"
 msgstr "Varighet"
 
@@ -1746,11 +1750,11 @@ msgstr "Skjermbilde"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Lar brukeren ta skjermbilder og lage gallerier av videoer"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Lagre galleri"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Lagre"
 
@@ -1758,7 +1762,7 @@ msgstr "_Lagre"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galleri-%s-%d.jpg"
@@ -1829,6 +1833,49 @@ msgstr "_Hopp til"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Hopp til …"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Normal"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1,1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1,25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1,5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1,75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Hastighet: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Variabel rate"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Tilbyr menyoppføring for variabel rate"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
