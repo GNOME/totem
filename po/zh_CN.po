@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-22 16:47+0000\n"
-"PO-Revision-Date: 2016-02-29 16:35-0700\n"
+"POT-Creation-Date: 2016-10-09 13:55+0000\n"
+"PO-Revision-Date: 2016-10-18 18:41+0800\n"
 "Last-Translator: Jeff Bai <jeffbai@aosc.xyz>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
@@ -595,6 +595,10 @@ msgstr "角度菜单(_A)"
 msgid "_Chapter Menu"
 msgstr "章节菜单(_C)"
 
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "速度"
+
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "输入您想要打开的文件的地址(_A)："
@@ -935,13 +939,13 @@ msgstr "请确保 Totem 已正确安装。"
 msgid "Click on items to select them"
 msgstr "点击项目来选择它们"
 
-#: ../src/totem-main-toolbar.c:137
+#: ../src/totem-main-toolbar.c:136
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "已选择 %d 个"
 
-#: ../src/totem-main-toolbar.c:159
+#: ../src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
 msgstr "“%s”的结果"
@@ -1021,7 +1025,7 @@ msgid "Add Web Video"
 msgstr "添加网络视频"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1357,7 +1361,7 @@ msgstr "添加视频"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:790
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1368,15 +1372,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:790
+#: ../src/totem-video-thumbnailer.c:791
 msgid "Filename"
 msgstr "文件名"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:793
 msgid "Resolution"
 msgstr "分辨率"
 
-#: ../src/totem-video-thumbnailer.c:795
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Duration"
 msgstr "持续时间"
 
@@ -1740,11 +1744,11 @@ msgstr "屏幕截图"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "允许抓取视频屏幕截图和画册"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "保存画册"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "保存(_S)"
 
@@ -1753,7 +1757,7 @@ msgstr "保存(_S)"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "画册-%s-%d.jpg"
@@ -1822,6 +1826,49 @@ msgstr "跳至(_S)"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "跳至(_S)..."
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "正常"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1.1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1.25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1.5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "速度：%s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "可变速率"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "提供可变速率菜单项"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
@@ -1989,9 +2036,6 @@ msgstr "向  Zeitgeist 发送事件的插件"
 
 #~ msgid "Quality setting for the audio visualization."
 #~ msgstr "音频可视化效果的质量设置。"
-
-#~ msgid "Normal"
-#~ msgstr "正常"
 
 #~ msgid "Large"
 #~ msgstr "大"
