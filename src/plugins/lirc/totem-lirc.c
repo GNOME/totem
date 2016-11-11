@@ -236,7 +236,7 @@ impl_activate (PeasActivatable *plugin)
 		//FIXME
 #if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Couldn't initialize lirc."));
+                                     _("Couldn’t initialize lirc."));
 		return FALSE;
 #endif
 	}
@@ -248,7 +248,7 @@ impl_activate (PeasActivatable *plugin)
 		//FIXME
 #if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Couldn't read lirc configuration."));
+                                     _("Couldn’t read lirc configuration."));
 #endif
 		close (fd);
 		return;
