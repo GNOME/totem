@@ -3951,7 +3951,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
     } else {
       if (g_str_has_prefix (bvw->priv->mrl, "rtsp:")) {
 	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_NETWORK_UNREACHABLE,
-				   _("This stream cannot be played. It's possible that a firewall is blocking it."));
+				   _("This stream cannot be played. It’s possible that a firewall is blocking it."));
       } else {
 	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
 				   _("An audio or video stream is not handled due to missing codecs. "
