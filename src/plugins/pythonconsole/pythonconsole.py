@@ -88,7 +88,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
 
             console.set_size_request (600, 400) # pylint: disable-msg=E1101
             console.eval ('print("%s" %% totem_object)' % _("You can access "\
-                "the Totem.Object through \'totem_object\' :\\n%s"), False)
+                "the Totem.Object through “totem_object” :\\n%s"), False)
 
             self.window = Gtk.Window ()
             self.window.set_title (_('Totem Python Console'))
@@ -104,7 +104,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
         msg = _("After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
-                 "('totem').")
+                 "(“totem”).")
         dialog = Gtk.MessageDialog (None, 0, Gtk.MessageType.INFO,
                                     Gtk.ButtonsType.OK_CANCEL, msg)
         if dialog.run () == Gtk.ResponseType.OK:
