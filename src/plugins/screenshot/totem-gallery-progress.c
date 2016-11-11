@@ -104,7 +104,7 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_CANCEL);
 
 	/* Set the progress label */
-	label_text = g_strdup_printf (_("Saving gallery as \"%s\""), output_filename);
+	label_text = g_strdup_printf (_("Saving gallery as “%s”"), output_filename);
 	gtk_progress_bar_set_show_text (self->priv->progress_bar, TRUE);
 	gtk_progress_bar_set_text (self->priv->progress_bar, label_text);
 	g_free (label_text);
