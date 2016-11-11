@@ -989,7 +989,7 @@ handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gch
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL, NULL, FALSE);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
 		g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-			     _("The playlist '%s' could not be parsed. It might be damaged."), display_name ? display_name : mrl);
+			     _("The playlist “%s” could not be parsed. It might be damaged."), display_name ? display_name : mrl);
 
 		return FALSE;
 	}

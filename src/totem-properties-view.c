@@ -187,7 +187,7 @@ update_video (TotemPropertiesView    *props,
 
 	width = gst_discoverer_video_info_get_width (info);
 	height = gst_discoverer_video_info_get_height (info);
-	string = g_strdup_printf (N_("%d x %d"), width, height);
+	string = g_strdup_printf (N_("%d × %d"), width, height);
 	bacon_video_widget_properties_set_label (props->priv->props,
 						 "dimensions",
 						 string);

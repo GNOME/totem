@@ -1467,7 +1467,7 @@ totem_object_play (TotemObject *totem)
 	}
 
 	disp = totem_uri_escape_for_display (totem->mrl);
-	msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+	msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
 	g_free (disp);
 
 	totem_object_show_error (totem, msg, err->message);
@@ -1494,7 +1494,7 @@ totem_object_seek (TotemObject *totem, double pos)
 		char *msg, *disp;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+		msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
 		g_free (disp);
 
 		reset_seek_status (totem);
@@ -1986,7 +1986,7 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 		char *msg, *disp;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+		msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
 		g_free (disp);
 
 		totem_object_stop (totem);

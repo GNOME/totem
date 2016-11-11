@@ -97,7 +97,7 @@ totem_options_process_for_server (Totem               *totem,
 
 	/* Then handle the things that modify the playlist */
 	if (options->replace && options->enqueue) {
-		g_warning (_("Can't enqueue and replace at the same time"));
+		g_warning (_("Can’t enqueue and replace at the same time"));
 	} else if (options->replace) {
 		action = TOTEM_REMOTE_COMMAND_REPLACE;
 	} else if (options->enqueue) {
