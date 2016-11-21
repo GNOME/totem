@@ -8,7 +8,7 @@ plugin_in_files = zeitgeist-dp.plugin.in
 # here we are explicitly specifying gtk+-3.0 to use the vapi because vala still
 # cannot parse the gir
 AM_VALAFLAGS = \
-	--girdir=$(top_builddir)/src	\
+	--girdir=$(abs_top_builddir)/src	\
 	--pkg Totem-1.0 --pkg Peas-1.0 --pkg gtk+-3.0 \
 	--pkg zeitgeist-2.0 \
 	bacon-video.vapi
