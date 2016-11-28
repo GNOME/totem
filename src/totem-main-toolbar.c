@@ -32,7 +32,7 @@
 #include "totem-main-toolbar.h"
 #include "griloresources.h"
 
-/**
+/*
  * SECTION:totemmaintoolbar
  * @Short_description: An toolbar with oft-used buttons.
  * @Title: TotemMainToolbar

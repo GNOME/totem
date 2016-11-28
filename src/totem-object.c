@@ -622,7 +622,9 @@ totem_object_get_main_window (TotemObject *totem)
  * @totem: a #TotemObject
  * @id: the ID for the menu section to look up
  *
- * Return value: (transfer none): a #GMenu or %NULL on failure
+ * Get the #GMenu of the given @id from the main Totem #GtkBuilder file.
+ *
+ * Return value: (transfer none) (nullable): a #GMenu or %NULL on failure
  **/
 GMenu *
 totem_object_get_menu_section (TotemObject *totem,

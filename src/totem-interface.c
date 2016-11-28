@@ -294,6 +294,9 @@ totem_interface_get_full_path (const char *name)
  * @icon_name: The icon name for the button image
  * @pack_type: A #GtkPackType to tell us where to include the button
  *
+ * Put the given @icon_name into @button, and pack @button into @header
+ * according to @pack_type.
+ *
  * Return value: (transfer none): the button passed as input
  */
 GtkWidget *

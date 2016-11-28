@@ -3206,6 +3206,15 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   }
 }
 
+/**
+ * bacon_video_widget_set_next_subtitle:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Switch to the next text subtitle index for the current video. See
+ * bacon_video_widget_set_subtitle().
+ *
+ * Since: 3.12
+ */
 void
 bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
 {
@@ -3494,6 +3503,15 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
+/**
+ * bacon_video_widget_set_next_language:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Switch to the next audio language index for the current video. See
+ * bacon_video_widget_set_language().
+ *
+ * Since: 3.12
+ */
 void
 bacon_video_widget_set_next_language (BaconVideoWidget *bvw)
 {
@@ -3693,6 +3711,15 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
   set_audio_filter (bvw);
 }
 
+/**
+ * bacon_video_widget_show_popup:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Show the video controls popup, and schedule for it to be hidden again after
+ * a timeout.
+ *
+ * Since: 3.12
+ */
 void
 bacon_video_widget_show_popup (BaconVideoWidget *bvw)
 {
@@ -3702,6 +3729,16 @@ bacon_video_widget_show_popup (BaconVideoWidget *bvw)
   schedule_hiding_popup (bvw);
 }
 
+/**
+ * bacon_video_widget_mark_popup_busy:
+ * @bvw: a #BaconVideoWidget
+ * @reason: human-readable reason for the controls popup being marked as busy
+ *
+ * Mark the video controls popup as busy, for the given @reason. Use
+ * bacon_video_widget_unmark_popup_busy() to undo.
+ *
+ * Since: 3.12
+ */
 void
 bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
 				    const char       *reason)
@@ -3719,6 +3756,17 @@ bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
   unschedule_hiding_popup (bvw);
 }
 
+/**
+ * bacon_video_widget_unmark_popup_busy:
+ * @bvw: a #BaconVideoWidget
+ * @reason: human-readable reason for the controls popup being unmarked as busy
+ *
+ * Unmark the video controls popup as busy, for the given @reason. The popup
+ * must previously have been marked as busy using
+ * bacon_video_widget_mark_popup_busy().
+ *
+ * Since: 3.12
+ */
 void
 bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
 				      const char       *reason)
@@ -3736,6 +3784,15 @@ bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
   }
 }
 
+/**
+ * bacon_video_widget_get_controls_object:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Get the widget which displays the video controls.
+ *
+ * Returns: (transfer none): controls widget
+ * Since: 3.12
+ */
 GObject *
 bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
 {
@@ -3744,6 +3801,15 @@ bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
   return G_OBJECT (bvw->priv->controls);
 }
 
+/**
+ * bacon_video_widget_get_header_controls_object:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Get the widget which displays the video header controls.
+ *
+ * Returns: (transfer none): header controls widget
+ * Since: 3.20
+ */
 GObject *
 bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw)
 {
