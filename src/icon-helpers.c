@@ -312,7 +312,6 @@ totem_grilo_get_thumbnail (GObject             *object,
 
 			file = g_file_icon_get_file (G_FILE_ICON (icon));
 			url_thumb = g_file_get_uri (file);
-			g_object_unref (file);
 
 			g_object_set_data (G_OBJECT (task), "is-source", GUINT_TO_POINTER (TRUE));
 		}
