@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <!-- interface-requires gtk+ 3.11 -->
+  <requires lib="gtk+" version="3.11"/>
   <object class="GtkVBox" id="vbox1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -15,9 +16,9 @@
           <object class="GtkLabel" id="bvwp_general_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
             <property name="label" translatable="yes">General</property>
             <property name="use_markup">True</property>
+            <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
             </attributes>
@@ -45,114 +46,114 @@
                   <object class="GtkLabel" id="title_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Title:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="title"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="title"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="artist_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Artist:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="artist"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="artist"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="duration_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Duration:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="duration"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="duration"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">4</property>
                     <property name="bottom_attach">5</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="year_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Year:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="year"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="year"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="album_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Album:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="album"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="album"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="title">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="title_label"/>
                     </accessibility>
@@ -161,18 +162,18 @@
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="artist">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="artist_label"/>
                     </accessibility>
@@ -183,18 +184,18 @@
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="album">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="album_label"/>
                     </accessibility>
@@ -205,17 +206,17 @@
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="year">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="year_label"/>
                     </accessibility>
@@ -226,17 +227,17 @@
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="duration">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 seconds</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="duration_label"/>
                     </accessibility>
@@ -247,39 +248,39 @@
                     <property name="top_attach">4</property>
                     <property name="bottom_attach">5</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="comment_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Comment:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="comment"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="comment"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">5</property>
                     <property name="bottom_attach">6</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="comment">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="comment_label"/>
                     </accessibility>
@@ -290,15 +291,15 @@
                     <property name="top_attach">5</property>
                     <property name="bottom_attach">6</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="container_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Container:</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
@@ -307,16 +308,16 @@
                     <property name="top_attach">6</property>
                     <property name="bottom_attach">7</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="container">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label">Unknown</property>
                     <property name="selectable">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -324,7 +325,7 @@
                     <property name="top_attach">6</property>
                     <property name="bottom_attach">7</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
               </object>
@@ -352,9 +353,9 @@
           <object class="GtkLabel" id="bvwp_video_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
             <property name="label" translatable="yes">Video</property>
             <property name="use_markup">True</property>
+            <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
             </attributes>
@@ -382,92 +383,92 @@
                   <object class="GtkLabel" id="dimensions_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Dimensions:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="dimensions"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="dimensions"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="vcodec_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Codec:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="vcodec"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="vcodec"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="framerate_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Framerate:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="framerate"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="framerate"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="vbitrate_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Bitrate:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="video_bitrate"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="video_bitrate"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="dimensions">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 x 0</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="dimensions_label"/>
                     </accessibility>
@@ -476,17 +477,17 @@
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="vcodec">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">N/A</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="vcodec_label"/>
                     </accessibility>
@@ -497,17 +498,17 @@
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="framerate">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 frames per second</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="framerate_label"/>
                     </accessibility>
@@ -518,17 +519,17 @@
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="video_bitrate">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 kbps</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="vbitrate_label"/>
                     </accessibility>
@@ -539,7 +540,7 @@
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
               </object>
@@ -567,9 +568,9 @@
           <object class="GtkLabel" id="bvwp_audio_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
             <property name="label" translatable="yes">Audio</property>
             <property name="use_markup">True</property>
+            <property name="xalign">0</property>
             <attributes>
               <attribute name="weight" value="bold"/>
             </attributes>
@@ -597,30 +598,30 @@
                   <object class="GtkLabel" id="samplerate_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Sample rate:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="samplerate"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="samplerate"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="samplerate">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 Hz</property>
                     <property name="selectable">True</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="samplerate_label"/>
                     </accessibility>
@@ -631,38 +632,38 @@
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="abitrate_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Bitrate:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="audio_bitrate"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="audio_bitrate"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="audio_bitrate">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 kbps</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="abitrate_label"/>
                     </accessibility>
@@ -673,36 +674,36 @@
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="acodec_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Codec:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="acodec"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="acodec"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="acodec">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">N/A</property>
                     <property name="selectable">True</property>
                     <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="acodec_label"/>
                     </accessibility>
@@ -711,37 +712,37 @@
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
                     <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="channels_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Channels:</property>
                     <property name="use_markup">True</property>
-                    <accessibility>
-                      <relation type="label-for" target="channels"/>
-                    </accessibility>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="style" value="italic"/>
                     </attributes>
+                    <accessibility>
+                      <relation type="label-for" target="channels"/>
+                    </accessibility>
                   </object>
                   <packing>
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="channels">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="xalign">0</property>
                     <property name="label">0 Channels</property>
                     <property name="selectable">True</property>
+                    <property name="xalign">0</property>
                     <accessibility>
                       <relation type="labelled-by" target="channels_label"/>
                     </accessibility>
@@ -752,7 +753,7 @@
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_FILL</property>
-                    <property name="y_options"></property>
+                    <property name="y_options"/>
                   </packing>
                 </child>
               </object>
