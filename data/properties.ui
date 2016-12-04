@@ -2,15 +2,17 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.11"/>
-  <object class="GtkVBox" id="vbox1">
+  <object class="GtkBox" id="vbox1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="border_width">6</property>
+    <property name="orientation">vertical</property>
     <property name="spacing">18</property>
     <child>
-      <object class="GtkVBox" id="general_vbox">
+      <object class="GtkBox" id="general_vbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="bvwp_general_label">
@@ -345,9 +347,10 @@
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="video_vbox">
+      <object class="GtkBox" id="video_vbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="bvwp_video_label">
@@ -560,9 +563,10 @@
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="audio_vbox">
+      <object class="GtkBox" id="audio_vbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="bvwp_audio_label">
