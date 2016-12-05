@@ -3394,8 +3394,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
 		} else {
-			/* FIXME
-			 * The menu won't be correctly positioned */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button),
 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button)));
 		}
