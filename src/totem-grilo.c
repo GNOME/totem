@@ -2187,6 +2187,7 @@ setup_browse (TotemGrilo *self)
 {
 	GtkAdjustment *adj;
 	const char const * select_all_accels[] = { "<Primary>A", NULL };
+	const char const * select_none_accels[] = { "<Shift><Primary>A", NULL };
 
 	/* Search */
 	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
@@ -2216,6 +2217,7 @@ setup_browse (TotemGrilo *self)
 	g_signal_connect (G_OBJECT (self->priv->select_none_action), "activate",
 			  G_CALLBACK (select_none_action_cb), self);
 	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_none_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self->priv->totem), "app.select-none", select_none_accels);
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->select_none_action, "enabled",
 				G_BINDING_SYNC_CREATE);
