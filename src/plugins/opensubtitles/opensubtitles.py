@@ -498,7 +498,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         # Set up signals
 
         combobox.connect ('changed', self.__on_combobox__changed)
-        self._dialog.connect ('delete-event', self._dialog.hide_on_delete)
         self._dialog.set_transient_for (self._totem.get_main_window ())
         self._dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
