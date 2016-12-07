@@ -32,12 +32,19 @@
 # Monday 7th February 2005: Christian Schaller: Add exception clause.
 # See license_change file for details.
 
-from console import PythonConsole, OutFile
+import gi
 
-__all__ = ('PythonConsole', 'OutFile') # pylint: disable-msg=E0603
+gi.require_version('Gtk', '3.0')
+gi.require_version('Peas', '1.0')
+gi.require_version('Pango', '1.0')
+gi.require_version('Totem', '1.0')
 
 from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable-msg=E0611
 from gi.repository import Gio # pylint: disable-msg=E0611
+
+from console import PythonConsole, OutFile
+
+__all__ = ('PythonConsole', 'OutFile') # pylint: disable-msg=E0603
 
 try:
     import rpdb2
