@@ -5,14 +5,14 @@
 #
 #
 # Áki G. Karlsson <aki@akademia.is>, 2004.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.99\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-05 15:00+0000\n"
-"PO-Revision-Date: 2016-05-15 16:14+0000\n"
+"POT-Creation-Date: 2016-10-09 13:55+0000\n"
+"PO-Revision-Date: 2017-01-10 06:57+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -352,25 +352,21 @@ msgid "Channels:"
 msgstr "Litrásir:"
 
 #: ../data/shortcuts.ui.h:1
-#| msgid "General"
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Almennt"
 
 #: ../data/shortcuts.ui.h:2
-#| msgid "Preferences"
 msgctxt "shortcut window"
 msgid "Preferences"
 msgstr "Kjörstillingar"
 
 #: ../data/shortcuts.ui.h:3
-#| msgid "Quit"
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Hætta"
 
 #: ../data/shortcuts.ui.h:4
-#| msgid "Volume Up"
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hljóðstyrkur"
@@ -391,37 +387,31 @@ msgid "View"
 msgstr "Skoða"
 
 #: ../data/shortcuts.ui.h:8
-#| msgid "Toggle Fullscreen"
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Víxla heilskjá"
 
 #: ../data/shortcuts.ui.h:9
-#| msgid "Exit Fullscreen"
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Hætta í skjáfylli"
 
 #: ../data/shortcuts.ui.h:10
-#| msgid "Zoom In"
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Renna að"
 
 #: ../data/shortcuts.ui.h:11
-#| msgid "Zoom In"
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Renna frá"
 
 #: ../data/shortcuts.ui.h:12
-#| msgid "Play"
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Afspilun"
 
 #: ../data/shortcuts.ui.h:13
-#| msgid "Play/Pause"
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Spila/stöðva"
@@ -437,7 +427,6 @@ msgid "Next video or chapter"
 msgstr "Næsta myndskeið eða kafli"
 
 #: ../data/shortcuts.ui.h:16
-#| msgid "Skip To"
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Sleppa"
@@ -448,20 +437,16 @@ msgid "Go back 15 seconds"
 msgstr "Fara afturábak um 15 sekúndur"
 
 #: ../data/shortcuts.ui.h:18
-#| msgid "0 seconds"
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Fara áfram um 60 sekúndur"
 
 #: ../data/shortcuts.ui.h:19
-#| msgid "0 seconds"
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Fara afturábak um 5 sekúndur"
 
 #: ../data/shortcuts.ui.h:20
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Fara áfram um 15 sekúndur"
@@ -477,7 +462,6 @@ msgid "Go forward 10 minutes"
 msgstr "Fara áfram um 10 mínútur"
 
 #: ../data/shortcuts.ui.h:23
-#| msgid "_Skip To…"
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Stökkva á…"
@@ -607,6 +591,10 @@ msgstr "_Sjónarhornsvalmynd"
 #: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "_Kaflavalmynd"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Hraði"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1049,7 +1037,7 @@ msgid "Add Web Video"
 msgstr "Bæta við vefmyndskeiði"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
@@ -1193,7 +1181,6 @@ msgid "Add to Favourites"
 msgstr "Bæta í Eftirlæti"
 
 #: ../src/totemselectiontoolbar.ui.h:2
-#| msgid "Play"
 msgctxt "button"
 msgid "Play"
 msgstr "Afspilun"
@@ -1386,7 +1373,7 @@ msgstr "Bæta við myndskeiðum"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:790
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1397,15 +1384,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:790
+#: ../src/totem-video-thumbnailer.c:791
 msgid "Filename"
 msgstr "Skráarheiti"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:793
 msgid "Resolution"
 msgstr "Upplausn"
 
-#: ../src/totem-video-thumbnailer.c:795
+#: ../src/totem-video-thumbnailer.c:796
 msgid "Duration"
 msgstr "Lengd"
 
@@ -1771,11 +1758,11 @@ msgstr "Skjámynd"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Leyfir að gerðar séu skjámyndir og upptökur af myndskeiðum"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Vista myndasafn"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Vista"
 
@@ -1783,7 +1770,7 @@ msgstr "_Vista"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Myndasafn-%s-%d.jpg"
@@ -1853,6 +1840,50 @@ msgstr "_Stökkva á:"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Stökkva á…"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#| msgid "Format"
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Venjulegt"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1.1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1.25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1.5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Hraði: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Breytilegt"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Gefur valmyndarfærslu fyrir breytilegan hraða"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
