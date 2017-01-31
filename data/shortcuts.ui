@@ -22,6 +22,27 @@
               </object>
             </child>
             <child>
+              <object class="GtkShortcutsShortcut" id="properties">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;p</property>
+                <property name="title" translatable="yes" context="shortcut window">Properties</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="save-as">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Ctrl&gt;S</property>
+                <property name="title" translatable="yes" context="shortcut window">Make Available Offline</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="take-screenshot">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Alt&gt;S</property>
+                <property name="title" translatable="yes" context="shortcut window">Take Screenshot</property>
+              </object>
+            </child>
+            <child>
               <object class="GtkShortcutsShortcut" id="quit">
                 <property name="visible">1</property>
                 <property name="accelerator">Q &lt;ctrl&gt;q &lt;ctrl&gt;w</property>
@@ -80,6 +101,20 @@
                 <property name="visible">1</property>
                 <property name="accelerator">T &lt;ctrl&gt;0</property>
                 <property name="title" translatable="yes" context="shortcut window">Zoom out</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="rotate-right">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;R</property>
+                <property name="title" translatable="yes" context="shortcut window">Rotate ↷</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="rotate-left">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;R</property>
+                <property name="title" translatable="yes" context="shortcut window">Rotate ↶</property>
               </object>
             </child>
           </object>
