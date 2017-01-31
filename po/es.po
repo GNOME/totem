@@ -8,17 +8,17 @@
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-07-25 20:17+0000\n"
-"PO-Revision-Date: 2016-06-02 09:24+0200\n"
+"POT-Creation-Date: 2017-01-31 15:08+0000\n"
+"PO-Revision-Date: 2017-01-31 16:30+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -133,31 +133,39 @@ msgid "Encoding character set for subtitle."
 msgstr "Conjunto de caracteres para el subtítulo."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:15
-msgid "Default location for the \"Open...\" dialogs"
+#| msgid "Default location for the \"Open...\" dialogs"
+msgid "Default location for the “Open…” dialogs"
 msgstr "Ubicación predeterminada para los diálogos «Abrir…»"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:16
+#| msgid ""
+#| "Default location for the \"Open...\" dialogs. Default is the current "
+#| "directory."
 msgid ""
-"Default location for the \"Open...\" dialogs. Default is the current "
-"directory."
+"Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
-"Ubicación predeterminada para los diálogos «Abrir…», lo predeterminado es la "
+"Ubicación predeterminada para los diálogos «Abrir…». Lo predeterminado es la "
 "carpeta actual."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:17
-msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "Unicación predeterminada para los diálogos «Capturar pantalla»"
+#| msgid "Default location for the \"Take Screenshot\" dialogs"
+msgid "Default location for the “Take Screenshot” dialogs"
+msgstr "Ubicación predeterminada para los diálogos «Capturar pantalla»"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:18
+#| msgid ""
+#| "Default location for the \"Take Screenshot\" dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs. Default is the "
-"Pictures directory."
+"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
+"directory."
 msgstr ""
-"Ubicación predeterminada para los diálogos «Capturar pantalla», lo "
+"Ubicación predeterminada para los diálogos «Capturar pantalla». Lo "
 "predeterminado es la carpeta Imágenes."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
-msgid "Whether to disable the plugins in the user's home directory"
+#| msgid "Whether to disable the plugins in the user's home directory"
+msgid "Whether to disable the plugins in the user’s home directory"
 msgstr ""
 "Indica si se deben desactivar los complementos en la carpeta personal del "
 "usuario"
@@ -200,7 +208,7 @@ msgstr ""
 "Carpetas que mostrar en la interfaz del explorador; lo predeterminado es "
 "ninguna"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5550
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5616
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Estéreo"
@@ -258,7 +266,8 @@ msgid "Plugins"
 msgstr "Complementos"
 
 #: ../data/preferences.ui.h:15
-msgid "Plugins..."
+#| msgid "Plugins"
+msgid "Plugins…"
 msgstr "Complementos…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
@@ -374,136 +383,161 @@ msgid "General"
 msgstr "General"
 
 #: ../data/shortcuts.ui.h:2
+#| msgid "Properties"
 msgctxt "shortcut window"
-msgid "Preferences"
-msgstr "Preferencias"
+msgid "Properties"
+msgstr "Propiedades"
 
 #: ../data/shortcuts.ui.h:3
+#| msgid "Make Available Offline"
+msgctxt "shortcut window"
+msgid "Make Available Offline"
+msgstr "Hacer que esté disponible fuera de línea"
+
+#: ../data/shortcuts.ui.h:4
+#| msgid "Take _Screenshot"
+msgctxt "shortcut window"
+msgid "Take Screenshot"
+msgstr "Capturar pantalla"
+
+#: ../data/shortcuts.ui.h:5
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Salir"
 
-#: ../data/shortcuts.ui.h:4
+#: ../data/shortcuts.ui.h:6
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volumen"
 
-#: ../data/shortcuts.ui.h:5
+#: ../data/shortcuts.ui.h:7
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Aumentar volumen"
 
-#: ../data/shortcuts.ui.h:6
+#: ../data/shortcuts.ui.h:8
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Disminuir volumen"
 
-#: ../data/shortcuts.ui.h:7
+#: ../data/shortcuts.ui.h:9
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Ver"
 
-#: ../data/shortcuts.ui.h:8
+#: ../data/shortcuts.ui.h:10
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Conmutar el modo a pantalla completa"
 
-#: ../data/shortcuts.ui.h:9
+#: ../data/shortcuts.ui.h:11
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Salir del modo a pantalla completa"
 
-#: ../data/shortcuts.ui.h:10
+#: ../data/shortcuts.ui.h:12
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: ../data/shortcuts.ui.h:11
+#: ../data/shortcuts.ui.h:13
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Reducir"
 
-#: ../data/shortcuts.ui.h:12
+#: ../data/shortcuts.ui.h:14
+#| msgid "_Rotate ↷"
+msgctxt "shortcut window"
+msgid "Rotate ↷"
+msgstr "Rotar ↷"
+
+#: ../data/shortcuts.ui.h:15
+#| msgid "Rotate ↶"
+msgctxt "shortcut window"
+msgid "Rotate ↶"
+msgstr "Rotar ↶"
+
+#: ../data/shortcuts.ui.h:16
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Reproducir"
 
-#: ../data/shortcuts.ui.h:13
+#: ../data/shortcuts.ui.h:17
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../data/shortcuts.ui.h:14
+#: ../data/shortcuts.ui.h:18
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Vídeo o capítulo anterior"
 
-#: ../data/shortcuts.ui.h:15
+#: ../data/shortcuts.ui.h:19
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Siguiente vídeo o capítulo"
 
-#: ../data/shortcuts.ui.h:16
+#: ../data/shortcuts.ui.h:20
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Saltar"
 
-#: ../data/shortcuts.ui.h:17
+#: ../data/shortcuts.ui.h:21
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Retroceder 15 segundos"
 
-#: ../data/shortcuts.ui.h:18
+#: ../data/shortcuts.ui.h:22
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Avanzar 60 segundos"
 
-#: ../data/shortcuts.ui.h:19
+#: ../data/shortcuts.ui.h:23
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Retroceder 5 segundos"
 
-#: ../data/shortcuts.ui.h:20
+#: ../data/shortcuts.ui.h:24
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Avanzar 15 segundos"
 
-#: ../data/shortcuts.ui.h:21
+#: ../data/shortcuts.ui.h:25
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Retroceder 3 minutos"
 
-#: ../data/shortcuts.ui.h:22
+#: ../data/shortcuts.ui.h:26
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Avanzar 10 minutos"
 
-#: ../data/shortcuts.ui.h:23
+#: ../data/shortcuts.ui.h:27
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Saltar a…"
 
-#: ../data/shortcuts.ui.h:24
+#: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Menú de navegación del DVD"
 
-#: ../data/shortcuts.ui.h:25
+#: ../data/shortcuts.ui.h:29
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navegar hacia arriba"
 
-#: ../data/shortcuts.ui.h:26
+#: ../data/shortcuts.ui.h:30
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navegar hacia abajo"
 
-#: ../data/shortcuts.ui.h:27
+#: ../data/shortcuts.ui.h:31
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navegar a la izquierda"
 
-#: ../data/shortcuts.ui.h:28
+#: ../data/shortcuts.ui.h:32
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navegar a la derecha"
@@ -626,51 +660,51 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget.c:3320
+#: ../src/backend/bacon-video-widget.c:3329
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget.c:3322
+#: ../src/backend/bacon-video-widget.c:3331
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget.c:3806
+#: ../src/backend/bacon-video-widget.c:3872
 msgid "The server you are trying to connect to is not known."
 msgstr "El servidor al que está intentando conectar no es conocido."
 
-#: ../src/backend/bacon-video-widget.c:3809
+#: ../src/backend/bacon-video-widget.c:3875
 msgid "The connection to this server was refused."
 msgstr "La conexión a este servidor fue rehusada."
 
-#: ../src/backend/bacon-video-widget.c:3812
+#: ../src/backend/bacon-video-widget.c:3878
 msgid "The specified movie could not be found."
 msgstr "La película especificada no se pudo encontrar."
 
-#: ../src/backend/bacon-video-widget.c:3819
+#: ../src/backend/bacon-video-widget.c:3885
 msgid "The server refused access to this file or stream."
 msgstr "El servidor rechazó el acceso a este archivo a flujo."
 
-#: ../src/backend/bacon-video-widget.c:3825
+#: ../src/backend/bacon-video-widget.c:3891
 msgid "Authentication is required to access this file or stream."
 msgstr "Se requiere autenticación para acceder a este archivo o flujo."
 
-#: ../src/backend/bacon-video-widget.c:3832
+#: ../src/backend/bacon-video-widget.c:3898
 msgid "You are not allowed to open this file."
 msgstr "No se le permite abrir este archivo."
 
-#: ../src/backend/bacon-video-widget.c:3837
+#: ../src/backend/bacon-video-widget.c:3903
 msgid "This location is not a valid one."
 msgstr "Esta dirección no es válida."
 
-#: ../src/backend/bacon-video-widget.c:3845
+#: ../src/backend/bacon-video-widget.c:3911
 msgid "The movie could not be read."
 msgstr "La película no se pudo leer."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3868
-#: ../src/backend/bacon-video-widget.c:3876
+#: ../src/backend/bacon-video-widget.c:3934
+#: ../src/backend/bacon-video-widget.c:3942
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -687,14 +721,17 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3888
+#: ../src/backend/bacon-video-widget.c:3954
+#| msgid ""
+#| "This stream cannot be played. It's possible that a firewall is blocking "
+#| "it."
 msgid ""
-"This stream cannot be played. It's possible that a firewall is blocking it."
+"This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "No se puede reproducir este flujo. Es posible que un cortafuegos los esté "
 "bloqueando."
 
-#: ../src/backend/bacon-video-widget.c:3891
+#: ../src/backend/bacon-video-widget.c:3957
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -703,7 +740,7 @@ msgstr ""
 "necesite instalar complementos adicionales para ser capaz de reproducir "
 "algunos tipos de películas"
 
-#: ../src/backend/bacon-video-widget.c:3902
+#: ../src/backend/bacon-video-widget.c:3968
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -711,19 +748,19 @@ msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget.c:5546 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5612 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget.c:5548 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5614 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5835
+#: ../src/backend/bacon-video-widget.c:5901
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget.c:6046
+#: ../src/backend/bacon-video-widget.c:6112
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -731,11 +768,11 @@ msgstr ""
 "Falta algún complemento necesario. Asegúrese de que el programa está "
 "instalado correctamente."
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:345
 msgid "Unable to play the file"
 msgstr "No se puede reproducir el archivo"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -746,7 +783,7 @@ msgstr[1] ""
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:356
 #, c-format
 msgid "_Find in %s"
 msgstr "_Buscar en %s"
@@ -954,7 +991,8 @@ msgstr "Canales"
 
 #: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
-msgid "Couldn't load the '%s' interface. %s"
+#| msgid "Couldn't load the '%s' interface. %s"
+msgid "Couldn’t load the “%s” interface. %s"
 msgstr "No se pudo cargar la interfaz «%s». %s"
 
 #: ../src/totem-interface.c:179
@@ -1009,26 +1047,27 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#: ../src/totem-object.c:1386 ../src/totem-options.c:51
+#: ../src/totem-object.c:1388 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
+#: ../src/totem-object.c:1393 ../src/totem-object.c:1403
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
-#: ../src/totem-object.c:1987
+#: ../src/totem-object.c:1470 ../src/totem-object.c:1497
+#: ../src/totem-object.c:1989
 #, c-format
-msgid "Totem could not play '%s'."
+#| msgid "Totem could not play '%s'."
+msgid "Totem could not play “%s”."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:2158
+#: ../src/totem-object.c:2160
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2419
+#: ../src/totem-object.c:2421
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
@@ -1044,11 +1083,11 @@ msgstr "Reproducir / Pausar"
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
-#: ../src/totem-object.c:3980
+#: ../src/totem-object.c:3981
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem-object.c:3980
+#: ../src/totem-object.c:3981
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1124,7 +1163,8 @@ msgid "Movies to play"
 msgstr "Películas que reproducir"
 
 #: ../src/totem-options.c:100
-msgid "Can't enqueue and replace at the same time"
+#| msgid "Can't enqueue and replace at the same time"
+msgid "Can’t enqueue and replace at the same time"
 msgstr "No se puede encolar y reemplazar al mismo tiempo"
 
 #. This is "Title 3", where title is a DVD title
@@ -1136,7 +1176,8 @@ msgstr "Título %d"
 
 #: ../src/totem-playlist.c:992
 #, c-format
-msgid "The playlist '%s' could not be parsed. It might be damaged."
+#| msgid "The playlist '%s' could not be parsed. It might be damaged."
+msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "La lista de reproducción «%s» no se pudo analizar. Puede estar dañada."
 
 #: ../src/totem-preferences.c:184
@@ -1176,8 +1217,8 @@ msgstr "%d Kbps"
 #: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "%d × %d"
+msgstr "%d × %d"
 
 #: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:168
@@ -1393,7 +1434,7 @@ msgstr "Añadir vídeos"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:797
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1404,15 +1445,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:790
+#: ../src/totem-video-thumbnailer.c:798
 msgid "Filename"
 msgstr "Nombre del archivo"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:800
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../src/totem-video-thumbnailer.c:795
+#: ../src/totem-video-thumbnailer.c:803
 msgid "Duration"
 msgstr "Duración"
 
@@ -1526,11 +1567,13 @@ msgid "Support infrared remote control"
 msgstr "Soporte para control remoto por infrarrojos"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn't initialize lirc."
+#| msgid "Couldn't initialize lirc."
+msgid "Couldn’t initialize lirc."
 msgstr "No se pudo inicializar lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn't read lirc configuration."
+#| msgid "Couldn't read lirc configuration."
+msgid "Couldn’t read lirc configuration."
 msgstr "No se pudo leer la configuración de lirc."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
@@ -1569,7 +1612,7 @@ msgid "Searching for subtitles…"
 msgstr "Buscando subtítulos…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:230
-#: ../src/plugins/opensubtitles/opensubtitles.py:612
+#: ../src/plugins/opensubtitles/opensubtitles.py:611
 msgid "Downloading the subtitles…"
 msgstr "Descargando los subtítulos…"
 
@@ -1602,11 +1645,11 @@ msgstr "Formato"
 msgid "Rating"
 msgstr "Puntuación"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:529
+#: ../src/plugins/opensubtitles/opensubtitles.py:528
 msgid "_Download Movie Subtitles…"
 msgstr "_Descargar subtítulos para la película…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:569
+#: ../src/plugins/opensubtitles/opensubtitles.py:568
 msgid "Searching subtitles…"
 msgstr "Buscando subtítulos…"
 
@@ -1651,9 +1694,13 @@ msgid "rpdb2 password"
 msgstr "Contraseña rpdb2"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
+#| msgid ""
+#| "A password to protect the rpdb2 server for debugging Totem from "
+#| "unauthorized remote access. If this is empty, a default of 'totem' will "
+#| "be used."
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
-"remote access. If this is empty, a default of 'totem' will be used."
+"remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
 "Una contraseña para proteger el servidor rpdb2 para dapurar Totem de accesos "
 "remotos no autorizados. Si esta vacía, se usará el valor predeterminado "
@@ -1678,7 +1725,8 @@ msgstr "Depurador Python"
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
-msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+#| msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Puede acceder al objeto de Totem a través de «totem_object»: \\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
@@ -1687,10 +1735,14 @@ msgstr "Consola Python de Totem"
 
 #. pylint: disable-msg=W0613
 #: ../src/plugins/pythonconsole/pythonconsole.py:104
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password ('totem')."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
-"default password ('totem')."
+"default password (“totem”)."
 msgstr ""
 "Después de que pulse Aceptar, Totem esperará a que se conecte con winpdb o "
 "rpdb2. Si no ha establecido una contraseña para el depurador en DConf, se "
@@ -1810,7 +1862,8 @@ msgstr "Creando galería…"
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
-msgid "Saving gallery as \"%s\""
+#| msgid "Saving gallery as \"%s\""
+msgid "Saving gallery as “%s”"
 msgstr "Guardando galería como «%s»"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
@@ -1836,7 +1889,8 @@ msgid "Skip To"
 msgstr "Saltar a"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
-msgid "Provides the \"Skip to\" dialog"
+#| msgid "Provides the \"Skip to\" dialog"
+msgid "Provides the “Skip to” dialog"
 msgstr "Proporciona el diálogo «Saltar a»"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
@@ -1926,6 +1980,16 @@ msgstr "Complemento Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un complemento para enviar eventos a Zeitgeist"
+
+#~ msgid "Plugins..."
+#~ msgstr "Complementos…"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Preferences"
+#~ msgstr "Preferencias"
+
+#~ msgid "%d x %d"
+#~ msgstr "%d x %d"
 
 #~ msgid "Skip to dialog"
 #~ msgstr "Saltar al diálogo"
