@@ -18,17 +18,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: "
-"http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-31 15:08+0000\n"
-"PO-Revision-Date: 2016-09-06 00:12+0200\n"
-"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-03-04 17:30+0000\n"
+"PO-Revision-Date: 2017-03-05 11:46+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
@@ -49,10 +50,10 @@ msgid ""
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
-"Videoer, også kendt som Totem, er den officielle filmafspiller for "
-"GNOME-skrivebordsmiljøet. Den indeholder en søgbar liste af lokale videoer "
-"og dvd'er, samt lokale netværksdelinger (som bruger UPnP/DLNA) og "
-"video-højdepunkter fra en række af websider."
+"Videoer, også kendt som Totem, er den officielle filmafspiller for GNOME-"
+"skrivebordsmiljøet. Den indeholder en søgbar liste af lokale videoer og "
+"dvd'er, samt lokale netværksdelinger (som bruger UPnP/DLNA) og video-"
+"højdepunkter fra en række af websider."
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
@@ -254,10 +255,8 @@ msgid "Plugins"
 msgstr "Udvidelsesmoduler"
 
 #: ../data/preferences.ui.h:15
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plugins…"
-msgstr "Udvidelsesmoduler"
+msgstr "Udvidelsesmoduler …"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
 msgid "General"
@@ -385,11 +384,9 @@ msgid "Make Available Offline"
 msgstr "Gør tilgængelig offline"
 
 #: ../data/shortcuts.ui.h:4
-#, fuzzy
-#| msgid "Take _Screenshot"
 msgctxt "shortcut window"
 msgid "Take Screenshot"
-msgstr "Gem _skærmbillede"
+msgstr "Gem skærmbillede"
 
 #: ../data/shortcuts.ui.h:5
 msgctxt "shortcut window"
@@ -437,11 +434,9 @@ msgid "Zoom out"
 msgstr "Zoom ud"
 
 #: ../data/shortcuts.ui.h:14
-#, fuzzy
-#| msgid "_Rotate ↷"
 msgctxt "shortcut window"
 msgid "Rotate ↷"
-msgstr "_Rotér ↷"
+msgstr "Rotér ↷"
 
 #: ../data/shortcuts.ui.h:15
 msgctxt "shortcut window"
@@ -697,8 +692,7 @@ msgstr "Filmen kunne ikke læses."
 #: ../src/backend/bacon-video-widget.c:3934
 #: ../src/backend/bacon-video-widget.c:3942
 #, c-format
-msgid ""
-"The playback of this movie requires a %s plugin which is not installed."
+msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following plugins which are not "
 "installed:\n"
@@ -1205,7 +1199,7 @@ msgstr "%d kbps"
 #: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
 msgid "%d × %d"
-msgstr ""
+msgstr "%d × %d"
 
 #: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:168
@@ -1682,8 +1676,8 @@ msgid ""
 "remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
 "En adgangskode til at beskytte rpdb2-serveren til fejlsøgning af Totem fra "
-"uautoriseret fjerntilgang, Hvis denne er tom, bruges standardværdien "
-"\"totem\"."
+"uautoriseret fjerntilgang, Hvis denne er tom, bruges standardværdien \"totem"
+"\"."
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Python Console"
@@ -1704,12 +1698,8 @@ msgstr "Python-fejlsøger"
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
-msgid ""
-"You can access the Totem.Object through “totem_object” :\\n"
-"%s"
-msgstr ""
-"Du kan tilgå Totem.Objekt'et med \"totem_object\" : \\n"
-"%s"
+msgid "You can access the Totem.Object through “totem_object” :\\n%s"
+msgstr "Du kan tilgå Totem.Objekt'et med \"totem_object\" : \\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
@@ -1985,7 +1975,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Verify your system installation. The Totem plugin will now exit."
 #~ msgstr ""
-#~ "Kontrollér din systeminstallation. Totem-udvidelsesmodulet vil nu afslutte."
+#~ "Kontrollér din systeminstallation. Totem-udvidelsesmodulet vil nu "
+#~ "afslutte."
 
 #~ msgid "Show visual effects when no video is displayed"
 #~ msgstr "Vis visuelle effekter når der ikke afspilles en video"
@@ -2021,10 +2012,12 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Visualiserings_størrelse:"
 
 #~ msgid "Mozilla (Firefox) plugin to view movies inside your browser"
-#~ msgstr "Mozilla-udvidelsesmodul (Firefox) til at se film inden i din browser"
+#~ msgstr ""
+#~ "Mozilla-udvidelsesmodul (Firefox) til at se film inden i din browser"
 
 #~ msgid "Command-line video properties helper (for indexers)"
-#~ msgstr "Hjælpeprogram til videoegenskaber på kommandolinjen (til indeksering)"
+#~ msgstr ""
+#~ "Hjælpeprogram til videoegenskaber på kommandolinjen (til indeksering)"
 
 #~ msgid "Play / P_ause"
 #~ msgstr "Afspil / p_ause"
@@ -2144,7 +2137,7 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "All Supported Files"
 #~ msgstr "Alle understøttede filer"
 
-#~ # Denne streng synes at blive brugt når man gemmer en afspilningsliste. Meningen er at afspilningsliste-formatet bestemmes af den extension brugeren skriver, hvorfor det må være korrekt at skrive "ved hjælp af fil-endelse" som oversættelse
+# Denne streng synes at blive brugt når man gemmer en afspilningsliste. Meningen er at afspilningsliste-formatet bestemmes af den extension brugeren skriver, hvorfor det må være korrekt at skrive "ved hjælp af fil-endelse" som oversættelse
 #~ msgid "By Extension"
 #~ msgstr "Ved hjælp af fil-endelse"
 
@@ -2155,12 +2148,12 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Fil-endelser"
 
 #~ msgid ""
-#~ "The program was not able to find out the file format you want to use for "
-#~ "`%s'. Please make sure to use a known extension for that file or manually "
+#~ "The program was not able to find out the file format you want to use for `"
+#~ "%s'. Please make sure to use a known extension for that file or manually "
 #~ "choose a file format from the list below."
 #~ msgstr ""
-#~ "Programmet kunne ikke finde ud af, hvilket filformat du vil bruge til "
-#~ "\"%s\". Sikr dig venligst, at du bruger en kendt filendelse for denne fil, "
+#~ "Programmet kunne ikke finde ud af, hvilket filformat du vil bruge til \"%s"
+#~ "\". Sikr dig venligst, at du bruger en kendt filendelse for denne fil, "
 #~ "eller vælg manuelt et filformat fra listen herunder."
 
 #~ msgid "File format not recognized"
@@ -2181,7 +2174,7 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "_Rotate Clockwise"
 #~ msgstr "_Rotér med uret"
 
-#~ # Er det rigtigt noteret?
+# Er det rigtigt noteret?
 #~ msgid "Rotate Counterc_lockwise"
 #~ msgstr "Rotér _mod uret"
 
@@ -2216,8 +2209,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Ændr størrelsen af lærredet automatisk ved filåbninger"
 
 #~ msgid ""
-#~ "Whether to remember the position of played audio/video files when pausing or "
-#~ "closing them"
+#~ "Whether to remember the position of played audio/video files when pausing "
+#~ "or closing them"
 #~ msgstr ""
 #~ "Hvorvidt positionen i de afspillede lyd-/videofiler skal huskes, når de "
 #~ "sættes på pause eller lukkes"
@@ -2401,8 +2394,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Angiv blandingstilstanden"
 
 #~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media over "
-#~ "the network."
+#~ "Approximate network connection speed, used to select quality on media "
+#~ "over the network."
 #~ msgstr ""
 #~ "Tilnærmet hastighed af netværksforbindelsen, der bruges til at vælge "
 #~ "mediekvalitet over netværket."
@@ -2423,15 +2416,15 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Filmafspiller med %s"
 
 #~ msgid ""
-#~ "Totem could not play this media (%s) although a plugin is present to handle "
-#~ "it."
+#~ "Totem could not play this media (%s) although a plugin is present to "
+#~ "handle it."
 #~ msgstr ""
-#~ "Totem kunne ikke afspille dette medie (%s), selvom et modul er tilgængeligt "
-#~ "til at håndtere det."
+#~ "Totem kunne ikke afspille dette medie (%s), selvom et modul er "
+#~ "tilgængeligt til at håndtere det."
 
 #~ msgid ""
-#~ "You might want to check that a disc is present in the drive and that it is "
-#~ "correctly configured."
+#~ "You might want to check that a disc is present in the drive and that it "
+#~ "is correctly configured."
 #~ msgstr ""
 #~ "Kontrollér at disken sidder i drevet og at det er korrekt konfigureret."
 
@@ -2442,28 +2435,29 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ "Please install the necessary plugins and restart Totem to be able to play "
 #~ "this media."
 #~ msgstr ""
-#~ "Installér de nødvendige moduler og genstart Totem hvis du vil afspille denne "
-#~ "type."
+#~ "Installér de nødvendige moduler og genstart Totem hvis du vil afspille "
+#~ "denne type."
 
 #~ msgid ""
 #~ "Totem cannot play this type of media (%s) because it does not have the "
 #~ "appropriate plugins to be able to read from the disc."
 #~ msgstr ""
-#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de nødvendige "
-#~ "udvidelsesmoduler til at læse dem fra disken."
+#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de "
+#~ "nødvendige udvidelsesmoduler til at læse dem fra disken."
 
 #~ msgid ""
 #~ "Totem cannot play this type of media (%s) because you do not have the "
 #~ "appropriate plugins to handle it."
 #~ msgstr ""
-#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de nødvendige "
-#~ "udvidelsesmoduler til at håndtere den."
+#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de "
+#~ "nødvendige udvidelsesmoduler til at håndtere den."
 
-#~ msgid "Totem cannot play this type of media (%s) because it is not supported."
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because it is not supported."
 #~ msgstr ""
 #~ "Totem kan ikke afspille denne medietype (%s), fordi den ikke understøttes."
 
-#~ # ???
+# ???
 #~ msgid "Please insert another disc to play back."
 #~ msgstr "Indsæt venligst en ny disk for at afspille."
 
@@ -2473,7 +2467,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Totem does not support playback of Audio CDs"
 #~ msgstr "Totem understøtter ikke afspilning af lyd-cd'er"
 
-#~ msgid "Please consider using a music player or a CD extractor to play this CD"
+#~ msgid ""
+#~ "Please consider using a music player or a CD extractor to play this CD"
 #~ msgstr ""
 #~ "Overvej venligst at bruge en musikafspiller eller en cd-udpakker til at "
 #~ "afspille denne cd"
@@ -2482,11 +2477,11 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "%d %%"
 
 #~ msgid ""
-#~ "The requested audio output was not found. Please select another audio output "
-#~ "in the Multimedia Systems Selector."
+#~ "The requested audio output was not found. Please select another audio "
+#~ "output in the Multimedia Systems Selector."
 #~ msgstr ""
-#~ "Den forespurgte lyd-uddata blev ikke fundet. Vælg venligst en anden "
-#~ "lyd-uddata i multimediesystems-vælgeren."
+#~ "Den forespurgte lyd-uddata blev ikke fundet. Vælg venligst en anden lyd-"
+#~ "uddata i multimediesystems-vælgeren."
 
 #~ msgid "Location not found."
 #~ msgstr "Sted ikke fundet."
@@ -2512,11 +2507,11 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Fejl ved søgning efter videoer"
 
 #~ msgid ""
-#~ "The response from the server could not be understood. Please check you are "
-#~ "running the latest version of libgdata."
+#~ "The response from the server could not be understood. Please check you "
+#~ "are running the latest version of libgdata."
 #~ msgstr ""
-#~ "Kunne ikke forstå svaret fra serveren. Kontrollér venligst, at du kører den "
-#~ "nyeste version af libgdata."
+#~ "Kunne ikke forstå svaret fra serveren. Kontrollér venligst, at du kører "
+#~ "den nyeste version af libgdata."
 
 #~ msgid "Fetching search results…"
 #~ msgstr "Henter søgeresultater …"
@@ -2534,11 +2529,11 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Videoformat understøttes ikke"
 
 #~ msgid ""
-#~ "This video is not available in any formats which Totem supports. Would you "
-#~ "like to open it in your web browser instead?"
+#~ "This video is not available in any formats which Totem supports. Would "
+#~ "you like to open it in your web browser instead?"
 #~ msgstr ""
-#~ "Denne video er ikke tilgængelig i et format som Totem understøtter. Vil du "
-#~ "åbne den i din webbrowser i stedet?"
+#~ "Denne video er ikke tilgængelig i et format som Totem understøtter. Vil "
+#~ "du åbne den i din webbrowser i stedet?"
 
 #~ msgid "0 frames per second"
 #~ msgstr "0 billeder pr. sekund"
@@ -2564,7 +2559,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
-#~ "Afspilning af denne film kræver følgende afkodere som ikke er installeret:\n"
+#~ "Afspilning af denne film kræver følgende afkodere som ikke er "
+#~ "installeret:\n"
 #~ "\n"
 #~ "%s"
 
@@ -2575,7 +2571,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Den installerede version af GStreamer er for gammel."
 
 #~ msgid ""
-#~ "Listen to the large collection of Creative Commons licensed music on Jamendo."
+#~ "Listen to the large collection of Creative Commons licensed music on "
+#~ "Jamendo."
 #~ msgstr ""
 #~ "Lyt til den store samling af musik på Jamendo under Create Commons-licens."
 
@@ -2628,7 +2625,7 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "%M:%S"
 #~ msgstr "%M:%S"
 
-#~ # Jamendo understøtter ikke dansk, men foretager en redirect til den engelske side, så vi kan ligeså godt skrive den rigtige sprogkode med det samme
+# Jamendo understøtter ikke dansk, men foretager en redirect til den engelske side, så vi kan ligeså godt skrive den rigtige sprogkode med det samme
 #~ msgid "en"
 #~ msgstr "da"
 
@@ -2641,7 +2638,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid ""
 #~ "The number of Jamendo search results to display in each page of results."
 #~ msgstr ""
-#~ "Antallet af Jamedo-søgeresultater, der skal vises i hver side af resultater."
+#~ "Antallet af Jamedo-søgeresultater, der skal vises i hver side af "
+#~ "resultater."
 
 #~ msgid "The preferred audio format to download tracks from Jamendo in."
 #~ msgstr "Det foretrukne lydformat, hvori der skal hentes spor fra Jamendo."
@@ -2675,7 +2673,7 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgid "Search for local videos using Tracker"
 #~ msgstr "Søg efter lokale videoer med Tracker"
 
-#~ # Oversættelsen kan meget vel være forkert afhængigt af kontekst
+# Oversættelsen kan meget vel være forkert afhængigt af kontekst
 #~ msgid "Browser Plugin using %s"
 #~ msgstr "Browser-udvidelsesmodul med %s"
 
@@ -2747,8 +2745,8 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ "Totem cannot play TV, because no TV adapters are present or they are not "
 #~ "supported."
 #~ msgstr ""
-#~ "Totem kan ikke afspille TV, da ingen TV-adaptere er tilsluttet eller fordi "
-#~ "de ikke understøttes."
+#~ "Totem kan ikke afspille TV, da ingen TV-adaptere er tilsluttet eller "
+#~ "fordi de ikke understøttes."
 
 #~ msgid "Please insert a supported TV adapter."
 #~ msgstr "Indsæt venligst en understøttet TV-adapter."
@@ -2799,11 +2797,11 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 #~ msgstr "Ukendt filtype."
 
 #~ msgid ""
-#~ "The change of this setting will only take effect for the next movie, or when "
-#~ "Totem is restarted."
+#~ "The change of this setting will only take effect for the next movie, or "
+#~ "when Totem is restarted."
 #~ msgstr ""
-#~ "Ændringen af denne indstilling træder først i kraft for den næste film eller "
-#~ "når Totem bliver genstartet."
+#~ "Ændringen af denne indstilling træder først i kraft for den næste film "
+#~ "eller når Totem bliver genstartet."
 
 #~ msgid "long time format|%d:%02d:%02d"
 #~ msgstr "%d:%02d:%02d"
@@ -2876,4 +2874,3 @@ msgstr "Et udvidelsesmodul, der sender hændelser til Zeitgeist"
 
 #~ msgid "Totem could not eject the optical media."
 #~ msgstr "Totem kunne ikke skubbe det optiske medium ud."
-
