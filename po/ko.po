@@ -3,7 +3,7 @@
 #
 # Jang,Jae-Man <jacojang@korea.com>, 2003.
 # Young-Ho Cha <ganadist@gmail.com>, 2006
-# Changwoo Ryu <cwryu@debian.org>, 2004-2016.
+# Changwoo Ryu <cwryu@debian.org>, 2004-2017.
 #
 #
 # 새로 번역하신 분은 아래 "translator-credits"에 추가해 주세요.
@@ -11,7 +11,7 @@
 # 주의:
 # - 이 프로그램의 이름인 Totem는 "토템"으로 음역.
 # - 프로그램의 이름으로 사용하는 "Videos"는 "동영상"으로 번역. 단
-# 오디오/비디오를 구분할때 "Video"는 "비디오"로.
+#   오디오/비디오를 구분할때 "Video"는 "비디오"로.
 # - "Jamendo" -> "자멘도"
 # - "Creative Commons" -> "크리에이티브 커먼즈"
 # - "Grilo" -> "그릴로"
@@ -20,10 +20,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-25 19:19+0000\n"
-"PO-Revision-Date: 2016-09-03 23:00+0900\n"
+"POT-Creation-Date: 2017-03-11 06:35+0000\n"
+"PO-Revision-Date: 2017-03-11 22:19+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -134,27 +134,26 @@ msgid "Encoding character set for subtitle."
 msgstr "자막에 사용할 인코딩 문자셋."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:15
-msgid "Default location for the \"Open...\" dialogs"
-msgstr "\"열기...\" 창의 기본 위치"
+msgid "Default location for the “Open…” dialogs"
+msgstr "“열기…” 창의 기본 위치"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
-"Default location for the \"Open...\" dialogs. Default is the current "
-"directory."
-msgstr "\"열기...\" 창의 기본 위치, 기본값은 현재 디렉터리입니다."
+"Default location for the “Open…” dialogs. Default is the current directory."
+msgstr "“열기…” 창의 기본 위치, 기본값은 현재 디렉터리입니다."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:17
-msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "\"스크린샷 찍기\" 창의 기본 위치"
+msgid "Default location for the “Take Screenshot” dialogs"
+msgstr "“스크린샷 찍기” 창의 기본 위치"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs. Default is the "
-"Pictures directory."
-msgstr "\"스크린샷 찍기\" 창의 기본 위치, 기본값은 사진 디렉터리입니다."
+"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
+"directory."
+msgstr "“스크린샷 찍기” 창의 기본 위치, 기본값은 사진 디렉터리입니다."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
-msgid "Whether to disable the plugins in the user's home directory"
+msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "사용자 디렉터리의 플러그인을 사용하지 않을지 여부"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:20
@@ -187,7 +186,7 @@ msgstr "표시할 디렉터리"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "찾아보기 인터페이스에서 표시할 디렉터리, 기본값은 none"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5550
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5616
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "스테레오"
@@ -245,8 +244,8 @@ msgid "Plugins"
 msgstr "플러그인"
 
 #: ../data/preferences.ui.h:15
-msgid "Plugins..."
-msgstr "플러그인..."
+msgid "Plugins…"
+msgstr "플러그인…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
 msgid "General"
@@ -362,135 +361,155 @@ msgstr "일반"
 
 #: ../data/shortcuts.ui.h:2
 msgctxt "shortcut window"
-msgid "Preferences"
-msgstr "기본 설정"
+msgid "Properties"
+msgstr "속성"
 
 #: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
+msgid "Make Available Offline"
+msgstr "오프라인에서 사용하게 만들기"
+
+#: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
+msgid "Take Screenshot"
+msgstr "스크린샷 찍기"
+
+#: ../data/shortcuts.ui.h:5
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "끝내기"
 
-#: ../data/shortcuts.ui.h:4
+#: ../data/shortcuts.ui.h:6
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "볼륨"
 
-#: ../data/shortcuts.ui.h:5
+#: ../data/shortcuts.ui.h:7
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "볼륨 높이기"
 
-#: ../data/shortcuts.ui.h:6
+#: ../data/shortcuts.ui.h:8
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "볼륨 낮추기"
 
-#: ../data/shortcuts.ui.h:7
+#: ../data/shortcuts.ui.h:9
 msgctxt "shortcut window"
 msgid "View"
 msgstr "보기"
 
-#: ../data/shortcuts.ui.h:8
+#: ../data/shortcuts.ui.h:10
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "전체화면 토글"
 
-#: ../data/shortcuts.ui.h:9
+#: ../data/shortcuts.ui.h:11
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "전체화면 나가기"
 
-#: ../data/shortcuts.ui.h:10
+#: ../data/shortcuts.ui.h:12
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "확대"
 
-#: ../data/shortcuts.ui.h:11
+#: ../data/shortcuts.ui.h:13
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "축소"
 
-#: ../data/shortcuts.ui.h:12
+#: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
+msgid "Rotate ↷"
+msgstr "회전 ↷"
+
+#: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
+msgid "Rotate ↶"
+msgstr "회전 ↶"
+
+#: ../data/shortcuts.ui.h:16
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "재생"
 
-#: ../data/shortcuts.ui.h:13
+#: ../data/shortcuts.ui.h:17
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "재생/일시 정지"
 
-#: ../data/shortcuts.ui.h:14
+#: ../data/shortcuts.ui.h:18
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "이전 영상 또는 챕터"
 
-#: ../data/shortcuts.ui.h:15
+#: ../data/shortcuts.ui.h:19
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "다음 영상 또는 챕터"
 
-#: ../data/shortcuts.ui.h:16
+#: ../data/shortcuts.ui.h:20
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "건너뛰기"
 
-#: ../data/shortcuts.ui.h:17
+#: ../data/shortcuts.ui.h:21
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "15초 뒤로 이동"
 
-#: ../data/shortcuts.ui.h:18
+#: ../data/shortcuts.ui.h:22
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "60초 앞으로 이동"
 
-#: ../data/shortcuts.ui.h:19
+#: ../data/shortcuts.ui.h:23
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "5초 뒤로 이동"
 
-#: ../data/shortcuts.ui.h:20
+#: ../data/shortcuts.ui.h:24
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "15초 앞으로 이동"
 
-#: ../data/shortcuts.ui.h:21
+#: ../data/shortcuts.ui.h:25
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "3분 뒤로 이동"
 
-#: ../data/shortcuts.ui.h:22
+#: ../data/shortcuts.ui.h:26
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "10분 앞으로 이동"
 
-#: ../data/shortcuts.ui.h:23
+#: ../data/shortcuts.ui.h:27
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "건너뛰기…"
 
-#: ../data/shortcuts.ui.h:24
+#: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD 메뉴 이동"
 
-#: ../data/shortcuts.ui.h:25
+#: ../data/shortcuts.ui.h:29
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "위로 이동"
 
-#: ../data/shortcuts.ui.h:26
+#: ../data/shortcuts.ui.h:30
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "아래로 이동"
 
-#: ../data/shortcuts.ui.h:27
+#: ../data/shortcuts.ui.h:31
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "왼쪽으로 이동"
 
-#: ../data/shortcuts.ui.h:28
+#: ../data/shortcuts.ui.h:32
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "오른쪽으로 이동"
@@ -613,51 +632,51 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "RTSP 서버에서 암호를 요청했습니다"
 
-#: ../src/backend/bacon-video-widget.c:3320
+#: ../src/backend/bacon-video-widget.c:3329
 #, c-format
 msgid "Audio Track #%d"
 msgstr "오디오 트랙 #%d"
 
-#: ../src/backend/bacon-video-widget.c:3322
+#: ../src/backend/bacon-video-widget.c:3331
 #, c-format
 msgid "Subtitle #%d"
 msgstr "자막 #%d"
 
-#: ../src/backend/bacon-video-widget.c:3806
+#: ../src/backend/bacon-video-widget.c:3872
 msgid "The server you are trying to connect to is not known."
 msgstr "연결하려는 서버를 알 수 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3809
+#: ../src/backend/bacon-video-widget.c:3875
 msgid "The connection to this server was refused."
 msgstr "이 서버에 대한 연결이 거부되었습니다."
 
-#: ../src/backend/bacon-video-widget.c:3812
+#: ../src/backend/bacon-video-widget.c:3878
 msgid "The specified movie could not be found."
 msgstr "지정한 동영상을 찾을 수 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3819
+#: ../src/backend/bacon-video-widget.c:3885
 msgid "The server refused access to this file or stream."
 msgstr "서버에서 이 파일이나 스트림에 대한 접근을 거부햇습니다."
 
-#: ../src/backend/bacon-video-widget.c:3825
+#: ../src/backend/bacon-video-widget.c:3891
 msgid "Authentication is required to access this file or stream."
 msgstr "이 파일이나 스트림에 접근하려면 인증이 필요합니다."
 
-#: ../src/backend/bacon-video-widget.c:3832
+#: ../src/backend/bacon-video-widget.c:3898
 msgid "You are not allowed to open this file."
 msgstr "이 파일을 열 권한이 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3837
+#: ../src/backend/bacon-video-widget.c:3903
 msgid "This location is not a valid one."
 msgstr "올바른 위치가 아닙니다."
 
-#: ../src/backend/bacon-video-widget.c:3845
+#: ../src/backend/bacon-video-widget.c:3911
 msgid "The movie could not be read."
 msgstr "동영상을 읽을 수 없습니다."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3868
-#: ../src/backend/bacon-video-widget.c:3876
+#: ../src/backend/bacon-video-widget.c:3934
+#: ../src/backend/bacon-video-widget.c:3942
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -670,12 +689,12 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3888
+#: ../src/backend/bacon-video-widget.c:3954
 msgid ""
-"This stream cannot be played. It's possible that a firewall is blocking it."
+"This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "이 스트림을 재생할 수 없습니다. 방화벽에 막혀서 그럴 수도 있습니다."
 
-#: ../src/backend/bacon-video-widget.c:3891
+#: ../src/backend/bacon-video-widget.c:3957
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -683,7 +702,7 @@ msgstr ""
 "코덱이 없어서 오디오 또는 비디오 스트림을 처리할 수 없습니다. 동영상 파일의 "
 "종류에 따라 추가 플러그인을 설치해야 할 수도 있습니다."
 
-#: ../src/backend/bacon-video-widget.c:3902
+#: ../src/backend/bacon-video-widget.c:3968
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -691,30 +710,30 @@ msgstr ""
 "이 파일은 네트워크를 통해 재생할 수 없습니다. 먼저 로컬 위치에 다운로드하십시"
 "오."
 
-#: ../src/backend/bacon-video-widget.c:5546 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5612 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "서라운드"
 
-#: ../src/backend/bacon-video-widget.c:5548 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5614 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "모노"
 
-#: ../src/backend/bacon-video-widget.c:5835
+#: ../src/backend/bacon-video-widget.c:5901
 msgid "Media contains no supported video streams."
 msgstr "지원하지 않는 비디오 스트림이 미디어에 포함되어 있습니다."
 
-#: ../src/backend/bacon-video-widget.c:6046
+#: ../src/backend/bacon-video-widget.c:6112
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "필요한 플러그인이 없습니다. 프로그램을 올바르게 설치했는지 확인하십시오."
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:345
 msgid "Unable to play the file"
 msgstr "파일을 재생할 수 없습니다"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -723,7 +742,7 @@ msgstr[0] "파일을 재생하려면 %s이(가) 필요하지만, 설치하지 �
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:356
 #, c-format
 msgid "_Find in %s"
 msgstr "%s에서 찾기(_F)"
@@ -927,8 +946,8 @@ msgstr "채널"
 
 #: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
-msgid "Couldn't load the '%s' interface. %s"
-msgstr "'%s' 인터페이스를 읽어들일 수 없습니다. %s"
+msgid "Couldn’t load the “%s” interface. %s"
+msgstr "“%s” 인터페이스를 읽어들일 수 없습니다. %s"
 
 #: ../src/totem-interface.c:179
 msgid "The file does not exist."
@@ -981,26 +1000,26 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "자동"
 
-#: ../src/totem-object.c:1386 ../src/totem-options.c:51
+#: ../src/totem-object.c:1388 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "일시 정지"
 
-#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
+#: ../src/totem-object.c:1393 ../src/totem-object.c:1403
 #: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "재생"
 
-#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
-#: ../src/totem-object.c:1987
+#: ../src/totem-object.c:1470 ../src/totem-object.c:1497
+#: ../src/totem-object.c:1989
 #, c-format
-msgid "Totem could not play '%s'."
-msgstr "토템이 '%s'을(를) 재생할 수 없습니다."
+msgid "Totem could not play “%s”."
+msgstr "토템이 “%s”을(를) 재생할 수 없습니다."
 
-#: ../src/totem-object.c:2158
+#: ../src/totem-object.c:2160
 msgid "Totem could not display the help contents."
 msgstr "토템 도움말 차례를 표시할 수 없습니다."
 
-#: ../src/totem-object.c:2419
+#: ../src/totem-object.c:2421
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
@@ -1016,11 +1035,11 @@ msgstr "재생 / 일시 정지"
 msgid "Next Chapter/Movie"
 msgstr "다음 장으로/동영상으로"
 
-#: ../src/totem-object.c:3980
+#: ../src/totem-object.c:3981
 msgid "Totem could not startup."
 msgstr "토템이 시작할 수 없습니다."
 
-#: ../src/totem-object.c:3980
+#: ../src/totem-object.c:3981
 msgid "No reason."
 msgstr "이유 없음."
 
@@ -1096,7 +1115,7 @@ msgid "Movies to play"
 msgstr "재생할 동영상"
 
 #: ../src/totem-options.c:100
-msgid "Can't enqueue and replace at the same time"
+msgid "Can’t enqueue and replace at the same time"
 msgstr "동시에 대기열에 넣고 바꿀 수 없습니다"
 
 #. This is "Title 3", where title is a DVD title
@@ -1108,8 +1127,8 @@ msgstr "타이틀 %d"
 
 #: ../src/totem-playlist.c:992
 #, c-format
-msgid "The playlist '%s' could not be parsed. It might be damaged."
-msgstr "'%s' 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
+msgid "The playlist “%s” could not be parsed. It might be damaged."
+msgstr "“%s” 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
 
 #: ../src/totem-preferences.c:184
 msgid "Configure Plugins"
@@ -1148,8 +1167,8 @@ msgstr "%d kbps"
 #: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "%d × %d"
+msgstr "%d × %d"
 
 #: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:168
@@ -1365,7 +1384,7 @@ msgstr "동영상 추가"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:789
+#: ../src/totem-video-thumbnailer.c:797
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1376,15 +1395,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:790
+#: ../src/totem-video-thumbnailer.c:798
 msgid "Filename"
 msgstr "파일 이름"
 
-#: ../src/totem-video-thumbnailer.c:792
+#: ../src/totem-video-thumbnailer.c:800
 msgid "Resolution"
 msgstr "해상도"
 
-#: ../src/totem-video-thumbnailer.c:795
+#: ../src/totem-video-thumbnailer.c:803
 msgid "Duration"
 msgstr "재생 시간"
 
@@ -1496,11 +1515,11 @@ msgid "Support infrared remote control"
 msgstr "적외선 리모콘 지원"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn't initialize lirc."
+msgid "Couldn’t initialize lirc."
 msgstr "LIRC를 초기화할 수 없습니다."
 
 #: ../src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn't read lirc configuration."
+msgid "Couldn’t read lirc configuration."
 msgstr "LIRC 설정을 읽을 수 없습니다."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
@@ -1536,7 +1555,7 @@ msgid "Searching for subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:230
-#: ../src/plugins/opensubtitles/opensubtitles.py:612
+#: ../src/plugins/opensubtitles/opensubtitles.py:611
 msgid "Downloading the subtitles…"
 msgstr "자막을 다운로드하는 중입니다…"
 
@@ -1569,11 +1588,11 @@ msgstr "형식"
 msgid "Rating"
 msgstr "평가"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:529
+#: ../src/plugins/opensubtitles/opensubtitles.py:528
 msgid "_Download Movie Subtitles…"
 msgstr "동영상 자막 다운로드(_D)…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:569
+#: ../src/plugins/opensubtitles/opensubtitles.py:568
 msgid "Searching subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
@@ -1620,10 +1639,10 @@ msgstr "RPDB2 암호"
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
-"remote access. If this is empty, a default of 'totem' will be used."
+"remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
 "권한이 없이 토템에 원격으로 접근하지 않도록 RPDB2 서버를 보호할 암호. 빈 값이"
-"면, 'totem' 기본값을 사용합니다."
+"면, “totem” 기본값을 사용합니다."
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Python Console"
@@ -1644,8 +1663,8 @@ msgstr "파이썬 디버거"
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
-msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
-msgstr "Totem.Object는 'totem_object'를 통해 접근할 수 있습니다 :\\n%s"
+msgid "You can access the Totem.Object through “totem_object” :\\n%s"
+msgstr "Totem.Object는 “totem_object”를 통해 접근할 수 있습니다 :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
@@ -1656,10 +1675,10 @@ msgstr "토템 파이썬 콘솔"
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
-"default password ('totem')."
+"default password (“totem”)."
 msgstr ""
 "확인을 누르면 WINPDB나 RPDB2를 이용해 연결할 때까지 토템이 대기합니다. DConf"
-"에서 디버거 암호를 설정하지 않았다면 기본 암호를('totem') 사용합니다."
+"에서 디버거 암호를 설정하지 않았다면 기본 암호를 (“totem”) 사용합니다."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -1717,7 +1736,7 @@ msgstr "영상을 재생하는 중"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
-msgstr "스크린샷 너비(픽셀 수):"
+msgstr "스크린샷 너비 (픽셀 수):"
 
 #: ../src/plugins/screenshot/gallery.ui.h:2
 msgid "Calculate the number of screenshots"
@@ -1775,8 +1794,8 @@ msgstr "갤러리를 만드는 중…"
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
-msgid "Saving gallery as \"%s\""
-msgstr "갤러리를 \"%s\" 파일로 저장하는 중"
+msgid "Saving gallery as “%s”"
+msgstr "갤러리를 “%s” 파일로 저장하는 중"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
@@ -1801,8 +1820,8 @@ msgid "Skip To"
 msgstr "건너뛰기"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
-msgid "Provides the \"Skip to\" dialog"
-msgstr "\"건너뛰기\" 대화상자 기능을 제공합니다"
+msgid "Provides the “Skip to” dialog"
+msgstr "“건너뛰기” 대화상자 기능을 제공합니다"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
@@ -1890,6 +1909,16 @@ msgstr "자이트가이스트 설정"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "이벤트를 자이트가이스트에 보내는 플러그인"
+
+#~ msgid "Plugins..."
+#~ msgstr "플러그인..."
+
+#~ msgctxt "shortcut window"
+#~ msgid "Preferences"
+#~ msgstr "기본 설정"
+
+#~ msgid "%d x %d"
+#~ msgstr "%d x %d"
 
 #~ msgid "_Remove Chapter"
 #~ msgstr "챕터 제거(_R)"
