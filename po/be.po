@@ -2,15 +2,16 @@
 # Ales Nyakhaychyk <nab@mail.by>, 2003, 2006, 2008.
 # Ihar Hrachyshka <ihar.hrachyshka@gmail.com>, 2006, 2007, 2011, 2012, 2013, 2014.
 # Andrey Ladyko <fylh.if@gmail.com>, 2009.
+# Yuras Shumovich <shumovichy@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-05-04 10:31+0000\n"
-"PO-Revision-Date: 2012-07-15 11:32+0300\n"
-"Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
+"POT-Creation-Date: 2017-02-24 00:48+0000\n"
+"PO-Revision-Date: 2017-03-22 15:09+0300\n"
+"Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
@@ -18,106 +19,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.11\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:330
-#: ../src/plugins/screensaver/totem-screensaver.c:79
-msgid "Playing a movie"
-msgstr "Прайграванне фільма"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3661
+msgid "Videos"
+msgstr "Відэа"
 
-#: ../browser-plugin/totem-plugin-viewer.c:400
-msgid "No URI to play"
-msgstr "Няма URI-адрасу для грання"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Прайграванне фільмаў"
 
-#. translators: this is:
-#. * Open With ApplicationName
-#. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1099
-#, c-format
-msgid "_Open with \"%s\""
-msgstr "_Адкрыць у \"%s\""
-
-#: ../browser-plugin/totem-plugin-viewer.c:1320 ../src/totem-object.c:2339
-msgid "An error occurred"
-msgstr "Узнікла памылка"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1676
-msgid "Totem Movie Player"
-msgstr "Totem: прайгравальнік фільмаў"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1992
-msgid "No playlist or playlist empty"
-msgstr "Няма спіса прайгравання або ён пусты"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2226
-msgid "Movie browser plugin"
-msgstr "Плугін фільмаў для сеціўнага аглядальніка"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2242 ../src/totem.c:260
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Не ўдалося ініцыяваць бібліятэкі, сумяшчальныя з ніцямі."
-
-#: ../browser-plugin/totem-plugin-viewer.c:2242
-msgid "Verify your system installation. The Totem plugin will now exit."
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
 msgstr ""
-"Праверце правільнасць усталявання сістэмы. Плугін Totem заканчвае працу."
+"Відэа, таксама вядомы як Totem, афіцыйны прайгравальнік фільмаў для "
+"асяроддзя GNOME. Падтрымлівае спісы мясцовых відэа і пошук у іх, супольны "
+"доступ да відэа ў мясцовай сетцы з выкарыстаннем UPnP/DLNA, паказ асноўных "
+"момантаў з відэа на некалькіх сайтах."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
-msgid "Show visual effects when no video is displayed"
-msgstr "Паказваць візуальныя эфекты, калі няма відэа"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"Totem пастаўляецца з дадатковымі функцыямі, напрыклад: сцягванне субцітраў, "
+"запіс DVD."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
-msgid "Show visual effects when playing an audio only file."
-msgstr "Паказваць візуальныя эфекты, калі прайграецца файл без відэа."
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
+msgid "Video thumbnailer for the file manager"
+msgstr "Відэамініяцюры для кіраўніка файлаў"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
-msgid "Name of the visual effects plugin"
-msgstr "Назва плугіна візуальных эфектаў"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
+msgid "Files properties tab"
+msgstr "Картка ўласцівасцяў для аглядчыка файлаў"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Відэа;Фільм;Кіно;Кліп;Серыял;Прайгравальнік;DVD;TV;ТВ;Дыск;"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "Яркасць відэа"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "Кантраснасць відэа"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "Тон відэа"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "Насычанасць відэа"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "Рэжым паўтору"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Ці трэба выключыць дэінтэрлэйсінг для церазрадковага відэа"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
-msgid "Whether to enable debug for the playback engine"
-msgstr "Ці трэба ўключаць адладку рухавіка прайгравання"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "Тып аўдыявываду"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
-msgid "Visualization quality setting"
-msgstr "Настройка якасці візуалізацыі"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
-msgid "Quality setting for the audio visualization."
-msgstr "Настройка якасці аўдыявізуалізацыі."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "Парог сеткавага буферавання"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -125,219 +104,199 @@ msgstr ""
 "Колькасць сеткавых даных для буферавання, патрэбная для пачатку паказу (у "
 "секундах)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "Шрыфт субцітраў"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "Апісанне Pango-шрыфту для паказу субцітраў."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "'UTF-8'"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "Кадаванне субцітраў"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "Знаказбор для кадавання субцітраў."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
-msgid "Default location for the \"Open...\" dialogs"
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
+msgid "Default location for the “Open…” dialogs"
 msgstr "Прадвызначанае месцазнаходжанне для дыялогаў \"Адкрыць...\""
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
-"Default location for the \"Open...\" dialogs. Default is the current "
-"directory."
+"Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
 "Прадвызначанае месцазнаходжанне для дыялогаў \"Адкрыць...\". Прадвызначана "
 "гэта бягучы каталог."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
-msgid "Default location for the \"Take Screenshot\" dialogs"
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
+msgid "Default location for the “Take Screenshot” dialogs"
 msgstr ""
 "Прадвызначанае месцазнаходжанне для дыялогаў \"Зрабіць экранны здымак\""
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs. Default is the "
-"Pictures directory."
+"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
+"directory."
 msgstr ""
 "Прадвызначанае месцазнаходжанне для дыялогаў \"Зрабіць экранны здымак\". "
 "Прадвызначана гэта каталог Малюнкі."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
-msgid "Whether to disable the plugins in the user's home directory"
-msgstr "Ці трэба выключыць плугіны з дамашняга каталога карыстальніка"
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
+msgid "Whether to disable the plugins in the user’s home directory"
+msgstr "Ці трэба выключыць плугіны ў дамашнім каталозе карыстальніка"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Ці трэба выключыць клавіятурныя скароты"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Ці трэба аўтаматычна загружаць субцітры пры адкрыцці фільма"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Ці трэба аўтаматычна загружаць файлы раздзелаў пры адкрыцці фільма"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "Спіс актыўных плугінаў"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "Спіс назваў актыўных плугінаў (загружаных і дзейных)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "Каталогі, якія трэба паказаць"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
-msgstr "Каталогі, якія трэба паказваць у аглядальніку, прадвызначанае значэнне - нічога"
+msgstr ""
+"Каталогі, якія трэба паказваць у аглядальніку, прадвызначанае значэнне - "
+"нічога"
 
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:2
-msgid "Normal"
-msgstr "Звычайны"
-
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:4
-msgid "Large"
-msgstr "Вялікі"
-
-#. Audio visualization dimensions
-#: ../data/preferences.ui.h:6
-msgid "Extra Large"
-msgstr "Вялізны"
-
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5886
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5616
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Стэрэа"
 
-#: ../data/preferences.ui.h:8
+#: ../data/preferences.ui.h:2
 msgid "4-channel"
 msgstr "4-канальны"
 
-#: ../data/preferences.ui.h:9
+#: ../data/preferences.ui.h:3
 msgid "4.1-channel"
 msgstr "4.1-канальны"
 
-#: ../data/preferences.ui.h:10
+#: ../data/preferences.ui.h:4
 msgid "5.0-channel"
 msgstr "5.0-канальны"
 
-#: ../data/preferences.ui.h:11
+#: ../data/preferences.ui.h:5
 msgid "5.1-channel"
 msgstr "5.1-канальны"
 
-#: ../data/preferences.ui.h:12
+#: ../data/preferences.ui.h:6
 msgid "AC3 Passthrough"
 msgstr "AC3 Passthrough"
 
-#: ../data/preferences.ui.h:13
+#: ../data/preferences.ui.h:7
 msgid "Preferences"
 msgstr "Настройкі"
 
-#: ../data/preferences.ui.h:14
-msgid "Text Subtitles"
-msgstr "Субцітры"
+#: ../data/preferences.ui.h:8
+msgid "External Subtitles"
+msgstr "Знешнія субцітры"
 
-#: ../data/preferences.ui.h:15
+#: ../data/preferences.ui.h:9
 msgid "_Load subtitle files when movie is loaded"
 msgstr "_Загружаць файлы субцітраў пры адкрыцці фільма"
 
-#: ../data/preferences.ui.h:16
+#: ../data/preferences.ui.h:10
 msgid "_Font:"
 msgstr "_Шрыфт:"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:11
 msgid "_Encoding:"
 msgstr "_Кадаванне:"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:12
 msgid "External Chapters"
 msgstr "Вонкавыя раздзелы"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:13
 msgid "Load _chapter files when movie is loaded"
 msgstr "_Загружаць файлы раздзелаў пры адкрыцці фільма"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:14
 msgid "Plugins"
 msgstr "Плугіны"
 
-#: ../data/preferences.ui.h:21
-msgid "Plugins..."
+#: ../data/preferences.ui.h:15
+msgid "Plugins…"
 msgstr "Плугіны..."
 
-#: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
+#: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
 msgid "General"
 msgstr "Агульнае"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:24
-msgid "Display"
-msgstr "Паказ"
+#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:285
+msgid "Video"
+msgstr "Відэа"
 
-#: ../data/preferences.ui.h:25
+#: ../data/preferences.ui.h:19
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Выключыць д_эінтэрлэйсінг для церазрадковага відэа"
 
-#: ../data/preferences.ui.h:26
-msgid "Visual Effects"
-msgstr "Візуальныя эфекты"
-
-#: ../data/preferences.ui.h:27
-msgid "Show _visual effects when an audio file is played"
-msgstr "Паказваць _візуальныя эфекты для гукавых файлаў"
-
-#: ../data/preferences.ui.h:28
-msgid "_Type of visualization:"
-msgstr "_Тып візуалізацыі:"
-
-#: ../data/preferences.ui.h:29
-msgid "Visualization _size:"
-msgstr "Па_мер візуалізацыі:"
-
-#: ../data/preferences.ui.h:30
+#: ../data/preferences.ui.h:20
 msgid "Color Balance"
 msgstr "Баланс колераў"
 
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:21
 msgid "_Brightness:"
 msgstr "_Яркасць:"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:22
 msgid "Co_ntrast:"
 msgstr "_Кантраснасць:"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:23
 msgid "Sat_uration:"
 msgstr "_Насычанасць:"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:24
 msgid "_Hue:"
 msgstr "_Тон:"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:25
 msgid "Reset to _Defaults"
 msgstr "Вярнуць _прадвызначаныя настройкі"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:26
+msgid "Display"
+msgstr "Паказ"
+
+#: ../data/preferences.ui.h:27
 msgid "Audio Output"
 msgstr "Вывад гуку"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
 msgstr "_Тып вываду гуку:"
 
-#: ../data/preferences.ui.h:38 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Гук"
@@ -370,10 +329,6 @@ msgstr "Каментарый:"
 msgid "Container:"
 msgstr "Кантэйнер:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
-msgid "Video"
-msgstr "Відэа"
-
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Памер:"
@@ -398,172 +353,270 @@ msgstr "Частата сэмплаў:"
 msgid "Channels:"
 msgstr "Каналы:"
 
-#: ../data/appdata/totem.appdata.xml.in.h:1
-msgid ""
-"Totem, also known as Videos, is the official movie player of the GNOME "
-"desktop environment. It features a playlist, a full-screen mode, seek and "
-"volume controls, as well as keyboard navigation."
-msgstr ""
-"Totem, таксама вядомы як Відэа, афіцыйны прайгравальнік фільмаў для асяроддзя GNOME. "
-"Падтрымлівае спісы прайгравання, поўнаэкранны рэжым, пракрутку і змяненне гучнасці, а таксама "
-"навігацыю з дапамогай клавіятуры."
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Агульнае"
 
-#: ../data/appdata/totem.appdata.xml.in.h:2
-msgid ""
-"Totem comes with added functionality such as: subtitle downloader, support "
-"to watch live TV and VCD recording."
-msgstr ""
-"Totem пастаўляецца з дадатковымі функцыямі, напрыклад: плугін для сцягвання субцітраў, падтрымка прагляду жывога тэлевізійнага эфіра і VCD-запісаў."
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Properties"
+msgstr "Уласцівасці"
 
-#: ../data/appdata/totem.appdata.xml.in.h:3
-msgid "Video thumbnailer for the file manager"
-msgstr "Відэамініяцюры для кіраўніка файлаў"
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
+msgid "Make Available Offline"
+msgstr "Зрабіць даступным без сеткі"
 
-#: ../data/appdata/totem.appdata.xml.in.h:4
-msgid "Nautilus properties tab"
-msgstr "Картка ўласцівасцяў для Наўтылуса"
+#: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
+msgid "Take Screenshot"
+msgstr "Зрабіць экранны здымак"
 
-#: ../data/appdata/totem.appdata.xml.in.h:5
-msgid "Mozilla (Firefox) plugin to view movies inside your browser"
-msgstr "Плугін Мазілы (Фаерфокс) для прагляду фільмаў у вашым сеціўным аглядальніку"
+#: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Выйсці"
 
-#: ../data/appdata/totem.appdata.xml.in.h:6
-msgid "Command-line video properties helper (for indexers)"
-msgstr "Дапаможны модуль для загаднага радка для ўласцівасцяў відэа (патрэбны для індэксатараў)"
+#: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
+msgid "Volume"
+msgstr "Гучнасць"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../src/totem.c:259 ../src/totem.c:265
-#: ../src/totem-object.c:3546
-msgid "Videos"
-msgstr "Відэа"
+#: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Павялічыць гучнасць"
 
-#: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Прайграванне фільмаў"
+#: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Паменшыць гучнасць"
 
-#: ../data/totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Відэа;Фільм;Кіно;Кліп;Серыял;Прайгравальнік;DVD;TV;ТВ;Дыск;"
+#: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Выгляд"
+
+#: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
+msgid "Toggle fullscreen"
+msgstr "Пераключыць поўнаэкранны рэжым"
+
+#: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
+msgid "Exit fullscreen"
+msgstr "Выйсці з поўнаэкраннага рэжыму"
+
+#: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Наблізіць"
+
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Аддаліць"
+
+#: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
+msgid "Rotate ↷"
+msgstr "Павярнуць ↷"
+
+#: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
+msgid "Rotate ↶"
+msgstr "Павярнуць ↶"
+
+#: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr "Прайграванне"
+
+#: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
+msgid "Play/Pause"
+msgstr "Зайграць/прыпыніць"
+
+#: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
+msgid "Previous video or chapter"
+msgstr "Папярэдняе відэа або раздзел"
+
+#: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
+msgid "Next video or chapter"
+msgstr "Наступнае відэа або раздзел"
+
+#: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
+msgid "Skip"
+msgstr "Прапусціць"
+
+#: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
+msgid "Go back 15 seconds"
+msgstr "Назад на 15 секунд"
+
+#: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
+msgid "Go forward 60 seconds"
+msgstr "Наперад на 60 секунд"
+
+#: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
+msgid "Go back 5 seconds"
+msgstr "Назад на 5 секунд"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "Go forward 15 seconds"
+msgstr "Наперад на 15 секунд"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
+msgid "Go back 3 minutes"
+msgstr "Назад на 3 хвіліны"
+
+#: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
+msgid "Go forward 10 minutes"
+msgstr "Наперад на 3 хвіліны"
+
+#: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
+msgid "Skip to…"
+msgstr "Пераскочыць да..."
+
+#: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
+msgid "DVD menu navigation"
+msgstr "Навігацыя ў меню DVD"
+
+#: ../data/shortcuts.ui.h:29
+msgctxt "shortcut window"
+msgid "Navigate up"
+msgstr "Перайсці ўверх"
+
+#: ../data/shortcuts.ui.h:30
+msgctxt "shortcut window"
+msgid "Navigate down"
+msgstr "Перайсці ўніз"
+
+#: ../data/shortcuts.ui.h:31
+msgctxt "shortcut window"
+msgid "Navigate left"
+msgstr "Перайсці ўлева"
+
+#: ../data/shortcuts.ui.h:32
+msgctxt "shortcut window"
+msgid "Navigate right"
+msgstr "Перайсці ўправа"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "_Настройкі"
 
 #: ../data/totem.ui.h:2
+msgid "_Keyboard Shortcuts"
+msgstr "_Клавіятурныя скароты"
+
+#: ../data/totem.ui.h:3
 msgid "_Help"
 msgstr "_Дапамога"
 
-#: ../data/totem.ui.h:3
+#: ../data/totem.ui.h:4
 msgid "_Quit"
 msgstr "В_ыйсці"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:5
 msgid "Add _Local Video…"
 msgstr "Дадаць _лакальнае відэа..."
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
 msgstr "Дадаць _сеціўнае відэа..."
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
 msgstr "_Прапорцыі відэа"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Аўтаматычна"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
-msgid "4:3 (TV)"
+msgid "4∶3 (TV)"
 msgstr "4:3 (ТВ)"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (шырокі экран)"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:12
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:13
 msgid "Zoom In"
 msgstr "Наблізіць"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:14
 msgid "Switch An_gles"
 msgstr "Змяніць _вугал"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:15
 msgid "_Languages"
 msgstr "_Мовы"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:16
 msgid "S_ubtitles"
 msgstr "_Субцітры"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
 msgstr "_Выбраць субцітры..."
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:18
 msgid "_Eject"
 msgstr "_Выняць"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:19
 msgid "_Repeat"
 msgstr "_Паўтараць"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:20
 msgid "_DVD Menu"
 msgstr "Мен_ю DVD"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:21
 msgid "_Title Menu"
 msgstr "_Загалоўнае меню"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:22
 msgid "A_udio Menu"
 msgstr "_Гукавое меню"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:23
 msgid "_Angle Menu"
 msgstr "Меню вуглоў"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "Меню _раздзелаў"
 
-#: ../data/totem.ui.h:24
-msgid "Play / P_ause"
-msgstr "З_айграць/прыпыніць"
-
 #: ../data/totem.ui.h:25
-msgid "Play or pause the movie"
-msgstr "Зайграць ці прыпыніць фільм"
-
-#: ../data/totem.ui.h:26
-msgid "_Next Chapter/Movie"
-msgstr "_Наступны раздзел ці фільм"
-
-#: ../data/totem.ui.h:27
-msgid "Next chapter or movie"
-msgstr "Наступны раздзел або фільм"
-
-#: ../data/totem.ui.h:28
-msgid "_Previous Chapter/Movie"
-msgstr "_Папярэдні раздзел ці фільм"
-
-#: ../data/totem.ui.h:29
-msgid "Previous chapter or movie"
-msgstr "Папярэдні раздзел або фільм"
+msgid "Speed"
+msgstr "Хуткасць"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -574,55 +627,55 @@ msgstr "Упішыце _адрас файла, які трэба адкрыць:
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1938
+#: ../src/backend/bacon-video-widget.c:1959
 msgid "Password requested for RTSP server"
 msgstr "Для RTSP-сервера запатрабаваны пароль"
 
-#: ../src/backend/bacon-video-widget.c:3325
+#: ../src/backend/bacon-video-widget.c:3329
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Гукавая сцежка №%d"
 
-#: ../src/backend/bacon-video-widget.c:3329
+#: ../src/backend/bacon-video-widget.c:3331
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субцітры №%d"
 
-#: ../src/backend/bacon-video-widget.c:3790
+#: ../src/backend/bacon-video-widget.c:3872
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, з якім вы спрабуеце злучыцца, невядомы."
 
-#: ../src/backend/bacon-video-widget.c:3793
+#: ../src/backend/bacon-video-widget.c:3875
 msgid "The connection to this server was refused."
 msgstr "Адмоўлена ў злучэнні з гэтым серверам."
 
-#: ../src/backend/bacon-video-widget.c:3796
+#: ../src/backend/bacon-video-widget.c:3878
 msgid "The specified movie could not be found."
 msgstr "Не ўдалося адшукаць патрэбны фільм."
 
-#: ../src/backend/bacon-video-widget.c:3803
+#: ../src/backend/bacon-video-widget.c:3885
 msgid "The server refused access to this file or stream."
 msgstr "Сервер адмовіў у доступе да гэтага файла ці струменя."
 
-#: ../src/backend/bacon-video-widget.c:3809
+#: ../src/backend/bacon-video-widget.c:3891
 msgid "Authentication is required to access this file or stream."
 msgstr "Для доступу да гэтага файла ці струменя трэба прайсці ідэнтыфікацыю."
 
-#: ../src/backend/bacon-video-widget.c:3816
+#: ../src/backend/bacon-video-widget.c:3898
 msgid "You are not allowed to open this file."
 msgstr "Вам не дазволена адкрываць гэты файл."
 
-#: ../src/backend/bacon-video-widget.c:3821
+#: ../src/backend/bacon-video-widget.c:3903
 msgid "This location is not a valid one."
 msgstr "Гэта хібнае месцапалажэнне."
 
-#: ../src/backend/bacon-video-widget.c:3829
+#: ../src/backend/bacon-video-widget.c:3911
 msgid "The movie could not be read."
 msgstr "Не ўдалося прачытаць гэты фільм."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3852
-#: ../src/backend/bacon-video-widget.c:3860
+#: ../src/backend/bacon-video-widget.c:3934
+#: ../src/backend/bacon-video-widget.c:3942
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -642,7 +695,13 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3871
+#: ../src/backend/bacon-video-widget.c:3954
+msgid ""
+"This stream cannot be played. It’s possible that a firewall is blocking it."
+msgstr ""
+"Не ўдалося зайграць гэты струмень. Магчыма, ён заблакіраваны брандмаўэрам."
+
+#: ../src/backend/bacon-video-widget.c:3957
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -651,7 +710,7 @@ msgstr ""
 "магчы прайграваць пэўныя тыпы фільмаў, патрабуецца ўсталяваць дадатковыя "
 "плугіны."
 
-#: ../src/backend/bacon-video-widget.c:3881
+#: ../src/backend/bacon-video-widget.c:3968
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -659,26 +718,46 @@ msgstr ""
 "Гэты файл не даступны для прайгравання праз сетку. Паспрабуйце спачатку "
 "сцягнуць яго на дыск."
 
-#: ../src/backend/bacon-video-widget.c:5882 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5612 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Аб'ёмны гук"
 
-#: ../src/backend/bacon-video-widget.c:5884 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5614 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Мона"
 
-#: ../src/backend/bacon-video-widget.c:6171
+#: ../src/backend/bacon-video-widget.c:5901
 msgid "Media contains no supported video streams."
 msgstr ""
 "Медыяфайл не ўтрымлівае відэаструменяў, якія б падтрымліваліся праграмай."
 
-#: ../src/backend/bacon-video-widget.c:6333
+#: ../src/backend/bacon-video-widget.c:6112
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Адсутнічаюць некаторыя патрэбныя плугіны. Спраўдзіце карэктнасць усталявання "
 "праграмы."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:345
+msgid "Unable to play the file"
+msgstr "Не ўдалося зайграць гэты файл"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "%s патрэбны, каб зайграць гэты файл, але не ўсталяваны."
+msgstr[1] "%s патрэбныя, каб зайграць гэты файл, але не ўсталяваныя."
+msgstr[2] "%s патрэбныя, каб зайграць гэты файл, але не ўсталяваныя."
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:356
+#, c-format
+msgid "_Find in %s"
+msgstr "_Шукаць у %s"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -734,59 +813,59 @@ msgstr "%d:%02d"
 #. Album
 #. Year
 #. Container
-#: ../src/properties/bacon-video-widget-properties.c:107
-#: ../src/properties/bacon-video-widget-properties.c:109
-#: ../src/properties/bacon-video-widget-properties.c:111
-#: ../src/properties/bacon-video-widget-properties.c:113
-#: ../src/properties/bacon-video-widget-properties.c:119
+#: ../src/properties/bacon-video-widget-properties.c:106
+#: ../src/properties/bacon-video-widget-properties.c:108
+#: ../src/properties/bacon-video-widget-properties.c:110
+#: ../src/properties/bacon-video-widget-properties.c:112
+#: ../src/properties/bacon-video-widget-properties.c:118
 msgid "Unknown"
 msgstr "Невядома"
 
 #. Dimensions
-#: ../src/properties/bacon-video-widget-properties.c:122
+#: ../src/properties/bacon-video-widget-properties.c:121
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Невядома"
 
 #. Video Codec
-#: ../src/properties/bacon-video-widget-properties.c:124
+#: ../src/properties/bacon-video-widget-properties.c:123
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../src/properties/bacon-video-widget-properties.c:127
+#: ../src/properties/bacon-video-widget-properties.c:126
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../src/properties/bacon-video-widget-properties.c:130
-#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:129
+#: ../src/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../src/properties/bacon-video-widget-properties.c:134
+#: ../src/properties/bacon-video-widget-properties.c:133
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Невядома"
 
 #. Audio Codec
-#: ../src/properties/bacon-video-widget-properties.c:136
+#: ../src/properties/bacon-video-widget-properties.c:135
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Невядома"
 
 #. Sample rate
-#: ../src/properties/bacon-video-widget-properties.c:138
+#: ../src/properties/bacon-video-widget-properties.c:137
 msgid "0 Hz"
 msgstr "0 Гц"
 
 #. Channels
-#: ../src/properties/bacon-video-widget-properties.c:140
+#: ../src/properties/bacon-video-widget-properties.c:139
 msgid "0 Channels"
 msgstr "0 каналаў"
 
-#: ../src/properties/bacon-video-widget-properties.c:156
+#: ../src/properties/bacon-video-widget-properties.c:155
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -794,7 +873,7 @@ msgstr[0] "%d гадзіна"
 msgstr[1] "%d гадзіны"
 msgstr[2] "%d гадзін"
 
-#: ../src/properties/bacon-video-widget-properties.c:158
+#: ../src/properties/bacon-video-widget-properties.c:157
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -802,7 +881,7 @@ msgstr[0] "%d хвіліна"
 msgstr[1] "%d хвіліны"
 msgstr[2] "%d хвілін"
 
-#: ../src/properties/bacon-video-widget-properties.c:161
+#: ../src/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -811,25 +890,25 @@ msgstr[1] "%d секунды"
 msgstr[2] "%d секунд"
 
 #. 5 hours 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:167
+#: ../src/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:170
+#: ../src/properties/bacon-video-widget-properties.c:169
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: ../src/properties/bacon-video-widget-properties.c:176
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 seconds"
 msgstr "0 секунд"
 
-#: ../src/properties/bacon-video-widget-properties.c:237
+#: ../src/properties/bacon-video-widget-properties.c:236
 #, c-format
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
@@ -837,86 +916,153 @@ msgstr[0] "%d кадраў на секунду"
 msgstr[1] "%d кадраў на секунду"
 msgstr[2] "%d кадраў на секунду"
 
+#: ../src/grilo.ui.h:1
+msgid "Select All"
+msgstr "Вылучыць усё"
+
+#: ../src/grilo.ui.h:2
+msgid "Select None"
+msgstr "Ануляваць вылучанне"
+
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Папярэдняе праслухоўванне"
 
-#: ../src/totem.c:260
+#: ../src/totem.c:67
+msgid "Could not initialize the thread-safe libraries."
+msgstr "Не ўдалося ініцыяваць бібліятэкі, сумяшчальныя з ніцямі."
+
+#: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Праверце правільнасць усталявання сістэмы. Тым часам Totem заканчвае працу."
 
-#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
+#: ../src/totem-grilo.c:285
 #, c-format
-msgid "Couldn't load the '%s' interface. %s"
+msgid "Season %d Episode %d"
+msgstr "Сезон %d, серыя %d"
+
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:322
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (сезон %d, серыя %d)"
+
+#: ../src/totem-grilo.c:677
+msgid "Browse Error"
+msgstr "Памылка агляду"
+
+#: ../src/totem-grilo.c:818
+msgid "Search Error"
+msgstr "Памылка пошуку"
+
+#: ../src/totem-grilo.c:1272
+msgid "Local"
+msgstr "Лакальна"
+
+#: ../src/totem-grilo.c:1873
+msgid "Channels"
+msgstr "Каналы"
+
+#: ../src/totem-interface.c:179 ../src/totem-interface.c:222
+#, c-format
+msgid "Couldn’t load the “%s” interface. %s"
 msgstr "Не ўдалося загрузіць інтэрфейс \"%s\". %s"
 
-#: ../src/totem-interface.c:180
+#: ../src/totem-interface.c:179
 msgid "The file does not exist."
 msgstr "Такога файла не існуе."
 
-#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
-#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
+#: ../src/totem-interface.c:181 ../src/totem-interface.c:183
+#: ../src/totem-interface.c:224 ../src/totem-interface.c:226
 msgid "Make sure that Totem is properly installed."
 msgstr "Праверце правільнасць усталявання Totem."
 
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "Пстрыкніце, каб вылучыць"
+
+#: ../src/totem-main-toolbar.c:136
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "вылучана: %d"
+msgstr[1] "вылучана: %d"
+msgstr[2] "вылучана: %d"
+
+#: ../src/totem-main-toolbar.c:157
+#, c-format
+msgid "Results for “%s”"
+msgstr "Вынікі для \"%s\""
+
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Назад"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "Вылучыць"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "Скасаваць"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "Пошук"
+
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:366
+#: ../src/totem-menu.c:435
 msgid "None"
 msgstr "Няма"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:370
+#: ../src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Аўтаматычна"
 
-#: ../src/totem-object.c:158
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"Каб убачыць поўны спіс наяўных опцый загаднага радка, выканайце \"%s --help"
-"\".\n"
-
-#: ../src/totem-object.c:1329 ../src/totem-options.c:52
+#: ../src/totem-object.c:1388 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Прыпыніць"
 
-#: ../src/totem-object.c:1334 ../src/totem-object.c:1344
-#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1393 ../src/totem-object.c:1403
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Зайграць"
 
-#: ../src/totem-object.c:1418 ../src/totem-object.c:1445
-#: ../src/totem-object.c:1957
+#: ../src/totem-object.c:1470 ../src/totem-object.c:1497
+#: ../src/totem-object.c:1989
 #, c-format
-msgid "Totem could not play '%s'."
+msgid "Totem could not play “%s”."
 msgstr "Totem не здолеў зайграць \"%s\"."
 
-#: ../src/totem-object.c:2099
+#: ../src/totem-object.c:2160
 msgid "Totem could not display the help contents."
 msgstr "Totem не здолеў паказаць змест даведкі."
 
-#: ../src/totem-object.c:3657
+#: ../src/totem-object.c:2421
+msgid "An error occurred"
+msgstr "Узнікла памылка"
+
+#: ../src/totem-object.c:3759
 msgid "Previous Chapter/Movie"
 msgstr "Папярэдні раздзел ці фільм"
 
-#: ../src/totem-object.c:3662
+#: ../src/totem-object.c:3765
 msgid "Play / Pause"
 msgstr "Зайграць ці прыпыніць"
 
-#: ../src/totem-object.c:3667
+#: ../src/totem-object.c:3771
 msgid "Next Chapter/Movie"
 msgstr "Наступны раздзел ці фільм"
 
-#: ../src/totem-object.c:3889
+#: ../src/totem-object.c:3981
 msgid "Totem could not startup."
 msgstr "Не ўдалося запусціць Totem."
 
-#: ../src/totem-object.c:3889
+#: ../src/totem-object.c:3981
 msgid "No reason."
 msgstr "Без дай прычыны."
 
@@ -924,111 +1070,100 @@ msgstr "Без дай прычыны."
 msgid "Add Web Video"
 msgstr "Новае сеціўнае відэа"
 
-#: ../src/totem-open-location.c:185 ../src/totem-uri.c:421
-#: ../src/totem-uri.c:484 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_Скасаваць"
 
-#: ../src/totem-open-location.c:186 ../src/totem-uri.c:485
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
+#: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
 msgid "_Add"
 msgstr "_Дадаць"
 
 #: ../src/totem-options.c:49
-msgid "Enable debug"
-msgstr "Уключыць адладку"
-
-#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "Зайграць/прыпыніць"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Наперад"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "Назад"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "Пракруціць наперад"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "Пракруціць назад"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "Павялічыць гучнасць"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "Паменшыць гучнасць"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "Абязгучыць"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Пераключыць поўнаэкранны рэжым"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Quit"
 msgstr "Выйсці"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Enqueue"
 msgstr "Дадаць у чаргу"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Replace"
 msgstr "Замяніць"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Seek"
 msgstr "Пракруціць"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Фільмы для прайгравання"
 
-#: ../src/totem-options.c:76
-msgid "- Play movies and songs"
-msgstr "- Прайгравальнік фільмаў і песень"
-
-#: ../src/totem-options.c:123
-msgid "Can't enqueue and replace at the same time"
+#: ../src/totem-options.c:100
+msgid "Can’t enqueue and replace at the same time"
 msgstr "Немагчыма адначасова дадаць у чаргу і замяніць"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:235
+#: ../src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "Загаловак %d"
 
-#: ../src/totem-playlist.c:1089
+#: ../src/totem-playlist.c:992
 #, c-format
-msgid "The playlist '%s' could not be parsed. It might be damaged."
+msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "Не ўдалося разабраць структуру спіса прайгравання \"%s\". Відаць, ён "
 "пашкоджаны."
 
-#: ../src/totem-preferences.c:260
+#: ../src/totem-preferences.c:184
 msgid "Configure Plugins"
 msgstr "Настройка плугінаў"
 
-#: ../src/totem-preferences.c:263
+#: ../src/totem-preferences.c:187
 msgid "_Close"
 msgstr "_Закрыць"
 
-#: ../src/totem-preferences.c:437
+#: ../src/totem-preferences.c:303
 msgid "Select Subtitle Font"
 msgstr "Выбраць шрыфт для субцітраў"
 
@@ -1057,8 +1192,8 @@ msgstr "%d кбіт/с"
 #: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "%d × %d"
+msgstr "%d × %d"
 
 #: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:168
@@ -1076,6 +1211,23 @@ msgstr "Невядома"
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "Невядома"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+msgid "Add to Favourites"
+msgstr "Дадаць ва ўлюбёнае"
+
+#: ../src/totemselectiontoolbar.ui.h:2
+msgctxt "button"
+msgid "Play"
+msgstr "Зайграць"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Shuffle"
+msgstr "Тасаваць"
+
+#: ../src/totemselectiontoolbar.ui.h:5
+msgid "Delete"
+msgstr "Выдаліць"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1230,42 +1382,34 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Пракруціць да %s / %s"
 
-#: ../src/totem-uri.c:331 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Усе файлы"
 
-#: ../src/totem-uri.c:336 ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Падтрыманыя файлы"
-
-#: ../src/totem-uri.c:348
-msgid "Audio files"
-msgstr "Гукавыя файлы"
-
-#: ../src/totem-uri.c:356
+#: ../src/totem-uri.c:335
 msgid "Video files"
 msgstr "Відэафайлы"
 
-#: ../src/totem-uri.c:366
+#: ../src/totem-uri.c:346
 msgid "Subtitle files"
 msgstr "Файлы субцітраў"
 
-#: ../src/totem-uri.c:418
+#: ../src/totem-uri.c:396
 msgid "Select Text Subtitles"
 msgstr "Выбар субцітраў"
 
-#: ../src/totem-uri.c:422 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Адкрыць"
 
-#: ../src/totem-uri.c:481
+#: ../src/totem-uri.c:457
 msgid "Add Videos"
 msgstr "Новыя відэа"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:797
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1276,15 +1420,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:798
 msgid "Filename"
 msgstr "Назва файла"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:800
 msgid "Resolution"
 msgstr "Памер"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:803
 msgid "Duration"
 msgstr "Працягласць"
 
@@ -1339,141 +1483,6 @@ msgstr "_Скапіраваць Video DVD..."
 msgid "Copy (S)VCD…"
 msgstr "Скапіраваць (S)VCD..."
 
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Назва новага раздзела:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "_Выдаліць раздзел"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Выдаліць раздзел са спіса"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Перайсці да раздзела"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Перайсці да раздзела фільма"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Дадаць раздзел..."
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Выдаліць раздзел"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Перайсці да раздзела"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Захаваць змены"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Няма даных пра раздзелы"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Загрузіць раздзелы..."
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Загрузіць спіс раздзелаў з вонкавага CMML-файла"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Дадаць новыя раздзелы"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Стварыць новы спіс раздзелаў для фільма"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Раздзелы"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Падтрымка раздзелаў для фільмаў"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Назва: </b>%s\n"
-"<b>Пачатак: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Узнікла памылка падчас чытання файла з раздзеламі"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Раздзел з такім пачаткам ужо існуе"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Паспрабуйце іншую назву ці выдаліце наяўны раздзел."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Узнікла памылка падчас запісу файла з раздзеламі"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Узнікла памылка падчас захавання раздзелаў"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "Праверце, ці маеце вы дазвол на запіс у папцы з фільмам."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Адкрыццё файла з раздзеламі"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Кадр для раздзела фільма"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Назва раздзела"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Захаваць змены ў спісе раздзелаў перад закрыццём?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Закрыць, не захоўваючы"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Захаваць"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr ""
-"Калі вы не захаваеце змены для спіса раздзелаў, яны будуць незваротна "
-"страчаны."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Новы раздзел"
-
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
 msgstr "D-Bus інтэрфейс да MPRIS"
@@ -1483,7 +1492,8 @@ msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
-"Плугін, які дазваляе пасылаць апавяшчэнні аб відэа і аддалена кіраваць іх прайграваннем з дапамогай MPRIS."
+"Плугін, які дазваляе пасылаць апавяшчэнні аб відэа і аддалена кіраваць іх "
+"прайграваннем з дапамогай MPRIS."
 
 #: ../src/plugins/dbusservice/dbusservice.py:208
 #: ../src/plugins/dbusservice/dbusservice.py:236
@@ -1500,91 +1510,6 @@ msgstr "Уласцівасць \"%s\" не можа быць запісана."
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Для аб'екта MediaPlayer 2 запатрабавана невядомая ўласцівасць \"%s\""
-
-#: ../src/grilo.ui.h:1
-msgid "Select All"
-msgstr "Вылучыць усё"
-
-#: ../src/grilo.ui.h:2
-msgid "Select None"
-msgstr "Ануляваць вылучанне"
-
-#: ../src/totem-grilo.c:278
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Сезон %d, серыя %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:315
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (сезон %d, серыя %d)"
-
-#: ../src/totem-grilo.c:685
-msgid "Browse Error"
-msgstr "Памылка агляду"
-
-#: ../src/totem-grilo.c:822
-msgid "Search Error"
-msgstr "Памылка пошуку"
-
-#: ../src/totem-grilo.c:1268
-msgid "Local"
-msgstr "Лакальна"
-
-#: ../src/totem-grilo.c:1855
-msgid "Recent"
-msgstr "Нядаўняе"
-
-#: ../src/totem-grilo.c:1864
-msgid "Channels"
-msgstr "Каналы"
-
-#: ../src/totem-main-toolbar.c:131 ../src/totemmaintoolbar.ui.h:5
-msgid "Click on items to select them"
-msgstr "Пстрыкніце, каб вылучыць"
-
-#: ../src/totem-main-toolbar.c:138
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "вылучана: %d"
-msgstr[1] "вылучана: %d"
-msgstr[2] "вылучана: %d"
-
-#: ../src/totem-main-toolbar.c:157
-#, c-format
-msgid "Results for “%s”"
-msgstr "Вынікі для \"%s\""
-
-#: ../src/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Назад"
-
-#: ../src/totemmaintoolbar.ui.h:2
-msgid "Select"
-msgstr "Вылучыць"
-
-#: ../src/totemmaintoolbar.ui.h:3
-msgid "Cancel"
-msgstr "Скасаваць"
-
-#: ../src/totemmaintoolbar.ui.h:4
-msgid "Search"
-msgstr "Пошук"
-
-#: ../src/totemselectiontoolbar.ui.h:1
-msgid "Add to Favourites"
-msgstr "Дадаць ва ўлюбёнае"
-
-#: ../src/totemselectiontoolbar.ui.h:3
-msgid "Shuffle"
-msgstr "Тасаваць"
-
-#: ../src/totemselectiontoolbar.ui.h:4
-msgid "Delete"
-msgstr "Выдаліць"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1617,11 +1542,11 @@ msgid "Support infrared remote control"
 msgstr "Падтрымка інфрачырвонага пульта дыстанцыйнага кіравання"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn't initialize lirc."
+msgid "Couldn’t initialize lirc."
 msgstr "Не ўдалося ініцыяваць lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn't read lirc configuration."
+msgid "Couldn’t read lirc configuration."
 msgstr "Не ўдалося прачытаць канфігурацыю lirc."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
@@ -1648,53 +1573,53 @@ msgstr "Сцягванне субцітраў"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Пошук субцітраў да адкрытага фільма"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:41
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Бразільская партугальская"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:176
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "Пошук субцітраў..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:224
-#: ../src/plugins/opensubtitles/opensubtitles.py:603
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:611
 msgid "Downloading the subtitles…"
 msgstr "Сцягванне субцітраў..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:289
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Не ўдалося звязацца з пляцоўкай OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:322
-#: ../src/plugins/opensubtitles/opensubtitles.py:340
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Не ўдалося звязацца з пляцоўкай OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Нічога не знойдзена."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:470
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Субцітры"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:476
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Фармат"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:481
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Ацэнка"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:520
+#: ../src/plugins/opensubtitles/opensubtitles.py:528
 msgid "_Download Movie Subtitles…"
 msgstr "_Сцягнуць субцітры да фільма..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:560
+#: ../src/plugins/opensubtitles/opensubtitles.py:568
 msgid "Searching subtitles…"
 msgstr "Пошук субцітраў..."
 
@@ -1710,11 +1635,11 @@ msgstr "_Мова субцітраў:"
 msgid "_Play with Subtitle"
 msgstr "_Зайграць з субцітрамі"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "Мова субцітраў"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "Мова для пошуку субцітраў да фільмаў."
 
@@ -1726,22 +1651,22 @@ msgstr "Уласцівасці фільма"
 msgid "Adds movie properties menu item"
 msgstr "Дадае элемент меню для ўласцівасцяў фільма"
 
-#: ../src/plugins/properties/totem-movie-properties.c:260
+#: ../src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
 msgstr "Уласцівасці"
 
-#: ../src/plugins/properties/totem-movie-properties.c:287
+#: ../src/plugins/properties/totem-movie-properties.c:286
 msgid "_Properties"
 msgstr "_Уласцівасці"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "Пароль rpdb2"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
-"remote access. If this is empty, a default of 'totem' will be used."
+"remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
 "Пароль для абароны адладачнага сервера rpdb2 для Татэма ад неўпаўнаважанага "
 "аддаленага доступу. Калі гэта настройка мае пустое значэнне, "
@@ -1766,7 +1691,7 @@ msgstr "Адладчык Python"
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
-msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Атрымаць доступ да Totem.Object можна праз \"totem_object\" :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
@@ -1778,11 +1703,11 @@ msgstr "Кансоль Python для Totem"
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
-"default password ('totem')."
+"default password (“totem”)."
 msgstr ""
 "Пасля націску на кнопку Добра, Totem будзе чакаць злучэння з winpdb або "
 "rpdb2. Калі вы не вызначылі пароль адладчыка ў DConf, будзе ўжыты "
-"прадвызначаны пароль  (\"totem\")."
+"прадвызначаны пароль (\"totem\")."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
@@ -1800,11 +1725,11 @@ msgstr "Плугін павароту"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Дазваляе паварочваць відэа з памылковай арыентацыяй"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:54
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
 msgid "_Rotate ↷"
 msgstr "Па_вярнуць ↷"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:58
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:56
 msgid "Rotate ↶"
 msgstr "Павярнуць ↶"
 
@@ -1818,11 +1743,11 @@ msgstr "Захаванне копіі адкрытага фільма"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:147
+#: ../src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Фільм"
 
-#: ../src/plugins/save-file/totem-save-file.c:357
+#: ../src/plugins/save-file/totem-save-file.c:366
 msgid "Make Available Offline"
 msgstr "Зрабіць даступным без сеткі"
 
@@ -1833,6 +1758,10 @@ msgstr "Ахоўнік экрана"
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Выключэнне ахоўніка экрана пры прайграванні фільма"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:79
+msgid "Playing a movie"
+msgstr "Прайграванне фільма"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
@@ -1869,11 +1798,11 @@ msgstr "Экранны здымак"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Дазваляе ствараць экранныя здымкі і іх галерэі на аснове відэа"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Захаваць галерэю"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "_Захаваць"
 
@@ -1881,7 +1810,7 @@ msgstr "_Захаваць"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Галерэя-%s-%d.jpg"
@@ -1894,7 +1823,7 @@ msgstr "Стварэнне галерэі..."
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
-msgid "Saving gallery as \"%s\""
+msgid "Saving gallery as “%s”"
 msgstr "Захаванне галерэі \"%s\""
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
@@ -1915,13 +1844,13 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Стварыць _галерэю экранных здымкаў..."
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Пераскочыць да..."
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
-msgid "Provides the \"Skip to\" dialog"
-msgstr "Дадае дыялогавае акенца \"Пераскочыць да...\""
+msgid "Provides the “Skip to” dialog"
+msgstr "Дадае дыялогавае акенца \"Пераскочыць да\""
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
@@ -1929,7 +1858,7 @@ msgstr "_Пераскочыць да:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "секунда"
@@ -1940,18 +1869,61 @@ msgstr[2] "секунд"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "_Пераскочыць да..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "_Пераскочыць да..."
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Звычайны"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1.1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1.25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1.5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Хуткасць: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Пераменлівая частата"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Дадае пункт меню \"Пераменлівая частата\""
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
@@ -1969,3 +1941,209 @@ msgstr "Плугін Zeitgeist"
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Плугін для пасылкі падзей для Zeitgeist"
 
+#~ msgid "No URI to play"
+#~ msgstr "Няма URI-адрасу для грання"
+
+#~ msgid "_Open with \"%s\""
+#~ msgstr "_Адкрыць у \"%s\""
+
+#~ msgid "Totem Movie Player"
+#~ msgstr "Totem: прайгравальнік фільмаў"
+
+#~ msgid "No playlist or playlist empty"
+#~ msgstr "Няма спіса прайгравання або ён пусты"
+
+#~ msgid "Movie browser plugin"
+#~ msgstr "Плугін фільмаў для сеціўнага аглядальніка"
+
+#~ msgid "Verify your system installation. The Totem plugin will now exit."
+#~ msgstr ""
+#~ "Праверце правільнасць усталявання сістэмы. Плугін Totem заканчвае працу."
+
+#~ msgid "Show visual effects when no video is displayed"
+#~ msgstr "Паказваць візуальныя эфекты, калі няма відэа"
+
+#~ msgid "Show visual effects when playing an audio only file."
+#~ msgstr "Паказваць візуальныя эфекты, калі прайграецца файл без відэа."
+
+#~ msgid "Name of the visual effects plugin"
+#~ msgstr "Назва плугіна візуальных эфектаў"
+
+#~ msgid "Whether to enable debug for the playback engine"
+#~ msgstr "Ці трэба ўключаць адладку рухавіка прайгравання"
+
+#~ msgid "Visualization quality setting"
+#~ msgstr "Настройка якасці візуалізацыі"
+
+#~ msgid "Quality setting for the audio visualization."
+#~ msgstr "Настройка якасці аўдыявізуалізацыі."
+
+#~ msgid "Large"
+#~ msgstr "Вялікі"
+
+#~ msgid "Extra Large"
+#~ msgstr "Вялізны"
+
+#~ msgid "Plugins..."
+#~ msgstr "Плугіны..."
+
+#~ msgid "Visual Effects"
+#~ msgstr "Візуальныя эфекты"
+
+#~ msgid "Show _visual effects when an audio file is played"
+#~ msgstr "Паказваць _візуальныя эфекты для гукавых файлаў"
+
+#~ msgid "_Type of visualization:"
+#~ msgstr "_Тып візуалізацыі:"
+
+#~ msgid "Visualization _size:"
+#~ msgstr "Па_мер візуалізацыі:"
+
+#~ msgid "Mozilla (Firefox) plugin to view movies inside your browser"
+#~ msgstr ""
+#~ "Плугін Мазілы (Фаерфокс) для прагляду фільмаў у вашым сеціўным "
+#~ "аглядальніку"
+
+#~ msgid "Command-line video properties helper (for indexers)"
+#~ msgstr ""
+#~ "Дапаможны модуль для загаднага радка для ўласцівасцяў відэа (патрэбны для "
+#~ "індэксатараў)"
+
+#~ msgid "Play / P_ause"
+#~ msgstr "З_айграць/прыпыніць"
+
+#~ msgid "Play or pause the movie"
+#~ msgstr "Зайграць ці прыпыніць фільм"
+
+#~ msgid "_Next Chapter/Movie"
+#~ msgstr "_Наступны раздзел ці фільм"
+
+#~ msgid "Next chapter or movie"
+#~ msgstr "Наступны раздзел або фільм"
+
+#~ msgid "_Previous Chapter/Movie"
+#~ msgstr "_Папярэдні раздзел ці фільм"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "Run '%s --help' to see a full list of available command line options.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "Каб убачыць поўны спіс наяўных опцый загаднага радка, выканайце \"%s --"
+#~ "help\".\n"
+
+#~ msgid "Enable debug"
+#~ msgstr "Уключыць адладку"
+
+#~ msgid "- Play movies and songs"
+#~ msgstr "- Прайгравальнік фільмаў і песень"
+
+#~ msgid "%d x %d"
+#~ msgstr "%d x %d"
+
+#~ msgid "Supported files"
+#~ msgstr "Падтрыманыя файлы"
+
+#~ msgid "Audio files"
+#~ msgstr "Гукавыя файлы"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "_Выдаліць раздзел"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Выдаліць раздзел са спіса"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Перайсці да раздзела"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Перайсці да раздзела фільма"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Дадаць раздзел..."
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Выдаліць раздзел"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Перайсці да раздзела"
+
+#~ msgid "Save Changes"
+#~ msgstr "Захаваць змены"
+
+#~ msgid "No chapter data"
+#~ msgstr "Няма даных пра раздзелы"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Загрузіць раздзелы..."
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Загрузіць спіс раздзелаў з вонкавага CMML-файла"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Дадаць новыя раздзелы"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Стварыць новы спіс раздзелаў для фільма"
+
+#~ msgid "Chapters"
+#~ msgstr "Раздзелы"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Падтрымка раздзелаў для фільмаў"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Назва: </b>%s\n"
+#~ "<b>Пачатак: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Узнікла памылка падчас чытання файла з раздзеламі"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Раздзел з такім пачаткам ужо існуе"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Паспрабуйце іншую назву ці выдаліце наяўны раздзел."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Узнікла памылка падчас запісу файла з раздзеламі"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Узнікла памылка падчас захавання раздзелаў"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr "Праверце, ці маеце вы дазвол на запіс у папцы з фільмам."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Адкрыццё файла з раздзеламі"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Кадр для раздзела фільма"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Назва раздзела"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Захаваць змены ў спісе раздзелаў перад закрыццём?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Закрыць, не захоўваючы"
+
+#~ msgid "Save"
+#~ msgstr "Захаваць"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr ""
+#~ "Калі вы не захаваеце змены для спіса раздзелаў, яны будуць незваротна "
+#~ "страчаны."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Новы раздзел"
+
+#~ msgid "Recent"
+#~ msgstr "Нядаўняе"
