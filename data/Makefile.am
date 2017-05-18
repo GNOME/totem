@@ -4,7 +4,7 @@ EXTRA_DIST =
 CLEANFILES =
 
 # Man pages
-man_MANS = totem.1 totem-video-thumbnailer.1 totem-audio-preview.1
+man_MANS = totem.1 totem-video-thumbnailer.1
 totem-video-thumbnailer.1: totem-video-thumbnailer.pod
 	$(AM_V_GEN) pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME $< > $@
 EXTRA_DIST += \

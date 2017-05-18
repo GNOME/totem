@@ -1,6 +1,6 @@
 SUBDIRS = gst backend properties . plugins
 
-bin_PROGRAMS = totem totem-video-thumbnailer totem-audio-preview
+bin_PROGRAMS = totem totem-video-thumbnailer
 lib_LTLIBRARIES = libtotem.la
 noinst_LTLIBRARIES = libtotem_player.la
 noinst_PROGRAMS = test-icons
@@ -211,26 +211,6 @@ test_properties_page_LDADD = \
 	libtotem_player.la					\
 	$(NAUTILUS_LIBS)
 endif # HAVE_NAUTILUS
-
-# Totem Audio Preview for Nautilus
-totem_audio_preview_SOURCES = \
-	totem-audio-preview.c		\
-	totem-resources.c		\
-	totem-resources.h
-
-totem_audio_preview_CPPFLAGS = \
-	-I$(top_builddir)/data			\
-	-I$(top_srcdir)/src/gst			\
-	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
-	$(AM_CPPFLAGS)
-
-totem_audio_preview_CFLAGS =	\
-	$(PREVIEW_CFLAGS)	\
-	$(AM_CFLAGS)
-
-totem_audio_preview_LDADD =			\
-	gst/libtotemgsthelpers.la		\
-	$(PREVIEW_LIBS)
 
 # Introspection
 -include $(INTROSPECTION_MAKEFILE)
