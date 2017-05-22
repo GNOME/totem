@@ -626,11 +626,6 @@ if test x$ENABLE_NAUTILUS = xyes ; then
 else
 	AC_MSG_NOTICE([   Nautilus properties page disabled])
 fi
-if test "$with_smclient" != "no" ; then
-	AC_MSG_NOTICE([** SM client support enabled])
-else
-	AC_MSG_NOTICE([   SM client support disabled])
-fi
 
 AC_MSG_NOTICE([End options])
 

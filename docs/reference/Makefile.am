@@ -51,11 +51,6 @@ CFILE_GLOB=$(top_srcdir)/src/*.c
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES = \
 	totem-private.h			\
-	eggdesktopfile.h		\
-	eggfileformatchooser.h		\
-	egg-macros.h			\
-	eggsmclient.h			\
-	eggsmclient-private.h		\
 	gnome-screenshot-widget.h	\
 	gsd-media-keys-window.h		\
 	totem-profile.h			\
