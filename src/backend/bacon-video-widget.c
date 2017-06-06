@@ -1267,6 +1267,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   /* Signals */
   /**
    * BaconVideoWidget::error:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @message: the error message
    * @playback_stopped: %TRUE if playback has stopped due to the error, %FALSE otherwise
    * @fatal: %TRUE if the error was fatal to playback, %FALSE otherwise
@@ -1285,6 +1286,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::eos:
+   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the end of the current stream is reached.
    **/
@@ -1297,6 +1299,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::got-metadata:
+   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the widget has updated the metadata of the current stream. This
    * will typically happen just after opening a stream.
@@ -1312,6 +1315,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::got-redirect:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @new_mrl: the new MRL
    *
    * Emitted when a redirect response is received from a stream's server.
@@ -1326,6 +1330,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::channels-change:
+   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the number of audio languages available changes, or when the
    * selected audio language is changed.
@@ -1341,6 +1346,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::tick:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @current_time: the current position in the stream, in milliseconds since the beginning of the stream
    * @stream_length: the length of the stream, in milliseconds
    * @current_position: the current position in the stream, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>
@@ -1360,6 +1366,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::buffering:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @percentage: the percentage of buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being buffered, to provide status updates on the buffering
@@ -1375,6 +1382,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::missing-plugins:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @details: a %NULL-terminated array of missing plugin details for use when installing the plugins with libgimme-codec
    * @descriptions: a %NULL-terminated array of missing plugin descriptions for display to the user
    * @playing: %TRUE if the stream could be played even without these plugins, %FALSE otherwise
@@ -1397,6 +1405,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::download-buffering:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @percentage: the percentage of download buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being cached on disk, to provide status
@@ -1412,6 +1421,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::seek-requested:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @forward: whether the seek requested is a forward or backward seek.
    *
    * Emitted when a gesture, our mouse movement that should seek is made.
@@ -1426,6 +1436,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::track-skip-requested:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @forward: whether the track change requested is a forward or backward skip.
    *
    * Emitted when a gesture, our mouse movement that should seek is made.
@@ -1440,6 +1451,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::volume-change-requested:
+   * @bvw: the #BaconVideoWidget which received the signal
    * @increase: whether the volume change requested is an increase or decrease.
    *
    * Emitted when a gesture, our mouse movement that should change the volume
