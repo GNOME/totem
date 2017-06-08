@@ -73,7 +73,8 @@
         },
         {
             "name": "totem-pl-parser",
-            "config-opts": [ "--disable-static" ],
+            "buildsystem": "meson",
+            "builddir": true,
             "sources": [
                 {
                     "type": "git",
