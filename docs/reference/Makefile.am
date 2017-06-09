@@ -137,8 +137,8 @@ GTKDOC_CFLAGS = \
 	-I$(top_srcdir)/src/plugins	\
 	$(PLAYER_CFLAGS)
 GTKDOC_LIBS = \
-	$(top_builddir)/src/libtotem.la	\
-	$(top_builddir)/libgd/libgd.la	\
+	$(top_builddir)/src/libtotem.la			\
+	$(top_builddir)/subprojects/libgd/libgd.la	\
 	$(PLAYER_LIBS)
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.

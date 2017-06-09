@@ -1,0 +1,163 @@
+subdir('appdata')
+subdir('icons')
+
+desktop_sh = find_program('desktop.sh')
+thumbnailer_sh = find_program('thumbnailer.sh')
+mime_type_include_sh = find_program('mime-type-include.sh')
+mime_type_imports_sh = find_program('mime-type-imports.sh')
+uri_scheme_include_sh = find_program('uri-scheme-include.sh')
+
+mime_type_list = files('mime-type-list.txt')
+uri_schemes_list = files('uri-schemes-list.txt')
+
+pod2man = find_program('pod2man', required: false)
+
+if pod2man.found()
+  thumbnailer_name = 'totem-video-thumbnailer'
+  pod2man_opts = [
+    '-c', '""',
+    '-s', '1',
+    '-q', 'none',
+    '-n', thumbnailer_name,
+    '-r', 'GNOME'
+  ]
+
+  custom_target(
+    thumbnailer_name + '.1',
+    input: thumbnailer_name + '.pod',
+    output: thumbnailer_name + '.1',
+    command: [pod2man, pod2man_opts, '@INPUT@', '@OUTPUT@'],
+    install: true,
+    install_dir: join_paths(totem_mandir, 'man1')
+  )
+
+  install_data(
+    'totem.1',
+    install_dir: join_paths(totem_mandir, 'man1')
+  )
+else
+  message('Man page generation disabled')
+endif
+
+ui_files = files(
+  'controls.ui',
+  'playlist.ui',
+  'preferences.ui',
+  'properties.ui',
+  'shortcuts.ui',
+  'totem.ui',
+  'uri.ui'
+)
+
+install_data(
+  ui_files,
+  install_dir: totem_pkgdatadir
+)
+
+r = run_command(desktop_sh, mime_type_list, uri_schemes_list)
+
+desktop_conf = configuration_data()
+desktop_conf.set('VERSION', totem_version)
+desktop_conf.set('MIME_TYPE', r.stdout().strip())
+
+desktop = 'org.gnome.Totem.desktop'
+
+desktop_in = configure_file(
+  input: desktop + '.meson',
+  output: desktop + '.in',
+  configuration: desktop_conf
+)
+
+custom_target(
+  desktop,
+  input: desktop_in,
+  output: desktop,
+  command: intltool_desktop_cmd,
+  install: true,
+  install_dir: join_paths(totem_datadir, 'applications')
+)
+
+service_conf = configuration_data()
+service_conf.set('bindir', totem_bindir)
+
+service = 'org.gnome.Totem.service'
+
+configure_file(
+  input: service + '.in',
+  output: service,
+  install: true,
+  install_dir: join_paths(totem_datadir, 'dbus-1', 'services'),
+  configuration: service_conf
+)
+
+r = run_command(thumbnailer_sh, mime_type_list)
+
+thumbnailer_conf = configuration_data()
+thumbnailer_conf.set('BINDIR', totem_bindir)
+thumbnailer_conf.set('MIME_TYPE', r.stdout().strip())
+
+thumbnailer = 'totem.thumbnailer'
+
+configure_file(
+  input: thumbnailer + '.meson',
+  output: thumbnailer,
+  install: true,
+  install_dir: join_paths(totem_datadir, 'thumbnailers'),
+  configuration: thumbnailer_conf
+)
+
+gen_sources = []
+
+totem_mime_header = 'totem-mime-types.h'
+
+gen_sources += custom_target(
+  totem_mime_header,
+  output: totem_mime_header,
+  capture: true,
+  command: [mime_type_include_sh, mime_type_list]
+)
+
+nautilus_mime_header = 'nautilus-video-mime-types.h'
+
+custom_target(
+  nautilus_mime_header,
+  output: nautilus_mime_header,
+  capture: true,
+  command: [mime_type_include_sh, '--nautilus', mime_type_list]
+)
+
+totem_mime_js = 'totemMimeTypes.js'
+
+custom_target(
+  totem_mime_js,
+  output: totem_mime_js,
+  capture: true,
+  command: [mime_type_imports_sh, mime_type_list]
+)
+
+totem_uri_header = 'totem-uri-schemes.h'
+
+gen_sources += custom_target(
+  totem_uri_header,
+  output: totem_uri_header,
+  capture: true,
+  command: [uri_scheme_include_sh, uri_schemes_list],
+)
+
+schema_conf = configuration_data()
+schema_conf.set('GETTEXT_PACKAGE', meson.project_name())
+
+schema = 'org.gnome.totem.gschema.xml'
+
+configure_file(
+  input: schema + '.in',
+  output: schema,
+  install: true,
+  install_dir: totem_schemadir,
+  configuration: schema_conf
+)
+
+install_data(
+  'totem.convert',
+  install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
+)

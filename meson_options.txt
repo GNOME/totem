@@ -1,0 +1,8 @@
+option('enable-easy-codec-installation', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'Whether to enable easy codec installation support for GStreamer')
+option('enable-python', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'Enable python support')
+option('enable-vala', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'whether Vala plugin support is requested')
+option('with-plugins', type: 'combo', choices: ['all', 'none', 'auto'], value: 'auto', description: 'Which Totem plugins to compile (default: auto; "all", "none" and "auto" are valid)')
+option('enable-nautilus', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'compile the nautilus plugin')
+option('with-nautilusdir', type: 'string', value: '', description: 'Installation path for Nautilus extension')
+option('enable-gtk-doc', type: 'boolean', value: false, description: 'use gtk-doc to build documentation')
+option('enable-introspection', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'Enable GObject Introspection (depends on GObject)')

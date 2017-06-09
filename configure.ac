@@ -247,8 +247,10 @@ PKG_CHECK_MODULES(PROPERTIES, gtk+-3.0 >= $GTK_REQS)
 LIBGD_INIT([
 	tagged-entry
 	main-view
+	gtk-hacks
+	view-common
 	static
- ])
+ ][subprojects/libgd])
 
 
 dnl ================================================================
@@ -536,7 +538,8 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 totem.spec
-libgd/Makefile
+subprojects/Makefile
+subprojects/libgd/Makefile
 src/Makefile
 src/gst/Makefile
 src/properties/Makefile

@@ -7,7 +7,7 @@ test -z "$srcdir" && srcdir=.
 olddir=`pwd`
 
 PKG_NAME="totem"
-ACLOCAL_FLAGS="-I libgd $ACLOCAL_FLAGS"
+ACLOCAL_FLAGS="-I subprojects/libgd $ACLOCAL_FLAGS"
 
 (test -f $srcdir/configure.ac) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"

@@ -1,0 +1,60 @@
+gst_inc = include_directories('.')
+
+libtotem_gst_helpers_deps = [
+  gst_dep,
+  gst_tag_dep,
+]
+
+libtotem_gst_helpers = library(
+  'totemgsthelpers',
+  sources: 'totem-gst-helpers.c',
+  dependencies: libtotem_gst_helpers_deps
+)
+
+libtotem_gst_helpers_dep = declare_dependency(
+  link_with: libtotem_gst_helpers,
+  include_directories: gst_inc,
+  dependencies: libtotem_gst_helpers_deps
+)
+
+libtotem_gst_pixbuf_helpers_deps = [
+  dependency('gdk-pixbuf-2.0'),
+  gst_tag_dep,
+  gst_video_dep
+]
+
+libtotem_gst_pixbuf_helpers = library(
+  'totemgstpixbufhelpers',
+  sources: 'totem-gst-pixbuf-helpers.c',
+  dependencies: libtotem_gst_pixbuf_helpers_deps
+)
+
+libtotem_gst_pixbuf_helpers_dep = declare_dependency(
+  link_with: libtotem_gst_pixbuf_helpers,
+  include_directories: gst_inc,
+  dependencies: libtotem_gst_pixbuf_helpers_deps
+)
+
+libtotem_time_helpers = library(
+  'totemtimehelpers',
+  sources: 'totem-time-helpers.c',
+  dependencies: glib_dep
+)
+
+libtotem_time_helpers_dep = declare_dependency(
+  link_with: libtotem_time_helpers,
+  include_directories: gst_inc,
+  dependencies: glib_dep
+)
+
+gst_test = 'test-time'
+
+exe = executable(
+  gst_test,
+  gst_test + '.c',
+  include_directories: top_inc,
+  dependencies: glib_dep,
+  link_with: libtotem_time_helpers
+)
+
+test(gst_test, exe)
