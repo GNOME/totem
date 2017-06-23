@@ -266,6 +266,8 @@ if vala_option != 'no'
 endif
 
 # nautilus support
+have_nautilus = false
+
 if get_option('enable-nautilus') != 'no'
   libnautilus_ext_dep = dependency('libnautilus-extension', version: '>= 2.91.3', required: false)
   if libnautilus_ext_dep.found()
