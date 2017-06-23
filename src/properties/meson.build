@@ -1,4 +1,4 @@
-libbacon_video_widget_properties = library(
+libbacon_video_widget_properties = static_library(
   'libbaconvideowidgetproperties',
   sources: 'bacon-video-widget-properties.c',
   include_directories: [

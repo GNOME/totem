@@ -5,7 +5,7 @@ libtotem_gst_helpers_deps = [
   gst_tag_dep,
 ]
 
-libtotem_gst_helpers = library(
+libtotem_gst_helpers = static_library(
   'totemgsthelpers',
   sources: 'totem-gst-helpers.c',
   dependencies: libtotem_gst_helpers_deps
@@ -23,7 +23,7 @@ libtotem_gst_pixbuf_helpers_deps = [
   gst_video_dep
 ]
 
-libtotem_gst_pixbuf_helpers = library(
+libtotem_gst_pixbuf_helpers = static_library(
   'totemgstpixbufhelpers',
   sources: 'totem-gst-pixbuf-helpers.c',
   dependencies: libtotem_gst_pixbuf_helpers_deps
@@ -35,7 +35,7 @@ libtotem_gst_pixbuf_helpers_dep = declare_dependency(
   dependencies: libtotem_gst_pixbuf_helpers_deps
 )
 
-libtotem_time_helpers = library(
+libtotem_time_helpers = static_library(
   'totemtimehelpers',
   sources: 'totem-time-helpers.c',
   dependencies: glib_dep
