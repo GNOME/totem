@@ -21,7 +21,7 @@ shared_module(
     backend_inc,
     src_inc
   ],
-  dependencies: plugin_deps,
+  dependencies: plugin_deps + plugins_vala_deps,
   c_args: plugins_cflags + plugins_vala_flags + [
     '--include=config.h'
   ],

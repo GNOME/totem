@@ -114,7 +114,9 @@ if plugins_option != 'none'
   endif
 
   if have_vala
-    plugins_vala_sources = [libtotem_gir[0]]
+    plugins_vala_deps = [
+      declare_dependency(sources: libtotem_gir)
+    ]
 
     plugins_vala_flags = [
       '-Wno-unused-but-set-variable',
@@ -126,6 +128,8 @@ if plugins_option != 'none'
       '--girdir=' + join_paths(meson.build_root(), 'src'),
       '--pkg=Totem-1.0',
     ]
+
+    plugins_vala_sources = []
 
     plugins += [
       'rotation',

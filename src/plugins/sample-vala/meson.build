@@ -15,7 +15,7 @@ shared_module(
     'totem-' + plugin_name + '-plugin.vala'
   ],
   include_directories: plugins_incs,
-  dependencies: plugin_deps,
+  dependencies: plugin_deps + plugins_vala_deps,
   c_args: plugins_cflags + plugins_vala_flags,
   vala_args: plugins_vala_args,
   install: plugin_install,
