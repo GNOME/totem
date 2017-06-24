@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2013 Richard Hughes <richard@hughsie.com>
      Copyright 2013 William Jon McCann <william.jon.mccann@gmail.com> -->
-<application>
+<component type="desktop">
+  <id>org.gnome.Totem.desktop</id>
   <name>Videos</name>
   <summary>Play movies</summary>
-  <id type="desktop">org.gnome.Totem.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license><!-- with the GStreamer exception -->
   <description>
@@ -26,11 +26,11 @@
   </description>
   <url type="homepage">https://wiki.gnome.org/Apps/Videos</url>
   <screenshots>
-  <screenshot type="default" width="1024" height="576">https://git.gnome.org/browse/totem/plain/data/appdata/ss-main.png</screenshot>
-  <screenshot width="1024" height="576">https://git.gnome.org/browse/totem/plain/data/appdata/ss-music-playlist.png</screenshot>
+    <screenshot type="default" width="1024" height="576">https://git.gnome.org/browse/totem/plain/data/appdata/ss-main.png</screenshot>
+    <screenshot width="1024" height="576">https://git.gnome.org/browse/totem/plain/data/appdata/ss-music-playlist.png</screenshot>
   </screenshots>
   <updatecontact>hadess@hadess.net</updatecontact>
   <project_group>GNOME</project_group>
   <compulsory_for_desktop>GNOME</compulsory_for_desktop>
   <translation type="gettext">totem</translation>
-</application>
+</component>
