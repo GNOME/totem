@@ -25,58 +25,58 @@
  * See license_change file for details.
  */
 
-#ifndef TOTEM_GRILO_H
-#define TOTEM_GRILO_H
+#ifndef TOTEM_LIBRARY_H
+#define TOTEM_LIBRARY_H
 
 #include <gtk/gtk.h>
 #include <totem.h>
 
 G_BEGIN_DECLS
 
-#define TOTEM_TYPE_GRILO                 (totem_grilo_get_type ())
-#define TOTEM_GRILO(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_GRILO, TotemGrilo))
-#define TOTEM_GRILO_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_GRILO, TotemGriloClass))
+#define TOTEM_TYPE_GRILO                 (totem_library_get_type ())
+#define TOTEM_LIBRARY(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_GRILO, TotemLibrary))
+#define TOTEM_LIBRARY_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_GRILO, TotemLibraryClass))
 #define TOTEM_IS_GRILO(obj)              (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_GRILO))
 #define TOTEM_IS_GRILO_CLASS(klass)      (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_GRILO))
-#define TOTEM_GRILO_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_GRILO, TotemGriloClass))
+#define TOTEM_LIBRARY_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_GRILO, TotemLibraryClass))
 
-typedef struct _TotemGrilo        TotemGrilo;
-typedef struct _TotemGriloPrivate TotemGriloPrivate;
-typedef struct _TotemGriloClass   TotemGriloClass;
+typedef struct _TotemLibrary        TotemLibrary;
+typedef struct _TotemLibraryPrivate TotemLibraryPrivate;
+typedef struct _TotemLibraryClass   TotemLibraryClass;
 
-struct _TotemGrilo
+struct _TotemLibrary
 {
   /*< private >*/
   GtkBox parent;
 
-  TotemGriloPrivate *priv;
+  TotemLibraryPrivate *priv;
 };
 
-struct _TotemGriloClass
+struct _TotemLibraryClass
 {
   GtkBoxClass parent_class;
 };
 
 typedef enum{
-  TOTEM_GRILO_PAGE_RECENT,
-  TOTEM_GRILO_PAGE_CHANNELS
-} TotemGriloPage;
+  TOTEM_LIBRARY_PAGE_RECENT,
+  TOTEM_LIBRARY_PAGE_CHANNELS
+} TotemLibraryPage;
 
-GType           totem_grilo_get_type              (void) G_GNUC_CONST;
-GtkWidget*      totem_grilo_new                   (TotemObject *totem,
+GType           totem_library_get_type              (void) G_GNUC_CONST;
+GtkWidget*      totem_library_new                   (TotemObject *totem,
                                                    GtkWidget   *header);
-void            totem_grilo_start                 (TotemGrilo  *self);
-void            totem_grilo_pause                 (TotemGrilo  *self);
-void            totem_grilo_back_button_clicked   (TotemGrilo  *self);
-gboolean        totem_grilo_get_show_back_button  (TotemGrilo  *self);
-void            totem_grilo_set_current_page      (TotemGrilo     *self,
-                                                   TotemGriloPage  page);
-TotemGriloPage  totem_grilo_get_current_page      (TotemGrilo     *self);
-gboolean        totem_grilo_add_item_to_recent    (TotemGrilo     *self,
+void            totem_library_start                 (TotemLibrary  *self);
+void            totem_library_pause                 (TotemLibrary  *self);
+void            totem_library_back_button_clicked   (TotemLibrary  *self);
+gboolean        totem_library_get_show_back_button  (TotemLibrary  *self);
+void            totem_library_set_current_page      (TotemLibrary     *self,
+                                                   TotemLibraryPage  page);
+TotemLibraryPage  totem_library_get_current_page      (TotemLibrary     *self);
+gboolean        totem_library_add_item_to_recent    (TotemLibrary     *self,
                                                    const char     *uri,
                                                    const char     *title,
                                                    gboolean        is_web);
 
 G_END_DECLS
 
-#endif /* TOTEM_GRILO_H */
+#endif /* TOTEM_LIBRARY_H */

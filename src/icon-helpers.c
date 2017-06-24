@@ -91,9 +91,9 @@ media_is_local (GrlMedia *media)
 }
 
 GdkPixbuf *
-totem_grilo_get_thumbnail_finish (GObject       *source_object,
-				  GAsyncResult  *res,
-				  GError       **error)
+totem_library_get_thumbnail_finish (GObject       *source_object,
+				    GAsyncResult  *res,
+				    GError       **error)
 {
 	g_return_val_if_fail (g_task_is_valid (res, source_object), NULL);
 
@@ -254,10 +254,10 @@ thumbnail_media_async_thread (GTask    *task,
 }
 
 static void
-totem_grilo_thumbnail_media (GrlMedia            *media,
-			     GCancellable        *cancellable,
-			     GAsyncReadyCallback  callback,
-			     gpointer             user_data)
+totem_library_thumbnail_media (GrlMedia            *media,
+			       GCancellable        *cancellable,
+			       GAsyncReadyCallback  callback,
+			       gpointer             user_data)
 {
 	GTask *task;
 
@@ -267,9 +267,9 @@ totem_grilo_thumbnail_media (GrlMedia            *media,
 }
 
 static GdkPixbuf *
-totem_grilo_thumbnail_media_finish (GrlMedia      *media,
-				    GAsyncResult  *res,
-				    GError       **error)
+totem_library_thumbnail_media_finish (GrlMedia      *media,
+				      GAsyncResult  *res,
+				      GError       **error)
 {
 	g_return_val_if_fail (g_task_is_valid (res, media), NULL);
 
@@ -285,7 +285,7 @@ thumbnail_media_cb (GObject      *source_object,
 	GdkPixbuf *pixbuf;
 	GError *error = NULL;
 
-	pixbuf = totem_grilo_thumbnail_media_finish (GRL_MEDIA (source_object), res, &error);
+	pixbuf = totem_library_thumbnail_media_finish (GRL_MEDIA (source_object), res, &error);
 	if (!pixbuf)
 		g_task_return_error (task, error);
 	else
@@ -294,7 +294,7 @@ thumbnail_media_cb (GObject      *source_object,
 }
 
 void
-totem_grilo_get_thumbnail (GObject             *object,
+totem_library_get_thumbnail (GObject             *object,
 			   GCancellable        *cancellable,
 			   GAsyncReadyCallback  callback,
 			   gpointer             user_data)
@@ -315,7 +315,7 @@ totem_grilo_get_thumbnail (GObject             *object,
 	} else if (GRL_IS_MEDIA (object)) {
 		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
 		if (!url_thumb && media_is_local (GRL_MEDIA (object))) {
-			totem_grilo_thumbnail_media (GRL_MEDIA (object),
+			totem_library_thumbnail_media (GRL_MEDIA (object),
 						     cancellable,
 						     thumbnail_media_cb,
 						     task);
@@ -470,8 +470,8 @@ load_named_icon (const char *name,
 }
 
 GdkPixbuf *
-totem_grilo_get_icon (GrlMedia *media,
-		      gboolean *thumbnailing)
+totem_library_get_icon (GrlMedia *media,
+			gboolean *thumbnailing)
 {
 	g_return_val_if_fail (thumbnailing != NULL, NULL);
 
@@ -497,31 +497,31 @@ totem_grilo_get_icon (GrlMedia *media,
 }
 
 const GdkPixbuf *
-totem_grilo_get_video_icon (void)
+totem_library_get_video_icon (void)
 {
 	return icons[ICON_VIDEO];
 }
 
 const GdkPixbuf *
-totem_grilo_get_box_icon (void)
+totem_library_get_box_icon (void)
 {
 	return icons[ICON_BOX];
 }
 
 const GdkPixbuf *
-totem_grilo_get_channel_icon (void)
+totem_library_get_channel_icon (void)
 {
 	return icons[ICON_CHANNEL];
 }
 
 const GdkPixbuf *
-totem_grilo_get_optical_icon (void)
+totem_library_get_optical_icon (void)
 {
 	return icons[ICON_OPTICAL];
 }
 
 void
-totem_grilo_clear_icons (void)
+totem_library_clear_icons (void)
 {
 	guint i;
 
@@ -535,7 +535,7 @@ totem_grilo_clear_icons (void)
 }
 
 void
-totem_grilo_setup_icons (void)
+totem_library_setup_icons (void)
 {
 	icons[ICON_BOX] = load_named_icon ("folder-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
 	icons[ICON_CHANNEL] = load_named_icon ("tv-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
@@ -553,14 +553,14 @@ totem_grilo_setup_icons (void)
 }
 
 void
-totem_grilo_pause_icon_thumbnailing (void)
+totem_library_pause_icon_thumbnailing (void)
 {
 	g_return_if_fail (thumbnail_pool != NULL);
 	g_thread_pool_set_max_threads (thumbnail_pool, 0, NULL);
 }
 
 void
-totem_grilo_resume_icon_thumbnailing (void)
+totem_library_resume_icon_thumbnailing (void)
 {
 	g_return_if_fail (thumbnail_pool != NULL);
 	g_thread_pool_set_max_threads (thumbnail_pool, DEFAULT_MAX_THREADS, NULL);
