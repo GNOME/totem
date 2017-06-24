@@ -53,7 +53,7 @@
 #include "totem-options.h"
 #include "totem-plugins-engine.h"
 #include "totem-playlist.h"
-#include "totem-grilo.h"
+#include "totem-library.h"
 #include "bacon-video-widget.h"
 #include "bacon-time-label.h"
 #include "totem-time-label.h"
@@ -957,8 +957,8 @@ totem_object_add_to_view (TotemObject *totem,
 	char *uri;
 
 	uri = g_file_get_uri (file);
-	if (!totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo),
-					     uri, title, FALSE)) {
+	if (!totem_library_add_item_to_recent (TOTEM_LIBRARY (totem->grilo),
+					       uri, title, FALSE)) {
 		g_warning ("Failed to add '%s' to view", uri);
 	}
 	g_free (uri);
@@ -984,16 +984,16 @@ totem_object_set_main_page (TotemObject *totem,
 {
 	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0) {
 		if (g_strcmp0 (page_id, PAGE_LIBRARY) == 0)
-			totem_grilo_start (TOTEM_GRILO (totem->grilo));
+			totem_library_start (TOTEM_LIBRARY (totem->grilo));
 		else
-			totem_grilo_pause (TOTEM_GRILO (totem->grilo));
+			totem_library_pause (TOTEM_LIBRARY (totem->grilo));
 		return;
 	}
 
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 
 	if (g_strcmp0 (page_id, PAGE_PLAYER) == 0) {
-		totem_grilo_pause (TOTEM_GRILO (totem->grilo));
+		totem_library_pause (TOTEM_LIBRARY (totem->grilo));
 		g_object_get (totem->header,
 			      "title", &totem->title,
 			      "subtitle", &totem->subtitle,
@@ -1016,9 +1016,9 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_hide (totem->add_button);
 		bacon_video_widget_show_popup (totem->bvw);
 	} else if (g_strcmp0 (page_id, PAGE_LIBRARY) == 0) {
-		totem_grilo_start (TOTEM_GRILO (totem->grilo));
+		totem_library_start (TOTEM_LIBRARY (totem->grilo));
 		g_object_set (totem->header,
-			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
+			      "show-back-button", totem_library_get_show_back_button (TOTEM_LIBRARY (totem->grilo)),
 			      "show-select-button", TRUE,
 			      "show-search-button", TRUE,
 			      "title", totem->title,
@@ -1034,9 +1034,9 @@ totem_object_set_main_page (TotemObject *totem,
 		g_clear_object (&totem->custom_title);
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
-		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
+		if (totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo)) == TOTEM_LIBRARY_PAGE_RECENT)
 			gtk_widget_show (totem->add_button);
-		totem_grilo_start (TOTEM_GRILO (totem->grilo));
+		totem_library_start (TOTEM_LIBRARY (totem->grilo));
 	}
 }
 
@@ -1524,7 +1524,7 @@ totem_object_open_dialog (TotemObject *totem, const char *path)
 	for (l = filenames; l != NULL; l = l->next) {
 		char *uri = l->data;
 
-		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, FALSE);
+		totem_library_add_item_to_recent (TOTEM_LIBRARY (totem->grilo), uri, NULL, FALSE);
 		g_free (uri);
 	}
 	g_slist_free (filenames);
@@ -1685,7 +1685,7 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, TotemObject *
 	uri = totem_open_location_get_uri (totem->open_location);
 
 	if (uri != NULL) {
-		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, TRUE);
+		totem_library_add_item_to_recent (TOTEM_LIBRARY (totem->grilo), uri, NULL, TRUE);
 		g_free (uri);
 	}
 
@@ -2313,7 +2313,7 @@ back_button_clicked_cb (GtkButton   *button,
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
 		totem_object_set_main_page (totem, PAGE_LIBRARY);
 	} else {
-		totem_grilo_back_button_clicked (TOTEM_GRILO (totem->grilo));
+		totem_library_back_button_clicked (TOTEM_LIBRARY (totem->grilo));
 	}
 }
 
@@ -2878,7 +2878,7 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
 		if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_PLAYER) == 0)
 			back_button_clicked_cb (NULL, totem);
-		totem_grilo_set_current_page (TOTEM_GRILO (totem->grilo), TOTEM_GRILO_PAGE_RECENT);
+		totem_library_set_current_page (TOTEM_LIBRARY (totem->grilo), TOTEM_LIBRARY_PAGE_RECENT);
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_object_volume_toggle_mute (totem);
@@ -3699,7 +3699,7 @@ update_add_button_visibility (GObject     *gobject,
 		gtk_widget_hide (totem->add_button);
 	} else {
 		gtk_widget_set_visible (totem->add_button,
-					totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo))  == TOTEM_GRILO_PAGE_RECENT);
+					totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo))  == TOTEM_LIBRARY_PAGE_RECENT);
 	}
 }
 
@@ -3882,35 +3882,35 @@ playlist_widget_setup (TotemObject *totem)
 }
 
 static void
-grilo_show_back_button_changed (TotemGrilo  *grilo,
+grilo_show_back_button_changed (TotemLibrary  *grilo,
 				GParamSpec  *spec,
 				TotemObject *totem)
 {
 	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_LIBRARY) == 0) {
 		g_object_set (totem->header,
-			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
+			      "show-back-button", totem_library_get_show_back_button (TOTEM_LIBRARY (totem->grilo)),
 			      NULL);
 	}
 }
 
 static void
-grilo_current_page_changed (TotemGrilo  *grilo,
+grilo_current_page_changed (TotemLibrary  *grilo,
 			    GParamSpec  *spec,
 			    TotemObject *totem)
 {
 	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_LIBRARY) == 0) {
-		TotemGriloPage page;
+		TotemLibraryPage page;
 
-		page = totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo));
+		page = totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo));
 		gtk_widget_set_visible (totem->add_button,
-					page == TOTEM_GRILO_PAGE_RECENT);
+					page == TOTEM_LIBRARY_PAGE_RECENT);
 	}
 }
 
 void
 grilo_widget_setup (TotemObject *totem)
 {
-	totem->grilo = totem_grilo_new (totem, totem->header);
+	totem->grilo = totem_library_new (totem, totem->header);
 	g_signal_connect (G_OBJECT (totem->grilo), "notify::show-back-button",
 			  G_CALLBACK (grilo_show_back_button_changed), totem);
 	g_signal_connect (G_OBJECT (totem->grilo), "notify::current-page",

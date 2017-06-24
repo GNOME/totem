@@ -62,7 +62,7 @@ icon_ready (GObject      *source_object,
 	GdkPixbuf *pixbuf;
 	GtkWidget *image = user_data;
 
-	pixbuf = totem_grilo_get_thumbnail_finish (source_object, res, NULL);
+	pixbuf = totem_library_get_thumbnail_finish (source_object, res, NULL);
 	if (!pixbuf) {
 		g_warning ("Failed load thumbnail for icon %s",
 			   (char *) g_object_get_data (G_OBJECT (image), "label"));
@@ -76,7 +76,7 @@ static void
 set_icon_from_grl (GObject   *object,
 		   GtkWidget *image)
 {
-	totem_grilo_get_thumbnail (object, NULL, icon_ready, image);
+	totem_library_get_thumbnail (object, NULL, icon_ready, image);
 }
 
 static const char *labels[] = {
@@ -109,7 +109,7 @@ int main (int argc, char **argv)
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	totem_grilo_setup_icons ();
+	totem_library_setup_icons ();
 	context = gtk_widget_get_style_context (window);
 	gtk_style_context_add_class (context, "content-view");
 	scroll = gtk_scrolled_window_new (NULL, NULL);
@@ -146,18 +146,18 @@ int main (int argc, char **argv)
 	set_icon_from_grl (object, images[i++]);
 
 	gtk_image_set_from_pixbuf (GTK_IMAGE (images[i++]),
-				   (GdkPixbuf *) totem_grilo_get_box_icon ());
+				   (GdkPixbuf *) totem_library_get_box_icon ());
 
 	gtk_image_set_from_pixbuf (GTK_IMAGE (images[i++]),
-				   (GdkPixbuf *) totem_grilo_get_channel_icon ());
+				   (GdkPixbuf *) totem_library_get_channel_icon ());
 
 	object = media_object ("file:///somewhere/over/the/rainbow.png");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (images[i++]),
-				   totem_grilo_get_icon (GRL_MEDIA (object), &tmp));
+				   totem_library_get_icon (GRL_MEDIA (object), &tmp));
 
 	object = media_object (NULL);
 	gtk_image_set_from_pixbuf (GTK_IMAGE (images[i++]),
-				   totem_grilo_get_icon (GRL_MEDIA (object), &tmp));
+				   totem_library_get_icon (GRL_MEDIA (object), &tmp));
 
 	object = media_object ("https://i.ytimg.com/vi/sEgd5cu_vMg/mqdefault.jpg");
 	set_icon_from_grl (object, images[i++]);
@@ -166,7 +166,7 @@ int main (int argc, char **argv)
 	set_icon_from_grl (object, images[i++]);
 
 	gtk_image_set_from_pixbuf (GTK_IMAGE (images[i++]),
-				   (GdkPixbuf *) totem_grilo_get_optical_icon ());
+				   (GdkPixbuf *) totem_library_get_optical_icon ());
 
 	gtk_widget_show_all (window);
 	gtk_window_maximize (GTK_WINDOW (window));
