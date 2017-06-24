@@ -166,6 +166,9 @@ GtkWidget *totem_volume_create (void);
 #define ZOOM_IN_OFFSET 0.01
 #define ZOOM_OUT_OFFSET -0.01
 
+#define PAGE_LIBRARY "grilo"
+#define PAGE_PLAYER "player"
+
 void	totem_object_open			(Totem *totem);
 void	totem_object_open_location		(Totem *totem);
 void	totem_object_eject			(Totem *totem);

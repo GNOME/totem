@@ -148,7 +148,7 @@ totem_object_app_open (GApplication  *application,
 
 	g_application_activate (application);
 
-	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
+	totem_object_set_main_page (TOTEM_OBJECT (application), PAGE_PLAYER);
 
 	for (i = 0 ; i < n_files; i++)
 		slist = g_slist_prepend (slist, g_file_get_uri (files[i]));
@@ -244,13 +244,13 @@ totem_object_app_activate (GApplication *app)
 
 	if (!optionstate.had_filenames) {
 		if (totem_session_try_restore (totem) == FALSE) {
-			totem_object_set_main_page (totem, "grilo");
+			totem_object_set_main_page (totem, PAGE_LIBRARY);
 			totem_object_set_mrl (totem, NULL, NULL);
 		} else {
-			totem_object_set_main_page (totem, "player");
+			totem_object_set_main_page (totem, PAGE_PLAYER);
 		}
 	} else {
-		totem_object_set_main_page (totem, "player");
+		totem_object_set_main_page (totem, PAGE_PLAYER);
 	}
 
 	optionstate.had_filenames = FALSE;
@@ -983,7 +983,7 @@ totem_object_set_main_page (TotemObject *totem,
 			    const char  *page_id)
 {
 	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0) {
-		if (g_strcmp0 (page_id, "grilo") == 0)
+		if (g_strcmp0 (page_id, PAGE_LIBRARY) == 0)
 			totem_grilo_start (TOTEM_GRILO (totem->grilo));
 		else
 			totem_grilo_pause (TOTEM_GRILO (totem->grilo));
@@ -992,7 +992,7 @@ totem_object_set_main_page (TotemObject *totem,
 
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 
-	if (g_strcmp0 (page_id, "player") == 0) {
+	if (g_strcmp0 (page_id, PAGE_PLAYER) == 0) {
 		totem_grilo_pause (TOTEM_GRILO (totem->grilo));
 		g_object_get (totem->header,
 			      "title", &totem->title,
@@ -1015,7 +1015,7 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_show (totem->gear_button);
 		gtk_widget_hide (totem->add_button);
 		bacon_video_widget_show_popup (totem->bvw);
-	} else if (g_strcmp0 (page_id, "grilo") == 0) {
+	} else if (g_strcmp0 (page_id, PAGE_LIBRARY) == 0) {
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
 		g_object_set (totem->header,
 			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
@@ -1786,7 +1786,7 @@ update_mrl_label (TotemObject *totem, const char *name)
 		g_clear_pointer (&totem->player_title, g_free);
 	}
 
-	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_PLAYER) == 0)
 		g_object_set (totem->header, "title", totem->player_title, NULL);
 }
 
@@ -1882,7 +1882,7 @@ totem_object_set_mrl (TotemObject *totem,
 
 		emit_file_opened (totem, totem->mrl);
 
-		totem_object_set_main_page (totem, "player");
+		totem_object_set_main_page (totem, PAGE_PLAYER);
 	}
 
 	update_buttons (totem);
@@ -2308,10 +2308,10 @@ static void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
-	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0) {
+	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_PLAYER) == 0) {
 		totem_playlist_clear (totem->playlist);
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
-		totem_object_set_main_page (totem, "grilo");
+		totem_object_set_main_page (totem, PAGE_LIBRARY);
 	} else {
 		totem_grilo_back_button_clicked (TOTEM_GRILO (totem->grilo));
 	}
@@ -2876,7 +2876,7 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 		totem_object_eject (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
-		if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+		if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_PLAYER) == 0)
 			back_button_clicked_cb (NULL, totem);
 		totem_grilo_set_current_page (TOTEM_GRILO (totem->grilo), TOTEM_GRILO_PAGE_RECENT);
 		break;
@@ -3492,7 +3492,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		return FALSE;
 
 	/* Check whether we're in the player panel */
-	if (!g_str_equal (totem_object_get_main_page (totem), "player"))
+	if (!g_str_equal (totem_object_get_main_page (totem), PAGE_PLAYER))
 		return FALSE;
 
 	/* Special case Eject, Open, Open URI,
@@ -3886,7 +3886,7 @@ grilo_show_back_button_changed (TotemGrilo  *grilo,
 				GParamSpec  *spec,
 				TotemObject *totem)
 {
-	if (g_strcmp0 (totem_object_get_main_page (totem), "grilo") == 0) {
+	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_LIBRARY) == 0) {
 		g_object_set (totem->header,
 			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
 			      NULL);
@@ -3898,7 +3898,7 @@ grilo_current_page_changed (TotemGrilo  *grilo,
 			    GParamSpec  *spec,
 			    TotemObject *totem)
 {
-	if (g_strcmp0 (totem_object_get_main_page (totem), "grilo") == 0) {
+	if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_LIBRARY) == 0) {
 		TotemGriloPage page;
 
 		page = totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo));
@@ -3917,8 +3917,8 @@ grilo_widget_setup (TotemObject *totem)
 			  G_CALLBACK (grilo_current_page_changed), totem);
 	gtk_stack_add_named (GTK_STACK (totem->stack),
 			     totem->grilo,
-			     "grilo");
-	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), "grilo");
+			     PAGE_LIBRARY);
+	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), PAGE_LIBRARY);
 }
 
 static void

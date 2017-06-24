@@ -1554,7 +1554,7 @@ window_key_press_event_cb (GtkWidget   *win,
 	guint state;
 
 	/* Check whether we're in the browse panel */
-	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), "grilo"))
+	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), PAGE_LIBRARY))
 		return GDK_EVENT_PROPAGATE;
 
 	state = event->state & gtk_accelerator_get_default_mod_mask ();
