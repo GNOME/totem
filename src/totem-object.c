@@ -1034,7 +1034,7 @@ totem_object_set_main_page (TotemObject *totem,
 		g_clear_object (&totem->custom_title);
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
-		if (totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo)) == TOTEM_LIBRARY_PAGE_RECENT)
+		if (totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo)) == TOTEM_LIBRARY_PAGE_VIDEOS)
 			gtk_widget_show (totem->add_button);
 		totem_library_start (TOTEM_LIBRARY (totem->grilo));
 	}
@@ -2878,7 +2878,7 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
 		if (g_strcmp0 (totem_object_get_main_page (totem), PAGE_PLAYER) == 0)
 			back_button_clicked_cb (NULL, totem);
-		totem_library_set_current_page (TOTEM_LIBRARY (totem->grilo), TOTEM_LIBRARY_PAGE_RECENT);
+		totem_library_set_current_page (TOTEM_LIBRARY (totem->grilo), TOTEM_LIBRARY_PAGE_VIDEOS);
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_object_volume_toggle_mute (totem);
@@ -3699,7 +3699,7 @@ update_add_button_visibility (GObject     *gobject,
 		gtk_widget_hide (totem->add_button);
 	} else {
 		gtk_widget_set_visible (totem->add_button,
-					totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo))  == TOTEM_LIBRARY_PAGE_RECENT);
+					totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo))  == TOTEM_LIBRARY_PAGE_VIDEOS);
 	}
 }
 
@@ -3903,7 +3903,7 @@ grilo_current_page_changed (TotemLibrary  *grilo,
 
 		page = totem_library_get_current_page (TOTEM_LIBRARY (totem->grilo));
 		gtk_widget_set_visible (totem->add_button,
-					page == TOTEM_LIBRARY_PAGE_RECENT);
+					page == TOTEM_LIBRARY_PAGE_VIDEOS);
 	}
 }
 

@@ -58,7 +58,7 @@ struct _TotemLibraryClass
 };
 
 typedef enum{
-  TOTEM_LIBRARY_PAGE_RECENT,
+  TOTEM_LIBRARY_PAGE_VIDEOS,
   TOTEM_LIBRARY_PAGE_CHANNELS
 } TotemLibraryPage;
 

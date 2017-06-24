@@ -1737,7 +1737,7 @@ source_switched (GtkToggleButton  *button,
 	if (g_str_equal (id, "recent")) {
 		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 					self->priv->recent_sort_model);
-		self->priv->current_page = TOTEM_LIBRARY_PAGE_RECENT;
+		self->priv->current_page = TOTEM_LIBRARY_PAGE_VIDEOS;
 		totem_library_set_drop_enabled (self, TRUE);
 	} else if (g_str_equal (id, "channels")) {
 		if (self->priv->browser_filter_model != NULL)
@@ -2471,7 +2471,7 @@ totem_library_set_current_page (TotemLibrary     *self,
 
 	g_return_if_fail (TOTEM_IS_GRILO (self));
 
-	if (page == TOTEM_LIBRARY_PAGE_RECENT)
+	if (page == TOTEM_LIBRARY_PAGE_VIDEOS)
 		button = self->priv->recent;
 	else if (page == TOTEM_LIBRARY_PAGE_CHANNELS)
 		button = self->priv->channels;
@@ -2488,7 +2488,7 @@ totem_library_set_current_page (TotemLibrary     *self,
 TotemLibraryPage
 totem_library_get_current_page (TotemLibrary *self)
 {
-	g_return_val_if_fail (TOTEM_IS_GRILO (self), TOTEM_LIBRARY_PAGE_RECENT);
+	g_return_val_if_fail (TOTEM_IS_GRILO (self), TOTEM_LIBRARY_PAGE_VIDEOS);
 
 	return self->priv->current_page;
 }
@@ -2662,7 +2662,7 @@ totem_library_class_init (TotemLibraryClass *klass)
 					 g_param_spec_int ("current-page",
 							   "Current page",
 							   "The name of the currently visible page",
-							   TOTEM_LIBRARY_PAGE_RECENT, TOTEM_LIBRARY_PAGE_CHANNELS, TOTEM_LIBRARY_PAGE_RECENT,
+							   TOTEM_LIBRARY_PAGE_VIDEOS, TOTEM_LIBRARY_PAGE_CHANNELS, TOTEM_LIBRARY_PAGE_VIDEOS,
 							   G_PARAM_READWRITE));
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
