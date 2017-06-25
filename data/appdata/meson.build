@@ -1,5 +1,3 @@
-po_dir = join_paths(meson.source_root(), 'po')
-
 i18n.merge_file ('appdata',
                  input: 'org.gnome.Totem.appdata.xml.in',
                  output: 'org.gnome.Totem.appdata.xml',
