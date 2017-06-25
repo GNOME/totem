@@ -16,7 +16,7 @@ plugin_deps = [
 
 shared_module(
   'totem-' + plugin_name + '-plugin',
-  sources: plugins_vala_sources + plugin_files,
+  sources: plugin_files,
   include_directories: plugins_incs + [
     backend_inc,
     src_inc

@@ -129,8 +129,6 @@ if plugins_option != 'none'
       '--pkg=@0@-@1@'.format(totem_gir_ns, totem_api_version)
     ]
 
-    plugins_vala_sources = []
-
     plugins += [
       'rotation',
       'sample-vala'
