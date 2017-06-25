@@ -126,7 +126,7 @@ if plugins_option != 'none'
 
     plugins_vala_args = [
       '--girdir=' + join_paths(meson.build_root(), 'src'),
-      '--pkg=Totem-1.0',
+      '--pkg=@0@-@1@'.format(totem_gir_ns, totem_api_version)
     ]
 
     plugins_vala_sources = []
