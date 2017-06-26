@@ -100,7 +100,7 @@ thumbnailer_conf.set('MIME_TYPE', r.stdout().strip())
 thumbnailer = 'totem.thumbnailer'
 
 configure_file(
-  input: thumbnailer + '.meson',
+  input: thumbnailer + '.in',
   output: thumbnailer,
   install: true,
   install_dir: join_paths(totem_datadir, 'thumbnailers'),
