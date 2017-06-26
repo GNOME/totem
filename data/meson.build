@@ -63,7 +63,7 @@ desktop_conf.set('MIME_TYPE', r.stdout().strip())
 desktop = 'org.gnome.Totem.desktop'
 
 desktop_in = configure_file(
-  input: desktop + '.meson',
+  input: desktop + '.in.in',
   output: desktop + '.in',
   configuration: desktop_conf
 )
