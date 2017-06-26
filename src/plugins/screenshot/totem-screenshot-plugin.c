@@ -308,7 +308,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	GMenu *menu;
 	GMenuItem *item;
-	const char const *accels[]= { "<Primary><Alt>s", NULL };
+	const char * const accels[]= { "<Primary><Alt>s", NULL };
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (priv->totem));
@@ -361,7 +361,7 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
-	const char const *accels[] = { NULL };
+	const char * const accels[] = { NULL };
 
 	/* Disconnect signal handlers */
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);

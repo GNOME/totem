@@ -328,7 +328,7 @@ impl_activate (PeasActivatable *plugin)
 	GMenuItem *item;
 	char *path;
 	char *mrl;
-	const char const *accels[] = { "<Primary>S", "Save", NULL };
+	const char * const accels[] = { "<Primary>S", "Save", NULL };
 
 	/* make sure nautilus is in the path */
 	path = g_find_program_in_path ("nautilus");

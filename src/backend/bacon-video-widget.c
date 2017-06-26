@@ -6054,7 +6054,7 @@ static void
 listen_navigation_events (ClutterActor *actor,
                           BaconVideoWidget *bvw)
 {
-  const char const *events[] = {
+  const char * const events[] = {
     "button-press-event",
     "button-release-event",
     "motion-event"

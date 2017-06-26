@@ -311,7 +311,7 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
-	const char const *accels[] = { NULL };
+	const char * const accels[] = { NULL };
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");

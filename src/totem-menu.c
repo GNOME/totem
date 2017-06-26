@@ -343,7 +343,7 @@ totem_app_menu_setup (Totem *totem)
 {
 	GMenuModel *appmenu;
 	char *accels[] = { NULL, NULL };
-	const char const *shortcuts_accels[] = {
+	const char * const shortcuts_accels[] = {
 		"<Ctrl>H",
 		"<Ctrl>question",
 		"<Ctrl>F1",

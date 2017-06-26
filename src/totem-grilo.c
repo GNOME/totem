@@ -177,10 +177,10 @@ enum {
 };
 
 static gboolean
-strv_has_prefix (const char **strv,
-		 const char  *str)
+strv_has_prefix (const char * const *strv,
+		 const char         *str)
 {
-	const char **s = strv;
+	const char * const *s = strv;
 
 	while (*s) {
 		if (g_str_has_prefix (str, *s))
@@ -195,7 +195,7 @@ static gboolean
 source_is_blacklisted (GrlSource *source)
 {
 	const char *id;
-	const char const *sources[] = {
+	const char * const sources[] = {
 		"grl-shoutcast",
 		"grl-flickr",
 		"grl-podcasts",
@@ -213,7 +213,7 @@ static gboolean
 source_is_browse_blacklisted (GrlSource *source)
 {
 	const char *id;
-	const char const *sources[] = {
+	const char * const sources[] = {
 		/* https://bugzilla.gnome.org/show_bug.cgi?id=722422 */
 		"grl-youtube",
 		NULL
@@ -229,7 +229,7 @@ static gboolean
 source_is_search_blacklisted (GrlSource *source)
 {
 	const char *id;
-	const char const *sources[] = {
+	const char * const sources[] = {
 		"grl-metadata-store",
 		NULL
 	};
@@ -244,7 +244,7 @@ static gboolean
 source_is_recent (GrlSource *source)
 {
 	const char *id;
-	const char const *sources[] = {
+	const char * const sources[] = {
 		"grl-tracker-source",
 		"grl-optical-media",
 		"grl-bookmarks",
@@ -2186,8 +2186,8 @@ static void
 setup_browse (TotemGrilo *self)
 {
 	GtkAdjustment *adj;
-	const char const * select_all_accels[] = { "<Primary>A", NULL };
-	const char const * select_none_accels[] = { "<Shift><Primary>A", NULL };
+	const char * const select_all_accels[] = { "<Primary>A", NULL };
+	const char * const select_none_accels[] = { "<Shift><Primary>A", NULL };
 
 	/* Search */
 	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
