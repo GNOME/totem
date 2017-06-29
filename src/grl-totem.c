@@ -320,6 +320,35 @@ create_series_group (const char     *show,
 	g_ptr_array_insert (ret->array, -1, media);
 }
 
+/* Casefolding is complicated, so only "normalise" case for
+ * names. This will avoid duplicates without mangling
+ * non-ASCII titles
+ * See https://www.w3.org/International/wiki/Case_folding */
+static char *
+str_to_title_case (const char *str)
+{
+	char *dup;
+	guint i;
+	gboolean prev_is_space = TRUE;
+
+	dup = g_strdup (str);
+	if (!g_str_is_ascii (str))
+		return dup;
+
+	for (i = 0; dup[i] != '\0'; i++) {
+		if (prev_is_space && g_ascii_isalpha (dup[i])) {
+			prev_is_space = FALSE;
+			dup[i] = g_ascii_toupper (dup[i]);
+		} else if (g_ascii_isalpha (dup[i]))
+			dup[i] = g_ascii_tolower (dup[i]);
+
+		if (g_ascii_isspace (dup[i]))
+			prev_is_space = TRUE;
+	}
+
+	return dup;
+}
+
 static GPtrArray *
 merge_media (GrlTotemSource *totem_source,
 	     GPtrArray      *entries,
@@ -345,7 +374,7 @@ merge_media (GrlTotemSource *totem_source,
 		guint num;
 
 		show = grl_media_get_show (media);
-		tmp = g_utf8_casefold (show, -1);
+		tmp = str_to_title_case (show);
 		num = GPOINTER_TO_UINT (g_hash_table_lookup (ht, tmp));
 		num++;
 		g_hash_table_insert (ht, (gpointer) tmp, GUINT_TO_POINTER (num));
