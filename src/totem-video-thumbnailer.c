@@ -257,7 +257,7 @@ check_cover_for_stream (ThumbApp   *app,
 		return;
 	}
 
-	PROGRESS_DEBUG("Saving cover image");
+	PROGRESS_DEBUG("Saving cover image to %s", app->output);
 	thumb_app_cleanup (app);
 	save_pixbuf (pixbuf, app->output, app->input, output_size, TRUE);
 	g_object_unref (pixbuf);
@@ -1018,7 +1018,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	PROGRESS_DEBUG("Saving captured screenshot");
+	PROGRESS_DEBUG("Saving captured screenshot to %s", output);
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
 	PRINT_PROGRESS (100.0);
