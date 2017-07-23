@@ -181,7 +181,7 @@ have_gir = false
 
 introspection_option = get_option('enable-introspection')
 if introspection_option != 'no'
-  gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7', required: false)
+  gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7', required: (introspection_option == 'yes'))
 
   if gir_dep.found()
     have_gir = true
