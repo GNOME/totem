@@ -63,9 +63,6 @@
 #define MAX_PROGRESS 90.0
 
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
-#define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
-#define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
-#define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
 #define DEFAULT_OUTPUT_SIZE 256
 
 static gboolean raw_output = FALSE;
@@ -73,7 +70,6 @@ static int output_size = -1;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean print_progress = FALSE;
-static gint gallery = -1;
 static gint64 second_index = -1;
 static char **filenames = NULL;
 
@@ -530,9 +526,9 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
 
-	/* If we're outputting a gallery or a raw image without a size,
+	/* If we're outputting a raw image without a size,
 	 * don't scale the pixbuf or add borders */
-	if (gallery != -1 || (raw_output != FALSE && size == -1))
+	if (raw_output != FALSE && size == -1)
 		with_holes = g_object_ref (pixbuf);
 	else if (raw_output != FALSE)
 		with_holes = scale_pixbuf (pixbuf, size, TRUE);
@@ -614,272 +610,12 @@ capture_interesting_frame (ThumbApp *app)
 	return pixbuf;
 }
 
-static GdkPixbuf *
-cairo_surface_to_pixbuf (cairo_surface_t *surface)
-{
-	gint stride, width, height, x, y;
-	guchar *data, *output, *output_pixel;
-
-	/* This doesn't deal with alpha --- it simply converts the 4-byte Cairo ARGB
-	 * format to the 3-byte GdkPixbuf packed RGB format. */
-	g_assert (cairo_image_surface_get_format (surface) == CAIRO_FORMAT_RGB24);
-
-	stride = cairo_image_surface_get_stride (surface);
-	width = cairo_image_surface_get_width (surface);
-	height = cairo_image_surface_get_height (surface);
-	data = cairo_image_surface_get_data (surface);
-
-	output = g_malloc (stride * height);
-	output_pixel = output;
-
-	for (y = 0; y < height; y++) {
-		guint32 *row = (guint32*) (data + y * stride);
-
-		for (x = 0; x < width; x++) {
-			output_pixel[0] = (row[x] & 0x00ff0000) >> 16;
-			output_pixel[1] = (row[x] & 0x0000ff00) >> 8;
-			output_pixel[2] = (row[x] & 0x000000ff);
-
-			output_pixel += 3;
-		}
-	}
-
-	return gdk_pixbuf_new_from_data (output, GDK_COLORSPACE_RGB, FALSE, 8,
-					 width, height, width * 3,
-					 (GdkPixbufDestroyNotify) g_free, NULL);
-}
-
-
-static GdkPixbuf *
-create_gallery (ThumbApp *app)
-{
-	GdkPixbuf *screenshot, *pixbuf = NULL;
-	cairo_t *cr;
-	cairo_surface_t *surface;
-	PangoLayout *layout;
-	PangoFontDescription *font_desc;
-	gint64 stream_length, screenshot_interval, pos;
-	guint columns = 3, rows, current_column, current_row, x, y;
-	gint screenshot_width = 0, screenshot_height = 0, x_padding = 0, y_padding = 0;
-	gfloat scale = 1.0;
-	gchar *header_text, *duration_text, *filename;
-	GFile *file;
-
-	/* Calculate how many screenshots we're going to take */
-	stream_length = app->duration;
-
-	/* As a default, we have one screenshot per minute of stream,
-	 * but adjusted so we don't have any gaps in the resulting gallery. */
-	if (gallery == 0) {
-		gallery = stream_length / 60000;
-
-		while (gallery % 3 != 0 &&
-		       gallery % 4 != 0 &&
-		       gallery % 5 != 0) {
-			gallery++;
-		}
-	}
-
-	if (gallery < GALLERY_MIN)
-		gallery = GALLERY_MIN;
-	if (gallery > GALLERY_MAX)
-		gallery = GALLERY_MAX;
-	screenshot_interval = stream_length / gallery;
-
-	/* Put a lower bound on the screenshot interval so we can't enter an infinite loop below */
-	if (screenshot_interval == 0)
-		screenshot_interval = 1;
-
-	PROGRESS_DEBUG ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " millisecond intervals throughout a %" G_GINT64_FORMAT " millisecond-long stream.",
-			gallery, screenshot_interval, stream_length);
-
-	/* Calculate how to arrange the screenshots so we don't get ones orphaned on the last row.
-	 * At this point, only deal with arrangements of 3, 4 or 5 columns. */
-	y = G_MAXUINT;
-	for (x = 3; x <= 5; x++) {
-		if (gallery % x == 0 || x - gallery % x < y) {
-			y = x - gallery % x;
-			columns = x;
-
-			/* Have we found an optimal solution already? */
-			if (y == x)
-				break;
-		}
-	}
-
-	rows = ceil ((gfloat) gallery / (gfloat) columns);
-
-	PROGRESS_DEBUG ("Outputting as %u rows and %u columns.", rows, columns);
-
-	/* Take the screenshots and composite them into a pixbuf */
-	current_column = current_row = x = y = 0;
-	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
-		if (pos == stream_length)
-			screenshot = capture_frame_at_time (app, pos - 1);
-		else
-			screenshot = capture_frame_at_time (app, pos);
-
-		if (pixbuf == NULL) {
-			screenshot_width = gdk_pixbuf_get_width (screenshot);
-			screenshot_height = gdk_pixbuf_get_height (screenshot);
-
-			/* Calculate a scaling factor so that screenshot_width -> output_size */
-			scale = (float) output_size / (float) screenshot_width;
-
-			x_padding = x = MAX (output_size * 0.05, 1);
-			y_padding = y = MAX (scale * screenshot_height * 0.05, 1);
-
-			PROGRESS_DEBUG ("Scaling each screenshot by %f.", scale);
-
-			/* Create our massive pixbuf */
-			pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-						 columns * output_size + (columns + 1) * x_padding,
-						 (guint) (rows * scale * screenshot_height + (rows + 1) * y_padding));
-			gdk_pixbuf_fill (pixbuf, 0x000000ff);
-
-			PROGRESS_DEBUG ("Created output pixbuf (%ux%u).", gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
-		}
-
-		/* Composite the screenshot into our gallery */
-		gdk_pixbuf_composite (screenshot, pixbuf,
-				      x, y, output_size, scale * screenshot_height,
-				      (gdouble) x, (gdouble) y, scale, scale,
-				      GDK_INTERP_BILINEAR, 255);
-		g_object_unref (screenshot);
-
-		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " milliseconds (address %u) at (%u,%u).",
-				pos, GPOINTER_TO_UINT (screenshot), x, y);
-
-		/* We print progress in the range 10% (MIN_PROGRESS) to 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0 */
-		PRINT_PROGRESS (MIN_PROGRESS + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
-
-		current_column = (current_column + 1) % columns;
-		x += output_size + x_padding;
-		if (current_column == 0) {
-			x = x_padding;
-			y += scale * screenshot_height + y_padding;
-			current_row++;
-		}
-	}
-
-	PROGRESS_DEBUG ("Converting pixbuf to a Cairo surface.");
-
-	/* Load the pixbuf into a Cairo surface and overlay the text. The height is the height of
-	 * the gallery plus the necessary height for 3 lines of header (at ~18px each), plus some
-	 * extra padding. */
-	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, gdk_pixbuf_get_width (pixbuf),
-					      gdk_pixbuf_get_height (pixbuf) + GALLERY_HEADER_HEIGHT + y_padding);
-	cr = cairo_create (surface);
-	cairo_surface_destroy (surface);
-
-	/* First, copy across the gallery pixbuf */
-	gdk_cairo_set_source_pixbuf (cr, pixbuf, 0.0, GALLERY_HEADER_HEIGHT + y_padding);
-	cairo_rectangle (cr, 0.0, GALLERY_HEADER_HEIGHT + y_padding, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
-	cairo_fill (cr);
-	g_object_unref (pixbuf);
-
-	/* Build the header information */
-	duration_text = totem_time_to_string (stream_length, FALSE, FALSE);
-	file = g_file_new_for_commandline_arg (app->input);
-	filename = g_file_get_basename (file);
-	g_object_unref (file);
-
-	/* Translators: The first string is "Filename" (as translated); the second is an actual filename.
-			The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
-			The sixth string is "Duration" (as translated); the seventh is the movie duration in words. */
-	header_text = g_markup_printf_escaped (_("<b>%s</b>: %s\n<b>%s</b>: %d\303\227%d\n<b>%s</b>: %s"),
-					       _("Filename"),
-					       filename,
-					       _("Resolution"),
-					       screenshot_width,
-					       screenshot_height,
-					       _("Duration"),
-					       duration_text);
-	g_free (duration_text);
-	g_free (filename);
-
-	PROGRESS_DEBUG ("Writing header text with Pango.");
-
-	/* Write out some header information */
-	layout = pango_cairo_create_layout (cr);
-	font_desc = pango_font_description_from_string ("Sans 18px");
-	pango_layout_set_font_description (layout, font_desc);
-	pango_font_description_free (font_desc);
-
-	pango_layout_set_markup (layout, header_text, -1);
-	g_free (header_text);
-
-	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
-	cairo_move_to (cr, (gdouble) x_padding, (gdouble) y_padding);
-	pango_cairo_show_layout (cr, layout);
-
-	/* Go through each screenshot and write its timestamp */
-	current_column = current_row = 0;
-	x = x_padding + output_size;
-	y = y_padding * 2 + GALLERY_HEADER_HEIGHT + scale * screenshot_height;
-
-	font_desc = pango_font_description_from_string ("Sans 10px");
-	pango_layout_set_font_description (layout, font_desc);
-	pango_font_description_free (font_desc);
-
-	PROGRESS_DEBUG ("Writing screenshot timestamps with Pango.");
-
-	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
-		gchar *timestamp_text;
-		gint layout_width, layout_height;
-
-		timestamp_text = totem_time_to_string (pos, FALSE, FALSE);
-
-		pango_layout_set_text (layout, timestamp_text, -1);
-		pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
-
-		/* Display the timestamp in the bottom-right corner of the current screenshot */
-		cairo_move_to (cr, x - layout_width - 0.02 * output_size, y - layout_height - 0.02 * scale * screenshot_height);
-
-		/* We have to stroke the text so it's visible against screenshots of the same
-		 * foreground color. */
-		pango_cairo_layout_path (cr, layout);
-		cairo_set_source_rgb (cr, 0.0, 0.0, 0.0); /* black */
-		cairo_stroke_preserve (cr);
-		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
-		cairo_fill (cr);
-
-		PROGRESS_DEBUG ("Writing timestamp \"%s\" at (%f,%f).", timestamp_text,
-				x - layout_width - 0.02 * output_size,
-				y - layout_height - 0.02 * scale * screenshot_height);
-
-		/* We print progress in the range 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0) to 90% (MAX_PROGRESS) */
-		PRINT_PROGRESS (MIN_PROGRESS + (MAX_PROGRESS - MIN_PROGRESS) / 2.0 + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
-
-		g_free (timestamp_text);
-
-		current_column = (current_column + 1) % columns;
-		x += output_size + x_padding;
-		if (current_column == 0) {
-			x = x_padding + output_size;
-			y += scale * screenshot_height + y_padding;
-			current_row++;
-		}
-	}
-
-	g_object_unref (layout);
-
-	PROGRESS_DEBUG ("Converting Cairo surface back to pixbuf.");
-
-	/* Create a new pixbuf from the Cairo context */
-	pixbuf = cairo_surface_to_pixbuf (cairo_get_target (cr));
-	cairo_destroy (cr);
-
-	return pixbuf;
-}
-
 static const GOptionEntry entries[] = {
-	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
+	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
-	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
-	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
+	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail", NULL },
 	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
 	{ NULL }
@@ -927,7 +663,6 @@ int main (int argc, char *argv[])
 		output_size = DEFAULT_OUTPUT_SIZE;
 
 	if (filenames == NULL || g_strv_length (filenames) != 2 ||
-	    (second_index != -1 && gallery != -1) ||
 	    (print_progress == TRUE && verbose == TRUE)) {
 		char *help;
 		help = g_option_context_get_help (context, FALSE, NULL);
@@ -961,9 +696,7 @@ int main (int argc, char *argv[])
 	}
 	thumb_app_set_error_handler (&app);
 
-	/* We don't need covers when we're in gallery mode */
-	if (gallery == -1)
-		thumb_app_check_for_cover (&app);
+	thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
 		PROGRESS_DEBUG ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
@@ -973,22 +706,16 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Opened video file: '%s'", input);
 	PRINT_PROGRESS (10.0);
 
-	if (gallery == -1) {
-		/* If the user has told us to use a frame at a specific second
-		 * into the video, just use that frame no matter how boring it
-		 * is */
-		if (second_index != -1) {
-			assert_duration (&app);
-			pixbuf = capture_frame_at_time (&app, second_index * 1000);
-		} else {
-			pixbuf = capture_interesting_frame (&app);
-		}
-		PRINT_PROGRESS (90.0);
-	} else {
+	/* If the user has told us to use a frame at a specific second
+	 * into the video, just use that frame no matter how boring it
+	 * is */
+	if (second_index != -1) {
 		assert_duration (&app);
-		/* We're producing a gallery of screenshots from throughout the file */
-		pixbuf = create_gallery (&app);
+		pixbuf = capture_frame_at_time (&app, second_index * 1000);
+	} else {
+		pixbuf = capture_interesting_frame (&app);
 	}
+	PRINT_PROGRESS (90.0);
 
 	/* Cleanup */
 	totem_resources_monitor_stop ();

@@ -55,7 +55,6 @@
 #define MIN_PROGRESS 10.0
 #define MAX_PROGRESS 90.0
 
-#define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 #define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
 #define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
 #define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
@@ -225,40 +224,6 @@ thumb_app_set_error_handler (ThumbApp *app)
 	bus = gst_element_get_bus (app->play);
 	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play, NULL);
 	g_object_unref (bus);
-}
-
-static void
-check_cover_for_stream (ThumbApp   *app,
-			const char *signal_name)
-{
-	GdkPixbuf *pixbuf;
-	GstTagList *tags = NULL;
-
-	g_signal_emit_by_name (G_OBJECT (app->play), signal_name, 0, &tags);
-
-	if (!tags)
-		return;
-
-	pixbuf = totem_gst_tag_list_get_cover (tags);
-	if (!pixbuf) {
-		gst_tag_list_unref (tags);
-		return;
-	}
-
-	g_debug("Saving cover image to %s", app->output);
-	thumb_app_cleanup (app);
-	save_pixbuf (pixbuf, app->output, app->input, output_size, TRUE);
-	g_object_unref (pixbuf);
-
-	exit (0);
-}
-
-static void
-thumb_app_check_for_cover (ThumbApp *app)
-{
-	g_debug ("Checking whether file has cover");
-	check_cover_for_stream (app, "get-audio-tags");
-	check_cover_for_stream (app, "get-video-tags");
 }
 
 static gboolean
@@ -434,42 +399,6 @@ thumb_app_seek (ThumbApp *app,
 	gst_element_get_state (app->play, NULL, NULL, GST_CLOCK_TIME_NONE);
 }
 
-/* This function attempts to detect images that are mostly solid images
- * It does this by calculating the statistical variance of the
- * black-and-white image */
-static gboolean
-is_image_interesting (GdkPixbuf *pixbuf)
-{
-	/* We're gonna assume 8-bit samples. If anyone uses anything different,
-	 * it doesn't really matter cause it's gonna be ugly anyways */
-	int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-	int height = gdk_pixbuf_get_height(pixbuf);
-	guchar* buffer = gdk_pixbuf_get_pixels(pixbuf);
-	int num_samples = (rowstride * height);
-	int i;
-	float x_bar = 0.0f;
-	float variance = 0.0f;
-
-	/* FIXME: If this proves to be a performance issue, this function
-	 * can be modified to perhaps only check 3 rows. I doubt this'll
-	 * be a problem though. */
-
-	/* Iterate through the image to calculate x-bar */
-	for (i = 0; i < num_samples; i++) {
-		x_bar += (float) buffer[i];
-	}
-	x_bar /= ((float) num_samples);
-
-	/* Calculate the variance */
-	for (i = 0; i < num_samples; i++) {
-		float tmp = ((float) buffer[i] - x_bar);
-		variance += tmp * tmp;
-	}
-	variance /= ((float) (num_samples - 1));
-
-	return (variance > BORING_IMAGE_VARIANCE);
-}
-
 static GdkPixbuf *
 scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 {
@@ -550,48 +479,6 @@ capture_frame_at_time (ThumbApp   *app,
 		thumb_app_seek (app, milliseconds);
 
 	return totem_gst_playbin_get_frame (app->play);
-}
-
-static GdkPixbuf *
-capture_interesting_frame (ThumbApp *app)
-{
-	GdkPixbuf* pixbuf;
-	guint current;
-	const double frame_locations[] = {
-		1.0 / 3.0,
-		2.0 / 3.0,
-		0.1,
-		0.9,
-		0.5
-	};
-
-	if (app->duration == -1) {
-		g_debug("Video has no duration, so capture 1st frame");
-		return capture_frame_at_time (app, 0);
-	}
-
-	/* Test at multiple points in the file to see if we can get an
-	 * interesting frame */
-	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
-	{
-		g_debug("About to seek to %f", frame_locations[current]);
-		thumb_app_seek (app, frame_locations[current] * app->duration);
-
-		/* Pull the frame, if it's interesting we bail early */
-		g_debug("About to get frame for iter %d", current);
-		pixbuf = totem_gst_playbin_get_frame (app->play);
-		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
-			g_debug("Frame for iter %d is interesting", current);
-			break;
-		}
-
-		/* If we get to the end of this loop, we'll end up using
-		 * the last image we pulled */
-		if (current + 1 < G_N_ELEMENTS(frame_locations))
-			g_clear_object (&pixbuf);
-		g_debug("Frame for iter %d was not interesting", current);
-	}
-	return pixbuf;
 }
 
 static GdkPixbuf *
@@ -924,9 +811,6 @@ int main (int argc, char *argv[])
 	}
 	thumb_app_set_error_handler (&app);
 
-	/* We don't need covers when we're in gallery mode */
-	if (gallery == -1)
-		thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
 		g_debug ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
@@ -936,22 +820,9 @@ int main (int argc, char *argv[])
 	g_debug("Opened video file: '%s'", input);
 	PRINT_PROGRESS (10.0);
 
-	if (gallery == -1) {
-		/* If the user has told us to use a frame at a specific second
-		 * into the video, just use that frame no matter how boring it
-		 * is */
-		if (second_index != -1) {
-			assert_duration (&app);
-			pixbuf = capture_frame_at_time (&app, second_index * 1000);
-		} else {
-			pixbuf = capture_interesting_frame (&app);
-		}
-		PRINT_PROGRESS (90.0);
-	} else {
-		assert_duration (&app);
-		/* We're producing a gallery of screenshots from throughout the file */
-		pixbuf = create_gallery (&app);
-	}
+	assert_duration (&app);
+	/* We're producing a gallery of screenshots from throughout the file */
+	pixbuf = create_gallery (&app);
 
 	/* Cleanup */
 	thumb_app_cleanup (&app);
