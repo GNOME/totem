@@ -50,14 +50,8 @@
 #include "gst/totem-time-helpers.h"
 #include "gst/totem-gst-pixbuf-helpers.h"
 
-#ifdef G_HAVE_ISO_VARARGS
-#define PROGRESS_DEBUG(...) { if (verbose != FALSE) g_message (__VA_ARGS__); }
-#elif defined(G_HAVE_GNUC_VARARGS)
-#define PROGRESS_DEBUG(format...) { if (verbose != FALSE) g_message (format); }
-#endif
-
 /* The main() function controls progress in the first and last 10% */
-#define PRINT_PROGRESS(p) { if (print_progress) g_printf ("%f%% complete\n", p); }
+#define PRINT_PROGRESS(p) { g_printf ("%f%% complete\n", p); }
 #define MIN_PROGRESS 10.0
 #define MAX_PROGRESS 90.0
 
@@ -69,8 +63,6 @@
 
 static gboolean raw_output = FALSE;
 static int output_size = -1;
-static gboolean verbose = FALSE;
-static gboolean print_progress = FALSE;
 static gboolean g_fatal_warnings = FALSE;
 static gint gallery = -1;
 static gint64 second_index = -1;
@@ -159,7 +151,7 @@ thumb_app_set_filename (ThumbApp *app)
 		uri = g_file_get_uri (file);
 	g_object_unref (file);
 
-	PROGRESS_DEBUG("setting URI %s", uri);
+	g_debug("setting URI %s", uri);
 
 	g_object_set (app->play, "uri", uri, NULL);
 	g_free (uri);
@@ -254,7 +246,7 @@ check_cover_for_stream (ThumbApp   *app,
 		return;
 	}
 
-	PROGRESS_DEBUG("Saving cover image to %s", app->output);
+	g_debug("Saving cover image to %s", app->output);
 	thumb_app_cleanup (app);
 	save_pixbuf (pixbuf, app->output, app->input, output_size, TRUE);
 	g_object_unref (pixbuf);
@@ -265,7 +257,7 @@ check_cover_for_stream (ThumbApp   *app,
 static void
 thumb_app_check_for_cover (ThumbApp *app)
 {
-	PROGRESS_DEBUG ("Checking whether file has cover");
+	g_debug ("Checking whether file has cover");
 	check_cover_for_stream (app, "get-audio-tags");
 	check_cover_for_stream (app, "get-video-tags");
 }
@@ -575,7 +567,7 @@ capture_interesting_frame (ThumbApp *app)
 	};
 
 	if (app->duration == -1) {
-		PROGRESS_DEBUG("Video has no duration, so capture 1st frame");
+		g_debug("Video has no duration, so capture 1st frame");
 		return capture_frame_at_time (app, 0);
 	}
 
@@ -583,14 +575,14 @@ capture_interesting_frame (ThumbApp *app)
 	 * interesting frame */
 	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
 	{
-		PROGRESS_DEBUG("About to seek to %f", frame_locations[current]);
+		g_debug("About to seek to %f", frame_locations[current]);
 		thumb_app_seek (app, frame_locations[current] * app->duration);
 
 		/* Pull the frame, if it's interesting we bail early */
-		PROGRESS_DEBUG("About to get frame for iter %d", current);
+		g_debug("About to get frame for iter %d", current);
 		pixbuf = totem_gst_playbin_get_frame (app->play);
 		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
-			PROGRESS_DEBUG("Frame for iter %d is interesting", current);
+			g_debug("Frame for iter %d is interesting", current);
 			break;
 		}
 
@@ -598,7 +590,7 @@ capture_interesting_frame (ThumbApp *app)
 		 * the last image we pulled */
 		if (current + 1 < G_N_ELEMENTS(frame_locations))
 			g_clear_object (&pixbuf);
-		PROGRESS_DEBUG("Frame for iter %d was not interesting", current);
+		g_debug("Frame for iter %d was not interesting", current);
 	}
 	return pixbuf;
 }
@@ -679,7 +671,7 @@ create_gallery (ThumbApp *app)
 	if (screenshot_interval == 0)
 		screenshot_interval = 1;
 
-	PROGRESS_DEBUG ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " millisecond intervals throughout a %" G_GINT64_FORMAT " millisecond-long stream.",
+	g_debug ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " millisecond intervals throughout a %" G_GINT64_FORMAT " millisecond-long stream.",
 			gallery, screenshot_interval, stream_length);
 
 	/* Calculate how to arrange the screenshots so we don't get ones orphaned on the last row.
@@ -698,7 +690,7 @@ create_gallery (ThumbApp *app)
 
 	rows = ceil ((gfloat) gallery / (gfloat) columns);
 
-	PROGRESS_DEBUG ("Outputting as %u rows and %u columns.", rows, columns);
+	g_debug ("Outputting as %u rows and %u columns.", rows, columns);
 
 	/* Take the screenshots and composite them into a pixbuf */
 	current_column = current_row = x = y = 0;
@@ -718,7 +710,7 @@ create_gallery (ThumbApp *app)
 			x_padding = x = MAX (output_size * 0.05, 1);
 			y_padding = y = MAX (scale * screenshot_height * 0.05, 1);
 
-			PROGRESS_DEBUG ("Scaling each screenshot by %f.", scale);
+			g_debug ("Scaling each screenshot by %f.", scale);
 
 			/* Create our massive pixbuf */
 			pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
@@ -726,7 +718,7 @@ create_gallery (ThumbApp *app)
 						 (guint) (rows * scale * screenshot_height + (rows + 1) * y_padding));
 			gdk_pixbuf_fill (pixbuf, 0x000000ff);
 
-			PROGRESS_DEBUG ("Created output pixbuf (%ux%u).", gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+			g_debug ("Created output pixbuf (%ux%u).", gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
 		}
 
 		/* Composite the screenshot into our gallery */
@@ -736,7 +728,7 @@ create_gallery (ThumbApp *app)
 				      GDK_INTERP_BILINEAR, 255);
 		g_object_unref (screenshot);
 
-		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " milliseconds (address %u) at (%u,%u).",
+		g_debug ("Composited screenshot from %" G_GINT64_FORMAT " milliseconds (address %u) at (%u,%u).",
 				pos, GPOINTER_TO_UINT (screenshot), x, y);
 
 		/* We print progress in the range 10% (MIN_PROGRESS) to 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0 */
@@ -751,7 +743,7 @@ create_gallery (ThumbApp *app)
 		}
 	}
 
-	PROGRESS_DEBUG ("Converting pixbuf to a Cairo surface.");
+	g_debug ("Converting pixbuf to a Cairo surface.");
 
 	/* Load the pixbuf into a Cairo surface and overlay the text. The height is the height of
 	 * the gallery plus the necessary height for 3 lines of header (at ~18px each), plus some
@@ -787,7 +779,7 @@ create_gallery (ThumbApp *app)
 	g_free (duration_text);
 	g_free (filename);
 
-	PROGRESS_DEBUG ("Writing header text with Pango.");
+	g_debug ("Writing header text with Pango.");
 
 	/* Write out some header information */
 	layout = pango_cairo_create_layout (cr);
@@ -811,7 +803,7 @@ create_gallery (ThumbApp *app)
 	pango_layout_set_font_description (layout, font_desc);
 	pango_font_description_free (font_desc);
 
-	PROGRESS_DEBUG ("Writing screenshot timestamps with Pango.");
+	g_debug ("Writing screenshot timestamps with Pango.");
 
 	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
 		gchar *timestamp_text;
@@ -833,7 +825,7 @@ create_gallery (ThumbApp *app)
 		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
 		cairo_fill (cr);
 
-		PROGRESS_DEBUG ("Writing timestamp \"%s\" at (%f,%f).", timestamp_text,
+		g_debug ("Writing timestamp \"%s\" at (%f,%f).", timestamp_text,
 				x - layout_width - 0.02 * output_size,
 				y - layout_height - 0.02 * scale * screenshot_height);
 
@@ -853,7 +845,7 @@ create_gallery (ThumbApp *app)
 
 	g_object_unref (layout);
 
-	PROGRESS_DEBUG ("Converting Cairo surface back to pixbuf.");
+	g_debug ("Converting Cairo surface back to pixbuf.");
 
 	/* Create a new pixbuf from the Cairo context */
 	pixbuf = cairo_surface_to_pixbuf (cairo_get_target (cr));
@@ -865,11 +857,9 @@ create_gallery (ThumbApp *app)
 static const GOptionEntry entries[] = {
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
-	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
 	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
-	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
 	{ NULL }
 };
@@ -899,10 +889,8 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-	if (print_progress) {
-		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
-		setbuf (stdout, NULL);
-	}
+	fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
+	setbuf (stdout, NULL);
 
 	if (g_fatal_warnings) {
 		GLogLevelFlags fatal_mask;
@@ -916,8 +904,7 @@ int main (int argc, char *argv[])
 		output_size = DEFAULT_OUTPUT_SIZE;
 
 	if (filenames == NULL || g_strv_length (filenames) != 2 ||
-	    (second_index != -1 && gallery != -1) ||
-	    (print_progress == TRUE && verbose == TRUE)) {
+	    (second_index != -1 && gallery != -1)) {
 		char *help;
 		help = g_option_context_get_help (context, FALSE, NULL);
 		g_print ("%s", help);
@@ -927,7 +914,7 @@ int main (int argc, char *argv[])
 	input = filenames[0];
 	output = filenames[1];
 
-	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
+	g_debug("Initialised libraries, about to create video widget");
 	PRINT_PROGRESS (2.0);
 
 	app.input = input;
@@ -936,10 +923,10 @@ int main (int argc, char *argv[])
 	thumb_app_setup_play (&app);
 	thumb_app_set_filename (&app);
 
-	PROGRESS_DEBUG("Video widget created");
+	g_debug("Video widget created");
 	PRINT_PROGRESS (6.0);
 
-	PROGRESS_DEBUG("About to open video file");
+	g_debug("About to open video file");
 
 	if (thumb_app_start (&app) == FALSE) {
 		g_print ("totem-video-thumbnailer couldn't open file '%s'\n", input);
@@ -951,12 +938,12 @@ int main (int argc, char *argv[])
 	if (gallery == -1)
 		thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
-		PROGRESS_DEBUG ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
+		g_debug ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
 	}
 	thumb_app_set_duration (&app);
 
-	PROGRESS_DEBUG("Opened video file: '%s'", input);
+	g_debug("Opened video file: '%s'", input);
 	PRINT_PROGRESS (10.0);
 
 	if (gallery == -1) {
@@ -985,7 +972,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	PROGRESS_DEBUG("Saving captured screenshot to %s", output);
+	g_debug("Saving captured screenshot to %s", output);
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
 	PRINT_PROGRESS (100.0);
