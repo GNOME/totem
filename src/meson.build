@@ -226,6 +226,34 @@ executable(
   install_dir: totem_bindir
 )
 
+totem_gallery_thumbnailer_sources = files(
+  'totem-resources.c',
+  'totem-gallery-thumbnailer.c'
+)
+
+totem_gallery_thumbnailer_deps = [
+  dependency('gdk-3.0'),
+  totem_plparser_dep,
+  gst_tag_dep,
+  gst_video_dep,
+  m_dep,
+  libtotem_gst_helpers_dep,
+  libtotem_gst_pixbuf_helpers_dep,
+  libtotem_time_helpers_dep
+]
+
+executable(
+  'totem-gallery-thumbnailer',
+  totem_gallery_thumbnailer_sources,
+  include_directories: top_inc,
+  dependencies: totem_gallery_thumbnailer_deps,
+  c_args: totem_common_cflags + [
+    '-DG_LOG_DOMAIN="TotemGalleryThumbnailer"'
+  ],
+  install: true,
+  install_dir: totem_libexecdir
+)
+
 if have_nautilus
   libtotem_properties_page_sources = files(
     'totem-properties-main.c',

@@ -170,7 +170,7 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (self)));
 
 	/* Build the command and arguments to pass it */
-	argv[0] = (gchar*) "totem-video-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
+	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
 	argv[1] = (gchar*) "-j"; /* JPEG mode */
 	argv[2] = (gchar*) "-l"; /* don't limit resources */
 	argv[3] = (gchar*) "-p"; /* print progress */

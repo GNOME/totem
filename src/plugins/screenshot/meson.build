@@ -27,7 +27,7 @@ shared_module(
   sources: plugin_files,
   include_directories: plugins_incs,
   dependencies: plugins_deps,
-  c_args: plugin_cflags,
+  c_args: plugin_cflags + ['-DLIBEXECDIR="@0@"'.format(totem_libexecdir)],
   install: true,
   install_dir: plugin_dir
 )
