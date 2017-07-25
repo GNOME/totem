@@ -73,7 +73,6 @@ static int output_size = -1;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean print_progress = FALSE;
-static gboolean g_fatal_warnings = FALSE;
 static gint gallery = -1;
 static gint64 second_index = -1;
 static char **filenames = NULL;
@@ -880,7 +879,6 @@ static const GOptionEntry entries[] = {
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
-	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
 	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
@@ -923,14 +921,6 @@ int main (int argc, char *argv[])
 	if (print_progress) {
 		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
 		setbuf (stdout, NULL);
-	}
-
-	if (g_fatal_warnings) {
-		GLogLevelFlags fatal_mask;
-
-		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-		g_log_set_always_fatal (fatal_mask);
 	}
 
 	if (raw_output == FALSE && output_size == -1)

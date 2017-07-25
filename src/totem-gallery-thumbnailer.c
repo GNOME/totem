@@ -63,7 +63,6 @@
 
 static gboolean raw_output = FALSE;
 static int output_size = -1;
-static gboolean g_fatal_warnings = FALSE;
 static gint gallery = -1;
 static gint64 second_index = -1;
 static char **filenames = NULL;
@@ -858,7 +857,6 @@ static const GOptionEntry entries[] = {
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
-	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
 	{ NULL }
@@ -891,14 +889,6 @@ int main (int argc, char *argv[])
 
 	fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
 	setbuf (stdout, NULL);
-
-	if (g_fatal_warnings) {
-		GLogLevelFlags fatal_mask;
-
-		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-		g_log_set_always_fatal (fatal_mask);
-	}
 
 	if (raw_output == FALSE && output_size == -1)
 		output_size = DEFAULT_OUTPUT_SIZE;
