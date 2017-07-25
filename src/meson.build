@@ -227,7 +227,6 @@ executable(
 )
 
 totem_gallery_thumbnailer_sources = files(
-  'totem-resources.c',
   'totem-gallery-thumbnailer.c'
 )
 

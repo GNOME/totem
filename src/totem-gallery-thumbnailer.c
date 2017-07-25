@@ -49,7 +49,6 @@
 #include "gst/totem-gst-helpers.h"
 #include "gst/totem-time-helpers.h"
 #include "gst/totem-gst-pixbuf-helpers.h"
-#include "totem-resources.h"
 
 #ifdef G_HAVE_ISO_VARARGS
 #define PROGRESS_DEBUG(...) { if (verbose != FALSE) g_message (__VA_ARGS__); }
@@ -70,7 +69,6 @@
 
 static gboolean raw_output = FALSE;
 static int output_size = -1;
-static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean print_progress = FALSE;
 static gboolean g_fatal_warnings = FALSE;
@@ -867,7 +865,6 @@ create_gallery (ThumbApp *app)
 static const GOptionEntry entries[] = {
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
-	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
 	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
@@ -901,14 +898,6 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		return 1;
 	}
-
-#ifdef G_OS_UNIX
-	if (time_limit != FALSE) {
-		errno = 0;
-		if (nice (20) != 20 && errno != 0)
-			g_warning ("Couldn't change nice value of process.");
-	}
-#endif
 
 	if (print_progress) {
 		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
@@ -950,9 +939,6 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Video widget created");
 	PRINT_PROGRESS (6.0);
 
-	if (time_limit != FALSE)
-		totem_resources_monitor_start (input, 0);
-
 	PROGRESS_DEBUG("About to open video file");
 
 	if (thumb_app_start (&app) == FALSE) {
@@ -991,7 +977,6 @@ int main (int argc, char *argv[])
 	}
 
 	/* Cleanup */
-	totem_resources_monitor_stop ();
 	thumb_app_cleanup (&app);
 	PRINT_PROGRESS (92.0);
 
