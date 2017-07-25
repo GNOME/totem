@@ -68,7 +68,6 @@
 #define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
 #define DEFAULT_OUTPUT_SIZE 256
 
-static gboolean jpeg_output = FALSE;
 static gboolean raw_output = FALSE;
 static int output_size = -1;
 static gboolean time_limit = TRUE;
@@ -523,13 +522,9 @@ static void
 save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	     const char *video_path, int size, gboolean is_still)
 {
-	int width, height;
 	GdkPixbuf *with_holes;
 	GError *err = NULL;
 	gboolean ret;
-
-	height = gdk_pixbuf_get_height (pixbuf);
-	width = gdk_pixbuf_get_width (pixbuf);
 
 	/* If we're outputting a gallery or a raw image without a size,
 	 * don't scale the pixbuf or add borders */
@@ -541,19 +536,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 		with_holes = scale_pixbuf (pixbuf, size, is_still);
 
 
-	if (jpeg_output == FALSE) {
-		char *a_width, *a_height;
-
-		a_width = g_strdup_printf ("%d", width);
-		a_height = g_strdup_printf ("%d", height);
-
-		ret = gdk_pixbuf_save (with_holes, path, "png", &err,
-				       "tEXt::Thumb::Image::Width", a_width,
-				       "tEXt::Thumb::Image::Height", a_height,
-				       NULL);
-	} else {
-		ret = gdk_pixbuf_save (with_holes, path, "jpeg", &err, NULL);
-	}
+	ret = gdk_pixbuf_save (with_holes, path, "jpeg", &err, NULL);
 
 	if (ret == FALSE) {
 		if (err != NULL) {
@@ -882,7 +865,6 @@ create_gallery (ThumbApp *app)
 }
 
 static const GOptionEntry entries[] = {
-	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
