@@ -138,7 +138,11 @@
         },
         {
             "name": "gom",
-            "config-opts": [ "--disable-python" ],
+            "buildsystem": "meson",
+            "builddir": true,
+            "config-opts": [
+                "--libdir=lib"
+            ],
             "sources": [
                 {
                     "type": "git",
