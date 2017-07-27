@@ -233,7 +233,11 @@
         },
         {
             "name": "totem",
-            "config-opts": [ "--disable-static" ],
+            "buildsystem": "meson",
+            "builddir": true,
+            "config-opts": [
+                "--libdir=lib"
+            ],
             "sources": [
                 {
                     "type": "git",
