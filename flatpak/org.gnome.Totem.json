@@ -75,6 +75,9 @@
             "name": "totem-pl-parser",
             "buildsystem": "meson",
             "builddir": true,
+            "config-opts": [
+                "--libdir=lib"
+            ],
             "sources": [
                 {
                     "type": "git",
