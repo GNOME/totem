@@ -1,6 +1,6 @@
 project(
   'totem', 'c',
-  version: '3.24.0',
+  version: '3.25.90',
   license: 'GPL2+',
   default_options: [
     'buildtype=debugoptimized',
