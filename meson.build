@@ -219,7 +219,7 @@ if python_option != 'no'
     python_version = r.stdout().split(' ')[1]
 
     pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)
-    pylint = find_program('pylint', required: false)
+    pylint = find_program('pylint-3', 'pylint3', 'pylint', required: false)
 
     if python_version.version_compare(python_req_version) and pygobject_dep.found() and pylint.found()
       have_python = true
