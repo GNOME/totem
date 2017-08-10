@@ -211,12 +211,12 @@ python_deps = []
 
 python_option = get_option('enable-python')
 if python_option != 'no'
-  python = find_program('python', required: false)
+  python = import('python3').find_python()
   if python.found()
-    python_req_version = '>= 2.3'
+    python_req_version = '>= 3.0'
 
-    r = run_command(python, '--version')
-    python_version = r.stderr().split(' ')[1]
+    r = run_command([python, '--version'])
+    python_version = r.stdout().split(' ')[1]
 
     pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)
     pylint = find_program('pylint', required: false)
