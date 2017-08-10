@@ -105,6 +105,8 @@ common_flags = [
   '-DLIBSOUP_DISABLE_SINGLE_INCLUDES'
 ]
 
+warn_flags = []
+
 if totem_buildtype == 'debug' or totem_buildtype == 'debugoptimized'
   test_cflags = [
     '-fno-strict-aliasing',
@@ -131,8 +133,6 @@ if totem_buildtype == 'debug' or totem_buildtype == 'debugoptimized'
     '-Werror=return-type',
     '-Wstrict-prototypes'
   ]
-
-  warn_flags = []
 
   foreach cflag: test_cflags
     if cc.has_argument(cflag)
