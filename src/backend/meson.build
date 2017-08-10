@@ -45,7 +45,9 @@ sources = files(
 enums = 'bacon-video-widget-enums'
 enums_header = files('bacon-video-widget.h')
 
-sources += gnome.mkenums(
+libbacon_gen_sources = []
+
+libbacon_gen_sources += gnome.mkenums(
   enums + '.h',
   sources: enums_header,
   fhead: '#ifndef BVW_ENUMS_H\n#define BVW_ENUMS_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n',
@@ -54,7 +56,7 @@ sources += gnome.mkenums(
   ftail: 'G_END_DECLS\n\n#endif /* !BVW_ENUMS_H */'
 )
 
-sources += gnome.mkenums(
+libbacon_gen_sources += gnome.mkenums(
   enums + '.c',
   sources: enums_header,
   fhead: '#include "bacon-video-widget.h"\n#include "bacon-video-widget-enums.h"',
@@ -93,7 +95,7 @@ libbacon_video_widget_cflags = common_flags + warn_flags + [
 
 libbacon_video_widget = static_library(
   'baconvideowidget',
-  sources: sources,
+  sources: sources + libbacon_gen_sources,
   include_directories: libbacon_video_widget_incs,
   dependencies: libbacon_video_widget_deps,
   c_args: libbacon_video_widget_cflags
@@ -102,7 +104,8 @@ libbacon_video_widget = static_library(
 libbacon_video_widget_dep = declare_dependency(
   link_with: libbacon_video_widget,
   include_directories: backend_inc,
-  dependencies: libbacon_video_widget_deps
+  dependencies: libbacon_video_widget_deps,
+  sources: libbacon_gen_sources
 )
 
 if have_easy_codec
