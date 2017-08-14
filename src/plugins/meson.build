@@ -70,8 +70,8 @@ if plugins_option != 'none'
     message(str)
   endif
 
-  lirc_dep = dependency('lirc_client', required: false)
-  if lirc_dep.found() and cc.has_function('lirc_init') and cc.has_header('lirc/lirc_client.h')
+  lirc_dep = dependency('lirc', required: false)
+  if lirc_dep.found() and cc.has_function('lirc_init', dependencies: lirc_dep) and cc.has_header('lirc/lirc_client.h')
     plugins += 'lirc'
   else
     str = 'you need lirc_client installed for the lirc plugin'
