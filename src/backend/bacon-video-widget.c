@@ -5388,6 +5388,22 @@ bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 }
 
 /**
+ * bacon_video_widget_get_mrl:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current media resource locator used by this widget.
+ *
+ * If no stream is loaded, %NULL is returned.
+ *
+ * Return value: the media resource locator if the stream is loaded, %NULL otherwise
+ */
+const gchar *
+bacon_video_widget_get_mrl (BaconVideoWidget * bvw)
+{
+  return bvw->priv->mrl;
+}
+
+/**
  * bacon_video_widget_is_seekable:
  * @bvw: a #BaconVideoWidget
  *

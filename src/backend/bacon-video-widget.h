@@ -135,6 +135,9 @@ gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
 
+/* MRL */
+const gchar * bacon_video_widget_get_mrl         (BaconVideoWidget *bvw);
+
 /* Seeking and length */
 gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
