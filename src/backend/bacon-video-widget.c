@@ -2063,15 +2063,20 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   GstTagList **cache = NULL;
   GstTagList *result;
 
-  GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
-
   /* all tags (replace previous tags, title/artist/etc. might change
    * in the middle of a stream, e.g. with radio streams) */
   result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
                                    GST_TAG_MERGE_REPLACE);
-  if (bvw->priv->tagcache)
-    gst_tag_list_unref (bvw->priv->tagcache);
+  if (bvw->priv->tagcache &&
+      result &&
+      gst_tag_list_is_equal (result, bvw->priv->tagcache)) {
+    gst_tag_list_unref (result);
+    GST_WARNING ("Pipeline sent %s tags update with no changes", type);
+    return;
+  }
+  g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
   bvw->priv->tagcache = result;
+  GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
 
   /* media-type-specific tags */
   if (!strcmp (type, "video")) {
