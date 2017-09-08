@@ -1744,9 +1744,6 @@ totem_grilo_drop_files (TotemGrilo       *self,
 	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
 
 	for (i = 0; list[i] != NULL; i++) {
-		if (list[i] == NULL)
-			continue;
-
 		g_debug ("Preparing to add '%s' as dropped file", list[i]);
 		totem_grilo_add_item_to_recent (self, list[i], NULL, FALSE);
 	}
