@@ -345,7 +345,13 @@ totem_properties_view_finalize (GObject *object)
 	props = TOTEM_PROPERTIES_VIEW (object);
 
 	if (props->priv != NULL) {
-		g_clear_object (&props->priv->disco);
+		if (props->priv->disco) {
+			g_signal_handlers_disconnect_by_func (props->priv->disco,
+							      discovered_cb,
+							      props);
+			gst_discoverer_stop (props->priv->disco);
+			g_clear_object (&props->priv->disco);
+		}
 		g_clear_object (&props->priv->label);
 		g_free (props->priv);
 	}
