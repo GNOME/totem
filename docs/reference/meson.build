@@ -89,7 +89,7 @@ gnome.gtkdoc(
     '--ignore-headers=' + ' '.join(private_headers),
   ],
   mkdb_args: [
-    '--sgml-mode',
+    '--xml-mode',
     '--output-format=xml',
     '--name-space=' + meson.project_name()
   ],
