@@ -30,6 +30,7 @@ linguas = [
   'id',
   'it',
   'ja',
+  'nb',
   'oc',
   'pa',
   'pl',
