@@ -115,7 +115,7 @@ if plugins_option != 'none'
 
   if have_vala
     plugins_vala_deps = [
-      declare_dependency(sources: libtotem_gir)
+      declare_dependency(sources: libtotem_gir[0])
     ]
 
     plugins_vala_flags = [
