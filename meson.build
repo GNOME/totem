@@ -2,11 +2,7 @@ project(
   'totem', 'c',
   version: '3.26.0',
   license: 'GPL2+ with exception',
-  default_options: [
-    'buildtype=debugoptimized',
-    'c_std=gnu99',
-    'warning_level=1'
-  ],
+  default_options: 'buildtype=debugoptimized',
   meson_version: '>= 0.41.0'
 )
 
