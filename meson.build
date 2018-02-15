@@ -13,9 +13,6 @@ totem_minor_version = version_array[1].to_int()
 totem_micro_version = version_array[2].to_int()
 
 totem_api_version = '1.0'
-api_version_array = totem_version.split('.')
-totem_api_major_version = api_version_array[0].to_int()
-totem_api_minor_version = api_version_array[1].to_int()
 
 totem_api_path = join_paths(meson.project_name(), totem_api_version)
 
@@ -48,41 +45,27 @@ cc = meson.get_compiler('c')
 
 config_h = configuration_data()
 
-config_h.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-
 # debug options
 config_h.set('GNOME_ENABLE_DEBUG', totem_buildtype != 'release',
              description: 'Define if debugging is enabled')
-config_h.set('NDEBUG', totem_buildtype == 'release',
-             description: 'Define if debugging is disabled')
 
-# package
-config_h.set_quoted('PACKAGE', meson.project_name())
-config_h.set_quoted('PACKAGE_BUGREPORT', 'http://bugzilla.gnome.org/enter_bug.cgi?product=totem')
-config_h.set_quoted('PACKAGE_NAME', meson.project_name())
-config_h.set_quoted('PACKAGE_STRING', '@0@ @1@'.format(meson.project_name(), totem_version))
-config_h.set_quoted('PACKAGE_TARNAME', meson.project_name())
-config_h.set_quoted('PACKAGE_URL', 'https://wiki.gnome.org/Apps/Videos')
-config_h.set_quoted('PACKAGE_VERSION', totem_version)
-config_h.set_quoted('TOTEM_API_VERSION', totem_api_version)
-config_h.set_quoted('VERSION', totem_version)
+# defines
+set_defines = [
+  # package
+  ['PACKAGE', meson.project_name()],
+  ['TOTEM_API_VERSION', totem_api_version],
+  ['VERSION', totem_version],
+  # i18n
+  ['GETTEXT_PACKAGE', meson.project_name()]
+]
 
-# headers
-config_h.set('HAVE_DLFCN_H', cc.has_header('dlfcn.h'))
-config_h.set('HAVE_INTTYPES_H', cc.has_header('inttypes.h'))
-config_h.set('HAVE_MEMORY_H', cc.has_header('memory.h'))
-config_h.set('HAVE_STDINT_H', cc.has_header('stdint.h'))
-config_h.set('HAVE_STDLIB_H', cc.has_header('stdlib.h'))
-config_h.set('HAVE_STRINGS_H', cc.has_header('strings.h'))
-config_h.set('HAVE_STRING_H', cc.has_header('string.h'))
-config_h.set('HAVE_SYS_STAT_H', cc.has_header('sys/stat.h'))
-config_h.set('HAVE_SYS_TYPES_H', cc.has_header('sys/types.h'))
-config_h.set('HAVE_UNISTD_H', cc.has_header('unistd.h'))
+foreach define: set_defines
+  config_h.set_quoted(define[0], define[1])
+endforeach
 
 # Compiler flags
 common_flags = [
   '-DHAVE_CONFIG_H',
-  '-D_REENTRANT',
   '-DGCONF_DISABLE_DEPRECATED',
   '-DGCONF_DISABLE_SINGLE_INCLUDES',
   '-DBONOBO_DISABLE_DEPRECATED',
@@ -272,7 +255,6 @@ if get_option('enable-nautilus') != 'no'
       nautilusdir = libnautilus_ext_dep.get_pkgconfig_variable('extensiondir')
     endif
 
-    config_h.set('HAVE_NAUTILUS', true)
     have_nautilus = true
     message('installing nautilus plugin in ' + nautilusdir)
   else
