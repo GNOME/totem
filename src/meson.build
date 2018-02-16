@@ -53,9 +53,10 @@ totem_common_incs = [
   plugins_inc
 ]
 
-totem_common_deps = libbacon_video_widget_deps + [
+totem_common_deps = [
   glib_dep,
   gio_dep,
+  gst_tag_dep,
   gtk_dep,
   gdk_x11_dep,
   dependency('gmodule-2.0'),

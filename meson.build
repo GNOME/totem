@@ -120,6 +120,7 @@ grilo_req_version = '>= 0.3.0'
 peas_req_version = '>= 1.1.0'
 totem_plparser_req_version = '>= 3.10.1'
 
+clutter_gst_dep = dependency('clutter-gst-3.0', version: '>= 2.99.2')
 gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0')
 glib_dep =  dependency('glib-2.0', version: glib_req_version)
 gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
