@@ -66,11 +66,6 @@ libbacon_gen_sources += gnome.mkenums(
   vtail: '      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static ("@EnumName@", values);\n  }\n  return etype;\n}\n'
 )
 
-libbacon_video_widget_incs = [
-  top_inc,
-  gst_inc
-]
-
 libbacon_video_widget_deps = [
   gst_dep,
   dependency('gstreamer-base-1.0', version: gst_req_version),
@@ -84,9 +79,7 @@ libbacon_video_widget_deps = [
   dependency('cairo', version: '>= 1.14.0'),
   dependency('gsettings-desktop-schemas'),
   m_dep,
-  libtotem_gst_helpers_dep,
-  libtotem_gst_pixbuf_helpers_dep,
-  libtotem_time_helpers_dep
+  libtotem_gst_helpers_dep
 ]
 
 libbacon_video_widget_cflags = common_flags + warn_flags + [
@@ -100,7 +93,7 @@ endif
 libbacon_video_widget = static_library(
   'baconvideowidget',
   sources: sources + libbacon_gen_sources,
-  include_directories: libbacon_video_widget_incs,
+  include_directories: top_inc,
   dependencies: libbacon_video_widget_deps,
   c_args: libbacon_video_widget_cflags
 )
@@ -118,7 +111,7 @@ if enable_easy_codec_installation
   executable(
     backend_test,
     backend_test + '.c',
-    include_directories: libbacon_video_widget_incs,
+    include_directories: top_inc,
     dependencies: libbacon_video_widget_dep,
     c_args: libbacon_video_widget_cflags + [
       '-DLOGO_PATH="@0@"'.format(join_paths(totem_pkgdatadir, meson.project_name(), 'totem_logo.png')),

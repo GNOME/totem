@@ -98,9 +98,7 @@ libtotem_player_sources = files(
   'totem-time-label.c'
 )
 
-libtotem_player_deps = totem_common_deps + [
-  libtotem_time_helpers_dep
-]
+libtotem_player_deps = totem_common_deps + [libtotem_time_helpers_dep]
 
 libtotem_player = static_library(
   'totem_player',
@@ -213,9 +211,7 @@ totem_video_thumbnailer_deps = [
   gst_tag_dep,
   gst_video_dep,
   m_dep,
-  libtotem_gst_helpers_dep,
-  libtotem_gst_pixbuf_helpers_dep,
-  libtotem_time_helpers_dep
+  libtotem_gst_helpers_dep
 ]
 
 executable(
@@ -240,9 +236,7 @@ totem_gallery_thumbnailer_deps = [
   gst_tag_dep,
   gst_video_dep,
   m_dep,
-  libtotem_gst_helpers_dep,
-  libtotem_gst_pixbuf_helpers_dep,
-  libtotem_time_helpers_dep
+  libtotem_gst_helpers_dep
 ]
 
 executable(
