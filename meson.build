@@ -39,15 +39,14 @@ current = 0
 revision = 0
 libversion = '@0@.@1@.@2@'.format(soversion, current, revision)
 
-totem_buildtype = get_option('buildtype')
+totem_debug = get_option('buildtype').contains('debug')
 
 cc = meson.get_compiler('c')
 
 config_h = configuration_data()
 
 # debug options
-config_h.set('GNOME_ENABLE_DEBUG', totem_buildtype != 'release',
-             description: 'Define if debugging is enabled')
+config_h.set('GNOME_ENABLE_DEBUG', totem_debug)
 
 # defines
 set_defines = [
@@ -86,7 +85,7 @@ common_flags = [
 
 warn_flags = []
 
-if totem_buildtype == 'debug' or totem_buildtype == 'debugoptimized'
+if totem_debug
   test_cflags = [
     '-fno-strict-aliasing',
     '-Wcast-align',
@@ -96,11 +95,7 @@ if totem_buildtype == 'debug' or totem_buildtype == 'debugoptimized'
     '-Wpointer-arith'
   ]
 
-  foreach cflag: test_cflags
-    if cc.has_argument(cflag)
-      common_flags += [cflag]
-    endif
-  endforeach
+  common_flags += cc.get_supported_arguments(test_cflags)
 
   test_cflags = [
     '-Werror=format=2',
@@ -113,14 +108,10 @@ if totem_buildtype == 'debug' or totem_buildtype == 'debugoptimized'
     '-Wstrict-prototypes'
   ]
 
-  foreach cflag: test_cflags
-    if cc.has_argument(cflag)
-      warn_flags += [cflag]
-    endif
-  endforeach
-
-  add_project_arguments(common_flags, language: 'c')
+  warn_flags += cc.get_supported_arguments(test_cflags)
 endif
+
+add_project_arguments(common_flags, language: 'c')
 
 glib_req_version = '>= 2.35.0'
 gtk_req_version = '>= 3.19.4'
