@@ -282,7 +282,7 @@ subdir('help')
 subdir('src')
 
 if get_option('enable-gtk-doc')
-  subdir('docs')
+  subdir('docs/reference')
 endif
 
 meson.add_install_script('meson_post_install.py')
