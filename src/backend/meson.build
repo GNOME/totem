@@ -71,7 +71,7 @@ libbacon_video_widget_incs = [
   gst_inc
 ]
 
-libbacon_video_widget_deps = missing_plugins_deps + [
+libbacon_video_widget_deps = [
   gst_dep,
   dependency('gstreamer-base-1.0', version: gst_req_version),
   dependency('gstreamer-plugins-base-1.0', version: gst_req_version),
@@ -93,6 +93,10 @@ libbacon_video_widget_cflags = common_flags + warn_flags + [
   '-DDATADIR="@0@"'.format(totem_pkgdatadir)
 ]
 
+if enable_easy_codec_installation
+  libbacon_video_widget_deps += gst_pbutils_dep
+endif
+
 libbacon_video_widget = static_library(
   'baconvideowidget',
   sources: sources + libbacon_gen_sources,
@@ -108,7 +112,7 @@ libbacon_video_widget_dep = declare_dependency(
   sources: libbacon_gen_sources
 )
 
-if have_easy_codec
+if enable_easy_codec_installation
   backend_test = 'bvw-test'
 
   executable(

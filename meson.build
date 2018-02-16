@@ -3,7 +3,7 @@ project(
   version: '3.26.0',
   license: 'GPL2+ with exception',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.41.0'
+  meson_version: '>= 0.44.0'
 )
 
 totem_version = meson.project_version()
@@ -156,113 +156,53 @@ libgd = subproject(
 libgd_dep = libgd.get_variable('libgd_dep')
 
 # introspection support
-have_gir = false
-
-introspection_option = get_option('enable-introspection')
-if introspection_option != 'no'
-  gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7', required: (introspection_option == 'yes'))
-
-  if gir_dep.found()
-    have_gir = true
-  endif
+enable_introspection = get_option('introspection')
+if enable_introspection
+  gir_req_version = '>= 0.6.7'
+  assert(dependency('gobject-introspection-1.0', version: gir_req_version, required: false).found(),
+         'gobject-introspection-1.0 ' + gir_req_version + ' required for introspection support')
 endif
 
 # missing plugins support
-missing_plugins_deps = []
-
-easy_codec_option = get_option('enable-easy-codec-installation')
-if easy_codec_option != 'no'
-  have_easy_codec = false
-
-  gst_pbutils_dep = dependency('gstreamer-pbutils-1.0', required: (easy_codec_option == 'yes'))
-  if gst_pbutils_dep.found()
-    have_easy_codec = true
-  endif
-
-  missing_plugins_deps += gst_pbutils_dep
-  config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
-               description: 'Whether we can and want to do installation of missing plugins')
+enable_easy_codec_installation = get_option('easy_codec_installation')
+if enable_easy_codec_installation
+  gst_pbutils_dep = dependency('gstreamer-pbutils-1.0')
 endif
+config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', enable_easy_codec_installation,
+             description: 'Whether we can and want to do installation of missing plugins')
 
 # python support
-have_python = false
-python_deps = []
+enable_python = get_option('python')
+if enable_python
+  py3 = import('python3')
 
-python_option = get_option('enable-python')
-if python_option != 'no'
-  python = import('python3').find_python()
-  if python.found()
-    python_req_version = '>= 3.0'
+  assert(py3.find_python().found(), 'python3 required for python support')
+  assert(find_program('pylint-3', 'pylint3', 'pylint', required: false).found(), 'pylint required for python support')
 
-    r = run_command([python, '--version'])
-    python_version = r.stdout().split(' ')[1]
+  pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3')
 
-    pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)
-    pylint = find_program('pylint-3', 'pylint3', 'pylint', required: false)
-
-    if python_version.version_compare(python_req_version) and pygobject_dep.found() and pylint.found()
-      have_python = true
-      python_deps += pygobject_dep
-      meson.add_install_script('meson_compile_python.py')
-    endif
-  endif
-
-  if not have_python
-    str = 'python ' + python_req_version + ', pygobject or pylint not found'
-    if python_option == 'yes'
-      error(str)
-    endif
-    message(str + ', disabling Python support')
-  endif
+  meson.add_install_script('meson_compile_python.py')
 endif
 
 # vala support
-have_vala = false
+enable_vapi = get_option('vapi')
+if enable_vapi
+  vala_req_version = '>= 0.14.1'
 
-vala_option = get_option('enable-vala')
-if vala_option != 'no'
-  if have_gir
-    if add_languages('vala', required: false)
-      vala_req_version = '>= 0.14.1'
-      if meson.get_compiler('vala').version().version_compare(vala_req_version)
-        have_vala = true
-      endif
-    endif
-
-    if not have_vala
-      str = 'you need vala ' + vala_req_version + ' installed to use vala plugins'
-    endif
-  else
-    str = 'you need introspection support for the vala plugins'
-  endif
-
-  if not have_vala
-    if vala_options == 'yes' or introspection_option == 'yes'
-      error(str)
-    endif
-    message(str)
-  endif
+  assert(enable_introspection, 'introspection support required for the vala plugins')
+  assert(add_languages('vala', required: false) and meson.get_compiler('vala').version().version_compare(vala_req_version),
+         'vala ' + vala_req_version + ' required for the vala plugins')
 endif
 
 # nautilus support
-have_nautilus = false
-
-if get_option('enable-nautilus') != 'no'
+enable_nautilus = get_option('nautilus')
+if enable_nautilus
   libnautilus_ext_dep = dependency('libnautilus-extension', version: '>= 2.91.3', required: false)
-  if libnautilus_ext_dep.found()
-    nautilusdir = get_option('with-nautilusdir')
-    if nautilusdir == ''
-      nautilusdir = libnautilus_ext_dep.get_pkgconfig_variable('extensiondir')
-    endif
+  assert(libnautilus_ext_dep.found(), 'libnautilus-extension required for nautilus support')
 
-    have_nautilus = true
-    message('installing nautilus plugin in ' + nautilusdir)
-  else
-    if get_option('enable-nautilus') == 'yes'
-      error('nautilus support enabled but libnautilus-extension missing')
-    else
-      message('libnautilus-extension missing so disabling nautilus supportt')
-    endif
+  nautilusdir = get_option('nautilusdir')
+  if nautilusdir == ''
+    nautilusdir = libnautilus_ext_dep.get_pkgconfig_variable('extensiondir')
   endif
 endif
 
@@ -289,49 +229,22 @@ subdir('data')
 subdir('help')
 subdir('src')
 
-if get_option('enable-gtk-doc')
+if get_option('gtk_doc')
   subdir('docs')
 endif
 
 meson.add_install_script('meson_post_install.py')
 
 message('Totem was configured with the following options:')
-message('** Using the GStreamer-1.0 backend')
-
-str = 'Easy codec installation support'
-if have_easy_codec
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
+message('Using the GStreamer-1.0 backend')
+message('Easy codec installation support: ' + enable_easy_codec_installation.to_string())
+message('Python plugin support: ' + enable_python.to_string())
+message('Vala plugin support: ' + enable_vapi.to_string())
+message('Nautilus properties page: ' + enable_nautilus.to_string())
+if enable_nautilus
+  message('installing nautilus plugin in: ' + nautilusdir)
 endif
-
-str = 'Python plugin support'
-if have_python
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
-
-str = 'Vala plugin support'
-if have_vala
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
-
 foreach plugin: allowed_plugins
-  if plugins.contains(plugin)
-    message('** ' + plugin + ' plugin enabled')
-  else
-    message('   ' + plugin + ' plugin disabled')
-  endif
+  message('Plugin ' + plugin + ': ' + plugins.contains(plugin).to_string())
 endforeach
-
-str = 'Nautilus properties page'
-if have_nautilus
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
-
 message('End options')

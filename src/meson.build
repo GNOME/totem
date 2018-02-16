@@ -53,7 +53,7 @@ totem_common_incs = [
   plugins_inc
 ]
 
-totem_common_deps = libbacon_video_widget_deps + python_deps + [
+totem_common_deps = libbacon_video_widget_deps + [
   glib_dep,
   gio_dep,
   gtk_dep,
@@ -76,6 +76,10 @@ totem_common_cflags = common_flags + warn_flags + [
   '-DBINDIR="@0@"'.format(totem_bindir),
   '-DGTKBUILDERDIR=""'
 ]
+
+if enable_python
+  totem_common_deps += pygobject_dep
+endif
 
 headers = files(
   'plugins/totem-plugin.h',
@@ -253,19 +257,23 @@ executable(
   install_dir: totem_libexecdir
 )
 
-if have_nautilus
+if enable_nautilus
   libtotem_properties_page_sources = files(
     'totem-properties-main.c',
     'totem-properties-view.c'
   )
 
-  libtotem_properties_page_deps = missing_plugins_deps + [
+  libtotem_properties_page_deps = [
     gtk_dep,
     dependency('gthread-2.0'),
     libnautilus_ext_dep,
     gst_tag_dep,
     libbacon_video_widget_properties_dep
   ]
+
+  if enable_easy_codec_installation
+    libtotem_properties_page_deps += gst_pbutils_dep
+  endif
 
   libtotem_properties_page = shared_module(
     'totem-properties-page',
@@ -312,7 +320,7 @@ executable(
   c_args: totem_common_cflags
 )
 
-if have_gir
+if enable_introspection
   gir_sources = libtotem_sources + libtotem_player_sources + headers
 
   gir_incs = [
