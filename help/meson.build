@@ -14,42 +14,9 @@ media = [
   'figures/totem_volume_mute_button.png'
 ]
 
-linguas = [
-  'bg',
-  'ca',
-  'cs',
-  'da',
-  'de',
-  'el',
-  'en_GB',
-  'es',
-  'eu',
-  'fi',
-  'fr',
-  'gl',
-  'id',
-  'it',
-  'ja',
-  'nb',
-  'oc',
-  'pa',
-  'pl',
-  'pt_BR',
-  'ro',
-  'ru',
-  'sl',
-  'sv',
-  'te',
-  'uk',
-  'zh_CN',
-  'zh_HK',
-  'zh_TW'
-]
-
 gnome.yelp(
   meson.project_name(),
   sources: sources,
   media: media,
-  symlink_media: true,
-  languages: linguas
+  symlink_media: true
 )
