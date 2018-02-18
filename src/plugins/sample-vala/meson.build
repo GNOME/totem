@@ -6,7 +6,7 @@ plugin_dir = join_paths(totem_pluginsdir, plugin_name)
 
 plugin_deps = [
   gtk_dep,
-  peas_dep
+  libpeas_dep
 ]
 
 shared_module(

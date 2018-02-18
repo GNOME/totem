@@ -9,7 +9,7 @@ plugin_files = files(
 
 plugin_deps = [
   gtk_dep,
-  peas_dep,
+  libpeas_dep,
   dependency('cogl-pango-1.0'),
   clutter_gtk_dep,
 ]

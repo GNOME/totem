@@ -7,6 +7,7 @@ shared_module(
   sources: 'totem-' + plugin_name + '.c',
   include_directories: plugins_incs,
   dependencies: plugins_deps + [
+    libbacon_video_widget_dep,
     libbacon_video_widget_properties_dep
   ],
   c_args: plugins_cflags,

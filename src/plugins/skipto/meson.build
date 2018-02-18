@@ -12,7 +12,7 @@ shared_module(
   plugin_name,
   sources: plugin_files,
   include_directories: plugins_incs,
-  dependencies: plugins_deps,
+  dependencies: plugins_deps + [libtotem_time_helpers_dep],
   c_args: plugins_cflags,
   install: true,
   install_dir: plugin_dir

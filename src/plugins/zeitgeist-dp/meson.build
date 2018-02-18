@@ -10,7 +10,7 @@ plugin_files = files(
 plugin_deps = [
   clutter_gtk_dep,
   gtk_dep,
-  peas_dep,
+  libpeas_dep,
   zeitgeist_dep
 ]
 

@@ -121,20 +121,21 @@ peas_req_version = '>= 1.1.0'
 totem_plparser_req_version = '>= 3.10.1'
 
 clutter_gst_dep = dependency('clutter-gst-3.0', version: '>= 2.99.2')
+clutter_gtk_dep = dependency('clutter-gtk-1.0', version: '>= 1.8.1')
 gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0')
 glib_dep =  dependency('glib-2.0', version: glib_req_version)
-gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
+gnome_desktop_dep = dependency('gnome-desktop-3.0')
 gio_dep = dependency('gio-2.0', version: '>= 2.43.4')
 gtk_dep = dependency('gtk+-3.0', version: gtk_req_version)
-gdk_x11_dep = dependency('gdk-x11-3.0', version: gtk_req_version)
+grilo_dep = dependency('grilo-0.3', version: grilo_req_version)
+grilo_pls_dep = dependency('grilo-pls-0.3', version: grilo_req_version)
 gst_dep = dependency('gstreamer-1.0', version: gst_req_version)
 gst_tag_dep = dependency('gstreamer-tag-1.0', version: '>= 0.11.93')
 gst_video_dep = dependency('gstreamer-video-1.0')
-peas_dep = dependency('libpeas-1.0', version: peas_req_version)
-peas_gtk_dep = dependency('libpeas-gtk-1.0', version: peas_req_version)
+libpeas_dep = dependency('libpeas-1.0', version: peas_req_version)
+libpeas_gtk_dep = dependency('libpeas-gtk-1.0', version: peas_req_version)
 totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_version)
-clutter_gtk_dep = dependency('clutter-gtk-1.0', version: '>= 1.8.1')
-m_dep = cc.find_library('m', required: true)
+m_dep = cc.find_library('m')
 
 libgd = subproject(
   'libgd',
@@ -148,12 +149,17 @@ libgd = subproject(
 )
 libgd_dep = libgd.get_variable('libgd_dep')
 
+'''
+FIXME:
+  libtotem adds plugins/totem-plugins-engine.c inconditionally, which includes
+  girepository.h. This means that introspection is not optional
+'''
 # introspection support
 enable_introspection = get_option('introspection')
 if enable_introspection
   gir_req_version = '>= 0.6.7'
-  assert(dependency('gobject-introspection-1.0', version: gir_req_version, required: false).found(),
-         'gobject-introspection-1.0 ' + gir_req_version + ' required for introspection support')
+  gir_dep = dependency('gobject-introspection-1.0', version: gir_req_version, required: false)
+  assert(gir_dep.found(), 'gobject-introspection-1.0 ' + gir_req_version + ' required for introspection support')
 endif
 
 # missing plugins support

@@ -48,40 +48,6 @@ gnome.mkenums(
   install_dir: totem_schemadir
 )
 
-totem_common_incs = [
-  top_inc,
-  plugins_inc
-]
-
-totem_common_deps = [
-  glib_dep,
-  gio_dep,
-  gst_tag_dep,
-  gtk_dep,
-  gdk_x11_dep,
-  dependency('gmodule-2.0'),
-  totem_plparser_dep,
-  peas_dep,
-  peas_gtk_dep,
-  dependency('grilo-0.3', version: grilo_req_version),
-  dependency('grilo-pls-0.3', version: grilo_req_version),
-  dependency('gnome-desktop-3.0')
-]
-
-totem_common_cflags = common_flags + warn_flags + [
-  '-DDBUS_API_SUBJECT_TO_CHANGE',
-  '-DGNOMELOCALEDIR="@0@"'.format(totem_localedir),
-  '-DDATADIR="@0@"'.format(totem_datadir),
-  '-DLIBEXECDIR="@0@"'.format(totem_libexecdir),
-  '-DTOTEM_PLUGIN_DIR="@0@"'.format(totem_pluginsdir),
-  '-DBINDIR="@0@"'.format(totem_bindir),
-  '-DGTKBUILDERDIR=""'
-]
-
-if enable_python
-  totem_common_deps += pygobject_dep
-endif
-
 headers = files(
   'plugins/totem-plugin.h',
   'plugins/totem-dirs.h',
@@ -94,27 +60,31 @@ install_headers(
   subdir: join_paths(totem_includedir, totem_api_path)
 )
 
+common_cflags = warn_flags + [
+  '-DDBUS_API_SUBJECT_TO_CHANGE',
+  '-DDATADIR="@0@"'.format(totem_datadir),
+  '-DGNOMELOCALEDIR="@0@"'.format(totem_localedir),
+  '-DTOTEM_PLUGIN_DIR="@0@"'.format(totem_pluginsdir)
+]
+
 libtotem_player_sources = files(
   'totem-interface.c',
   'totem-time-label.c'
 )
 
-libtotem_player_deps = totem_common_deps + [libtotem_time_helpers_dep]
+deps = [
+  gtk_dep,
+  libtotem_time_helpers_dep
+]
+
+cflags = common_cflags + ['-DG_LOG_DOMAIN="Totem"']
 
 libtotem_player = static_library(
   'totem_player',
   sources: libtotem_player_sources,
   include_directories: top_inc,
-  dependencies: libtotem_player_deps,
-  c_args: totem_common_cflags + [
-    '-DG_LOG_DOMAIN="Totem"'
-  ]
-)
-
-libtotem_player_dep = declare_dependency(
-  link_with: libtotem_player,
-  include_directories: src_inc,
-  dependencies: libtotem_player_deps
+  dependencies: deps,
+  c_args: cflags
 )
 
 libtotem_sources = files(
@@ -140,34 +110,46 @@ libtotem_sources += gnome.compile_resources(
   'griloresources',
   'grilo.gresource.xml',
   export: true,
-  source_dir: '.',
-  c_name: '_totem'
+  c_name: '_' + meson.project_name()
 )
 
-libtotem_deps = [
-  libtotem_player_dep,
+incs = [
+  top_inc,
+  plugins_inc
+]
+
+deps = [
+  gir_dep,
+  gnome_desktop_dep,
+  grilo_pls_dep,
+  gst_tag_dep,
   libbacon_video_widget_dep,
-  libgd_dep
+  libgd_dep,
+  libpeas_gtk_dep,
+  libtotem_time_helpers_dep,
+  totem_plparser_dep
 ]
 
 libtotem = shared_library(
-  'totem',
+  meson.project_name(),
   sources: libtotem_sources + gen_sources,
   version: libversion,
   soversion: soversion,
-  include_directories: totem_common_incs,
-  dependencies: libtotem_deps,
-  c_args: totem_common_cflags + [
-    '-DG_LOG_DOMAIN="Totem"'
-  ],
-  install: true,
-  install_dir: totem_libdir
+  include_directories: incs,
+  dependencies: deps,
+  c_args: cflags,
+  link_with: libtotem_player,
+  install: true
 )
 
 libtotem_dep = declare_dependency(
-  link_with: libtotem,
   include_directories: src_inc,
-  dependencies: libtotem_deps
+  dependencies: [
+    grilo_dep,
+    gtk_dep,
+    totem_plparser_dep
+  ],
+  link_with: libtotem
 )
 
 pkg.generate(
@@ -183,106 +165,99 @@ pkg.generate(
     'totem-plparser ' + totem_plparser_req_version
   ],
   variables: [
-    'exec_prefix=' + totem_libexecdir,
+    'exec_prefix=' + totem_prefix,
     'pluginsdir=' + totem_pluginsdir
-  ],
-  install_dir: join_paths(totem_libdir, 'pkgconfig')
+  ]
 )
 
-totem = executable(
+deps = [
+  libbacon_video_widget_dep,
+  libpeas_dep,
+  totem_plparser_dep
+]
+
+executable(
   meson.project_name(),
   'totem.c',
-  include_directories: totem_common_incs,
-  dependencies: libtotem_dep,
-  c_args: totem_common_cflags + [
-    '-DG_LOG_DOMAIN="Totem"'
-  ],
-  install: true,
-  install_dir: totem_bindir
+  include_directories: incs,
+  dependencies: deps,
+  c_args: cflags,
+  link_with: libtotem,
+  install: true
 )
 
-totem_video_thumbnailer_sources = files(
-  'totem-resources.c',
-  'totem-video-thumbnailer.c'
-)
+programs = [
+  ['Gallery', [], totem_libexecdir],
+  ['Video', ['totem-resources.c'], totem_bindir]
+]
 
-totem_video_thumbnailer_deps = [
-  dependency('gdk-3.0'),
-  totem_plparser_dep,
-  gst_tag_dep,
-  gst_video_dep,
+deps = [
+  libtotem_gst_helpers_dep,
   m_dep,
-  libtotem_gst_helpers_dep
+  totem_plparser_dep,
+  dependency('gdk-3.0')
+]
+
+foreach program: programs
+  name = 'totem-@0@-thumbnailer'.format(program[0].to_lower())
+
+  executable(
+    name,
+    [name + '.c'] + program[1],
+    include_directories: top_inc,
+    dependencies: deps,
+    c_args: common_cflags + ['-DG_LOG_DOMAIN="Totem@0@Thumbnailer"'.format(program[0])],
+    install: true,
+    install_dir: program[2]
+  )
+endforeach
+
+sources = files(
+  'icon-helpers.c',
+  'test-icons.c'
+)
+
+deps = [
+  gnome_desktop_dep,
+  grilo_dep,
+  gtk_dep
 ]
 
 executable(
-  'totem-video-thumbnailer',
-  totem_video_thumbnailer_sources,
-  include_directories: top_inc,
-  dependencies: totem_video_thumbnailer_deps,
-  c_args: totem_common_cflags + [
-    '-DG_LOG_DOMAIN="TotemVideoThumbnailer"'
-  ],
-  install: true,
-  install_dir: totem_bindir
-)
-
-totem_gallery_thumbnailer_sources = files(
-  'totem-gallery-thumbnailer.c'
-)
-
-totem_gallery_thumbnailer_deps = [
-  dependency('gdk-3.0'),
-  totem_plparser_dep,
-  gst_tag_dep,
-  gst_video_dep,
-  m_dep,
-  libtotem_gst_helpers_dep
-]
-
-executable(
-  'totem-gallery-thumbnailer',
-  totem_gallery_thumbnailer_sources,
-  include_directories: top_inc,
-  dependencies: totem_gallery_thumbnailer_deps,
-  c_args: totem_common_cflags + [
-    '-DG_LOG_DOMAIN="TotemGalleryThumbnailer"'
-  ],
-  install: true,
-  install_dir: totem_libexecdir
+  'test-icons',
+  sources,
+  dependencies: deps,
+  c_args: common_cflags,
+  link_with: libtotem_player
 )
 
 if enable_nautilus
-  libtotem_properties_page_sources = files(
+  sources = files(
     'totem-properties-main.c',
     'totem-properties-view.c'
   )
 
-  libtotem_properties_page_deps = [
-    gtk_dep,
-    dependency('gthread-2.0'),
-    libnautilus_ext_dep,
+  deps = [
     gst_tag_dep,
-    libbacon_video_widget_properties_dep
+    libbacon_video_widget_properties_dep,
+    libnautilus_ext_dep
   ]
 
   if enable_easy_codec_installation
-    libtotem_properties_page_deps += gst_pbutils_dep
+    deps += gst_pbutils_dep
   endif
 
-  libtotem_properties_page = shared_module(
+  shared_module(
     'totem-properties-page',
-    sources: libtotem_properties_page_sources + gen_sources,
+    sources: sources + gen_sources,
     include_directories: top_inc,
-    dependencies: libtotem_properties_page_deps,
-    c_args: totem_common_cflags + [
-      '-DG_LOG_DOMAIN="TotemPropertiesPage"'
-    ],
+    dependencies: deps,
+    c_args: common_cflags + ['-DG_LOG_DOMAIN="TotemPropertiesPage"'],
     install: true,
     install_dir: nautilusdir
   )
 
-  test_properties_page_sources = files(
+  sources = files(
     'totem-properties-main.c',
     'totem-properties-view.c',
     'test-properties-page.c'
@@ -290,34 +265,15 @@ if enable_nautilus
 
   executable(
     'test-properties-page',
-    test_properties_page_sources + gen_sources,
+    sources + gen_sources,
     include_directories: top_inc,
-    dependencies: libtotem_properties_page_deps + [
-      libtotem_player_dep,
-      libbacon_video_widget_dep
-    ],
-    c_args: totem_common_cflags
+    dependencies: deps,
+    c_args: cflags,
+    link_with: libtotem_player
   )
 endif
 
-test_icons_sources = files(
-  'icon-helpers.c',
-  'test-icons.c'
-)
-
-executable(
-  'test-icons',
-  test_icons_sources,
-  dependencies: [
-    libtotem_player_dep,
-    libbacon_video_widget_dep
-  ],
-  c_args: totem_common_cflags
-)
-
 if enable_introspection
-  gir_sources = libtotem_sources + libtotem_player_sources + headers
-
   gir_incs = [
     'Gio-2.0',
     'GLib-2.0',
@@ -326,27 +282,18 @@ if enable_introspection
     'TotemPlParser-1.0'
   ]
 
-  gir_extra_args = [
-    '--c-include=totem.h',
-    '--pkg-export=totem'
-  ]
-
-  gir_dir = join_paths(totem_datadir, 'gir-' + totem_api_version)
-  typelib_dir = join_paths(totem_libdir, 'girepository-' + totem_api_version)
-
   libtotem_gir = gnome.generate_gir(
     libtotem,
-    sources: gir_sources,
+    sources: libtotem_sources + libtotem_player_sources + headers,
     nsversion: totem_api_version,
     namespace: totem_gir_ns,
     symbol_prefix: totem_gir_ns.to_lower(),
     identifier_prefix: totem_gir_ns,
     includes: gir_incs,
     include_directories: src_inc,
-    install: true,
-    install_dir_gir: gir_dir,
-    install_dir_typelib: typelib_dir,
-    extra_args: gir_extra_args
+    header: 'totem.h',
+    export_packages: meson.project_name(),
+    install: true
   )
 endif
 

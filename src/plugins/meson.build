@@ -3,7 +3,11 @@ plugins_incs = [
   plugins_inc
 ]
 
-plugins_deps = [libtotem_dep]
+plugins_deps = [
+  libbacon_video_widget_dep,
+  libpeas_dep,
+  libtotem_dep
+]
 
 plugins_cflags = common_flags + warn_flags + [
   '-DG_LOG_DOMAIN="Totem"'
