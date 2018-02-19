@@ -42,28 +42,14 @@ sources = files(
   'totem-aspect-frame.c'
 )
 
-enums = 'bacon-video-widget-enums'
-enums_header = files('bacon-video-widget.h')
+enum = 'bacon-video-widget-enums'
+enum_headers = files('bacon-video-widget.h')
 
-libbacon_gen_sources = []
-
-libbacon_gen_sources += gnome.mkenums(
-  enums + '.h',
-  sources: enums_header,
-  fhead: '#ifndef BVW_ENUMS_H\n#define BVW_ENUMS_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n',
-  fprod: '/* enumerations from "@filename@" */\n',
-  vhead: 'GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define BVW_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n',
-  ftail: 'G_END_DECLS\n\n#endif /* !BVW_ENUMS_H */'
-)
-
-libbacon_gen_sources += gnome.mkenums(
-  enums + '.c',
-  sources: enums_header,
-  fhead: '#include "bacon-video-widget.h"\n#include "bacon-video-widget-enums.h"',
-  fprod: '\n/* enumerations from "@filename@" */',
-  vhead: 'GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {',
-  vprod: '      { @VALUENAME@, "@VALUENAME@", "@valuenick@" },',
-  vtail: '      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static ("@EnumName@", values);\n  }\n  return etype;\n}\n'
+enum_sources = gnome.mkenums(
+  enum,
+  sources: enum_headers,
+  c_template: enum + '.c.template',
+  h_template: enum + '.h.template'
 )
 
 libbacon_video_widget_incs = [
@@ -95,7 +81,7 @@ libbacon_video_widget_cflags = common_flags + warn_flags + [
 
 libbacon_video_widget = static_library(
   'baconvideowidget',
-  sources: sources + libbacon_gen_sources,
+  sources: sources + enum_sources,
   include_directories: libbacon_video_widget_incs,
   dependencies: libbacon_video_widget_deps,
   c_args: libbacon_video_widget_cflags
@@ -105,7 +91,7 @@ libbacon_video_widget_dep = declare_dependency(
   link_with: libbacon_video_widget,
   include_directories: backend_inc,
   dependencies: libbacon_video_widget_deps,
-  sources: libbacon_gen_sources
+  sources: enum_sources
 )
 
 if have_easy_codec
