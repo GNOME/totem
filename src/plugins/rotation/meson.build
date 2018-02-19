@@ -1,43 +1,20 @@
-plugin_name = 'rotation'
-
-plugin_dir = join_paths(totem_pluginsdir, plugin_name)
-
-plugin_files = files(
-  'totem-' + plugin_name + '-plugin.vala',
-  'bacon-video.vapi'
+sources = files(
+  'bacon-video.vapi',
+  'totem-@0@-plugin.vala'.format(plugin)
 )
 
-plugin_deps = [
-  gtk_dep,
-  libpeas_dep,
-  dependency('cogl-pango-1.0'),
-  clutter_gtk_dep,
+deps = [
+  libbacon_video_widget_dep,
+  libpeas_dep
 ]
 
 shared_module(
-  plugin_name,
-  sources: plugin_files,
-  include_directories: plugins_incs + [
-    backend_inc,
-    src_inc
-  ],
-  dependencies: plugin_deps + plugins_vala_deps,
-  c_args: plugins_cflags + plugins_vala_flags + [
-    '--include=config.h'
-  ],
-  vala_args: plugins_vala_args,
-  link_with: libtotem,
-  install: true,
-  install_dir: plugin_dir
-)
-
-plugin_data = plugin_name + '.plugin'
-
-custom_target(
-  plugin_data,
-  input: plugin_data + '.in',
-  output: plugin_data,
-  command: intltool_desktop_cmd,
+  plugin,
+  sources: sources,
+  include_directories: incs + [src_inc],
+  dependencies: deps + vala_deps,
+  c_args: cflags + vala_flags + ['--include=config.h'],
+  vala_args: vala_args,
   install: true,
   install_dir: plugin_dir
 )

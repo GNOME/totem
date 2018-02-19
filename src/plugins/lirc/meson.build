@@ -1,26 +1,12 @@
-plugin_name = 'lirc'
-
-plugin_dir = join_paths(totem_pluginsdir, plugin_name)
+deps [
+  lirc_dep,
+  plugins_dep
+]
 
 shared_module(
-  plugin_name,
-  sources: 'totem-' + plugin_name + '.c',
-  include_directories: plugins_incs,
-  dependencies: plugins_deps + [
-    lirc_dep
-  ],
-  c_args: plugins_cflags,
-  install: true,
-  install_dir: plugin_dir
-)
-
-plugin_data = plugin_name + '.plugin'
-
-custom_target(
-  plugin_data,
-  input: plugin_data + '.in',
-  output: plugin_data,
-  command: intltool_desktop_cmd,
+  plugin,
+  sources: 'totem-@0@.c'.format(plugin),
+  dependencies: deps,
   install: true,
   install_dir: plugin_dir
 )

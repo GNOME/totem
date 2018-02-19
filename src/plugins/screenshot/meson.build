@@ -1,44 +1,27 @@
-plugin_name = 'screenshot'
-
-plugin_dir = join_paths(totem_pluginsdir, plugin_name)
-
-plugin_files = files(
-  'totem-' + plugin_name + '-plugin.c',
+sources = files(
+  'totem-@0@-plugin.c'.format(plugin),
   'screenshot-filename-builder.c',
   'totem-gallery.c',
   'totem-gallery-progress.c'
 )
+
+deps = [
+  libbacon_video_widget_dep,
+  plugins_dep
+]
 
 test_cflags = [
   '-Wno-error=format-nonliteral',
   '-Wno-format-nonliteral'
 ]
 
-plugin_cflags = plugins_cflags
-
-foreach cflag: test_cflags
-  if cc.has_argument(cflag)
-    plugin_cflags += [cflag]
-  endif
-endforeach
+cflags = cc.get_supported_arguments(test_cflags) + ['-DLIBEXECDIR="@0@"'.format(totem_libexecdir)]
 
 shared_module(
-  plugin_name,
-  sources: plugin_files,
-  include_directories: plugins_incs,
-  dependencies: plugins_deps,
-  c_args: plugin_cflags + ['-DLIBEXECDIR="@0@"'.format(totem_libexecdir)],
-  install: true,
-  install_dir: plugin_dir
-)
-
-plugin_data = plugin_name + '.plugin'
-
-custom_target(
-  plugin_data,
-  input: plugin_data + '.in',
-  output: plugin_data,
-  command: intltool_desktop_cmd,
+  plugin,
+  sources: sources,
+  dependencies: deps,
+  c_args: cflags,
   install: true,
   install_dir: plugin_dir
 )

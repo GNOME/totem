@@ -1,40 +1,25 @@
-plugin_name = 'opensubtitles'
-
-plugin_dir = join_paths(totem_pluginsdir, plugin_name)
-
-plugin_files = files(
-  plugin_name + '.py',
+data_files = files(
   'hash.py',
-  plugin_name + '.ui'
+  plugin + '.py',
+  plugin + '.ui'
 )
 
 install_data(
-  plugin_files,
+  data_files,
   install_dir: plugin_dir
 )
 
-plugin_data = plugin_name + '.plugin'
-
-custom_target(
-  plugin_data,
-  input: plugin_data + '.in',
-  output: plugin_data,
-  command: intltool_desktop_cmd,
-  install: true,
-  install_dir: plugin_dir
-)
-
-schema = 'org.gnome.totem.plugins.' + plugin_name + '.gschema.xml'
+schema = 'org.gnome.totem.plugins.' + plugin + '.gschema.xml'
 
 configure_file(
   input: schema + '.in',
   output: schema,
+  configuration: plugins_conf,
   install: true,
-  install_dir: totem_schemadir,
-  configuration: plugins_conf
+  install_dir: totem_schemadir
 )
 
 install_data(
-  plugin_name + '.convert',
+  plugin + '.convert',
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
 )

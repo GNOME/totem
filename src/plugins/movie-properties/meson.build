@@ -1,5 +1,6 @@
 deps = [
   libbacon_video_widget_dep,
+  libbacon_video_widget_properties_dep,
   plugins_dep
 ]
 

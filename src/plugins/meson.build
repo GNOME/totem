@@ -1,28 +1,10 @@
-plugins_incs = [
-  top_inc,
-  plugins_inc
-]
-
-plugins_deps = [
-  libbacon_video_widget_dep,
-  libpeas_dep,
-  libtotem_dep
-]
-
-plugins_cflags = common_flags + warn_flags + [
-  '-DG_LOG_DOMAIN="Totem"'
-]
-
-plugins_conf = configuration_data()
-plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
-
 base_plugins = [
   'apple-trailers',
   'autoload-subtitles',
   'im-status',
   'media-player-keys',
   'ontop',
-  'properties',
+  'movie-properties',
   'recent',
   'screensaver',
   'screenshot',
@@ -38,15 +20,18 @@ lirc_plugins = ['lirc']
 nautilus_plugins = ['save-file']
 
 python_plugins = [
+  # FIXME: this should be installed to `dbus`
   'dbusservice',
   'opensubtitles',
   'pythonconsole',
-  'samplepython'
+  # FIXME: disabled
+  #'samplepython',
 ]
 
 vala_plugins = [
   'rotation',
-  'sample-vala',
+  # FIXME: disabled
+  #'sample-vala',
   'zeitgeist-dp'
 ]
 
@@ -55,18 +40,15 @@ x11_plugins = ['gromit']
 allowed_plugins = base_plugins + brasero_plugins + lirc_plugins + nautilus_plugins + python_plugins + vala_plugins + x11_plugins
 
 if get_option('plugins_set') == 'all'
-  enable_plugins = allowed_plugins
+  plugins = allowed_plugins
 elif get_option('plugins_set') == 'base'
-  enable_plugins = base_plugins
+  plugins = base_plugins
 else
-  enable_plugins = []
+  plugins = []
 endif
 
-enable_plugins += get_option('plugins')
-
 # Sanity check: Make sure enabled extensions are valid and also remove duplicates
-plugins = []
-foreach plugin: enable_plugins
+foreach plugin: get_option('plugins')
   assert(allowed_plugins.contains(plugin), 'Invalid plugin: ' + plugin)
   if not plugins.contains(plugin)
     plugins += plugin
@@ -94,24 +76,31 @@ if plugins.contains('save-file')
   assert(enable_nautilus, 'nautilus support required for the save-file plugin')
 endif
 
-foreach plugin: python_plugins
-  assert(enable_python or not plugins.contains(plugin), 'python support required for the ' + plugin + ' plugin')
-endforeach
+if enable_python
+  plugins_conf = configuration_data()
+  plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
+else
+  foreach plugin: python_plugins
+    assert(not plugins.contains(plugin), 'python support required for the ' + plugin + ' plugin')
+  endforeach
+endif
 
-foreach plugin: vala_plugins
-  assert(enable_vapi or not plugins.contains(plugin), 'vala support required for the ' + plugin + ' plugin')
-endforeach
+if not enable_vapi
+  foreach plugin: vala_plugins
+    assert(not plugins.contains(plugin), 'vala support required for the ' + plugin + ' plugin')
+  endforeach
+endif
 
 if enable_vapi
-  plugins_vala_deps = [declare_dependency(sources: libtotem_gir[0])]
+  vala_deps = [declare_dependency(sources: libtotem_gir[0])]
 
-  plugins_vala_flags = [
+  vala_flags = [
     '-Wno-unused-but-set-variable',
     '-Wno-unused-function',
     '-Wno-unused-variable'
   ]
 
-  plugins_vala_args = [
+  vala_args = [
     '--girdir=' + join_paths(meson.build_root(), 'src'),
     '--pkg=@0@-@1@'.format(totem_gir_ns, totem_api_version)
   ]
@@ -124,6 +113,31 @@ if enable_vapi
   endif
 endif
 
+plugins_dep = declare_dependency(
+  include_directories: [
+    top_inc,
+    plugins_inc
+  ],
+  dependencies: [
+    libpeas_dep,
+    libtotem_dep
+  ],
+  compile_args: warn_flags + ['-DG_LOG_DOMAIN="Totem"']
+)
+
 foreach plugin: plugins
+  plugin_dir = join_paths(totem_pluginsdir, plugin)
+
+  plugin_data = plugin + '.plugin'
+
+  custom_target(
+    plugin_data,
+    input: join_paths(plugin, plugin_data + '.in'),
+    output: plugin_data,
+    command: intltool_desktop_cmd,
+    install: true,
+    install_dir: plugin_dir
+  )
+
   subdir(plugin)
 endforeach
