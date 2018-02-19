@@ -86,9 +86,9 @@ service = 'org.gnome.Totem.service'
 configure_file(
   input: service + '.in',
   output: service,
+  configuration: service_conf,
   install: true,
-  install_dir: join_paths(totem_datadir, 'dbus-1', 'services'),
-  configuration: service_conf
+  install_dir: dbus_session_dir
 )
 
 r = run_command(thumbnailer_sh, mime_type_list)

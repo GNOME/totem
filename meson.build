@@ -149,6 +149,13 @@ libgd = subproject(
 )
 libgd_dep = libgd.get_variable('libgd_dep')
 
+dbus_session_dir = get_option('dbus_session_dir')
+if dbus_session_dir == ''
+  dbus_dep = dependency('dbus-1', required: false)
+  assert(dbus_dep.found(), 'D-Bus required but not found, please provide a valid session bus services dir')
+  dbus_session_dir = dbus_dep.get_pkgconfig_variable('session_bus_services_dir')
+endif
+
 '''
 FIXME:
   libtotem adds plugins/totem-plugins-engine.c inconditionally, which includes
