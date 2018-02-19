@@ -125,6 +125,16 @@ plugins_dep = declare_dependency(
   compile_args: warn_flags + ['-DG_LOG_DOMAIN="Totem"']
 )
 
+msgfmt_plugin_cmd = [
+  find_program('msgfmt'),
+  '--desktop',
+  '--keyword=Name',
+  '--keyword=Description',
+  '-d', po_dir,
+  '--template=@INPUT@',
+  '--output=@OUTPUT@'
+]
+
 foreach plugin: plugins
   plugin_dir = join_paths(totem_pluginsdir, plugin)
 
@@ -132,9 +142,9 @@ foreach plugin: plugins
 
   custom_target(
     plugin_data,
-    input: join_paths(plugin, plugin_data + '.in'),
+    input: join_paths(plugin, plugin_data + '.desktop.in'),
     output: plugin_data,
-    command: intltool_desktop_cmd,
+    command: msgfmt_plugin_cmd,
     install: true,
     install_dir: plugin_dir
   )
