@@ -79,6 +79,11 @@ endif
 if enable_python
   plugins_conf = configuration_data()
   plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
+
+  run_target(
+    'check_python',
+    command: [join_paths(meson.current_source_dir(), 'check_python.py'), pylint.path(), meson.current_source_dir()]
+  )
 else
   foreach plugin: python_plugins
     assert(not plugins.contains(plugin), 'python support required for the ' + plugin + ' plugin')
