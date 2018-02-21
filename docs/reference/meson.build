@@ -1,3 +1,5 @@
+doc_module = meson.project_name()
+
 private_headers = [
   'bacon-resize.h',
   'bacon-time-label.h',
@@ -72,27 +74,16 @@ configure_file(
   configuration: version_conf
 )
 
-doc_path = join_paths(totem_datadir, 'gtk-doc', 'html', meson.project_name())
+doc_path = join_paths(totem_prefix, gnome.gtkdoc_html_dir(doc_module))
 
 gnome.gtkdoc(
-  meson.project_name(),
-  main_xml: meson.project_name() + '-docs.xml',
-  src_dir: [
-    top_inc,
-    src_inc,
-    plugins_inc,
-    backend_inc
-  ],
+  doc_module,
+  main_xml: doc_module + '-docs.xml',
+  src_dir: join_paths(meson.source_root(), 'src'),
   dependencies: libtotem_dep,
-  scan_args: [
-    '--rebuild-types',
-    '--ignore-headers=' + ' '.join(private_headers),
-  ],
-  mkdb_args: [
-    '--xml-mode',
-    '--output-format=xml',
-    '--name-space=' + meson.project_name()
-  ],
+  scan_args: '--ignore-headers=' + ' '.join(private_headers),
+  mkdb_args: '--name-space=' + doc_module,
+  fixxref_args: '--html-dir=' + doc_path,
   install: true,
   install_dir: doc_path
 )
