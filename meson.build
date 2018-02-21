@@ -180,9 +180,7 @@ config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', enable_easy_codec_installatio
 # python support
 enable_python = get_option('python')
 if enable_python
-  py3 = import('python3')
-
-  assert(py3.find_python().found(), 'python3 required for python support')
+  assert(import('python3').find_python().found(), 'python3 required for python support')
   assert(find_program('pylint-3', 'pylint3', 'pylint', required: false).found(), 'pylint required for python support')
 
   pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3')
