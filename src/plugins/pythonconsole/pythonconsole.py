@@ -44,8 +44,6 @@ from gi.repository import Gio # pylint: disable-msg=E0611
 
 from console import PythonConsole, OutFile
 
-__all__ = ('PythonConsole', 'OutFile') # pylint: disable-msg=E0603
-
 try:
     import rpdb2
     HAVE_RPDB2 = True

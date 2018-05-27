@@ -42,6 +42,8 @@ gi.require_version('Pango', '1.0')
 
 from gi.repository import GLib, Pango, Gtk, Gdk # pylint: disable-msg=E0611
 
+__all__ = ('PythonConsole', 'OutFile') # pylint: disable-msg=E0603
+
 class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
     def __init__(self, namespace = {}, # pylint: disable-msg=W0102
                  destroy_cb = None):
