@@ -17,3 +17,5 @@ custom_target(
   install: true,
   install_dir: plugin_dir
 )
+
+test('pylint-' + plugin_name, pylint, args: pylint_flags + [ plugin_name + '.py' ])
