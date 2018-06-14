@@ -1,6 +1,6 @@
 import struct
 import os
-from gi.repository import Gio # pylint: disable-msg=E0611
+from gi.repository import Gio
 
 SIZE_ERROR = -1
 SEEK_ERROR = -2
@@ -44,4 +44,3 @@ def hash_file (name):
     returnedhash = "%016x" % file_hash
 
     return returnedhash, filesize
-
