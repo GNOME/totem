@@ -38,4 +38,6 @@ install_data(
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
 )
 
-test('pylint-' + plugin_name, pylint, args: pylint_flags + [ plugin_name + '.py', 'console.py' ])
+if pylint.found()
+  test('pylint-' + plugin_name, pylint, args: pylint_flags + files([ plugin_name + '.py', 'console.py' ]))
+endif
