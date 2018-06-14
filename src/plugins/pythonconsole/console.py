@@ -40,22 +40,22 @@ import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Pango', '1.0')
 
-from gi.repository import GLib, Pango, Gtk, Gdk # pylint: disable-msg=E0611
+from gi.repository import GLib, Pango, Gtk, Gdk # pylint: disable=wrong-import-position
 
-class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
-    def __init__(self, namespace = {}, # pylint: disable-msg=W0102
+class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
+    def __init__(self, namespace = {}, # pylint: disable=W0102
                  destroy_cb = None):
         Gtk.ScrolledWindow.__init__(self)
 
         self.destroy_cb = destroy_cb
-        self.set_policy(Gtk.PolicyType.NEVER, # pylint: disable-msg=E1101
+        self.set_policy(Gtk.PolicyType.NEVER, # pylint: disable=E1101
                         Gtk.PolicyType.AUTOMATIC)
-        self.set_shadow_type(Gtk.ShadowType.IN) # pylint: disable-msg=E1101
+        self.set_shadow_type(Gtk.ShadowType.IN) # pylint: disable=E1101
         self.view = Gtk.TextView()
         self.view.modify_font(Pango.font_description_from_string('Monospace'))
         self.view.set_editable(True)
         self.view.set_wrap_mode(Gtk.WrapMode.CHAR)
-        self.add(self.view) # pylint: disable-msg=E1101
+        self.add(self.view) # pylint: disable=E1101
         self.view.show()
 
         buf = self.view.get_buffer()
@@ -90,7 +90,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
         buf.connect("mark-set", self.__mark_set_cb)
 
 
-    def __key_press_event_cb(self, view, # pylint: disable-msg=R0912,R0915
+    def __key_press_event_cb(self, view, # pylint: disable=R0912,R0915
                              event):
         modifier_mask = Gtk.accelerator_get_default_mod_mask()
         event_state = event.state & modifier_mask
@@ -262,7 +262,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
         buf.delete(buf.get_iter_at_mark(lin),
                    buf.get_end_iter())
 
-        if isinstance(command, list) or isinstance(command, tuple):
+        if isinstance(command, (list, tuple)):
             for char in command:
                 if display_command:
                     self.write(">>> " + char + "\n", self.command)
@@ -285,14 +285,14 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
 
         try:
             try:
-                res = eval(command, self.namespace, self.namespace)
+                res = eval(command, self.namespace, self.namespace) # pylint: disable=eval-used
                 if res is not None:
                     print(res)
             except SyntaxError:
-                exec(command, self.namespace) # pylint: disable-msg=W0122
-        except: # pylint: disable-msg=W0702
+                exec(command, self.namespace) # pylint: disable=W0122
+        except: # pylint: disable=W0702
             if hasattr(sys, 'last_type') and \
-               sys.last_type == SystemExit: # pylint: disable-msg=E1101
+               sys.last_type == SystemExit: # pylint: disable=E1101
                 self.destroy()
             else:
                 traceback.print_exc()
@@ -300,7 +300,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable-msg=R0902
         sys.stdout, self.stdout = self.stdout, sys.stdout
         sys.stderr, self.stderr = self.stderr, sys.stderr
 
-    def destroy(self):
+    def destroy(self): # pylint: disable=arguments-differ
         pass
         #Gtk.ScrolledWindow.destroy(self)
 
@@ -317,20 +317,20 @@ class OutFile(object):
         pass
     def fileno(self):
         return self.file_no
-    def isatty(self): # pylint: disable-msg=R0201
+    def isatty(self): # pylint: disable=R0201
         return 0
-    def read(self, _): # pylint: disable-msg=R0201
+    def read(self, _): # pylint: disable=R0201
         return ''
-    def readline(self): # pylint: disable-msg=R0201
+    def readline(self): # pylint: disable=R0201
         return ''
-    def readlines(self): # pylint: disable-msg=R0201
+    def readlines(self): # pylint: disable=R0201
         return []
     def write(self, seg):
         self.console.write(seg, self.tag)
     def writelines(self, lines):
         self.console.write(lines, self.tag)
-    def seek(self, _): # pylint: disable-msg=R0201
+    def seek(self, _): # pylint: disable=R0201
         raise IOError((29, 'Illegal seek'))
-    def tell(self): # pylint: disable-msg=R0201
+    def tell(self): # pylint: disable=R0201
         raise IOError((29, 'Illegal seek'))
     truncate = tell
