@@ -1,0 +1,8 @@
+build-fedora:
+  image: fedora:latest
+  before_script:
+    - dnf install -y redhat-rpm-config meson cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc intltool itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala
+  script:
+    - meson _build
+    - ninja -C _build test
+    - ninja -C _build install
