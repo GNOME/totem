@@ -192,7 +192,7 @@ if python_option != 'no'
     pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)
     pylint = find_program('pylint-3', 'pylint3', 'pylint', required: false)
 
-    if python_version.version_compare(python_req_version) and pygobject_dep.found() and pylint.found()
+    if python_version.version_compare(python_req_version) and pygobject_dep.found()
       have_python = true
       python_deps += pygobject_dep
       meson.add_install_script('meson_compile_python.py')
@@ -200,7 +200,7 @@ if python_option != 'no'
   endif
 
   if not have_python
-    str = 'python ' + python_req_version + ', pygobject or pylint not found'
+    str = 'python ' + python_req_version + ', pygobject not found'
     if python_option == 'yes'
       error(str)
     endif
