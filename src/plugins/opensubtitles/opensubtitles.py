@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import xmlrpc.client
+import threading
+import zlib
+from os import sep
+import gettext
+
+from hash import hash_file
+
 import gi
 gi.require_version('Peas', '1.0')
 gi.require_version('Gtk', '3.0')
 gi.require_version('Totem', '1.0')
-from gi.repository import GLib, GObject # pylint: disable-msg=E0611
-from gi.repository import Peas, Gtk, Gdk # pylint: disable-msg=E0611
-from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
-
-import xmlrpc.client
-import threading
-import zlib
-from os import sep, path, mkdir
-import gettext
-
-from hash import hash_file
+from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
+from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position
+from gi.repository import Gio, Pango, Totem # pylint: disable=wrong-import-position
 
 gettext.textdomain ("totem")
 
@@ -145,6 +145,11 @@ LANGUAGES = {'sq':'alb',
          'tr':'tur',
          'uk':'ukr',
          'vi':'vie',}
+
+def _cache_subtitles_dir ():
+    bpath = GLib.get_user_cache_dir() + sep
+    bpath += 'totem' + sep + 'subtitles' + sep
+    return bpath
 
 class SearchThread (threading.Thread):
     """
@@ -374,7 +379,7 @@ class OpenSubtitlesModel (object):
 
         return (None, message)
 
-class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
+class OpenSubtitles (GObject.Object, # pylint: disable=R0902
                      Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
@@ -436,7 +441,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
     def _build_dialog (self):
         builder = Totem.plugin_load_interface ("opensubtitles",
                                                "opensubtitles.ui", True,
-                                               self._totem.get_main_window (),
+                                               self._totem.get_main_window (), # pylint: disable=no-member
                                                None)
 
         # Obtain all the widgets we need to initialize
@@ -498,7 +503,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         # Set up signals
 
         combobox.connect ('changed', self.__on_combobox__changed)
-        self._dialog.set_transient_for (self._totem.get_main_window ())
+        self._dialog.set_transient_for (self._totem.get_main_window ()) # pylint: disable=no-member
         self._dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
         # Connect the callbacks
@@ -509,7 +514,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._tree_view.connect ('row-activated',
                                self.__on_treeview__row_activate)
 
-    def _show_dialog (self, params, _):
+    def _show_dialog (self, _):
         if not self._dialog:
             self._build_dialog ()
 
@@ -520,19 +525,19 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
     def _append_menu (self):
         self._action = Gio.SimpleAction.new ("opensubtitles", None)
         self._action.connect ('activate', self._show_dialog)
-        self._totem.add_action (self._action)
-        self._totem.set_accels_for_action ("app.opensubtitles",
+        self._totem.add_action (self._action) # pylint: disable=no-member
+        self._totem.set_accels_for_action ("app.opensubtitles",  # pylint: disable=no-member
                                            ["<Primary><Shift>s"])
 
-        menu = self._totem.get_menu_section ("subtitle-download-placeholder")
+        menu = self._totem.get_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
         menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
 
-        self._action.set_enabled (self._totem.is_playing () and
+        self._action.set_enabled (self._totem.is_playing () and # pylint: disable=no-member
                   self._check_allowed_scheme () and
                                   not self._check_is_audio ())
 
     def _check_allowed_scheme (self):
-        current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ())
+        current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ()) # pylint: disable=no-member
         scheme = current_file.get_uri_scheme ()
 
         if (scheme == 'dvd' or scheme == 'http' or
@@ -545,13 +550,13 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         # FIXME need to use something else here
         # I think we must use video widget metadata but I don't found a way
         # to get this info from python
-        filename = self._totem.get_current_mrl ()
+        filename = self._totem.get_current_mrl () # pylint: disable=no-member
         if Gio.content_type_guess (filename, '')[0].split ('/')[0] == 'audio':
             return True
         return False
 
     def _delete_menu (self):
-        self._totem.empty_menu_section ("subtitle-download-placeholder")
+        self._totem.empty_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
 
     def _get_results (self, movie_hash, movie_size):
         self._list_store.clear ()
@@ -596,12 +601,12 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             subtitle_id = model.get_value (subtitle_iter, 3)
             subtitle_format = model.get_value (subtitle_iter, 1)
 
-            bpath = self._cache_subtitles_dir()
+            bpath = _cache_subtitles_dir()
 
             directory = Gio.file_new_for_path (bpath)
             try:
-                directory.make_directory_with_parents (None);
-            except:
+                directory.make_directory_with_parents (None)
+            except: # pylint: disable=bare-except
                 pass
 
             thread = DownloadThread (self._model, subtitle_id)
@@ -614,15 +619,10 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             #warn user!
             pass
 
-    def _cache_subtitles_dir (self):
-       bpath = GLib.get_user_cache_dir() + sep
-       bpath += 'totem' + sep + 'subtitles' + sep
-       return bpath
-
     def _movie_dir (self):
-       directory = Gio.file_new_for_uri (self._filename)
-       parent = directory.get_parent()
-       return parent.get_path ()
+        directory = Gio.file_new_for_uri (self._filename)
+        parent = directory.get_parent()
+        return parent.get_path ()
 
     def _save_subtitles (self, download_thread, extension):
         if not download_thread.done:
@@ -637,30 +637,34 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
                 # In the cache dir
-                old_subtitle_file = Gio.file_new_for_path (self._cache_subtitles_dir() + sep + movie_name + '.' + ext)
+                old_subtitle_file = Gio.file_new_for_path (_cache_subtitles_dir() +
+                        sep + movie_name + '.' + ext)
                 try:
                     old_subtitle_file.delete (None)
-                except:
+                except: # pylint: disable=bare-except
                     pass
 
                 # In the movie dir
-                old_subtitle_file = Gio.file_new_for_path (self._movie_dir() + sep + movie_name + '.' + ext)
+                old_subtitle_file = Gio.file_new_for_path (self._movie_dir() +
+                        sep + movie_name + '.' + ext)
                 try:
                     old_subtitle_file.delete (None)
-                except:
+                except: # pylint: disable=bare-except
                     pass
 
             flags = Gio.FileCreateFlags.REPLACE_DESTINATION
             try:
-                subtitle_file = Gio.file_new_for_path (self._movie_dir() + sep + movie_name + '.' + extension)
+                subtitle_file = Gio.file_new_for_path (self._movie_dir() +
+                        sep + movie_name + '.' + extension)
                 print ('trying to save to ' + subtitle_file.get_uri())
                 suburi = subtitle_file.get_uri ()
 
                 sub_file = subtitle_file.replace ('', False, flags, None)
                 sub_file.write (subtitles, None)
                 sub_file.close (None)
-            except:
-                subtitle_file = Gio.file_new_for_path (self._cache_subtitles_dir() + sep + movie_name + '.' + extension)
+            except: # pylint: disable=bare-except
+                subtitle_file = Gio.file_new_for_path (_cache_subtitles_dir() +
+                        sep + movie_name + '.' + extension)
                 print ('saving to ' + subtitle_file.get_uri())
                 suburi = subtitle_file.get_uri ()
 
@@ -672,7 +676,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._close_dialog ()
 
         if suburi:
-            self._totem.set_current_subtitle (suburi)
+            self._totem.set_current_subtitle (suburi) # pylint: disable=no-member
 
         return False
 
@@ -721,9 +725,9 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             self._apply_button.set_sensitive (False)
 
     def __on_treeview__row_activate (self,
-                                     _tree_path, # pylint: disable-msg=W0613
-                                     _column, # pylint: disable-msg=W0613
-                                     _data): # pylint: disable-msg=W0613
+                                     _tree_path, # pylint: disable=W0613
+                                     _column, # pylint: disable=W0613
+                                     _data): # pylint: disable=W0613
         self._download_and_apply ()
 
     def __on_totem__file_opened (self, _, new_mrl):
@@ -768,8 +772,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
     def __on_find_clicked (self, _):
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
-        self._filename = self._totem.get_current_mrl ()
+        self._filename = self._totem.get_current_mrl () # pylint: disable=no-member
         (movie_hash, movie_size) = hash_file (self._filename)
 
         self._get_results (movie_hash, movie_size)
-
