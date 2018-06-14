@@ -37,3 +37,5 @@ install_data(
   plugin_name + '.convert',
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
 )
+
+test('pylint-' + plugin_name, pylint, args: pylint_flags + [ plugin_name + '.py', 'console.py' ])
