@@ -147,7 +147,7 @@ if plugins_option != 'none'
   endif
 endif
 
-pylint_flags = ['-d', 'C0111', '-d', 'W0511', '-d', 'F0401' ]
+pylint_flags = ['-d', 'C0111', '-d', 'W0511', '-d', 'F0401', '-d', 'C0326' ]
 
 foreach plugin: plugins
   subdir(plugin)
