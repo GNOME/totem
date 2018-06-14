@@ -23,8 +23,9 @@
 ## See license_change file for details.
 
 import gettext
-from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611
-import dbus, dbus.service
+from gi.repository import GObject, Peas, Totem # pylint: disable=no-name-in-module
+import dbus
+import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
 gettext.textdomain ("totem")
@@ -51,7 +52,7 @@ class DbusService (GObject.Object, Peas.Activatable):
         # Ensure we don't leak our paths on the bus
         self.root.disconnect ()
 
-class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
+class Root (dbus.service.Object): # pylint: disable=R0904
     def __init__ (self, name, totem):
         dbus.service.Object.__init__ (self, name, '/org/mpris/MediaPlayer2')
         self.totem = totem
@@ -84,15 +85,14 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
     def __calculate_playback_status (self):
         if self.totem.is_playing ():
             return 'Playing'
-        elif self.totem.is_paused ():
+        if self.totem.is_paused ():
             return 'Paused'
-        else:
-            return 'Stopped'
+        return 'Stopped'
 
     def __calculate_metadata (self):
         metadata = {
             'mpris:trackid': dbus.String (self.totem.props.current_mrl,
-                variant_level = 1),
+                                          variant_level = 1),
             'mpris:length': dbus.Int64 (
                 self.totem.props.stream_length * 1000,
                 variant_level = 1),
@@ -116,7 +116,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
 
         return metadata
 
-    def __do_update_metadata (self, _, artist, # pylint: disable-msg=R0913
+    def __do_update_metadata (self, _, artist, # pylint: disable=R0913
                               title, album, num):
         self.current_metadata = self.null_metadata.copy ()
         if title:
@@ -129,13 +129,13 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             self.current_metadata['tracknumber'] = num
 
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player',
-            { 'Metadata': self.__calculate_metadata () }, [])
+                                { 'Metadata': self.__calculate_metadata () }, [])
 
-    def __do_notify_playing (self, _, prop): # pylint: disable-msg=W0613
+    def __do_notify_playing (self, _, prop): # pylint: disable=W0613
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player',
-            { 'PlaybackStatus': self.__calculate_playback_status () }, [])
+                                { 'PlaybackStatus': self.__calculate_playback_status () }, [])
 
-    def __do_notify_current_mrl (self, _, prop): # pylint: disable-msg=W0613
+    def __do_notify_current_mrl (self, _, prop): # pylint: disable=W0613
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
             'CanPlay': (self.totem.props.current_mrl != None),
             'CanPause': (self.totem.props.current_mrl != None),
@@ -143,7 +143,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                         self.totem.props.seekable),
         }, [])
 
-    def __do_notify_seekable (self, _, prop): # pylint: disable-msg=W0613
+    def __do_notify_seekable (self, _, prop): # pylint: disable=W0613
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
             'CanSeek': (self.totem.props.current_mrl != None and
                         self.totem.props.seekable),
@@ -158,15 +158,15 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
 
     # org.freedesktop.DBus.Properties interface
     @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
-                          in_signature = 'ss', # pylint: disable-msg=C0103
+                          in_signature = 'ss', # pylint: disable=C0103
                           out_signature = 'v')
-    def Get (self, interface_name, property_name): # pylint: disable-msg=C0103
+    def Get (self, interface_name, property_name): # pylint: disable=C0103
         return self.GetAll (interface_name)[property_name]
 
     @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
-                          in_signature = 's', # pylint: disable-msg=C0103
+                          in_signature = 's', # pylint: disable=C0103
                           out_signature = 'a{sv}')
-    def GetAll (self, interface_name): # pylint: disable-msg=C0103
+    def GetAll (self, interface_name): # pylint: disable=C0103
         if interface_name == 'org.mpris.MediaPlayer2':
             return {
                 'CanQuit': True,
@@ -179,8 +179,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             }
         elif interface_name == 'org.mpris.MediaPlayer2.Player':
             # Loop status (we don't support Track)
-            if self.totem.remote_get_setting (
-                Totem.RemoteSetting.REPEAT):
+            if self.totem.remote_get_setting (Totem.RemoteSetting.REPEAT):
                 loop_status = 'Playlist'
             else:
                 loop_status = 'None'
@@ -206,11 +205,11 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         raise dbus.exceptions.DBusException (
             'org.mpris.MediaPlayer2.UnknownInterface',
             _('The MediaPlayer2 object does not implement the ‘%s’ interface')
-                % interface_name)
+            % interface_name)
 
     @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
-                          in_signature = 'ssv') # pylint: disable-msg=C0103
-    def Set (self, interface_name, property_name, # pylint: disable-msg=C0103
+                          in_signature = 'ssv') # pylint: disable=C0103
+    def Set (self, interface_name, property_name, # pylint: disable=C0103
              new_value):
         if interface_name == 'org.mpris.MediaPlayer2':
             raise dbus.exceptions.DBusException (
@@ -229,91 +228,91 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             raise dbus.exceptions.DBusException (
                 'org.mpris.MediaPlayer2.ReadOnlyProperty',
                 _('Unknown property ‘%s’ requested of a MediaPlayer 2 object')
-                    % interface_name)
+                % interface_name)
 
         raise dbus.exceptions.DBusException (
             'org.mpris.MediaPlayer2.UnknownInterface',
             _('The MediaPlayer2 object does not implement the ‘%s’ interface')
-                % interface_name)
+            % interface_name)
 
     @dbus.service.signal (dbus_interface = dbus.PROPERTIES_IFACE,
-                          signature = 'sa{sv}as') # pylint: disable-msg=C0103
-    def PropertiesChanged (self, interface_name,  # pylint: disable-msg=C0103
+                          signature = 'sa{sv}as') # pylint: disable=C0103
+    def PropertiesChanged (self, interface_name,  # pylint: disable=C0103
                            changed_properties, invalidated_properties):
         pass
 
     # org.mpris.MediaPlayer2 interface
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Raise (self): # pylint: disable-msg=C0103
+    def Raise (self): # pylint: disable=C0103
         main_window = self.totem.get_main_window ()
         main_window.present ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Quit (self): # pylint: disable-msg=C0103
+    def Quit (self): # pylint: disable=C0103
         self.totem.exit ()
 
     # org.mpris.MediaPlayer2.Player interface
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Next (self): # pylint: disable-msg=C0103
+    def Next (self): # pylint: disable=C0103
         if self.totem.is_playing () or self.totem.is_paused ():
             return
 
         self.totem.seek_next ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Previous (self): # pylint: disable-msg=C0103
+    def Previous (self): # pylint: disable=C0103
         if self.totem.is_playing () or self.totem.is_paused ():
             return
 
         self.totem.seek_previous ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Pause (self): # pylint: disable-msg=C0103
+    def Pause (self): # pylint: disable=C0103
         self.totem.pause ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def PlayPause (self): # pylint: disable-msg=C0103
+    def PlayPause (self): # pylint: disable=C0103
         self.totem.play_pause ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Stop (self): # pylint: disable-msg=C0103
+    def Stop (self): # pylint: disable=C0103
         self.totem.stop ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = '', # pylint: disable-msg=C0103
+                          in_signature = '', # pylint: disable=C0103
                           out_signature = '')
-    def Play (self): # pylint: disable-msg=C0103
+    def Play (self): # pylint: disable=C0103
         # If playing or no track loaded: do nothing,
         # else: start playing.
-        if self.totem.is_playing () or self.totem.props.current_mrl == None:
+        if self.totem.is_playing () or self.totem.props.current_mrl is None:
             return
 
         self.totem.play ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = 'x', # pylint: disable-msg=C0103
+                          in_signature = 'x', # pylint: disable=C0103
                           out_signature = '')
-    def Seek (self, offset): # pylint: disable-msg=C0103
+    def Seek (self, offset): # pylint: disable=C0103
         self.totem.seek_relative (offset / 1000, False)
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = 'ox', # pylint: disable-msg=C0103
+                          in_signature = 'ox', # pylint: disable=C0103
                           out_signature = '')
-    def SetPosition (self, _, position): # pylint: disable-msg=C0103
+    def SetPosition (self, _, position): # pylint: disable=C0103
         position = position / 1000
 
         # Bail if the position is not in the permitted range
@@ -323,12 +322,12 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         self.totem.seek_time (position, False)
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          in_signature = 's', # pylint: disable-msg=C0103
+                          in_signature = 's', # pylint: disable=C0103
                           out_signature = '')
-    def OpenUri (self, uri): # pylint: disable-msg=C0103
+    def OpenUri (self, uri): # pylint: disable=C0103
         self.totem.add_to_playlist_and_play (uri)
 
     @dbus.service.signal (dbus_interface = 'org.mpris.MediaPlayer2.Player',
-                          signature = 'x') # pylint: disable-msg=C0103
-    def Seeked (self, position): # pylint: disable-msg=C0103
+                          signature = 'x') # pylint: disable=C0103
+    def Seeked (self, position): # pylint: disable=C0103
         pass
