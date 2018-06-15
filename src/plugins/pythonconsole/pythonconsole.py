@@ -45,7 +45,7 @@ from gi.repository import Gio # pylint: disable=wrong-import-position
 
 from console import PythonConsole, OutFile # pylint: disable=wrong-import-position
 
-__all__ = ('PythonConsole', 'OutFile') # pylint: disable=E0603
+__all__ = ('PythonConsolePlugin', 'PythonConsole', 'OutFile') # pylint: disable=E0603
 
 try:
     import rpdb2
