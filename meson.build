@@ -240,7 +240,7 @@ endif
 have_nautilus = false
 
 if get_option('enable-nautilus') != 'no'
-  libnautilus_ext_dep = dependency('libnautilus-extension', version: '>= 3.28.0', required: false)
+  libnautilus_ext_dep = dependency('libnautilus-extension', version: '>= 2.91.3', required: false)
   if libnautilus_ext_dep.found()
     nautilusdir = get_option('with-nautilusdir')
     if nautilusdir == ''
