@@ -214,8 +214,8 @@ have_vala = false
 vala_option = get_option('enable-vala')
 if vala_option != 'no'
   if have_gir
+    vala_req_version = '>= 0.14.1'
     if add_languages('vala', required: false)
-      vala_req_version = '>= 0.14.1'
       if meson.get_compiler('vala').version().version_compare(vala_req_version)
         have_vala = true
       endif
