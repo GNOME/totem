@@ -656,7 +656,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
             try:
                 subtitle_file = Gio.file_new_for_path (self._movie_dir() +
                         sep + movie_name + '.' + extension)
-                print ('trying to save to ' + subtitle_file.get_uri())
                 suburi = subtitle_file.get_uri ()
 
                 sub_file = subtitle_file.replace ('', False, flags, None)
@@ -665,7 +664,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
             except: # pylint: disable=bare-except
                 subtitle_file = Gio.file_new_for_path (_cache_subtitles_dir() +
                         sep + movie_name + '.' + extension)
-                print ('saving to ' + subtitle_file.get_uri())
                 suburi = subtitle_file.get_uri ()
 
                 sub_file = subtitle_file.replace ('', False, flags, None)
