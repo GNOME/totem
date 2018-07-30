@@ -1,8 +1,21 @@
 build-fedora:
   image: fedora:latest
   before_script:
-    - dnf install -y redhat-rpm-config meson git cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc intltool itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala
+    - dnf install -y redhat-rpm-config meson git cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc intltool itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala flatpak-builder
   script:
     - meson _build -Denable-vala=no
     - ninja -C _build test
     - ninja -C _build install
+
+    # Check that https://github.com/mesonbuild/meson/issues/1994 work-around still works
+    - rm -rf _build
+    - meson _build -Denable-vala=yes
+    - ninja -C _build -j1
+
+build-flatpak:
+  image: registry.gitlab.com/alatiera/gnome-nightly-oci/gnome-master:latest
+  before_script:
+    # Flatpak build
+    - rm -rf _build ; mkdir _build
+    - rm -rf _repo ; mkdir _repo
+    - flatpak-builder --ccache --force-clean _build flatpak/org.gnome.Totem.json --repo=_repo
