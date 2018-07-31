@@ -169,9 +169,10 @@ if easy_codec_option != 'no'
   gst_pbutils_dep = dependency('gstreamer-pbutils-1.0', required: (easy_codec_option == 'yes'))
   if gst_pbutils_dep.found()
     have_easy_codec = true
+    gio_unix_dep = dependency('gio-unix-2.0')
   endif
 
-  missing_plugins_deps += gst_pbutils_dep
+  missing_plugins_deps += [ gst_pbutils_dep, gio_unix_dep ]
   config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
                description: 'Whether we can and want to do installation of missing plugins')
 endif
