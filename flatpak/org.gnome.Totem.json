@@ -78,7 +78,9 @@
         },
         {
             "name": "grilo",
-            "config-opts": [ "--enable-grl-net", "--enable-grl-pls", "--disable-static" ],
+            "buildsystem": "meson",
+            "builddir": true,
+            "config-opts": [ "-Denable-grl-net=true", "-Denable-grl-pls=true" ],
             "sources": [
                 {
                     "type": "git",
