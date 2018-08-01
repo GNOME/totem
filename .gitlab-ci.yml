@@ -1,5 +1,10 @@
+stages:
+- test
+- review
+
 build-fedora:
   image: fedora:latest
+  stage: test
   before_script:
     - dnf install -y redhat-rpm-config meson git cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc intltool itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala flatpak-builder
   script:
@@ -12,10 +17,67 @@ build-fedora:
     - meson _build -Denable-vala=yes
     - ninja -C _build -j1
 
-build-flatpak:
-  image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
-  script:
-    # Flatpak build
-    - rm -rf _build ; mkdir _build
-    - rm -rf _repo ; mkdir _repo
-    - flatpak-builder --ccache --force-clean _build flatpak/org.gnome.Totem.json --repo=_repo
+variables:
+    # Replace with your preferred file name of the resulting Flatpak bundle
+    BUNDLE: "org.gnome.TotemDevel.flatpak"
+    GIT_SUBMODULE_STRATEGY: normal
+
+flatpak:
+    image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
+    stage: test
+    variables:
+        # Replace with your manifest path
+        MANIFEST_PATH: "flatpak/org.gnome.Totem.json"
+        RUNTIME_REPO: "https://sdk.gnome.org/gnome-nightly.flatpakrepo"
+        # Replace with your application name, as written in the manifest
+        FLATPAK_MODULE: "totem"
+        # Make sure to keep this in sync with the Flatpak manifest, all arguments
+        # are passed except the config-args because we build it ourselves
+        MESON_ARGS: "-Denable-vala=no"
+        DBUS_ID: "org.gnome.Totem"
+
+    script:
+        - flatpak-builder --stop-at=${FLATPAK_MODULE} app ${MANIFEST_PATH}
+        # Make sure to keep this in sync with the Flatpak manifest, all arguments
+        # are passed except the config-args because we build it ourselves
+        - flatpak build app meson --prefix=/app ${MESON_ARGS} _build
+        - flatpak build app ninja -C _build install
+        - flatpak-builder --finish-only --repo=repo app ${MANIFEST_PATH}
+        # Run automatic tests inside the Flatpak env
+        - xvfb-run -a -s "-screen 0 1024x768x24" flatpak build app ninja -C _build test
+        # Generate a Flatpak bundle
+        - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${DBUS_ID}
+
+    artifacts:
+        paths:
+            - ${BUNDLE}
+            - _build/meson-logs/meson-log.txt
+            - _build/meson-logs/testlog.txt
+        expire_in: 30 days
+    cache:
+        paths:
+             - .flatpak-builder/cache
+
+review:
+    stage: review
+    dependencies:
+        - flatpak
+    script:
+        - echo "Generating flatpak deployment"
+    artifacts:
+        paths:
+            - ${BUNDLE}
+        expire_in: 30 days
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        url: https://gitlab.gnome.org/$CI_PROJECT_PATH/-/jobs/$CI_JOB_ID/artifacts/raw/${BUNDLE}
+        on_stop: stop_review
+
+stop_review:
+    stage: review
+    script:
+        - echo "Stopping flatpak deployment"
+    when: manual
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        action: stop
