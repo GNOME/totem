@@ -235,9 +235,9 @@
             "name": "totem",
             "buildsystem": "meson",
             "builddir": true,
+            "no-parallel-make": true,
             "config-opts": [
-                "--libdir=lib",
-                "-Denable-vala=no"
+                "--libdir=lib"
             ],
             "sources": [
                 {
