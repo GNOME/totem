@@ -171,9 +171,6 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 
 	/* Build the command and arguments to pass it */
 	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
-	argv[1] = (gchar*) "-j"; /* JPEG mode */
-	argv[2] = (gchar*) "-l"; /* don't limit resources */
-	argv[3] = (gchar*) "-p"; /* print progress */
 	argv[4] = g_strdup_printf ("--gallery=%u", screenshot_count); /* number of screenshots to output */
 	argv[5] = g_strdup_printf ("--size=%u", gtk_spin_button_get_value_as_int (self->priv->screenshot_width)); /* screenshot width */
 	argv[6] = video_mrl; /* video to thumbnail */
