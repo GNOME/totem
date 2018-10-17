@@ -4,7 +4,7 @@ totem-video-thumbnailer - video thumbnailer for the GNOME desktop
 
 =head1 SYNOPSYS
 
-B<totem-video-thumbnailer> [-j|--jpeg] [-l|--no-limit] [-g num|--gallery num] [-s size] input output [backend options]
+B<totem-video-thumbnailer> [-j|--jpeg] [-l|--no-limit] [-s size] input output [backend options]
 
 =head1 DESCRIPTION
 
@@ -37,10 +37,6 @@ Options to be passed to the backend (i.e. B<gstreamer>).
 =item B<-j> B<--jpeg>
 
 Switch the output format to JPEG. The default is PNG.
-
-=item B<-g num> B<--gallery num>
-
-Output a gallery of the given number (0 is the default) of screenshots.
 
 =item B<-l> B<--no-limit>
 
