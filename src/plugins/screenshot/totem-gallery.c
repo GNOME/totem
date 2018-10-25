@@ -145,7 +145,7 @@ default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, Totem
 static void
 dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self)
 {
-	gchar *filename, *video_mrl, *argv[9];
+	gchar *filename, *video_mrl, *argv[6];
 	guint screenshot_count, i;
 	gint stdout_fd;
 	GPid child_pid;
@@ -182,7 +182,7 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 					&child_pid, NULL, &stdout_fd, NULL, &error);
 
 	/* Free argv, minus the filename */
-	for (i = 4; i < G_N_ELEMENTS (argv) - 2; i++)
+	for (i = 1; i < G_N_ELEMENTS (argv) - 2; i++)
 		g_free (argv[i]);
 
 	if (ret == FALSE) {
