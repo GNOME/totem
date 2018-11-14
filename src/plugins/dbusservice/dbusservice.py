@@ -177,7 +177,8 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                 'SupportedUriSchemes': self.totem.get_supported_uri_schemes (),
                 'SupportedMimeTypes': self.totem.get_supported_content_types (),
             }
-        elif interface_name == 'org.mpris.MediaPlayer2.Player':
+
+        if interface_name == 'org.mpris.MediaPlayer2.Player':
             # Loop status (we don't support Track)
             if self.totem.remote_get_setting (Totem.RemoteSetting.REPEAT):
                 loop_status = 'Playlist'
