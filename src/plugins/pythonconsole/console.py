@@ -202,6 +202,8 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
                 buf.place_cursor(inp)
             return True
 
+        return False
+
     def __mark_set_cb(self, buf, _, name):
         inp = buf.get_iter_at_mark(buf.get_mark("input"))
         pos   = buf.get_iter_at_mark(buf.get_insert())
