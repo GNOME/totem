@@ -137,15 +137,15 @@ class Root (dbus.service.Object): # pylint: disable=R0904
 
     def __do_notify_current_mrl (self, _, prop): # pylint: disable=W0613
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
-            'CanPlay': (self.totem.props.current_mrl != None),
-            'CanPause': (self.totem.props.current_mrl != None),
-            'CanSeek': (self.totem.props.current_mrl != None and
+            'CanPlay': (self.totem.props.current_mrl is not None),
+            'CanPause': (self.totem.props.current_mrl is not None),
+            'CanSeek': (self.totem.props.current_mrl is not None and
                         self.totem.props.seekable),
         }, [])
 
     def __do_notify_seekable (self, _, prop): # pylint: disable=W0613
         self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
-            'CanSeek': (self.totem.props.current_mrl != None and
+            'CanSeek': (self.totem.props.current_mrl is not None and
                         self.totem.props.seekable),
         }, [])
 
@@ -195,9 +195,9 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                 'Position': dbus.Int64(self.totem.props.current_time * 1000),
                 'CanGoNext': True, # TODO
                 'CanGoPrevious': True, # TODO
-                'CanPlay': (self.totem.props.current_mrl != None),
-                'CanPause': (self.totem.props.current_mrl != None),
-                'CanSeek': (self.totem.props.current_mrl != None and
+                'CanPlay': (self.totem.props.current_mrl is not None),
+                'CanPause': (self.totem.props.current_mrl is not None),
+                'CanSeek': (self.totem.props.current_mrl is not None and
                             self.totem.props.seekable),
                 'CanControl': True,
             }
