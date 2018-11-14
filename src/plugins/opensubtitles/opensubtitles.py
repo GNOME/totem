@@ -540,8 +540,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ()) # pylint: disable=no-member
         scheme = current_file.get_uri_scheme ()
 
-        if (scheme == 'dvd' or scheme == 'http' or
-            scheme == 'dvb' or scheme == 'vcd'):
+        if scheme in ('dvd', 'http', 'dvb', 'vcd'):
             return False
 
         return True
