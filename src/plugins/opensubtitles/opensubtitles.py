@@ -251,7 +251,7 @@ class DownloadThread (threading.Thread):
 
 # OpenSubtitles.org API abstraction
 
-class OpenSubtitlesModel (object):
+class OpenSubtitlesModel:
     """
     This contains the logic of the opensubtitles service.
     """
