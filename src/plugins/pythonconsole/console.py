@@ -306,7 +306,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
         pass
         #Gtk.ScrolledWindow.destroy(self)
 
-class OutFile(object):
+class OutFile:
     """A fake output file object. It sends output to a TK test widget,
     and if asked for a file number, returns one set on instance creation"""
     def __init__(self, console, file_no, tag):
