@@ -90,7 +90,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
         buf.connect("mark-set", self.__mark_set_cb)
 
 
-    def __key_press_event_cb(self, view, # pylint: disable=R0912,R0915
+    def __key_press_event_cb(self, view, # pylint: disable=R0911,R0912,R0914,R0915
                              event):
         modifier_mask = Gtk.accelerator_get_default_mod_mask()
         event_state = event.state & modifier_mask
