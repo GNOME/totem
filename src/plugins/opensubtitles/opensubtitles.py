@@ -422,8 +422,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
 
         self._append_menu ()
 
-        self._totem.connect ('file-opened', self.__on_totem__file_opened)
-        self._totem.connect ('file-closed', self.__on_totem__file_closed)
+        self._totem.connect ('file-opened', self.__on_totem__file_opened) # pylint: disable=no-member
+        self._totem.connect ('file-closed', self.__on_totem__file_closed) # pylint: disable=no-member
 
         # Obtain the ServerProxy and init the model
         server = xmlrpc.client.Server ('http://api.opensubtitles.org/xml-rpc')
