@@ -74,15 +74,15 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
 
         action = Gio.SimpleAction.new ("python-console", None)
         action.connect ('activate', self._show_console)
-        self.totem.add_action (action)
+        self.totem.add_action (action) # pylint: disable=no-member
 
-        menu = self.totem.get_menu_section ("python-console-placeholder")
+        menu = self.totem.get_menu_section ("python-console-placeholder") # pylint: disable=no-member
         menu.append (_('_Python Console'), "app.python-console")
 
         if HAVE_RPDB2:
             action = Gio.SimpleAction.new ("python-debugger", None)
             action.connect ('activate', self._enable_debugging)
-            self.totem.add_action (action)
+            self.totem.add_action (action) # pylint: disable=no-member
             menu.append (_('Python Debugger'), "app.python-debugger")
 
     def _show_console (self, parameter, _action): # pylint: disable=W0613
