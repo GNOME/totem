@@ -6,8 +6,6 @@ import zlib
 from os import sep
 import gettext
 
-from hash import hash_file
-
 import gi
 gi.require_version('Peas', '1.0')
 gi.require_version('Gtk', '3.0')
@@ -15,6 +13,8 @@ gi.require_version('Totem', '1.0')
 from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
 from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position,
 from gi.repository import Gio, Pango, Totem # pylint: disable=wrong-import-position,no-name-in-module
+
+from hash import hash_file # pylint: disable=wrong-import-position
 
 gettext.textdomain ("totem")
 
