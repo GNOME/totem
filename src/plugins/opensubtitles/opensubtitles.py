@@ -335,8 +335,8 @@ class OpenSubtitlesModel:
             if result.get ('data'):
                 self._lock.release ()
                 return (result['data'], message)
-            else:
-                message = _(u'No results found.')
+
+            message = _(u'No results found.')
         else:
             message = log_in_message
 
