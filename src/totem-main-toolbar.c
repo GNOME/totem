@@ -49,6 +49,7 @@ struct _TotemMainToolbarPrivate {
   GtkWidget   *search_button;
   GtkWidget   *select_button;
   GtkWidget   *done_button;
+  GtkWidget   *primary_menu_button;
   GtkWidget   *back_button;
   GtkWidget   *stack;
 
@@ -124,6 +125,7 @@ update_toolbar_state (TotemMainToolbar *bar)
       gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), SELECTION_PAGE);
       gtk_widget_hide (priv->select_button);
       gtk_widget_show (priv->done_button);
+      gtk_widget_hide (priv->primary_menu_button);
 
       if (priv->n_selected == 0)
         {
@@ -163,6 +165,7 @@ update_toolbar_state (TotemMainToolbar *bar)
       if (priv->show_select_button)
         gtk_widget_show (priv->select_button);
       gtk_widget_hide (priv->done_button);
+      gtk_widget_show (priv->primary_menu_button);
 
       change_class (GTK_WIDGET (bar), "selection-mode", FALSE);
     }
@@ -176,6 +179,7 @@ update_toolbar_state (TotemMainToolbar *bar)
       if (priv->show_select_button)
         gtk_widget_show (priv->select_button);
       gtk_widget_hide (priv->done_button);
+      gtk_widget_show (priv->primary_menu_button);
       if (priv->show_search_button)
         gtk_widget_show (priv->search_button);
 
@@ -444,6 +448,7 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, select_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, selection_menu_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, done_button);
+  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, primary_menu_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, stack);
 }
@@ -496,6 +501,8 @@ static void
 totem_main_toolbar_init (TotemMainToolbar *bar)
 {
   GtkWidget *title_widget;
+  GtkBuilder *builder;
+  GMenuModel *appmenu;
 
   bar->priv = totem_main_toolbar_get_instance_private (bar);
 
@@ -503,6 +510,11 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
 
   gtk_widget_set_no_show_all (bar->priv->search_button, TRUE);
   gtk_widget_set_no_show_all (bar->priv->select_button, TRUE);
+
+  /* Primary menu button */
+  builder = gtk_builder_new_from_file ("data/totem.ui");
+  appmenu = (GMenuModel *) gtk_builder_get_object (builder, "appmenu");
+  gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (bar->priv->primary_menu_button), appmenu);
 
   /* Back button */
   g_signal_connect (G_OBJECT (bar->priv->back_button), "clicked",
