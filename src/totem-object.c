@@ -3797,7 +3797,7 @@ totem_callback_connect (TotemObject *totem)
 	/* Cog wheel */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
 									  gtk_menu_button_new (),
-									  "open-menu-symbolic",
+									  "view-more-symbolic",
 									  GTK_PACK_END);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
