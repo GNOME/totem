@@ -2634,83 +2634,77 @@ bvw_set_auth_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
-bvw_set_http_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
+bvw_set_http_proxy_on_element (BaconVideoWidget *bvw,
+			       GstElement       *element,
+			       const char       *uri_str)
 {
-  GSettings *settings;
-  char *url, *host = NULL, *user_id, *user_pw;
-  int port;
-  gboolean is_https;
+  GstUri *uri;
+  char *protocol, *host, proxy_url;
+  guint port;
+  char *userinfo;
+  char **user_strv;
 
-  if (g_str_has_prefix (bvw->priv->mrl, "https://"))
-    {
-      settings = g_settings_new ("org.gnome.system.proxy.https");
-      is_https = TRUE;
-    }
-  else
-    {
-      settings = g_settings_new ("org.gnome.system.proxy.http");
-      is_https = FALSE;
-    }
+  uri = gst_uri_from_string (uri_str);
+  if (!uri) {
+    GST_DEBUG ("Failed to parse URI '%s'", uri_str);
+    return;
+  }
 
-  host = g_settings_get_string (settings, "host");
-  if (*host == '\0')
-    goto finish;
-  port = g_settings_get_int (settings, "port");
-  if (port == 0)
-    goto finish;
+  protocol = gst_uri_get_protocol (uri_str);
+  host = gst_uri_get_host (uri);
+  port = gst_uri_get_port (uri);
 
-  url = g_strdup_printf ("http://%s:%d", host, port);
-  g_object_set (element, "proxy", url, NULL);
-  g_free (url);
+  proxy_url = g_strdup_printf ("%s://%s:%d", protocol, host, port);
+  g_object_set (element, "proxy", proxy_url, NULL);
+  g_free (proxy_url);
 
   /* https doesn't handle authentication yet */
-  if (is_https ||
-      g_settings_get_boolean (settings, "use-authentication") == FALSE)
+  if (gst_uri_has_protocol (uri_str, "https"))
     goto finish;
 
-  user_id = g_settings_get_string (settings, "authentication-user");
-  user_pw = g_settings_get_string (settings, "authentication-password");
+  userinfo = gst_uri_get_userinfo (uri);
+  if (userinfo == NULL)
+    goto finish;
+
+  user_strv = g_strsplit (userinfo, ":", 2);
+  g_free (userinfo);
+
   g_object_set (element,
-		"proxy-id", user_id,
-		"proxy-pw", user_pw,
+		"proxy-id", user_strv[0],
+		"proxy-pw", user_strv[1],
 		NULL);
-  g_free (user_pw);
-  g_free (user_id);
+  g_strfreev (user_strv);
 
 finish:
-  g_free (host);
-  g_object_unref (settings);
+  gst_uri_unref (uri);
 }
 
 static void
 bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
-  GSettings *settings;
-  GDesktopProxyMode mode;
+  GError *error = NULL;
+  char **uris;
 
   if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy") == NULL)
     return;
 
-  settings = g_settings_new ("org.gnome.system.proxy");
-  mode = g_settings_get_enum (settings, "mode");
-  g_object_unref (settings);
-
-  switch (mode) {
-    case G_DESKTOP_PROXY_MODE_NONE:
-      return;
-    case G_DESKTOP_PROXY_MODE_MANUAL:
-      /* Handled below. */
-      break;
-    case G_DESKTOP_PROXY_MODE_AUTO:
-      /* FIXME: Auto proxy configuration is unhandled */
-      GST_DEBUG ("Auto proxy configuration is unhandled");
-      return;
-    default:
-      GST_DEBUG ("Proxy mode %d is unhandled", mode);
-      return;
+  uris = g_proxy_resolver_lookup (g_proxy_resolver_get_default (),
+				  bvw->priv->mrl,
+				  NULL,
+				  &error);
+  if (!uris) {
+    if (error != NULL) {
+      GST_DEBUG ("Failed to look up proxy for MRL '%s': %s",
+                 bvw->priv->mrl,
+                 error->message);
+      g_clear_error (&error);
+    }
+    return;
   }
 
-  bvw_set_http_proxy_on_element (bvw, element);
+  if (!g_str_equal (uris[0], "direct://"))
+    bvw_set_http_proxy_on_element (bvw, element, uris[0]);
+  g_strfreev (uris);
 }
 
 static void
