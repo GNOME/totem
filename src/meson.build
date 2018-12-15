@@ -204,7 +204,6 @@ totem_video_thumbnailer_sources = files(
 )
 
 totem_video_thumbnailer_deps = [
-  dependency('gdk-3.0'),
   totem_plparser_dep,
   gst_tag_dep,
   gst_video_dep,

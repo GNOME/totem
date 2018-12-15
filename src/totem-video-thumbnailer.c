@@ -31,9 +31,7 @@
 
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
-#include <cairo.h>
 #include <gst/gst.h>
-#include <gdk/gdk.h>
 #include <totem-pl-parser.h>
 
 #include <locale.h>
