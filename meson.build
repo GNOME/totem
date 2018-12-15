@@ -230,7 +230,7 @@ if vala_option != 'no'
   endif
 
   if not have_vala
-    if vala_options == 'yes' or introspection_option == 'yes'
+    if vala_option == 'yes' or introspection_option == 'yes'
       error(str)
     endif
     message(str)
