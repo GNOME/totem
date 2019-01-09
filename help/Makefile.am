@@ -11,7 +11,6 @@ DOC_FIGURES = \
 # List of pages
 DOC_PAGES = \
   file-open.page \
-  file-save.page \
   index.page \
   introduction.page \
   keyboard-shortcuts.page \
