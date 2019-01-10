@@ -38,7 +38,6 @@
 #include "totem-mime-types.h"
 
 static GType tpp_type = 0;
-static gboolean backend_inited = FALSE;
 static void property_page_provider_iface_init
 	(NautilusPropertyPageProviderIface *iface);
 static GList *totem_properties_get_pages
@@ -79,10 +78,18 @@ property_page_provider_iface_init (NautilusPropertyPageProviderIface *iface)
 	iface->get_pages = totem_properties_get_pages;
 }
 
+static gpointer
+init_backend (gpointer data)
+{
+	gst_init (NULL, NULL);
+	return NULL;
+}
+
 static GList *
 totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 			     GList *files)
 {
+	static GOnce backend_inited = G_ONCE_INIT;
 	NautilusFileInfo *file;
 	char *uri;
 	GtkWidget *page, *label;
@@ -107,10 +114,7 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 		return NULL;
 
 	/* okay, make the page, init'ing the backend first if necessary */
-	if (backend_inited == FALSE) {
-		gst_init (NULL, NULL);
-		backend_inited = TRUE;
-	}
+	g_once (&backend_inited, init_backend, NULL);
 
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
