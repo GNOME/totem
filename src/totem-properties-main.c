@@ -30,6 +30,7 @@
 #define GST_USE_UNSTABLE_API 1
 #include <gst/gst.h>
 
+#include "gst/totem-gst-helpers.h"
 #include "totem-properties-view.h"
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
@@ -82,6 +83,7 @@ static gpointer
 init_backend (gpointer data)
 {
 	gst_init (NULL, NULL);
+	totem_gst_disable_display_decoders ();
 	return NULL;
 }
 
