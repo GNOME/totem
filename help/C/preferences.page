@@ -5,10 +5,15 @@
   <info>
     <link type="guide" xref="index#application-adjustment"/>
     <link type="seealso" xref="subtitles"/>
+    <revision pkgversion="3.30" version="0.2" date="2019-01-10" status="draft"/>
     <desc>Configure the application.</desc>
     <credit type="author">
       <name>Marta Bogdanowicz</name>
       <email>majus85@gmail.com</email>
+    </credit>
+    <credit type="editor">
+      <name>Andre Klapper</name>
+      <email>ak-47@gmx.net</email>
     </credit>
     <license>
       <p>Creative Commons Share Alike 3.0</p>
@@ -19,41 +24,26 @@
 
   <p>
     <app>Videos</app> offers some additional options. Configure the
-    application according to your preferences. View <gui>Preferences</gui>
-    window by clicking <guiseq><gui style="menu">Edit</gui>
+    application according to your preferences. View the <gui>Preferences</gui>
+    window by opening the <app>Videos</app> menu from the top bar and select
     <gui style="menuitem">Preferences</gui></guiseq>.
   </p>
-    <note>
-      <p>When you finish adjusting application click <gui>Close</gui> to leave
-      <gui>Preferences</gui> window.</p>
-    </note>
-
 
   <section id="pref-general">
     <title>General</title>
       <terms>
         <item>
-          <title><code>Playback</code></title>
-          <p>Tick option <gui>Start playing files from the last position</gui>.
-          <app>Videos</app> will remember when you stopped playing, and will
-          start from this moment, when you run the application again.</p>
-        </item>
-        <item>
-          <title><code>Networking</code></title>
-          <p>Choose the connection speed from the drop-down list.</p>
-        </item>
-        <item>
-          <title><code>Text Subtitles</code></title>
+          <title><code>External Subtitles</code></title>
             <list>
               <item>
                 <p>Tick the option
-                <gui>Load subtitle file when movie is loaded</gui>, if you want
+                <gui>Load subtitle files when movie is loaded</gui> if you want
                 subtitles to be loaded automatically.</p>
               </item>
               <item>
-                <p>Adjust font type and size, by clickng its name. Choose font
+                <p>Adjust font type and size, by clicking its name. Choose font
                 type from the drop-down list. Click on the slider and change the
-                font size. When ready click <gui>Select</gui>. </p>
+                font size. When ready click <gui>Select</gui>.</p>
               </item>
               <item>
                 <p>Choose the encoding from the drop-down list.</p>
@@ -62,7 +52,7 @@
         </item>
         <item>
           <title><code>External Chapters</code></title>
-          <p><app>Videos</app> allows you to load chapter files, when movie is
+          <p><app>Videos</app> allows you to load chapter files when the movie is
           loaded. Do it by ticking this option.</p>
         </item>
       </terms>
@@ -72,36 +62,19 @@
     <title>Display</title>
       <terms>
         <item>
-          <title><code>Display</code></title>
-          <p><app>Videos</app> allows you to specify, wheather you want to:</p>
-            <list>
-              <item><p><gui>Resize the window when a new video is loaded
-              </gui></p></item>
-              <item><p><gui>Disable deinterlacing of interlaced videos
-              </gui></p></item>
-              <item><p><gui>Disable screensaver when playing</gui>
-              <gui>Video</gui> or <gui>Video or Audio</gui></p></item>
-            </list>
+          <title><code>Video</code></title>
+          <p><app>Videos</app> allows you to specify, whether you want to
+            <gui>Disable deinterlacing of interlaced videos</gui>.
           <p>Tick the desired option.</p>
-        </item>
-        <item>
-          <title><code>Visual Effects</code></title>
-          <p>Choose if <app>Videos</app> should show visual effects while playing
-          audio files or not. Tick this option if you want to see visualization.
-          </p>
-            <note>
-              <p>You may also select the type of visualization or its size.
-              Choose them from the drop-down lists.</p>
-            </note>
         </item>
         <item>
           <title><code>Color Balance</code></title>
           <p>This option allows you to adjust <gui>Brightness</gui>,
-          <gui>Contrast</gui>, <gui>Saturation</gui> or <gui>Hue</gui> of the
-          viewed video. Do it by clicking and dragging along sliders.</p>
+          <gui>Contrast</gui>, <gui>Saturation</gui> or <gui>Hue</gui> of
+          viewed videos. Do it by clicking and dragging along sliders.</p>
             <note style="tip">
-              <p>You may go back to previous settings, by clicking
-              <gui>Reset to Deafult</gui> button.</p>
+              <p>You may go back to previous settings by pressing the
+              <gui style="button">Reset to Defaults</gui> button.</p>
             </note>
         </item>
       </terms>
