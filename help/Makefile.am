@@ -23,7 +23,6 @@ DOC_PAGES = \
   properties.page \
   screenshot-gallery.page \
   screenshot.page \
-  sidebar.page \
   sound-language.page \
   sound-volume.page \
   subtitles.page \
