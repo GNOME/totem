@@ -5,7 +5,6 @@ sources = [
   'keyboard-shortcuts.page',
   'navigation.page',
   'playing-DVD.page',
-  'plugins.page',
   'preferences.page',
   'properties.page',
   'screenshot-gallery.page',
