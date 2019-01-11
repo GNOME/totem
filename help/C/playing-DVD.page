@@ -6,52 +6,80 @@
   <info>
     <link type="guide" xref="index#playing-media"/>
     <link type="seealso" xref="navigation"/>
+    <revision pkgversion="3.30" version="0.2" date="2019-01-11" status="draft"/>
     <desc>Play media files from DVD or VCD.</desc>
     <credit type="author">
       <name its:translate="no">Marta Bogdanowicz</name>
       <email its:translate="no">majus85@gmail.com</email>
+    </credit>
+    <credit type="author">
+      <name its:translate="no">Andre Klapper</name>
+      <email its:translate="no">ak-47@gmx.net</email>
     </credit>
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
 
-  <title>Play DVD or VCD</title>
-
-  <p>
-  Insert DVD in your disc drive and select <guiseq><gui style="menu">Movie</gui>
-  <gui style="menuitem">Play Disc</gui></guiseq>. The menu of DVD will appear on
-  the display area of <app>Videos</app>. Apart from this you may use
-  <gui style="menu">Go</gui> menu to navigate while watching movie:
-  </p>
+  <title>Watch a DVD or VCD</title>
 
   <list>
     <item>
-      <p>Select <gui style="menuitem">DVD Menu</gui> or click
-      <keyseq><key>Ctrl</key><key>M</key></keyseq> to view main menu of a DVD.
-      Customize language and subtitles or view scene index or special features.
-      </p>
+      <p>To play a DVD disc that you just inserted into your drive, move the
+      mouse pointer over the <link xref="help:gnome-help/shell-notifications"
+      href="https://help.gnome.org/users/gnome-help/stable/shell-notifications">notification</link>
+      and press <gui style="button">Open with Videos</gui>.</p>
+      <figure>
+        <title>GNOME notification, offering to open the disc with <app>Videos</app></title>
+        <media type="image" mime="image/png" src="figures/dvd-gnome-notification.png">
+          <p>Screenshot of the GNOME notification dialog.</p>
+        </media>
+      </figure>
     </item>
     <item>
-      <p>Select <gui style="menuitem">Title Menu</gui> to choose the language of
-      the DVD's interface.</p>
-    </item>
-    <item>
-      <p>Select <gui style="menuitem">Audio Menu</gui> and choose the spoken
-      language of the movie.</p>
-    </item>
-    <item>
-      <p>Select <gui style="menuitem">Angle Menu</gui>.</p>
-    </item>
-    <item>
-      <p>Select <gui style="menuitem">Chapter Menu</gui> or click
-      <keyseq><key>Ctrl</key><key>C</key></keyseq> to view scene index.</p>
+      <p>To play a DVD disc in your drive, open <app>Files</app>, select to
+      the disc in the side bar, and press <gui style="button">Videos</gui> in
+      the <gui>Video DVD</gui> bar.</p>
+      <figure>
+        <title><app>Files</app>, offering to open the disc with <app>Videos</app></title>
+        <media type="image" mime="image/png" src="figures/dvd-nautilus.png">
+        <p>Screenshot of <app>Files</app>.</p>
+        </media>
+      </figure>
     </item>
   </list>
 
-  <comment>
-    <cite date="2012-09-26">Marta Bogdanowicz</cite>
-    <p>I have no idea what this Angle menu is.</p>
-  </comment>
+  <p>You can navigate while watching the movie:</p>
+  <list>
+    <item>
+      <p>Press the <gui>menu button</gui> which is below the video area.</p>
+    </item>
+    <item>
+    <p>Choose one of the following options:</p>
+    <list>
+      <item>
+        <p>Select <gui style="menuitem">DVD Menu</gui> to view main menu of a DVD.
+        Customize language and subtitles or view scene index or special features.
+        </p>
+      </item>
+      <item>
+        <p>Select <gui style="menuitem">Title Menu</gui> to choose the language of
+        the DVD interface.</p>
+      </item>
+      <item>
+        <p>Select <gui style="menuitem">Audio Menu</gui> and choose the language
+        spoken in the movie.</p>
+      </item>
+      <item>
+        <p>Select <gui style="menuitem">Angle Menu</gui> to choose a different
+        camera perspective.</p>
+      </item>
+      <item>
+        <p>Select <gui style="menuitem">Chapter Menu</gui> to view the scene index.</p>
+      </item>
+    </list>
+    <note><p>Not all DVDs might support these options.</p></note>
+    </item>
+  </list>
 
 </page>
