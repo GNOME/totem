@@ -9,7 +9,6 @@ echo_handler () {
 }
 
 MIMETYPES=`grep -v ^# $1`
-printf MimeType=;
 for i in $MIMETYPES ; do
 	echo_mime;
 done
