@@ -6,7 +6,7 @@ build-fedora:
   image: fedora:latest
   stage: test
   before_script:
-    - dnf install -y redhat-rpm-config meson git cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc intltool itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala flatpak-builder
+    - dnf install -y redhat-rpm-config meson git cairo-devel clutter-devel clutter-gst3-devel clutter-gtk-devel gcc-c++ gettext gnome-desktop3-devel grilo-devel gsettings-desktop-schemas-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gtk3-devel gtk-doc itstool libappstream-glib liberation-sans-fonts libpeas-devel lirc-devel meson nautilus-devel pygobject3-devel pylint python3-devel totem-pl-parser-devel vala flatpak-builder
   script:
     - meson _build -Denable-vala=no
     - ninja -C _build test

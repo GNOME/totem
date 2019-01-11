@@ -20,7 +20,7 @@ custom_target(
   plugin_data,
   input: plugin_data + '.in',
   output: plugin_data,
-  command: intltool_desktop_cmd,
+  command: msgfmt_plugin_cmd,
   install: true,
   install_dir: plugin_dir
 )
