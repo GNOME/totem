@@ -1,7 +1,6 @@
 sources = [
   'file-open.page',
   'index.page',
-  'introduction.page',
   'navigation.page',
   'playing-DVD.page',
   'playing-order.page',
@@ -22,7 +21,7 @@ sources = [
 ]
 
 media = [
-  'figures/totem-main-window.png',
+  'figures/totem.png',
   'figures/volume-button-slider.png'
 ]
 
