@@ -6,10 +6,15 @@
     <link type="guide" xref="index#troubleshooting"/>
     <link type="seealso" xref="subtitles"/>
     <link type="seealso" xref="preferences"/>
+    <revision pkgversion="3.30" version="0.2" date="2019-01-11" status="draft"/>
     <desc>I cannot load subtitles.</desc>
     <credit type="author">
       <name>Marta Bogdanowicz</name>
       <email>majus85@gmail.com</email>
+    </credit>
+    <credit type="editor">
+      <name>Andre Klapper</name>
+      <email>ak-47@gmx.net</email>
     </credit>
     <license>
       <p>Creative Commons Share Alike 3.0</p>
@@ -36,19 +41,20 @@
     </item>
   </list>
 
-  <p>If you do not have subtitles file for your movie, you can search for it
-  via <app>Videos</app>. Do it in the following way:</p>
+  <p>If you do not have a subtitles file for your movie, you can search for it
+  via <app>Videos</app>:</p>
   <steps>
-    <item>
-      <p>Select <guiseq><gui style="menu">Edit</gui>
-      <gui style="menuitem">Plugins…</gui></guiseq>.</p>
+    <item>Open the <app>Videos</app> menu from the top bar and select
+    <gui style="menuitem">Preferences</gui>.
     </item>
     <item>
-      <p>The <gui>Configure Plugins</gui> window will pop up.</p>
+      <p>In the <gui>General</gui> tab under <gui>Plugins</gui>, press
+      <gui style="button">Plugins…</gui>.</p>
     </item>
     <item>
-      <p>Tick <gui>Subtitle Downloader</gui> option. It will try to find
-      and download subtitles for the currently played movie.</p>
+      <p>In the <gui>Configure Plugins</gui> window, enable the <gui>Subtitle
+      Downloader</gui> plugin. It will try to find and download subtitles for
+      the currently played movie.</p>
     </item>
   </steps>
 
