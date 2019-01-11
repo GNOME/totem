@@ -7,7 +7,6 @@ sources = [
   'playing-DVD.page',
   'playing-order.page',
   'playlist.page',
-  'plugins.page',
   'preferences.page',
   'properties.page',
   'screenshot-gallery.page',
