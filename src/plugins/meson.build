@@ -149,6 +149,8 @@ endif
 
 pylint_flags = ['-d', 'C0111', '-d', 'W0511', '-d', 'F0401', '-d', 'C0326' ]
 
+# FIXME: Move custom_target to i18n.merge_file when gettext acquires plugin support.
+#        http://lists.gnu.org/archive/html/bug-gettext/2017-06/msg00001.html
 msgfmt_plugin_cmd = [
   find_program('msgfmt'),
   '--desktop',

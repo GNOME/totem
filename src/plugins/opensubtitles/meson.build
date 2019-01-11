@@ -17,7 +17,7 @@ plugin_data = plugin_name + '.plugin'
 
 custom_target(
   plugin_data,
-  input: plugin_data + '.in',
+  input: plugin_data + '.desktop.in',
   output: plugin_data,
   command: msgfmt_plugin_cmd,
   install: true,
