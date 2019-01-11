@@ -149,6 +149,16 @@ endif
 
 pylint_flags = ['-d', 'C0111', '-d', 'W0511', '-d', 'F0401', '-d', 'C0326' ]
 
+msgfmt_plugin_cmd = [
+  find_program('msgfmt'),
+  '--desktop',
+  '--keyword=Name',
+  '--keyword=Description',
+  '--template=@INPUT@',
+  '-d', po_dir,
+  '--output=@OUTPUT@'
+]
+
 foreach plugin: plugins
   subdir(plugin)
 endforeach
