@@ -14,6 +14,7 @@ sources = [
   'subtitles.page',
   'supported-formats.page',
   'troubleshooting-Audio-CD.page',
+  'troubleshooting-debug.page',
   'troubleshooting-DVD.page',
   'troubleshooting-subtitles.page',
   'view-zoom.page'
