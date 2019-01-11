@@ -4,10 +4,15 @@
 
   <info>
     <link type="guide" xref="index#advanced-options"/>
-    <desc>Create gallery with the screenshots from a movie.</desc>
+    <revision pkgversion="3.30.0" version="0.1" date="2019-01-11" status="draft"/>
+    <desc>Create a number of screenshots from a movie.</desc>
     <credit type="author">
       <name>Marta Bogdanowicz</name>
       <email>majus85@gmail.com</email>
+    </credit>
+    <credit type="author">
+      <name>Andre Klapper</name>
+      <email>ak-47@gmx.net</email>
     </credit>
     <license>
       <p>Creative Commons Share Alike 3.0</p>
@@ -16,38 +21,30 @@
 
   <title>Screenshot gallery</title>
 
-  <p>Create a screenshot gallery in the following way:</p>
+  <p>To create a gallery of screenshots in a single image file:</p>
 
   <steps>
     <item>
-      <p>Select <guiseq><gui style="menu">Edit</gui>
-      <gui>Create Screenshot Gallery…</gui></guiseq>.</p>
+      <p>Press the menu button in the top-right corner of the window and select
+      <gui style="menuitem">Create Screenshot Gallery…</gui>.</p>
     </item>
     <item>
-      <p>A file chooser will open.</p>
+      <p>In the dialog, enter a name for the gallery file to be created.</p>
     </item>
     <item>
-      <p>Type the name of your gallery.</p>
-    </item>
-    <item>
-      <p>Choose a folder into which the gallery should be saved.</p>
+      <p>Optionally, change the folder into which the gallery will be saved.</p>
     </item>
     <item>
       <p>Click <gui>Save</gui> when ready.</p>
     </item>
     <item>
-      <p>The progress bar will pop up. You may cancel the process by clicking
-      <gui>Cancel</gui>.</p>
-    </item>
-    <item>
-      <p><app>Movie Player</app> creates a gallery from the random screenshots.
-      The gallery will be saved in the folder you chose, as a <file>.jpg</file>
-      file.</p>
+      <p>A progress bar will be shown while the screenshots are taken.
+      The gallery will be saved as a <file>.jpg</file> file.</p>
     </item>
   </steps>
 
   <note style="advanced">
-    <p>On the bottom of the file chooser you may specify the width of
+    <p>On the bottom of the dialog you may specify the width of
     screenshots in pixels. You may also set the number of screenshots that
     the gallery will include or tick option <gui>Calculate the number of
     screenshots</gui> and <app>Movie Player</app> will set it automatically.</p>
