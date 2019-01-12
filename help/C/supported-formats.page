@@ -5,6 +5,7 @@
 
   <info>
     <link type="guide" xref="index#troubleshooting"/>
+    <revision pkgversion="3.30" version="0.2" date="2019-01-11" status="draft"/>
     <desc>See what file formats are supported.</desc>
     <credit type="author">
       <name its:translate="no">Marta Bogdanowicz</name>
@@ -24,5 +25,9 @@
   <p>File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys>
   plugins. If certain file formats are not supported, please refer to a support
   forum of your distribution to find out which package to install.</p>
+
+  <note><p>If you try to open a format which is not supported, on many
+  distributions <app>Videos</app> will display a dialog which will allow you
+  to search for missing plugins (codecs) and install them.</p></note>
 
 </page>
