@@ -5,8 +5,6 @@ sources = [
   'keyboard-shortcuts.page',
   'navigation.page',
   'playing-DVD.page',
-  'playing-order.page',
-  'playlist.page',
   'preferences.page',
   'properties.page',
   'screenshot-gallery.page',
