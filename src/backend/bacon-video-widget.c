@@ -2639,9 +2639,9 @@ bvw_set_http_proxy_on_element (BaconVideoWidget *bvw,
 			       const char       *uri_str)
 {
   GstUri *uri;
-  char *protocol, *host, proxy_url;
+  char *protocol, *proxy_url;
+  const char *host, *userinfo;
   guint port;
-  char *userinfo;
   char **user_strv;
 
   uri = gst_uri_from_string (uri_str);
@@ -2667,8 +2667,6 @@ bvw_set_http_proxy_on_element (BaconVideoWidget *bvw,
     goto finish;
 
   user_strv = g_strsplit (userinfo, ":", 2);
-  g_free (userinfo);
-
   g_object_set (element,
 		"proxy-id", user_strv[0],
 		"proxy-pw", user_strv[1],
