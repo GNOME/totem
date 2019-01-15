@@ -296,6 +296,14 @@ remote_command_cb (GSimpleAction *action,
 		totem_object_remote_command (totem, cmd, url);
 }
 
+static void
+mute_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	TOTEM_PROFILE (totem_object_volume_toggle_mute (TOTEM_OBJECT (user_data)));
+}
+
 static GActionEntry app_entries[] = {
 	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
@@ -330,6 +338,9 @@ static GActionEntry app_entries[] = {
 
 	/* Remote command handling */
 	{ "remote-command", remote_command_cb, "(is)", NULL, NULL },
+
+	/* Extra actions */
+	{ "mute", mute_action_cb, NULL, NULL, NULL },
 };
 
 void
