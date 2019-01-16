@@ -61,10 +61,6 @@
         {
             "name": "totem-pl-parser",
             "buildsystem": "meson",
-            "builddir": true,
-            "config-opts": [
-                "--libdir=lib"
-            ],
             "sources": [
                 {
                     "type": "git",
@@ -128,10 +124,6 @@
         {
             "name": "gom",
             "buildsystem": "meson",
-            "builddir": true,
-            "config-opts": [
-                "--libdir=lib"
-            ],
             "sources": [
                 {
                     "type": "git",
@@ -237,11 +229,7 @@
         {
             "name": "totem",
             "buildsystem": "meson",
-            "builddir": true,
             "no-parallel-make": true,
-            "config-opts": [
-                "--libdir=lib"
-            ],
             "sources": [
                 {
                     "type": "git",
