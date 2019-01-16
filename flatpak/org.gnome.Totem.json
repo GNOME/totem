@@ -92,7 +92,8 @@
         },
         {
             "name": "gnome-online-accounts",
-            "config-opts": [ "--disable-telepathy", "--disable-documentation", "--disable-backend", "--disable-Werror" ],
+            "buildsystem": "meson",
+            "config-opts": [ "-Dgtk_doc=false", "-Dgoabackend=false", "-Dman=false" ],
             "sources": [
                 {
                     "type": "git",
