@@ -3491,6 +3491,14 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 	if (totem->disable_kbd_shortcuts != FALSE)
 		return FALSE;
 
+	/* Handle Quit */
+	if (event->state & GDK_CONTROL_MASK &&
+	    event->type == GDK_KEY_PRESS &&
+	    (event->keyval == GDK_KEY_Q ||
+	     event->keyval == GDK_KEY_q)) {
+		return totem_object_handle_key_press (totem, event);
+	}
+
 	/* Check whether we're in the player panel */
 	if (!g_str_equal (totem_object_get_main_page (totem), "player"))
 		return FALSE;
