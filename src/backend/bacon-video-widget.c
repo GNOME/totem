@@ -6345,6 +6345,9 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
+  if (new_rate == bvw->priv->rate)
+    return TRUE;
+
   /* set upper and lower limit for rate */
   if (new_rate < 0.5)
     return retval;
