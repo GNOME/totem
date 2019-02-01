@@ -1,5 +1,6 @@
 sources = [
   'adjust-speed.page',
+  'channels.page',
   'file-open.page',
   'index.page',
   'navigation.page',
