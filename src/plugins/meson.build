@@ -17,7 +17,6 @@ allowed_plugins = [
   'autoload-subtitles',
   'brasero-disc-recorder',
   'dbusservice',
-  'gromit',
   'im-status',
   'lirc',
   'media-player-keys',
@@ -58,17 +57,6 @@ if plugins_option != 'none'
   ]
 
   plugin_error = (plugins_option == 'all')
-
-  gdk_targets = gtk_dep.get_pkgconfig_variable('targets')
-  if gdk_targets.contains('x11')
-    plugins += 'gromit'
-  else
-    str = 'the gromit plugin is not supported on non-X11 targets'
-    if plugin_error
-      error(str)
-    endif
-    message(str)
-  endif
 
   lirc_dep = dependency('lirc', required: false)
   if lirc_dep.found() and cc.has_function('lirc_init', dependencies: lirc_dep) and cc.has_header('lirc/lirc_client.h')
