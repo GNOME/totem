@@ -139,6 +139,7 @@ struct _TotemObject {
 	GtkWidget *fullscreen_button;
 	GtkWidget *gear_button;
 	GtkWidget *add_button;
+	GtkWidget *main_menu_button;
 
 	char *player_title;
 

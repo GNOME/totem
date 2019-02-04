@@ -341,7 +341,6 @@ totem_app_actions_setup (Totem *totem)
 void
 totem_app_menu_setup (Totem *totem)
 {
-	GMenuModel *appmenu;
 	char *accels[] = { NULL, NULL };
 	const char * const shortcuts_accels[] = {
 		"<Ctrl>H",
@@ -349,9 +348,6 @@ totem_app_menu_setup (Totem *totem)
 		"<Ctrl>F1",
 		NULL
 	};
-
-	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
-	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
 
 	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=700085 */
 	accels[0] = "<Primary>G";
