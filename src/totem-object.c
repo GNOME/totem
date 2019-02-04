@@ -1014,6 +1014,7 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_show (totem->fullscreen_button);
 		gtk_widget_show (totem->gear_button);
 		gtk_widget_hide (totem->add_button);
+		gtk_widget_hide (totem->main_menu_button);
 		bacon_video_widget_show_popup (totem->bvw);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
@@ -1032,6 +1033,7 @@ totem_object_set_main_page (TotemObject *totem,
 		g_clear_pointer (&totem->search_string, g_free);
 		g_clear_pointer (&totem->player_title, g_free);
 		g_clear_object (&totem->custom_title);
+		gtk_widget_show (totem->main_menu_button);
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
@@ -3802,7 +3804,20 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
-	/* Cog wheel */
+
+	/* Main menu */
+	item = totem->main_menu_button = totem_interface_create_header_button (totem->header,
+									       gtk_menu_button_new (),
+									       "open-menu-symbolic",
+									       GTK_PACK_END);
+	gtk_container_child_set (GTK_CONTAINER (totem->header), totem->main_menu_button,
+				 "position", 0,
+				 NULL);
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "appmenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	gtk_widget_show (item);
+
+	/* Player menu */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
 									  gtk_menu_button_new (),
 									  "open-menu-symbolic",
