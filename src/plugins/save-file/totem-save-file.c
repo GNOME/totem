@@ -379,6 +379,10 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	TotemSaveFilePluginPrivate *priv = pi->priv;
 
+	/* impl_activate() exited early */
+	if (priv->totem == NULL)
+		return;
+
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_closed, plugin);
 	g_signal_handlers_disconnect_by_func (priv->bvw, totem_save_file_download_filename, plugin);
