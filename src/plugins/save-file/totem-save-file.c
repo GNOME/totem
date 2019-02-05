@@ -56,8 +56,9 @@ typedef struct {
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SAVE_FILE_PLUGIN, TotemSaveFilePlugin, totem_save_file_plugin)
 
 static void
-copy_uris_with_nautilus (const char *source,
-			 const char *dest)
+copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
+			 const char          *source,
+			 const char          *dest)
 {
 	GError *error = NULL;
 	GDBusProxyFlags flags;
@@ -78,7 +79,15 @@ copy_uris_with_nautilus (const char *source,
 					       NULL, /* GCancellable */
 					       &error);
 	if (proxy == NULL) {
-		g_warning ("Could not contact nautilus: %s", error->message);
+		GtkWindow *main_window;
+
+		main_window = totem_object_get_main_window (pi->priv->totem);
+		totem_interface_error (_("The video could not be made available offline."),
+				       /* translators: “Files” refers to nautilus' name */
+				       _("“Files” is not available."), main_window);
+		g_object_unref (main_window);
+
+		g_debug ("Could not contact nautilus: %s", error->message);
 		g_error_free (error);
 		return;
 	}
@@ -191,7 +200,7 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 		dest_uri = g_filename_to_uri (dest_path, NULL, NULL);
 		g_free (dest_path);
 
-		copy_uris_with_nautilus (pi->priv->mrl, dest_uri);
+		copy_uris_with_nautilus (pi, pi->priv->mrl, dest_uri);
 		g_free (dest_uri);
 
 		/* We don't call Totem to bookmark it, as Tracker should pick it up */
@@ -326,15 +335,8 @@ impl_activate (PeasActivatable *plugin)
 	TotemSaveFilePluginPrivate *priv = pi->priv;
 	GMenu *menu;
 	GMenuItem *item;
-	char *path;
 	char *mrl;
 	const char * const accels[] = { "<Primary>S", "Save", NULL };
-
-	/* make sure nautilus is in the path */
-	path = g_find_program_in_path ("nautilus");
-	if (!path)
-		return;
-	g_free (path);
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = totem_object_get_video_widget (priv->totem);
@@ -378,10 +380,6 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	TotemSaveFilePluginPrivate *priv = pi->priv;
-
-	/* impl_activate() exited early */
-	if (priv->totem == NULL)
-		return;
 
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_closed, plugin);
