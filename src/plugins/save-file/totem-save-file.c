@@ -64,6 +64,7 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 	GError *error = NULL;
 	GDBusProxyFlags flags;
 	GDBusProxy *proxy;
+	GVariant *ret;
 
 	g_return_if_fail (source != NULL);
 	g_return_if_fail (dest_dir != NULL);
@@ -92,12 +93,29 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 		return;
 	}
 
-	if (g_dbus_proxy_call_sync (proxy,
-				"CopyFile", g_variant_new ("(&s&s&s&s)", source, "", dest_dir, dest_name),
-				G_DBUS_CALL_FLAGS_NONE,
-				-1, NULL, &error) == FALSE) {
+	ret = g_dbus_proxy_call_sync (proxy,
+				      "CopyFile", g_variant_new ("(&s&s&s&s)", source, "", dest_dir, dest_name),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1, NULL, &error);
+
+	if (ret == NULL) {
+		/* nautilus >= 3.30.0? */
+		if (g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_UNKNOWN_METHOD)) {
+			const char *sources[2] = { source, NULL };
+
+			g_clear_error (&error);
+			ret = g_dbus_proxy_call_sync (proxy,
+						      "CopyURIs", g_variant_new ("(^ass)", sources, dest_dir),
+						      G_DBUS_CALL_FLAGS_NONE,
+						      -1, NULL, &error);
+		}
+	}
+
+	if (ret == NULL) {
 		g_warning ("Could not get nautilus to copy file: %s", error->message);
 		g_error_free (error);
+	} else {
+		g_variant_unref (ret);
 	}
 
 	g_object_unref (proxy);
