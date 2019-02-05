@@ -202,6 +202,9 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 		} else {
 			GFile *file;
 
+			g_debug ("Successfully linked '%s' to '%s'",
+				 src_path, dest_path);
+
 			file = g_file_new_for_path (dest_path);
 			totem_object_add_to_view (pi->priv->totem, file, filename);
 			g_object_unref (file);
@@ -331,10 +334,14 @@ totem_save_file_download_filename (GObject    *gobject,
 	if (filename == NULL)
 		return;
 
+	g_debug ("download-filename changed to '%s'", filename);
+
 	pi->priv->mrl = g_filename_to_uri (filename, NULL, NULL);
 	g_free (filename);
 	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 	pi->priv->is_tmp = TRUE;
+
+	g_debug ("MRL: '%s', name: '%s'", pi->priv->mrl, pi->priv->name);
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
 }
