@@ -133,6 +133,36 @@ get_videos_dir (void)
 	return videos_dir;
 }
 
+static char *
+totem_save_file_get_filename (TotemSaveFilePlugin *pi)
+{
+	char *filename, *basename;
+	GFile *file;
+
+	if (pi->priv->name != NULL)
+		return g_strdup (pi->priv->name);
+
+	/* Try to get a nice filename from the URI */
+	file = g_file_new_for_uri (pi->priv->mrl);
+	basename = g_file_get_basename (file);
+	g_object_unref (file);
+
+	if (g_utf8_validate (basename, -1, NULL) == FALSE) {
+		g_free (basename);
+		filename = NULL;
+	} else {
+		filename = basename;
+	}
+
+	if (filename == NULL) {
+		/* translators: Movie is the default saved movie filename,
+		 * without the suffix */
+		filename = g_strdup (_("Movie"));
+	}
+
+	return filename;
+}
+
 static void
 totem_save_file_plugin_copy (GSimpleAction       *action,
 			     GVariant            *parameter,
@@ -142,30 +172,7 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 
 	g_assert (pi->priv->mrl != NULL);
 
-	if (pi->priv->name != NULL) {
-		filename = g_strdup (pi->priv->name);
-	} else {
-		GFile *file;
-		char *basename;
-
-		/* Try to get a nice filename from the URI */
-		file = g_file_new_for_uri (pi->priv->mrl);
-		basename = g_file_get_basename (file);
-		g_object_unref (file);
-
-		if (g_utf8_validate (basename, -1, NULL) == FALSE) {
-			g_free (basename);
-			filename = NULL;
-		} else {
-			filename = basename;
-		}
-	}
-
-	if (filename == NULL) {
-		/* translators: Movie is the default saved movie filename,
-		 * without the suffix */
-		filename = g_strdup (_("Movie"));
-	}
+	filename = totem_save_file_get_filename (pi);
 
 	if (pi->priv->is_tmp) {
 		char *dest_dir, *dest_name, *dest_path;
