@@ -58,16 +58,16 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SAVE_FILE_PLUGIN, TotemSaveFilePlugin, totem_sa
 static void
 copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 			 const char          *source,
-			 const char          *dest)
+			 const char          *dest_dir,
+			 const char          *dest_name)
 {
 	GError *error = NULL;
 	GDBusProxyFlags flags;
 	GDBusProxy *proxy;
-	GFile *dest_file, *parent;
-	char *dest_name, *dest_dir;
 
 	g_return_if_fail (source != NULL);
-	g_return_if_fail (dest != NULL);
+	g_return_if_fail (dest_dir != NULL);
+	g_return_if_fail (dest_name != NULL);
 
 	flags = G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES;
 	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
@@ -92,13 +92,6 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 		return;
 	}
 
-	dest_file = g_file_new_for_uri (dest);
-	dest_name = g_file_get_basename (dest_file);
-	parent = g_file_get_parent (dest_file);
-	g_object_unref (dest_file);
-	dest_dir = g_file_get_uri (parent);
-	g_object_unref (parent);
-
 	if (g_dbus_proxy_call_sync (proxy,
 				"CopyFile", g_variant_new ("(&s&s&s&s)", source, "", dest_dir, dest_name),
 				G_DBUS_CALL_FLAGS_NONE,
@@ -107,8 +100,6 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 		g_error_free (error);
 	}
 
-	g_free (dest_dir);
-	g_free (dest_name);
 	g_object_unref (proxy);
 }
 
@@ -122,15 +113,15 @@ get_cache_path (void)
 	return path;
 }
 
-static const char *
-get_videos_dir (void)
+static char *
+get_videos_dir_uri (void)
 {
 	const char *videos_dir;
 
 	videos_dir = g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS);
 	if (!videos_dir)
 		videos_dir = g_get_home_dir ();
-	return videos_dir;
+	return g_filename_to_uri (videos_dir, NULL, NULL);
 }
 
 static char *
@@ -201,15 +192,7 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 		g_free (src_path);
 		g_free (dest_path);
 	} else {
-		char *dest_path, *dest_uri;
-
-		dest_path = g_build_filename (get_videos_dir (), filename, NULL);
-		dest_uri = g_filename_to_uri (dest_path, NULL, NULL);
-		g_free (dest_path);
-
-		copy_uris_with_nautilus (pi, pi->priv->mrl, dest_uri);
-		g_free (dest_uri);
-
+		copy_uris_with_nautilus (pi, pi->priv->mrl, get_videos_dir_uri(), filename);
 		/* We don't call Totem to bookmark it, as Tracker should pick it up */
 	}
 
@@ -263,9 +246,9 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
-	GFile *videos_dir;
+	GFile *videos_dir_file;
 	GFile *cache_dir = NULL;
-	char *cache_path;
+	char *cache_path, *videos_dir;
 	GFile *file;
 
 	g_clear_pointer (&pi->priv->mrl, g_free);
@@ -285,11 +268,14 @@ totem_save_file_file_opened (TotemObject *totem,
 
 	/* We check whether it's in the Videos dir, in the future,
 	 * we might want to check if it's native instead */
-	videos_dir = g_file_new_for_path (get_videos_dir ());
-	if (file_has_ancestor (file, videos_dir)) {
-		g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, get_videos_dir ());
+	videos_dir = get_videos_dir_uri ();
+	videos_dir_file = g_file_new_for_path (videos_dir);
+	if (file_has_ancestor (file, videos_dir_file)) {
+		g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, videos_dir);
+		g_free (videos_dir);
 		goto out;
 	}
+	g_free (videos_dir);
 
 	/* Already cached? */
 	cache_path = get_cache_path ();
@@ -307,7 +293,7 @@ totem_save_file_file_opened (TotemObject *totem,
 
 out:
 	g_clear_object (&cache_dir);
-	g_clear_object (&videos_dir);
+	g_clear_object (&videos_dir_file);
 	g_clear_object (&file);
 }
 
