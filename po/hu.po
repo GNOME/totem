@@ -5,14 +5,14 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004, 2005.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2014, 2017.
 # Lukács Bence <lukacs.bence1 at gmail dot com>, 2012.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015, 2016, 2019.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-01-14 16:47+0000\n"
-"PO-Revision-Date: 2019-01-27 15:20+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2019-02-06 21:16+0000\n"
+"PO-Revision-Date: 2019-02-06 23:00+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1861 src/totem-object.c:3660
+#: src/totem-grilo.c:1861 src/totem-object.c:3670
 msgid "Videos"
 msgstr "Videók"
 
@@ -188,7 +188,7 @@ msgstr "Megjelenítendő könyvtárak"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "A böngésző felületen megjelenítendő könyvtárak, alapesetben üres"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5627
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5625
 #: src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Sztereó"
@@ -526,113 +526,109 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navigálás jobbra"
 
-#: data/totem.ui:10
+#: data/totem.ui:11 data/totem.ui:110
 msgid "Prefere_nces"
 msgstr "_Beállítások"
 
-#: data/totem.ui:17
+#: data/totem.ui:15 data/totem.ui:114
 msgid "_Keyboard Shortcuts"
 msgstr "Gy_orsbillentyűk"
 
-#: data/totem.ui:21
+#: data/totem.ui:19
 msgid "_Help"
 msgstr "_Súgó"
 
-#: data/totem.ui:26
-msgid "_Quit"
-msgstr "_Kilépés"
-
-#: data/totem.ui:36
+#: data/totem.ui:29
 msgid "Add _Local Video…"
 msgstr "_Helyi videó hozzáadása…"
 
-#: data/totem.ui:41
+#: data/totem.ui:34
 msgid "Add _Web Video…"
 msgstr "_Webes videó hozzáadása…"
 
-#: data/totem.ui:58
+#: data/totem.ui:51
 msgid "_Aspect Ratio"
 msgstr "Méret_arány"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:61
+#: data/totem.ui:54
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Auto"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:66
+#: data/totem.ui:59
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Négyzet"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:71
+#: data/totem.ui:64
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:76
+#: data/totem.ui:69
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (szélesvásznú)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:81
+#: data/totem.ui:74
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: data/totem.ui:88
+#: data/totem.ui:81
 msgid "Zoom In"
 msgstr "Nagyítás"
 
-#: data/totem.ui:93
+#: data/totem.ui:86
 msgid "Switch An_gles"
 msgstr "Szögek _váltása"
 
-#: data/totem.ui:100
+#: data/totem.ui:93
 msgid "_Languages"
 msgstr "Nye_lvek"
 
-#: data/totem.ui:104
+#: data/totem.ui:97
 msgid "S_ubtitles"
 msgstr "_Feliratok"
 
-#: data/totem.ui:107
+#: data/totem.ui:100
 msgid "_Select Text Subtitles…"
 msgstr "_Felirat kiválasztása…"
 
-#: data/totem.ui:120
+#: data/totem.ui:123
 msgid "_Eject"
 msgstr "_Kiadás"
 
-#: data/totem.ui:131
+#: data/totem.ui:134
 msgid "_Repeat"
 msgstr "_Ismétlés mód"
 
-#: data/totem.ui:137
+#: data/totem.ui:140
 msgid "_DVD Menu"
 msgstr "_DVD menü"
 
-#: data/totem.ui:143
+#: data/totem.ui:146
 msgid "_Title Menu"
 msgstr "_Cím menü"
 
-#: data/totem.ui:148
+#: data/totem.ui:151
 msgid "A_udio Menu"
 msgstr "_Hang menü"
 
-#: data/totem.ui:153
+#: data/totem.ui:156
 msgid "_Angle Menu"
 msgstr "_Szög menü"
 
-#: data/totem.ui:158
+#: data/totem.ui:161
 msgid "_Chapter Menu"
 msgstr "_Fejezet menü"
 
-#: data/totem.ui:167
+#: data/totem.ui:170
 msgid "Speed"
 msgstr "Sebesség"
 
@@ -649,50 +645,50 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "Az RTSP-kiszolgáló jelszót kér"
 
-#: src/backend/bacon-video-widget.c:3340
+#: src/backend/bacon-video-widget.c:3338
 #, c-format
 msgid "Audio Track #%d"
 msgstr "%d. hangsáv"
 
-#: src/backend/bacon-video-widget.c:3342
+#: src/backend/bacon-video-widget.c:3340
 #, c-format
 msgid "Subtitle #%d"
 msgstr "%d. felirat"
 
-#: src/backend/bacon-video-widget.c:3883
+#: src/backend/bacon-video-widget.c:3881
 msgid "The server you are trying to connect to is not known."
 msgstr "Az elérni kívánt kiszolgáló ismeretlen."
 
-#: src/backend/bacon-video-widget.c:3886
+#: src/backend/bacon-video-widget.c:3884
 msgid "The connection to this server was refused."
 msgstr "A kapcsolódás a kiszolgálóhoz visszautasítva."
 
-#: src/backend/bacon-video-widget.c:3889
+#: src/backend/bacon-video-widget.c:3887
 msgid "The specified movie could not be found."
 msgstr "A megadott film nem található."
 
-#: src/backend/bacon-video-widget.c:3896
+#: src/backend/bacon-video-widget.c:3894
 msgid "The server refused access to this file or stream."
 msgstr "A kiszolgáló elutasította a fájl vagy műsor elérését."
 
-#: src/backend/bacon-video-widget.c:3902
+#: src/backend/bacon-video-widget.c:3900
 msgid "Authentication is required to access this file or stream."
 msgstr "Hitelesítés szükséges a fájl vagy műsor eléréséhez."
 
-#: src/backend/bacon-video-widget.c:3909
+#: src/backend/bacon-video-widget.c:3907
 msgid "You are not allowed to open this file."
 msgstr "A fájl megnyitása nem engedélyezett."
 
-#: src/backend/bacon-video-widget.c:3914
+#: src/backend/bacon-video-widget.c:3912
 msgid "This location is not a valid one."
 msgstr "A hely nem érvényes."
 
-#: src/backend/bacon-video-widget.c:3922
+#: src/backend/bacon-video-widget.c:3920
 msgid "The movie could not be read."
 msgstr "A film nem olvasható."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3945 src/backend/bacon-video-widget.c:3953
+#: src/backend/bacon-video-widget.c:3943 src/backend/bacon-video-widget.c:3951
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -708,13 +704,13 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3965
+#: src/backend/bacon-video-widget.c:3963
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Ezt a folyamot nem lehet lejátszani. Lehet, hogy egy tűzfal blokkolja azt."
 
-#: src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3966
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -722,7 +718,7 @@ msgstr ""
 "A hang- vagy videoműsor hiányzó kodekek miatt nincs kezelve. További "
 "bővítmények telepítésére lehet szükség egyes filmtípusok lejátszásához."
 
-#: src/backend/bacon-video-widget.c:3979
+#: src/backend/bacon-video-widget.c:3977
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -730,19 +726,19 @@ msgstr ""
 "Ez a fájl nem játszható le a hálózaton keresztül. Próbálja előbb letölteni a "
 "gépére."
 
-#: src/backend/bacon-video-widget.c:5623 src/totem-properties-view.c:238
+#: src/backend/bacon-video-widget.c:5621 src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Térhatású"
 
-#: src/backend/bacon-video-widget.c:5625 src/totem-properties-view.c:240
+#: src/backend/bacon-video-widget.c:5623 src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5912
+#: src/backend/bacon-video-widget.c:5910
 msgid "Media contains no supported video streams."
 msgstr "A média nem tartalmaz támogatott videofolyamot."
 
-#: src/backend/bacon-video-widget.c:6123
+#: src/backend/bacon-video-widget.c:6121
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -940,7 +936,7 @@ msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: src/totem-gallery-thumbnailer.c:657
+#: src/totem-gallery-thumbnailer.c:631
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -951,15 +947,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: src/totem-gallery-thumbnailer.c:658
+#: src/totem-gallery-thumbnailer.c:632
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: src/totem-gallery-thumbnailer.c:660
+#: src/totem-gallery-thumbnailer.c:634
 msgid "Resolution"
 msgstr "Felbontás"
 
-#: src/totem-gallery-thumbnailer.c:663
+#: src/totem-gallery-thumbnailer.c:637
 msgid "Duration"
 msgstr "Időtartam"
 
@@ -1038,55 +1034,55 @@ msgid "Search"
 msgstr "Keresés"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:435
+#: src/totem-menu.c:431
 msgid "None"
 msgstr "Nincs"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:439
+#: src/totem-menu.c:435
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem-object.c:1387 src/totem-options.c:51
+#: src/totem-object.c:1389 src/totem-options.c:51
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/totem-object.c:1392 src/totem-object.c:1402 src/totem-options.c:50
+#: src/totem-object.c:1394 src/totem-object.c:1404 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Lejátszás"
 
-#: src/totem-object.c:1469 src/totem-object.c:1496 src/totem-object.c:1988
+#: src/totem-object.c:1471 src/totem-object.c:1498 src/totem-object.c:1990
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "A Totem nem tudja lejátszani a következőt: „%s”."
 
-#: src/totem-object.c:2159
+#: src/totem-object.c:2161
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudja megjeleníteni a súgótartalmat."
 
-#: src/totem-object.c:2420
+#: src/totem-object.c:2422
 msgid "An error occurred"
 msgstr "Hiba történt"
 
-#: src/totem-object.c:3758
+#: src/totem-object.c:3768
 msgid "Previous Chapter/Movie"
 msgstr "Előző fejezet/film"
 
-#: src/totem-object.c:3764
+#: src/totem-object.c:3774
 msgid "Play / Pause"
 msgstr "Lejátszás / Szünet"
 
-#: src/totem-object.c:3770
+#: src/totem-object.c:3780
 msgid "Next Chapter/Movie"
 msgstr "Következő fejezet/film"
 
-#: src/totem-object.c:3980
+#: src/totem-object.c:4003
 msgid "Totem could not startup."
 msgstr "A Totem nem tud elindulni."
 
-#: src/totem-object.c:3980
+#: src/totem-object.c:4003
 msgid "No reason."
 msgstr "Nincs ok."
 
@@ -1507,18 +1503,6 @@ msgstr "A(z) „%s” tulajdonság nem írható."
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Ismeretlen tulajdonság („%s”) lett kérve egy MediaPlayer 2 objektumtól"
 
-#: src/plugins/gromit/gromit.plugin.desktop.in:5
-msgid "Gromit Annotations"
-msgstr "Gromit megjegyzések"
-
-#: src/plugins/gromit/gromit.plugin.desktop.in:6
-msgid "Presentation helper to make annotations on screen"
-msgstr "Prezentációsegéd feljegyzések készítéséhez a képernyőre"
-
-#: src/plugins/gromit/totem-gromit.c:232
-msgid "The gromit binary was not found."
-msgstr "A gromit bináris nem található."
-
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
 msgstr "Azonnali üzenő állapota"
@@ -1739,13 +1723,22 @@ msgstr "Másolat mentése"
 msgid "Save a copy of the currently playing movie"
 msgstr "A jelenleg lejátszott videó másolása"
 
+#: src/plugins/save-file/totem-save-file.c:85
+msgid "The video could not be made available offline."
+msgstr "A videót nem sikerült elérhetővé tenni kapcsolat nélkül használathoz."
+
+#. translators: “Files” refers to nautilus' name
+#: src/plugins/save-file/totem-save-file.c:87
+msgid "“Files” is not available."
+msgstr "A „Fájlok” nem érhető el."
+
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:167
 msgid "Movie"
 msgstr "Film"
 
-#: src/plugins/save-file/totem-save-file.c:366
+#: src/plugins/save-file/totem-save-file.c:368
 msgid "Make Available Offline"
 msgstr "Elérhetővé tétel kapcsolat nélkül"
 
