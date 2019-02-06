@@ -47,6 +47,7 @@ typedef struct {
 	GtkWidget   *bvw;
 
 	char        *mrl;
+	char        *cache_mrl;
 	char        *name;
 	gboolean     is_tmp;
 
@@ -193,7 +194,7 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 		g_free (dest_name);
 		g_free (dest_dir);
 
-		src_path = g_filename_from_uri (pi->priv->mrl, NULL, NULL);
+		src_path = g_filename_from_uri (pi->priv->cache_mrl, NULL, NULL);
 
 		if (link (src_path, dest_path) != 0) {
 			int err = errno;
@@ -225,6 +226,7 @@ totem_save_file_file_closed (TotemObject *totem,
 				 TotemSaveFilePlugin *pi)
 {
 	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->priv->cache_mrl, g_free);
 	g_clear_pointer (&pi->priv->name, g_free);
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), FALSE);
@@ -278,6 +280,8 @@ totem_save_file_file_opened (TotemObject *totem,
 	if (mrl == NULL)
 		return;
 
+	pi->priv->mrl = g_strdup (mrl);
+
 	/* We can only save files from file:/// and smb:/// URIs (for now) */
 	if (!g_str_has_prefix (mrl, "file:") &&
 	    !g_str_has_prefix (mrl, "smb:")) {
@@ -308,7 +312,6 @@ totem_save_file_file_opened (TotemObject *totem,
 	}
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
-	pi->priv->mrl = g_strdup (mrl);
 	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 	pi->priv->is_tmp = FALSE;
 
@@ -326,7 +329,7 @@ totem_save_file_download_filename (GObject    *gobject,
 	char *filename;
 
 	/* We're already ready to copy it */
-	if (pi->priv->mrl != NULL)
+	if (pi->priv->cache_mrl != NULL)
 		return;
 
 	filename = NULL;
@@ -336,12 +339,12 @@ totem_save_file_download_filename (GObject    *gobject,
 
 	g_debug ("download-filename changed to '%s'", filename);
 
-	pi->priv->mrl = g_filename_to_uri (filename, NULL, NULL);
+	pi->priv->cache_mrl = g_filename_to_uri (filename, NULL, NULL);
 	g_free (filename);
 	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 	pi->priv->is_tmp = TRUE;
 
-	g_debug ("MRL: '%s', name: '%s'", pi->priv->mrl, pi->priv->name);
+	g_debug ("Cache MRL: '%s', name: '%s'", pi->priv->cache_mrl, pi->priv->name);
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
 }
@@ -409,5 +412,6 @@ impl_deactivate (PeasActivatable *plugin)
 	priv->bvw = NULL;
 
 	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->priv->cache_mrl, g_free);
 	g_clear_pointer (&pi->priv->name, g_free);
 }
