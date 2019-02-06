@@ -64,7 +64,7 @@ struct _TotemGriloPrivate {
 	Totem *totem;
 	GtkWindow *main_window;
 
-	gboolean plugins_loaded;
+	gboolean plugins_activated;
 
 	GrlSource *local_metadata_src;
 	GrlSource *title_parsing_src;
@@ -1249,6 +1249,22 @@ source_added_cb (GrlRegistry *registry,
 	GrlSupportedOps ops;
 	const char *id;
 
+	self = TOTEM_GRILO (user_data);
+	id = grl_source_get_id (source);
+
+	/* Metadata */
+	if (g_str_equal (id, "grl-video-title-parsing"))
+		self->priv->title_parsing_src = source;
+	else if (g_str_equal (id, "grl-local-metadata"))
+		self->priv->local_metadata_src = source;
+	else if (g_str_equal (id, "grl-metadata-store"))
+		self->priv->metadata_store_src = source;
+	else if (g_str_equal (id, "grl-bookmarks"))
+		self->priv->bookmarks_src = source;
+
+	if (self->priv->plugins_activated == FALSE)
+		return;
+
 	if (source_is_blacklisted (source) ||
 	    source_is_forbidden (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
@@ -1257,9 +1273,6 @@ source_added_cb (GrlRegistry *registry,
 		                                NULL);
 		return;
 	}
-
-	self = TOTEM_GRILO (user_data);
-	id = grl_source_get_id (source);
 
 	/* The filesystem plugin */
 	if (g_str_equal (id, "grl-filesystem") &&
@@ -1272,16 +1285,6 @@ source_added_cb (GrlRegistry *registry,
 		name = _("Local");
 	else
 		name = grl_source_get_name (source);
-
-	/* Metadata */
-	if (g_str_equal (id, "grl-video-title-parsing"))
-		self->priv->title_parsing_src = source;
-	else if (g_str_equal (id, "grl-local-metadata"))
-		self->priv->local_metadata_src = source;
-	else if (g_str_equal (id, "grl-metadata-store"))
-		self->priv->metadata_store_src = source;
-	else if (g_str_equal (id, "grl-bookmarks"))
-		self->priv->bookmarks_src = source;
 
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
@@ -1410,6 +1413,12 @@ load_grilo_plugins (TotemGrilo *self)
 	GSettings *settings;
 	char **configs;
 	guint i;
+	const char *required_plugins[] = {
+		"grl-lua-factory",
+		"grl-local-metadata",
+		"grl-metadata-store",
+		"grl-bookmarks"
+	};
 
 	registry = grl_registry_get_default ();
 
@@ -1433,9 +1442,17 @@ load_grilo_plugins (TotemGrilo *self)
 	g_signal_connect (registry, "source-removed",
 	                  G_CALLBACK (source_removed_cb), self);
 
-	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
+	if (grl_registry_load_all_plugins (registry, FALSE, &error) == FALSE) {
 		g_warning ("Failed to load grilo plugins: %s", error->message);
 		g_error_free (error);
+		return;
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(required_plugins); i++) {
+		if (!grl_registry_activate_plugin_by_id (registry, required_plugins[i], &error)) {
+			g_warning ("Failed to load %s plugin: %s", required_plugins[i], error->message);
+			g_clear_error (&error);
+		}
 	}
 }
 
@@ -2496,17 +2513,26 @@ totem_grilo_finalize (GObject *object)
 void
 totem_grilo_start (TotemGrilo *self)
 {
+	GError *error = NULL;
+	GrlRegistry *registry;
+
 	g_debug ("TotemGrilo: Resuming videos thumbnailing");
 
 	totem_grilo_resume_icon_thumbnailing ();
 
-	if (self->priv->plugins_loaded)
+	if (self->priv->plugins_activated)
 		return;
 
-	g_debug ("TotemGrilo: Loading plugins");
+	g_debug ("TotemGrilo: Activating plugins");
 
-	load_grilo_plugins (self);
-	self->priv->plugins_loaded = TRUE;
+	registry = grl_registry_get_default ();
+	self->priv->plugins_activated = TRUE;
+
+	/* Load the others */
+	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
+		g_warning ("Failed to activate grilo plugins: %s", error->message);
+		g_error_free (error);
+	}
 }
 
 void
@@ -2526,6 +2552,7 @@ totem_grilo_constructed (GObject *object)
 	setup_ui (self);
 	grl_init (0, NULL);
 	setup_config (self);
+	load_grilo_plugins (self);
 }
 
 gboolean
