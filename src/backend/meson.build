@@ -61,6 +61,7 @@ libbacon_video_widget_deps = missing_plugins_deps + [
   gst_dep,
   dependency('gstreamer-base-1.0', version: gst_req_version),
   dependency('gstreamer-plugins-base-1.0', version: gst_req_version),
+  gst_pbutils_dep,
   gst_tag_dep,
   dependency('gstreamer-audio-1.0'),
   gst_video_dep,

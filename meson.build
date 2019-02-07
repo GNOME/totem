@@ -128,6 +128,7 @@ gtk_dep = dependency('gtk+-3.0', version: gtk_req_version)
 gst_dep = dependency('gstreamer-1.0', version: gst_req_version)
 gst_tag_dep = dependency('gstreamer-tag-1.0', version: '>= 0.11.93')
 gst_video_dep = dependency('gstreamer-video-1.0')
+gst_pbutils_dep = dependency('gstreamer-pbutils-1.0')
 peas_dep = dependency('libpeas-1.0', version: peas_req_version)
 peas_gtk_dep = dependency('libpeas-gtk-1.0', version: peas_req_version)
 totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_version)
@@ -162,19 +163,17 @@ endif
 missing_plugins_deps = []
 
 easy_codec_option = get_option('enable-easy-codec-installation')
+have_easy_codec = false
 if easy_codec_option != 'no'
-  have_easy_codec = false
-
-  gst_pbutils_dep = dependency('gstreamer-pbutils-1.0', required: (easy_codec_option == 'yes'))
   if gst_pbutils_dep.found()
     have_easy_codec = true
     gio_unix_dep = dependency('gio-unix-2.0')
   endif
 
   missing_plugins_deps += [ gst_pbutils_dep, gio_unix_dep ]
-  config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
-               description: 'Whether we can and want to do installation of missing plugins')
 endif
+config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
+             description: 'Whether we can and want to do installation of missing plugins')
 
 # python support
 have_python = false
