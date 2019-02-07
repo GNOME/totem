@@ -41,7 +41,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <stdlib.h>
 #include <math.h>
 #include <gio/gio.h>
 #include <libgd/gd.h>
@@ -1301,13 +1300,6 @@ totem_object_save_state (TotemObject *totem)
 	g_free (contents);
 }
 
-G_GNUC_NORETURN static void
-totem_object_wait_force_exit (gpointer user_data)
-{
-	g_usleep (10 * G_USEC_PER_SEC);
-	exit (1);
-}
-
 /**
  * totem_object_exit:
  * @totem: a #TotemObject
@@ -1322,9 +1314,6 @@ totem_object_exit (TotemObject *totem)
 	/* Shut down the plugins first, allowing them to display modal dialogues (etc.) without threat of being killed from another thread */
 	if (totem != NULL && totem->engine != NULL)
 		totem_object_plugins_shutdown (totem);
-
-	/* Exit forcefully if we can't do the shutdown in 10 seconds */
-	g_thread_new ("force-exit", (GThreadFunc) totem_object_wait_force_exit, NULL);
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
