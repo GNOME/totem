@@ -210,7 +210,6 @@ totem_video_thumbnailer_deps = [
   m_dep,
   libtotem_gst_helpers_dep,
   libtotem_gst_pixbuf_helpers_dep,
-  libtotem_time_helpers_dep
 ]
 
 executable(

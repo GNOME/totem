@@ -45,7 +45,6 @@
 #include <sys/stat.h>
 
 #include "gst/totem-gst-helpers.h"
-#include "gst/totem-time-helpers.h"
 #include "gst/totem-gst-pixbuf-helpers.h"
 #include "totem-resources.h"
 
