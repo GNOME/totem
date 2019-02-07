@@ -33,7 +33,7 @@ flatpak:
         FLATPAK_MODULE: "totem"
         # Make sure to keep this in sync with the Flatpak manifest, all arguments
         # are passed except the config-args because we build it ourselves
-        MESON_ARGS: "-Denable-easy-codec-installation=n"
+        MESON_ARGS: "-Denable-easy-codec-installation=no"
         DBUS_ID: "org.gnome.Totem"
 
     script:
