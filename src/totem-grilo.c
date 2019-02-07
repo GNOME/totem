@@ -2096,6 +2096,7 @@ delete_foreach (gpointer data,
 	GtkTreeIter iter;
 	GrlSource *source;
 	GrlMedia *media;
+	gboolean source_supports_remove;
 	gboolean success;
 	GError *error = NULL;
 
@@ -2114,13 +2115,18 @@ delete_foreach (gpointer data,
 			    MODEL_RESULTS_SOURCE, &source,
 			    -1);
 
+	source_supports_remove = (grl_source_supported_operations (source) & GRL_OP_REMOVE);
 	success = TRUE;
-	if (grl_source_supported_operations (source) & GRL_OP_REMOVE) {
+
+	if (source_supports_remove) {
 		g_debug ("Removing item '%s' through Grilo",
 			 grl_media_get_id (media));
 		grl_source_remove_sync (source, media, &error);
 		success = (error == NULL);
-	} else {
+	}
+
+	if (!source_supports_remove ||
+	    g_strcmp0 (grl_source_get_id (source), "grl-bookmarks") == 0) {
 		const char *uri;
 
 		uri = grl_media_get_url (media);
@@ -2136,6 +2142,7 @@ delete_foreach (gpointer data,
 			g_object_unref (file);
 		}
 	}
+
 	if (!success) {
 		g_warning ("Couldn't remove item '%s' (%s): %s",
 			   grl_media_get_title (media),
