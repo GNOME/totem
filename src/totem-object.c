@@ -41,7 +41,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <math.h>
 #include <gio/gio.h>
 #include <libgd/gd.h>
 
