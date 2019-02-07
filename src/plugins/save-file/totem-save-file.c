@@ -173,6 +173,20 @@ totem_save_file_get_filename (TotemSaveFilePlugin *pi)
 	return filename;
 }
 
+static char *
+checksum_path_for_mrl (const char *mrl)
+{
+	char *dest_dir, *dest_name, *dest_path;
+
+	dest_dir = get_cache_path ();
+	dest_name = g_compute_checksum_for_string (G_CHECKSUM_SHA256, mrl, -1);
+	dest_path = g_build_filename (dest_dir, dest_name, NULL);
+	g_free (dest_name);
+	g_free (dest_dir);
+
+	return dest_path;
+}
+
 static void
 totem_save_file_plugin_copy (GSimpleAction       *action,
 			     GVariant            *parameter,
@@ -185,16 +199,10 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 	filename = totem_save_file_get_filename (pi);
 
 	if (pi->priv->is_tmp) {
-		char *dest_dir, *dest_name, *dest_path;
-		char *src_path;
-
-		dest_dir = get_cache_path ();
-		dest_name = g_compute_checksum_for_string (G_CHECKSUM_SHA256, pi->priv->mrl, -1);
-		dest_path = g_build_filename (dest_dir, dest_name, NULL);
-		g_free (dest_name);
-		g_free (dest_dir);
+		char *src_path, *dest_path;
 
 		src_path = g_filename_from_uri (pi->priv->cache_mrl, NULL, NULL);
+		dest_path = checksum_path_for_mrl (pi->priv->mrl);
 
 		if (link (src_path, dest_path) != 0) {
 			int err = errno;
