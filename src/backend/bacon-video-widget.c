@@ -2750,6 +2750,23 @@ playbin_source_setup_cb (GstElement       *playbin,
 }
 
 static void
+playbin_element_setup_cb (GstElement *playbin,
+			  GstElement *element,
+			  BaconVideoWidget *bvw)
+{
+  char *template;
+
+  if (g_strcmp0 (G_OBJECT_CLASS_NAME (G_OBJECT_GET_CLASS (G_OBJECT (element))), "GstDownloadBuffer") != 0)
+    return;
+
+  /* See also bacon_video_widget_initable_init() */
+  template = g_build_filename (g_get_user_cache_dir (), "totem", "stream-buffer", "XXXXXX", NULL);
+  g_object_set (element, "temp-template", template, NULL);
+  GST_DEBUG ("Reconfigured file download template to '%s'", template);
+  g_free (template);
+}
+
+static void
 playbin_deep_notify_cb (GstObject  *gstobject,
 			GstObject  *prop_object,
 			GParamSpec *prop,
@@ -6087,6 +6104,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstPad *audio_pad;
   ClutterAction *action;
   GObject *item;
+  char *template;
 
   bvw = BACON_VIDEO_WIDGET (initable);
 
@@ -6130,6 +6148,11 @@ bacon_video_widget_initable_init (GInitable     *initable,
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
   flags |= GST_PLAY_FLAG_DOWNLOAD | GST_PLAY_FLAG_DEINTERLACE;
   g_object_set (bvw->priv->play, "flags", flags, NULL);
+
+  /* Keep in sync with playbin_element_setup_cb() */
+  template = g_build_filename (g_get_user_cache_dir (), "totem", "stream-buffer", NULL);
+  g_mkdir_with_parents (template, 0700);
+  g_free (template);
 
   gst_bus_add_signal_watch (bvw->priv->bus);
 
@@ -6270,6 +6293,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
       G_CALLBACK (notify_volume_cb), bvw);
   g_signal_connect (bvw->priv->play, "source-setup",
       G_CALLBACK (playbin_source_setup_cb), bvw);
+  g_signal_connect (bvw->priv->play, "element-setup",
+      G_CALLBACK (playbin_element_setup_cb), bvw);
   g_signal_connect (bvw->priv->play, "video-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "audio-changed",
