@@ -52,6 +52,7 @@ typedef struct {
 	gboolean     is_tmp;
 
 	GCancellable *cancellable;
+	gboolean      is_flatpaked;
 
 	GSimpleAction *action;
 } TotemSaveFilePluginPrivate;
@@ -279,7 +280,6 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
-	GFile *videos_dir_file;
 	GFile *cache_dir = NULL;
 	char *cache_path, *videos_dir;
 	GFile *file;
@@ -301,16 +301,33 @@ totem_save_file_file_opened (TotemObject *totem,
 
 	file = g_file_new_for_uri (mrl);
 
-	/* We check whether it's in the Videos dir, in the future,
-	 * we might want to check if it's native instead */
-	videos_dir = get_videos_dir_uri ();
-	videos_dir_file = g_file_new_for_path (videos_dir);
-	if (file_has_ancestor (file, videos_dir_file)) {
-		g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, videos_dir);
+	if (pi->priv->is_flatpaked) {
+		GFile *videos_dir_file;
+
+		/* Check whether it's in the Videos dir */
+		videos_dir = get_videos_dir_uri ();
+		videos_dir_file = g_file_new_for_path (videos_dir);
+		if (file_has_ancestor (file, videos_dir_file)) {
+			g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, videos_dir);
+			g_object_unref (videos_dir_file);
+			g_free (videos_dir);
+			goto out;
+		}
+		g_object_unref (videos_dir_file);
 		g_free (videos_dir);
-		goto out;
+	} else {
+		char *path;
+
+		path = g_file_get_path (file);
+		/* Check, crudely, whether it's in $HOME */
+		if (g_str_has_prefix (path, g_get_home_dir ()) &&
+		    g_file_is_native (file)) {
+			g_debug ("Not enabling offline save, as '%s' already in $HOME, and native", mrl);
+			g_free (path);
+			goto out;
+		}
+		g_free (path);
 	}
-	g_free (videos_dir);
 
 	/* Already cached? */
 	cache_path = get_cache_path ();
@@ -327,7 +344,6 @@ totem_save_file_file_opened (TotemObject *totem,
 
 out:
 	g_clear_object (&cache_dir);
-	g_clear_object (&videos_dir_file);
 	g_clear_object (&file);
 }
 
@@ -412,6 +428,7 @@ impl_activate (PeasActivatable *plugin)
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = totem_object_get_video_widget (priv->totem);
 	priv->cancellable = g_cancellable_new ();
+	priv->is_flatpaked = g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS);
 
 	g_signal_connect (priv->totem,
 			  "file-opened",
