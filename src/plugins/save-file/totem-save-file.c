@@ -51,6 +51,8 @@ typedef struct {
 	char        *name;
 	gboolean     is_tmp;
 
+	GCancellable *cancellable;
+
 	GSimpleAction *action;
 } TotemSaveFilePluginPrivate;
 
@@ -330,11 +332,44 @@ out:
 }
 
 static void
+cache_file_exists_cb (GObject      *source_object,
+		      GAsyncResult *res,
+		      gpointer      user_data)
+{
+	TotemSaveFilePlugin *pi;
+	GFileInfo *info;
+	GError *error = NULL;
+	char *path;
+
+	path = g_file_get_path (G_FILE (source_object));
+	info = g_file_query_info_finish (G_FILE (source_object), res, &error);
+	if (!info) {
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+			pi = user_data;
+			g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
+
+			g_debug ("Enabling offline save, as '%s' for '%s'",
+				 path, pi->priv->mrl);
+		}
+		g_free (path);
+		g_error_free (error);
+		return;
+	}
+	g_object_unref (info);
+
+	pi = user_data;
+	g_debug ("Not enabling offline save, as '%s' already exists for '%s'",
+		 path, pi->priv->mrl);
+	g_free (path);
+}
+
+static void
 totem_save_file_download_filename (GObject    *gobject,
 				   GParamSpec *pspec,
 				   TotemSaveFilePlugin *pi)
 {
-	char *filename;
+	char *filename, *cache_path;
+	GFile *file;
 
 	/* We're already ready to copy it */
 	if (pi->priv->cache_mrl != NULL)
@@ -354,7 +389,14 @@ totem_save_file_download_filename (GObject    *gobject,
 
 	g_debug ("Cache MRL: '%s', name: '%s'", pi->priv->cache_mrl, pi->priv->name);
 
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
+	cache_path = checksum_path_for_mrl (pi->priv->mrl);
+	file = g_file_new_for_path (cache_path);
+	g_free (cache_path);
+
+	g_file_query_info_async (file, G_FILE_ATTRIBUTE_STANDARD_TYPE,
+				 G_FILE_QUERY_INFO_NONE, 0, pi->priv->cancellable,
+				 cache_file_exists_cb, pi);
+	g_object_unref (file);
 }
 
 static void
@@ -369,6 +411,7 @@ impl_activate (PeasActivatable *plugin)
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = totem_object_get_video_widget (priv->totem);
+	priv->cancellable = g_cancellable_new ();
 
 	g_signal_connect (priv->totem,
 			  "file-opened",
@@ -415,6 +458,11 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (priv->bvw, totem_save_file_download_filename, plugin);
 
 	totem_object_empty_menu_section (priv->totem, "save-placeholder");
+
+	if (priv->cancellable) {
+		g_cancellable_cancel (priv->cancellable);
+		g_clear_object (&priv->cancellable);
+	}
 
 	priv->totem = NULL;
 	priv->bvw = NULL;
