@@ -38,10 +38,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_X11
-#include <gtk/gtkx.h>
-#endif
-
 #include <string.h>
 
 GST_DEBUG_CATEGORY_EXTERN (_totem_gst_debug_cat);
@@ -58,53 +54,6 @@ typedef struct
 	BaconVideoWidget *bvw;
 }
 TotemCodecInstallContext;
-
-#ifdef GDK_WINDOWING_X11
-/* Adapted from totem-interface.c */
-static Window
-bacon_video_widget_gtk_plug_get_toplevel (GtkPlug *plug)
-{
-	Window root, parent, *children;
-	guint nchildren;
-	Window xid;
-
-	g_return_val_if_fail (GTK_IS_PLUG (plug), 0);
-
-	xid = gtk_plug_get_id (plug);
-
-	do
-	{
-		/* FIXME: multi-head */
-		if (XQueryTree (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), xid, &root,
-					&parent, &children, &nchildren) == 0)
-		{
-			g_warning ("Couldn't find window manager window");
-			return 0;
-		}
-
-		if (root == parent)
-			return xid;
-
-		xid = parent;
-	}
-	while (TRUE);
-}
-
-static Window
-bacon_video_widget_gst_get_toplevel (GtkWidget *widget)
-{
-	GtkWidget *parent;
-
-	parent = gtk_widget_get_toplevel (GTK_WIDGET (widget));
-	if (parent == NULL)
-		return 0;
-
-	if (GTK_IS_PLUG (parent))
-		return bacon_video_widget_gtk_plug_get_toplevel (GTK_PLUG (parent));
-	else
-		return GDK_WINDOW_XID(gtk_widget_get_window (parent));
-}
-#endif
 
 static gboolean
 bacon_video_widget_gst_codec_install_plugin_is_blacklisted (const gchar * detail)
@@ -256,28 +205,11 @@ bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx,
 {
 	GstInstallPluginsContext *install_ctx;
 	GstInstallPluginsReturn status;
-#ifdef GDK_WINDOWING_X11
-	GdkDisplay *display;
-#endif
 
 	install_ctx = gst_install_plugins_context_new ();
 	gst_install_plugins_context_set_desktop_id (install_ctx, "org.gnome.Totem.desktop");
 	gst_install_plugins_context_set_confirm_search (install_ctx, confirm_search);
 	set_startup_notification_id (install_ctx);
-
-#ifdef GDK_WINDOWING_X11
-	display = gdk_display_get_default ();
-
-	if (GDK_IS_X11_DISPLAY (display) &&
-	    gtk_widget_get_window (GTK_WIDGET (ctx->bvw)) != NULL &&
-	    gtk_widget_get_realized (GTK_WIDGET (ctx->bvw)))
-	{
-		gulong xid = 0;
-
-		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (ctx->bvw));
-		gst_install_plugins_context_set_xid (install_ctx, xid);
-	}
-#endif /* GDK_WINDOWING_X11 */
 
 	status = gst_install_plugins_async ((const char * const*) ctx->details, install_ctx,
 	                                    on_plugin_installation_done,
