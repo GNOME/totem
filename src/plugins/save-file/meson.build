@@ -8,7 +8,6 @@ shared_module(
   include_directories: plugins_incs,
   dependencies: plugins_deps + [
     gio_dep,
-    libnautilus_ext_dep
   ],
   c_args: plugins_cflags,
   install: true,

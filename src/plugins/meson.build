@@ -45,6 +45,7 @@ if plugins_option != 'none'
     'media-player-keys',
     'properties',
     'recent',
+    'save-file',
     'screensaver',
     'screenshot',
     'skipto',
@@ -72,16 +73,6 @@ if plugins_option != 'none'
     plugins += 'brasero-disc-recorder'
   else
     str = 'you need libxml-2.0 ' + libxml_req_version + ' and gtk+-x11-3.0 to use the brasero-disc-recorder plugin'
-    if plugin_error
-      error(str)
-    endif
-    message(str)
-  endif
-
-  if have_nautilus
-    plugins += 'save-file'
-  else
-    str = 'you need libnautilus-extension to use the save-file plugin'
     if plugin_error
       error(str)
     endif
