@@ -45,6 +45,7 @@ if plugins_option != 'none'
     'media-player-keys',
     'properties',
     'recent',
+    'rotation',
     'save-file',
     'screensaver',
     'screenshot',
@@ -85,27 +86,6 @@ if plugins_option != 'none'
       'opensubtitles',
       'pythonconsole',
       'samplepython'
-    ]
-  endif
-
-  if have_vala
-    plugins_vala_deps = [
-      declare_dependency(sources: libtotem_gir[0])
-    ]
-
-    plugins_vala_flags = [
-      '-Wno-unused-but-set-variable',
-      '-Wno-unused-function',
-      '-Wno-unused-variable'
-    ]
-
-    plugins_vala_args = [
-      '--girdir=' + join_paths(meson.build_root(), 'src'),
-      '--pkg=@0@-@1@'.format(totem_gir_ns, totem_api_version)
-    ]
-
-    plugins += [
-      'rotation',
     ]
   endif
 endif
