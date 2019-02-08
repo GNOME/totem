@@ -25,7 +25,6 @@ allowed_plugins = [
   'pythonconsole',
   'recent',
   'rotation',
-  'sample-vala',
   'samplepython',
   'save-file',
   'screensaver',
@@ -116,7 +115,6 @@ if plugins_option != 'none'
 
     plugins += [
       'rotation',
-      'sample-vala'
     ]
   endif
 endif

@@ -43,7 +43,6 @@ private_headers = [
   'totem-properties-view.h',
   'totem-python-plugin.h',
   'totem-resources.h',
-  'totem-sample-vala-plugin.h',
   'totem-screenshot-plugin.h',
   'totem-screenshot.h',
   'totem-search-entry.h',
