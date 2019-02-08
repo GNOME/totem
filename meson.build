@@ -216,34 +216,6 @@ if python_option != 'no'
   endif
 endif
 
-# vala support
-have_vala = false
-
-vala_option = get_option('enable-vala')
-if vala_option != 'no'
-  if have_gir
-    vala_req_version = '>= 0.14.1'
-    if add_languages('vala', required: false)
-      if meson.get_compiler('vala').version().version_compare(vala_req_version)
-        have_vala = true
-      endif
-    endif
-
-    if not have_vala
-      str = 'you need vala ' + vala_req_version + ' installed to use vala plugins'
-    endif
-  else
-    str = 'you need introspection support for the vala plugins'
-  endif
-
-  if not have_vala
-    if vala_option == 'yes' or introspection_option == 'yes'
-      error(str)
-    endif
-    message(str)
-  endif
-endif
-
 # nautilus support
 have_nautilus = false
 
@@ -302,13 +274,6 @@ endif
 
 str = 'Python plugin support'
 if have_python
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
-
-str = 'Vala plugin support'
-if have_vala
   message('** ' + str + ' enabled')
 else
   message('   ' + str + ' disabled')
