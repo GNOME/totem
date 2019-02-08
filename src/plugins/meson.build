@@ -33,7 +33,6 @@ allowed_plugins = [
   'skipto',
   'variable-rate',
   'vimeo',
-  'zeitgeist-dp'
 ]
 
 plugins = []
@@ -119,17 +118,6 @@ if plugins_option != 'none'
       'rotation',
       'sample-vala'
     ]
-
-    zeitgeist_dep = dependency('zeitgeist-2.0', version: '>= 0.9.12', required: false)
-    if zeitgeist_dep.found()
-      plugins += 'zeitgeist-dp'
-    else
-      str = 'you need zeitgeist-2.0 >= 0.9.12 to use the zeitgeist-dp plugin'
-      if plugin_error
-        error(str)
-      endif
-      message(str)
-    endif
   endif
 endif
 
