@@ -26,7 +26,6 @@
 #include <glib/gi18n-lib.h>
 #include <glib/gstdio.h>
 #include <gmodule.h>
-#include <gdk/gdkx.h>
 #include <errno.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
