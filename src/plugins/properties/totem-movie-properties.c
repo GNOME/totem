@@ -154,7 +154,7 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 				 N_("%d kbps"), C_("Stream bit rate", "N/A"));
 
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
-		bacon_video_widget_properties_set_framerate (props, g_value_get_int (&value));
+		bacon_video_widget_properties_set_framerate (props, g_value_get_float (&value));
 		g_value_unset (&value);
 	}
 

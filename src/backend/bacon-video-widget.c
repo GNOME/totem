@@ -5713,15 +5713,6 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
     case BVW_INFO_DIMENSION_Y:
       integer = bvw->priv->video_height;
       break;
-    case BVW_INFO_FPS:
-      if (bvw->priv->video_fps_d > 0) {
-        /* Round up/down to the nearest integer framerate */
-        integer = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
-                  bvw->priv->video_fps_d;
-      }
-      else
-        integer = 0;
-      break;
     case BVW_INFO_AUDIO_BITRATE:
       if (bvw->priv->audiotags == NULL)
         break;
@@ -5868,7 +5859,6 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_DURATION:
     case BVW_INFO_DIMENSION_X:
     case BVW_INFO_DIMENSION_Y:
-    case BVW_INFO_FPS:
     case BVW_INFO_AUDIO_BITRATE:
     case BVW_INFO_VIDEO_BITRATE:
     case BVW_INFO_TRACK_NUMBER:
@@ -5891,6 +5881,17 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 	  g_value_init (value, GDK_TYPE_PIXBUF);
 	  g_value_take_object (value, pixbuf);
         }
+      }
+      break;
+    case BVW_INFO_FPS:
+      {
+	float fps = 0.0;
+
+	if (bvw->priv->video_fps_d > 0)
+	  fps = (float) bvw->priv->video_fps_n / (float) bvw->priv->video_fps_d;
+
+	g_value_init (value, G_TYPE_FLOAT);
+	g_value_set_float (value, fps);
       }
       break;
     default:
