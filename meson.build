@@ -216,28 +216,6 @@ if python_option != 'no'
   endif
 endif
 
-# nautilus support
-have_nautilus = false
-
-if get_option('enable-nautilus') != 'no'
-  libnautilus_ext_dep = dependency('libnautilus-extension', version: '>= 2.91.3', required: false)
-  if libnautilus_ext_dep.found()
-    nautilusdir = get_option('with-nautilusdir')
-    if nautilusdir == ''
-      nautilusdir = libnautilus_ext_dep.get_pkgconfig_variable('extensiondir')
-    endif
-
-    have_nautilus = true
-    message('installing nautilus plugin in ' + nautilusdir)
-  else
-    if get_option('enable-nautilus') == 'yes'
-      error('nautilus support enabled but libnautilus-extension missing')
-    else
-      message('libnautilus-extension missing so disabling nautilus supportt')
-    endif
-  endif
-endif
-
 configure_file(
   output: 'config.h',
   configuration: config_h
@@ -286,12 +264,5 @@ foreach plugin: allowed_plugins
     message('   ' + plugin + ' plugin disabled')
   endif
 endforeach
-
-str = 'Nautilus properties page'
-if have_nautilus
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
 
 message('End options')

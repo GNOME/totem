@@ -40,7 +40,6 @@ private_headers = [
   'totem-preferences.h',
   'totem-private.h',
   'totem-profile.h',
-  'totem-properties-view.h',
   'totem-python-plugin.h',
   'totem-resources.h',
   'totem-screenshot-plugin.h',
