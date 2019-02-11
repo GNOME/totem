@@ -258,7 +258,7 @@ bacon_video_widget_properties_new (void)
 
 	xml = gtk_builder_new ();
 	gtk_builder_set_translation_domain (xml, GETTEXT_PACKAGE);
-	if (gtk_builder_add_from_file (xml, DATADIR"/properties.ui", NULL) == 0) {
+	if (gtk_builder_add_from_resource (xml, "/org/gnome/totem/properties/properties.ui", NULL) == 0) {
 		g_object_unref (xml);
 		return NULL;
 	}

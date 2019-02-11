@@ -2,13 +2,21 @@ plugin_name = 'movie-properties'
 
 plugin_dir = join_paths(totem_pluginsdir, 'properties')
 
+resources = gnome.compile_resources(
+  'properties-resources',
+  'properties.gresource.xml',
+  c_name: 'totem_properties',
+)
+
 shared_module(
   plugin_name,
-  sources: 'totem-' + plugin_name + '.c',
-  include_directories: plugins_incs,
-  dependencies: plugins_deps + [
-    libbacon_video_widget_properties_dep
+  sources: [
+    'totem-' + plugin_name + '.c',
+    'bacon-video-widget-properties.c',
+    resources[0]
   ],
+  include_directories: plugins_incs,
+  dependencies: plugins_deps,
   c_args: plugins_cflags,
   install: true,
   install_dir: plugin_dir

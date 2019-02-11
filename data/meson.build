@@ -43,7 +43,6 @@ ui_files = files(
   'controls.ui',
   'playlist.ui',
   'preferences.ui',
-  'properties.ui',
   'shortcuts.ui',
   'totem.ui',
   'uri.ui'

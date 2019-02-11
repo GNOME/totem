@@ -3,7 +3,6 @@ plugins_inc = include_directories('plugins')
 
 subdir('gst')
 subdir('backend')
-subdir('properties')
 
 enum_headers = files(
   'backend/bacon-time-label.h',
