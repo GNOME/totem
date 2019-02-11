@@ -1157,10 +1157,18 @@ content_changed (TotemGrilo   *self,
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 		GtkTreeIter *iter;
+		char *str;
+
+		str = grl_media_serialize (media);
+		g_debug ("About to change %s in the store", str);
+		g_free (str);
 
 		if (find_media (model, media, &iter)) {
 			update_media (GTK_TREE_STORE (model), iter, source, media);
 			gtk_tree_iter_free (iter);
+		} else {
+			g_debug ("Could not find '%s' to change in the store",
+				 grl_media_get_id (media));
 		}
 	}
 }
@@ -1188,7 +1196,7 @@ content_removed (TotemGrilo   *self,
 			gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
 			gtk_tree_iter_free (iter);
 		} else {
-			g_debug ("Could not find '%s' in the store",
+			g_debug ("Could not find '%s' to remove in the store",
 				 grl_media_get_id (media));
 		}
 	}
@@ -1209,6 +1217,11 @@ content_added (TotemGrilo   *self,
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
+		char *str;
+
+		str = grl_media_serialize (media);
+		g_debug ("About to add %s to the store", str);
+		g_free (str);
 
 		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
