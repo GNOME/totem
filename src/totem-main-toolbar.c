@@ -439,7 +439,7 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                 g_cclosure_marshal_generic,
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/totemmaintoolbar.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/totemmaintoolbar.ui");
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, search_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, select_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, selection_menu_button);

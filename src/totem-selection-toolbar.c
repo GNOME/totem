@@ -255,7 +255,7 @@ totem_selection_toolbar_class_init (TotemSelectionToolbarClass *klass)
                 g_cclosure_marshal_generic,
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/totemselectiontoolbar.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/totemselectiontoolbar.ui");
   gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, add_to_fav);
   gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, delete);
   gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, play);

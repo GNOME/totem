@@ -2475,7 +2475,7 @@ static void
 setup_config (TotemGrilo *self)
 {
 	GrlRegistry *registry = grl_registry_get_default ();
-	grl_registry_add_config_from_resource (registry, "/org/totem/grilo/totem-grilo.conf", NULL);
+	grl_registry_add_config_from_resource (registry, "/org/gnome/totem/grilo/totem-grilo.conf", NULL);
 }
 
 GtkWidget *
@@ -2786,7 +2786,7 @@ totem_grilo_class_init (TotemGriloClass *klass)
 							   TOTEM_GRILO_PAGE_RECENT, TOTEM_GRILO_PAGE_CHANNELS, TOTEM_GRILO_PAGE_RECENT,
 							   G_PARAM_READWRITE));
 
-	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/grilo.ui");
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selectmenu);
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_bar);
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_entry);
