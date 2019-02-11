@@ -140,9 +140,8 @@ libgd = subproject(
   default_options: [
     'static=true',
     'with-gtk-hacks=true',
-    'with-main-view=true',
+    'with-main-icon-view=true',
     'with-tagged-entry=true',
-    'with-view-common=true'
   ]
 )
 libgd_dep = libgd.get_variable('libgd_dep')
