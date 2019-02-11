@@ -3,7 +3,7 @@ project(
   version: '3.31.90',
   license: 'GPL2+ with exception',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.43.0'
+  meson_version: '>= 0.46.0'
 )
 
 totem_version = meson.project_version()
@@ -181,7 +181,7 @@ python_deps = []
 
 python_option = get_option('enable-python')
 if python_option != 'no'
-  python = import('python3').find_python()
+  python = import('python').find_installation('python3')
   if python.found()
     python_req_version = '>= 3.0'
 
