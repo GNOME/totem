@@ -11,55 +11,99 @@
 # Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012-2013, 2015.
 # Hajime Taira <htaira@redhat.com>, 2015.
 # Aefgh39622 <aefgh39622@gmail.com>, 2018.
+# sicklylife <translation@sicklylife.jp>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2018-11-14 17:55+0000\n"
-"PO-Revision-Date: 2018-03-21 18:32+0700\n"
-"Last-Translator: Aefgh39622 <aefgh39622@gmail.com>\n"
+"POT-Creation-Date: 2019-02-12 06:23+0000\n"
+"PO-Revision-Date: 2019-02-12 19:00+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:1
+#: data/appdata/org.gnome.Totem.appdata.xml.in:6
+#: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
+#: src/totem-grilo.c:1892 src/totem-object.c:3658
+msgid "Videos"
+msgstr "ビデオ"
+
+#: data/appdata/org.gnome.Totem.appdata.xml.in:7
+#: data/org.gnome.Totem.desktop.in.in:4
+msgid "Play movies"
+msgstr "動画を再生します"
+
+#: data/appdata/org.gnome.Totem.appdata.xml.in:11
+msgid ""
+"Videos is the official movie player of the GNOME desktop environment. It "
+"features a searchable list of local videos, and DVDs, as well as local "
+"network video shares (using UPnP/DLNA) and video highlights from a number of "
+"web sites."
+msgstr ""
+"ビデオは、GNOME デスクトップ環境の公式動画プレイヤーです。ローカルに保存した"
+"動画や DVD の一覧表示、検索機能に加え、ローカルネットワーク上の動画も再生でき"
+"ます (UPnP/DLNA を使用)。また、様々なウェブサイトのビデオハイライトを楽しむこ"
+"ともできます"
+
+#: data/appdata/org.gnome.Totem.appdata.xml.in:17
+msgid ""
+"Videos comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, create screenshot galleries, and "
+"support for recording DVDs."
+msgstr ""
+"ビデオでは、字幕ダウンローダー、再生速度の変更、スクリーンショットギャラリー"
+"の作成、DVD の作成といった追加機能が利用できます。"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Totem.desktop.in.in:6
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr ""
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;ビデオ;映像;動画;フィルム;ク"
+"リップ;シリーズ;プレイヤー;テレビ;ディスク;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: data/org.gnome.Totem.desktop.in.in:9
+msgid "org.gnome.Totem"
+msgstr ""
+
+#: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
 msgstr "映像の明るさ"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:2
+#: data/org.gnome.totem.gschema.xml.in:10
 msgid "The contrast of the video"
 msgstr "映像のコントラスト"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:3
+#: data/org.gnome.totem.gschema.xml.in:14
 msgid "The hue of the video"
 msgstr "映像の色相"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:4
+#: data/org.gnome.totem.gschema.xml.in:18
 msgid "The saturation of the video"
 msgstr "映像の彩度"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:5
+#: data/org.gnome.totem.gschema.xml.in:22
 msgid "Repeat mode"
 msgstr "リピートモードにするかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:6
+#: data/org.gnome.totem.gschema.xml.in:26
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "インターレースの動画のインターレース解除を無効にするかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:7
+#: data/org.gnome.totem.gschema.xml.in:30
 msgid "Type of audio output to use"
 msgstr "音声出力の種類"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:8
+#: data/org.gnome.totem.gschema.xml.in:34
 msgid "Network buffering threshold"
 msgstr "ネットワークバッファリングのしきい値"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:9
+#: data/org.gnome.totem.gschema.xml.in:35
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -67,43 +111,43 @@ msgstr ""
 "ストリームの表示を開始する前にネットワークストリーム用にバッファーするデータ"
 "量です (秒単位)。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:10
+#: data/org.gnome.totem.gschema.xml.in:39
 msgid "Subtitle font"
 msgstr "字幕のフォント"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:11
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Pango font description for subtitle rendering."
 msgstr "字幕を描画する際に使用するPango形式記述のフォントです。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:12
+#: data/org.gnome.totem.gschema.xml.in:43
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:13
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Subtitle encoding"
 msgstr "字幕のエンコーディング"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:14
+#: data/org.gnome.totem.gschema.xml.in:51
 msgid "Encoding character set for subtitle."
 msgstr "字幕をエンコーディングする際の文字集合です。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:15
+#: data/org.gnome.totem.gschema.xml.in:55
 msgid "Default location for the “Open…” dialogs"
 msgstr "“開く…”ダイアログで表示するデフォルトのフォルダー"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:16
+#: data/org.gnome.totem.gschema.xml.in:56
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
-"“開く…”ダイアログで表示するデフォルトの場所です。デフォルトは現在のフォル"
-"ダーです。"
+"“開く…”ダイアログで表示するデフォルトの場所です。デフォルトは現在のフォルダー"
+"です。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:17
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "“スクリーンショットの取得”ダイアログで表示するデフォルトのフォルダー"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:18
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the Pictures "
 "directory."
@@ -111,544 +155,489 @@ msgstr ""
 "“スクリーンショットの取得”ダイアログで表示するデフォルトの場所です。デフォル"
 "トは画像フォルダーです。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:19
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "ユーザーのホームフォルダーにあるプラグインを無効にするかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:20
+#: data/org.gnome.totem.gschema.xml.in:69
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "キーボードショートカットを無効にするかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:21
+#: data/org.gnome.totem.gschema.xml.in:73
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "ビデオを読み込んだら字幕のファイルを自動的に読み込むかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:22
+#: data/org.gnome.totem.gschema.xml.in:77
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "ビデオを読み込んだらチャプターファイルを自動的に読み込むかどうか"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:23
+#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "有効なプラグイン一覧"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:24
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "現在有効(読み込み済みで実行中)であるプラグインの名前の一覧です。"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:25
+#: data/org.gnome.totem.gschema.xml.in:86
 msgid "Directories to show"
 msgstr "表示するディレクトリ"
 
-#: ../data/org.gnome.totem.gschema.xml.in.h:26
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "ブラウズインターフェースにて表示するディレクトリ群です。デフォルトは指定な"
 "し。"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5633
-#: ../src/totem-properties-view.c:242
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5642
 msgid "Stereo"
 msgstr "ステレオ"
 
-#: ../data/preferences.ui.h:2
+#: data/preferences.ui:16
 msgid "4-channel"
 msgstr "4 チャンネル"
 
-#: ../data/preferences.ui.h:3
+#: data/preferences.ui:19
 msgid "4.1-channel"
 msgstr "4.1 チャンネル"
 
-#: ../data/preferences.ui.h:4
+#: data/preferences.ui:22
 msgid "5.0-channel"
 msgstr "5.0 チャンネル"
 
-#: ../data/preferences.ui.h:5
+#: data/preferences.ui:25
 msgid "5.1-channel"
 msgstr "5.1 チャンネル"
 
-#: ../data/preferences.ui.h:6
+#: data/preferences.ui:28
 msgid "AC3 Passthrough"
 msgstr "AC3 パススルー"
 
-#: ../data/preferences.ui.h:7
+#: data/preferences.ui:80
 msgid "Preferences"
 msgstr "設定"
 
-#: ../data/preferences.ui.h:8
+#: data/preferences.ui:130
 msgid "External Subtitles"
 msgstr "外部字幕"
 
-#: ../data/preferences.ui.h:9
+#: data/preferences.ui:178
 msgid "_Load subtitle files when movie is loaded"
 msgstr "ビデオ読み込み時に字幕ファイルを読み込む(_L)"
 
-#: ../data/preferences.ui.h:10
+#: data/preferences.ui:199
 msgid "_Font:"
 msgstr "フォント(_F):"
 
-#: ../data/preferences.ui.h:11
+#: data/preferences.ui:226
 msgid "_Encoding:"
 msgstr "エンコーディング(_E):"
 
-#: ../data/preferences.ui.h:12
+#: data/preferences.ui:312
 msgid "External Chapters"
 msgstr "チャプターファイル"
 
-#: ../data/preferences.ui.h:13
+#: data/preferences.ui:360
 msgid "Load _chapter files when movie is loaded"
 msgstr "ビデオ読み込み時にチャプターファイルを読み込む(_C)"
 
-#: ../data/preferences.ui.h:14
+#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: ../data/preferences.ui.h:15
+#: data/preferences.ui:429
 msgid "Plugins…"
 msgstr "プラグイン…"
 
-#: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
+#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "全般"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:285
+#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "ビデオ"
 
-#: ../data/preferences.ui.h:19
+#: data/preferences.ui:527
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "インターレースのビデオのインターレース解除を無効にする(_D)"
 
-#: ../data/preferences.ui.h:20
+#: data/preferences.ui:568
 msgid "Color Balance"
 msgstr "色のバランス"
 
-#: ../data/preferences.ui.h:21
+#: data/preferences.ui:622
 msgid "_Brightness:"
 msgstr "明るさ(_B):"
 
-#: ../data/preferences.ui.h:22
+#: data/preferences.ui:649
 msgid "Co_ntrast:"
 msgstr "コントラスト(_N):"
 
-#: ../data/preferences.ui.h:23
+#: data/preferences.ui:715
 msgid "Sat_uration:"
 msgstr "彩度(_U):"
 
-#: ../data/preferences.ui.h:24
+#: data/preferences.ui:742
 msgid "_Hue:"
 msgstr "色相(_H):"
 
-#: ../data/preferences.ui.h:25
+#: data/preferences.ui:817
 msgid "Reset to _Defaults"
 msgstr "デフォルトに戻す(_D)"
 
-#: ../data/preferences.ui.h:26
+#: data/preferences.ui:864
 msgid "Display"
 msgstr "表示"
 
-#: ../data/preferences.ui.h:27
+#: data/preferences.ui:905
 msgid "Audio Output"
 msgstr "音声の出力"
 
-#: ../data/preferences.ui.h:28
+#: data/preferences.ui:949
 msgid "_Audio output type:"
 msgstr "音声出力の種類(_A):"
 
-#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:283
+#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "音声"
 
-#: ../data/properties.ui.h:2
-msgid "Title:"
-msgstr "タイトル:"
-
-#: ../data/properties.ui.h:3
-msgid "Artist:"
-msgstr "演奏者:"
-
-#: ../data/properties.ui.h:4
-msgid "Duration:"
-msgstr "再生時間:"
-
-#: ../data/properties.ui.h:5
-msgid "Year:"
-msgstr "制作年:"
-
-#: ../data/properties.ui.h:6
-msgid "Album:"
-msgstr "アルバム名:"
-
-#: ../data/properties.ui.h:7
-msgid "Comment:"
-msgstr "コメント:"
-
-#: ../data/properties.ui.h:8
-msgid "Container:"
-msgstr "コンテナー:"
-
-#: ../data/properties.ui.h:10
-msgid "Dimensions:"
-msgstr "大きさ:"
-
-#: ../data/properties.ui.h:11
-msgid "Codec:"
-msgstr "コーデック:"
-
-#: ../data/properties.ui.h:12
-msgid "Framerate:"
-msgstr "フレームレート:"
-
-#: ../data/properties.ui.h:13
-msgid "Bitrate:"
-msgstr "ビットレート:"
-
-#: ../data/properties.ui.h:15
-msgid "Sample rate:"
-msgstr "サンプリング:"
-
-#: ../data/properties.ui.h:16
-msgid "Channels:"
-msgstr "チャンネル数:"
-
-#: ../data/shortcuts.ui.h:1
+#: data/shortcuts.ui:16
 msgctxt "shortcut window"
 msgid "General"
 msgstr "全般"
 
-#: ../data/shortcuts.ui.h:2
+#: data/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Properties"
 msgstr "プロパティ"
 
-#: ../data/shortcuts.ui.h:3
+#: data/shortcuts.ui:28
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "オフラインでも試聴可能にする"
 
-#: ../data/shortcuts.ui.h:4
+#: data/shortcuts.ui:35
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "スクリーンショットを取得"
 
-#: ../data/shortcuts.ui.h:5
+#: data/shortcuts.ui:42
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "終了する"
 
-#: ../data/shortcuts.ui.h:6
+#: data/shortcuts.ui:50
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "音量"
 
-#: ../data/shortcuts.ui.h:7
+#: data/shortcuts.ui:55
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "音量を上げる"
 
-#: ../data/shortcuts.ui.h:8
+#: data/shortcuts.ui:62
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "音量を下げる"
 
-#: ../data/shortcuts.ui.h:9
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "View"
 msgstr "表示"
 
-#: ../data/shortcuts.ui.h:10
+#: data/shortcuts.ui:75
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "フルスクリーン表示を切り替える"
 
-#: ../data/shortcuts.ui.h:11
+#: data/shortcuts.ui:82
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "フルスクリーンを終了する"
 
-#: ../data/shortcuts.ui.h:12
+#: data/shortcuts.ui:89
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "拡大する"
 
-#: ../data/shortcuts.ui.h:13
+#: data/shortcuts.ui:96
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "縮小する"
 
-#: ../data/shortcuts.ui.h:14
+#: data/shortcuts.ui:103
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "回転 ↷"
 
-#: ../data/shortcuts.ui.h:15
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "回転 ↶"
 
-#: ../data/shortcuts.ui.h:16
+#: data/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "再生"
 
-#: ../data/shortcuts.ui.h:17
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "再生/一時停止する"
 
-#: ../data/shortcuts.ui.h:18
+#: data/shortcuts.ui:132 data/shortcuts.ui:148
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "前のビデオまたはチャプター"
 
-#: ../data/shortcuts.ui.h:19
+#: data/shortcuts.ui:140 data/shortcuts.ui:156
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "次のビデオまたはチャプター"
 
-#: ../data/shortcuts.ui.h:20
+#: data/shortcuts.ui:164
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "スキップ"
 
-#: ../data/shortcuts.ui.h:21
+#: data/shortcuts.ui:170 data/shortcuts.ui:232
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "15 秒戻る"
 
-#: ../data/shortcuts.ui.h:22
+#: data/shortcuts.ui:178 data/shortcuts.ui:240
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "60 秒進む"
 
-#: ../data/shortcuts.ui.h:23
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr ""
 
-#: ../data/shortcuts.ui.h:24
+#: data/shortcuts.ui:192
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr ""
 
-#: ../data/shortcuts.ui.h:25
+#: data/shortcuts.ui:200 data/shortcuts.ui:248
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "5 秒戻る"
 
-#: ../data/shortcuts.ui.h:26
+#: data/shortcuts.ui:208 data/shortcuts.ui:256
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "15 秒進む"
 
-#: ../data/shortcuts.ui.h:27
+#: data/shortcuts.ui:216 data/shortcuts.ui:264
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "3 分戻る"
 
-#: ../data/shortcuts.ui.h:28
+#: data/shortcuts.ui:224 data/shortcuts.ui:272
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "10 分進む"
 
-#: ../data/shortcuts.ui.h:29
+#: data/shortcuts.ui:279
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "スキップ…"
 
-#: ../data/shortcuts.ui.h:30
+#: data/shortcuts.ui:287
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD メニューのナビゲーション"
 
-#: ../data/shortcuts.ui.h:31
+#: data/shortcuts.ui:292
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr ""
 
-#: ../data/shortcuts.ui.h:32
+#: data/shortcuts.ui:299
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr ""
 
-#: ../data/shortcuts.ui.h:33
+#: data/shortcuts.ui:306
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr ""
 
-#: ../data/shortcuts.ui.h:34
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr ""
 
-#: ../data/totem.ui.h:1
+#: data/totem.ui:11 data/totem.ui:110
 msgid "Prefere_nces"
 msgstr "設定(_N)"
 
-#: ../data/totem.ui.h:2
+#: data/totem.ui:15 data/totem.ui:114
 msgid "_Keyboard Shortcuts"
 msgstr "キーボードショートカット(_K)"
 
-#: ../data/totem.ui.h:3
+#: data/totem.ui:19
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../data/totem.ui.h:4
-msgid "_Quit"
-msgstr "終了(_Q)"
-
-#: ../data/totem.ui.h:5
+#: data/totem.ui:29
 msgid "Add _Local Video…"
 msgstr "ローカルのビデオを追加する(_L)…"
 
-#: ../data/totem.ui.h:6
+#: data/totem.ui:34
 msgid "Add _Web Video…"
 msgstr "ウェブ上のビデオを追加する(_W)…"
 
-#: ../data/totem.ui.h:7
+#: data/totem.ui:51
 msgid "_Aspect Ratio"
 msgstr "アスペクト比(_A)"
 
-#: ../data/totem.ui.h:8
+#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
+#: data/totem.ui:54
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "自動"
 
-#: ../data/totem.ui.h:9
+#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
+#: data/totem.ui:59
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "スクエア型"
 
-#: ../data/totem.ui.h:10
+#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
+#: data/totem.ui:64
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
-#: ../data/totem.ui.h:11
+#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
+#: data/totem.ui:69
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (ワイドスクリーン)"
 
-#: ../data/totem.ui.h:12
+#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
+#: data/totem.ui:74
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:13
+#: data/totem.ui:81
 msgid "Zoom In"
 msgstr "拡大する"
 
-#: ../data/totem.ui.h:14
+#: data/totem.ui:86
 msgid "Switch An_gles"
 msgstr "アングルを切り替える(_G)"
 
-#: ../data/totem.ui.h:15
+#: data/totem.ui:93
 msgid "_Languages"
 msgstr "言語(_L)"
 
-#: ../data/totem.ui.h:16
+#: data/totem.ui:97
 msgid "S_ubtitles"
 msgstr "字幕(_U)"
 
-#: ../data/totem.ui.h:17
+#: data/totem.ui:100
 msgid "_Select Text Subtitles…"
 msgstr "字幕を選択する(_S)…"
 
-#: ../data/totem.ui.h:18
+#: data/totem.ui:123
 msgid "_Eject"
 msgstr "取り出す(_E)"
 
-#: ../data/totem.ui.h:19
+#: data/totem.ui:134
 msgid "_Repeat"
 msgstr "リピート(_R)"
 
-#: ../data/totem.ui.h:20
+#: data/totem.ui:140
 msgid "_DVD Menu"
 msgstr "DVD メニュー(_D)"
 
-#: ../data/totem.ui.h:21
+#: data/totem.ui:146
 msgid "_Title Menu"
 msgstr "タイトルメニュー(_T)"
 
-#: ../data/totem.ui.h:22
+#: data/totem.ui:151
 msgid "A_udio Menu"
 msgstr "音声メニュー(_U)"
 
-#: ../data/totem.ui.h:23
+#: data/totem.ui:156
 msgid "_Angle Menu"
 msgstr "アングルメニュー(_A)"
 
-#: ../data/totem.ui.h:24
+#: data/totem.ui:161
 msgid "_Chapter Menu"
 msgstr "チャプターメニュー(_C)"
 
-#: ../data/totem.ui.h:25
+#: data/totem.ui:170
 msgid "Speed"
 msgstr "再生速度"
 
-#: ../data/uri.ui.h:1
+#: data/uri.ui:14
 msgid "Enter the _address of the file you would like to open:"
 msgstr "オープンするファイルのアドレスを入力してください(_A):"
 
 #. translators: Unknown remaining time
-#: ../src/backend/bacon-time-label.c:113
+#: src/backend/bacon-time-label.c:113
 msgid "--:--"
 msgstr "--:--"
 
 # FIXME: 画面が見たい
-#: ../src/backend/bacon-video-widget.c:1971
+#: src/backend/bacon-video-widget.c:1971
 msgid "Password requested for RTSP server"
 msgstr "RTSP サーバーから要求されたパスワード"
 
-#: ../src/backend/bacon-video-widget.c:3346
+#: src/backend/bacon-video-widget.c:3355
 #, c-format
 msgid "Audio Track #%d"
 msgstr "音声トラック #%d"
 
-#: ../src/backend/bacon-video-widget.c:3348
+#: src/backend/bacon-video-widget.c:3357
 #, c-format
 msgid "Subtitle #%d"
 msgstr "サブタイトル #%d"
 
-#: ../src/backend/bacon-video-widget.c:3889
+#: src/backend/bacon-video-widget.c:3898
 msgid "The server you are trying to connect to is not known."
 msgstr "接続しようとしているサーバーは不明です。"
 
-#: ../src/backend/bacon-video-widget.c:3892
+#: src/backend/bacon-video-widget.c:3901
 msgid "The connection to this server was refused."
 msgstr "このサーバーへの接続は拒否されました。"
 
-#: ../src/backend/bacon-video-widget.c:3895
+#: src/backend/bacon-video-widget.c:3904
 msgid "The specified movie could not be found."
 msgstr "指定した動画は見つかりませんでした。"
 
-#: ../src/backend/bacon-video-widget.c:3902
+#: src/backend/bacon-video-widget.c:3911
 msgid "The server refused access to this file or stream."
 msgstr "サーバーはこのファイルまたはストリームへのアクセスを拒否しました。"
 
-#: ../src/backend/bacon-video-widget.c:3908
+#: src/backend/bacon-video-widget.c:3917
 msgid "Authentication is required to access this file or stream."
 msgstr "このファイルまたはストリームにアクセスするには認証が必要です。"
 
-#: ../src/backend/bacon-video-widget.c:3915
+#: src/backend/bacon-video-widget.c:3924
 msgid "You are not allowed to open this file."
 msgstr "このファイルを開くことができませんでした。"
 
-#: ../src/backend/bacon-video-widget.c:3920
+#: src/backend/bacon-video-widget.c:3929
 msgid "This location is not a valid one."
 msgstr "場所が無効です。"
 
-#: ../src/backend/bacon-video-widget.c:3928
+#: src/backend/bacon-video-widget.c:3937
 msgid "The movie could not be read."
 msgstr "動画を読み込めませんでした。"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3951
-#: ../src/backend/bacon-video-widget.c:3959
+#: src/backend/bacon-video-widget.c:3960 src/backend/bacon-video-widget.c:3968
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -661,14 +650,14 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3980
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "このストリームを再生できません。ファイアウォールでブロックされている可能性が"
 "あります。"
 
-#: ../src/backend/bacon-video-widget.c:3974
+#: src/backend/bacon-video-widget.c:3983
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -676,7 +665,7 @@ msgstr ""
 "音声か動画ストリームのコーデックがないため処理できません。動画の種類によって"
 "は再生するのに追加のプラグインをインストールする必要があります"
 
-#: ../src/backend/bacon-video-widget.c:3985
+#: src/backend/bacon-video-widget.c:3994
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -684,19 +673,19 @@ msgstr ""
 "このファイルはネットワーク越しに再生できません。まずローカルにダウンロードし"
 "てみてください。"
 
-#: ../src/backend/bacon-video-widget.c:5629 ../src/totem-properties-view.c:238
+#: src/backend/bacon-video-widget.c:5638
 msgid "Surround"
 msgstr "サラウンド"
 
-#: ../src/backend/bacon-video-widget.c:5631 ../src/totem-properties-view.c:240
+#: src/backend/bacon-video-widget.c:5640
 msgid "Mono"
 msgstr "モノラル"
 
-#: ../src/backend/bacon-video-widget.c:5918
+#: src/backend/bacon-video-widget.c:5928
 msgid "Media contains no supported video streams."
 msgstr "このメディアにはビデオストリームが含まれていません。"
 
-#: ../src/backend/bacon-video-widget.c:6129
+#: src/backend/bacon-video-widget.c:6140
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -704,11 +693,11 @@ msgstr ""
 "必要なプラグインが見つかりません。プログラムが正しくインストールされているか"
 "確認してください。"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:345
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:277
 msgid "Unable to play the file"
 msgstr "このファイルを再生できません"
 
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:280
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -718,7 +707,7 @@ msgstr[0] ""
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:356
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:288
 #, c-format
 msgid "_Find in %s"
 msgstr "%s で検索(_F)"
@@ -729,8 +718,7 @@ msgstr "%s で検索(_F)"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/gst/totem-time-helpers.c:63
-#: ../src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:63 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -742,7 +730,7 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: ../src/gst/totem-time-helpers.c:71
+#: src/gst/totem-time-helpers.c:71
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
@@ -754,7 +742,7 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: ../src/gst/totem-time-helpers.c:82
+#: src/gst/totem-time-helpers.c:82
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
@@ -766,137 +754,32 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/gst/totem-time-helpers.c:91
+#: src/gst/totem-time-helpers.c:91
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#. Title
-#. Artist
-#. Album
-#. Year
-#. Container
-#: ../src/properties/bacon-video-widget-properties.c:106
-#: ../src/properties/bacon-video-widget-properties.c:108
-#: ../src/properties/bacon-video-widget-properties.c:110
-#: ../src/properties/bacon-video-widget-properties.c:112
-#: ../src/properties/bacon-video-widget-properties.c:118
-msgid "Unknown"
-msgstr "不明"
-
-#. Dimensions
-#: ../src/properties/bacon-video-widget-properties.c:121
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "N/A"
-
-#. Video Codec
-#: ../src/properties/bacon-video-widget-properties.c:123
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/properties/bacon-video-widget-properties.c:126
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/properties/bacon-video-widget-properties.c:129
-#: ../src/properties/bacon-video-widget-properties.c:239
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/properties/bacon-video-widget-properties.c:133
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#. Audio Codec
-#: ../src/properties/bacon-video-widget-properties.c:135
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "N/A"
-
-#. Sample rate
-#: ../src/properties/bacon-video-widget-properties.c:137
-msgid "0 Hz"
-msgstr "0 Hz"
-
-#. Channels
-#: ../src/properties/bacon-video-widget-properties.c:139
-msgid "0 Channels"
-msgstr "0 チャンネル"
-
-#: ../src/properties/bacon-video-widget-properties.c:155
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d時間"
-
-#: ../src/properties/bacon-video-widget-properties.c:157
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d分"
-
-#: ../src/properties/bacon-video-widget-properties.c:160
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d秒"
-
-#. 5 hours 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:166
-#, c-format
-msgctxt "time"
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. 2 minutes 12 seconds
-#: ../src/properties/bacon-video-widget-properties.c:169
-#, c-format
-msgctxt "time"
-msgid "%s %s"
-msgstr "%s %s"
-
-#. 0 seconds
-#: ../src/properties/bacon-video-widget-properties.c:175
-msgid "0 seconds"
-msgstr "0 秒"
-
-#: ../src/properties/bacon-video-widget-properties.c:236
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d フレーム/秒"
-
-#: ../src/grilo.ui.h:1
+#: src/grilo.ui:7
 msgid "Select All"
 msgstr "すべて選択する"
 
-#: ../src/grilo.ui.h:2
+#: src/grilo.ui:12
 msgid "Select None"
 msgstr "すべて解除する"
 
-#: ../src/totem.c:66 ../src/totem.c:72 ../src/totem-grilo.c:1861
-#: ../src/totem-object.c:3660
-msgid "Videos"
-msgstr "ビデオ"
-
-#: ../src/totem.c:67
+#: src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr "スレッドセーフなライブラリを初期化できませんでした。"
 
-#: ../src/totem.c:67
+#: src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認してください。Totem を終了します。"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-gallery-thumbnailer.c:657
+#: src/totem-gallery-thumbnailer.c:631
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -907,540 +790,493 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-gallery-thumbnailer.c:658
+#: src/totem-gallery-thumbnailer.c:632
 msgid "Filename"
 msgstr "ファイル名"
 
-#: ../src/totem-gallery-thumbnailer.c:660
+#: src/totem-gallery-thumbnailer.c:634
 msgid "Resolution"
 msgstr "解像度"
 
-#: ../src/totem-gallery-thumbnailer.c:663
+#: src/totem-gallery-thumbnailer.c:637
 msgid "Duration"
 msgstr "再生時間"
 
-#: ../src/totem-grilo.c:285
+#: src/totem-grilo.c:285
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "シーズン %d エピソード %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:322
+#: src/totem-grilo.c:322
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (シーズン %d エピソード %d)"
 
-#: ../src/totem-grilo.c:677
+#: src/totem-grilo.c:677
 msgid "Browse Error"
 msgstr "表示エラー"
 
-#: ../src/totem-grilo.c:818
+#: src/totem-grilo.c:818
 msgid "Search Error"
 msgstr "検索エラー"
 
-#: ../src/totem-grilo.c:1272
+#: src/totem-grilo.c:1298
 msgid "Local"
 msgstr "ローカル"
 
-#: ../src/totem-grilo.c:1870
+#: src/totem-grilo.c:1901
 msgid "Channels"
 msgstr "チャンネル"
 
-#: ../src/totem-interface.c:179 ../src/totem-interface.c:222
+#: src/totem-interface.c:179 src/totem-interface.c:222
 #, c-format
 msgid "Couldn’t load the “%s” interface. %s"
 msgstr "インターフェース (“%s”) を読み込めませんでした: %s"
 
-#: ../src/totem-interface.c:179
+#: src/totem-interface.c:179
 msgid "The file does not exist."
 msgstr "ファイルがありません"
 
-#: ../src/totem-interface.c:181 ../src/totem-interface.c:183
-#: ../src/totem-interface.c:224 ../src/totem-interface.c:226
+#: src/totem-interface.c:181 src/totem-interface.c:183
+#: src/totem-interface.c:224 src/totem-interface.c:226
 msgid "Make sure that Totem is properly installed."
 msgstr "Totem が正しくインストールされているか確認してください。"
 
-#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "アイテムを選択してください"
 
-#: ../src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:136
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d 件選択"
 
-#: ../src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
 msgstr "“%s”の検索結果"
 
-#: ../src/totemmaintoolbar.ui.h:1
+#: src/totemmaintoolbar.ui:18
 msgid "Back"
 msgstr "戻る"
 
-#: ../src/totemmaintoolbar.ui.h:2
+#: src/totemmaintoolbar.ui:44
 msgid "Select"
 msgstr "選択"
 
-#: ../src/totemmaintoolbar.ui.h:3
+#: src/totemmaintoolbar.ui:69 src/totemmaintoolbar.ui:72
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../src/totemmaintoolbar.ui.h:4
+#: src/totemmaintoolbar.ui:90
 msgid "Search"
 msgstr "検索"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:435
+#: src/totem-menu.c:431
 msgid "None"
 msgstr "なし"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:439
+#: src/totem-menu.c:435
 msgctxt "Language"
 msgid "Auto"
 msgstr "自動"
 
-#: ../src/totem-object.c:1387 ../src/totem-options.c:51
+#: src/totem-object.c:1377 src/totem-options.c:51
 msgid "Pause"
 msgstr "一時停止"
 
-#: ../src/totem-object.c:1392 ../src/totem-object.c:1402
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
+#: src/totem-object.c:1382 src/totem-object.c:1392 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "再生"
 
-#: ../src/totem-object.c:1469 ../src/totem-object.c:1496
-#: ../src/totem-object.c:1988
+#: src/totem-object.c:1459 src/totem-object.c:1486 src/totem-object.c:1978
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem は“%s”を再生できませんでした。"
 
-#: ../src/totem-object.c:2159
+#: src/totem-object.c:2149
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: ../src/totem-object.c:2420
+#: src/totem-object.c:2410
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: ../src/totem-object.c:3758
+#: src/totem-object.c:3756
 msgid "Previous Chapter/Movie"
 msgstr "前のチャプター/動画に移動します"
 
-#: ../src/totem-object.c:3764
+#: src/totem-object.c:3762
 msgid "Play / Pause"
 msgstr "再生/一時停止します"
 
-#: ../src/totem-object.c:3770
+#: src/totem-object.c:3768
 msgid "Next Chapter/Movie"
 msgstr "次のチャプター/動画に移動します"
 
-#: ../src/totem-object.c:3980
+#: src/totem-object.c:3991
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: ../src/totem-object.c:3980
+#: src/totem-object.c:3991
 msgid "No reason."
 msgstr "原因は不明です。"
 
-#: ../src/totem-open-location.c:183
+#: src/totem-open-location.c:183
 msgid "Add Web Video"
 msgstr "ウェブ上のビデオを追加する"
 
-#: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
-#: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:221
+#: src/totem-open-location.c:185 src/totem-uri.c:399 src/totem-uri.c:460
+#: src/plugins/screenshot/totem-gallery.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:103
+#: src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
-#: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
+#: src/totem-open-location.c:186 src/totem-uri.c:461
 msgid "_Add"
 msgstr "追加(_A)"
 
-#: ../src/totem-options.c:49
+#: src/totem-options.c:49
 msgid "Play/Pause"
 msgstr "動画を再生または一時停止する"
 
-#: ../src/totem-options.c:52
+#: src/totem-options.c:52
 msgid "Next"
 msgstr "次へ進む"
 
-#: ../src/totem-options.c:53
+#: src/totem-options.c:53
 msgid "Previous"
 msgstr "前へ戻る"
 
-#: ../src/totem-options.c:54
+#: src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "再生しながら次へ進む"
 
-#: ../src/totem-options.c:55
+#: src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "再生しながら後ろへ戻る"
 
-#: ../src/totem-options.c:56
+#: src/totem-options.c:56
 msgid "Volume Up"
 msgstr "音量を上げる"
 
-#: ../src/totem-options.c:57
+#: src/totem-options.c:57
 msgid "Volume Down"
 msgstr "音量を下げる"
 
-#: ../src/totem-options.c:58
+#: src/totem-options.c:58
 msgid "Mute sound"
 msgstr "ミュートにする"
 
-#: ../src/totem-options.c:59
+#: src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "フルスクリーンに切り替え"
 
-#: ../src/totem-options.c:60
+#: src/totem-options.c:60
 msgid "Quit"
 msgstr "終了する"
 
-#: ../src/totem-options.c:61
+#: src/totem-options.c:61
 msgid "Enqueue"
 msgstr "キューに追加する"
 
-#: ../src/totem-options.c:62
+#: src/totem-options.c:62
 msgid "Replace"
 msgstr "置き換える"
 
-#: ../src/totem-options.c:63
+#: src/totem-options.c:63
 msgid "Seek"
 msgstr "シークする"
 
-#: ../src/totem-options.c:65
+#: src/totem-options.c:65
 msgid "Movies to play"
 msgstr "再生する動画"
 
-#: ../src/totem-options.c:100
+#: src/totem-options.c:100
 msgid "Can’t enqueue and replace at the same time"
 msgstr "キューへの追加と置き換えは同時にできません"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:232
+#: src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "タイトル %d"
 
-#: ../src/totem-playlist.c:992
+#: src/totem-playlist.c:992
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "プレイリスト“%s”を解析できませんでした。おそらく壊れています。"
 
-#: ../src/totem-preferences.c:184
+#: src/totem-preferences.c:184
 msgid "Configure Plugins"
 msgstr "プラグインの設定"
 
-#: ../src/totem-preferences.c:187
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:4
+#: src/totem-preferences.c:187 src/plugins/opensubtitles/opensubtitles.ui:138
 msgid "_Close"
 msgstr "閉じる(_C)"
 
-#: ../src/totem-preferences.c:303
+#: src/totem-preferences.c:303
 msgid "Select Subtitle Font"
 msgstr "字幕で使用するフォントの選択"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
-msgid "Audio/Video"
-msgstr "音声/ビデオ"
-
-#: ../src/totem-properties-view.c:141
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/totem-properties-view.c:170
-#: ../src/plugins/properties/totem-movie-properties.c:154
-#: ../src/plugins/properties/totem-movie-properties.c:165
-msgctxt "Stream bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/totem-properties-view.c:173
-#: ../src/plugins/properties/totem-movie-properties.c:154
-#: ../src/plugins/properties/totem-movie-properties.c:165
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: ../src/totem-properties-view.c:190
-#: ../src/plugins/properties/totem-movie-properties.c:151
-#, c-format
-msgid "%d × %d"
-msgstr "%d × %d"
-
-#: ../src/totem-properties-view.c:222
-#: ../src/plugins/properties/totem-movie-properties.c:168
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/totem-properties-view.c:230
-#: ../src/plugins/properties/totem-movie-properties.c:168
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/totem-properties-view.c:251
-msgctxt "Number of audio channels"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/totemselectiontoolbar.ui.h:1
+#: src/totemselectiontoolbar.ui:15
 msgid "Add to Favourites"
 msgstr "お気に入りに追加する"
 
-#: ../src/totemselectiontoolbar.ui.h:2
+#: src/totemselectiontoolbar.ui:40
 msgctxt "button"
 msgid "Play"
 msgstr "再生"
 
-#: ../src/totemselectiontoolbar.ui.h:4
+#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
 msgid "Shuffle"
 msgstr "シャッフル"
 
-#: ../src/totemselectiontoolbar.ui.h:5
+#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
 msgid "Delete"
 msgstr "削除"
 
-#: ../src/totem-subtitle-encoding.c:156
+#: src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
 msgstr "現在のロケール"
 
-#: ../src/totem-subtitle-encoding.c:159 ../src/totem-subtitle-encoding.c:161
-#: ../src/totem-subtitle-encoding.c:163 ../src/totem-subtitle-encoding.c:165
+#: src/totem-subtitle-encoding.c:159 src/totem-subtitle-encoding.c:161
+#: src/totem-subtitle-encoding.c:163 src/totem-subtitle-encoding.c:165
 msgid "Arabic"
 msgstr "アラビア語"
 
-#: ../src/totem-subtitle-encoding.c:168
+#: src/totem-subtitle-encoding.c:168
 msgid "Armenian"
 msgstr "アルメニア語"
 
-#: ../src/totem-subtitle-encoding.c:171 ../src/totem-subtitle-encoding.c:173
-#: ../src/totem-subtitle-encoding.c:175
+#: src/totem-subtitle-encoding.c:171 src/totem-subtitle-encoding.c:173
+#: src/totem-subtitle-encoding.c:175
 msgid "Baltic"
 msgstr "バルト語"
 
-#: ../src/totem-subtitle-encoding.c:178
+#: src/totem-subtitle-encoding.c:178
 msgid "Celtic"
 msgstr "ケルト語"
 
-#: ../src/totem-subtitle-encoding.c:181 ../src/totem-subtitle-encoding.c:183
-#: ../src/totem-subtitle-encoding.c:185 ../src/totem-subtitle-encoding.c:187
+#: src/totem-subtitle-encoding.c:181 src/totem-subtitle-encoding.c:183
+#: src/totem-subtitle-encoding.c:185 src/totem-subtitle-encoding.c:187
 msgid "Central European"
 msgstr "中欧"
 
-#: ../src/totem-subtitle-encoding.c:190 ../src/totem-subtitle-encoding.c:192
-#: ../src/totem-subtitle-encoding.c:194 ../src/totem-subtitle-encoding.c:196
+#: src/totem-subtitle-encoding.c:190 src/totem-subtitle-encoding.c:192
+#: src/totem-subtitle-encoding.c:194 src/totem-subtitle-encoding.c:196
 msgid "Chinese Simplified"
 msgstr "中国語/簡体字"
 
-#: ../src/totem-subtitle-encoding.c:199 ../src/totem-subtitle-encoding.c:201
-#: ../src/totem-subtitle-encoding.c:203
+#: src/totem-subtitle-encoding.c:199 src/totem-subtitle-encoding.c:201
+#: src/totem-subtitle-encoding.c:203
 msgid "Chinese Traditional"
 msgstr "中国語/繁体字"
 
-#: ../src/totem-subtitle-encoding.c:206
+#: src/totem-subtitle-encoding.c:206
 msgid "Croatian"
 msgstr "クロアチア語"
 
-#: ../src/totem-subtitle-encoding.c:209 ../src/totem-subtitle-encoding.c:211
-#: ../src/totem-subtitle-encoding.c:213 ../src/totem-subtitle-encoding.c:215
-#: ../src/totem-subtitle-encoding.c:217 ../src/totem-subtitle-encoding.c:219
+#: src/totem-subtitle-encoding.c:209 src/totem-subtitle-encoding.c:211
+#: src/totem-subtitle-encoding.c:213 src/totem-subtitle-encoding.c:215
+#: src/totem-subtitle-encoding.c:217 src/totem-subtitle-encoding.c:219
 msgid "Cyrillic"
 msgstr "キリル語"
 
-#: ../src/totem-subtitle-encoding.c:222
+#: src/totem-subtitle-encoding.c:222
 msgid "Cyrillic/Russian"
 msgstr "キリル語/ロシア"
 
-#: ../src/totem-subtitle-encoding.c:225 ../src/totem-subtitle-encoding.c:227
+#: src/totem-subtitle-encoding.c:225 src/totem-subtitle-encoding.c:227
 msgid "Cyrillic/Ukrainian"
 msgstr "キリル語/ウクライナ"
 
-#: ../src/totem-subtitle-encoding.c:230
+#: src/totem-subtitle-encoding.c:230
 msgid "Georgian"
 msgstr "グルジア語"
 
-#: ../src/totem-subtitle-encoding.c:233 ../src/totem-subtitle-encoding.c:235
-#: ../src/totem-subtitle-encoding.c:237
+#: src/totem-subtitle-encoding.c:233 src/totem-subtitle-encoding.c:235
+#: src/totem-subtitle-encoding.c:237
 msgid "Greek"
 msgstr "ギリシア語"
 
-#: ../src/totem-subtitle-encoding.c:240
+#: src/totem-subtitle-encoding.c:240
 msgid "Gujarati"
 msgstr "グジャラート語"
 
-#: ../src/totem-subtitle-encoding.c:243
+#: src/totem-subtitle-encoding.c:243
 msgid "Gurmukhi"
 msgstr "グルムキー文字"
 
-#: ../src/totem-subtitle-encoding.c:246 ../src/totem-subtitle-encoding.c:248
-#: ../src/totem-subtitle-encoding.c:250 ../src/totem-subtitle-encoding.c:252
+#: src/totem-subtitle-encoding.c:246 src/totem-subtitle-encoding.c:248
+#: src/totem-subtitle-encoding.c:250 src/totem-subtitle-encoding.c:252
 msgid "Hebrew"
 msgstr "ヘブライ語"
 
-#: ../src/totem-subtitle-encoding.c:255
+#: src/totem-subtitle-encoding.c:255
 msgid "Hebrew Visual"
 msgstr "ヘブライ語/表示"
 
-#: ../src/totem-subtitle-encoding.c:258
+#: src/totem-subtitle-encoding.c:258
 msgid "Hindi"
 msgstr "ヒンズー語"
 
-#: ../src/totem-subtitle-encoding.c:261
+#: src/totem-subtitle-encoding.c:261
 msgid "Icelandic"
 msgstr "アイスランド語"
 
-#: ../src/totem-subtitle-encoding.c:264 ../src/totem-subtitle-encoding.c:266
-#: ../src/totem-subtitle-encoding.c:268
+#: src/totem-subtitle-encoding.c:264 src/totem-subtitle-encoding.c:266
+#: src/totem-subtitle-encoding.c:268
 msgid "Japanese"
 msgstr "日本語"
 
-#: ../src/totem-subtitle-encoding.c:271 ../src/totem-subtitle-encoding.c:273
-#: ../src/totem-subtitle-encoding.c:275 ../src/totem-subtitle-encoding.c:277
+#: src/totem-subtitle-encoding.c:271 src/totem-subtitle-encoding.c:273
+#: src/totem-subtitle-encoding.c:275 src/totem-subtitle-encoding.c:277
 msgid "Korean"
 msgstr "韓国語"
 
-#: ../src/totem-subtitle-encoding.c:280
+#: src/totem-subtitle-encoding.c:280
 msgid "Nordic"
 msgstr "北欧"
 
-#: ../src/totem-subtitle-encoding.c:283
+#: src/totem-subtitle-encoding.c:283
 msgid "Persian"
 msgstr "ペルシア語"
 
-#: ../src/totem-subtitle-encoding.c:286 ../src/totem-subtitle-encoding.c:288
+#: src/totem-subtitle-encoding.c:286 src/totem-subtitle-encoding.c:288
 msgid "Romanian"
 msgstr "ルーマニア語"
 
-#: ../src/totem-subtitle-encoding.c:291
+#: src/totem-subtitle-encoding.c:291
 msgid "South European"
 msgstr "南欧"
 
-#: ../src/totem-subtitle-encoding.c:294
+#: src/totem-subtitle-encoding.c:294
 msgid "Thai"
 msgstr "タイ語"
 
-#: ../src/totem-subtitle-encoding.c:297 ../src/totem-subtitle-encoding.c:299
-#: ../src/totem-subtitle-encoding.c:301 ../src/totem-subtitle-encoding.c:303
+#: src/totem-subtitle-encoding.c:297 src/totem-subtitle-encoding.c:299
+#: src/totem-subtitle-encoding.c:301 src/totem-subtitle-encoding.c:303
 msgid "Turkish"
 msgstr "トルコ語"
 
-#: ../src/totem-subtitle-encoding.c:306 ../src/totem-subtitle-encoding.c:308
-#: ../src/totem-subtitle-encoding.c:310 ../src/totem-subtitle-encoding.c:312
-#: ../src/totem-subtitle-encoding.c:314
+#: src/totem-subtitle-encoding.c:306 src/totem-subtitle-encoding.c:308
+#: src/totem-subtitle-encoding.c:310 src/totem-subtitle-encoding.c:312
+#: src/totem-subtitle-encoding.c:314
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../src/totem-subtitle-encoding.c:317 ../src/totem-subtitle-encoding.c:319
-#: ../src/totem-subtitle-encoding.c:321 ../src/totem-subtitle-encoding.c:323
-#: ../src/totem-subtitle-encoding.c:325
+#: src/totem-subtitle-encoding.c:317 src/totem-subtitle-encoding.c:319
+#: src/totem-subtitle-encoding.c:321 src/totem-subtitle-encoding.c:323
+#: src/totem-subtitle-encoding.c:325
 msgid "Western"
 msgstr "西欧"
 
-#: ../src/totem-subtitle-encoding.c:328 ../src/totem-subtitle-encoding.c:330
-#: ../src/totem-subtitle-encoding.c:332
+#: src/totem-subtitle-encoding.c:328 src/totem-subtitle-encoding.c:330
+#: src/totem-subtitle-encoding.c:332
 msgid "Vietnamese"
 msgstr "ベトナム語"
 
 #. Elapsed / Total Length
-#: ../src/totem-time-label.c:64
+#: src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-time-label.c:67
+#: src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "%s / %s へスキップ"
 
-#: ../src/totem-uri.c:329
+#: src/totem-uri.c:329
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: ../src/totem-uri.c:335
+#: src/totem-uri.c:335
 msgid "Video files"
 msgstr "動画ファイル"
 
-#: ../src/totem-uri.c:346
+#: src/totem-uri.c:346
 msgid "Subtitle files"
 msgstr "字幕のファイル"
 
-#: ../src/totem-uri.c:396
+#: src/totem-uri.c:396
 msgid "Select Text Subtitles"
 msgstr "字幕の選択"
 
-#: ../src/totem-uri.c:400
+#: src/totem-uri.c:400
 msgid "_Open"
 msgstr "開く(_O)"
 
-#: ../src/totem-uri.c:457
+#: src/totem-uri.c:457
 msgid "Add Videos"
 msgstr "ビデオを追加する"
 
-#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:1
+#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
 msgid "Apple Trailers"
 msgstr "Apple トレーラー"
 
-#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
+#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
 msgid "Sets the user agent for the Apple Trailers site"
 msgstr "Apple トレーラーのサイトに使用するユーザーエージェントを設定します"
 
-#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoload Subtitles"
 msgstr "字幕の自動読み込み"
 
-#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
 msgid "Autoloads text subtitles"
 msgstr "テキスト字幕を自動的に読み込みます"
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
+#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:6
 msgid "Video Disc Recorder"
 msgstr "ビデオディスクレコーダー"
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
+#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:7
 msgid "Records (S)VCDs or video DVDs"
 msgstr "(S)VCD または DVD-Video を作成します"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:101
 msgid "The video disc could not be duplicated."
 msgstr "ビデオディスクの複製を作成できませんでした"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:122
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:103
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:249
 msgid "The movie could not be recorded."
 msgstr "動画を保存できませんでした"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:139
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:235
 msgid "Unable to write a project."
 msgstr "プロジェクトを書き込めません"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:375
 msgid "_Create Video Disc…"
 msgstr "ビデオディスクを作成する(_C)…"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:376
 msgid "Copy Vide_o DVD…"
 msgstr "DVD-Videoを複製する(_O)…"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
+#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:377
 msgid "Copy (S)VCD…"
 msgstr "(S)VCD を複製する…"
 
-#: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
+#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus インターフェース"
 
-#: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
+#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:7
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1448,175 +1284,330 @@ msgstr ""
 "MPRIS を使用して、現在再生中のビデオの通知を送信し、リモートコントロールを可"
 "能にします。"
 
-#: ../src/plugins/dbusservice/dbusservice.py:208
-#: ../src/plugins/dbusservice/dbusservice.py:236
+#: src/plugins/dbusservice/dbusservice.py:208
+#: src/plugins/dbusservice/dbusservice.py:236
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "MediaPlayer2オブジェクトは‘%s’インターフェースを実装してません"
 
-#: ../src/plugins/dbusservice/dbusservice.py:218
+#: src/plugins/dbusservice/dbusservice.py:218
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "プロパティー‘%s’は書き込みできません。"
 
-#: ../src/plugins/dbusservice/dbusservice.py:231
+#: src/plugins/dbusservice/dbusservice.py:231
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "MediaPlayer 2オブジェクトの不明なプロパティー‘%s’を要求されました"
 
-#: ../src/plugins/gromit/gromit.plugin.in.h:1
-msgid "Gromit Annotations"
-msgstr "Gromit 式のアノテーション"
-
-#: ../src/plugins/gromit/gromit.plugin.in.h:2
-msgid "Presentation helper to make annotations on screen"
-msgstr "スクリーンで注釈を表示するプレゼンテーションヘルパーです"
-
-#: ../src/plugins/gromit/totem-gromit.c:232
-msgid "The gromit binary was not found."
-msgstr "Gromit のバイナリが見つかりませんでした。"
-
-#: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
 msgstr "インスタントメッセンジャーのステータス"
 
-#: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "動画を再生している時にインスタントメッセンジャーを離席状態にセットします"
 
-#: ../src/plugins/lirc/lirc.plugin.in.h:1
+#: src/plugins/lirc/lirc.plugin.desktop.in:5
 msgid "Infrared Remote Control"
 msgstr "赤外線リモート制御"
 
-#: ../src/plugins/lirc/lirc.plugin.in.h:2
+#: src/plugins/lirc/lirc.plugin.desktop.in:6
 msgid "Support infrared remote control"
 msgstr "赤外線のリモコンをサポートします"
 
-#: ../src/plugins/lirc/totem-lirc.c:239
+#: src/plugins/lirc/totem-lirc.c:239
 msgid "Couldn’t initialize lirc."
 msgstr "lirc を初期化できませんでした。"
 
-#: ../src/plugins/lirc/totem-lirc.c:251
+#: src/plugins/lirc/totem-lirc.c:251
 msgid "Couldn’t read lirc configuration."
 msgstr "lirc の設定を読み込めませんでした。"
 
-#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
+#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
 msgid "Media Player Keys"
 msgstr "メディアプレイヤーのキー"
 
-#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
+#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:6
 msgid "Support additional media player keys"
 msgstr "メディアプレイヤーのキー追加サポート"
 
-#: ../src/plugins/ontop/ontop.plugin.in.h:1
-msgid "Always On Top"
-msgstr "常に手前に表示する"
-
-#: ../src/plugins/ontop/ontop.plugin.in.h:2
-msgid "Keep the main window on top when playing a movie"
-msgstr "動画を再生している時はメインウィンドウを常に前面に出しておきます"
-
-#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:1
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Subtitle Downloader"
 msgstr "字幕ダウンローダー"
 
-#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
 msgid "Look for subtitles for the currently playing movie"
 msgstr "再生中の動画の字幕を探します"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:46
+#: src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "ブラジル系ポルトガル語"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:187
+#: src/plugins/opensubtitles/opensubtitles.py:187
 msgid "Searching for subtitles…"
 msgstr "字幕を検索中..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:235
-#: ../src/plugins/opensubtitles/opensubtitles.py:615
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "字幕をダウンロード中..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:300
+#: src/plugins/opensubtitles/opensubtitles.py:300
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles のウェブサイトにアクセスできませんでした"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:333
-#: ../src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:333
+#: src/plugins/opensubtitles/opensubtitles.py:351
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitlesのウェブサイトにアクセスできませんでした。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:339
+#: src/plugins/opensubtitles/opensubtitles.py:339
 msgid "No results found."
 msgstr "見つかりませんでした。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:482
+#: src/plugins/opensubtitles/opensubtitles.py:482
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:488
+#: src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Format"
 msgstr "形式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:493
+#: src/plugins/opensubtitles/opensubtitles.py:493
 msgid "Rating"
 msgstr "評価"
 
 #. pylint: disable=no-member
-#: ../src/plugins/opensubtitles/opensubtitles.py:533
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "動画の字幕をダウンロード(_D)…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:572
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "字幕を検索中..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
+#: src/plugins/opensubtitles/opensubtitles.ui:27
 msgid "Download Movie Subtitles"
 msgstr "動画の字幕のダウンロード"
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
+#: src/plugins/opensubtitles/opensubtitles.ui:43
 msgid "Subtitle _language:"
 msgstr "字幕の言語(_L):"
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
+#: src/plugins/opensubtitles/opensubtitles.ui:124
 msgid "_Play with Subtitle"
 msgstr "字幕付きで再生する(_P)"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
+#: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
 msgstr "字幕の言語"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
+#: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:7
 msgid "The language to search for subtitles for movies in."
 msgstr "動画にある字幕を検索するための言語です。"
 
-#: ../src/plugins/properties/movie-properties.plugin.in.h:1
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Movie Properties"
 msgstr "動画のプロパティ"
 
-#: ../src/plugins/properties/movie-properties.plugin.in.h:2
+#: src/plugins/properties/movie-properties.plugin.desktop.in:7
 msgid "Adds movie properties menu item"
 msgstr "動画のプロパティのメニューアイテムを追加します"
 
-#: ../src/plugins/properties/totem-movie-properties.c:261
+#: src/plugins/properties/totem-movie-properties.c:151
+#, c-format
+msgid "%d × %d"
+msgstr "%d × %d"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
 msgstr "プロパティ"
 
-#: ../src/plugins/properties/totem-movie-properties.c:286
+#: src/plugins/properties/totem-movie-properties.c:286
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
+#: src/plugins/properties/properties.ui:47
+msgid "Title:"
+msgstr "タイトル:"
+
+#: src/plugins/properties/properties.ui:67
+msgid "Artist:"
+msgstr "演奏者:"
+
+#: src/plugins/properties/properties.ui:87
+msgid "Duration:"
+msgstr "再生時間:"
+
+#: src/plugins/properties/properties.ui:107
+msgid "Year:"
+msgstr "制作年:"
+
+#: src/plugins/properties/properties.ui:127
+msgid "Album:"
+msgstr "アルバム名:"
+
+#: src/plugins/properties/properties.ui:235
+msgid "Comment:"
+msgstr "コメント:"
+
+#: src/plugins/properties/properties.ui:273
+msgid "Container:"
+msgstr "コンテナー:"
+
+#: src/plugins/properties/properties.ui:345
+msgid "Dimensions:"
+msgstr "大きさ:"
+
+#: src/plugins/properties/properties.ui:365
+#: src/plugins/properties/properties.ui:609
+msgid "Codec:"
+msgstr "コーデック:"
+
+#: src/plugins/properties/properties.ui:385
+msgid "Framerate:"
+msgstr "フレームレート:"
+
+#: src/plugins/properties/properties.ui:405
+#: src/plugins/properties/properties.ui:572
+msgid "Bitrate:"
+msgstr "ビットレート:"
+
+#: src/plugins/properties/properties.ui:536
+msgid "Sample rate:"
+msgstr "サンプリング:"
+
+#: src/plugins/properties/properties.ui:646
+msgid "Channels:"
+msgstr "チャンネル数:"
+
+#. Title
+#. Artist
+#. Album
+#. Year
+#. Container
+#: src/plugins/properties/bacon-video-widget-properties.c:106
+#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:118
+msgid "Unknown"
+msgstr "不明"
+
+#. Dimensions
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/A"
+
+#. Video Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:123
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:126
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:237
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:133
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#. Audio Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:135
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/A"
+
+#. Sample rate
+#: src/plugins/properties/bacon-video-widget-properties.c:137
+msgid "0 Hz"
+msgstr "0 Hz"
+
+#. Channels
+#: src/plugins/properties/bacon-video-widget-properties.c:139
+msgid "0 Channels"
+msgstr "0 チャンネル"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:155
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d時間"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:157
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d分"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:160
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d秒"
+
+#. 5 hours 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:166
+#, c-format
+msgctxt "time"
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:169
+#, c-format
+msgctxt "time"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 0 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:175
+msgid "0 seconds"
+msgstr "0 秒"
+
+#: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
 msgstr "rpdb2パスワード"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
+#: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:7
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of “totem” will be used."
@@ -1624,37 +1615,37 @@ msgstr ""
 "権限のないリモートアクセスからTotemをデバッグ用rpdb2サーバーを保護するための"
 "パスワード。空の場合は、デフォルトで“totem”を使います。"
 
-#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Python Console"
 msgstr "Python 端末"
 
-#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
 msgid "Interactive Python console"
 msgstr "対話式 Python 端末"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: ../src/plugins/pythonconsole/pythonconsole.py:80
+#: src/plugins/pythonconsole/pythonconsole.py:80
 msgid "_Python Console"
 msgstr "Python 端末(_P)"
 
 #. pylint: disable=no-member
-#: ../src/plugins/pythonconsole/pythonconsole.py:86
+#: src/plugins/pythonconsole/pythonconsole.py:86
 msgid "Python Debugger"
 msgstr "Python デバッガー"
 
 #. pylint: disable=E1101
-#: ../src/plugins/pythonconsole/pythonconsole.py:97
+#: src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "“totem_object”を使って Totem.Object にアクセスできます:\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:101
+#: src/plugins/pythonconsole/pythonconsole.py:101
 msgid "Totem Python Console"
 msgstr "Totem の Python 端末"
 
 #. pylint: disable=W0613
-#: ../src/plugins/pythonconsole/pythonconsole.py:111
+#: src/plugins/pythonconsole/pythonconsole.py:111
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1664,75 +1655,84 @@ msgstr ""
 "ります。DConf の設定でデバッガーのパスワードを指定していない場合、デフォルト"
 "のパスワード (“totem”) を使用してください。"
 
-#: ../src/plugins/recent/recent.plugin.in.h:1
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
 msgstr "最近使用したファイル"
 
-#: ../src/plugins/recent/recent.plugin.in.h:2
+#: src/plugins/recent/recent.plugin.desktop.in:7
 msgid "Adds files that have been played to recent files"
 msgstr "最近使ったファイルに再生したファイルを追加します"
 
-#: ../src/plugins/rotation/rotation.plugin.in.h:1
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Rotation Plugin"
 msgstr "回転プラグイン"
 
-#: ../src/plugins/rotation/rotation.plugin.in.h:2
+#: src/plugins/rotation/rotation.plugin.desktop.in:7
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "動画の向きが誤っている場合に回転することができます"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "_Rotate ↷"
 msgstr "回転 ↷(_R)"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:56
+#: src/plugins/rotation/totem-rotation.c:262
 msgid "Rotate ↶"
 msgstr "回転 ↶"
 
-#: ../src/plugins/save-file/save-file.plugin.in.h:1
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save Copy"
 msgstr "コピーを保存する"
 
-#: ../src/plugins/save-file/save-file.plugin.in.h:2
+#: src/plugins/save-file/save-file.plugin.desktop.in:7
 msgid "Save a copy of the currently playing movie"
 msgstr "現在再生中の動画を複製します"
 
+#: src/plugins/save-file/totem-save-file.c:89
+msgid "The video could not be made available offline."
+msgstr ""
+
+#. translators: “Files” refers to nautilus' name
+#: src/plugins/save-file/totem-save-file.c:91
+msgid "“Files” is not available."
+msgstr ""
+
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:172
 msgid "Movie"
 msgstr "動画"
 
-#: ../src/plugins/save-file/totem-save-file.c:366
+#: src/plugins/save-file/totem-save-file.c:456
 msgid "Make Available Offline"
 msgstr "オフラインでも試聴可能にする"
 
-#: ../src/plugins/screensaver/screensaver.plugin.in.h:1
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Screen Saver"
 msgstr "スクリーンセーバー"
 
-#: ../src/plugins/screensaver/screensaver.plugin.in.h:2
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "動画の再生中にスクリーンセーバーを無効にします"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:79
+#: src/plugins/screensaver/totem-screensaver.c:79
 msgid "Playing a movie"
 msgstr "動画を再生する"
 
-#: ../src/plugins/screenshot/gallery.ui.h:1
+#: src/plugins/screenshot/gallery.ui:41
 msgid "Screenshot width (in pixels):"
 msgstr "スクリーンショットの幅 (ピクセル単位):"
 
-#: ../src/plugins/screenshot/gallery.ui.h:2
+#: src/plugins/screenshot/gallery.ui:50
 msgid "Calculate the number of screenshots"
 msgstr "スクリーンショットの総数の計算"
 
-#: ../src/plugins/screenshot/gallery.ui.h:3
+#: src/plugins/screenshot/gallery.ui:73
 msgid "Number of screenshots:"
 msgstr "スクリーンショットの総数:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: ../src/plugins/screenshot/screenshot-filename-builder.c:147
+#: src/plugins/screenshot/screenshot-filename-builder.c:147
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Screenshot from %s.png"
@@ -1740,24 +1740,24 @@ msgstr "Screenshot from %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: ../src/plugins/screenshot/screenshot-filename-builder.c:154
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Screenshot from %s - %d.png"
 
-#: ../src/plugins/screenshot/screenshot.plugin.in.h:1
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
 msgstr "スクリーンショット"
 
-#: ../src/plugins/screenshot/screenshot.plugin.in.h:2
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "ビデオのスクリーンショットやギャラリーを撮ることができます"
 
-#: ../src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "ギャラリーの保存"
 
-#: ../src/plugins/screenshot/totem-gallery.c:99
+#: src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
 msgstr "保存(_S)"
 
@@ -1765,55 +1765,55 @@ msgstr "保存(_S)"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:116
+#: src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "ギャラリー-%s-%d.jpg"
 
 #. Set up the window
-#: ../src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/screenshot/totem-gallery-progress.c:101
 msgid "Creating Gallery…"
 msgstr "ギャラリーの作成中…"
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:107
+#: src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "ギャラリー (“%s”) の保存中"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem はこのビデオのスクリーンショットを撮れませんでした。"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "これは発生してはいけない現象です; バグとして報告してください。"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
+#: src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
 msgstr "スクリーンショットを撮る(_S)"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
+#: src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
 msgstr "ギャラリーの作成(_G)…"
 
-#: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:219
+#: src/plugins/skipto/skipto.plugin.desktop.in:6
+#: src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "スキップ"
 
-#: ../src/plugins/skipto/skipto.plugin.in.h:2
+#: src/plugins/skipto/skipto.plugin.desktop.in:7
 msgid "Provides the “Skip to” dialog"
 msgstr "“スキップ”ダイアログを追加します"
 
-#: ../src/plugins/skipto/skipto.ui.h:1
+#: src/plugins/skipto/skipto.ui:22
 msgid "_Skip to:"
 msgstr "スキップ先(_S):"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:176
+#: src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
@@ -1822,109 +1822,113 @@ msgstr[0] "秒"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:213
+#: src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: ../src/plugins/skipto/totem-skipto.c:222
+#: src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "スキップ(_S)"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:206
+#: src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
 msgstr "スキップ(_S)…"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "通常"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:76
 #, c-format
 msgid "Speed: %s"
 msgstr "スピード: %s"
 
-#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Variable Rate"
 msgstr ""
 
-#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
 msgid "Provides the variable rate menu item"
 msgstr ""
 
-#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Vimeo のサイトに使用するユーザーエージェントを設定します"
 
-#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-msgid "Zeitgeist Plugin"
-msgstr "Zeitgeistプラグイン"
+#~ msgid "_Quit"
+#~ msgstr "終了(_Q)"
 
-#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
-msgid "A plugin sending events to Zeitgeist"
-msgstr "Zeitgeistへのイベント送信プラグイン"
+#~ msgid "%d frame per second"
+#~ msgid_plural "%d frames per second"
+#~ msgstr[0] "%d フレーム/秒"
 
-#~ msgid "Play movies"
-#~ msgstr "動画を再生します"
+#~ msgid "Audio/Video"
+#~ msgstr "音声/ビデオ"
 
-#~ msgid ""
-#~ "Videos, also known as Totem, is the official movie player of the GNOME "
-#~ "desktop environment. It features a searchable list of local videos, and "
-#~ "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-#~ "highlights from a number of web sites."
-#~ msgstr ""
-#~ "ビデオ (Totem とも呼ばれます) は、GNOME デスクトップ環境の公式動画プレイ"
-#~ "ヤーです。ローカルに保存したビデオや DVD の一覧表示、検索機能に加え、ロー"
-#~ "カルネットワーク上のビデオも再生できます (UPnP/DLNA を使用)。また、様々な"
-#~ "ウェブサイトのビデオハイライトを楽しむこともできます"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
-#~ msgid ""
-#~ "Totem comes with added functionality such as: subtitle downloader, and "
-#~ "support for recording DVDs."
-#~ msgstr ""
-#~ "Totem では次のような追加機能が利用できます: 字幕ダウンローダー、DVD の作"
-#~ "成。"
+#~ msgctxt "Number of audio channels"
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Gromit Annotations"
+#~ msgstr "Gromit 式のアノテーション"
+
+#~ msgid "Presentation helper to make annotations on screen"
+#~ msgstr "スクリーンで注釈を表示するプレゼンテーションヘルパーです"
+
+#~ msgid "The gromit binary was not found."
+#~ msgstr "Gromit のバイナリが見つかりませんでした。"
+
+#~ msgid "Always On Top"
+#~ msgstr "常に手前に表示する"
+
+#~ msgid "Keep the main window on top when playing a movie"
+#~ msgstr "動画を再生している時はメインウィンドウを常に前面に出しておきます"
+
+#~ msgid "Zeitgeist Plugin"
+#~ msgstr "Zeitgeistプラグイン"
+
+#~ msgid "A plugin sending events to Zeitgeist"
+#~ msgstr "Zeitgeistへのイベント送信プラグイン"
 
 #~ msgid "Video thumbnailer for the file manager"
 #~ msgstr "ファイルマネージャー用のビデオサムネイル作成"
 
 #~ msgid "Files properties tab"
 #~ msgstr "ファイルのプロパティタブ"
-
-#~ msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-#~ msgstr ""
-#~ "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;ビデオ;映像;動画;フィルム;"
-#~ "クリップ;シリーズ;プレイヤー;テレビ;ディスク;"
 
 #~ msgid "Audio Preview"
 #~ msgstr "音声プレビュー"
