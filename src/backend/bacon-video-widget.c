@@ -2742,7 +2742,9 @@ playbin_source_setup_cb (GstElement       *playbin,
 			 GstElement       *source,
 			 BaconVideoWidget *bvw)
 {
-  GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
+  GST_DEBUG ("Got source of type '%s'", G_OBJECT_TYPE_NAME (source));
+  if (g_strcmp0 (G_OBJECT_TYPE_NAME (source), "GstCurlHttpSrc") == 0)
+    g_warning ("Download buffering not supported with GstCurlHttpSrc, see https://gitlab.freedesktop.org/gstreamer/gst-plugins-base/issues/551");
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
   bvw_set_auth_on_element (bvw, source);
