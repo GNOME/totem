@@ -2756,7 +2756,7 @@ playbin_element_setup_cb (GstElement *playbin,
 {
   char *template;
 
-  if (g_strcmp0 (G_OBJECT_CLASS_NAME (G_OBJECT_GET_CLASS (G_OBJECT (element))), "GstDownloadBuffer") != 0)
+  if (g_strcmp0 (G_OBJECT_TYPE_NAME (element), "GstDownloadBuffer") != 0)
     return;
 
   /* See also bacon_video_widget_initable_init() */
