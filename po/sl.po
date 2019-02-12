@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-09 15:43+0000\n"
-"PO-Revision-Date: 2019-02-09 20:24+0100\n"
+"POT-Creation-Date: 2019-02-12 11:43+0000\n"
+"PO-Revision-Date: 2019-02-12 13:03+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1877 src/totem-object.c:3658
+#: src/totem-grilo.c:1892 src/totem-object.c:3658
 msgid "Videos"
 msgstr "Video"
 
@@ -34,30 +34,25 @@ msgstr "Predvajanje posnetkov"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:11
 msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
+"Videos is the official movie player of the GNOME desktop environment. It "
+"features a searchable list of local videos, and DVDs, as well as local "
+"network video shares (using UPnP/DLNA) and video highlights from a number of "
+"web sites."
 msgstr ""
-"Program Totem, znan tudi kot uradni predvajalnik videa za namizje GNOME, "
-"podpira različne zmožnosti kot iskanje krajevnih in oddaljenih datotek z "
-"uporabo UPnP/DLNA in izbor povzetkov videa preko različnih spletnih strani."
+"Program je uradni predvajalnik videa za namizje GNOME. Podpira različne "
+"zmožnosti kot je iskanje krajevnih in oddaljenih (z uporabo UPnP/DLNA) "
+"datotek, nosilcev DVD in izbor povzetkov videa prek različnih spletnih "
+"strani."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:18
+#: data/appdata/org.gnome.Totem.appdata.xml.in:17
 msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
+"Videos comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, create screenshot galleries, and "
 "support for recording DVDs."
 msgstr ""
-"Program Totem podpira tudi napredno iskanje in prejemanje podpisov in "
-"zapisovanje nosilcev DVD."
-
-#: data/appdata/org.gnome.Totem.appdata.xml.in:23
-msgid "Video thumbnailer for the file manager"
-msgstr "Ustvarjalnik sličic posnetka za upravljalnik datotek"
-
-#: data/appdata/org.gnome.Totem.appdata.xml.in:24
-msgid "Files properties tab"
-msgstr "Zavihek lastnosti datotek"
+"Program podpira hitro in počasno predvajanje posnetka, ustvarjanje galerij "
+"zaslonskih posnetkov, napredno iskanje, prejemanje podpisov in zapisovanje "
+"nosilcev DVD."
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -192,7 +187,6 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr "Mape, ki bodo prikazane v vmesniku brskanja; privzeto ni določene mape"
 
 #: data/preferences.ui:13 src/backend/bacon-video-widget.c:5642
-#: src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -252,13 +246,12 @@ msgstr "Vstavki"
 msgid "Plugins…"
 msgstr "Vstavki ..."
 
-#: data/preferences.ui:464 data/properties.ui:23
+#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Splošno"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 data/properties.ui:321
-#: src/totem-properties-view.c:285
+#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Posnetek"
 
@@ -302,62 +295,9 @@ msgstr "Zvočni odvod"
 msgid "_Audio output type:"
 msgstr "Vrsta _zvočnega odvoda:"
 
-#: data/preferences.ui:1023 data/properties.ui:512
-#: src/totem-properties-view.c:283
+#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Zvok"
-
-#: data/properties.ui:47
-msgid "Title:"
-msgstr "Naslov:"
-
-#: data/properties.ui:67
-msgid "Artist:"
-msgstr "Izvajalec:"
-
-#: data/properties.ui:87
-msgid "Duration:"
-msgstr "Trajanje:"
-
-#: data/properties.ui:107
-msgid "Year:"
-msgstr "Leto:"
-
-#: data/properties.ui:127
-msgid "Album:"
-msgstr "Album:"
-
-#: data/properties.ui:235
-msgid "Comment:"
-msgstr "Opomba:"
-
-#: data/properties.ui:273
-msgid "Container:"
-msgstr "Vsebovalnik:"
-
-#: data/properties.ui:345
-msgid "Dimensions:"
-msgstr "Mere:"
-
-#: data/properties.ui:365 data/properties.ui:609
-msgid "Codec:"
-msgstr "Kodek:"
-
-#: data/properties.ui:385
-msgid "Framerate:"
-msgstr "Hitrost sličic:"
-
-#: data/properties.ui:405 data/properties.ui:572
-msgid "Bitrate:"
-msgstr "Bitna hitrost:"
-
-#: data/properties.ui:536
-msgid "Sample rate:"
-msgstr "Hitrost vzorčenja:"
-
-#: data/properties.ui:646
-msgid "Channels:"
-msgstr "Kanali:"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -743,19 +683,19 @@ msgstr ""
 "Te datoteke ni mogoče predvajanje preko omrežja. Datoteko je treba najprej "
 "prejeti na disk in nato  predvajati."
 
-#: src/backend/bacon-video-widget.c:5638 src/totem-properties-view.c:238
+#: src/backend/bacon-video-widget.c:5638
 msgid "Surround"
 msgstr "Surround sistem zvoka"
 
-#: src/backend/bacon-video-widget.c:5640 src/totem-properties-view.c:240
+#: src/backend/bacon-video-widget.c:5640
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5927
+#: src/backend/bacon-video-widget.c:5928
 msgid "Media contains no supported video streams."
 msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
-#: src/backend/bacon-video-widget.c:6139
+#: src/backend/bacon-video-widget.c:6140
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -839,118 +779,6 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#. Title
-#. Artist
-#. Album
-#. Year
-#. Container
-#: src/properties/bacon-video-widget-properties.c:106
-#: src/properties/bacon-video-widget-properties.c:108
-#: src/properties/bacon-video-widget-properties.c:110
-#: src/properties/bacon-video-widget-properties.c:112
-#: src/properties/bacon-video-widget-properties.c:118
-msgid "Unknown"
-msgstr "Neznano"
-
-#. Dimensions
-#: src/properties/bacon-video-widget-properties.c:121
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "ni podatka"
-
-#. Video Codec
-#: src/properties/bacon-video-widget-properties.c:123
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: src/properties/bacon-video-widget-properties.c:126
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: src/properties/bacon-video-widget-properties.c:129
-#: src/properties/bacon-video-widget-properties.c:239
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: src/properties/bacon-video-widget-properties.c:133
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#. Audio Codec
-#: src/properties/bacon-video-widget-properties.c:135
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "N/A"
-
-#. Sample rate
-#: src/properties/bacon-video-widget-properties.c:137
-msgid "0 Hz"
-msgstr "0 Hz"
-
-#. Channels
-#: src/properties/bacon-video-widget-properties.c:139
-msgid "0 Channels"
-msgstr "0 kanalov"
-
-#: src/properties/bacon-video-widget-properties.c:155
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d ur"
-msgstr[1] "%d ura"
-msgstr[2] "%d uri"
-msgstr[3] "%d ure"
-
-#: src/properties/bacon-video-widget-properties.c:157
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minuta"
-msgstr[2] "%d minuti"
-msgstr[3] "%d minute"
-
-#: src/properties/bacon-video-widget-properties.c:160
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d sekund"
-msgstr[1] "%d sekunda"
-msgstr[2] "%d sekundi"
-msgstr[3] "%d sekunde"
-
-#. 5 hours 2 minutes 12 seconds
-#: src/properties/bacon-video-widget-properties.c:166
-#, c-format
-msgctxt "time"
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. 2 minutes 12 seconds
-#: src/properties/bacon-video-widget-properties.c:169
-#, c-format
-msgctxt "time"
-msgid "%s %s"
-msgstr "%s %s"
-
-#. 0 seconds
-#: src/properties/bacon-video-widget-properties.c:175
-msgid "0 seconds"
-msgstr "0 sekund"
-
-#: src/properties/bacon-video-widget-properties.c:236
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d sličic na sekundo"
-msgstr[1] "%d sličica na sekundo"
-msgstr[2] "%d sličici na sekundo"
-msgstr[3] "%d sličice na sekundo"
-
 #: src/grilo.ui:7
 msgid "Select All"
 msgstr "Izberi vse"
@@ -1013,11 +841,11 @@ msgstr "Napaka med brskanjem"
 msgid "Search Error"
 msgstr "Napaka med iskanjem"
 
-#: src/totem-grilo.c:1285
+#: src/totem-grilo.c:1298
 msgid "Local"
 msgstr "Krajevno"
 
-#: src/totem-grilo.c:1886
+#: src/totem-grilo.c:1901
 msgid "Channels"
 msgstr "Kanali"
 
@@ -1221,51 +1049,6 @@ msgstr "_Zapri"
 #: src/totem-preferences.c:303
 msgid "Select Subtitle Font"
 msgstr "Izbor pisave podnapisa"
-
-#: src/totem-properties-main.c:122 src/totem-properties-view.c:281
-msgid "Audio/Video"
-msgstr "Zvok / Slika"
-
-#: src/totem-properties-view.c:141
-msgid "N/A"
-msgstr "N/A"
-
-#: src/totem-properties-view.c:170
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
-msgctxt "Stream bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: src/totem-properties-view.c:173
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: src/totem-properties-view.c:190
-#: src/plugins/properties/totem-movie-properties.c:151
-#, c-format
-msgid "%d × %d"
-msgstr "%d × %d"
-
-#: src/totem-properties-view.c:222
-#: src/plugins/properties/totem-movie-properties.c:168
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: src/totem-properties-view.c:230
-#: src/plugins/properties/totem-movie-properties.c:168
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: src/totem-properties-view.c:251
-msgctxt "Number of audio channels"
-msgid "N/A"
-msgstr "N/A"
 
 #: src/totemselectiontoolbar.ui:15
 msgid "Add to Favourites"
@@ -1659,6 +1442,33 @@ msgstr "Lastnosti posnetka"
 msgid "Adds movie properties menu item"
 msgstr "Doda predmet menija lastnosti posnetka"
 
+#: src/plugins/properties/totem-movie-properties.c:151
+#, c-format
+msgid "%d × %d"
+msgstr "%d × %d"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "ni podatka"
+
 #: src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
 msgstr "Lastnosti"
@@ -1666,6 +1476,163 @@ msgstr "Lastnosti"
 #: src/plugins/properties/totem-movie-properties.c:286
 msgid "_Properties"
 msgstr "_Lastnosti"
+
+#: src/plugins/properties/properties.ui:47
+msgid "Title:"
+msgstr "Naslov:"
+
+#: src/plugins/properties/properties.ui:67
+msgid "Artist:"
+msgstr "Izvajalec:"
+
+#: src/plugins/properties/properties.ui:87
+msgid "Duration:"
+msgstr "Trajanje:"
+
+#: src/plugins/properties/properties.ui:107
+msgid "Year:"
+msgstr "Leto:"
+
+#: src/plugins/properties/properties.ui:127
+msgid "Album:"
+msgstr "Album:"
+
+#: src/plugins/properties/properties.ui:235
+msgid "Comment:"
+msgstr "Opomba:"
+
+#: src/plugins/properties/properties.ui:273
+msgid "Container:"
+msgstr "Vsebovalnik:"
+
+#: src/plugins/properties/properties.ui:345
+msgid "Dimensions:"
+msgstr "Mere:"
+
+#: src/plugins/properties/properties.ui:365
+#: src/plugins/properties/properties.ui:609
+msgid "Codec:"
+msgstr "Kodek:"
+
+#: src/plugins/properties/properties.ui:385
+msgid "Framerate:"
+msgstr "Hitrost sličic:"
+
+#: src/plugins/properties/properties.ui:405
+#: src/plugins/properties/properties.ui:572
+msgid "Bitrate:"
+msgstr "Bitna hitrost:"
+
+#: src/plugins/properties/properties.ui:536
+msgid "Sample rate:"
+msgstr "Hitrost vzorčenja:"
+
+#: src/plugins/properties/properties.ui:646
+msgid "Channels:"
+msgstr "Kanali:"
+
+#. Title
+#. Artist
+#. Album
+#. Year
+#. Container
+#: src/plugins/properties/bacon-video-widget-properties.c:106
+#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:118
+msgid "Unknown"
+msgstr "Neznano"
+
+#. Dimensions
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "ni podatka"
+
+#. Video Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:123
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "N/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:126
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:237
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:133
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#. Audio Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:135
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/A"
+
+#. Sample rate
+#: src/plugins/properties/bacon-video-widget-properties.c:137
+msgid "0 Hz"
+msgstr "0 Hz"
+
+#. Channels
+#: src/plugins/properties/bacon-video-widget-properties.c:139
+msgid "0 Channels"
+msgstr "0 kanalov"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:155
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d ur"
+msgstr[1] "%d ura"
+msgstr[2] "%d uri"
+msgstr[3] "%d ure"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:157
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minut"
+msgstr[1] "%d minuta"
+msgstr[2] "%d minuti"
+msgstr[3] "%d minute"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:160
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d sekund"
+msgstr[1] "%d sekunda"
+msgstr[2] "%d sekundi"
+msgstr[3] "%d sekunde"
+
+#. 5 hours 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:166
+#, c-format
+msgctxt "time"
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:169
+#, c-format
+msgctxt "time"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 0 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:175
+msgid "0 seconds"
+msgstr "0 sekund"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1954,6 +1921,29 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nastavi uporabniški dostop do spletišča Vimeo"
+
+#~ msgid "Video thumbnailer for the file manager"
+#~ msgstr "Ustvarjalnik sličic posnetka za upravljalnik datotek"
+
+#~ msgid "Files properties tab"
+#~ msgstr "Zavihek lastnosti datotek"
+
+#~ msgid "%d frame per second"
+#~ msgid_plural "%d frames per second"
+#~ msgstr[0] "%d sličic na sekundo"
+#~ msgstr[1] "%d sličica na sekundo"
+#~ msgstr[2] "%d sličici na sekundo"
+#~ msgstr[3] "%d sličice na sekundo"
+
+#~ msgid "Audio/Video"
+#~ msgstr "Zvok / Slika"
+
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgctxt "Number of audio channels"
+#~ msgid "N/A"
+#~ msgstr "N/A"
 
 #~ msgid "_Quit"
 #~ msgstr "_Končaj"
