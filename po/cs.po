@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-11 17:16+0000\n"
-"PO-Revision-Date: 2019-02-12 12:41+0100\n"
+"POT-Creation-Date: 2019-02-12 16:34+0000\n"
+"PO-Revision-Date: 2019-02-13 10:44+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -52,8 +52,8 @@ msgid ""
 msgstr ""
 "Aplikace Videa je oficiální přehrávač filmů v uživatelském prostředí GNOME. "
 "Můžete vyhledávat v seznamech místních videí a DVD, stejně jako ve videích "
-"sdílených přes místní síť (pomocí UPnP/DLNA) a v hlavních videích z některých "
-"webů."
+"sdílených přes místní síť (pomocí UPnP/DLNA) a v hlavních videích z "
+"některých webů."
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:17
 msgid ""
@@ -195,7 +195,7 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Složky, které se mají zobrazit v rozhraní prohlížeče; výchozí není žádná"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5642
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5644
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -600,54 +600,54 @@ msgstr "--∶--"
 msgid "Password requested for RTSP server"
 msgstr "Heslo vyžadované pro server RTSP"
 
-#: src/backend/bacon-video-widget.c:3355
+#: src/backend/bacon-video-widget.c:3357
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvuková stopa č. %d"
 
 # TEST
-#: src/backend/bacon-video-widget.c:3357
+#: src/backend/bacon-video-widget.c:3359
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Titulky č. %d"
 
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3900
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ke kterému se snažíte připojit, není známý."
 
-#: src/backend/bacon-video-widget.c:3901
+#: src/backend/bacon-video-widget.c:3903
 msgid "The connection to this server was refused."
 msgstr "Připojení k tomuto serveru bylo zamítnuto."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3906
 msgid "The specified movie could not be found."
 msgstr "Zadaný film nebyl nalezen."
 
-#: src/backend/bacon-video-widget.c:3911
+#: src/backend/bacon-video-widget.c:3913
 msgid "The server refused access to this file or stream."
 msgstr "Přístup k tomuto souboru či vysílání byl serverem zamítnut."
 
-#: src/backend/bacon-video-widget.c:3917
+#: src/backend/bacon-video-widget.c:3919
 msgid "Authentication is required to access this file or stream."
 msgstr "Pro přístup k tomuto souboru či vysílání je zapotřebí ověření."
 
-#: src/backend/bacon-video-widget.c:3924
+#: src/backend/bacon-video-widget.c:3926
 msgid "You are not allowed to open this file."
 msgstr "Nemáte oprávnění otevřít tento soubor."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3929
+#: src/backend/bacon-video-widget.c:3931
 msgid "This location is not a valid one."
 msgstr "Toto není platné upístění."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3937
+#: src/backend/bacon-video-widget.c:3939
 msgid "The movie could not be read."
 msgstr "Film nebylo možno přečíst."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3960 src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3962 src/backend/bacon-video-widget.c:3970
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -669,12 +669,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3980
+#: src/backend/bacon-video-widget.c:3982
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Toto vysílání nelze přehrát. Je možné, že jej blokuje firewall."
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:3985
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -683,26 +683,26 @@ msgstr ""
 "přehrávání některých typů médií budete potřebovat nainstalovat zásuvné "
 "moduly."
 
-#: src/backend/bacon-video-widget.c:3994
+#: src/backend/bacon-video-widget.c:3996
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "Tento soubor nelze přehrávat po síti. Zkuste jej nejdřív stáhnout na disk."
 
-#: src/backend/bacon-video-widget.c:5638
+#: src/backend/bacon-video-widget.c:5640
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5640
+#: src/backend/bacon-video-widget.c:5642
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5928
+#: src/backend/bacon-video-widget.c:5930
 msgid "Media contains no supported video streams."
 msgstr "Médium neobsahuje žádný podporované video."
 
-#: src/backend/bacon-video-widget.c:6140
+#: src/backend/bacon-video-widget.c:6142
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1559,7 +1559,7 @@ msgstr "Kodek:"
 
 #: src/plugins/properties/properties.ui:385
 msgid "Framerate:"
-msgstr "Snímků:"
+msgstr "Snímková rychlost:"
 
 #: src/plugins/properties/properties.ui:405
 #: src/plugins/properties/properties.ui:572
@@ -1568,58 +1568,75 @@ msgstr "Datový tok:"
 
 #: src/plugins/properties/properties.ui:536
 msgid "Sample rate:"
-msgstr "Vzorkování:"
+msgstr "Vzorkovací frekvence:"
 
 #: src/plugins/properties/properties.ui:646
 msgid "Channels:"
 msgstr "Kanály:"
 
 #. Title
-#. Artist
-#. Album
-#. Year
-#. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:106
-#: src/plugins/properties/bacon-video-widget-properties.c:108
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-#: src/plugins/properties/bacon-video-widget-properties.c:112
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+msgctxt "Title"
 msgid "Unknown"
-msgstr "Neznámý"
+msgstr "neznámý"
+
+#. Artist
+#: src/plugins/properties/bacon-video-widget-properties.c:108
+msgctxt "Artist"
+msgid "Unknown"
+msgstr "neznámý"
+
+#. Album
+#: src/plugins/properties/bacon-video-widget-properties.c:110
+msgctxt "Album"
+msgid "Unknown"
+msgstr "neznámé"
+
+#. Year
+#: src/plugins/properties/bacon-video-widget-properties.c:112
+msgctxt "Year"
+msgid "Unknown"
+msgstr "neznámý"
+
+#. Container
+#: src/plugins/properties/bacon-video-widget-properties.c:118
+msgctxt "Media container"
+msgid "Unknown"
+msgstr "neznámý"
 
 #. Dimensions
 #: src/plugins/properties/bacon-video-widget-properties.c:121
 msgctxt "Dimensions"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #. Video Codec
 #: src/plugins/properties/bacon-video-widget-properties.c:123
 msgctxt "Video codec"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
 msgctxt "Video bit rate"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:129
 #: src/plugins/properties/bacon-video-widget-properties.c:237
 msgctxt "Frame rate"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:133
 msgctxt "Audio bit rate"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #. Audio Codec
 #: src/plugins/properties/bacon-video-widget-properties.c:135
 msgctxt "Audio codec"
 msgid "N/A"
-msgstr "---"
+msgstr "–"
 
 #. Sample rate
 #: src/plugins/properties/bacon-video-widget-properties.c:137
