@@ -3275,13 +3275,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_AudioStop:
 		totem_object_pause (totem);
 		break;
-	case GDK_KEY_w:
-	case GDK_KEY_W:
-		if (mask == GDK_CONTROL_MASK)
-			totem_object_exit (totem);
-		else
-			retval = FALSE;
-		break;
 	case GDK_KEY_q:
 	case GDK_KEY_Q:
 		totem_object_exit (totem);
@@ -3489,6 +3482,19 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		return totem_object_handle_key_press (totem, event);
 	}
 
+	/* Handle back/quit */
+	if (event->state & GDK_CONTROL_MASK &&
+	    event->type == GDK_KEY_PRESS &&
+	    (event->keyval == GDK_KEY_W ||
+	     event->keyval == GDK_KEY_w)) {
+		if (totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)) ||
+		    g_str_equal (totem_object_get_main_page (totem), "player"))
+			back_button_clicked_cb (NULL, totem);
+		else
+			totem_object_exit (totem);
+		return FALSE;
+	}
+
 	/* Check whether we're in the player panel */
 	if (!g_str_equal (totem_object_get_main_page (totem), "player"))
 		return FALSE;
@@ -3507,8 +3513,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_l:
 		case GDK_KEY_q:
 		case GDK_KEY_Q:
-		case GDK_KEY_w:
-		case GDK_KEY_W:
 		case GDK_KEY_Right:
 		case GDK_KEY_Left:
 		case GDK_KEY_plus:
