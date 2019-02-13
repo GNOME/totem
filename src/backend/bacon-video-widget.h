@@ -40,7 +40,6 @@ G_BEGIN_DECLS
 #define BVW_ERROR bacon_video_widget_error_quark ()
 
 typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
-typedef struct BaconVideoWidgetCommon BaconVideoWidgetCommon;
 
 /**
  * BaconVideoWidget:
