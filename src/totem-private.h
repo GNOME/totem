@@ -145,6 +145,7 @@ struct _TotemObject {
 
 	/* other */
 	char *mrl;
+	char *next_subtitle;
 	TotemPlaylist *playlist;
 	GSettings *settings;
 	TotemStates state;

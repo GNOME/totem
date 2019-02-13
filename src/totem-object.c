@@ -1780,6 +1780,14 @@ update_mrl_label (TotemObject *totem, const char *name)
 		g_object_set (totem->header, "title", totem->player_title, NULL);
 }
 
+static void
+totem_object_set_next_subtitle (TotemObject *totem,
+				const char  *subtitle)
+{
+	g_clear_pointer (&totem->next_subtitle, g_free);
+	totem->next_subtitle = g_strdup (subtitle);
+}
+
 /**
  * totem_object_set_mrl:
  * @totem: a #TotemObject
@@ -1851,8 +1859,15 @@ totem_object_set_mrl (TotemObject *totem,
 
 		g_application_mark_busy (G_APPLICATION (totem));
 		bacon_video_widget_open (totem->bvw, mrl);
-		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
-		g_free (autoload_sub);
+		if (subtitle) {
+			bacon_video_widget_set_text_subtitle (totem->bvw, subtitle);
+		} else if (autoload_sub) {
+			bacon_video_widget_set_text_subtitle (totem->bvw, autoload_sub);
+			g_free (autoload_sub);
+		} else {
+			totem_playlist_set_current_subtitle (totem->playlist, totem->next_subtitle);
+			totem_object_set_next_subtitle (totem, NULL);
+		}
 		g_application_unmark_busy (G_APPLICATION (totem));
 		totem->mrl = g_strdup (mrl);
 
@@ -2816,18 +2831,28 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
 		g_assert (url != NULL);
-		totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
+		if (!totem_uri_is_subtitle (url))
+			totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
+		else
+			totem_object_set_next_subtitle (totem, url);
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
-		totem_playlist_clear (totem->playlist);
-		if (url == NULL) {
-			bacon_video_widget_close (totem->bvw);
-			emit_file_closed (totem);
-			totem->has_played_emitted = FALSE;
-			totem_object_set_mrl (totem, NULL, NULL);
-			break;
+		if (url == NULL ||
+		    !totem_uri_is_subtitle (url)) {
+			totem_playlist_clear (totem->playlist);
+			if (url == NULL) {
+				bacon_video_widget_close (totem->bvw);
+				emit_file_closed (totem);
+				totem->has_played_emitted = FALSE;
+				totem_object_set_mrl (totem, NULL, NULL);
+				break;
+			}
+			totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
+		} else if (totem->mrl != NULL) {
+			totem_playlist_set_current_subtitle (totem->playlist, url);
+		} else {
+			totem_object_set_next_subtitle (totem, url);
 		}
-		totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
 		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
