@@ -381,6 +381,23 @@ typedef enum {
 
 void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
 						  BvwDVDEvent type);
+
+/**
+ * BvwLangInfo:
+ * @language: the ISO-639 language code for the track, or "und" if unknown.
+ * @codec: the codec for the track
+ *
+ * #BvwLangInfo holds the language code and codec for each subtitle
+ * or audio track for a media, which would allow the front-ends to
+ * present appropriate information to the user.
+ */
+typedef struct {
+	const char *language;
+	const char *codec;
+} BvwLangInfo;
+
+void bacon_video_widget_lang_info_free           (BvwLangInfo *info);
+
 GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_language             (BaconVideoWidget *bvw,

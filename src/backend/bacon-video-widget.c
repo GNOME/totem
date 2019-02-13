@@ -3389,40 +3389,45 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 
   for (i = 0; i < n; i++) {
     GstTagList *tags = NULL;
+    BvwLangInfo *info;
 
     g_signal_emit_by_name (G_OBJECT (bvw->priv->play), signal, i, &tags);
 
+    info = g_new0 (BvwLangInfo, 1);
+
     if (tags) {
-      gchar *lc = NULL, *cd = NULL;
+      gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &info->language);
+      if (g_str_equal (type_name, "AUDIO"))
+	gst_tag_list_get_string (tags, GST_TAG_AUDIO_CODEC, &info->codec);
 
-      gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &lc);
-      gst_tag_list_get_string (tags, GST_TAG_CODEC, &cd);
-
-      if (lc) {
-	ret = g_list_prepend (ret, lc);
-	g_free (cd);
-      } else if (cd) {
-	ret = g_list_prepend (ret, cd);
-      } else {
-	  ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
-      }
       gst_tag_list_unref (tags);
-    } else {
-      ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
     }
+
+    if (info->language == NULL)
+      info->language = g_strdup ("und");
+    ret = g_list_prepend (ret, info);
   }
 
   return g_list_reverse (ret);
+}
+
+void
+bacon_video_widget_lang_info_free (BvwLangInfo *info)
+{
+  if (info == NULL)
+    return;
+  g_free (info->language);
+  g_free (info->codec);
+  g_free (info);
 }
 
 /**
  * bacon_video_widget_get_subtitles:
  * @bvw: a #BaconVideoWidget
  *
- * Returns a list of subtitle tags, each in the form <literal>TEXT <replaceable>x</replaceable></literal>,
- * where <replaceable>x</replaceable> is the subtitle index.
+ * Returns a list of #BvwLangInfo for each subtitle track.
  *
- * Return value: a #GList of subtitle tags, or %NULL; free each element with g_free() and the list with g_list_free()
+ * Return value: a #GList of #BvwLangInfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
  **/
 GList *
 bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
@@ -3441,10 +3446,9 @@ bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
  * bacon_video_widget_get_languages:
  * @bvw: a #BaconVideoWidget
  *
- * Returns a list of audio language tags, each in the form <literal>AUDIO <replaceable>x</replaceable></literal>,
- * where <replaceable>x</replaceable> is the language index.
+ * Returns a list of #BvwLangInfo for each audio track.
  *
- * Return value: a #GList of audio language tags, or %NULL; free each element with g_free() and the list with g_list_free()
+ * Return value: a #GList of #BvwLanginfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
  **/
 GList *
 bacon_video_widget_get_languages (BaconVideoWidget * bvw)
@@ -3459,9 +3463,8 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
   /* When we have only one language, we don't need to show
    * any languages, we default to the only track */
   if (g_list_length (list) == 1) {
-    g_free (list->data);
-    g_list_free (list);
-    list = NULL;
+    g_list_free_full (list, bacon_video_widget_lang_info_free);
+    return NULL;
   }
 
   return list;

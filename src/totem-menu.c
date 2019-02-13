@@ -438,22 +438,23 @@ create_lang_actions (GMenu *menu,
 	add_lang_action (menu, action, C_("Language", "Auto"), -1, 0);
 
 	i = 0;
-	lookup = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
+	lookup = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
 	for (l = list; l != NULL; l = l->next) {
 		guint num;
 		unsigned int *hash_value;
+		BvwLangInfo *info = l->data;
 
-		hash_value = g_hash_table_lookup (lookup, l->data);
+		hash_value = g_hash_table_lookup (lookup, info->language);
 		if (hash_value == NULL)
 			num = 0;
 		else
 			num = GPOINTER_TO_INT (hash_value);
 		num++;
 
-		g_hash_table_insert (lookup, l->data, GINT_TO_POINTER (num));
+		g_hash_table_insert (lookup, g_strdup (info->language), GINT_TO_POINTER (num));
 
-		add_lang_action (menu, action, l->data, i, num);
+		add_lang_action (menu, action, info->language, i, num);
 
 		i++;
 	}
@@ -478,9 +479,12 @@ totem_sublang_equal_lists (GList *orig, GList *new)
 	retval = TRUE;
 	o = orig;
 	n = new;
-	while (o != NULL && n != NULL && retval != FALSE)
-	{
-		if (g_str_equal (o->data, n->data) == FALSE)
+	while (o != NULL && n != NULL && retval != FALSE) {
+		BvwLangInfo *info_o, *info_n;
+
+		info_o = o->data;
+		info_n = n->data;
+		if (g_strcmp0 (info_o->language, info_n->language) != 0)
 			retval = FALSE;
                 o = g_list_next (o);
                 n = g_list_next (n);
@@ -510,7 +514,7 @@ totem_languages_update (Totem *totem, GList *list)
 	g_action_change_state (action, g_variant_new_int32 (current));
 	totem->updating_menu = FALSE;
 
-	g_list_free_full (totem->languages_list, g_free);
+	g_list_free_full (totem->languages_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
 	totem->languages_list = list;
 }
 
@@ -535,7 +539,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 	g_action_change_state (action, g_variant_new_int32 (current));
 	totem->updating_menu = FALSE;
 
-	g_list_free_full (totem->subtitles_list, g_free);
+	g_list_free_full (totem->subtitles_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
 	totem->subtitles_list = list;
 }
 
@@ -546,14 +550,14 @@ totem_sublang_update (Totem *totem)
 
 	list = bacon_video_widget_get_languages (totem->bvw);
 	if (totem_sublang_equal_lists (totem->languages_list, list) == TRUE) {
-		g_list_free_full (list, g_free);
+		g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
 	} else {
 		totem_languages_update (totem, list);
 	}
 
 	list = bacon_video_widget_get_subtitles (totem->bvw);
 	if (totem_sublang_equal_lists (totem->subtitles_list, list) == TRUE) {
-		g_list_free_full (list, g_free);
+		g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
 	} else {
 		totem_subtitles_update (totem, list);
 	}
@@ -562,6 +566,6 @@ totem_sublang_update (Totem *totem)
 void
 totem_sublang_exit (Totem *totem)
 {
-	g_list_free_full (totem->subtitles_list, g_free);
-	g_list_free_full (totem->languages_list, g_free);
+	g_list_free_full (totem->subtitles_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
+	g_list_free_full (totem->languages_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
 }
