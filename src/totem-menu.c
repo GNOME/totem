@@ -398,7 +398,10 @@ add_lang_action (GMenu *menu,
 	const char *full_lang;
 	char *label;
 
-	full_lang = gst_tag_get_language_name (lang);
+	if (g_str_equal (lang, "und"))
+		full_lang = gst_tag_get_language_name ("eng");
+	else
+		full_lang = gst_tag_get_language_name (lang);
 
 	if (lang_index > 1) {
 		char *num_lang;
