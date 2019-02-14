@@ -393,6 +393,10 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
 	TotemDiscRecorderPluginPrivate *priv = pi->priv;
 
+	/* impl_activate() exited early */
+	if (priv->totem == NULL)
+		return;
+
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_closed, plugin);
 
