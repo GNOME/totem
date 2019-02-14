@@ -1890,6 +1890,8 @@ totem_object_set_mrl (TotemObject *totem,
 		totem_object_set_main_page (totem, "player");
 	}
 
+	g_object_notify (G_OBJECT (totem), "current-mrl");
+
 	update_buttons (totem);
 	update_media_menu_items (totem);
 }
