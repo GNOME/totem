@@ -6171,6 +6171,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo_mode = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
+  clutter_actor_set_text_direction (bvw->priv->stage,
+				    CLUTTER_TEXT_DIRECTION_LTR);
   clutter_actor_set_layout_manager (bvw->priv->stage,
                                     clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_FILL));
   clutter_actor_set_name (bvw->priv->stage, "stage");
