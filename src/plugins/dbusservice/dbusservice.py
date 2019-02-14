@@ -263,18 +263,12 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                           in_signature = '', # pylint: disable=C0103
                           out_signature = '')
     def Next (self): # pylint: disable=C0103
-        if self.totem.is_playing () or self.totem.is_paused ():
-            return
-
         self.totem.seek_next ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable=C0103
                           out_signature = '')
     def Previous (self): # pylint: disable=C0103
-        if self.totem.is_playing () or self.totem.is_paused ():
-            return
-
         self.totem.seek_previous ()
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
