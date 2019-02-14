@@ -3632,19 +3632,10 @@ update_media_menu_items (TotemObject *totem)
 static void
 update_buttons (TotemObject *totem)
 {
-	gboolean has_item;
-
-	/* Previous */
-	has_item = bacon_video_widget_has_previous_track (totem->bvw) ||
-		totem_playlist_has_previous_mrl (totem->playlist) ||
-		totem_playlist_get_repeat (totem->playlist);
-	totem_object_set_sensitivity2 ("previous-chapter", has_item);
-
-	/* Next */
-	has_item = bacon_video_widget_has_next_track (totem->bvw) ||
-		totem_playlist_has_next_mrl (totem->playlist) ||
-		totem_playlist_get_repeat (totem->playlist);
-	totem_object_set_sensitivity2 ("next-chapter", has_item);
+	totem_object_set_sensitivity2 ("previous-chapter",
+				       totem_object_can_seek_previous (totem));
+	totem_object_set_sensitivity2 ("next-chapter",
+				       totem_object_can_seek_next (totem));
 }
 
 void
