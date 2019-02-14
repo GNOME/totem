@@ -141,6 +141,8 @@ class Root (dbus.service.Object): # pylint: disable=R0904
             'CanPause': (self.totem.props.current_mrl is not None),
             'CanSeek': (self.totem.props.current_mrl is not None and
                         self.totem.props.seekable),
+            'CanGoNext': self.totem.can_seek_next (),
+            'CanGoPrevious': self.totem.can_seek_previous (),
         }, [])
 
     def __do_notify_seekable (self, _, prop): # pylint: disable=W0613
@@ -194,8 +196,8 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                 'Metadata': self.__calculate_metadata (),
                 'Volume': self.totem.get_volume (), # TODO: Notifications
                 'Position': dbus.Int64(self.totem.props.current_time * 1000),
-                'CanGoNext': True, # TODO
-                'CanGoPrevious': True, # TODO
+                'CanGoNext': self.totem.can_seek_next (),
+                'CanGoPrevious': self.totem.can_seek_previous (),
                 'CanPlay': (self.totem.props.current_mrl is not None),
                 'CanPause': (self.totem.props.current_mrl is not None),
                 'CanSeek': (self.totem.props.current_mrl is not None and
