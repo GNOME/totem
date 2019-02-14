@@ -110,7 +110,8 @@ enum {
 	PROP_CURRENT_TIME,
 	PROP_CURRENT_MRL,
 	PROP_CURRENT_CONTENT_TYPE,
-	PROP_CURRENT_DISPLAY_NAME
+	PROP_CURRENT_DISPLAY_NAME,
+	PROP_MAIN_PAGE
 };
 
 enum {
@@ -382,6 +383,17 @@ totem_object_class_init (TotemObjectClass *klass)
 							      NULL, G_PARAM_READABLE));
 
 	/**
+	 * TotemObject:main-page:
+	 *
+	 * The name of the current main page (usually "grilo", or "player").
+	 **/
+	g_object_class_install_property (object_class, PROP_MAIN_PAGE,
+					 g_param_spec_string ("main-page",
+							      "Current main page",
+							      "Current main page.",
+							      NULL, G_PARAM_READABLE));
+
+	/**
 	 * TotemObject::file-opened:
 	 * @totem: the #TotemObject which received the signal
 	 * @mrl: the MRL of the opened stream
@@ -555,6 +567,9 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_CURRENT_DISPLAY_NAME:
 		g_value_take_string (value, totem_playlist_get_current_title (totem->playlist));
+		break;
+	case PROP_MAIN_PAGE:
+		g_value_set_string (value, totem_object_get_main_page (totem));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1032,6 +1047,8 @@ totem_object_set_main_page (TotemObject *totem,
 			gtk_widget_show (totem->add_button);
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
 	}
+
+	g_object_notify (G_OBJECT (totem), "main-page");
 }
 
 /**
