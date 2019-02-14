@@ -197,12 +197,8 @@ totem_object_app_activate (GApplication *app)
 	grilo_widget_setup (totem);
 
 	/* Show ! */
-	if (optionstate.fullscreen == FALSE) {
-		gtk_widget_show (totem->win);
-		g_application_mark_busy (G_APPLICATION (totem));
-	} else {
-		gtk_widget_realize (totem->win);
-	}
+	gtk_widget_show (totem->win);
+	g_application_mark_busy (G_APPLICATION (totem));
 
 	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
 
@@ -216,12 +212,6 @@ totem_object_app_activate (GApplication *app)
 	totem_callback_connect (totem);
 
 	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-
-	if (optionstate.fullscreen != FALSE) {
-		gtk_widget_show (totem->win);
-		gdk_flush ();
-		totem_object_set_fullscreen (totem, TRUE);
-	}
 
 	/* The prefs after the video widget is connected */
 	totem->prefs_xml = totem_interface_load ("preferences.ui", TRUE, NULL, totem);
@@ -253,11 +243,15 @@ totem_object_app_activate (GApplication *app)
 
 	optionstate.had_filenames = FALSE;
 
+	if (optionstate.fullscreen != FALSE) {
+		if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+			totem_object_set_fullscreen (totem, TRUE);
+	}
+
 	/* Set the logo at the last minute so we won't try to show it before a video */
 	bacon_video_widget_set_logo (totem->bvw, "org.gnome.Totem");
 
-	if (optionstate.fullscreen == FALSE)
-		g_application_unmark_busy (G_APPLICATION (totem));
+	g_application_unmark_busy (G_APPLICATION (totem));
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
@@ -2826,7 +2820,8 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 		totem_object_seek_previous (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_FULLSCREEN:
-		totem_object_action_fullscreen_toggle (totem);
+		if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+			totem_object_action_fullscreen_toggle (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_QUIT:
 		totem_object_exit (totem);
