@@ -1934,6 +1934,20 @@ totem_object_direction (TotemObject *totem, TotemPlaylistDirection dir)
 }
 
 /**
+ * totem_object_can_seek_previous:
+ * @totem: a #TotemObject
+ *
+ * Returns true if totem_object_seek_previous() would have an effect.
+ */
+gboolean
+totem_object_can_seek_previous (TotemObject *totem)
+{
+	return bacon_video_widget_has_previous_track (totem->bvw) ||
+		totem_playlist_has_previous_mrl (totem->playlist) ||
+		totem_playlist_get_repeat (totem->playlist);
+}
+
+/**
  * totem_object_seek_previous:
  * @totem: a #TotemObject
  *
@@ -1945,6 +1959,20 @@ void
 totem_object_seek_previous (TotemObject *totem)
 {
 	totem_object_direction (totem, TOTEM_PLAYLIST_DIRECTION_PREVIOUS);
+}
+
+/**
+ * totem_object_can_seek_next:
+ * @totem: a #TotemObject
+ *
+ * Returns true if totem_object_seek_next() would have an effect.
+ */
+gboolean
+totem_object_can_seek_next (TotemObject *totem)
+{
+	return bacon_video_widget_has_next_track (totem->bvw) ||
+		totem_playlist_has_next_mrl (totem->playlist) ||
+		totem_playlist_get_repeat (totem->playlist);
 }
 
 /**
