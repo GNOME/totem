@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-08 14:50+0000\n"
-"PO-Revision-Date: 2019-02-08 22:52+0700\n"
+"POT-Creation-Date: 2019-02-12 16:34+0000\n"
+"PO-Revision-Date: 2019-02-14 21:51+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1877 src/totem-object.c:3658
+#: src/totem-grilo.c:1892 src/totem-object.c:3658
 msgid "Videos"
 msgstr "Video"
 
@@ -35,31 +35,24 @@ msgstr "Memutar film"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:11
 msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
+"Videos is the official movie player of the GNOME desktop environment. It "
+"features a searchable list of local videos, and DVDs, as well as local "
+"network video shares (using UPnP/DLNA) and video highlights from a number of "
+"web sites."
 msgstr ""
-"Video, yang juga dikenal sebagai Totem, adalah pemutar film resmi untuk "
-"lingkungan desktop GNOME. Ini memiliki fitur daftar video lokal dan DVD yang "
-"dapat dicari, maupun video jaringan lokal bersama (memakai UPnP/DLNA) dan "
-"video pilihan dari sejumlah situs web."
+"Video adalah pemutar film resmi untuk lingkungan destop GNOME. Ini memiliki "
+"fitur daftar video lokal dan DVD yang dapat dicari, maupun video jaringan "
+"lokal bersama (memakai UPnP/DLNA) dan video pilihan dari sejumlah situs web."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:18
+#: data/appdata/org.gnome.Totem.appdata.xml.in:17
 msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
+"Videos comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, create screenshot galleries, and "
 "support for recording DVDs."
 msgstr ""
-"Totem hadir dengan fungsionalitas tambahan seperti: pengunduh subtitel dan "
-"dukungan  perekaman DVD."
-
-#: data/appdata/org.gnome.Totem.appdata.xml.in:23
-msgid "Video thumbnailer for the file manager"
-msgstr "Pembuat gambar mini video bagi manajer berkas"
-
-#: data/appdata/org.gnome.Totem.appdata.xml.in:24
-msgid "Files properties tab"
-msgstr "Tab properti berkas"
+"Totem hadir dengan fungsionalitas tambahan seperti pengunduh subtitel, "
+"kemampuan untuk mempercepat atau memperlambat pemutaran, membuat galeri "
+"cuplikan layar, dan dukungan untuk merekam DVD."
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -189,8 +182,7 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Direktori yang akan ditampilkan dalam antar muka peramban, nilai baku nihil"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5642
-#: src/totem-properties-view.c:242
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5644
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -250,13 +242,12 @@ msgstr "Pengaya"
 msgid "Plugins…"
 msgstr "Pengaya…"
 
-#: data/preferences.ui:464 data/properties.ui:23
+#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Umum"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 data/properties.ui:321
-#: src/totem-properties-view.c:285
+#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Video"
 
@@ -300,62 +291,9 @@ msgstr "Keluaran Audio"
 msgid "_Audio output type:"
 msgstr "Jenis keluaran _audio:"
 
-#: data/preferences.ui:1023 data/properties.ui:512
-#: src/totem-properties-view.c:283
+#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Audio"
-
-#: data/properties.ui:47
-msgid "Title:"
-msgstr "Judul:"
-
-#: data/properties.ui:67
-msgid "Artist:"
-msgstr "Artis:"
-
-#: data/properties.ui:87
-msgid "Duration:"
-msgstr "Durasi:"
-
-#: data/properties.ui:107
-msgid "Year:"
-msgstr "Tahun:"
-
-#: data/properties.ui:127
-msgid "Album:"
-msgstr "Album:"
-
-#: data/properties.ui:235
-msgid "Comment:"
-msgstr "Komentar:"
-
-#: data/properties.ui:273
-msgid "Container:"
-msgstr "Wadah:"
-
-#: data/properties.ui:345
-msgid "Dimensions:"
-msgstr "Dimensi:"
-
-#: data/properties.ui:365 data/properties.ui:609
-msgid "Codec:"
-msgstr "Kodek:"
-
-#: data/properties.ui:385
-msgid "Framerate:"
-msgstr "Laju Gambar:"
-
-#: data/properties.ui:405 data/properties.ui:572
-msgid "Bitrate:"
-msgstr "Laju bit:"
-
-#: data/properties.ui:536
-msgid "Sample rate:"
-msgstr "Laju sampel:"
-
-#: data/properties.ui:646
-msgid "Channels:"
-msgstr "Kanal:"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -646,50 +584,50 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "Diperlukan sandi untuk server RTSP"
 
-#: src/backend/bacon-video-widget.c:3355
+#: src/backend/bacon-video-widget.c:3357
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Jalur Audio #%d"
 
-#: src/backend/bacon-video-widget.c:3357
+#: src/backend/bacon-video-widget.c:3359
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtitel #%d"
 
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3900
 msgid "The server you are trying to connect to is not known."
 msgstr "Server yang Anda coba hubungi tak diketahui."
 
-#: src/backend/bacon-video-widget.c:3901
+#: src/backend/bacon-video-widget.c:3903
 msgid "The connection to this server was refused."
 msgstr "Koneksi ke server ini ditolak."
 
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3906
 msgid "The specified movie could not be found."
 msgstr "Tak menemukan film yang dicari."
 
-#: src/backend/bacon-video-widget.c:3911
+#: src/backend/bacon-video-widget.c:3913
 msgid "The server refused access to this file or stream."
 msgstr "Server menolak akses ke berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3917
+#: src/backend/bacon-video-widget.c:3919
 msgid "Authentication is required to access this file or stream."
 msgstr "Otentikasi diperlukan untuk mengakses berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3924
+#: src/backend/bacon-video-widget.c:3926
 msgid "You are not allowed to open this file."
 msgstr "Anda tak diizinkan untuk membuka berkas ini."
 
-#: src/backend/bacon-video-widget.c:3929
+#: src/backend/bacon-video-widget.c:3931
 msgid "This location is not a valid one."
 msgstr "Lokasi ini tidak sah."
 
-#: src/backend/bacon-video-widget.c:3937
+#: src/backend/bacon-video-widget.c:3939
 msgid "The movie could not be read."
 msgstr "Film tidak dapat dibaca."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3960 src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3962 src/backend/bacon-video-widget.c:3970
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -708,12 +646,12 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3980
+#: src/backend/bacon-video-widget.c:3982
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Stream ini tak dapat diputar. Mungkin ada firewall yang memblokirnya."
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:3985
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -721,7 +659,7 @@ msgstr ""
 "Stream audio atau video tak dapat diputar karena kurangnya kodek. Anda "
 "mungkin harus memasang pengaya tambahan untuk dapat memutarnya"
 
-#: src/backend/bacon-video-widget.c:3994
+#: src/backend/bacon-video-widget.c:3996
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -729,19 +667,19 @@ msgstr ""
 "Berkas ini tak bisa diputar melalui jaringan. Cobalah untuk mengunduhnya "
 "lebih dulu."
 
-#: src/backend/bacon-video-widget.c:5638 src/totem-properties-view.c:238
+#: src/backend/bacon-video-widget.c:5640
 msgid "Surround"
 msgstr "Stereo"
 
-#: src/backend/bacon-video-widget.c:5640 src/totem-properties-view.c:240
+#: src/backend/bacon-video-widget.c:5642
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5927
+#: src/backend/bacon-video-widget.c:5930
 msgid "Media contains no supported video streams."
 msgstr "Media mengandung siaran video yang tidak didukung."
 
-#: src/backend/bacon-video-widget.c:6139
+#: src/backend/bacon-video-widget.c:6142
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -816,110 +754,6 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#. Title
-#. Artist
-#. Album
-#. Year
-#. Container
-#: src/properties/bacon-video-widget-properties.c:106
-#: src/properties/bacon-video-widget-properties.c:108
-#: src/properties/bacon-video-widget-properties.c:110
-#: src/properties/bacon-video-widget-properties.c:112
-#: src/properties/bacon-video-widget-properties.c:118
-msgid "Unknown"
-msgstr "Tak Diketahui"
-
-#. Dimensions
-#: src/properties/bacon-video-widget-properties.c:121
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "T/A"
-
-#. Video Codec
-#: src/properties/bacon-video-widget-properties.c:123
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "T/A"
-
-#: src/properties/bacon-video-widget-properties.c:126
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "T/A"
-
-#: src/properties/bacon-video-widget-properties.c:129
-#: src/properties/bacon-video-widget-properties.c:239
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "T/A"
-
-#: src/properties/bacon-video-widget-properties.c:133
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "T/A"
-
-#. Audio Codec
-#: src/properties/bacon-video-widget-properties.c:135
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "T/A"
-
-#. Sample rate
-#: src/properties/bacon-video-widget-properties.c:137
-msgid "0 Hz"
-msgstr "0 Hz"
-
-#. Channels
-#: src/properties/bacon-video-widget-properties.c:139
-msgid "0 Channels"
-msgstr "0 Kanal"
-
-#: src/properties/bacon-video-widget-properties.c:155
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d jam"
-msgstr[1] "%d jam"
-
-#: src/properties/bacon-video-widget-properties.c:157
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d menit"
-msgstr[1] "%d menit"
-
-#: src/properties/bacon-video-widget-properties.c:160
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d detik"
-msgstr[1] "%d detik"
-
-#. 5 hours 2 minutes 12 seconds
-#: src/properties/bacon-video-widget-properties.c:166
-#, c-format
-msgctxt "time"
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. 2 minutes 12 seconds
-#: src/properties/bacon-video-widget-properties.c:169
-#, c-format
-msgctxt "time"
-msgid "%s %s"
-msgstr "%s %s"
-
-#. 0 seconds
-#: src/properties/bacon-video-widget-properties.c:175
-msgid "0 seconds"
-msgstr "0 detik"
-
-#: src/properties/bacon-video-widget-properties.c:236
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d gambar per detik"
-msgstr[1] "%d gambar per detik"
-
 #: src/grilo.ui:7
 msgid "Select All"
 msgstr "Pilih Semua"
@@ -982,11 +816,11 @@ msgstr "Galat Meramban"
 msgid "Search Error"
 msgstr "Galat Mencari"
 
-#: src/totem-grilo.c:1285
+#: src/totem-grilo.c:1298
 msgid "Local"
 msgstr "Lokal"
 
-#: src/totem-grilo.c:1886
+#: src/totem-grilo.c:1901
 msgid "Channels"
 msgstr "Kanal"
 
@@ -1187,51 +1021,6 @@ msgstr "_Tutup"
 #: src/totem-preferences.c:303
 msgid "Select Subtitle Font"
 msgstr "Pilih Fonta Subtitel"
-
-#: src/totem-properties-main.c:122 src/totem-properties-view.c:281
-msgid "Audio/Video"
-msgstr "Audio/Video"
-
-#: src/totem-properties-view.c:141
-msgid "N/A"
-msgstr "T/A"
-
-#: src/totem-properties-view.c:170
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
-msgctxt "Stream bit rate"
-msgid "N/A"
-msgstr "T/A"
-
-#: src/totem-properties-view.c:173
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: src/totem-properties-view.c:190
-#: src/plugins/properties/totem-movie-properties.c:151
-#, c-format
-msgid "%d × %d"
-msgstr "%d × %d"
-
-#: src/totem-properties-view.c:222
-#: src/plugins/properties/totem-movie-properties.c:168
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: src/totem-properties-view.c:230
-#: src/plugins/properties/totem-movie-properties.c:168
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "T/A"
-
-#: src/totem-properties-view.c:251
-msgctxt "Number of audio channels"
-msgid "N/A"
-msgstr "T/A"
 
 #: src/totemselectiontoolbar.ui:15
 msgid "Add to Favourites"
@@ -1626,6 +1415,33 @@ msgstr "Properti Film"
 msgid "Adds movie properties menu item"
 msgstr "Tambahkan butir menu properti film"
 
+#: src/plugins/properties/totem-movie-properties.c:151
+#, c-format
+msgid "%d × %d"
+msgstr "%d × %d"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: src/plugins/properties/totem-movie-properties.c:154
+#: src/plugins/properties/totem-movie-properties.c:165
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "T/A"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: src/plugins/properties/totem-movie-properties.c:168
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "T/A"
+
 #: src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
 msgstr "Properti"
@@ -1633,6 +1449,174 @@ msgstr "Properti"
 #: src/plugins/properties/totem-movie-properties.c:286
 msgid "_Properties"
 msgstr "_Properti"
+
+#: src/plugins/properties/properties.ui:47
+msgid "Title:"
+msgstr "Judul:"
+
+#: src/plugins/properties/properties.ui:67
+msgid "Artist:"
+msgstr "Artis:"
+
+#: src/plugins/properties/properties.ui:87
+msgid "Duration:"
+msgstr "Durasi:"
+
+#: src/plugins/properties/properties.ui:107
+msgid "Year:"
+msgstr "Tahun:"
+
+#: src/plugins/properties/properties.ui:127
+msgid "Album:"
+msgstr "Album:"
+
+#: src/plugins/properties/properties.ui:235
+msgid "Comment:"
+msgstr "Komentar:"
+
+#: src/plugins/properties/properties.ui:273
+msgid "Container:"
+msgstr "Wadah:"
+
+#: src/plugins/properties/properties.ui:345
+msgid "Dimensions:"
+msgstr "Dimensi:"
+
+#: src/plugins/properties/properties.ui:365
+#: src/plugins/properties/properties.ui:609
+msgid "Codec:"
+msgstr "Kodek:"
+
+#: src/plugins/properties/properties.ui:385
+msgid "Framerate:"
+msgstr "Laju Gambar:"
+
+#: src/plugins/properties/properties.ui:405
+#: src/plugins/properties/properties.ui:572
+msgid "Bitrate:"
+msgstr "Laju bit:"
+
+#: src/plugins/properties/properties.ui:536
+msgid "Sample rate:"
+msgstr "Laju sampel:"
+
+#: src/plugins/properties/properties.ui:646
+msgid "Channels:"
+msgstr "Kanal:"
+
+#. Title
+#: src/plugins/properties/bacon-video-widget-properties.c:106
+msgctxt "Title"
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#. Artist
+#: src/plugins/properties/bacon-video-widget-properties.c:108
+msgctxt "Artist"
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#. Album
+#: src/plugins/properties/bacon-video-widget-properties.c:110
+msgctxt "Album"
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#. Year
+#: src/plugins/properties/bacon-video-widget-properties.c:112
+msgctxt "Year"
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#. Container
+#: src/plugins/properties/bacon-video-widget-properties.c:118
+msgctxt "Media container"
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#. Dimensions
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "T/A"
+
+#. Video Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:123
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "T/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:126
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "T/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:237
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "T/A"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:133
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "T/A"
+
+#. Audio Codec
+#: src/plugins/properties/bacon-video-widget-properties.c:135
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "T/A"
+
+#. Sample rate
+#: src/plugins/properties/bacon-video-widget-properties.c:137
+msgid "0 Hz"
+msgstr "0 Hz"
+
+#. Channels
+#: src/plugins/properties/bacon-video-widget-properties.c:139
+msgid "0 Channels"
+msgstr "0 Kanal"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:155
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d jam"
+msgstr[1] "%d jam"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:157
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d menit"
+msgstr[1] "%d menit"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:160
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d detik"
+msgstr[1] "%d detik"
+
+#. 5 hours 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:166
+#, c-format
+msgctxt "time"
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:169
+#, c-format
+msgctxt "time"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 0 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:175
+msgid "0 seconds"
+msgstr "0 detik"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1918,6 +1902,27 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Atur user agent bagi situs Vimeo"
+
+#~ msgid "Video thumbnailer for the file manager"
+#~ msgstr "Pembuat gambar mini video bagi manajer berkas"
+
+#~ msgid "Files properties tab"
+#~ msgstr "Tab properti berkas"
+
+#~ msgid "%d frame per second"
+#~ msgid_plural "%d frames per second"
+#~ msgstr[0] "%d gambar per detik"
+#~ msgstr[1] "%d gambar per detik"
+
+#~ msgid "Audio/Video"
+#~ msgstr "Audio/Video"
+
+#~ msgid "N/A"
+#~ msgstr "T/A"
+
+#~ msgctxt "Number of audio channels"
+#~ msgid "N/A"
+#~ msgstr "T/A"
 
 #~ msgid "_Quit"
 #~ msgstr "_Keluar"
