@@ -375,6 +375,105 @@ escape_label_for_menu (const char *name)
 }
 
 /* Subtitle and language menus */
+static char *
+bvw_lang_info_to_id (BvwLangInfo *info)
+{
+	return g_strdup_printf ("%s-%s", info->language, info->codec);
+}
+
+static int
+hash_table_num_instances (GHashTable *ht,
+			  const char *key)
+{
+	gpointer value;
+
+	value = g_hash_table_lookup (ht, key);
+	if (!value)
+		return 0;
+	return GPOINTER_TO_INT (value);
+}
+
+static const char *
+get_language_name_no_und (const char *lang)
+{
+	if (g_str_equal (lang, "und"))
+		return gst_tag_get_language_name ("eng");
+	return gst_tag_get_language_name (lang);
+}
+
+static GList *
+bvw_lang_info_to_menu_labels (GList *langs)
+{
+	GList *l, *ret;
+	GHashTable *lang_table, *lang_codec_table, *printed_table;
+
+	lang_table = g_hash_table_new (g_str_hash, g_str_equal);
+	lang_codec_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
+	/* Populate the hash tables */
+	for (l = langs; l != NULL; l = l->next) {
+		BvwLangInfo *info = l->data;
+		int num;
+		char *id;
+
+		num = hash_table_num_instances (lang_table, info->language);
+		num++;
+		g_hash_table_insert (lang_table,
+				     (gpointer) info->language,
+				     GINT_TO_POINTER (num));
+
+		id = bvw_lang_info_to_id (info);
+		num = hash_table_num_instances (lang_codec_table, id);
+		num++;
+		g_hash_table_insert (lang_codec_table,
+				     id,
+				     GINT_TO_POINTER (num));
+	}
+
+	ret = NULL;
+	printed_table = g_hash_table_new (g_str_hash, g_str_equal);
+	for (l = langs; l != NULL; l = l->next) {
+		BvwLangInfo *info = l->data;
+		int num;
+		char *str;
+
+		num = hash_table_num_instances (lang_table, info->language);
+		g_assert (num >= 1);
+		if (num > 1) {
+			char *id;
+
+			id = bvw_lang_info_to_id (info);
+			num = hash_table_num_instances (lang_codec_table, id);
+			if (num > 1) {
+				num = hash_table_num_instances (printed_table, info->language);
+				num++;
+				g_hash_table_insert (printed_table,
+						     (gpointer) info->language,
+						     GINT_TO_POINTER (num));
+
+				str = g_strdup_printf ("%s #%d",
+						       get_language_name_no_und (info->language),
+						       num);
+			} else {
+				str = g_strdup_printf ("%s — %s",
+						       get_language_name_no_und (info->language),
+						       info->codec);
+			}
+			g_free (id);
+		} else {
+			str = g_strdup (get_language_name_no_und (info->language));
+		}
+
+		ret = g_list_prepend (ret, str);
+	}
+
+	g_hash_table_destroy (printed_table);
+	g_hash_table_destroy (lang_codec_table);
+	g_hash_table_destroy (lang_table);
+
+	return g_list_reverse (ret);
+}
+
 static void
 add_lang_item (GMenu      *menu,
 	       const char *label,
@@ -391,32 +490,14 @@ add_lang_item (GMenu      *menu,
 static void
 add_lang_action (GMenu *menu,
 		 const char *action,
-		 const char *lang,
-		 int lang_id,
-		 int lang_index)
+		 const char *label,
+		 int lang_id)
 {
-	const char *full_lang;
-	char *label;
+	char *escaped_label;
 
-	if (g_str_equal (lang, "und"))
-		full_lang = gst_tag_get_language_name ("eng");
-	else
-		full_lang = gst_tag_get_language_name (lang);
-
-	if (lang_index > 1) {
-		char *num_lang;
-
-		num_lang = g_strdup_printf ("%s #%u",
-					    full_lang ? full_lang : lang,
-					    lang_index);
-		label = escape_label_for_menu (num_lang);
-		g_free (num_lang);
-	} else {
-		label = escape_label_for_menu (full_lang ? full_lang : lang);
-	}
-
-	add_lang_item (menu, label, action, lang_id);
-	g_free (label);
+	escaped_label = escape_label_for_menu (label);
+	add_lang_item (menu, escaped_label, action, lang_id);
+	g_free (escaped_label);
 }
 
 static void
@@ -425,41 +506,23 @@ create_lang_actions (GMenu *menu,
 		     GList *list,
 		     gboolean is_lang)
 {
-	unsigned int i;
-	GList *l;
-	GHashTable *lookup;
+	GList *ui_list, *l;
+	guint i;
 
 	if (is_lang == FALSE) {
 		/* Translators: an entry in the "Languages" menu, used to choose the subtitle language of a DVD */
-		add_lang_action (menu, action, _("None"), -2, 0);
+		add_lang_action (menu, action, _("None"), -2);
 	}
 
 	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
-	add_lang_action (menu, action, C_("Language", "Auto"), -1, 0);
+	add_lang_action (menu, action, C_("Language", "Auto"), -1);
 
-	i = 0;
-	lookup = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	ui_list = bvw_lang_info_to_menu_labels (list);
 
-	for (l = list; l != NULL; l = l->next) {
-		guint num;
-		unsigned int *hash_value;
-		BvwLangInfo *info = l->data;
+	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
+		add_lang_action (menu, action, l->data, i);
 
-		hash_value = g_hash_table_lookup (lookup, info->language);
-		if (hash_value == NULL)
-			num = 0;
-		else
-			num = GPOINTER_TO_INT (hash_value);
-		num++;
-
-		g_hash_table_insert (lookup, g_strdup (info->language), GINT_TO_POINTER (num));
-
-		add_lang_action (menu, action, info->language, i, num);
-
-		i++;
-	}
-
-	g_hash_table_destroy (lookup);
+	g_list_free_full (ui_list, (GDestroyNotify) g_free);
 }
 
 static gboolean
@@ -485,6 +548,8 @@ totem_sublang_equal_lists (GList *orig, GList *new)
 		info_o = o->data;
 		info_n = n->data;
 		if (g_strcmp0 (info_o->language, info_n->language) != 0)
+			retval = FALSE;
+		if (g_strcmp0 (info_o->codec, info_n->codec) != 0)
 			retval = FALSE;
                 o = g_list_next (o);
                 n = g_list_next (n);
