@@ -53,11 +53,14 @@
         "shared-modules/lua5.3/lua-5.3.2.json",
         {
             "name": "libpeas",
-            "cleanup": [ "/bin/*", "/lib/peas-demo" ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/libpeas.git"
+                },
+                {
+                    "type": "shell",
+                    "commands" : [ "sed 's,libpeas-gtk peas-demo,libpeas-gtk,' -i Makefile.am" ]
                 }
             ]
         },
@@ -82,7 +85,7 @@
                     "url": "https://gitlab.gnome.org/GNOME/grilo.git"
                 }
             ],
-            "cleanup": [ "/include", "/bin" ]
+            "cleanup": [ "/include" ]
         },
         {
             "name": "librest",
@@ -107,6 +110,7 @@
         {
             "name": "liboauth",
             "config-opts": [ "--enable-nss" ],
+            "cleanup": [ "/bin/*oauth*", "share/man/man1/*oauth*" ],
             "sources": [
                 {
                     "type": "archive",
@@ -169,7 +173,7 @@
         },
         {
             "name": "avahi",
-            "cleanup": [ "/bin" ],
+            "cleanup": [ "/bin/*avahi*", "share/man/man1/*avahi*" ],
             "config-opts": [
                 "--with-distro=none",
                 "--enable-gobject",
