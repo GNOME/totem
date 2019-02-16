@@ -41,6 +41,7 @@ static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 					    const char    *display_name,
 					    const char    *content_type,
 					    const char    *subtitle_uri,
+					    gint64         starttime,
 					    gboolean       playing);
 
 typedef gboolean (*ClearComparisonFunc) (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data);
@@ -111,6 +112,7 @@ enum {
 	FILE_MONITOR_COL,
 	MOUNT_COL,
 	MIME_TYPE_COL,
+	STARTTIME_COL,
 	NUM_COLS
 };
 
@@ -738,8 +740,8 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 			     GHashTable *metadata,
 			     TotemPlaylist *playlist)
 {
-	const char *title, *content_type, *subtitle_uri, *starttime;
-	gint64 duration;
+	const char *title, *content_type, *subtitle_uri, *starttime_str;
+	gint64 duration, starttime;
 	gboolean playing;
 
 	/* We ignore 0-length items in playlists, they're usually just banners */
@@ -751,14 +753,14 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	content_type = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE);
 	playing = parse_bool_str (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_PLAYING));
 	subtitle_uri = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_SUBTITLE_URI);
-	if (playing) {
-		starttime = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
-		if (starttime != NULL) {
-			g_free (playlist->priv->starttime);
-			playlist->priv->starttime = g_strdup (starttime);
-		}
+	starttime_str = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
+	starttime = totem_pl_parser_parse_duration (starttime_str, FALSE);
+	starttime = MAX (starttime, 0);
+	if (starttime_str != NULL && playing) {
+		g_free (playlist->priv->starttime);
+		playlist->priv->starttime = g_strdup (starttime_str);
 	}
-	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, playing);
+	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, starttime, playing);
 }
 
 static gboolean
@@ -893,6 +895,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 			    const char *display_name,
 			    const char *content_type,
 			    const char *subtitle_uri,
+			    gint64      starttime,
 			    gboolean    playing)
 {
 	GtkListStore *store;
@@ -912,7 +915,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 
 	uri = totem_create_full_path (mrl);
 
-	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %s\n", filename_for_display, uri, display_name, subtitle_uri, playing ? "true" : "false");
+	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %"G_GINT64_FORMAT " %s\n", filename_for_display, uri, display_name, subtitle_uri, starttime, playing ? "true" : "false");
 
 	store = GTK_LIST_STORE (playlist->priv->model);
 
@@ -944,6 +947,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 					   FILE_MONITOR_COL, monitor,
 					   MOUNT_COL, mount,
 					   MIME_TYPE_COL, content_type,
+					   STARTTIME_COL, starttime,
 					   -1);
 	g_free (escaped_filename);
 
@@ -986,7 +990,7 @@ static gboolean
 handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name, GError **error)
 {
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
-		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL, NULL, FALSE);
+		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL, NULL, 0, FALSE);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
 		g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
 			     _("The playlist “%s” could not be parsed. It might be damaged."), display_name ? display_name : mrl);
@@ -1109,7 +1113,7 @@ totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
 			gtk_tree_path_free (playlist->priv->current);
 			playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
 
-			*starttime = parse_starttime (playlist);
+			*starttime = parse_starttime (playlist->priv->starttime);
 			g_clear_pointer (&playlist->priv->starttime, g_free);
 
 			break;
