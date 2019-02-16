@@ -130,6 +130,7 @@ char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist,
 					   char **subtitle);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_content_type (TotemPlaylist *playlist);
+gint64     totem_playlist_steal_current_starttime (TotemPlaylist *playlist);
 char      *totem_playlist_get_title (TotemPlaylist *playlist,
 				     guint title_index);
 
