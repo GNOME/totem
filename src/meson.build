@@ -298,4 +298,14 @@ if have_gir
   )
 endif
 
+tests = [ 'test-totem' ]
+
+foreach test_name : tests
+  exe = executable(test_name, '@0@.c'.format(test_name),
+                   include_directories: [src_inc, top_inc],
+                   dependencies: libtotem_dep)
+
+  test(test_name, exe)
+endforeach
+
 subdir('plugins')

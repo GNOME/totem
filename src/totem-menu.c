@@ -401,7 +401,7 @@ get_language_name_no_und (const char *lang)
 	return gst_tag_get_language_name (lang);
 }
 
-static GList *
+GList *
 bvw_lang_info_to_menu_labels (GList *langs)
 {
 	GList *l, *ret;
