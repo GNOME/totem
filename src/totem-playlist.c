@@ -77,9 +77,6 @@ struct TotemPlaylistPrivate
 	GSettings *settings;
 	GSettings *lockdown_settings;
 
-	/* Current time in the track */
-	char *starttime;
-
 	/* This is a scratch list for when we're removing files */
 	GList *list;
 	guint current_to_be_removed : 1;
@@ -756,10 +753,6 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	starttime_str = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
 	starttime = totem_pl_parser_parse_duration (starttime_str, FALSE);
 	starttime = MAX (starttime, 0);
-	if (starttime_str != NULL && playing) {
-		g_free (playlist->priv->starttime);
-		playlist->priv->starttime = g_strdup (starttime_str);
-	}
 	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, starttime, playing);
 }
 
@@ -803,7 +796,6 @@ totem_playlist_dispose (GObject *object)
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
 
 	g_clear_object (&playlist->priv->parser);
-	g_clear_pointer (&playlist->priv->starttime, g_free);
 	g_clear_object (&playlist->priv->settings);
 	g_clear_object (&playlist->priv->lockdown_settings);
 	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
@@ -1074,28 +1066,14 @@ totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result, GE
 	return FALSE;
 }
 
-static gint64
-parse_starttime (TotemPlaylist *playlist)
-{
-	gint64 ret;
-
-	if (playlist->priv->starttime == NULL)
-		return 0;
-	ret = g_ascii_strtoll (playlist->priv->starttime, NULL, 0);
-
-	return ret;
-}
-
 gboolean
 totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
-			     const char    *mrl,
-			     gint64        *starttime)
+			     const char    *mrl)
 {
 	GtkTreeIter iter;
 	gboolean ret;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
-	g_return_val_if_fail (starttime != NULL, FALSE);
 
 	ret = handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, NULL, NULL);
 	if (!ret)
@@ -1112,10 +1090,6 @@ totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
 		if (status == TOTEM_PLAYLIST_STATUS_PAUSED) {
 			gtk_tree_path_free (playlist->priv->current);
 			playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
-
-			*starttime = parse_starttime (playlist->priv->starttime);
-			g_clear_pointer (&playlist->priv->starttime, g_free);
-
 			break;
 		}
 		ret = gtk_tree_model_iter_next (playlist->priv->model, &iter);
