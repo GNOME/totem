@@ -96,8 +96,7 @@ gboolean totem_playlist_add_mrl_finish (TotemPlaylist *playlist,
                                         GAsyncResult  *result,
                                         GError       **error);
 gboolean totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
-                                      const char *mrl,
-                                      gint64 *starttime);
+                                      const char *mrl);
 
 typedef struct TotemPlaylistMrlData TotemPlaylistMrlData;
 

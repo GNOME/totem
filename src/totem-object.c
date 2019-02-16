@@ -1819,7 +1819,6 @@ totem_object_set_mrl (TotemObject *totem,
 		      const char *subtitle)
 {
 	if (totem->mrl != NULL) {
-		totem->seek_to_start = 0;
 		totem->pause_start = FALSE;
 
 		g_clear_pointer (&totem->mrl, g_free);
@@ -2458,7 +2457,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 {
 	/* Clear the seek if it's there, we only want to try and seek
 	 * the first file, even if it's not there */
-	totem->seek_to_start = 0;
+	totem_playlist_steal_current_starttime (totem->playlist);
 	totem->pause_start = FALSE;
 
 	if (playback_stopped)
@@ -2494,27 +2493,31 @@ static void
 update_seekable (TotemObject *totem)
 {
 	gboolean seekable;
+	gboolean notify;
 
 	seekable = bacon_video_widget_is_seekable (totem->bvw);
-	if (totem->seekable == seekable)
-		return;
+	notify = (totem->seekable == seekable);
 	totem->seekable = seekable;
 
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
 
-	/* This is for the session restore and the position saving
-	 * to seek to the saved time */
 	if (seekable != FALSE) {
-		if (totem->seek_to_start != 0) {
+		gint64 starttime;
+
+		starttime = totem_playlist_steal_current_starttime (totem->playlist);
+		if (starttime != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to_start, FALSE, NULL);
-			totem_object_pause (totem);
+						      starttime * 1000, FALSE, NULL);
+			if (totem->pause_start) {
+				totem_object_pause (totem);
+				totem->pause_start = FALSE;
+			}
 		}
 	}
-	totem->seek_to_start = 0;
 
-	g_object_notify (G_OBJECT (totem), "seekable");
+	if (notify)
+		g_object_notify (G_OBJECT (totem), "seekable");
 }
 
 static void
