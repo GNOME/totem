@@ -1714,6 +1714,36 @@ totem_playlist_get_current_content_type (TotemPlaylist *playlist)
 	return content_type;
 }
 
+gint64
+totem_playlist_steal_current_starttime (TotemPlaylist *playlist)
+{
+	GtkTreeIter iter;
+	gint64 starttime;
+
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), 0);
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return 0;
+
+	gtk_tree_model_get_iter (playlist->priv->model,
+				 &iter,
+				 playlist->priv->current);
+
+	gtk_tree_model_get (playlist->priv->model,
+			    &iter,
+			    STARTTIME_COL, &starttime,
+			    -1);
+
+	/* And reset the starttime so it's only used once,
+	 * hence the "steal" in the API name */
+	gtk_list_store_set (GTK_LIST_STORE (playlist->priv->model),
+			    &iter,
+			    STARTTIME_COL, 0,
+			    -1);
+
+	return starttime;
+}
+
 char *
 totem_playlist_get_title (TotemPlaylist *playlist, guint title_index)
 {
