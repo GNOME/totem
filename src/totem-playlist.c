@@ -269,10 +269,10 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 {
 	TotemPlPlaylist *playlist = user_data;
 	TotemPlPlaylistIter pl_iter;
-	gchar *uri, *title, *subtitle_uri, *mime_type;
+	gchar *uri, *title, *subtitle_uri, *mime_type, *starttime_str;
 	TotemPlaylistStatus status;
 	gboolean custom_title;
-	const char *starttime;
+	gint64 starttime;
 
 	gtk_tree_model_get (model, iter,
 			    URI_COL, &uri,
@@ -281,12 +281,20 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 			    SUBTITLE_URI_COL, &subtitle_uri,
 			    PLAYING_COL, &status,
 			    MIME_TYPE_COL, &mime_type,
+			    STARTTIME_COL, &starttime,
 			    -1);
 
-	if (status != TOTEM_PLAYLIST_STATUS_NONE)
-		starttime = g_object_get_data (G_OBJECT (playlist), "starttime");
-	else
-		starttime = NULL;
+	/* Prefer the current position for the starttime, if one is passed */
+	starttime_str = NULL;
+	if (status != TOTEM_PLAYLIST_STATUS_NONE) {
+		gint64 new_starttime;
+
+		new_starttime = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (playlist), "starttime"));
+		if (new_starttime != 0)
+			starttime = new_starttime;
+	}
+	if (starttime != 0)
+		starttime_str = g_strdup_printf ("%" G_GINT64_FORMAT, starttime);
 
 	totem_pl_playlist_append (playlist, &pl_iter);
 	totem_pl_playlist_set (playlist, &pl_iter,
@@ -295,13 +303,14 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 			       TOTEM_PL_PARSER_FIELD_SUBTITLE_URI, subtitle_uri,
 			       TOTEM_PL_PARSER_FIELD_PLAYING, status != TOTEM_PLAYLIST_STATUS_NONE ? "true" : "",
 			       TOTEM_PL_PARSER_FIELD_CONTENT_TYPE, mime_type,
-			       TOTEM_PL_PARSER_FIELD_STARTTIME, starttime,
+			       TOTEM_PL_PARSER_FIELD_STARTTIME, starttime_str,
 			       NULL);
 
 	g_free (uri);
 	g_free (title);
 	g_free (subtitle_uri);
 	g_free (mime_type);
+	g_free (starttime_str);
 
 	return FALSE;
 }
@@ -327,12 +336,8 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 
 	pl_playlist = totem_pl_playlist_new ();
 
-	if (starttime > 0) {
-		char *starttime_msec;
-
-		starttime_msec = g_strdup_printf ("%" G_GINT64_FORMAT, starttime);
-		g_object_set_data_full (G_OBJECT (pl_playlist), "starttime", starttime_msec, g_free);
-	}
+	if (starttime > 0)
+		g_object_set_data (G_OBJECT (pl_playlist), "starttime", GINT_TO_POINTER (starttime));
 
 	gtk_tree_model_foreach (playlist->priv->model,
 				totem_playlist_save_iter_foreach,
