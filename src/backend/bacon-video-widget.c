@@ -3366,7 +3366,6 @@ static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
   GList *ret = NULL;
-  gint num = 1;
   gint i, n;
   const char *prop;
   const char *signal;
