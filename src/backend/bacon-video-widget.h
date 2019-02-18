@@ -385,7 +385,8 @@ void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
 /**
  * BvwLangInfo:
  * @language: the ISO-639 language code for the track, or "und" if unknown.
- * @codec: the codec for the track
+ * Can never be %NULL.
+ * @codec: the codec for the track, or %NULL if unknown or unset.
  *
  * #BvwLangInfo holds the language code and codec for each subtitle
  * or audio track for a media, which would allow the front-ends to
