@@ -30,7 +30,7 @@ test_menus_lang_info (void)
 	l = g_list_append (l, bvw_lang_info_new ("eng", "Dolby Pro Racing"));
 	l = g_list_append (l, bvw_lang_info_new ("fre", "Dolby Amateur 5.1"));
 
-	ret = bvw_lang_info_to_menu_labels (l);
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
 	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English #1");
@@ -44,7 +44,7 @@ test_menus_lang_info (void)
 	l = g_list_append (l, bvw_lang_info_new ("eng", "Dolby Amateur 5.1"));
 	l = g_list_append (l, bvw_lang_info_new ("fre", "Dolby Amateur 5.1"));
 
-	ret = bvw_lang_info_to_menu_labels (l);
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
 	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English — Dolby Pro Racing");
@@ -58,7 +58,7 @@ test_menus_lang_info (void)
 	l = g_list_append (l, bvw_lang_info_new ("spa", "Dolby Amateur 5.1"));
 	l = g_list_append (l, bvw_lang_info_new ("fre", "Dolby Amateur 5.1"));
 
-	ret = bvw_lang_info_to_menu_labels (l);
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
 	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English");

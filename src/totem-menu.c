@@ -394,15 +394,32 @@ hash_table_num_instances (GHashTable *ht,
 }
 
 static const char *
-get_language_name_no_und (const char *lang)
+get_language_name_no_und (const char   *lang,
+			  BvwTrackType  track_type)
 {
-	if (g_str_equal (lang, "und"))
-		return gst_tag_get_language_name ("eng");
-	return gst_tag_get_language_name (lang);
+	const char *ret;
+
+	ret =  gst_tag_get_language_name (lang);
+	if (ret != NULL)
+		return ret;
+
+	switch (track_type) {
+	case BVW_TRACK_TYPE_AUDIO:
+		return _("Audio Track");
+		break;
+	case BVW_TRACK_TYPE_SUBTITLE:
+		return _("Subtitle");
+		break;
+	case BVW_TRACK_TYPE_VIDEO:
+		g_assert_not_reached ();
+	}
+
+	return NULL;
 }
 
 GList *
-bvw_lang_info_to_menu_labels (GList *langs)
+bvw_lang_info_to_menu_labels (GList        *langs,
+			      BvwTrackType  track_type)
 {
 	GList *l, *ret;
 	GHashTable *lang_table, *lang_codec_table, *printed_table;
@@ -452,16 +469,16 @@ bvw_lang_info_to_menu_labels (GList *langs)
 						     GINT_TO_POINTER (num));
 
 				str = g_strdup_printf ("%s #%d",
-						       get_language_name_no_und (info->language),
+						       get_language_name_no_und (info->language, track_type),
 						       num);
 			} else {
 				str = g_strdup_printf ("%s — %s",
-						       get_language_name_no_und (info->language),
+						       get_language_name_no_und (info->language, track_type),
 						       info->codec);
 			}
 			g_free (id);
 		} else {
-			str = g_strdup (get_language_name_no_und (info->language));
+			str = g_strdup (get_language_name_no_und (info->language, track_type));
 		}
 
 		ret = g_list_prepend (ret, str);
@@ -517,7 +534,7 @@ create_lang_actions (GMenu *menu,
 	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 	add_lang_action (menu, action, C_("Language", "Auto"), -1);
 
-	ui_list = bvw_lang_info_to_menu_labels (list);
+	ui_list = bvw_lang_info_to_menu_labels (list, is_lang ? BVW_TRACK_TYPE_AUDIO : BVW_TRACK_TYPE_SUBTITLE);
 
 	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
 		add_lang_action (menu, action, l->data, i);

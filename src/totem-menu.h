@@ -24,6 +24,7 @@
 #define TOTEM_MENU_H
 
 #include "totem.h"
+#include "bacon-video-widget.h"
 
 G_BEGIN_DECLS
 
@@ -34,7 +35,8 @@ void totem_sublang_update (Totem *totem);
 void totem_sublang_exit (Totem *totem);
 
 /* For test use only */
-GList *bvw_lang_info_to_menu_labels (GList *langs);
+GList *bvw_lang_info_to_menu_labels (GList        *langs,
+				     BvwTrackType  track_type);
 
 G_END_DECLS
 
