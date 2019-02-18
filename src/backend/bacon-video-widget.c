@@ -3349,19 +3349,6 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
   return FALSE;
 }
 
-static char *
-get_label_for_type (const char *type_name,
-		    int         num)
-{
-  if (g_str_equal (type_name, "AUDIO")) {
-    return g_strdup_printf (_("Audio Track #%d"), num);
-  } else if (g_str_equal (type_name, "TEXT")) {
-    return g_strdup_printf (_("Subtitle #%d"), num);
-  }
-
-  g_assert_not_reached ();
-}
-
 static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
