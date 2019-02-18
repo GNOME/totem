@@ -518,15 +518,15 @@ add_lang_action (GMenu *menu,
 }
 
 static void
-create_lang_actions (GMenu *menu,
-		     const char *action,
-		     GList *list,
-		     gboolean is_lang)
+create_lang_actions (GMenu        *menu,
+		     const char   *action,
+		     GList        *list,
+		     BvwTrackType  track_type)
 {
 	GList *ui_list, *l;
 	guint i;
 
-	if (is_lang == FALSE) {
+	if (track_type == BVW_TRACK_TYPE_SUBTITLE) {
 		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
 		add_lang_action (menu, action, _("None"), -2);
 	}
@@ -534,7 +534,7 @@ create_lang_actions (GMenu *menu,
 	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 	add_lang_action (menu, action, C_("Language", "Auto"), -1);
 
-	ui_list = bvw_lang_info_to_menu_labels (list, is_lang ? BVW_TRACK_TYPE_AUDIO : BVW_TRACK_TYPE_SUBTITLE);
+	ui_list = bvw_lang_info_to_menu_labels (list, track_type);
 
 	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
 		add_lang_action (menu, action, l->data, i);
@@ -587,7 +587,7 @@ totem_languages_update (Totem *totem, GList *list)
 	if (list != NULL) {
 		GMenu *menu;
 		menu = totem_object_get_menu_section (totem, "languages-placeholder");
-		create_lang_actions (menu, "app.set-language", list, TRUE);
+		create_lang_actions (menu, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
 	}
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-language");
@@ -612,7 +612,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 	if (list != NULL) {
 		GMenu *menu;
 		menu = totem_object_get_menu_section (totem, "subtitles-placeholder");
-		create_lang_actions (menu, "app.set-subtitle", list, FALSE);
+		create_lang_actions (menu, "app.set-subtitle", list, BVW_TRACK_TYPE_SUBTITLE);
 	}
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-subtitle");
