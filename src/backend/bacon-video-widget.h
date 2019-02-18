@@ -392,8 +392,8 @@ void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
  * present appropriate information to the user.
  */
 typedef struct {
-	const char *language;
-	const char *codec;
+	char *language;
+	char *codec;
 } BvwLangInfo;
 
 void bacon_video_widget_lang_info_free           (BvwLangInfo *info);
