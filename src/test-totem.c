@@ -24,6 +24,18 @@ test_menus_lang_info (void)
 {
 	GList *l, *ret;
 
+	/* No language, no codec */
+	l = NULL;
+	l = g_list_append (l, bvw_lang_info_new ("und", NULL));
+	l = g_list_append (l, bvw_lang_info_new ("und", NULL));
+
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
+	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
+
+	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "Audio Track #1");
+	g_assert_cmpstr (g_list_nth_data (ret, 1), ==, "Audio Track #2");
+	g_list_free_full (ret, g_free);
+
 	/* Same language, same codecs */
 	l = NULL;
 	l = g_list_append (l, bvw_lang_info_new ("eng", "Dolby Pro Racing"));
