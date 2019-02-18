@@ -527,7 +527,7 @@ create_lang_actions (GMenu *menu,
 	guint i;
 
 	if (is_lang == FALSE) {
-		/* Translators: an entry in the "Languages" menu, used to choose the subtitle language of a DVD */
+		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
 		add_lang_action (menu, action, _("None"), -2);
 	}
 
