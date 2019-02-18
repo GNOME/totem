@@ -3463,7 +3463,7 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
   /* When we have only one language, we don't need to show
    * any languages, we default to the only track */
   if (g_list_length (list) == 1) {
-    g_list_free_full (list, bacon_video_widget_lang_info_free);
+    g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
     return NULL;
   }
 
