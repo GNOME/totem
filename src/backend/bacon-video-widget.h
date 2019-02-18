@@ -397,6 +397,20 @@ typedef struct {
 	char *codec;
 } BvwLangInfo;
 
+/**
+ * BvwTrackType:
+ * @BVW_TRACK_TYPE_AUDIO: an audio track
+ * @BVW_TRACK_TYPE_SUBTITLE: a subtitle track
+ * @BVW_TRACK_TYPE_ANGLE: a video track
+ *
+ * A type of media track.
+ */
+typedef enum {
+	BVW_TRACK_TYPE_AUDIO,
+	BVW_TRACK_TYPE_SUBTITLE,
+	BVW_TRACK_TYPE_VIDEO
+} BvwTrackType;
+
 void bacon_video_widget_lang_info_free           (BvwLangInfo *info);
 
 GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
