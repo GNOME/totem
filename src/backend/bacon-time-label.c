@@ -105,7 +105,8 @@ update_label_text (BaconTimeLabel *label)
 	if (length > 60 * 60 * 1000)
 		force_hour = TRUE;
 
-	if (length <= 0) {
+	if (length <= 0 ||
+	    _time > length) {
 		if (!label->priv->remaining) {
 			label_str = totem_time_to_string (_time, FALSE, force_hour);
 		} else {
