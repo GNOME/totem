@@ -5,6 +5,7 @@
 #include <gst/tag/tag.h>
 
 #include "backend/bacon-video-widget.h"
+#include "backend/bacon-time-label.h"
 #include "totem-menu.h"
 
 static BvwLangInfo *
@@ -79,14 +80,70 @@ test_menus_lang_info (void)
 	g_list_free_full (ret, g_free);
 }
 
+static void
+set_labels (GtkWidget  *label,
+	    GtkWidget  *label_remaining,
+	    gint64      _time,
+	    gint64      length,
+	    const char *expected,
+	    const char *expected_remaining)
+{
+	const char *str;
+
+	bacon_time_label_set_time (BACON_TIME_LABEL (label), _time, length);
+	bacon_time_label_set_time (BACON_TIME_LABEL (label_remaining), _time, length);
+
+	str = gtk_label_get_text (GTK_LABEL (label));
+	g_assert_cmpstr (str, ==, expected);
+
+	str = gtk_label_get_text (GTK_LABEL (label_remaining));
+	g_assert_cmpstr (str, ==, expected_remaining);
+}
+
+static void
+test_time_label (void)
+{
+	GtkWidget *label, *label_remaining;
+
+	label = bacon_time_label_new ();
+	label_remaining = bacon_time_label_new ();
+	bacon_time_label_set_remaining (BACON_TIME_LABEL (label_remaining), TRUE);
+
+	set_labels (label, label_remaining,
+		    0, 1000,
+		    "0:00", "-0:01");
+
+	set_labels (label, label_remaining,
+		    500, 1000,
+		    "0:00", "-0:01");
+
+	set_labels (label, label_remaining,
+		    700, 1400,
+		    "0:00", "-0:01");
+
+	set_labels (label, label_remaining,
+		    1000, 1400,
+		    "0:01", "-0:01");
+
+	set_labels (label, label_remaining,
+		    0, 45 * 60 * 1000,
+		    "0:00", "-45:00");
+
+	set_labels (label, label_remaining,
+		    50 * 60 * 1000, 45 * 60 * 1000,
+		    "50:00", "--:--");
+}
+
 int main (int argc, char **argv)
 {
 	setlocale (LC_ALL, "en_GB.UTF-8");
 
 	g_test_init (&argc, &argv, NULL);
+	gtk_init (&argc, &argv);
 	g_test_bug_base ("http://bugzilla.gnome.org/show_bug.cgi?id=");
 
 	g_test_add_func ("/menus/lang_info", test_menus_lang_info);
+	g_test_add_func ("/osd/time_label", test_time_label);
 
 	return g_test_run ();
 }
