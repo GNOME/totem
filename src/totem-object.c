@@ -54,7 +54,6 @@
 #include "totem-grilo.h"
 #include "bacon-video-widget.h"
 #include "bacon-time-label.h"
-#include "totem-time-label.h"
 #include "totem-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"

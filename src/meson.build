@@ -28,7 +28,6 @@ enum_headers = files(
   'totem-selection-toolbar.h',
   'totem-session.h',
   'totem-subtitle-encoding.h',
-  'totem-time-label.h',
   'totem-uri.h',
   'totem.h'
 )
@@ -88,7 +87,6 @@ install_headers(
 
 libtotem_player_sources = files(
   'totem-interface.c',
-  'totem-time-label.c'
 )
 
 libtotem_player_deps = totem_common_deps + [
