@@ -39,6 +39,8 @@ totem_time_to_string (gint64   msecs,
 {
 	int sec, min, hour, _time;
 
+	g_return_val_if_fail (msecs >= 0, NULL);
+
 	_time = (int) (msecs / 1000);
 	/* When calculating the remaining time,
 	 * we want to make sure that:
