@@ -25,6 +25,7 @@
  *
  */
 
+#include <math.h>
 #include <glib/gi18n.h>
 #include <libintl.h>
 
@@ -38,15 +39,19 @@ totem_time_to_string (gint64   msecs,
 		      gboolean force_hour)
 {
 	int sec, min, hour, _time;
+	double time_f;
 
 	g_return_val_if_fail (msecs >= 0, NULL);
 
-	_time = (int) (msecs / 1000);
 	/* When calculating the remaining time,
 	 * we want to make sure that:
 	 * current time + time remaining = total run time */
+	time_f = (double) msecs / 1000;
 	if (remaining)
-		_time++;
+		time_f = ceil (time_f);
+	else
+		time_f = round (time_f);
+	_time = (int) time_f;
 
 	sec = _time % 60;
 	_time = _time - sec;

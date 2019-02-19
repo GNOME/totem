@@ -38,7 +38,7 @@ libtotem_gst_pixbuf_helpers_dep = declare_dependency(
 libtotem_time_helpers = static_library(
   'totemtimehelpers',
   sources: 'totem-time-helpers.c',
-  dependencies: glib_dep
+  dependencies: [ glib_dep, m_dep ]
 )
 
 libtotem_time_helpers_dep = declare_dependency(
@@ -53,7 +53,7 @@ exe = executable(
   gst_test,
   gst_test + '.c',
   include_directories: top_inc,
-  dependencies: glib_dep,
+  dependencies: [ glib_dep, m_dep ],
   link_with: libtotem_time_helpers
 )
 
