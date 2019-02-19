@@ -4,6 +4,7 @@
 #define GST_USE_UNSTABLE_API 1
 #include <gst/tag/tag.h>
 
+#include "gst/totem-time-helpers.h"
 #include "backend/bacon-video-widget.h"
 #include "backend/bacon-time-label.h"
 #include "totem-menu.h"
@@ -104,6 +105,7 @@ static void
 test_time_label (void)
 {
 	GtkWidget *label, *label_remaining;
+	char *str;
 
 	label = bacon_time_label_new ();
 	label_remaining = bacon_time_label_new ();
@@ -132,6 +134,26 @@ test_time_label (void)
 	set_labels (label, label_remaining,
 		    50 * 60 * 1000, 45 * 60 * 1000,
 		    "50:00", "--:--");
+
+	str = totem_time_to_string (0, FALSE, FALSE);
+	g_assert_cmpstr (str, ==, "0:00");
+	g_free (str);
+
+	str = totem_time_to_string (500, FALSE, FALSE);
+	g_assert_cmpstr (str, ==, "0:01");
+	g_free (str);
+
+	str = totem_time_to_string (500, TRUE, FALSE);
+	g_assert_cmpstr (str, ==, "-0:01");
+	g_free (str);
+
+	str = totem_time_to_string (1250, FALSE, FALSE);
+	g_assert_cmpstr (str, ==, "0:01");
+	g_free (str);
+
+	str = totem_time_to_string (1250, TRUE, FALSE);
+	g_assert_cmpstr (str, ==, "-0:02");
+	g_free (str);
 }
 
 int main (int argc, char **argv)

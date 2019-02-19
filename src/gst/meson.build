@@ -46,15 +46,3 @@ libtotem_time_helpers_dep = declare_dependency(
   include_directories: gst_inc,
   dependencies: glib_dep
 )
-
-gst_test = 'test-time'
-
-exe = executable(
-  gst_test,
-  gst_test + '.c',
-  include_directories: top_inc,
-  dependencies: [ glib_dep, m_dep ],
-  link_with: libtotem_time_helpers
-)
-
-test(gst_test, exe)
