@@ -134,6 +134,10 @@ bacon_time_label_set_time (BaconTimeLabel *label,
 {
 	g_return_if_fail (BACON_IS_TIME_LABEL (label));
 
+	if (label->priv->length == -1 &&
+	    length == -1)
+		return;
+
 	if (_time / 1000 == label->priv->time / 1000 &&
 	    length / 1000 == label->priv->length / 1000)
 		return;
