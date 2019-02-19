@@ -1,5 +1,25 @@
 New features and significant updates in version...
 
+Major changes in 3.31.91:
+- Move nautilus properties page to nautilus module
+- Fix fullscreen toolbar's appearance in RTL languages
+- Update appdata and screenshots
+- Don't advertise VCD support, GStreamer 1.0 has never supported it
+- Add support for "start time" in playlists
+- Make Ctrl+W navigate back before exiting
+- Make it possible to load subtitles from the command-line
+- Fix media player controls not appearing in gnome-shell in
+  some cases, and the next/previous buttons not working
+- Make previous/next buttons' state update when a movie
+  contains chapters
+- Use better labels for Subtitles and Languages menus
+- Fix some display problems when files are longer than detected
+- And other smaller bug fixes
+  - Throw a warning when download buffering breaks because
+    of a missing plugin
+  - Make framerate more precise in properties
+  - Fix a warning on exit when brasero is not installed
+
 Major changes in 3.31.90:
 - New icon
 - Remove app menu
