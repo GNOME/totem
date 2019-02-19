@@ -31,7 +31,7 @@
 #include "totem-time-helpers.h"
 
 /* FIXME: Remove
- * See https://bugzilla.gnome.org/show_bug.cgi?id=679850 */
+ * See https://gitlab.freedesktop.org/gstreamer/gstreamer/issues/26 */
 char *
 totem_time_to_string (gint64   msecs,
 		      gboolean remaining,
