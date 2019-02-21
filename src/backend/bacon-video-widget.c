@@ -3859,7 +3859,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   /* FIXME:
    * Unemitted errors:
    * BVW_ERROR_DVD_ENCRYPTED
-   * BVW_ERROR_FILE_ENCRYPTED
    * BVW_ERROR_EMPTY_FILE
    * BVW_ERROR_BROKEN_FILE
    */
@@ -3926,6 +3925,12 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       is_error (e, RESOURCE, READ)) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
 			       _("The movie could not be read."));
+    goto done;
+  }
+
+  if (is_error (e, STREAM, DECRYPT)) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_ENCRYPTED,
+			       _("This file is encrypted and cannot be played back."));
     goto done;
   }
 
