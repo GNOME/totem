@@ -3858,7 +3858,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 
   /* FIXME:
    * Unemitted errors:
-   * BVW_ERROR_DVD_ENCRYPTED
    * BVW_ERROR_BROKEN_FILE
    */
 
@@ -3874,6 +3873,23 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 				 "The VCD device you specified seems to be invalid.");
       goto done;
     }
+  }
+
+  /* Check for encrypted DVD */
+  if (is_error (e, RESOURCE, READ) &&
+      g_str_has_prefix (bvw->priv->mrl, "dvd:")) {
+    GModule *module;
+    gpointer sym;
+
+    module = g_module_open ("libdvdcss", 0);
+    if (module == NULL ||
+	g_module_symbol (module, "dvdcss_open", &sym)) {
+      g_clear_pointer (&module, g_module_close);
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_DVD_ENCRYPTED,
+				 _("The source seems encrypted and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+      goto done;
+    }
+    g_clear_pointer (&module, g_module_close);
   }
 
   /* HTTP error codes */
