@@ -3859,7 +3859,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   /* FIXME:
    * Unemitted errors:
    * BVW_ERROR_DVD_ENCRYPTED
-   * BVW_ERROR_EMPTY_FILE
    * BVW_ERROR_BROKEN_FILE
    */
 
@@ -3931,6 +3930,12 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   if (is_error (e, STREAM, DECRYPT)) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_ENCRYPTED,
 			       _("This file is encrypted and cannot be played back."));
+    goto done;
+  }
+
+  if (is_error (e, STREAM, TYPE_NOT_FOUND)) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_EMPTY_FILE,
+			       _("The file you tried to play is an empty file."));
     goto done;
   }
 
