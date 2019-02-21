@@ -109,7 +109,7 @@ variable_rate_action_callback (GSimpleAction           *action,
 
 	label = get_submenu_label_for_index (i);
 	/* FIXME how do we change the section label?
-	 * https://bugzilla.gnome.org/show_bug.cgi?id=667779 */
+	 * https://gitlab.gnome.org/GNOME/glib/issues/498 */
 	g_free (label);
 }
 

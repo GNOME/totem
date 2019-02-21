@@ -349,7 +349,7 @@ totem_app_menu_setup (Totem *totem)
 		NULL
 	};
 
-	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=700085 */
+	/* FIXME: https://gitlab.gnome.org/GNOME/glib/issues/700 */
 	accels[0] = "<Primary>G";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.next-angle", (const char * const *) accels);
 	accels[0] = "<Primary>M";

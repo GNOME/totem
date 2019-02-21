@@ -214,7 +214,7 @@ source_is_browse_blacklisted (GrlSource *source)
 {
 	const char *id;
 	const char * const sources[] = {
-		/* https://bugzilla.gnome.org/show_bug.cgi?id=722422 */
+		/* https://gitlab.gnome.org/GNOME/grilo/issues/36 */
 		"grl-youtube",
 		NULL
 	};
