@@ -590,6 +590,9 @@ totem_languages_update (Totem *totem, GList *list)
 		create_lang_actions (menu, "app.set-language", list, BVW_TRACK_TYPE_AUDIO);
 	}
 
+	gtk_widget_set_sensitive (totem->fs_languages_submenu, list != NULL);
+	gtk_widget_set_sensitive (totem->languages_submenu, list != NULL);
+
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-language");
 	totem->updating_menu = TRUE;
 	current = bacon_video_widget_get_language (totem->bvw);
@@ -643,6 +646,63 @@ totem_sublang_update (Totem *totem)
 	} else {
 		totem_subtitles_update (totem, list);
 	}
+}
+
+typedef struct {
+	GtkWidget *widget;
+	char *label;
+} WidgetRet;
+
+static void
+foreach_child (GtkWidget *widget,
+	       gpointer   data)
+{
+	WidgetRet *ret = data;
+
+	if (ret->widget != NULL)
+		return;
+
+	if (GTK_IS_MODEL_BUTTON (widget)) {
+		char *text;
+
+		g_object_get (G_OBJECT (widget), "text", &text, NULL);
+		if (g_strcmp0 (text, ret->label) == 0)
+			ret->widget = widget;
+		g_free (text);
+		if (ret->widget != NULL)
+			return;
+	}
+
+	if (GTK_IS_CONTAINER (widget))
+		gtk_container_foreach (GTK_CONTAINER (widget), foreach_child, data);
+
+}
+
+static GtkWidget *
+get_language_menu_item (GtkMenuButton *button)
+{
+	GtkPopover *popover;
+	WidgetRet ret;
+	char **s;
+
+	popover = gtk_menu_button_get_popover (button);
+	ret.widget = NULL;
+	s = g_strsplit (_("_Languages"), "_", -1);
+	ret.label = g_strjoinv ("", s);
+	g_strfreev (s);
+	gtk_container_foreach (GTK_CONTAINER (popover), foreach_child, (gpointer) &ret);
+	g_free (ret.label);
+	return ret.widget;
+}
+
+void
+totem_sublang_setup (Totem *totem)
+{
+	totem->fs_languages_submenu = get_language_menu_item (GTK_MENU_BUTTON (totem->fullscreen_gear_button));
+	totem->languages_submenu = get_language_menu_item (GTK_MENU_BUTTON (totem->gear_button));
+
+	gtk_widget_set_sensitive (totem->fs_languages_submenu, FALSE);
+	gtk_widget_set_sensitive (totem->languages_submenu, FALSE);
 }
 
 void
