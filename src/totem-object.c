@@ -1574,6 +1574,30 @@ totem_object_play_pause (TotemObject *totem)
 }
 
 /**
+ * totem_object_stop:
+ * @totem: a #TotemObject
+ *
+ * Stops playback, and sets the playlist back at the start.
+ */
+void
+totem_object_stop (TotemObject *totem)
+{
+	char *mrl, *subtitle;
+
+	totem_playlist_set_at_start (totem->playlist);
+	update_buttons (totem);
+	bacon_video_widget_stop (totem->bvw);
+	play_pause_set_label (totem, STATE_STOPPED);
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+	if (mrl != NULL) {
+		totem_object_set_mrl (totem, mrl, subtitle);
+		bacon_video_widget_pause (totem->bvw);
+		g_free (mrl);
+		g_free (subtitle);
+	}
+}
+
+/**
  * totem_object_pause:
  * @totem: a #TotemObject
  *
@@ -2807,22 +2831,9 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 	case TOTEM_REMOTE_COMMAND_PAUSE:
 		totem_object_pause (totem);
 		break;
-	case TOTEM_REMOTE_COMMAND_STOP: {
-		char *mrl, *subtitle;
-
-		totem_playlist_set_at_start (totem->playlist);
-		update_buttons (totem);
-		bacon_video_widget_stop (totem->bvw);
-		play_pause_set_label (totem, STATE_STOPPED);
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		if (mrl != NULL) {
-			totem_object_set_mrl (totem, mrl, subtitle);
-			bacon_video_widget_pause (totem->bvw);
-			g_free (mrl);
-			g_free (subtitle);
-		}
+	case TOTEM_REMOTE_COMMAND_STOP:
+		totem_object_stop (totem);
 		break;
-	};
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD: {
 		double offset = 0;
 
