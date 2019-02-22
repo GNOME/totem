@@ -165,6 +165,7 @@ GType	totem_object_get_type			(void);
 
 void	totem_object_exit			(TotemObject *totem) G_GNUC_NORETURN;
 void	totem_object_play			(TotemObject *totem);
+void	totem_object_stop			(TotemObject *totem);
 void	totem_object_play_pause			(TotemObject *totem);
 void	totem_object_pause			(TotemObject *totem);
 gboolean totem_object_can_seek_next		(TotemObject *totem);
