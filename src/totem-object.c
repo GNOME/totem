@@ -1236,7 +1236,8 @@ reset_seek_status (TotemObject *totem)
 		totem->seek_lock = FALSE;
 		bacon_video_widget_unmark_popup_busy (totem->bvw, "seek started");
 		bacon_video_widget_seek (totem->bvw, 0, NULL);
-		totem_object_stop (totem);
+		bacon_video_widget_stop (totem->bvw);
+		play_pause_set_label (totem, STATE_STOPPED);
 	}
 }
 
@@ -1470,7 +1471,8 @@ totem_object_play (TotemObject *totem)
 	g_free (disp);
 
 	totem_object_show_error (totem, msg, err->message);
-	totem_object_stop (totem);
+	bacon_video_widget_stop (totem->bvw);
+	play_pause_set_label (totem, STATE_STOPPED);
 	g_free (msg);
 	g_error_free (err);
 }
@@ -1530,19 +1532,6 @@ totem_object_open_dialog (TotemObject *totem, const char *path)
 	g_slist_free (filenames);
 
 	return TRUE;
-}
-
-/**
- * totem_object_stop:
- * @totem: a #TotemObject
- *
- * Stops the current stream.
- **/
-void
-totem_object_stop (TotemObject *totem)
-{
-	bacon_video_widget_stop (totem->bvw);
-	play_pause_set_label (totem, STATE_STOPPED);
 }
 
 /**
@@ -2032,7 +2021,8 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 		msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
 		g_free (disp);
 
-		totem_object_stop (totem);
+		bacon_video_widget_stop (totem->bvw);
+		play_pause_set_label (totem, STATE_STOPPED);
 		totem_object_show_error (totem, msg, err->message);
 		g_free (msg);
 		g_error_free (err);
@@ -2822,7 +2812,8 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		totem_object_stop (totem);
+		bacon_video_widget_stop (totem->bvw);
+		play_pause_set_label (totem, STATE_STOPPED);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		if (mrl != NULL) {
 			totem_object_set_mrl (totem, mrl, subtitle);
@@ -3206,7 +3197,8 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 		/* Set play button status */
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		totem_object_stop (totem);
+		bacon_video_widget_stop (totem->bvw);
+		play_pause_set_label (totem, STATE_STOPPED);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_object_set_mrl (totem, mrl, subtitle);
 		bacon_video_widget_pause (totem->bvw);
