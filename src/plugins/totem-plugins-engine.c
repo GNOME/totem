@@ -133,11 +133,14 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_signal_connect (engine->priv->activatable_extensions, "extension-removed",
 			  G_CALLBACK (on_activatable_extension_removed), engine);
 
-	g_settings_bind (engine->priv->settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+	g_settings_bind (engine->priv->settings, "active-plugins",
+			 engine, "loaded-plugins",
+			 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Load builtin plugins */
 	plugin_infos = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
 
+	g_object_freeze_notify (G_OBJECT (engine));
 	for (l = plugin_infos; l != NULL; l = l->next) {
 		PeasPluginInfo *plugin_info = PEAS_PLUGIN_INFO (l->data);
 
@@ -145,6 +148,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 			peas_engine_load_plugin (PEAS_ENGINE (engine), plugin_info);
 		}
 	}
+	g_object_thaw_notify (G_OBJECT (engine));
 
 	return engine;
 }
