@@ -52,12 +52,7 @@ typedef struct _TotemPluginsEnginePrivate{
 G_DEFINE_TYPE(TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
 
 static void totem_plugins_engine_dispose (GObject *object);
-#if 0
-static void totem_plugins_engine_activate_plugin (PeasEngine     *engine,
-						  PeasPluginInfo *info);
-static void totem_plugins_engine_deactivate_plugin (PeasEngine     *engine,
-						    PeasPluginInfo *info);
-#endif
+
 static gboolean
 garbage_collect_cb (gpointer data)
 {
