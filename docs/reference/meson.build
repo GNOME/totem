@@ -18,8 +18,6 @@ private_headers = [
   'icon-helpers.h',
   'screenshot-filename-builder.h',
   'totem-aspect-frame.h',
-  'totem-chapters-utils.h',
-  'totem-cmml-parser.h',
   'totem-dnd-menu.h',
   'totem-dvb-setup.h',
   'totem-edit-chapter.h',
