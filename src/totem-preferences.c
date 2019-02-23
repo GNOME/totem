@@ -253,10 +253,6 @@ totem_setup_preferences (Totem *totem)
 	item = POBJ ("tpw_auto_subtitles_checkbutton");
 	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
 
-	/* Auto-load external chapters */
-	item = POBJ ("tpw_auto_chapters_checkbutton");
-	g_settings_bind (totem->settings, "autoload-chapters", item, "active", G_SETTINGS_BIND_DEFAULT);
-
 	/* Plugins button */
 	item = POBJ ("tpw_plugins_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
