@@ -17,27 +17,27 @@
 # Nicolas Repentin <nicolas@shivaserv.fr>, 2009, 2010.
 # Gérard Baylard <Geodebay@gmail.com>, 2011.
 # Alexandre Franke <alexandre.franke@gmail.com>, 2014.
-# Guillaume Bernard <associations@guillaume-bernard.fr>, 2015, 2018.
-# Charles Monzat <charles.monzat@numericable.fr>, 2017-2018.
+# Guillaume Bernard <associations@guillaume-bernard.fr>, 2015-2019.
+# Charles Monzat <charles.monzat@free.fr>, 2017-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-18 18:04+0000\n"
-"PO-Revision-Date: 2019-02-19 09:30+0100\n"
-"Last-Translator: Guillaume Bernard <associations@guillaume-bernard.fr>\n"
-"Language-Team: français <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2019-02-26 12:02+0000\n"
+"PO-Revision-Date: 2019-02-26 14:33+0100\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.30.1\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1892 src/totem-object.c:3724
+#: src/totem-grilo.c:1898 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Vidéos"
 
@@ -208,7 +208,7 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Répertoires à afficher dans l’interface de navigation, aucun par défaut"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5633
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5659
 msgid "Stereo"
 msgstr "Stéréo"
 
@@ -602,7 +602,7 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Saisissez l’_emplacement du fichier que vous voulez ouvrir :"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:113
+#: src/backend/bacon-time-label.c:114
 msgid "--:--"
 msgstr "--:--"
 
@@ -611,41 +611,57 @@ msgid "Password requested for RTSP server"
 msgstr "Mot de passe demandé pour le serveur RTSP"
 
 #: src/backend/bacon-video-widget.c:3889
+msgid ""
+"The source seems encrypted and can’t be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"La source semble chiffrée et ne peut être lue. Essayez-vous de lire un DVD "
+"chiffré sans libdvdcss ?"
+
+#: src/backend/bacon-video-widget.c:3903
 msgid "The server you are trying to connect to is not known."
 msgstr "Le serveur auquel vous tentez de vous connecter est inconnu."
 
-#: src/backend/bacon-video-widget.c:3892
+#: src/backend/bacon-video-widget.c:3906
 msgid "The connection to this server was refused."
 msgstr "La connexion à ce serveur a été refusée."
 
-#: src/backend/bacon-video-widget.c:3895
+#: src/backend/bacon-video-widget.c:3909
 msgid "The specified movie could not be found."
 msgstr "Le film spécifié n’a pas pu être trouvé."
 
-#: src/backend/bacon-video-widget.c:3902
+#: src/backend/bacon-video-widget.c:3916
 msgid "The server refused access to this file or stream."
 msgstr "Le serveur a refusé l’accès à ce fichier ou ce flux."
 
-#: src/backend/bacon-video-widget.c:3908
+#: src/backend/bacon-video-widget.c:3922
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Il est nécessaire de s’authentifier pour accéder à ce fichier ou ce flux."
 
-#: src/backend/bacon-video-widget.c:3915
+#: src/backend/bacon-video-widget.c:3929
 msgid "You are not allowed to open this file."
 msgstr "L’ouverture de ce fichier n’est pas permise."
 
-#: src/backend/bacon-video-widget.c:3920
+#: src/backend/bacon-video-widget.c:3934
 msgid "This location is not a valid one."
 msgstr "L’emplacement n’est pas valide."
 
-#: src/backend/bacon-video-widget.c:3928
+#: src/backend/bacon-video-widget.c:3942
 msgid "The movie could not be read."
 msgstr "Le film n’a pas pu être lu."
 
+#: src/backend/bacon-video-widget.c:3948
+msgid "This file is encrypted and cannot be played back."
+msgstr "Ce fichier est chiffré. Il ne peut donc pas être lu."
+
+#: src/backend/bacon-video-widget.c:3954
+msgid "The file you tried to play is an empty file."
+msgstr "Le fichier que vous essayez de lire est un fichier vide."
+
 # Voir bug #403011
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3951 src/backend/bacon-video-widget.c:3959
+#: src/backend/bacon-video-widget.c:3977 src/backend/bacon-video-widget.c:3985
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -660,12 +676,12 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3997
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Ce flux ne peut être lu. Il est possible qu’un pare-feu le bloque."
 
-#: src/backend/bacon-video-widget.c:3974
+#: src/backend/bacon-video-widget.c:4000
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -674,7 +690,7 @@ msgstr ""
 "peut que vous deviez installer des greffons supplémentaires pour être "
 "capable de visualiser certains types de films"
 
-#: src/backend/bacon-video-widget.c:3985
+#: src/backend/bacon-video-widget.c:4011
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -682,19 +698,19 @@ msgstr ""
 "Impossible de lire ce fichier via le réseau. Essayez de le télécharger sur "
 "disque au préalable."
 
-#: src/backend/bacon-video-widget.c:5629
+#: src/backend/bacon-video-widget.c:5655
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5631
+#: src/backend/bacon-video-widget.c:5657
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5919
+#: src/backend/bacon-video-widget.c:5945
 msgid "Media contains no supported video streams."
 msgstr "Le média ne contient pas de flux vidéo pris en charge."
 
-#: src/backend/bacon-video-widget.c:6131
+#: src/backend/bacon-video-widget.c:6157
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -727,7 +743,7 @@ msgstr "_Le chercher dans %s"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:63 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -739,7 +755,7 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:71
+#: src/gst/totem-time-helpers.c:78
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
@@ -751,7 +767,7 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:82
+#: src/gst/totem-time-helpers.c:89
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
@@ -763,7 +779,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:91
+#: src/gst/totem-time-helpers.c:98
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -836,7 +852,7 @@ msgstr "Erreur lors de la recherche"
 msgid "Local"
 msgstr "Locale"
 
-#: src/totem-grilo.c:1901
+#: src/totem-grilo.c:1907
 msgid "Channels"
 msgstr "Canaux"
 
@@ -887,16 +903,14 @@ msgid "Search"
 msgstr "Rechercher"
 
 #: src/totem-menu.c:408
-#, fuzzy
 #| msgid "Audio Track #%d"
 msgid "Audio Track"
-msgstr "Piste audio n° %d"
+msgstr "Piste audio"
 
 #: src/totem-menu.c:411
-#, fuzzy
 #| msgid "Subtitles"
 msgid "Subtitle"
-msgstr "Sous-titres"
+msgstr "Sous-titre"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
 #: src/totem-menu.c:531
@@ -918,36 +932,36 @@ msgstr "Pause"
 msgid "Play"
 msgstr "Lecture"
 
-#: src/totem-object.c:1470 src/totem-object.c:1497 src/totem-object.c:2033
+#: src/totem-object.c:1470 src/totem-object.c:1498 src/totem-object.c:2045
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem n’a pas pu lire « %s »."
 
-#: src/totem-object.c:2204
+#: src/totem-object.c:2217
 msgid "Totem could not display the help contents."
 msgstr "Totem ne peut afficher le contenu de l’aide."
 
-#: src/totem-object.c:2466
+#: src/totem-object.c:2479
 msgid "An error occurred"
 msgstr "Une erreur est survenue"
 
-#: src/totem-object.c:3822
+#: src/totem-object.c:3824
 msgid "Previous Chapter/Movie"
 msgstr "Chapitre/Film précédent"
 
-#: src/totem-object.c:3828
+#: src/totem-object.c:3830
 msgid "Play / Pause"
 msgstr "Lecture / Pause"
 
-#: src/totem-object.c:3834
+#: src/totem-object.c:3836
 msgid "Next Chapter/Movie"
 msgstr "Chapitre/Film suivant"
 
-#: src/totem-object.c:4057
+#: src/totem-object.c:4059
 msgid "Totem could not startup."
 msgstr "Totem n’a pas pu démarrer."
 
-#: src/totem-object.c:4057
+#: src/totem-object.c:4059
 msgid "No reason."
 msgstr "Aucune raison."
 
@@ -1208,18 +1222,6 @@ msgstr "Occidental"
 #: src/totem-subtitle-encoding.c:332
 msgid "Vietnamese"
 msgstr "Vietnamien"
-
-#. Elapsed / Total Length
-#: src/totem-time-label.c:64
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#. Seeking to Time / Total Length
-#: src/totem-time-label.c:67
-#, c-format
-msgid "Seek to %s / %s"
-msgstr "Pointer vers %s / %s"
 
 #: src/totem-uri.c:329
 msgid "All files"
@@ -1537,7 +1539,6 @@ msgstr "Canaux :"
 
 #. Title
 #: src/plugins/properties/bacon-video-widget-properties.c:106
-#, fuzzy
 #| msgid "Unknown"
 msgctxt "Title"
 msgid "Unknown"
@@ -1545,7 +1546,6 @@ msgstr "Inconnu"
 
 #. Artist
 #: src/plugins/properties/bacon-video-widget-properties.c:108
-#, fuzzy
 #| msgid "Unknown"
 msgctxt "Artist"
 msgid "Unknown"
@@ -1553,7 +1553,6 @@ msgstr "Inconnu"
 
 #. Album
 #: src/plugins/properties/bacon-video-widget-properties.c:110
-#, fuzzy
 #| msgid "Unknown"
 msgctxt "Album"
 msgid "Unknown"
@@ -1561,15 +1560,13 @@ msgstr "Inconnu"
 
 #. Year
 #: src/plugins/properties/bacon-video-widget-properties.c:112
-#, fuzzy
 #| msgid "Unknown"
 msgctxt "Year"
 msgid "Unknown"
-msgstr "Inconnu"
+msgstr "Inconnue"
 
 #. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:118
-#, fuzzy
 #| msgid "Unknown"
 msgctxt "Media container"
 msgid "Unknown"
@@ -1746,15 +1743,14 @@ msgid "Save a copy of the currently playing movie"
 msgstr "Enregistrement d’une copie de la vidéo en cours de lecture"
 
 #: src/plugins/save-file/totem-save-file.c:89
-#, fuzzy
 #| msgid "The video disc could not be duplicated."
 msgid "The video could not be made available offline."
-msgstr "Le disque vidéo n’a pas pu être copié."
+msgstr "La vidéo n’a pas pu être rendue disponible hors ligne."
 
 #. translators: “Files” refers to nautilus' name
 #: src/plugins/save-file/totem-save-file.c:91
 msgid "“Files” is not available."
-msgstr ""
+msgstr "« Fichiers » n’est pas disponible."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
@@ -1951,6 +1947,12 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Définit l’agent utilisateur pour le site Vimeo"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Seek to %s / %s"
+#~ msgstr "Pointer vers %s / %s"
 
 #~ msgid "_Quit"
 #~ msgstr "_Quitter"
