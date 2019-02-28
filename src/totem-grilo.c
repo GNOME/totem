@@ -682,8 +682,11 @@ browse_cb (GrlSource    *source,
 			GtkTreePath *path;
 
 			path = gtk_tree_row_reference_get_path (bud->ref_parent);
-			gtk_tree_model_get_iter (bud->model, &parent, path);
-			gtk_tree_path_free (path);
+			if (!path ||
+			    !gtk_tree_model_get_iter (bud->model, &parent, path)) {
+				g_clear_pointer (&path, gtk_tree_path_free);
+				return;
+			}
 
 			gtk_tree_model_get (bud->model, &parent,
 					    MODEL_RESULTS_REMAINING, &remaining_expected,
