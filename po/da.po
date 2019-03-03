@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-11 17:16+0000\n"
-"PO-Revision-Date: 2019-02-11 20:00+0100\n"
+"POT-Creation-Date: 2019-02-26 18:03+0000\n"
+"PO-Revision-Date: 2019-02-28 20:15+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1892 src/totem-object.c:3658
+#: src/totem-grilo.c:1898 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Videoer"
 
@@ -172,14 +172,10 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Om undertekster skal hentes automatisk når en film indlæses"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr "Om eksterne kapitelfiler skal hentes automatisk når en film indlæses"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Liste over aktive udvidelsesmoduler"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -187,16 +183,16 @@ msgstr ""
 "En liste af navne på udvidelsesmodulerne, der i øjeblikket er aktiveret "
 "(indlæst og kører)."
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Kataloger, der skal vises"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Kataloger, der skal vises i gennemsynsgrænsefladen; none som standard (ingen)"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5642
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5659
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -242,74 +238,66 @@ msgid "_Encoding:"
 msgstr "_Indkodning:"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Eksterne kapitler"
-
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "Indlæs _kapitelfiler når filmen indlæses"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Udvidelsesmoduler"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Udvidelsesmoduler …"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Generelt"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Video"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr ""
 "Deaktivér _deinterlacing (kompensation for alternerende linjevis "
 "billedlagring) af interlacede videoer"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Farvebalance"
 
 # Genvejstasten _Lys... er ikke i konflikt med _Lyd... ovenfor, da de indgår i forskellige skærmbilleder
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
 msgstr "_Lysstyrke:"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "_Kontrast:"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "_Mætning:"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "_Farvetone:"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "Nulstil til fo_rvalg"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Video"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Lyd-ud"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "_Lyduddata-type:"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Lyd"
 
@@ -594,7 +582,7 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Angiv _adressen på den fil du ønsker at åbne:"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:113
+#: src/backend/bacon-time-label.c:114
 msgid "--:--"
 msgstr "--:--"
 
@@ -602,50 +590,56 @@ msgstr "--:--"
 msgid "Password requested for RTSP server"
 msgstr "Adgangskode afventes for RTSP-server"
 
-#: src/backend/bacon-video-widget.c:3355
-#, c-format
-msgid "Audio Track #%d"
-msgstr "Lydspor #%d"
+#: src/backend/bacon-video-widget.c:3889
+msgid ""
+"The source seems encrypted and can’t be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"Kilden ser ud til at være krypteret og kan ikke læses. Prøver du at afspille "
+"en krypteret dvd uden libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3357
-#, c-format
-msgid "Subtitle #%d"
-msgstr "Undertekst #%d"
-
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3903
 msgid "The server you are trying to connect to is not known."
 msgstr "Den server du forsøger at tilkoble til, er ikke kendt."
 
-#: src/backend/bacon-video-widget.c:3901
+#: src/backend/bacon-video-widget.c:3906
 msgid "The connection to this server was refused."
 msgstr "Forbindelses til denne server blev nægtet."
 
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3909
 msgid "The specified movie could not be found."
 msgstr "Den angivne film blev ikke fundet."
 
-#: src/backend/bacon-video-widget.c:3911
+#: src/backend/bacon-video-widget.c:3916
 msgid "The server refused access to this file or stream."
 msgstr "Serveren nægtede adgang til denne fil eller strøm."
 
-#: src/backend/bacon-video-widget.c:3917
+#: src/backend/bacon-video-widget.c:3922
 msgid "Authentication is required to access this file or stream."
 msgstr "Denne fil eller strøm kan ikke tilgås uden godkendelse."
 
-#: src/backend/bacon-video-widget.c:3924
+#: src/backend/bacon-video-widget.c:3929
 msgid "You are not allowed to open this file."
 msgstr "Du har ikke rettigheder til at åbne denne fil."
 
-#: src/backend/bacon-video-widget.c:3929
+#: src/backend/bacon-video-widget.c:3934
 msgid "This location is not a valid one."
 msgstr "Denne placering er ikke gyldig."
 
-#: src/backend/bacon-video-widget.c:3937
+#: src/backend/bacon-video-widget.c:3942
 msgid "The movie could not be read."
 msgstr "Filmen kunne ikke læses."
 
+#: src/backend/bacon-video-widget.c:3948
+msgid "This file is encrypted and cannot be played back."
+msgstr "Filen er krypteret og kan ikke afspilles."
+
+#: src/backend/bacon-video-widget.c:3954
+msgid "The file you tried to play is an empty file."
+msgstr "Filen, du prøvede at afspille, er en tom fil."
+
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3960 src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3977 src/backend/bacon-video-widget.c:3985
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -662,14 +656,14 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3980
+#: src/backend/bacon-video-widget.c:3997
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Denne strøm kan ikke afspilles. Det er muligt at en firewall blokerer for "
 "den."
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:4000
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -678,26 +672,26 @@ msgstr ""
 "bliver muligvis nødt til at installere yderligere udvidelsesmoduler for at "
 "afspille visse typer film"
 
-#: src/backend/bacon-video-widget.c:3994
+#: src/backend/bacon-video-widget.c:4011
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "Denne fil kan ikke afspilles over netværket. Prøv at hente den lokalt først."
 
-#: src/backend/bacon-video-widget.c:5638
+#: src/backend/bacon-video-widget.c:5655
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5640
+#: src/backend/bacon-video-widget.c:5657
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5928
+#: src/backend/bacon-video-widget.c:5945
 msgid "Media contains no supported video streams."
 msgstr "Medie indeholder ingen understøttede video-strømme."
 
-#: src/backend/bacon-video-widget.c:6140
+#: src/backend/bacon-video-widget.c:6157
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -732,7 +726,7 @@ msgstr "_Find i %s"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:63 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -744,7 +738,7 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:71
+#: src/gst/totem-time-helpers.c:78
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
@@ -756,7 +750,7 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:82
+#: src/gst/totem-time-helpers.c:89
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
@@ -768,7 +762,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:91
+#: src/gst/totem-time-helpers.c:98
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -840,7 +834,7 @@ msgstr "Fejl ved søgning"
 msgid "Local"
 msgstr "Lokalt"
 
-#: src/totem-grilo.c:1901
+#: src/totem-grilo.c:1907
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -891,56 +885,64 @@ msgstr "Annullér"
 msgid "Search"
 msgstr "Søg"
 
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:431
+#: src/totem-menu.c:408
+msgid "Audio Track"
+msgstr "Lydspor"
+
+#: src/totem-menu.c:411
+msgid "Subtitle"
+msgstr "Undertekst"
+
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:531
 msgid "None"
 msgstr "Ingen"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:435
+#: src/totem-menu.c:535
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatisk"
 
-#: src/totem-object.c:1377 src/totem-options.c:51
+#: src/totem-object.c:1388 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pause"
 
-#: src/totem-object.c:1382 src/totem-object.c:1392 src/totem-options.c:50
+#: src/totem-object.c:1393 src/totem-object.c:1403 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Afspil"
 
-#: src/totem-object.c:1459 src/totem-object.c:1486 src/totem-object.c:1978
+#: src/totem-object.c:1470 src/totem-object.c:1498 src/totem-object.c:2045
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem kunne ikke afspille “%s”."
 
-#: src/totem-object.c:2149
+#: src/totem-object.c:2217
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise indholdet af hjælp."
 
-#: src/totem-object.c:2410
+#: src/totem-object.c:2479
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
-#: src/totem-object.c:3756
+#: src/totem-object.c:3824
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapitel/film"
 
-#: src/totem-object.c:3762
+#: src/totem-object.c:3830
 msgid "Play / Pause"
 msgstr "Afspil / pause"
 
-#: src/totem-object.c:3768
+#: src/totem-object.c:3836
 msgid "Next Chapter/Movie"
 msgstr "Næste kapitel/film"
 
-#: src/totem-object.c:3991
+#: src/totem-object.c:4059
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte."
 
-#: src/totem-object.c:3991
+#: src/totem-object.c:4059
 msgid "No reason."
 msgstr "Ingen begrundelse."
 
@@ -1021,12 +1023,12 @@ msgstr "Kan ikke sætte i kø og erstatte på samme tid"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:231
 #, c-format
 msgid "Title %d"
 msgstr "Titel %d"
 
-#: src/totem-playlist.c:992
+#: src/totem-playlist.c:993
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Afspilningslisten “%s” kunne ikke fortolkes. Den kan være beskadiget."
@@ -1039,7 +1041,7 @@ msgstr "Konfigurér udvidelsesmoduler"
 msgid "_Close"
 msgstr "_Luk"
 
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Vælg skrifttype for undertekster"
 
@@ -1202,18 +1204,6 @@ msgstr "Vestlig"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
 
-#. Elapsed / Total Length
-#: src/totem-time-label.c:64
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#. Seeking to Time / Total Length
-#: src/totem-time-label.c:67
-#, c-format
-msgid "Seek to %s / %s"
-msgstr "Søg til %s / %s"
-
 #: src/totem-uri.c:329
 msgid "All files"
 msgstr "Alle filer"
@@ -1301,18 +1291,18 @@ msgstr ""
 "Send påmindelser om videoer under afspilning, og tillad fjernstyring ved "
 "hjælp af MPRIS."
 
-#: src/plugins/dbusservice/dbusservice.py:208
-#: src/plugins/dbusservice/dbusservice.py:236
+#: src/plugins/dbusservice/dbusservice.py:210
+#: src/plugins/dbusservice/dbusservice.py:238
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "MediaPlayer2-objektet anvender ikke brugergrænsefladen “%s”"
 
-#: src/plugins/dbusservice/dbusservice.py:218
+#: src/plugins/dbusservice/dbusservice.py:220
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "Egenskaben “%s” er ikke skrivbar."
 
-#: src/plugins/dbusservice/dbusservice.py:231
+#: src/plugins/dbusservice/dbusservice.py:233
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Et MediaPlayer2-objekt kræver en ukendt egenskab “%s”"
@@ -1438,38 +1428,38 @@ msgstr "Filmegenskaber"
 msgid "Adds movie properties menu item"
 msgstr "Tilføjer menupunkt for filmegenskaber"
 
-#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:152
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:155
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:155
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "—"
 
-#: src/plugins/properties/totem-movie-properties.c:168
+#: src/plugins/properties/totem-movie-properties.c:169
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:168
+#: src/plugins/properties/totem-movie-properties.c:169
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "—"
 
-#: src/plugins/properties/totem-movie-properties.c:261
+#: src/plugins/properties/totem-movie-properties.c:280
 msgid "Properties"
 msgstr "Egenskaber"
 
-#: src/plugins/properties/totem-movie-properties.c:286
+#: src/plugins/properties/totem-movie-properties.c:305
 msgid "_Properties"
 msgstr "_Egenskaber"
 
@@ -1528,15 +1518,32 @@ msgid "Channels:"
 msgstr "Kanaler:"
 
 #. Title
-#. Artist
-#. Album
-#. Year
-#. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:106
+msgctxt "Title"
+msgid "Unknown"
+msgstr "Ukendt"
+
+#. Artist
 #: src/plugins/properties/bacon-video-widget-properties.c:108
+msgctxt "Artist"
+msgid "Unknown"
+msgstr "Ukendt"
+
+#. Album
 #: src/plugins/properties/bacon-video-widget-properties.c:110
+msgctxt "Album"
+msgid "Unknown"
+msgstr "Ukendt"
+
+#. Year
 #: src/plugins/properties/bacon-video-widget-properties.c:112
+msgctxt "Year"
+msgid "Unknown"
+msgstr "Ukendt"
+
+#. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:118
+msgctxt "Media container"
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -1908,6 +1915,25 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Sætter brugeragenten for Vimeo-stedet"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr ""
+#~ "Om eksterne kapitelfiler skal hentes automatisk når en film indlæses"
+
+#~ msgid "External Chapters"
+#~ msgstr "Eksterne kapitler"
+
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "Indlæs _kapitelfiler når filmen indlæses"
+
+#~ msgid "Subtitle #%d"
+#~ msgstr "Undertekst #%d"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Seek to %s / %s"
+#~ msgstr "Søg til %s / %s"
 
 #~ msgid "_Quit"
 #~ msgstr "_Afslut"
@@ -2572,9 +2598,6 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ "installeret:\n"
 #~ "\n"
 #~ "%s"
-
-#~ msgid "Media file could not be played."
-#~ msgstr "Mediefilen kunne ikke afspilles."
 
 #~ msgid "Too old version of GStreamer installed."
 #~ msgstr "Den installerede version af GStreamer er for gammel."
