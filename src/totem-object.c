@@ -140,11 +140,14 @@ totem_object_app_open (GApplication  *application,
 		       const char    *hint)
 {
 	GSList *slist = NULL;
+	Totem *totem = TOTEM_OBJECT (application);
 	int i;
 
 	optionstate.had_filenames = (n_files > 0);
 
 	g_application_activate (application);
+	gtk_window_present_with_time (GTK_WINDOW (totem->win),
+				      gtk_get_current_event_time ());
 
 	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
 
