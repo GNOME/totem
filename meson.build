@@ -21,7 +21,6 @@ totem_gir_ns = 'Totem'
 totem_prefix = get_option('prefix')
 totem_bindir = join_paths(totem_prefix, get_option('bindir'))
 totem_datadir = join_paths(totem_prefix, get_option('datadir'))
-totem_includedir = join_paths(totem_prefix, get_option('includedir'))
 totem_libdir = join_paths(totem_prefix, get_option('libdir'))
 totem_libexecdir = join_paths(totem_prefix, get_option('libexecdir'))
 totem_localedir = join_paths(totem_prefix, get_option('localedir'))
@@ -29,7 +28,6 @@ totem_mandir = join_paths(totem_prefix, get_option('mandir'))
 
 totem_pkglibdir = join_paths(totem_libdir, meson.project_name())
 totem_pkgdatadir = join_paths(totem_datadir, meson.project_name())
-totem_pkgincludedir = join_paths(totem_includedir, meson.project_name())
 
 totem_pluginsdir = join_paths(totem_pkglibdir, 'plugins')
 totem_schemadir = join_paths(totem_datadir, 'glib-2.0', 'schemas')
