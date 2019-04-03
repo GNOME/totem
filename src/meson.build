@@ -82,7 +82,7 @@ headers = files(
 
 install_headers(
   headers,
-  subdir: join_paths(totem_includedir, totem_api_path)
+  subdir: join_paths(get_option('includedir'), totem_api_path)
 )
 
 libtotem_player_sources = files(
