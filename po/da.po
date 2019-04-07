@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-26 18:03+0000\n"
+"POT-Creation-Date: 2019-03-24 19:18+0000\n"
 "PO-Revision-Date: 2019-02-28 20:15+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1898 src/totem-object.c:3726
+#: src/totem-grilo.c:1901 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Videoer"
 
@@ -69,11 +69,6 @@ msgstr ""
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Video;Film;Klip;Serie;Afspiller;Dvd;Tv;Disk;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -641,7 +636,8 @@ msgstr "Filen, du prøvede at afspille, er en tom fil."
 #. should be exactly one missing thing (source or converter)
 #: src/backend/bacon-video-widget.c:3977 src/backend/bacon-video-widget.c:3985
 #, c-format
-msgid "The playback of this movie requires a %s plugin which is not installed."
+msgid ""
+"The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following plugins which are not "
 "installed:\n"
@@ -826,15 +822,15 @@ msgstr "%s (Sæson %d afsnit %d)"
 msgid "Browse Error"
 msgstr "Fejl ved gennemsyn"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Fejl ved søgning"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Lokalt"
 
-#: src/totem-grilo.c:1907
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -1665,8 +1661,12 @@ msgstr "Python-fejlsøger"
 #. pylint: disable=E1101
 #: src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
-msgid "You can access the Totem.Object through “totem_object” :\\n%s"
-msgstr "Du kan tilgå Totem.Objekt'et med “totem_object” : \\n%s"
+msgid ""
+"You can access the Totem.Object through “totem_object” :\\n"
+"%s"
+msgstr ""
+"Du kan tilgå Totem.Objekt'et med “totem_object” : \\n"
+"%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
 msgid "Totem Python Console"
@@ -1916,9 +1916,11 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Sætter brugeragenten for Vimeo-stedet"
 
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
 #~ msgid "Whether to autoload external chapter files when a movie is loaded"
-#~ msgstr ""
-#~ "Om eksterne kapitelfiler skal hentes automatisk når en film indlæses"
+#~ msgstr "Om eksterne kapitelfiler skal hentes automatisk når en film indlæses"
 
 #~ msgid "External Chapters"
 #~ msgstr "Eksterne kapitler"
@@ -2010,8 +2012,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 
 #~ msgid "Verify your system installation. The Totem plugin will now exit."
 #~ msgstr ""
-#~ "Kontrollér din systeminstallation. Totem-udvidelsesmodulet vil nu "
-#~ "afslutte."
+#~ "Kontrollér din systeminstallation. Totem-udvidelsesmodulet vil nu afslutte."
 
 #~ msgid "Show visual effects when no video is displayed"
 #~ msgstr "Vis visuelle effekter når der ikke afspilles en video"
@@ -2047,12 +2048,10 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Visualiserings_størrelse:"
 
 #~ msgid "Mozilla (Firefox) plugin to view movies inside your browser"
-#~ msgstr ""
-#~ "Mozilla-udvidelsesmodul (Firefox) til at se film inden i din browser"
+#~ msgstr "Mozilla-udvidelsesmodul (Firefox) til at se film inden i din browser"
 
 #~ msgid "Command-line video properties helper (for indexers)"
-#~ msgstr ""
-#~ "Hjælpeprogram til videoegenskaber på kommandolinjen (til indeksering)"
+#~ msgstr "Hjælpeprogram til videoegenskaber på kommandolinjen (til indeksering)"
 
 #~ msgid "Play / P_ause"
 #~ msgstr "Afspil / p_ause"
@@ -2172,7 +2171,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid "All Supported Files"
 #~ msgstr "Alle understøttede filer"
 
-# Denne streng synes at blive brugt når man gemmer en afspilningsliste. Meningen er at afspilningsliste-formatet bestemmes af den extension brugeren skriver, hvorfor det må være korrekt at skrive "ved hjælp af fil-endelse" som oversættelse
+#~ # Denne streng synes at blive brugt når man gemmer en afspilningsliste. Meningen er at afspilningsliste-formatet bestemmes af den extension brugeren skriver, hvorfor det må være korrekt at skrive "ved hjælp af fil-endelse" som oversættelse
 #~ msgid "By Extension"
 #~ msgstr "Ved hjælp af fil-endelse"
 
@@ -2183,13 +2182,13 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Fil-endelser"
 
 #~ msgid ""
-#~ "The program was not able to find out the file format you want to use for `"
-#~ "%s'. Please make sure to use a known extension for that file or manually "
+#~ "The program was not able to find out the file format you want to use for "
+#~ "`%s'. Please make sure to use a known extension for that file or manually "
 #~ "choose a file format from the list below."
 #~ msgstr ""
-#~ "Programmet kunne ikke finde ud af, hvilket filformat du vil bruge til "
-#~ "“%s”. Sikr dig venligst, at du bruger en kendt filendelse for denne fil, "
-#~ "eller vælg manuelt et filformat fra listen herunder."
+#~ "Programmet kunne ikke finde ud af, hvilket filformat du vil bruge til “%s”. "
+#~ "Sikr dig venligst, at du bruger en kendt filendelse for denne fil, eller "
+#~ "vælg manuelt et filformat fra listen herunder."
 
 #~ msgid "File format not recognized"
 #~ msgstr "Filformatet genkendes ikke"
@@ -2209,7 +2208,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid "_Rotate Clockwise"
 #~ msgstr "_Rotér med uret"
 
-# Er det rigtigt noteret?
+#~ # Er det rigtigt noteret?
 #~ msgid "Rotate Counterc_lockwise"
 #~ msgstr "Rotér _mod uret"
 
@@ -2244,8 +2243,8 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Ændr størrelsen af lærredet automatisk ved filåbninger"
 
 #~ msgid ""
-#~ "Whether to remember the position of played audio/video files when pausing "
-#~ "or closing them"
+#~ "Whether to remember the position of played audio/video files when pausing or "
+#~ "closing them"
 #~ msgstr ""
 #~ "Hvorvidt positionen i de afspillede lyd-/videofiler skal huskes, når de "
 #~ "sættes på pause eller lukkes"
@@ -2287,8 +2286,9 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ "Lasse Bang Mikkelsen\n"
 #~ "Ask Hjorth Larsen\n"
 #~ "\n"
-#~ "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-#~ "Mere info: http://www.dansk-gruppen.dk"
+#~ "Dansk-gruppen\n"
+#~ "Websted <http://dansk-gruppen.dk>\n"
+#~ "E-mail <dansk@dansk-gruppen.dk>"
 
 #~ msgid "Totem Website"
 #~ msgstr "Totems hjemmeside"
@@ -2429,8 +2429,8 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Angiv blandingstilstanden"
 
 #~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network."
+#~ "Approximate network connection speed, used to select quality on media over "
+#~ "the network."
 #~ msgstr ""
 #~ "Tilnærmet hastighed af netværksforbindelsen, der bruges til at vælge "
 #~ "mediekvalitet over netværket."
@@ -2451,15 +2451,15 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Filmafspiller med %s"
 
 #~ msgid ""
-#~ "Totem could not play this media (%s) although a plugin is present to "
-#~ "handle it."
+#~ "Totem could not play this media (%s) although a plugin is present to handle "
+#~ "it."
 #~ msgstr ""
-#~ "Totem kunne ikke afspille dette medie (%s), selvom et modul er "
-#~ "tilgængeligt til at håndtere det."
+#~ "Totem kunne ikke afspille dette medie (%s), selvom et modul er tilgængeligt "
+#~ "til at håndtere det."
 
 #~ msgid ""
-#~ "You might want to check that a disc is present in the drive and that it "
-#~ "is correctly configured."
+#~ "You might want to check that a disc is present in the drive and that it is "
+#~ "correctly configured."
 #~ msgstr ""
 #~ "Kontrollér at disken sidder i drevet og at det er korrekt konfigureret."
 
@@ -2470,29 +2470,28 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ "Please install the necessary plugins and restart Totem to be able to play "
 #~ "this media."
 #~ msgstr ""
-#~ "Installér de nødvendige moduler og genstart Totem hvis du vil afspille "
-#~ "denne type."
+#~ "Installér de nødvendige moduler og genstart Totem hvis du vil afspille denne "
+#~ "type."
 
 #~ msgid ""
 #~ "Totem cannot play this type of media (%s) because it does not have the "
 #~ "appropriate plugins to be able to read from the disc."
 #~ msgstr ""
-#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de "
-#~ "nødvendige udvidelsesmoduler til at læse dem fra disken."
+#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de nødvendige "
+#~ "udvidelsesmoduler til at læse dem fra disken."
 
 #~ msgid ""
 #~ "Totem cannot play this type of media (%s) because you do not have the "
 #~ "appropriate plugins to handle it."
 #~ msgstr ""
-#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de "
-#~ "nødvendige udvidelsesmoduler til at håndtere den."
+#~ "Totem kan ikke afspille denne medietype (%s), da du ikke har de nødvendige "
+#~ "udvidelsesmoduler til at håndtere den."
 
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because it is not supported."
+#~ msgid "Totem cannot play this type of media (%s) because it is not supported."
 #~ msgstr ""
 #~ "Totem kan ikke afspille denne medietype (%s), fordi den ikke understøttes."
 
-# ???
+#~ # ???
 #~ msgid "Please insert another disc to play back."
 #~ msgstr "Indsæt venligst en ny disk for at afspille."
 
@@ -2502,8 +2501,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid "Totem does not support playback of Audio CDs"
 #~ msgstr "Totem understøtter ikke afspilning af lyd-cd'er"
 
-#~ msgid ""
-#~ "Please consider using a music player or a CD extractor to play this CD"
+#~ msgid "Please consider using a music player or a CD extractor to play this CD"
 #~ msgstr ""
 #~ "Overvej venligst at bruge en musikafspiller eller en cd-udpakker til at "
 #~ "afspille denne cd"
@@ -2512,11 +2510,11 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "%d %%"
 
 #~ msgid ""
-#~ "The requested audio output was not found. Please select another audio "
-#~ "output in the Multimedia Systems Selector."
+#~ "The requested audio output was not found. Please select another audio output "
+#~ "in the Multimedia Systems Selector."
 #~ msgstr ""
-#~ "Den forespurgte lyd-uddata blev ikke fundet. Vælg venligst en anden lyd-"
-#~ "uddata i multimediesystems-vælgeren."
+#~ "Den forespurgte lyd-uddata blev ikke fundet. Vælg venligst en anden "
+#~ "lyd-uddata i multimediesystems-vælgeren."
 
 #~ msgid "Location not found."
 #~ msgstr "Sted ikke fundet."
@@ -2542,11 +2540,11 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Fejl ved søgning efter videoer"
 
 #~ msgid ""
-#~ "The response from the server could not be understood. Please check you "
-#~ "are running the latest version of libgdata."
+#~ "The response from the server could not be understood. Please check you are "
+#~ "running the latest version of libgdata."
 #~ msgstr ""
-#~ "Kunne ikke forstå svaret fra serveren. Kontrollér venligst, at du kører "
-#~ "den nyeste version af libgdata."
+#~ "Kunne ikke forstå svaret fra serveren. Kontrollér venligst, at du kører den "
+#~ "nyeste version af libgdata."
 
 #~ msgid "Fetching search results…"
 #~ msgstr "Henter søgeresultater …"
@@ -2564,11 +2562,11 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Videoformat understøttes ikke"
 
 #~ msgid ""
-#~ "This video is not available in any formats which Totem supports. Would "
-#~ "you like to open it in your web browser instead?"
+#~ "This video is not available in any formats which Totem supports. Would you "
+#~ "like to open it in your web browser instead?"
 #~ msgstr ""
-#~ "Denne video er ikke tilgængelig i et format som Totem understøtter. Vil "
-#~ "du åbne den i din webbrowser i stedet?"
+#~ "Denne video er ikke tilgængelig i et format som Totem understøtter. Vil du "
+#~ "åbne den i din webbrowser i stedet?"
 
 #~ msgid "0 frames per second"
 #~ msgstr "0 billeder pr. sekund"
@@ -2594,8 +2592,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ "\n"
 #~ "%s"
 #~ msgstr ""
-#~ "Afspilning af denne film kræver følgende afkodere som ikke er "
-#~ "installeret:\n"
+#~ "Afspilning af denne film kræver følgende afkodere som ikke er installeret:\n"
 #~ "\n"
 #~ "%s"
 
@@ -2603,8 +2600,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Den installerede version af GStreamer er for gammel."
 
 #~ msgid ""
-#~ "Listen to the large collection of Creative Commons licensed music on "
-#~ "Jamendo."
+#~ "Listen to the large collection of Creative Commons licensed music on Jamendo."
 #~ msgstr ""
 #~ "Lyt til den store samling af musik på Jamendo under Create Commons-licens."
 
@@ -2657,7 +2653,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid "%M:%S"
 #~ msgstr "%M:%S"
 
-# Jamendo understøtter ikke dansk, men foretager en redirect til den engelske side, så vi kan ligeså godt skrive den rigtige sprogkode med det samme
+#~ # Jamendo understøtter ikke dansk, men foretager en redirect til den engelske side, så vi kan ligeså godt skrive den rigtige sprogkode med det samme
 #~ msgid "en"
 #~ msgstr "da"
 
@@ -2670,8 +2666,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid ""
 #~ "The number of Jamendo search results to display in each page of results."
 #~ msgstr ""
-#~ "Antallet af Jamedo-søgeresultater, der skal vises i hver side af "
-#~ "resultater."
+#~ "Antallet af Jamedo-søgeresultater, der skal vises i hver side af resultater."
 
 #~ msgid "The preferred audio format to download tracks from Jamendo in."
 #~ msgstr "Det foretrukne lydformat, hvori der skal hentes spor fra Jamendo."
@@ -2705,7 +2700,7 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgid "Search for local videos using Tracker"
 #~ msgstr "Søg efter lokale videoer med Tracker"
 
-# Oversættelsen kan meget vel være forkert afhængigt af kontekst
+#~ # Oversættelsen kan meget vel være forkert afhængigt af kontekst
 #~ msgid "Browser Plugin using %s"
 #~ msgstr "Browser-udvidelsesmodul med %s"
 
@@ -2777,8 +2772,8 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ "Totem cannot play TV, because no TV adapters are present or they are not "
 #~ "supported."
 #~ msgstr ""
-#~ "Totem kan ikke afspille TV, da ingen TV-adaptere er tilsluttet eller "
-#~ "fordi de ikke understøttes."
+#~ "Totem kan ikke afspille TV, da ingen TV-adaptere er tilsluttet eller fordi "
+#~ "de ikke understøttes."
 
 #~ msgid "Please insert a supported TV adapter."
 #~ msgstr "Indsæt venligst en understøttet TV-adapter."
@@ -2829,11 +2824,11 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 #~ msgstr "Ukendt filtype."
 
 #~ msgid ""
-#~ "The change of this setting will only take effect for the next movie, or "
-#~ "when Totem is restarted."
+#~ "The change of this setting will only take effect for the next movie, or when "
+#~ "Totem is restarted."
 #~ msgstr ""
-#~ "Ændringen af denne indstilling træder først i kraft for den næste film "
-#~ "eller når Totem bliver genstartet."
+#~ "Ændringen af denne indstilling træder først i kraft for den næste film eller "
+#~ "når Totem bliver genstartet."
 
 #~ msgid "long time format|%d:%02d:%02d"
 #~ msgstr "%d:%02d:%02d"
@@ -2906,3 +2901,4 @@ msgstr "Sætter brugeragenten for Vimeo-stedet"
 
 #~ msgid "Totem could not eject the optical media."
 #~ msgstr "Totem kunne ikke skubbe det optiske medium ud."
+
