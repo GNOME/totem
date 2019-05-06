@@ -39,5 +39,8 @@ install_data(
 )
 
 if pylint.found()
-  test('pylint-' + plugin_name, pylint, args: pylint_flags + files([ plugin_name + '.py', 'console.py' ]))
+  test('pylint-' + plugin_name,
+       pylint,
+       args: pylint_flags + files([ plugin_name + '.py', 'console.py' ]),
+       timeout: 120)
 endif
