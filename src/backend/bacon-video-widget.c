@@ -3850,7 +3850,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   char *dbg = NULL;
   int http_error_code;
 
-  GST_LOG ("resolving error message %" GST_PTR_FORMAT, err_msg);
+  GST_LOG ("resolving %" GST_PTR_FORMAT, err_msg);
 
   src_typename = (err_msg->src) ? G_OBJECT_TYPE_NAME (err_msg->src) : NULL;
 
