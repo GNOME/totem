@@ -3964,7 +3964,8 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   if (is_error (e, CORE, MISSING_PLUGIN) ||
       is_error (e, STREAM, CODEC_NOT_FOUND) ||
       is_error (e, STREAM, WRONG_TYPE) ||
-      is_error (e, STREAM, NOT_IMPLEMENTED)) {
+      is_error (e, STREAM, NOT_IMPLEMENTED) ||
+      (is_error (e, STREAM, FORMAT) && strstr (dbg, "no video pad or visualizations"))) {
     if (bvw->priv->missing_plugins != NULL) {
       gchar **descs, *msg = NULL;
       guint num;
