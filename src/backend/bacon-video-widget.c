@@ -345,12 +345,22 @@ static gchar **
 bvw_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
 {
   GPtrArray *arr = g_ptr_array_new ();
+  GHashTable *ht;
 
+  ht = g_hash_table_new (g_str_hash, g_str_equal);
   while (missing_plugins != NULL) {
-    g_ptr_array_add (arr, func (GST_MESSAGE (missing_plugins->data)));
+    char *tmp;
+    tmp = func (GST_MESSAGE (missing_plugins->data));
+    if (!g_hash_table_lookup (ht, tmp)) {
+      g_ptr_array_add (arr, tmp);
+      g_hash_table_insert (ht, tmp, GINT_TO_POINTER (1));
+    } else {
+      g_free (tmp);
+    }
     missing_plugins = missing_plugins->next;
   }
   g_ptr_array_add (arr, NULL);
+  g_hash_table_destroy (ht);
   return (gchar **) g_ptr_array_free (arr, FALSE);
 }
 
