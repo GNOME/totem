@@ -14,21 +14,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-21 20:05+0000\n"
-"PO-Revision-Date: 2019-02-26 09:15+0100\n"
+"POT-Creation-Date: 2019-05-06 11:02+0000\n"
+"PO-Revision-Date: 2019-05-07 13:36+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.31.90\n"
+"X-Generator: Gtranslator 3.32.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Spanish\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1898 src/totem-object.c:3723
+#: src/totem-grilo.c:1901 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -63,11 +63,6 @@ msgstr ""
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Vídeo;Película;Clip,Serie;Reproductor;DVD;TV;Disco;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -171,16 +166,10 @@ msgstr ""
 "automáticamente al cargar una película"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr ""
-"Indica si se deben cargar automáticamente los archivos de capítulos externos "
-"al cargar una película"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Lista de complementos activos"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -188,11 +177,11 @@ msgstr ""
 "Una lista de los nombres de los complementos que están actualmente activos "
 "(cargados y en ejecución)."
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Carpetas que mostrar"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Carpetas que mostrar en la interfaz del explorador; lo predeterminado es "
@@ -243,71 +232,63 @@ msgid "_Encoding:"
 msgstr "_Codificación:"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Capítulos externos"
-
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "Ca_rgar los archivos de capítulos al cargar la película"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Complementos"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Complementos…"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "General"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Vídeo"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Desactivar _desentrelazado de vídeos entrelazados"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Balance de color"
 
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
 msgstr "_Brillo:"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "Co_ntraste:"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "Sat_uración:"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "_Tono:"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "_Restablecer predeterminados"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Pantalla"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Salida de sonido"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "Tipo de salida de _sonido:"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Sonido"
 
@@ -601,9 +582,6 @@ msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
 #: src/backend/bacon-video-widget.c:3889
-#| msgid ""
-#| "The source seems encrypted and can't be read. Are you trying to play an "
-#| "encrypted DVD without libdvdcss?"
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -839,15 +817,15 @@ msgstr "%s (Temporada %d, capítulo %d)"
 msgid "Browse Error"
 msgstr "Error al examinar"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Error al buscar"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Local"
 
-#: src/totem-grilo.c:1907
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Canales"
 
@@ -916,45 +894,45 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#: src/totem-object.c:1387 src/totem-options.c:51
+#: src/totem-object.c:1388 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/totem-object.c:1392 src/totem-object.c:1402 src/totem-options.c:50
+#: src/totem-object.c:1393 src/totem-object.c:1403 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Reproducir"
 
-#: src/totem-object.c:1469 src/totem-object.c:1496 src/totem-object.c:2032
+#: src/totem-object.c:1470 src/totem-object.c:1498 src/totem-object.c:2045
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: src/totem-object.c:2203
+#: src/totem-object.c:2217
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: src/totem-object.c:2465
+#: src/totem-object.c:2479
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: src/totem-object.c:3821
+#: src/totem-object.c:3824
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3830
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3836
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1053,7 +1031,7 @@ msgstr "Configurar complementos"
 msgid "_Close"
 msgstr "_Cerrar"
 
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Seleccionar la tipografía de los subtítulos"
 
@@ -1530,94 +1508,94 @@ msgid "Channels:"
 msgstr "Canales:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:106
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Desconocido"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:109
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Desconocido"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:111
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Desconocido"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Desconocido"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:119
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Desconocido"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "N/D"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:124
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:129
-#: src/plugins/properties/bacon-video-widget-properties.c:237
+#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:133
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/D"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:135
+#: src/plugins/properties/bacon-video-widget-properties.c:136
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/D"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:137
+#: src/plugins/properties/bacon-video-widget-properties.c:138
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:139
+#: src/plugins/properties/bacon-video-widget-properties.c:140
 msgid "0 Channels"
 msgstr "0 canales"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:155
+#: src/plugins/properties/bacon-video-widget-properties.c:156
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d horas"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:158
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:161
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1625,23 +1603,32 @@ msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:167
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s:%s:%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:169
+#: src/plugins/properties/bacon-video-widget-properties.c:170
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s:%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:176
 msgid "0 seconds"
 msgstr "0 segundos"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:236
+#, c-format
+#| msgid "%d frame per second"
+#| msgid_plural "%d frames per second"
+msgid "%0.2f frame per second"
+msgid_plural "%0.2f frames per second"
+msgstr[0] "%0.2f fotograma por segundo"
+msgstr[1] "%0.2f fotogramas por segundo"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1929,6 +1916,20 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Establecer el agente de usuario para la página de Vimeo"
 
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr ""
+#~ "Indica si se deben cargar automáticamente los archivos de capítulos "
+#~ "externos al cargar una película"
+
+#~ msgid "External Chapters"
+#~ msgstr "Capítulos externos"
+
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "Ca_rgar los archivos de capítulos al cargar la película"
+
 #~ msgid "Subtitle #%d"
 #~ msgstr "Subtítulo nº %d"
 
@@ -1943,11 +1944,6 @@ msgstr "Establecer el agente de usuario para la página de Vimeo"
 
 #~ msgid "Files properties tab"
 #~ msgstr "Pestaña de propiedades del archivo"
-
-#~ msgid "%d frame per second"
-#~ msgid_plural "%d frames per second"
-#~ msgstr[0] "%d fotograma por segundo"
-#~ msgstr[1] "%d fotogramas por segundo"
 
 #~ msgid "Audio/Video"
 #~ msgstr "Sonido / Vídeo"
