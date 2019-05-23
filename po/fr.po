@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-26 12:02+0000\n"
-"PO-Revision-Date: 2019-02-26 14:33+0100\n"
+"POT-Creation-Date: 2019-05-06 11:02+0000\n"
+"PO-Revision-Date: 2019-05-20 09:52+0200\n"
 "Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -33,11 +33,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 3.30.1\n"
+"X-Generator: Gtranslator 3.32.1\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1898 src/totem-object.c:3726
+#: src/totem-grilo.c:1901 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Vidéos"
 
@@ -72,11 +72,6 @@ msgstr ""
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Vidéo;Film;Clip;Série;Lecteur;DVD;TV;Disque;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -182,16 +177,10 @@ msgstr ""
 "le film"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr ""
-"Indique s’il faut charger automatiquement les fichiers de chapitrage avec le "
-"film"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Liste des greffons actifs"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -199,11 +188,11 @@ msgstr ""
 "Une liste des noms des greffons actuellement actifs (chargés et en cours "
 "d’exécution)."
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Répertoires à afficher"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Répertoires à afficher dans l’interface de navigation, aucun par défaut"
@@ -253,71 +242,63 @@ msgid "_Encoding:"
 msgstr "_Codage :"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Chapitres externes"
-
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "Ch_arger les fichiers de chapitrage au chargement d’un film"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Greffons"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Greffons…"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Général"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Vidéo"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "_Désactiver le désentrelacement des vidéos entrelacées"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Balance des couleurs"
 
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
 msgstr "_Luminosité :"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "Co_ntraste :"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "Sat_uration :"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "_Teinte :"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "Rétablir les valeurs par _défaut"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Affichage"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Sortie audio"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "Type de sortie _audio :"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Audio"
 
@@ -844,15 +825,15 @@ msgstr "%s (saison %d épisode %d)"
 msgid "Browse Error"
 msgstr "Erreur lors du parcours"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Erreur lors de la recherche"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Locale"
 
-#: src/totem-grilo.c:1907
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Canaux"
 
@@ -903,12 +884,10 @@ msgid "Search"
 msgstr "Rechercher"
 
 #: src/totem-menu.c:408
-#| msgid "Audio Track #%d"
 msgid "Audio Track"
 msgstr "Piste audio"
 
 #: src/totem-menu.c:411
-#| msgid "Subtitles"
 msgid "Subtitle"
 msgstr "Sous-titre"
 
@@ -1061,7 +1040,7 @@ msgstr "Configuration des greffons"
 msgid "_Close"
 msgstr "_Fermer"
 
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Sélection des polices de sous-titres"
 
@@ -1538,99 +1517,94 @@ msgid "Channels:"
 msgstr "Canaux :"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:106
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:108
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:109
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:111
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:112
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Inconnue"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:118
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:119
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "N/D"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:124
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:129
-#: src/plugins/properties/bacon-video-widget-properties.c:237
+#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:133
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/D"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:135
+#: src/plugins/properties/bacon-video-widget-properties.c:136
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/D"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:137
+#: src/plugins/properties/bacon-video-widget-properties.c:138
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:139
+#: src/plugins/properties/bacon-video-widget-properties.c:140
 msgid "0 Channels"
 msgstr "0 canal"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:155
+#: src/plugins/properties/bacon-video-widget-properties.c:156
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d heure"
 msgstr[1] "%d heures"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:158
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minute"
 msgstr[1] "%d minutes"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:161
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1638,23 +1612,32 @@ msgstr[0] "%d seconde"
 msgstr[1] "%d secondes"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:167
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:169
+#: src/plugins/properties/bacon-video-widget-properties.c:170
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:176
 msgid "0 seconds"
 msgstr "0 seconde"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:236
+#, c-format
+#| msgid "%d frame per second"
+#| msgid_plural "%d frames per second"
+msgid "%0.2f frame per second"
+msgid_plural "%0.2f frames per second"
+msgstr[0] "%0.2f image par seconde"
+msgstr[1] "%0.2f images par seconde"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1743,7 +1726,6 @@ msgid "Save a copy of the currently playing movie"
 msgstr "Enregistrement d’une copie de la vidéo en cours de lecture"
 
 #: src/plugins/save-file/totem-save-file.c:89
-#| msgid "The video disc could not be duplicated."
 msgid "The video could not be made available offline."
 msgstr "La vidéo n’a pas pu être rendue disponible hors ligne."
 
@@ -1948,6 +1930,20 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Définit l’agent utilisateur pour le site Vimeo"
 
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr ""
+#~ "Indique s’il faut charger automatiquement les fichiers de chapitrage avec "
+#~ "le film"
+
+#~ msgid "External Chapters"
+#~ msgstr "Chapitres externes"
+
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "Ch_arger les fichiers de chapitrage au chargement d’un film"
+
 #~ msgid "%s / %s"
 #~ msgstr "%s / %s"
 
@@ -1959,11 +1955,6 @@ msgstr "Définit l’agent utilisateur pour le site Vimeo"
 
 #~ msgid "Subtitle #%d"
 #~ msgstr "Sous-titre n° %d"
-
-#~ msgid "%d frame per second"
-#~ msgid_plural "%d frames per second"
-#~ msgstr[0] "%d image par seconde"
-#~ msgstr[1] "%d images par seconde"
 
 #~ msgid "Audio/Video"
 #~ msgstr "Audio/Vidéo"
