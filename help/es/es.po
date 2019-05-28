@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.help.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-27 08:27+0000\n"
-"PO-Revision-Date: 2019-05-27 11:49+0200\n"
+"POT-Creation-Date: 2019-05-27 09:51+0000\n"
+"PO-Revision-Date: 2019-05-28 16:28+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -710,6 +710,10 @@ msgid ""
 "include or tick option <gui>Calculate the number of screenshots</gui> and "
 "<app>Videos</app> will set it automatically."
 msgstr ""
+"En la parte inferir del diálogo puede especificar el ancho de las capturas "
+"de pantalla en píxeles. También puede establecer el número de capturas que "
+"incluirá la galería o marcar la opción <gui>Calcular el número de capturas</"
+"gui> y <app>Vídeos</app> lo establecerá automáticamente."
 
 #. (itstool) path: info/desc
 #: C/screenshot.page:9
@@ -734,6 +738,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Take Screenshot</gui>."
 msgstr ""
+"Pulse el botón del menú en la esquina superior derecha de la ventana y "
+"seleccione <gui style=\"menuitem\">Capturar pantalla</gui>."
 
 #. (itstool) path: note/p
 #: C/screenshot.page:37
@@ -741,6 +747,8 @@ msgid ""
 "Your screenshot will be saved in your <gui>Pictures</gui> folder under the "
 "name <file>Screenshot from Name-of-the-Video.png</file>."
 msgstr ""
+"Las capturas se guardarán en la carpeta <gui>Imágenes</gui> bajo el nombre "
+"<file>Captura de Nombre-del-Vídeo.png</file>."
 
 #. (itstool) path: info/desc
 #: C/sound-language.page:27
@@ -758,6 +766,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window, select <gui "
 "style=\"menuitem\">Languages</gui>, and select the language."
 msgstr ""
+"Pulse el botón de menú en la esquina superior derecha, seleccione <gui style="
+"\"menuitem\">Idiomas</gui> y seleccione el idioma."
 
 #. (itstool) path: info/desc
 #: C/sound-volume.page:27
@@ -814,6 +824,8 @@ msgid ""
 "Depending on the video format, subtitles can be built into the video file or "
 "disc itself, or available as external files."
 msgstr ""
+"Dependiendo del formato de vídeo, los subtítulos se pueden integrar en el "
+"archivo de vídeo o disco, o estar disponibles como un archivo externo."
 
 #. (itstool) path: page/p
 #: C/subtitles.page:31
@@ -822,6 +834,9 @@ msgid ""
 "subtitles, press the menu button in the top-right corner of the window and "
 "select <gui style=\"menuitem\">Subtitles</gui>."
 msgstr ""
+"Para seleccionar qué subtítulo usar cuando el archivo de vídeo o disco "
+"contiene subtítulos, pulse el botón de menú el la esquina superior derecha "
+"de la ventana y seleccione <gui style=\"menuitem\">Subtítulos</gui>."
 
 #. (itstool) path: page/p
 #: C/subtitles.page:37
@@ -830,6 +845,9 @@ msgid ""
 "subtitle files when movie is loaded</gui> is enabled in the <link xref="
 "\"preferences\">Preferences</link>."
 msgstr ""
+"<app>Vídeos</app> carga los subtítulos externos automáticamente si "
+"<gui>Cargar los archivos de subtítulos al cargar la película</gui> está "
+"activado en <link xref=\"preferences\">Preferencias</link>."
 
 #. (itstool) path: page/p
 #: C/subtitles.page:42
@@ -844,6 +862,9 @@ msgid ""
 "<guiseq><gui style=\"menuitem\">Subtitles</gui> <gui>Select Text Subtitles…</"
 "gui></guiseq>."
 msgstr ""
+"Pulse el botón de menú en la esquina superior derecha de la ventana y "
+"seleccione <guiseq><gui style=\"menuitem\">Subtítulos</gui> <gui>Seleccionar "
+"subtítulos de texto…</gui></guiseq>."
 
 #. (itstool) path: item/p
 #: C/subtitles.page:50
@@ -855,6 +876,7 @@ msgstr "Se abrirá el selector de archivos. Busque los subtítulos que quiera."
 msgid "Select them and click <gui>Open</gui>."
 msgstr "Selecciónelos y pulse <gui>Abrir</gui>."
 
+# ¿Bien?
 #. (itstool) path: note/p
 #: C/subtitles.page:58
 msgid ""
@@ -862,11 +884,14 @@ msgid ""
 "gui><gui>External Subtitles</gui></guiseq> section on <link xref="
 "\"preferences\"/> page."
 msgstr ""
+"Ajuste el tamaño y tipografía de los subtítulos de acuerdo con sus "
+"necesidades. Consulte <guiseq><gui>General</gui><gui>Subtítulos externos</"
+"gui></guiseq> en la página de la <link xref=\"preferences\"/>."
 
 #. (itstool) path: info/desc
 #: C/supported-formats.page:9
 msgid "See what file formats are supported."
-msgstr "Vea qué formatos de archivo están admitidos."
+msgstr "Vea qué formatos de archivo están soportados."
 
 #. (itstool) path: page/title
 #: C/supported-formats.page:23
@@ -880,6 +905,10 @@ msgid ""
 "plugins. If certain file formats are not supported, please refer to a "
 "support forum of your distribution to find out which package to install."
 msgstr ""
+"Los formatos de archivos que muestra <app>Vídeos</app> dependen de los "
+"complementos <sys>GStreamer</sys>. Si ciertos formatos de archivo no están "
+"soportados, vaya al foro de asistencia de su distribución para averiguar qué "
+"paquete instalar."
 
 #. (itstool) path: note/p
 #: C/supported-formats.page:29
@@ -888,6 +917,9 @@ msgid ""
 "<app>Videos</app> will display a dialog which will allow you to search for "
 "missing plugins (codecs) and install them."
 msgstr ""
+"Si intenta abrir un formato que no está soportado, en muchas distribuciones "
+"<app>Videos</app> mostrará un diálogo que le permitirá buscar los "
+"complementos que faltan (codificadores) e instalarlos."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -905,6 +937,8 @@ msgid ""
 "<app>Videos</app> does not support playback of Audio CDs. You may use a "
 "music player such as <app>Music</app> or <app>Rhythmbox</app>."
 msgstr ""
+"<app>Vídeos</app> no soporta la reproducción de CDs de sonido. Debería usar "
+"un reproductor de música como <app>Música</app> o <app>Rhythmbox</app>."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-debug.page:9
