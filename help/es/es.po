@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.help.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-27 09:51+0000\n"
-"PO-Revision-Date: 2019-05-28 16:28+0200\n"
+"POT-Creation-Date: 2019-05-28 14:31+0000\n"
+"PO-Revision-Date: 2019-05-30 12:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -283,8 +283,8 @@ msgstr ""
 msgid ""
 "Adjust volume. For further information see <link xref=\"sound-volume\"/>."
 msgstr ""
-"Ajustar el volumen. Para más información consulte la <link xref=\"sound-"
-"volume\"/>."
+"Ajustar el volumen. Para más información consulte la sección <link xref="
+"\"sound-volume\"/>."
 
 #. (itstool) path: item/p
 #: C/navigation.page:40
@@ -302,7 +302,7 @@ msgid ""
 "see <link xref=\"playing-DVD\"/>."
 msgstr ""
 "Para cambiar a un capítulo diferente de un DVD o para volver a la pantalla "
-"principal, consulte la <link xref=\"playing-DVD\"/>."
+"principal, consulte la sección <link xref=\"playing-DVD\"/>."
 
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
@@ -710,7 +710,7 @@ msgid ""
 "include or tick option <gui>Calculate the number of screenshots</gui> and "
 "<app>Videos</app> will set it automatically."
 msgstr ""
-"En la parte inferir del diálogo puede especificar el ancho de las capturas "
+"En la parte inferir del diálogo puede especificar la anchura de las capturas "
 "de pantalla en píxeles. También puede establecer el número de capturas que "
 "incluirá la galería o marcar la opción <gui>Calcular el número de capturas</"
 "gui> y <app>Vídeos</app> lo establecerá automáticamente."
@@ -960,6 +960,13 @@ msgid ""
 "problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
 "not in <app>Videos</app> itself."
 msgstr ""
+"Si ya ha seguido la sección <link xref=\"supported-formats\"/> y la sección "
+"<link xref=\"troubleshooting-DVD\"/> y sigue sin poder reproducir el vídeo, "
+"abra una ventana de la terminal e introduzca el comando <cmd>totem --help-"
+"gst</cmd>. Esto le mostrará una lista de las opciones disponibles que puede "
+"usar para obtener información sobre errores. Frecuentemente el problema está "
+"en un complemento subyacente, por ejemplo, en <sys>GStreamer</sys> y no en "
+"<app>Vídeos</app>."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
@@ -968,6 +975,9 @@ msgid ""
 "\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> issue "
 "tracker</link>."
 msgstr ""
+"Los errores de software de <sys>GStreamer</sys> se pueden informar en el "
+"<link href=\"https://gitlab.freedesktop.org/gstreamer\">seguimiento de "
+"errores de <sys>GStreamer</sys></link>."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-DVD.page:10
@@ -989,6 +999,13 @@ msgid ""
 "installed on your system</link>, or because DVD is encrypted and a DVD "
 "decryption package is not installed on your system."
 msgstr ""
+"Podría suceder que después de introducir un DVD en su lector de CD/DVD, "
+"<app>Vídeos</app> muestra el mensaje de error <gui>Ha ocurrido un error ‒ La "
+"película no se pudo leer.</gui> Esto podría ser debido a que <link xref="
+"\"supported-formats\">un complemento de <sys>GStreamer</sys> necesario para "
+"leer el formato de la película no está instalado en su sistema</link>, o "
+"bien, el DVD está cifrado y el paquete necesario para descifrarlo no está "
+"instalado en su sistema."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-DVD.page:36
@@ -999,6 +1016,11 @@ msgid ""
 "available for your distribution, please ask in a support forum of your "
 "distribution."
 msgstr ""
+"Para abrir DVD cifrados, considere la instalación del paquete "
+"<sys>libdvdcss</sys>. Sin embargo, tenga en cuenta que usar este paquete es "
+"ilegal en algunos países. Para más información sobre si el paquete está "
+"disponible para su distribución, pregunte en un foro de asistencia de su "
+"distribución."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1017,6 +1039,10 @@ msgid ""
 "from <link xref=\"subtitles\"/> page or <link xref=\"preferences\"/> page, "
 "<app>Videos</app> still does not load subtitles. The reason for that may be:"
 msgstr ""
+"Puede pasar que, aunque siga las instrucciones sobre los subtítulos en la "
+"página de la secciones <link xref=\"subtitles\"/> o <link xref=\"preferences"
+"\"/>, <app>Vídeos</app> siga sin cargar los subtítulos. La razón de esto "
+"podría ser que:"
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:35
@@ -1024,6 +1050,9 @@ msgid ""
 "Wrong name of the subtitles file - open the file chooser and check if the "
 "name of the subtitles file is the same as the name of the movie file."
 msgstr ""
+"El archivo de subtítulos tiene un nombre incorrecto: abra el selector de "
+"archivos y compruebe si el nombre del archivo de subtítulos es el mismo que "
+"el nombre de la película."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:40
@@ -1031,6 +1060,8 @@ msgid ""
 "Lack of the subtitles file - open the file chooser and check if there is "
 "also a file with the subtitles in the directory with the movie."
 msgstr ""
+"Faltan el archivo de subtítulos: abra el selector de archivos y compruebe si "
+"hay un archivo con los subtítulos en la carpeta de la película."
 
 #. (itstool) path: page/p
 #: C/troubleshooting-subtitles.page:45
@@ -1038,6 +1069,8 @@ msgid ""
 "If you do not have a subtitles file for your movie, you can search for it "
 "via <app>Videos</app>:"
 msgstr ""
+"Si no tiene un archivo de subtítulos para la película, puede buscar uno en "
+"<app>Vídeos</app>:"
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:48
@@ -1045,6 +1078,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Preferences</gui>."
 msgstr ""
+"Pulse el botón de menú en la esquina superior derecha de la ventana y elija "
+"<gui style=\"menuitem\">Preferencias</gui>."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:52
@@ -1052,6 +1087,8 @@ msgid ""
 "In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui style="
 "\"button\">Plugins…</gui>."
 msgstr ""
+"En la pestaña <gui>General</gui> debajo de <gui>Complementos</gui>, pulse en "
+"<gui style=\"button\">Complementos…</gui>."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:56
@@ -1060,6 +1097,9 @@ msgid ""
 "Downloader</gui> plugin. It will try to find and download subtitles for the "
 "currently played movie."
 msgstr ""
+"En la ventana <gui>Configurar complementos</gui>, active el complemento "
+"<gui>Descargador de subtítulos</gui>. Intentará encontrar y descargar "
+"subtítulos para la película actual."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-subtitles.page:63
@@ -1067,6 +1107,8 @@ msgid ""
 "Please notice that to search for subtitles you need to be connected to the "
 "Internet."
 msgstr ""
+"Tenga en cuenta que para buscar subtítulos necesita estar conectado a "
+"Internet."
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
@@ -1095,6 +1137,10 @@ msgid ""
 "style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
 "<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
 msgstr ""
+"Pulse el botón de menú en la esquina superior derecha de la ventana y elija "
+"<gui style=\"menuitem\">Ampliar</gui> o pulse <key>R</key>. Para alejar, "
+"desactive <gui style=\"menuitem\">Acercar</gui> nuevamente o pulse <key>T</"
+"key>."
 
 #. (itstool) path: item/title
 #: C/view-zoom.page:43
@@ -1107,6 +1153,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
 msgstr ""
+"Pulse el botón de menú en la esquina suprior derecha de la ventana y elija "
+"<gui style=\"menuitem\">Proporción</gui>."
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:46
@@ -1144,7 +1192,7 @@ msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
 "you to force different aspect ratio to be used for displaying movie."
 msgstr ""
-"La relación de aspecto es la proporción entre el ancho y el alto. Esta "
+"La relación de aspecto es la proporción entre la anchura y la altura. Esta "
 "opción le permite forzar varias relaciones de aspecto con las que reproducir "
 "una película."
 
