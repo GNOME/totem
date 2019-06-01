@@ -10,20 +10,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-21 20:05+0000\n"
-"PO-Revision-Date: 2019-02-22 00:10+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2019-05-06 11:02+0000\n"
+"PO-Revision-Date: 2019-05-23 21:27+0200\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1898 src/totem-object.c:3723
+#: src/totem-grilo.c:1901 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Videók"
 
@@ -58,11 +58,6 @@ msgstr ""
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Videó;Film;Klip;Sorozat;Lejátszó;Lejátszás;DVD;TV;Lemez;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -161,24 +156,20 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "A feliratfájlok automatikusan betöltendők-e film betöltésekor"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr "A külső fejezetfájlok automatikusan betöltendők-e film betöltésekor"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Aktív bővítmények listája"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "A jelenleg aktív (betöltött és futó) bővítmények neveinek listája."
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Megjelenítendő könyvtárak"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
 msgstr "A böngésző felületen megjelenítendő könyvtárak, alapesetben üres"
 
@@ -227,71 +218,63 @@ msgid "_Encoding:"
 msgstr "Kó_dolás:"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Külső fejezetek"
-
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "_Fejezetfájlok betöltése a film betöltésekor"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Bővítmények"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Bővítmények…"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Általános"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Videó"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "_Váltottsoros videók váltottsorosság-mentesítésének letiltása"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Színegyensúly"
 
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
 msgstr "_Fényerősség:"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "Ko_ntraszt:"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "_Telítettség:"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "Á_rnyalat:"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "Alapértelmezések _visszaállítása"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Megjelenítés"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Hangkimenet"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "_Hangkimenet típusa:"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Hang"
 
@@ -816,15 +799,15 @@ msgstr "%s (%d. évad %d. epizód)"
 msgid "Browse Error"
 msgstr "Böngészési hiba"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Keresési hiba"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Helyi"
 
-#: src/totem-grilo.c:1907
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Csatornák"
 
@@ -893,45 +876,45 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automatikus"
 
-#: src/totem-object.c:1387 src/totem-options.c:51
+#: src/totem-object.c:1388 src/totem-options.c:51
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/totem-object.c:1392 src/totem-object.c:1402 src/totem-options.c:50
+#: src/totem-object.c:1393 src/totem-object.c:1403 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Lejátszás"
 
-#: src/totem-object.c:1469 src/totem-object.c:1496 src/totem-object.c:2032
+#: src/totem-object.c:1470 src/totem-object.c:1498 src/totem-object.c:2045
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "A Totem nem tudja lejátszani a következőt: „%s”."
 
-#: src/totem-object.c:2203
+#: src/totem-object.c:2217
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudja megjeleníteni a súgótartalmat."
 
-#: src/totem-object.c:2465
+#: src/totem-object.c:2479
 msgid "An error occurred"
 msgstr "Hiba történt"
 
-#: src/totem-object.c:3821
+#: src/totem-object.c:3824
 msgid "Previous Chapter/Movie"
 msgstr "Előző fejezet/film"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3830
 msgid "Play / Pause"
 msgstr "Lejátszás / Szünet"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3836
 msgid "Next Chapter/Movie"
 msgstr "Következő fejezet/film"
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "Totem could not startup."
 msgstr "A Totem nem tud elindulni."
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "No reason."
 msgstr "Nincs ok."
 
@@ -1030,7 +1013,7 @@ msgstr "Bővítmények beállítása"
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Válassza ki a felirat betűtípusát"
 
@@ -1504,94 +1487,94 @@ msgid "Channels:"
 msgstr "Csatornák:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:106
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:109
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:111
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:119
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "---"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:124
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "---"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "---"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:129
-#: src/plugins/properties/bacon-video-widget-properties.c:237
+#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "---"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:133
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "---"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:135
+#: src/plugins/properties/bacon-video-widget-properties.c:136
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "---"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:137
+#: src/plugins/properties/bacon-video-widget-properties.c:138
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:139
+#: src/plugins/properties/bacon-video-widget-properties.c:140
 msgid "0 Channels"
 msgstr "0 csatorna"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:155
+#: src/plugins/properties/bacon-video-widget-properties.c:156
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d óra"
 msgstr[1] "%d óra"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:158
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d perc"
 msgstr[1] "%d perc"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:161
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1599,23 +1582,30 @@ msgstr[0] "%d másodperc"
 msgstr[1] "%d másodperc"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:167
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:169
+#: src/plugins/properties/bacon-video-widget-properties.c:170
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:176
 msgid "0 seconds"
 msgstr "0 másodperc"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:236
+#, c-format
+msgid "%0.2f frame per second"
+msgid_plural "%0.2f frames per second"
+msgstr[0] "%0.2f képkocka másodpercenként"
+msgstr[1] "%0.2f képkocka másodpercenként"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1903,3 +1893,15 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Felhasználóügynök beállítása a Vimeo oldalához"
+
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr "A külső fejezetfájlok automatikusan betöltendők-e film betöltésekor"
+
+#~ msgid "External Chapters"
+#~ msgstr "Külső fejezetek"
+
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "_Fejezetfájlok betöltése a film betöltésekor"
