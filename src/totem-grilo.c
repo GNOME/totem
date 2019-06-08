@@ -786,7 +786,7 @@ play (TotemGrilo *self,
 	if (!url)
 		url = grl_media_get_external_url (media);
 	if (!url) {
-		g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://bugzilla.gnome.org/",
+		g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://gitlab.gnome.org/",
 			   grl_media_get_id (media),
 			   grl_media_get_source (media));
 		return;
@@ -2074,7 +2074,7 @@ play_selection (TotemGrilo *self,
 		if (!url)
 			url = grl_media_get_external_url (media);
 		if (!url) {
-			g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://bugzilla.gnome.org/",
+			g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://gitlab.gnome.org/",
 				   grl_media_get_id (media),
 				   grl_media_get_source (media));
 			goto next_item;
