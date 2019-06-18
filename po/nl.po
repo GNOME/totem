@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-21 20:05+0000\n"
-"PO-Revision-Date: 2019-02-24 14:59+0100\n"
+"POT-Creation-Date: 2019-05-06 11:02+0000\n"
+"PO-Revision-Date: 2019-06-18 11:04+0200\n"
 "Last-Translator: Nathan Follens <nthn@unseen.is>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -23,11 +23,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1898 src/totem-object.c:3723
+#: src/totem-grilo.c:1901 src/totem-object.c:3726
 msgid "Videos"
 msgstr "Video’s"
 
@@ -64,11 +64,6 @@ msgstr ""
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Video;Movie;Film;Clip;Series;Player;Speler;DVD;TV;Disc;Schijf;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -108,7 +103,7 @@ msgid ""
 "stream (in seconds)."
 msgstr ""
 "De hoeveelheid te bufferen data (in seconden) voordat de datastroom wordt "
-"afgespeeld "
+"afgespeeld."
 
 #: data/org.gnome.totem.gschema.xml.in:39
 msgid "Subtitle font"
@@ -116,7 +111,7 @@ msgstr "Lettertype ondertitels"
 
 #: data/org.gnome.totem.gschema.xml.in:40
 msgid "Pango font description for subtitle rendering."
-msgstr "Pango-lettertypebeschrijving voor weergave van ondertitels"
+msgstr "Pango-lettertypebeschrijving voor weergave van ondertitels."
 
 # Kan ook iso-8859-15 zijn
 #: data/org.gnome.totem.gschema.xml.in:43
@@ -130,7 +125,7 @@ msgstr "Tekenset ondertitels"
 
 #: data/org.gnome.totem.gschema.xml.in:51
 msgid "Encoding character set for subtitle."
-msgstr "Tekenset voor de ondertiteling"
+msgstr "Tekenset voor de ondertiteling."
 
 #: data/org.gnome.totem.gschema.xml.in:55
 msgid "Default location for the “Open…” dialogs"
@@ -170,26 +165,21 @@ msgstr ""
 "film"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr ""
-"Of hoofdstukbestanden automatisch geladen worden bij het laden van een film"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Lijst van actieve plug-ins"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr ""
 "Een lijst met de namen van de huidige actieve plug-ins (geladen en draaiend)"
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Te tonen mappen"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Te tonen mappen in de blader-interface, standaard geen"
 
@@ -239,72 +229,63 @@ msgid "_Encoding:"
 msgstr "_Tekenset:"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Externe hoofdstukken"
-
-# Vrij vertaald (Wouter Bolsterlee)
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "_Hoofdstukbestanden automatisch laden"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Plug-ins"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Plug-ins…"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Algemeen"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Video"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "‘_Deinterlacing’ van ‘interlaced’ video’s uitschakelen"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Kleurbalans"
 
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
 msgstr "_Helderheid:"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "_Contrast:"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "Ver_zadiging:"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "_Tint:"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "_Standaardinstellingen herstellen"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Weergave"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Geluidsweergave"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "Type _geluidsweergave:"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Audio"
 
@@ -841,15 +822,15 @@ msgstr "%s (seizoen %d aflevering %d)"
 msgid "Browse Error"
 msgstr "Bladeren mislukt"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Zoeken mislukt"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Lokaal"
 
-#: src/totem-grilo.c:1907
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Kanalen"
 
@@ -919,45 +900,45 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automatisch"
 
-#: src/totem-object.c:1387 src/totem-options.c:51
+#: src/totem-object.c:1388 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pauzeren"
 
-#: src/totem-object.c:1392 src/totem-object.c:1402 src/totem-options.c:50
+#: src/totem-object.c:1393 src/totem-object.c:1403 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Afspelen"
 
-#: src/totem-object.c:1469 src/totem-object.c:1496 src/totem-object.c:2032
+#: src/totem-object.c:1470 src/totem-object.c:1498 src/totem-object.c:2045
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem kan ‘%s’ niet afspelen."
 
-#: src/totem-object.c:2203
+#: src/totem-object.c:2217
 msgid "Totem could not display the help contents."
 msgstr "Totem kan de hulpinhoud niet weergeven."
 
-#: src/totem-object.c:2465
+#: src/totem-object.c:2479
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
-#: src/totem-object.c:3821
+#: src/totem-object.c:3824
 msgid "Previous Chapter/Movie"
 msgstr "Vorige hoofdstuk/film"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3830
 msgid "Play / Pause"
 msgstr "Afspelen / pauzeren"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3836
 msgid "Next Chapter/Movie"
 msgstr "Volgende hoofdstuk/film"
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "Totem could not startup."
 msgstr "Totem kan niet worden opgestart."
 
-#: src/totem-object.c:4056
+#: src/totem-object.c:4059
 msgid "No reason."
 msgstr "Geen reden."
 
@@ -1033,7 +1014,7 @@ msgstr "Spoelen"
 # de film wordt niet gedraaid?
 #: src/totem-options.c:65
 msgid "Movies to play"
-msgstr "Films om af te spelen."
+msgstr "Films om af te spelen"
 
 #: src/totem-options.c:100
 msgid "Can’t enqueue and replace at the same time"
@@ -1061,7 +1042,7 @@ msgid "_Close"
 msgstr "_Sluiten"
 
 # voor de ondertiteling
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Selecteer het lettertype voor de ondertitels"
 
@@ -1316,7 +1297,7 @@ msgstr ""
 #: src/plugins/dbusservice/dbusservice.py:238
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "Het MediaPlayer2-object implementeert de ‘%s’-interface niet."
+msgstr "Het MediaPlayer2-object implementeert de ‘%s’-interface niet"
 
 #: src/plugins/dbusservice/dbusservice.py:220
 #, python-format
@@ -1394,11 +1375,11 @@ msgstr "Benaderen van OpenSubtitles-website mislukt"
 #: src/plugins/opensubtitles/opensubtitles.py:333
 #: src/plugins/opensubtitles/opensubtitles.py:351
 msgid "Could not contact the OpenSubtitles website."
-msgstr "Benaderen van OpenSubtitles-website mislukt"
+msgstr "Benaderen van OpenSubtitles-website mislukt."
 
 #: src/plugins/opensubtitles/opensubtitles.py:339
 msgid "No results found."
-msgstr "Geen resultaten gevonden"
+msgstr "Geen resultaten gevonden."
 
 #: src/plugins/opensubtitles/opensubtitles.py:482
 msgid "Subtitles"
@@ -1419,7 +1400,7 @@ msgstr "Waardering"
 #. pylint: disable=no-member
 #: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
-msgstr "Ondertitels voor film _downloaden"
+msgstr "Ondertitels voor film _downloaden…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
@@ -1443,7 +1424,7 @@ msgstr "Taal ondertiteling"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:7
 msgid "The language to search for subtitles for movies in."
-msgstr "De taal van te zoeken ondertitels"
+msgstr "De taal van te zoeken ondertitels."
 
 #: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Movie Properties"
@@ -1546,95 +1527,94 @@ msgid "Channels:"
 msgstr "Kanalen:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:106
-#| msgid "Unknown"
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:109
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:111
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:119
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:124
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:129
-#: src/plugins/properties/bacon-video-widget-properties.c:237
+#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:133
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:135
+#: src/plugins/properties/bacon-video-widget-properties.c:136
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:137
+#: src/plugins/properties/bacon-video-widget-properties.c:138
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:139
+#: src/plugins/properties/bacon-video-widget-properties.c:140
 msgid "0 Channels"
 msgstr "0 kanalen"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:155
+#: src/plugins/properties/bacon-video-widget-properties.c:156
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d uur"
 msgstr[1] "%d uren"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:158
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuut"
 msgstr[1] "%d minuten"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:161
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1642,23 +1622,30 @@ msgstr[0] "%d seconde"
 msgstr[1] "%d seconden"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:167
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:169
+#: src/plugins/properties/bacon-video-widget-properties.c:170
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:176
 msgid "0 seconds"
 msgstr "0 seconden"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:236
+#, c-format
+msgid "%0.2f frame per second"
+msgid_plural "%0.2f frames per second"
+msgstr[0] "%0.2f frame per seconde"
+msgstr[1] "%0.2f frames per seconde"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1949,16 +1936,26 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Stelt de gebruikersagent in voor de Vimeo-site"
 
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr ""
+#~ "Of hoofdstukbestanden automatisch geladen worden bij het laden van een "
+#~ "film"
+
+#~ msgid "External Chapters"
+#~ msgstr "Externe hoofdstukken"
+
+# Vrij vertaald (Wouter Bolsterlee)
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "_Hoofdstukbestanden automatisch laden"
+
 #~ msgid "_Quit"
 #~ msgstr "A_fsluiten"
 
 #~ msgid "Subtitle #%d"
 #~ msgstr "Ondertitel #%d"
-
-#~ msgid "%d frame per second"
-#~ msgid_plural "%d frames per second"
-#~ msgstr[0] "%d frame per seconde"
-#~ msgstr[1] "%d frames per seconde"
 
 #~ msgid "Audio/Video"
 #~ msgstr "Audio/Video"
