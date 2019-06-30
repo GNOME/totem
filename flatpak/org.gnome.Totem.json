@@ -121,7 +121,15 @@
         },
         {
             "name": "libgdata",
-            "config-opts": [ "--disable-always-build-tests", "--disable-Werror", "--disable-static" ],
+            "buildsystem": "meson",
+            "config-opts": [
+                 "-Dalways_build_tests=false",
+                 "-Dgtk=disabled",
+                 "-Dgtk_doc=false",
+                 "-Dinstalled_tests=false",
+                 "-Dintrospection=false",
+                 "-Dvapi=false"
+            ],
             "sources": [
                 {
                     "type": "git",
