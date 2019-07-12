@@ -203,7 +203,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_open_directory_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_open_directory_file_closed, plugin);
 
-	totem_object_empty_menu_section (priv->totem, "open-placeholder");
+	totem_object_empty_menu_section (priv->totem, "opendirectory-placeholder");
 
 	priv->totem = NULL;
 
