@@ -18,7 +18,6 @@ allowed_plugins = [
   'brasero-disc-recorder',
   'dbusservice',
   'im-status',
-  'lirc',
   'media-player-keys',
   'open-directory',
   'opensubtitles',
@@ -57,17 +56,6 @@ if plugins_option != 'none'
   ]
 
   plugin_error = (plugins_option == 'all')
-
-  lirc_dep = dependency('lirc', required: false)
-  if lirc_dep.found() and cc.has_function('lirc_init', dependencies: lirc_dep) and cc.has_header('lirc/lirc_client.h')
-    plugins += 'lirc'
-  else
-    str = 'you need lirc_client installed for the lirc plugin'
-    if plugin_error
-      error(str)
-    endif
-    message(str)
-  endif
 
   libxml_req_version = '>= 2.6.0'
   libxml_dep = dependency('libxml-2.0', version: libxml_req_version, required: false)
