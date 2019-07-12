@@ -429,6 +429,10 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         server = xmlrpc.client.Server ('http://api.opensubtitles.org/xml-rpc')
         self._model = OpenSubtitlesModel (server)
 
+        mrl = self._totem.get_current_mrl ()
+        if mrl:
+            self.__on_totem__file_opened(self._totem, self._totem.get_current_mrl ())
+
     def do_deactivate (self):
         if self._dialog:
             self._dialog.destroy ()
