@@ -218,7 +218,8 @@ class Root (dbus.service.Object): # pylint: disable=R0904
             raise dbus.exceptions.DBusException (
                 'org.mpris.MediaPlayer2.ReadOnlyProperty',
                 _('The property ‘%s’ is not writeable.'))
-        elif interface_name == 'org.mpris.MediaPlayer2.Player':
+
+        if interface_name == 'org.mpris.MediaPlayer2.Player':
             if property_name == 'LoopStatus':
                 self.totem.remote_set_setting (
                     Totem.RemoteSetting.REPEAT, (new_value == 'Playlist'))
