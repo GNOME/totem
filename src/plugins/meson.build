@@ -15,7 +15,6 @@ plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
 allowed_plugins = [
   'apple-trailers',
   'autoload-subtitles',
-  'brasero-disc-recorder',
   'dbusservice',
   'im-status',
   'lirc',
@@ -63,19 +62,6 @@ if plugins_option != 'none'
     plugins += 'lirc'
   else
     str = 'you need lirc_client installed for the lirc plugin'
-    if plugin_error
-      error(str)
-    endif
-    message(str)
-  endif
-
-  libxml_req_version = '>= 2.6.0'
-  libxml_dep = dependency('libxml-2.0', version: libxml_req_version, required: false)
-  gtk_x11_dep = dependency('gtk+-x11-3.0', version: gtk_req_version, required: false)
-  if libxml_dep.found() and gtk_x11_dep.found()
-    plugins += 'brasero-disc-recorder'
-  else
-    str = 'you need libxml-2.0 ' + libxml_req_version + ' and gtk+-x11-3.0 to use the brasero-disc-recorder plugin'
     if plugin_error
       error(str)
     endif
