@@ -186,7 +186,7 @@ impl_activate (PeasActivatable *plugin)
 
 	/* add UI */
 	menu = totem_object_get_menu_section (priv->totem, "opendirectory-placeholder");
-	item = g_menu_item_new (_("Open containing folder"), "app.open-dir");
+	item = g_menu_item_new (_("Open Containing Folder"), "app.open-dir");
 	g_menu_append_item (G_MENU (menu), item);
 
 	mrl = totem_object_get_current_mrl (priv->totem);
