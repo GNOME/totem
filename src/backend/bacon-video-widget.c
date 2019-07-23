@@ -1051,11 +1051,25 @@ bvw_boolean_handled_accumulator (GSignalInvocationHint * ihint,
 }
 
 static void
+disable_vaapi (void)
+{
+  GstRegistry *registry;
+  GstPlugin *plugin;
+
+  registry = gst_registry_get ();
+  plugin = gst_registry_find_plugin (registry, "vaapi");
+  if (!plugin)
+    return;
+  gst_registry_remove_plugin (registry, plugin);
+}
+
+static void
 bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 {
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
+  disable_vaapi ();
   clutter_gst_init (NULL, NULL);
 
   object_class = (GObjectClass *) klass;
