@@ -48,15 +48,12 @@ struct _TotemGalleryProgressPrivate {
 	GtkProgressBar *progress_bar;
 };
 
-G_DEFINE_TYPE (TotemGalleryProgress, totem_gallery_progress, GTK_TYPE_DIALOG)
-#define TOTEM_GALLERY_PROGRESS_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgressPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (TotemGalleryProgress, totem_gallery_progress, GTK_TYPE_DIALOG)
 
 static void
 totem_gallery_progress_class_init (TotemGalleryProgressClass *klass)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-	g_type_class_add_private (klass, sizeof (TotemGalleryProgressPrivate));
 
 	gobject_class->finalize = totem_gallery_progress_finalize;
 }
@@ -64,13 +61,13 @@ totem_gallery_progress_class_init (TotemGalleryProgressClass *klass)
 static void
 totem_gallery_progress_init (TotemGalleryProgress *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgressPrivate);
+	self->priv = totem_gallery_progress_get_instance_private (self);
 }
 
 static void
 totem_gallery_progress_finalize (GObject *object)
 {
-	TotemGalleryProgressPrivate *priv = TOTEM_GALLERY_PROGRESS_GET_PRIVATE (object);
+	TotemGalleryProgressPrivate *priv = TOTEM_GALLERY_PROGRESS (object)->priv;
 
 	g_spawn_close_pid (priv->child_pid);
 	g_free (priv->output_filename);

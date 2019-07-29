@@ -47,19 +47,17 @@ struct _TotemGalleryPrivate {
 	GtkSpinButton *screenshot_width;
 };
 
-G_DEFINE_TYPE (TotemGallery, totem_gallery, GTK_TYPE_FILE_CHOOSER_DIALOG)
-#define TOTEM_GALLERY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_GALLERY, TotemGalleryPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (TotemGallery, totem_gallery, GTK_TYPE_FILE_CHOOSER_DIALOG)
 
 static void
 totem_gallery_class_init (TotemGalleryClass *klass)
 {
-	g_type_class_add_private (klass, sizeof (TotemGalleryPrivate));
 }
 
 static void
 totem_gallery_init (TotemGallery *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_GALLERY, TotemGalleryPrivate);
+	self->priv = totem_gallery_get_instance_private (self);
 }
 
 TotemGallery *

@@ -55,8 +55,7 @@ struct TotemSkiptoPrivate {
 	gpointer class_ref;
 };
 
-G_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
-#define TOTEM_SKIPTO_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_SKIPTO, TotemSkiptoPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
 
 #define WID(x) (gtk_builder_get_object (skipto->priv->xml, x))
 
@@ -64,8 +63,6 @@ static void
 totem_skipto_class_init (TotemSkiptoClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	g_type_class_add_private (klass, sizeof (TotemSkiptoPrivate));
 
 	object_class->dispose = totem_skipto_dispose;
 }
@@ -82,7 +79,7 @@ totem_skipto_response_cb (GtkDialog *dialog, gint response_id, gpointer data)
 static void
 totem_skipto_init (TotemSkipto *skipto)
 {
-	skipto->priv = TOTEM_SKIPTO_GET_PRIVATE (skipto);
+	skipto->priv = totem_skipto_get_instance_private (skipto);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 	g_signal_connect (skipto, "response",

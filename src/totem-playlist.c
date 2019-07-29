@@ -130,7 +130,7 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
 #define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, TOTEM_PLAYLIST_STATUS_NONE)
 
-G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
 /* Helper functions */
 void
@@ -819,7 +819,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (playlist),
 					GTK_ORIENTATION_VERTICAL);
 
-	playlist->priv = G_TYPE_INSTANCE_GET_PRIVATE (playlist, TOTEM_TYPE_PLAYLIST, TotemPlaylistPrivate);
+	playlist->priv = totem_playlist_get_instance_private (playlist);
 	playlist->priv->parser = totem_pl_parser_new ();
 
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "dvd:");
@@ -2053,8 +2053,6 @@ static void
 totem_playlist_class_init (TotemPlaylistClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	g_type_class_add_private (klass, sizeof (TotemPlaylistPrivate));
 
 	object_class->set_property = totem_playlist_set_property;
 	object_class->get_property = totem_playlist_get_property;
