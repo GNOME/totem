@@ -22,8 +22,6 @@
 #include "totem-search-entry.h"
 #include "libgd/gd-tagged-entry.h"
 
-G_DEFINE_TYPE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
-
 enum {
 	SIGNAL_ACTIVATE,
 	LAST_SIGNAL
@@ -42,6 +40,8 @@ struct _TotemSearchEntryPrivate {
 	GtkWidget *listbox;
 	GdTaggedEntryTag *tag;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
 
 static void
 totem_search_entry_finalize (GObject *obj)
@@ -142,7 +142,7 @@ totem_search_entry_init (TotemSearchEntry *self)
 {
 	GtkWidget *entry;
 
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntryPrivate);
+	self->priv = totem_search_entry_get_instance_private (self);
 
 	/* Entry */
 	entry = GTK_WIDGET (gd_tagged_entry_new ());
@@ -231,8 +231,6 @@ totem_search_entry_class_init (TotemSearchEntryClass *klass)
 							      NULL,
 							      G_PARAM_READWRITE |
 							      G_PARAM_STATIC_STRINGS));
-
-	g_type_class_add_private (klass, sizeof (TotemSearchEntryPrivate));
 }
 
 TotemSearchEntry *

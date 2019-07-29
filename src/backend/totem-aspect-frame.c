@@ -26,13 +26,6 @@
 
 #include "totem-aspect-frame.h"
 
-G_DEFINE_TYPE (TotemAspectFrame, totem_aspect_frame, CLUTTER_TYPE_ACTOR)
-
-#define ASPECT_FRAME_PRIVATE(o)                         \
-  (G_TYPE_INSTANCE_GET_PRIVATE ((o),                    \
-                                TOTEM_TYPE_ASPECT_FRAME,   \
-                                TotemAspectFramePrivate))
-
 enum
 {
   PROP_0,
@@ -45,6 +38,8 @@ struct _TotemAspectFramePrivate
   guint expand : 1;
   gdouble rotation;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (TotemAspectFrame, totem_aspect_frame, CLUTTER_TYPE_ACTOR)
 
 
 static void
@@ -345,8 +340,6 @@ totem_aspect_frame_class_init (TotemAspectFrameClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   ClutterActorClass *actor_class = CLUTTER_ACTOR_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (TotemAspectFramePrivate));
-
   object_class->get_property = totem_aspect_frame_get_property;
   object_class->set_property = totem_aspect_frame_set_property;
   object_class->dispose = totem_aspect_frame_dispose;
@@ -370,7 +363,7 @@ totem_aspect_frame_class_init (TotemAspectFrameClass *klass)
 static void
 totem_aspect_frame_init (TotemAspectFrame *self)
 {
-  self->priv = ASPECT_FRAME_PRIVATE (self);
+  self->priv = totem_aspect_frame_get_instance_private (self);
   clutter_actor_set_pivot_point (CLUTTER_ACTOR (self), 0.5f, 0.5f);
 }
 

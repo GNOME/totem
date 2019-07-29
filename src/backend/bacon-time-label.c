@@ -31,8 +31,7 @@ struct _BaconTimeLabelPrivate {
 	gboolean remaining;
 };
 
-G_DEFINE_TYPE (BaconTimeLabel, bacon_time_label, GTK_TYPE_LABEL)
-#define BACON_TIME_LABEL_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), BACON_TYPE_TIME_LABEL, BaconTimeLabelPrivate))
+G_DEFINE_TYPE_WITH_PRIVATE (BaconTimeLabel, bacon_time_label, GTK_TYPE_LABEL)
 
 enum {
 	PROP_0,
@@ -43,7 +42,7 @@ static void
 bacon_time_label_init (BaconTimeLabel *label)
 {
 	char *time_string;
-	label->priv = G_TYPE_INSTANCE_GET_PRIVATE (label, BACON_TYPE_TIME_LABEL, BaconTimeLabelPrivate);
+	label->priv = bacon_time_label_get_instance_private (label);
 
 	time_string = totem_time_to_string (0, FALSE, FALSE);
 	gtk_label_set_text (GTK_LABEL (label), time_string);
@@ -80,8 +79,6 @@ static void
 bacon_time_label_class_init (BaconTimeLabelClass *klass)
 {
 	GObjectClass *object_class;
-
-	g_type_class_add_private (klass, sizeof (BaconTimeLabelPrivate));
 
 	object_class = (GObjectClass *) klass;
 	object_class->set_property = bacon_time_label_set_property;

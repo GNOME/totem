@@ -24,14 +24,13 @@
 #include "bacon-video-spinner-actor.h"
 #include "clock.h"
 
-#define BACON_VIDEO_SPINNER_ACTOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BACON_TYPE_VIDEO_SPINNER_ACTOR, BaconVideoSpinnerActorPrivate))
 
 struct BaconVideoSpinnerActorPrivate
 {
 	ClutterActor     *clock;
 };
 
-G_DEFINE_TYPE (BaconVideoSpinnerActor, bacon_video_spinner_actor, CLUTTER_TYPE_ACTOR);
+G_DEFINE_TYPE_WITH_PRIVATE (BaconVideoSpinnerActor, bacon_video_spinner_actor, CLUTTER_TYPE_ACTOR);
 
 enum {
 	PROP_0,
@@ -89,8 +88,6 @@ bacon_video_spinner_actor_class_init (BaconVideoSpinnerActorClass *klass)
 							     "Percentage fill",
 							     0.0, 100.0, 0.0,
 							     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-        g_type_class_add_private (klass, sizeof (BaconVideoSpinnerActorPrivate));
 }
 
 static void
@@ -100,7 +97,7 @@ bacon_video_spinner_actor_init (BaconVideoSpinnerActor *spinner)
 	ClutterConstraint *constraint;
 	ClutterColor *color;
 
-	spinner->priv = BACON_VIDEO_SPINNER_ACTOR_GET_PRIVATE (G_OBJECT (spinner));
+	spinner->priv = bacon_video_spinner_actor_get_instance_private (spinner);
 	actor = CLUTTER_ACTOR (spinner);
 
 	/* We'll set that colour on the layout, as the child doesn't
