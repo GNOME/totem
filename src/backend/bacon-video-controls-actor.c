@@ -24,8 +24,6 @@
 #include "bacon-video-controls-actor.h"
 #include "bacon-time-label.h"
 
-#define BACON_VIDEO_CONTROLS_ACTOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BACON_TYPE_VIDEO_CONTROLS_ACTOR, BaconVideoControlsActorPrivate))
-
 struct BaconVideoControlsActorPrivate
 {
 	GtkBuilder *builder;
@@ -33,7 +31,7 @@ struct BaconVideoControlsActorPrivate
 	GObject *bvw;
 };
 
-G_DEFINE_TYPE (BaconVideoControlsActor, bacon_video_controls_actor, GTK_CLUTTER_TYPE_ACTOR);
+G_DEFINE_TYPE_WITH_PRIVATE (BaconVideoControlsActor, bacon_video_controls_actor, GTK_CLUTTER_TYPE_ACTOR);
 
 static void
 bacon_video_controls_actor_finalize (GObject *object)
@@ -72,8 +70,6 @@ bacon_video_controls_actor_class_init (BaconVideoControlsActorClass *klass)
 
         gobject_class->finalize = bacon_video_controls_actor_finalize;
         gobject_class->constructed = bacon_video_controls_actor_constructed;
-
-        g_type_class_add_private (klass, sizeof (BaconVideoControlsActorPrivate));
 }
 
 static void
@@ -105,7 +101,7 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 {
 	const char *objects[] = { "toolbar", NULL };
 
-	controls->priv = BACON_VIDEO_CONTROLS_ACTOR_GET_PRIVATE (G_OBJECT (controls));
+	controls->priv = bacon_video_controls_actor_get_instance_private (controls);
 
 	g_type_class_ref (BACON_TYPE_TIME_LABEL);
 

@@ -112,10 +112,6 @@
 
 static void bacon_video_widget_initable_iface_init (GInitableIface *iface);
 
-G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_CLUTTER_TYPE_EMBED,
-			 G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
-						bacon_video_widget_initable_iface_init))
-
 /* Signals */
 enum
 {
@@ -283,6 +279,11 @@ struct BaconVideoWidgetPrivate
   /* for stepping */
   float                        rate;
 };
+
+G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_CLUTTER_TYPE_EMBED,
+			 G_ADD_PRIVATE (BaconVideoWidget)
+			 G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
+						bacon_video_widget_initable_iface_init))
 
 static void bacon_video_widget_set_property (GObject * object,
                                              guint property_id,
@@ -1077,8 +1078,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  g_type_class_add_private (object_class, sizeof (BaconVideoWidgetPrivate));
-
   /* GtkWidget */
   widget_class->get_preferred_width = bacon_video_widget_get_preferred_width;
   widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
@@ -1501,7 +1500,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_type_class_ref (BVW_TYPE_DVD_EVENT);
   g_type_class_ref (BVW_TYPE_ROTATION);
 
-  bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
+  bvw->priv = priv = bacon_video_widget_get_instance_private (bvw);
 
   g_object_set (G_OBJECT (bvw), "use-layout-size", TRUE, NULL);
 
