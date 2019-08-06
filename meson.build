@@ -145,17 +145,7 @@ libgd = subproject(
 )
 libgd_dep = libgd.get_variable('libgd_dep')
 
-# introspection support
-have_gir = false
-
-introspection_option = get_option('enable-introspection')
-if introspection_option != 'no'
-  gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7', required: (introspection_option == 'yes'))
-
-  if gir_dep.found()
-    have_gir = true
-  endif
-endif
+gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7')
 
 # missing plugins support
 missing_plugins_deps = []
@@ -202,15 +192,6 @@ if python_option != 'no'
       error(str)
     endif
     message(str + ', disabling Python support')
-  else
-    if not have_gir
-      str = 'Introspection support is required to enable Python plugins'
-      if python_option == 'yes'
-        error(str)
-      endif
-      message(str + ', disabling Python support')
-      have_python = false
-    endif
   endif
 endif
 

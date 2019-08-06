@@ -56,6 +56,7 @@ totem_common_deps = libbacon_video_widget_deps + python_deps + [
   gtk_dep,
   dependency('gmodule-2.0'),
   totem_plparser_dep,
+  gir_dep,
   peas_dep,
   peas_gtk_dep,
   dependency('grilo-0.3', version: grilo_req_version),
@@ -261,40 +262,38 @@ executable(
   c_args: totem_common_cflags
 )
 
-if have_gir
-  gir_sources = libtotem_sources + libtotem_player_sources + headers
+gir_sources = libtotem_sources + libtotem_player_sources + headers
 
-  gir_incs = [
-    'Gio-2.0',
-    'GLib-2.0',
-    'GObject-2.0',
-    'Gtk-3.0',
-    'TotemPlParser-1.0'
-  ]
+gir_incs = [
+  'Gio-2.0',
+  'GLib-2.0',
+  'GObject-2.0',
+  'Gtk-3.0',
+  'TotemPlParser-1.0'
+]
 
-  gir_extra_args = [
-    '--c-include=totem.h',
-    '--pkg-export=totem'
-  ]
+gir_extra_args = [
+  '--c-include=totem.h',
+  '--pkg-export=totem'
+]
 
-  gir_dir = join_paths(totem_datadir, 'gir-' + totem_api_version)
-  typelib_dir = join_paths(totem_libdir, 'girepository-' + totem_api_version)
+gir_dir = join_paths(totem_datadir, 'gir-' + totem_api_version)
+typelib_dir = join_paths(totem_libdir, 'girepository-' + totem_api_version)
 
-  libtotem_gir = gnome.generate_gir(
-    libtotem,
-    sources: gir_sources,
-    nsversion: totem_api_version,
-    namespace: totem_gir_ns,
-    symbol_prefix: totem_gir_ns.to_lower(),
-    identifier_prefix: totem_gir_ns,
-    includes: gir_incs,
-    include_directories: src_inc,
-    install: true,
-    install_dir_gir: gir_dir,
-    install_dir_typelib: typelib_dir,
-    extra_args: gir_extra_args
-  )
-endif
+libtotem_gir = gnome.generate_gir(
+  libtotem,
+  sources: gir_sources,
+  nsversion: totem_api_version,
+  namespace: totem_gir_ns,
+  symbol_prefix: totem_gir_ns.to_lower(),
+  identifier_prefix: totem_gir_ns,
+  includes: gir_incs,
+  include_directories: src_inc,
+  install: true,
+  install_dir_gir: gir_dir,
+  install_dir_typelib: typelib_dir,
+  extra_args: gir_extra_args
+)
 
 tests = [ 'test-totem' ]
 
