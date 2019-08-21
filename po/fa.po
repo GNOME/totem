@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-07-23 15:50+0000\n"
-"PO-Revision-Date: 2019-08-14 13:20+0430\n"
+"POT-Creation-Date: 2019-08-21 12:00+0000\n"
+"PO-Revision-Date: 2019-08-21 16:36+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -107,7 +107,7 @@ msgstr "قلم زیرنویس"
 
 #: data/org.gnome.totem.gschema.xml.in:40
 msgid "Pango font description for subtitle rendering."
-msgstr "شرح قلم پانگو برای رسم زیرنویس"
+msgstr "شرح قلم پانگو برای رسم زیرنویس."
 
 #: data/org.gnome.totem.gschema.xml.in:43
 msgctxt "subtitle-encoding"
@@ -120,7 +120,7 @@ msgstr "کدگذاری زیرنویس"
 
 #: data/org.gnome.totem.gschema.xml.in:51
 msgid "Encoding character set for subtitle."
-msgstr "دستهٔ کدگذاری، برای زیرنویس"
+msgstr "دستهٔ نویسهٔ کدگذاری برای زیرنویس."
 
 #: data/org.gnome.totem.gschema.xml.in:55
 msgid "Default location for the “Open…” dialogs"
@@ -138,8 +138,7 @@ msgstr "مکان پیش‌گزیده برای محاوره‌های «عکس گ�
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the Pictures "
 "directory."
-msgstr ""
-"مکان پیش‌گزیده برای محاوره‌های «عکس گرفتن از صفحه». محل پیش‌گزیده شاخهٔ «عکس‌ها» است"
+msgstr "مکان پیش‌گزیده برای محاوره‌های نماگرفت. مکان پیش‌گزیده، شاخهٔ عکس‌ها است."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -151,7 +150,7 @@ msgstr "اینکه آیا میانبرهای صفحه کلید غیرفعال ش
 
 #: data/org.gnome.totem.gschema.xml.in:73
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr "اینکه پس از بارگیری فیلم به طور خودکار پرونده‌های زیرنویس بارگیری شوند."
+msgstr "این که پس از بار شدن فیلم، پرونده‌های زیرنویس به صورت خودکار بارگیری شوند"
 
 #: data/org.gnome.totem.gschema.xml.in:77
 msgid "Active plugins list"
@@ -170,9 +169,9 @@ msgstr "شاخه‌ها جهت نمایش"
 
 #: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
-msgstr "شاخه‌های نشان داده شده در واسط مرور، پیش‌گزیده هیچی نمایش داده نمی‌شود."
+msgstr "شاخه‌های نمایان در واسط مرور، به‌صورت پیش‌گزیده هیچ‌کدام"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5670
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5684
 msgid "Stereo"
 msgstr "استریو"
 
@@ -465,7 +464,7 @@ msgstr "افزودن ویدیوی _محلّی…"
 
 #: data/totem.ui:34
 msgid "Add _Web Video…"
-msgstr "افزودن ویدیو ا_ینترنتی..."
+msgstr "افزودن ویدیوی _وب…"
 
 #: data/totem.ui:51
 msgid "_Aspect Ratio"
@@ -519,7 +518,7 @@ msgstr "_زیرنویس‌ها"
 
 #: data/totem.ui:100
 msgid "_Select Text Subtitles…"
-msgstr "ا_نتخاب زیرنویس..."
+msgstr "_گزینش زیرنویس…"
 
 #: data/totem.ui:123
 msgid "_Eject"
@@ -562,11 +561,11 @@ msgstr "_نشانی پرونده‌ای را که می‌خواهید باز ک�
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1981
+#: src/backend/bacon-video-widget.c:1995
 msgid "Password requested for RTSP server"
 msgstr "گذرواژه برای کارگزار RTSP درخواست شده است"
 
-#: src/backend/bacon-video-widget.c:3899
+#: src/backend/bacon-video-widget.c:3913
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an encrypted "
 "DVD without libdvdcss?"
@@ -574,48 +573,48 @@ msgstr ""
 "به نظر می‌رسد منبع رمزنگاری شده و قابل خواندن نیست. آیا تلاش در پخش یک دی‌وی‌دی "
 "رمزنگاری شده بدون libdvdcss دارید؟"
 
-#: src/backend/bacon-video-widget.c:3913
+#: src/backend/bacon-video-widget.c:3927
 msgid "The server you are trying to connect to is not known."
 msgstr "کارگزاری که شما در تلاش برای اتصال به آن هستید، شناخته شده نیست."
 
-#: src/backend/bacon-video-widget.c:3916
+#: src/backend/bacon-video-widget.c:3930
 msgid "The connection to this server was refused."
 msgstr "اتصال به کارگزار رد شد."
 
-#: src/backend/bacon-video-widget.c:3919
+#: src/backend/bacon-video-widget.c:3933
 msgid "The specified movie could not be found."
 msgstr "فیلم مشخص شده را نمی‌توان پیدا کرد."
 
-#: src/backend/bacon-video-widget.c:3926
+#: src/backend/bacon-video-widget.c:3940
 msgid "The server refused access to this file or stream."
 msgstr "کارگزار دسترسی به این پرونده یا جریان را رد کرد."
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3946
 msgid "Authentication is required to access this file or stream."
 msgstr "تصدیق‌هویت جهت دسترسی به این پرونده یا جریان لازم است."
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3953
 msgid "You are not allowed to open this file."
 msgstr "شما اجازه گشودن این پرونده را ندارید."
 
-#: src/backend/bacon-video-widget.c:3944
+#: src/backend/bacon-video-widget.c:3958
 msgid "This location is not a valid one."
 msgstr "این مکان یک مکان معتبر نیست."
 
-#: src/backend/bacon-video-widget.c:3952
+#: src/backend/bacon-video-widget.c:3966
 msgid "The movie could not be read."
 msgstr "فیلم قابل خواندن نیست."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3972
 msgid "This file is encrypted and cannot be played back."
 msgstr "پرونده رمزنگاری شده و قابل پخش نیست."
 
-#: src/backend/bacon-video-widget.c:3964
+#: src/backend/bacon-video-widget.c:3978
 msgid "The file you tried to play is an empty file."
 msgstr "پرونده‌ای که سعی در پخشش دارید، خالی است."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3988 src/backend/bacon-video-widget.c:3996
+#: src/backend/bacon-video-widget.c:4002 src/backend/bacon-video-widget.c:4010
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -629,11 +628,11 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4008
+#: src/backend/bacon-video-widget.c:4022
 msgid "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "این جریان قابل پخش نیست. ممکن است دیوارآتشین جریان را مسدود کرده باشد."
 
-#: src/backend/bacon-video-widget.c:4011
+#: src/backend/bacon-video-widget.c:4025
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might need to "
 "install additional plugins to be able to play some types of movies"
@@ -641,24 +640,24 @@ msgstr ""
 "یک جریان صوتی یا تصویری به دلیل نبود کُدِک مناسب قابل اجرا نیست. ممکن است لازم باشد "
 "جهت پخش بعضی از انواع فیلم‌ها، افزونه‌ای اضافی نصب کنید"
 
-#: src/backend/bacon-video-widget.c:4022
+#: src/backend/bacon-video-widget.c:4036
 msgid ""
 "This file cannot be played over the network. Try downloading it locally first."
 msgstr "نمی توان این فایل را از شبکه پخش نمود. سعی کنید اول آنرا اول بارگیری کنید."
 
-#: src/backend/bacon-video-widget.c:5666
+#: src/backend/bacon-video-widget.c:5680
 msgid "Surround"
 msgstr "فراگیر"
 
-#: src/backend/bacon-video-widget.c:5668
+#: src/backend/bacon-video-widget.c:5682
 msgid "Mono"
 msgstr "واحد"
 
-#: src/backend/bacon-video-widget.c:5956
+#: src/backend/bacon-video-widget.c:5970
 msgid "Media contains no supported video streams."
 msgstr "رسانه حاوی هیچ ویدیوی جاری پشتیبانی شده‌ای نیست."
 
-#: src/backend/bacon-video-widget.c:6168
+#: src/backend/bacon-video-widget.c:6182
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1280,12 +1279,12 @@ msgstr "پرتغالی‌ برزیل"
 
 #: src/plugins/opensubtitles/opensubtitles.py:187
 msgid "Searching for subtitles…"
-msgstr "درحال جست‌وجو برای زیرنویس‌ها..."
+msgstr "درحال جست‌وجو برای زیرنویس‌ها…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
 #: src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
-msgstr "درحال بارگیری زیرنویس‌ها..."
+msgstr "درحال بارگیری زیرنویس‌ها…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:300
 msgid "Could not contact the OpenSubtitles website"
@@ -1319,11 +1318,11 @@ msgstr "نمره‌دهی"
 #. pylint: disable=no-member
 #: src/plugins/opensubtitles/opensubtitles.py:537
 msgid "_Download Movie Subtitles…"
-msgstr "_بارگیری زیرنویس‌های فیلم..."
+msgstr "_بارگیری زیرنویس‌های فیلم…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:576
 msgid "Searching subtitles…"
-msgstr "درحال جست‌وجوی زیرنویس‌ها..."
+msgstr "درحال جست‌وجوی زیرنویس‌ها…"
 
 #: src/plugins/opensubtitles/opensubtitles.ui:27
 msgid "Download Movie Subtitles"
@@ -1339,7 +1338,7 @@ msgstr "_پخش همراه با زیرنویس"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
-msgstr "زبان زیرنویس:"
+msgstr "زبان زیرنویس"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:7
 msgid "The language to search for subtitles for movies in."
@@ -1555,13 +1554,11 @@ msgid "0 seconds"
 msgstr "۰ ثانیه"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:236
-#, fuzzy, c-format
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
+#, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
-msgstr[0] "%Id فریم بر ثانیه"
-msgstr[1] "%Id فریم بر ثانیه"
+msgstr[0] "%0.2f فریم بر ثانیه"
+msgstr[1] "%0.2f فریم بر ثانیه"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1734,7 +1731,7 @@ msgstr "Gallery-%s-%d.jpg"
 #. Set up the window
 #: src/plugins/screenshot/totem-gallery-progress.c:101
 msgid "Creating Gallery…"
-msgstr "درحال ایجاد گالری..."
+msgstr "درحال ایجاد گالری…"
 
 #. Set the progress label
 #: src/plugins/screenshot/totem-gallery-progress.c:107
@@ -1757,7 +1754,7 @@ msgstr "گرفتن _عکس از صفحه"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "ساخت _گالری عکس‌صفحه..."
+msgstr "ساخت _گالری عکس‌صفحه…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
 #: src/plugins/skipto/totem-skipto.c:219
@@ -1795,7 +1792,7 @@ msgstr "_پرش به"
 
 #: src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To…"
-msgstr "_پرش به..."
+msgstr "_پرش به…"
 
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
 msgctxt "playback rate"
