@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-06-20 23:28+0000\n"
-"PO-Revision-Date: 2019-07-02 17:32+0200\n"
+"POT-Creation-Date: 2019-08-24 14:04+0000\n"
+"PO-Revision-Date: 2019-08-24 18:55+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -54,10 +54,10 @@ msgstr ""
 "zaslonskih posnetkov, napredno iskanje, prejemanje podpisov in zapisovanje "
 "nosilcev DVD."
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Video;Oddaja;Klip;Film;Posnetek;Serija;Predvajalnik;DVD;TV;Disk;"
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
+msgstr "Video;Oddaja;Klip;Film;Posnetek;Serija;Predvajalnik;DVD;TV;Disk;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -176,7 +176,7 @@ msgstr "Mape za prikaz"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Mape, ki bodo prikazane v vmesniku brskanja; privzeto ni določene mape"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5670
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5684
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -566,11 +566,11 @@ msgstr "Vnesite n_aslov datoteke, ki jo želite odpreti:"
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1981
+#: src/backend/bacon-video-widget.c:1995
 msgid "Password requested for RTSP server"
 msgstr "Zahtevano je geslo za dostop do RTSP strežnika"
 
-#: src/backend/bacon-video-widget.c:3899
+#: src/backend/bacon-video-widget.c:3913
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -578,48 +578,48 @@ msgstr ""
 "Vir je videti šifriran in ga ni mogoče prebrati. Ali poskušate predvajati "
 "šifriran zapis DVD brez podporne knjižnice libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3913
+#: src/backend/bacon-video-widget.c:3927
 msgid "The server you are trying to connect to is not known."
 msgstr "Strežnik za povezavo ni znan."
 
-#: src/backend/bacon-video-widget.c:3916
+#: src/backend/bacon-video-widget.c:3930
 msgid "The connection to this server was refused."
 msgstr "Povezava s strežnikom je bila zavrnjena."
 
-#: src/backend/bacon-video-widget.c:3919
+#: src/backend/bacon-video-widget.c:3933
 msgid "The specified movie could not be found."
 msgstr "Navedenega posnetka ni mogoče najti."
 
-#: src/backend/bacon-video-widget.c:3926
+#: src/backend/bacon-video-widget.c:3940
 msgid "The server refused access to this file or stream."
 msgstr "Dostop do datoteke ali pretoka je s strani strežnika zavrnjen."
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3946
 msgid "Authentication is required to access this file or stream."
 msgstr "Pred dostopom do datoteke ali pretoka je zahtevana overitev."
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3953
 msgid "You are not allowed to open this file."
 msgstr "Za odpiranje te datoteke so zahtevana skrbniška dovoljenja."
 
-#: src/backend/bacon-video-widget.c:3944
+#: src/backend/bacon-video-widget.c:3958
 msgid "This location is not a valid one."
 msgstr "Mesto datoteke ni veljavno."
 
-#: src/backend/bacon-video-widget.c:3952
+#: src/backend/bacon-video-widget.c:3966
 msgid "The movie could not be read."
 msgstr "Posnetka ni mogoče prebrati."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3972
 msgid "This file is encrypted and cannot be played back."
 msgstr "Datoteka je šifrirana in je ni mogoče predvajati."
 
-#: src/backend/bacon-video-widget.c:3964
+#: src/backend/bacon-video-widget.c:3978
 msgid "The file you tried to play is an empty file."
 msgstr "Datoteka, ki jo poskušate predvajati, je brez vsebine."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3988 src/backend/bacon-video-widget.c:3996
+#: src/backend/bacon-video-widget.c:4002 src/backend/bacon-video-widget.c:4010
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -648,13 +648,13 @@ msgstr[3] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4008
+#: src/backend/bacon-video-widget.c:4022
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Tega pretoka ni mogoče predvajati. Najverjetneje na to vpliva požarni zid."
 
-#: src/backend/bacon-video-widget.c:4011
+#: src/backend/bacon-video-widget.c:4025
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -663,7 +663,7 @@ msgstr ""
 "kodekov. Pred nadaljevanjem je treba namestiti ustrezne kodeke za "
 "predvajanje tovrstnih datotek."
 
-#: src/backend/bacon-video-widget.c:4022
+#: src/backend/bacon-video-widget.c:4036
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -671,19 +671,19 @@ msgstr ""
 "Te datoteke ni mogoče predvajanje preko omrežja. Datoteko je treba najprej "
 "prejeti na disk in nato  predvajati."
 
-#: src/backend/bacon-video-widget.c:5666
+#: src/backend/bacon-video-widget.c:5680
 msgid "Surround"
 msgstr "Surround sistem zvoka"
 
-#: src/backend/bacon-video-widget.c:5668
+#: src/backend/bacon-video-widget.c:5682
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5956
+#: src/backend/bacon-video-widget.c:5970
 msgid "Media contains no supported video streams."
 msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
-#: src/backend/bacon-video-widget.c:6168
+#: src/backend/bacon-video-widget.c:6182
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1013,6 +1013,10 @@ msgstr "Zamenjaj"
 msgid "Seek"
 msgstr "Poišči"
 
+#: src/totem-options.c:64
+msgid "Show version information and exit"
+msgstr "Pokaži podatke različice in končaj"
+
 #: src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Filmi za predvajanje"
@@ -1244,41 +1248,6 @@ msgstr "Samodejno nalaganje podnapisov"
 msgid "Autoloads text subtitles"
 msgstr "Naloži podnapise samodejno ob predvajanju posnetka"
 
-#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:6
-msgid "Video Disc Recorder"
-msgstr "Snemalnik video nosilcev"
-
-#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:7
-msgid "Records (S)VCDs or video DVDs"
-msgstr "Zapiše (S)VCD ali video DVD"
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:101
-msgid "The video disc could not be duplicated."
-msgstr "Video nosilca ni mogoče podvojiti."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:103
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:249
-msgid "The movie could not be recorded."
-msgstr "Filma ni mogoče posneti."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:139
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:235
-msgid "Unable to write a project."
-msgstr "Ni mogoče zapisati projekta."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:375
-msgid "_Create Video Disc…"
-msgstr "_Ustvari video nosilec ..."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:376
-msgid "Copy Vide_o DVD…"
-msgstr "Kopiraj Vide_o DVD ..."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:377
-msgid "Copy (S)VCD…"
-msgstr "_Kopiraj (S)VCD ..."
-
 #: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
 msgid "MPRIS D-Bus Interface"
 msgstr "Vmesnik vodila D-Bus MPRIS"
@@ -1291,7 +1260,7 @@ msgstr ""
 "Pošiljanje obvestil o predvajanem posnetku in upravljanje na daljavo z MPRIS"
 
 #: src/plugins/dbusservice/dbusservice.py:210
-#: src/plugins/dbusservice/dbusservice.py:238
+#: src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "Predmet MediaPlayer2 ne vključuje vmesnika ‘%s’."
@@ -1301,7 +1270,7 @@ msgstr "Predmet MediaPlayer2 ne vključuje vmesnika ‘%s’."
 msgid "The property ‘%s’ is not writeable."
 msgstr "Lastnosti '%s' ni zapisljiva."
 
-#: src/plugins/dbusservice/dbusservice.py:233
+#: src/plugins/dbusservice/dbusservice.py:234
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Predmet MediaPlayer 2 zahteva neznano lastnost ‘%s’"
@@ -1314,22 +1283,6 @@ msgstr "Stanje hipnega sporočilnika"
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Nastavi stanje hipnih sporočil na odsotno med predvajanjem posnetka"
 
-#: src/plugins/lirc/lirc.plugin.desktop.in:5
-msgid "Infrared Remote Control"
-msgstr "Infrardeči daljinski upravljalnik"
-
-#: src/plugins/lirc/lirc.plugin.desktop.in:6
-msgid "Support infrared remote control"
-msgstr "Podpora za infrardeči daljinski upravljalnik"
-
-#: src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn’t initialize lirc."
-msgstr "Ni mogoče začeti programa lirc."
-
-#: src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn’t read lirc configuration."
-msgstr "Ni mogoče prebrati nastavitev lirc."
-
 #: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
 msgid "Media Player Keys"
 msgstr "Tipke predstavnih predvajalnikov"
@@ -1337,6 +1290,18 @@ msgstr "Tipke predstavnih predvajalnikov"
 #: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:6
 msgid "Support additional media player keys"
 msgstr "Podpora dodatnim predstavnim tipkam predvajalnika"
+
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+msgid "Open directory"
+msgstr "Odpri mapo"
+
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+msgid "Open the directory of the currently playing movie"
+msgstr "Odpri mapo trenutno predvajanega posnetka"
+
+#: src/plugins/open-directory/totem-open-directory.c:189
+msgid "Open Containing Folder"
+msgstr "Odpri vsebujočo mapo"
 
 #: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Subtitle Downloader"
@@ -1355,7 +1320,7 @@ msgid "Searching for subtitles…"
 msgstr "Iskanje podnapisov ..."
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:615
+#: src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
 msgstr "Prejemanje podnapisov ..."
 
@@ -1372,28 +1337,28 @@ msgstr "Ni se mogoče povezati s spletiščem OpenSubtitles."
 msgid "No results found."
 msgstr "Ni najdenih zadetkov."
 
-#: src/plugins/opensubtitles/opensubtitles.py:482
+#: src/plugins/opensubtitles/opensubtitles.py:486
 msgid "Subtitles"
 msgstr "Podnapisi"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:488
+#: src/plugins/opensubtitles/opensubtitles.py:492
 msgid "Format"
 msgstr "Zapis"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:493
+#: src/plugins/opensubtitles/opensubtitles.py:497
 msgid "Rating"
 msgstr "Ocena"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:533
+#: src/plugins/opensubtitles/opensubtitles.py:537
 msgid "_Download Movie Subtitles…"
 msgstr "_Prejmi podnapise filma"
 
-#: src/plugins/opensubtitles/opensubtitles.py:572
+#: src/plugins/opensubtitles/opensubtitles.py:576
 msgid "Searching subtitles…"
 msgstr "Iskanje podnapisov ..."
 
@@ -1931,6 +1896,42 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nastavi uporabniški dostop do spletišča Vimeo"
 
+#~ msgid "Video Disc Recorder"
+#~ msgstr "Snemalnik video nosilcev"
+
+#~ msgid "Records (S)VCDs or video DVDs"
+#~ msgstr "Zapiše (S)VCD ali video DVD"
+
+#~ msgid "The video disc could not be duplicated."
+#~ msgstr "Video nosilca ni mogoče podvojiti."
+
+#~ msgid "The movie could not be recorded."
+#~ msgstr "Filma ni mogoče posneti."
+
+#~ msgid "Unable to write a project."
+#~ msgstr "Ni mogoče zapisati projekta."
+
+#~ msgid "_Create Video Disc…"
+#~ msgstr "_Ustvari video nosilec ..."
+
+#~ msgid "Copy Vide_o DVD…"
+#~ msgstr "Kopiraj Vide_o DVD ..."
+
+#~ msgid "Copy (S)VCD…"
+#~ msgstr "_Kopiraj (S)VCD ..."
+
+#~ msgid "Infrared Remote Control"
+#~ msgstr "Infrardeči daljinski upravljalnik"
+
+#~ msgid "Support infrared remote control"
+#~ msgstr "Podpora za infrardeči daljinski upravljalnik"
+
+#~ msgid "Couldn’t initialize lirc."
+#~ msgstr "Ni mogoče začeti programa lirc."
+
+#~ msgid "Couldn’t read lirc configuration."
+#~ msgstr "Ni mogoče prebrati nastavitev lirc."
+
 #~ msgid "org.gnome.Totem"
 #~ msgstr "org.gnome.Totem"
 
@@ -2383,9 +2384,6 @@ msgstr "Nastavi uporabniški dostop do spletišča Vimeo"
 
 #~ msgid "Select Movies or Playlists"
 #~ msgstr "Izberite filme ali sezname predvajanja"
-
-#~ msgid "Add Directory"
-#~ msgstr "Dodaj mapo"
 
 #~ msgid "Add Chapter..."
 #~ msgstr "Dodaj poglavje ..."
