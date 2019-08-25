@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
 "POT-Creation-Date: 2019-07-23 15:50+0000\n"
-"PO-Revision-Date: 2019-02-23 18:19+0900\n"
+"PO-Revision-Date: 2019-08-25 20:35+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -61,12 +61,10 @@ msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
-#, fuzzy
-#| msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr ""
-"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;ビデオ;映像;動画;フィルム;ク"
-"リップ;シリーズ;プレイヤー;テレビ;ディスク;"
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;ビデオ;映像;動画;"
+"フィルム;クリップ;シリーズ;プレイヤー;テレビ;ディスク;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -584,6 +582,8 @@ msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
+"ソースは暗号化されている可能性があるため読み取れません。暗号化された DVD を "
+"libdvdcss なしで再生しようとしていませんか?"
 
 #: src/backend/bacon-video-widget.c:3913
 msgid "The server you are trying to connect to is not known."
@@ -619,11 +619,11 @@ msgstr "動画を読み込めませんでした。"
 
 #: src/backend/bacon-video-widget.c:3958
 msgid "This file is encrypted and cannot be played back."
-msgstr ""
+msgstr "このファイルは暗号化されているため再生できません。"
 
 #: src/backend/bacon-video-widget.c:3964
 msgid "The file you tried to play is an empty file."
-msgstr ""
+msgstr "再生しようとしたファイルは空のファイルです。"
 
 #. should be exactly one missing thing (source or converter)
 #: src/backend/bacon-video-widget.c:3988 src/backend/bacon-video-widget.c:3996
@@ -994,7 +994,7 @@ msgstr "シークする"
 
 #: src/totem-options.c:64
 msgid "Show version information and exit"
-msgstr ""
+msgstr "バージョン情報を表示して終了する"
 
 #: src/totem-options.c:65
 msgid "Movies to play"
@@ -1272,20 +1272,16 @@ msgid "Support additional media player keys"
 msgstr "メディアプレイヤーのキー追加サポート"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
-#, fuzzy
-#| msgid "Add Directory"
 msgid "Open directory"
-msgstr "ディレクトリの追加"
+msgstr "ディレクトリを開く"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:7
-#, fuzzy
-#| msgid "Save a copy of the currently playing movie"
 msgid "Open the directory of the currently playing movie"
-msgstr "現在再生中の動画を複製します"
+msgstr "現在再生中の動画のディレクトリを開きます"
 
 #: src/plugins/open-directory/totem-open-directory.c:189
 msgid "Open Containing Folder"
-msgstr ""
+msgstr "これを含むフォルダーを開く"
 
 #: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Subtitle Downloader"
@@ -1575,12 +1571,10 @@ msgid "0 seconds"
 msgstr "0 秒"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:236
-#, fuzzy, c-format
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
+#, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
-msgstr[0] "%d フレーム/秒"
+msgstr[0] "%0.2f フレーム/秒"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
