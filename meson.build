@@ -3,7 +3,7 @@ project(
   version: '3.34.0',
   license: 'GPL2+ with exception',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.46.0'
+  meson_version: '>= 0.49.0'
 )
 
 totem_version = meson.project_version()
@@ -218,6 +218,13 @@ if get_option('enable-gtk-doc')
 endif
 
 meson.add_install_script('meson_post_install.py')
+
+meson.add_dist_script(
+  find_program('check-news.sh').path(),
+  '@0@'.format(meson.project_version()),
+  'NEWS',
+  'data/appdata/org.gnome.Totem.appdata.xml.in'
+)
 
 message('Totem was configured with the following options:')
 message('** Using the GStreamer-1.0 backend')
