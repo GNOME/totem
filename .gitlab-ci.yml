@@ -35,7 +35,7 @@ flatpak:master:
         APP_ID: "org.gnome.Totem.Devel"
 
 review:
-    extends: .review:
+    extends: .review
     stage: deploy
     dependencies:
         - flatpak
