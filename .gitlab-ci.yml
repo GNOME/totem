@@ -25,7 +25,7 @@ flatpak:master:
     stage: test
     variables:
         # Replace with your manifest path
-        MANIFEST_PATH: "flatpak/org.gnome.Totem.json"
+        MANIFEST_PATH: "flatpak/org.gnome.Totem.Devel.json"
         RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
         # Replace with your application name, as written in the manifest
         FLATPAK_MODULE: "totem"

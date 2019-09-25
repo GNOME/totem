@@ -1,5 +1,5 @@
 install_data(
-  join_paths('scalable', 'org.gnome.Totem.svg'),
+  join_paths('scalable', application_id + '.svg'),
   install_dir: join_paths(totem_datadir, 'icons', 'hicolor', 'scalable', 'apps')
 )
 
