@@ -38,7 +38,7 @@ review:
     extends: .review
     stage: review
     dependencies:
-        - flatpak
+        - flatpak:master
 
 stop_review:
     extends: .stop_review
