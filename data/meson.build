@@ -57,6 +57,7 @@ r = run_command(desktop_sh, mime_type_list, uri_schemes_list)
 
 desktop_conf = configuration_data()
 desktop_conf.set('VERSION', totem_version)
+desktop_conf.set('APPLICATION_ID', application_id)
 desktop_conf.set('MIME_TYPE', r.stdout().strip())
 
 desktop = 'org.gnome.Totem.desktop'
