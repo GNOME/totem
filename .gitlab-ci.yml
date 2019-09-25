@@ -19,7 +19,7 @@ variables:
     BUNDLE: "org.gnome.Totem.Devel.flatpak"
     GIT_SUBMODULE_STRATEGY: normal
 
-flatpak:master:
+flatpak:
     extends: .flatpak
     image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
     stage: test
