@@ -1,11 +1,12 @@
 {
-    "app-id": "org.gnome.Totem",
+    "app-id": "org.gnome.Totem.Devel",
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
     "command": "totem",
     "tags": ["nightly"],
-    "desktop-file-name-prefix": "(Nightly) ",
+    "rename-desktop-file": "org.gnome.Totem.desktop",
+    "desktop-file-name-suffix": " (☢️)",
     "finish-args": [
         /* X11 + XShm access */
         "--share=ipc", "--socket=x11",

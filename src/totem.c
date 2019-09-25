@@ -70,13 +70,13 @@ main (int argc, char **argv)
 
 	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
-	gtk_window_set_default_icon_name ("org.gnome.Totem");
+	gtk_window_set_default_icon_name (APPLICATION_ID);
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
-	g_setenv("PULSE_PROP_application.icon_name", "org.gnome.Totem", TRUE);
+	g_setenv("PULSE_PROP_application.icon_name", APPLICATION_ID, TRUE);
 
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT,
-			      "application-id", "org.gnome.Totem",
+			      "application-id", APPLICATION_ID,
 			      "flags", G_APPLICATION_HANDLES_OPEN,
 			      NULL);
 

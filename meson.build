@@ -41,6 +41,16 @@ totem_debug = get_option('buildtype').contains('debug')
 
 cc = meson.get_compiler('c')
 
+if get_option('profile') == 'development'
+  profile = '.Devel'
+  name_suffix = ' ☢️'
+else
+  profile = ''
+  name_suffix = ''
+endif
+
+application_id = 'org.gnome.Totem@0@'.format(profile)
+
 config_h = configuration_data()
 
 # debug options
@@ -51,6 +61,7 @@ set_defines = [
   # package
   ['PACKAGE', meson.project_name()],
   ['TOTEM_API_VERSION', totem_api_version],
+  ['APPLICATION_ID', application_id],
   ['VERSION', totem_version],
   # i18n
   ['GETTEXT_PACKAGE', meson.project_name()]
@@ -228,6 +239,13 @@ meson.add_dist_script(
 
 message('Totem was configured with the following options:')
 message('** Using the GStreamer-1.0 backend')
+
+str = 'Development build'
+if get_option('profile') == 'development'
+  message('** ' + str + ' enabled')
+else
+  message('   ' + str + ' disabled')
+endif
 
 str = 'Easy codec installation support'
 if have_easy_codec

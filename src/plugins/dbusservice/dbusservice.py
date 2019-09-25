@@ -175,7 +175,7 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                 'CanRaise': True,
                 'HasTrackList': False,
                 'Identity': 'Videos',
-                'DesktopEntry': 'org.gnome.Totem',
+                'DesktopEntry': self.totem.application_id,
                 'SupportedUriSchemes': self.totem.get_supported_uri_schemes (),
                 'SupportedMimeTypes': self.totem.get_supported_content_types (),
             }
