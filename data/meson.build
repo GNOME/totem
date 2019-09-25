@@ -68,7 +68,7 @@ desktop_in = configure_file(
   configuration: desktop_conf
 )
 
-i18n.merge_file (
+desktop_file = i18n.merge_file (
   desktop,
   type: 'desktop',
   input: desktop_in,
@@ -77,6 +77,17 @@ i18n.merge_file (
   install: true,
   install_dir: join_paths(totem_datadir, 'applications')
 )
+# Validate Desktop file
+desktop_file_validate = find_program('desktop-file-validate', required: false)
+if desktop_file_validate.found()
+  test(
+    'validate-desktop',
+    desktop_file_validate,
+    args: [
+      desktop_file.full_path()
+    ]
+  )
+endif
 
 service_conf = configuration_data()
 service_conf.set('bindir', totem_bindir)
@@ -158,6 +169,16 @@ configure_file(
   install_dir: totem_schemadir,
   configuration: schema_conf
 )
+# Validata GSchema
+glib_compile_schemas = find_program('glib-compile-schemas', required: false)
+if glib_compile_schemas.found()
+  test(
+    'validate-gschema', glib_compile_schemas,
+    args: [
+      '--strict', '--dry-run', meson.current_source_dir()
+    ]
+  )
+endif
 
 install_data(
   'totem.convert',
