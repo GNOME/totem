@@ -25,13 +25,13 @@ flatpak:master:
     stage: test
     variables:
         # Replace with your manifest path
-        MANIFEST_PATH: "flatpak/org.gnome.Totem.json"
+        MANIFEST_PATH: "flatpak/org.gnome.Totem.Devel.json"
         RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
         # Replace with your application name, as written in the manifest
         FLATPAK_MODULE: "totem"
         # Make sure to keep this in sync with the Flatpak manifest, all arguments
         # are passed except the config-args because we build it ourselves
-        MESON_ARGS: "-Denable-easy-codec-installation=no"
+        MESON_ARGS: "-Denable-easy-codec-installation=no -Dprofile=development"
         APP_ID: "org.gnome.Totem.Devel"
 
 review:

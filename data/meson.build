@@ -57,6 +57,7 @@ r = run_command(desktop_sh, mime_type_list, uri_schemes_list)
 
 desktop_conf = configuration_data()
 desktop_conf.set('VERSION', totem_version)
+desktop_conf.set('APPLICATION_ID', application_id)
 desktop_conf.set('MIME_TYPE', r.stdout().strip())
 
 desktop = 'org.gnome.Totem.desktop'
@@ -79,11 +80,12 @@ i18n.merge_file (
 
 service_conf = configuration_data()
 service_conf.set('bindir', totem_bindir)
+service_conf.set('application_id', application_id)
 
-service = 'org.gnome.Totem.service'
+service = application_id + '.service'
 
 configure_file(
-  input: service + '.in',
+  input: 'org.gnome.Totem.service.in',
   output: service,
   install: true,
   install_dir: join_paths(totem_datadir, 'dbus-1', 'services'),
