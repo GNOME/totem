@@ -49,7 +49,7 @@ typedef struct _TotemPluginsEnginePrivate{
 	guint garbage_collect_id;
 } _TotemPluginsEnginePrivate;
 
-G_DEFINE_TYPE(TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
+G_DEFINE_TYPE_WITH_PRIVATE (TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
 
 static void totem_plugins_engine_dispose (GObject *object);
 
@@ -67,7 +67,6 @@ totem_plugins_engine_class_init (TotemPluginsEngineClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->dispose = totem_plugins_engine_dispose;
-	g_type_class_add_private (klass, sizeof (TotemPluginsEnginePrivate));
 }
 
 static void
@@ -178,9 +177,7 @@ totem_plugins_engine_shut_down (TotemPluginsEngine *self)
 static void
 totem_plugins_engine_init (TotemPluginsEngine *engine)
 {
-	engine->priv = G_TYPE_INSTANCE_GET_PRIVATE (engine,
-						    TOTEM_TYPE_PLUGINS_ENGINE,
-						    TotemPluginsEnginePrivate);
+	engine->priv = totem_plugins_engine_get_instance_private (engine);
 
 	engine->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 

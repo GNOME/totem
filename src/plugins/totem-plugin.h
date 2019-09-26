@@ -69,6 +69,7 @@ G_BEGIN_DECLS
 					type_name,				\
 					PEAS_TYPE_EXTENSION_BASE,		\
 					0,					\
+					G_ADD_PRIVATE_DYNAMIC(TypeName)		\
 					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
 								       peas_activatable_iface_init) \
 					TYPE_CODE)				\
@@ -119,7 +120,6 @@ G_BEGIN_DECLS
 		object_class->get_property = get_property;			\
 										\
 		g_object_class_override_property (object_class, PROP_OBJECT, "object"); \
-		g_type_class_add_private (klass, sizeof (TypeName##Private));	\
 	}									\
 	static void								\
 	type_name##_class_finalize (TypeName##Class *klass)			\
@@ -128,7 +128,7 @@ G_BEGIN_DECLS
 	static void								\
 	type_name##_init (TypeName *plugin)					\
 	{									\
-		plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin, TYPE_NAME, TypeName##Private); \
+		plugin->priv = type_name##_get_instance_private (plugin);	\
 	}									\
 	G_MODULE_EXPORT void							\
 	peas_register_types (PeasObjectModule *module)				\
