@@ -46,9 +46,7 @@ struct TotemOpenLocationPrivate
 	GtkEntry *uri_entry;
 };
 
-#define TOTEM_OPEN_LOCATION_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationPrivate))
-
-G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
 
 /* GtkBuilder callbacks */
 G_MODULE_EXPORT void uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog);
@@ -56,7 +54,6 @@ G_MODULE_EXPORT void uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog
 static void
 totem_open_location_class_init (TotemOpenLocationClass *klass)
 {
-	g_type_class_add_private (klass, sizeof (TotemOpenLocationPrivate));
 }
 
 static void
@@ -64,7 +61,7 @@ totem_open_location_init (TotemOpenLocation *self)
 {
 	GtkBuilder *builder;
 
-	self->priv = TOTEM_OPEN_LOCATION_GET_PRIVATE (self);
+	self->priv = totem_open_location_get_instance_private (self);
 	builder = totem_interface_load ("uri.ui", FALSE, NULL, self);
 
 	if (builder == NULL)
