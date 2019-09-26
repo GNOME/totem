@@ -47,7 +47,7 @@ struct TotemTimeEntryPrivate {
 	gulong adjustment_changed_signal;
 };
 
-G_DEFINE_TYPE (TotemTimeEntry, totem_time_entry, GTK_TYPE_SPIN_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (TotemTimeEntry, totem_time_entry, GTK_TYPE_SPIN_BUTTON)
 
 static gint64
 totem_string_to_time (const char *time_string)
@@ -76,15 +76,13 @@ totem_time_entry_class_init (TotemTimeEntryClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	g_type_class_add_private (klass, sizeof (TotemTimeEntryPrivate));
-
 	object_class->dispose = dispose;
 }
 
 static void
 totem_time_entry_init (TotemTimeEntry *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_TIME_ENTRY, TotemTimeEntryPrivate);
+	self->priv = totem_time_entry_get_instance_private (self);
 
 	/* Connect to signals */
 	g_signal_connect (self, "output", G_CALLBACK (output_cb), NULL);
