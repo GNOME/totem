@@ -167,6 +167,14 @@ configure_file(
   install_dir: totem_schemadir,
   configuration: schema_conf
 )
+# Validata GSchema
+glib_compile_schemas = find_program('glib-compile-schemas', required: false)
+if glib_compile_schemas.found()
+  test(
+      'validate-gschema', glib_compile_schemas,
+      args: ['--strict', '--dry-run', meson.current_source_dir()]
+      )
+endif
 
 install_data(
   'totem.convert',
