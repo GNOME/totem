@@ -57,7 +57,7 @@ libbacon_video_widget_incs = [
   gst_inc
 ]
 
-libbacon_video_widget_deps = missing_plugins_deps + [
+libbacon_video_widget_deps = [
   gst_dep,
   dependency('gstreamer-base-1.0', version: gst_req_version),
   dependency('gstreamer-plugins-base-1.0', version: gst_req_version),
