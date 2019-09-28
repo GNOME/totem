@@ -27,8 +27,6 @@
 #define GST_USE_UNSTABLE_API 1
 #include <gst/gst.h> /* for gst_registry_update and functions in bacon_video_widget_gst_missing_plugins_blacklist */
 
-#ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
-
 #include "bacon-video-widget.h"
 
 #include <gst/pbutils/pbutils.h>
@@ -385,6 +383,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 		return FALSE;
 	}
 
+#ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 	/* Get the PackageKit session interface proxy and continue with the
 	 * codec installation in the callback */
 	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
@@ -396,6 +395,9 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 	                          g_object_get_data (G_OBJECT (bvw), "missing-plugins-cancellable"),
 	                          on_packagekit_proxy_ready,
 	                          ctx);
+#else /* ENABLE_MISSING_PLUGIN_INSTALLATION */
+	bacon_video_widget_gst_codec_install_context_free (ctx);
+#endif
 
 	/* if we managed to start playing, pause playback, since some install
 	 * wizard should now take over in a second anyway and the user might not
@@ -406,12 +408,9 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 	return TRUE;
 }
 
-#endif /* ENABLE_MISSING_PLUGIN_INSTALLATION */
-
 void
 bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 {
-#ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 	g_signal_connect (G_OBJECT (bvw),
 			"missing-plugins",
 			G_CALLBACK (bacon_video_widget_gst_on_missing_plugins_event),
@@ -420,7 +419,6 @@ bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 	gst_pb_utils_init ();
 
 	GST_INFO ("Set up support for automatic missing plugin installation");
-#endif
 }
 
 void

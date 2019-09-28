@@ -159,17 +159,10 @@ libgd_dep = libgd.get_variable('libgd_dep')
 gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7')
 
 # missing plugins support
-missing_plugins_deps = []
-
 easy_codec_option = get_option('enable-easy-codec-installation')
 have_easy_codec = false
 if easy_codec_option != 'no'
-  if gst_pbutils_dep.found()
-    have_easy_codec = true
-    gio_unix_dep = dependency('gio-unix-2.0')
-  endif
-
-  missing_plugins_deps += [ gst_pbutils_dep, gio_unix_dep ]
+  have_easy_codec = true
 endif
 config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
              description: 'Whether we can and want to do installation of missing plugins')
