@@ -110,6 +110,8 @@ struct _TotemObject {
 	gboolean updating_menu;
 	GList *subtitles_list;
 	GList *languages_list;
+	GtkWidget *languages_submenu;
+	GtkWidget *fs_languages_submenu;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;

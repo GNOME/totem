@@ -213,6 +213,7 @@ totem_object_app_activate (GApplication *app)
 	totem->pause_start = optionstate.pause;
 
 	totem_callback_connect (totem);
+	totem_sublang_setup (totem);
 
 	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
 
