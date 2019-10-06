@@ -419,8 +419,7 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 }
 
 static void
-set_display_pixel_aspect_ratio (GdkScreen *screen,
-				int        monitor,
+set_display_pixel_aspect_ratio (GdkMonitor *monitor,
 				GValue    *value)
 {
   static const gint par[][2] = {
@@ -442,10 +441,10 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
 
   /* first calculate the "real" ratio based on the X values;
    * which is the "physical" w/h divided by the w/h in pixels of the display */
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_monitor_get_geometry (monitor, &rect);
 
-  ratio = (gdouble) (gdk_screen_get_monitor_width_mm (screen, monitor) * rect.height) /
-    (gdk_screen_get_monitor_height_mm (screen, monitor) * rect.width);
+  ratio = (gdouble) (gdk_monitor_get_width_mm (monitor) * rect.height) /
+    (gdk_monitor_get_height_mm (monitor) * rect.width);
 
   GST_DEBUG ("calculated pixel aspect ratio: %f", ratio);
   /* now find the one from par[][2] with the lowest delta to the real one */
@@ -498,15 +497,17 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 
       /* Now try getting display's pixel aspect ratio */
       if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
-	GdkScreen *screen;
+	GdkDisplay *display;
 	GdkWindow *window;
-	int monitor = 0;
+	GdkMonitor *monitor;
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
+	display = gtk_widget_get_display (GTK_WIDGET (bvw));
 	window = gtk_widget_get_window (GTK_WIDGET (bvw));
 	if (window)
-	  monitor = gdk_screen_get_monitor_at_window (screen, window);
-	set_display_pixel_aspect_ratio (screen, monitor, &disp_par);
+	  monitor = gdk_display_get_monitor_at_window (display, window);
+	else
+	  monitor = gdk_display_get_primary_monitor (display);
+	set_display_pixel_aspect_ratio (monitor, &disp_par);
       }
 
       disp_par_n = gst_value_get_fraction_numerator (&disp_par);
