@@ -80,10 +80,11 @@ tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 void
 font_set_cb (GtkFontButton * fb, Totem * totem)
 {
-	const gchar *font;
+	gchar *font;
 
-	font = gtk_font_button_get_font_name (fb);
+	font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER (fb));
 	g_settings_set_string (totem->settings, "subtitle-font", font);
+	g_free (font);
 }
 
 void
@@ -104,7 +105,7 @@ font_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 
 	item = GTK_FONT_BUTTON (POBJ ("font_sel_button"));
 	font = g_settings_get_string (settings, "subtitle-font");
-	gtk_font_button_set_font_name (item, font);
+	gtk_font_chooser_set_font (GTK_FONT_CHOOSER (item), font);
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	g_free (font);
 }
@@ -299,7 +300,7 @@ totem_setup_preferences (Totem *totem)
 				   _("Select Subtitle Font"));
 	font = g_settings_get_string (totem->settings, "subtitle-font");
 	if (*font != '\0') {
-		gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
+		gtk_font_chooser_set_font (GTK_FONT_CHOOSER (item), font);
 		bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	}
 	g_free (font);
