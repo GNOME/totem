@@ -2216,7 +2216,7 @@ totem_object_show_help (TotemObject *totem)
 {
 	GError *error = NULL;
 
-	if (gtk_show_uri (gtk_widget_get_screen (totem->win), "help:totem", gtk_get_current_event_time (), &error) == FALSE) {
+	if (gtk_show_uri_on_window (GTK_WINDOW (totem->win), "help:totem", gtk_get_current_event_time (), &error) == FALSE) {
 		totem_object_show_error (totem, _("Totem could not display the help contents."), error->message);
 		g_error_free (error);
 	}
