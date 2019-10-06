@@ -766,8 +766,10 @@ set_show_cursor (BaconVideoWidget *bvw,
 
   if (show_cursor == FALSE) {
     GdkCursor *cursor;
+    GdkDisplay *display;
 
-    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+    display = gdk_window_get_display (window);
+    cursor = gdk_cursor_new_for_display (display, GDK_BLANK_CURSOR);
     gdk_window_set_cursor (window, cursor);
     g_object_unref (cursor);
   } else {
@@ -1746,17 +1748,20 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     switch (nav_msg_type) {
       case GST_NAVIGATION_MESSAGE_MOUSE_OVER: {
         gint active;
+        GdkWindow *window;
+        GdkDisplay *display;
         if (!gst_navigation_message_parse_mouse_over (msg, &active))
           break;
+        window = gtk_widget_get_window (GTK_WIDGET (bvw));
         if (active) {
           if (bvw->priv->cursor == NULL) {
-            bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
+            display = gdk_window_get_display (window);
+            bvw->priv->cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
           }
         } else {
 	  g_clear_object (&bvw->priv->cursor);
         }
-        gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
-            bvw->priv->cursor);
+        gdk_window_set_cursor (window, bvw->priv->cursor);
         goto done;
       }
       case GST_NAVIGATION_MESSAGE_COMMANDS_CHANGED: {
