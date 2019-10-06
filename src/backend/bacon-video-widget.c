@@ -767,7 +767,7 @@ set_show_cursor (BaconVideoWidget *bvw,
   if (show_cursor == FALSE) {
     GdkCursor *cursor;
 
-    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+    cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_BLANK_CURSOR);
     gdk_window_set_cursor (window, cursor);
     g_object_unref (cursor);
   } else {
@@ -1750,7 +1750,8 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
           break;
         if (active) {
           if (bvw->priv->cursor == NULL) {
-            bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
+            bvw->priv->cursor =
+                gdk_cursor_new_for_display (gdk_display_get_default (), GDK_HAND2);
           }
         } else {
 	  g_clear_object (&bvw->priv->cursor);
