@@ -419,8 +419,7 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 }
 
 static void
-set_display_pixel_aspect_ratio (GdkScreen *screen,
-				int        monitor,
+set_display_pixel_aspect_ratio (GdkMonitor *monitor,
 				GValue    *value)
 {
   static const gint par[][2] = {
@@ -442,10 +441,10 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
 
   /* first calculate the "real" ratio based on the X values;
    * which is the "physical" w/h divided by the w/h in pixels of the display */
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_monitor_get_geometry (monitor, &rect);
 
-  ratio = (gdouble) (gdk_screen_get_monitor_width_mm (screen, monitor) * rect.height) /
-    (gdk_screen_get_monitor_height_mm (screen, monitor) * rect.width);
+  ratio = (gdouble) (gdk_monitor_get_width_mm (monitor) * rect.height) /
+    (gdk_monitor_get_height_mm (monitor) * rect.width);
 
   GST_DEBUG ("calculated pixel aspect ratio: %f", ratio);
   /* now find the one from par[][2] with the lowest delta to the real one */
@@ -498,15 +497,17 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 
       /* Now try getting display's pixel aspect ratio */
       if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
-	GdkScreen *screen;
+	GdkDisplay *display;
 	GdkWindow *window;
-	int monitor = 0;
+	GdkMonitor *monitor;
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
+	display = gtk_widget_get_display (GTK_WIDGET (bvw));
 	window = gtk_widget_get_window (GTK_WIDGET (bvw));
 	if (window)
-	  monitor = gdk_screen_get_monitor_at_window (screen, window);
-	set_display_pixel_aspect_ratio (screen, monitor, &disp_par);
+	  monitor = gdk_display_get_monitor_at_window (display, window);
+	else
+	  monitor = gdk_display_get_primary_monitor (display);
+	set_display_pixel_aspect_ratio (monitor, &disp_par);
       }
 
       disp_par_n = gst_value_get_fraction_numerator (&disp_par);
@@ -766,8 +767,10 @@ set_show_cursor (BaconVideoWidget *bvw,
 
   if (show_cursor == FALSE) {
     GdkCursor *cursor;
+    GdkDisplay *display;
 
-    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+    display = gdk_window_get_display (window);
+    cursor = gdk_cursor_new_for_display (display, GDK_BLANK_CURSOR);
     gdk_window_set_cursor (window, cursor);
     g_object_unref (cursor);
   } else {
@@ -1746,17 +1749,20 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     switch (nav_msg_type) {
       case GST_NAVIGATION_MESSAGE_MOUSE_OVER: {
         gint active;
+        GdkWindow *window;
+        GdkDisplay *display;
         if (!gst_navigation_message_parse_mouse_over (msg, &active))
           break;
+        window = gtk_widget_get_window (GTK_WIDGET (bvw));
         if (active) {
           if (bvw->priv->cursor == NULL) {
-            bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
+            display = gdk_window_get_display (window);
+            bvw->priv->cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
           }
         } else {
 	  g_clear_object (&bvw->priv->cursor);
         }
-        gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
-            bvw->priv->cursor);
+        gdk_window_set_cursor (window, bvw->priv->cursor);
         goto done;
       }
       case GST_NAVIGATION_MESSAGE_COMMANDS_CHANGED: {
