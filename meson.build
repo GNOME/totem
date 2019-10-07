@@ -144,6 +144,10 @@ totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_ve
 clutter_gtk_dep = dependency('clutter-gtk-1.0', version: '>= 1.8.1')
 m_dep = cc.find_library('m', required: true)
 
+grilo_plugins_dep = dependency('grilo-plugins-0.3', version: grilo_req_version,
+                               required: false,
+                               fallback: ['grilo-plugins', 'grilo_plugins_dep'])
+
 libgd = subproject(
   'libgd',
   default_options: [
