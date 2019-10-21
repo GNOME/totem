@@ -48,8 +48,10 @@
 typedef struct {
 	TotemObject       *totem;
 	guint              handler_id_key_press;
+	guint              handler_id_main_page;
 	GSimpleAction     *action;
 	GMenuItem         *submenu_item;
+	gboolean           player_page;
 } TotemVariableRatePluginPrivate;
 
 #define NUM_RATES 6
@@ -161,12 +163,24 @@ change_rate (TotemVariableRatePlugin *pi,
 	g_action_change_state (G_ACTION (priv->action), state);
 }
 
+static void
+on_totem_main_page_notify (GObject *object, GParamSpec *spec, TotemVariableRatePlugin *plugin)
+{
+	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
+	char *main_page;
+
+	g_object_get (pi->priv->totem, "main-page", &main_page, NULL);
+	pi->priv->player_page = (g_strcmp0 (main_page, "player") == 0);
+	g_free (main_page);
+}
+
 static gboolean
 on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemVariableRatePlugin *plugin)
 {
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 
-	if (event->state == 0 ||
+	if (!pi->priv->player_page ||
+	    event->state == 0 ||
 	    event->state & (GDK_CONTROL_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK)) {
 		return FALSE;
 	}
@@ -199,6 +213,12 @@ impl_activate (PeasActivatable *plugin)
 	guint i;
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+
+	/* Cache totem's main page */
+	priv->handler_id_main_page = g_signal_connect (G_OBJECT(priv->totem),
+						       "notify::main-page",
+						       G_CALLBACK (on_totem_main_page_notify),
+						       pi);
 
 	/* Key press handler */
 	window = totem_object_get_main_window (priv->totem);
@@ -243,6 +263,12 @@ impl_deactivate (PeasActivatable *plugin)
 					     priv->handler_id_key_press);
 		priv->handler_id_key_press = 0;
 		g_object_unref (window);
+	}
+
+	if (priv->handler_id_main_page != 0) {
+		g_signal_handler_disconnect (G_OBJECT(priv->totem),
+					     priv->handler_id_main_page);
+		priv->handler_id_main_page = 0;
 	}
 
 	/* Remove the menu */
