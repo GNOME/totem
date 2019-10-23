@@ -76,6 +76,7 @@ gnome.gtkdoc(
   doc_module,
   main_xml: doc_module + '-docs.xml',
   src_dir: join_paths(meson.source_root(), 'src'),
+  gobject_typesfile: join_paths(meson.current_source_dir(), 'totem.types'),
   dependencies: libtotem_dep,
   scan_args: '--ignore-headers=' + ' '.join(private_headers),
   mkdb_args: '--name-space=' + doc_module,
