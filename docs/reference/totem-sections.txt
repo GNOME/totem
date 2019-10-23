@@ -13,6 +13,8 @@ totem_object_play_pause
 totem_object_stop
 totem_object_seek_next
 totem_object_seek_previous
+totem_object_can_seek_next
+totem_object_can_seek_previous
 totem_object_remote_get_setting
 totem_object_remote_set_setting
 totem_object_seek_time
@@ -101,7 +103,6 @@ totem_interface_error_blocking
 totem_interface_error_with_link
 <SUBSECTION Private>
 totem_interface_get_full_path
-totem_interface_get_license
 totem_interface_load
 totem_interface_load_pixbuf
 totem_interface_load_with_full_path
@@ -125,8 +126,10 @@ BaconVideoWidgetClass
 BvwAspectRatio
 BvwAudioOutputType
 BvwDVDEvent
+BvwLangInfo
 BvwMetadataType
 BvwRotation
+BvwTrackType
 BvwVideoProperty
 BvwZoomMode
 BvwError
@@ -152,6 +155,7 @@ bacon_video_widget_get_current_time
 bacon_video_widget_get_deinterlacing
 bacon_video_widget_set_deinterlacing
 bacon_video_widget_get_languages
+bacon_video_widget_lang_info_free
 bacon_video_widget_get_language
 bacon_video_widget_set_language
 bacon_video_widget_set_logo

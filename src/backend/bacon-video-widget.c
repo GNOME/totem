@@ -3463,7 +3463,7 @@ bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
  *
  * Returns a list of #BvwLangInfo for each audio track.
  *
- * Return value: a #GList of #BvwLanginfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
+ * Return value: a #GList of #BvwLangInfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
  **/
 GList *
 bacon_video_widget_get_languages (BaconVideoWidget * bvw)

@@ -401,7 +401,7 @@ typedef struct {
  * BvwTrackType:
  * @BVW_TRACK_TYPE_AUDIO: an audio track
  * @BVW_TRACK_TYPE_SUBTITLE: a subtitle track
- * @BVW_TRACK_TYPE_ANGLE: a video track
+ * @BVW_TRACK_TYPE_VIDEO: a video track
  *
  * A type of media track.
  */
