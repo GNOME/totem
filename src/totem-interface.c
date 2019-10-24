@@ -236,28 +236,6 @@ totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 	return builder;
 }
 
-/**
- * totem_interface_load_pixbuf:
- * @name: the image file name
- *
- * Load the image called @name in the directory given by totem_interface_get_full_path() into a #GdkPixbuf.
- *
- * Return value: (transfer full): the loaded pixbuf, or %NULL
- */
-GdkPixbuf*
-totem_interface_load_pixbuf (const char *name)
-{
-	GdkPixbuf *pix;
-	char *filename;
-
-	filename = totem_interface_get_full_path (name);
-	if (filename == NULL)
-		return NULL;
-	pix = gdk_pixbuf_new_from_file (filename, NULL);
-	g_free (filename);
-	return pix;
-}
-
 char *
 totem_interface_get_full_path (const char *name)
 {

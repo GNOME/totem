@@ -28,7 +28,6 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf	*totem_interface_load_pixbuf	(const char *name);
 char		*totem_interface_get_full_path	(const char *name);
 GtkBuilder	*totem_interface_load		(const char *name,
 						 gboolean fatal,
