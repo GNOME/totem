@@ -813,12 +813,18 @@ search_cb (GrlSource    *source,
 
 	self = TOTEM_GRILO (user_data);
 
-	if (error != NULL &&
-	    g_error_matches (error,
-	                     GRL_CORE_ERROR,
-	                     GRL_CORE_ERROR_OPERATION_CANCELLED) == FALSE) {
-		window = totem_object_get_main_window (self->priv->totem);
-		totem_interface_error (_("Search Error"), error->message, window);
+	if (error != NULL) {
+		if (g_error_matches (error,
+	                             GRL_CORE_ERROR,
+	                             GRL_CORE_ERROR_OPERATION_CANCELLED)) {
+			g_application_unmark_busy (g_application_get_default ());
+			/* Don't zero out self->priv->search_id to avoid a race
+			 * condition with next search. Don't update thumbnails. */
+			return;
+		} else {
+			window = totem_object_get_main_window (self->priv->totem);
+			totem_interface_error (_("Search Error"), error->message, window);
+		}
 	}
 
 	if (media != NULL) {
@@ -840,7 +846,6 @@ search_cb (GrlSource    *source,
 	if (remaining == 0) {
 		g_application_unmark_busy (g_application_get_default ());
 		self->priv->search_id = 0;
-		gtk_widget_set_sensitive (self->priv->search_entry, TRUE);
 		update_search_thumbnails (self);
 	}
 }
@@ -877,7 +882,6 @@ search_more (TotemGrilo *self)
 
 	search_options = get_search_options (self);
 
-	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_page++;
 	self->priv->search_remaining = PAGE_SIZE;
 
@@ -911,9 +915,10 @@ search (TotemGrilo  *self,
 	GrlSource   *source,
 	const gchar *text)
 {
+	g_clear_handle_id (&self->priv->search_id, grl_operation_cancel);
+
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 //	g_hash_table_remove_all (self->priv->cache_thumbnails);
-	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_source = source;
 	g_free (self->priv->search_text);
 	self->priv->search_text = g_strdup (text);
