@@ -20,7 +20,6 @@
  */
 
 #include "totem-search-entry.h"
-#include "libgd/gd-tagged-entry.h"
 
 enum {
 	SIGNAL_ACTIVATE,
@@ -37,9 +36,10 @@ static guint signals[LAST_SIGNAL] = { 0, };
 struct _TotemSearchEntry {
 	GtkBox parent;
 	GtkWidget *entry;
+	GtkWidget *dropdown_button;
+	GtkWidget *label;
 	GtkWidget *popover;
 	GtkWidget *listbox;
-	GdTaggedEntryTag *tag;
 };
 
 G_DEFINE_TYPE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
@@ -49,8 +49,7 @@ totem_search_entry_finalize (GObject *obj)
 {
 	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
 
-	g_clear_object (&self->tag);
-	/* The popover will be destroyed with it parent (us) */
+	/* The popover will be destroyed with its parent (us) */
 
 	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
 }
@@ -65,19 +64,6 @@ entry_activate_cb (GtkEntry *entry,
 	if (text == NULL || *text == '\0')
 		return;
 	g_signal_emit (self, signals[SIGNAL_ACTIVATE], 0);
-}
-
-static void
-tag_clicked_cb (GdTaggedEntry    *entry,
-		GdTaggedEntryTag *tag,
-		TotemSearchEntry *self)
-{
-	cairo_rectangle_int_t rect;
-
-	if (gd_tagged_entry_tag_get_area (tag, &rect)) {
-		gtk_popover_set_pointing_to (GTK_POPOVER (self->popover), &rect);
-		gtk_widget_show (self->popover);
-	}
 }
 
 static void
@@ -98,7 +84,7 @@ listbox_row_activated (GtkListBox    *list_box,
 
 			gtk_widget_set_opacity (check, 1.0);
 			label = g_object_get_data (G_OBJECT (l->data), "label");
-			gd_tagged_entry_tag_set_label (self->tag, label);
+			gtk_label_set_text (GTK_LABEL (self->label), label);
 			g_object_notify (G_OBJECT (self), "selected-id");
 		} else {
 			gtk_widget_set_opacity (check, 0.0);
@@ -141,17 +127,34 @@ popover_closed_cb (GtkPopover       *popover,
 static void
 totem_search_entry_init (TotemSearchEntry *self)
 {
-	GtkWidget *entry;
+	GtkStyleContext *context;
+	GtkWidget *entry, *child, *box;
 
 	/* Entry */
-	entry = GTK_WIDGET (gd_tagged_entry_new ());
-	gd_tagged_entry_set_tag_button_visible (GD_TAGGED_ENTRY (entry), FALSE);
+	entry = GTK_WIDGET (gtk_entry_new ());
 	gtk_box_pack_start (GTK_BOX (self),
 			    entry,
 			    TRUE, TRUE, 0);
-	gtk_widget_show (entry);
 
 	self->entry = entry;
+
+	/* Dropdown button */
+	self->dropdown_button = gtk_menu_button_new ();
+	self->label = gtk_label_new (NULL);
+	child = gtk_bin_get_child (GTK_BIN (self->dropdown_button));
+	g_object_ref (child);
+	gtk_container_remove (GTK_CONTAINER (self->dropdown_button), child);
+	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+	gtk_box_pack_start (GTK_BOX (box), self->label, FALSE, FALSE, 0);
+	gtk_box_pack_end (GTK_BOX (box), child, FALSE, FALSE, 0);
+	gtk_container_add (GTK_CONTAINER (self->dropdown_button), box);
+	gtk_box_pack_end (GTK_BOX (self),
+			  self->dropdown_button,
+			  FALSE, FALSE, 0);
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (self));
+	gtk_style_context_add_class (context, "linked");
+	gtk_widget_show_all (GTK_WIDGET (self));
 
 	/* Popover */
 	self->popover = gtk_popover_new (GTK_WIDGET (self));
@@ -159,6 +162,7 @@ totem_search_entry_init (TotemSearchEntry *self)
 	gtk_popover_set_position (GTK_POPOVER (self->popover), GTK_POS_BOTTOM);
 	g_signal_connect (G_OBJECT (self->popover), "closed",
 			  G_CALLBACK (popover_closed_cb), self);
+	gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->dropdown_button), self->popover);
 
 	self->listbox = gtk_list_box_new ();
 	gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (self->listbox), TRUE);
@@ -170,8 +174,6 @@ totem_search_entry_init (TotemSearchEntry *self)
 			  G_CALLBACK (listbox_row_activated), self);
 
 	/* Connect signals */
-	g_signal_connect (self->entry, "tag-clicked",
-			  G_CALLBACK (tag_clicked_cb), self);
 	g_signal_connect (self->entry, "activate",
 			  G_CALLBACK (entry_activate_cb), self);
 }
@@ -265,12 +267,8 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 
 	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
 
-	if (self->tag == NULL) {
-		self->tag = gd_tagged_entry_tag_new (label);
-		gd_tagged_entry_tag_set_has_close_button (self->tag, FALSE);
-		gd_tagged_entry_insert_tag (GD_TAGGED_ENTRY (self->entry), self->tag, -1);
-		gtk_widget_set_sensitive (GTK_WIDGET (self), TRUE);
-	}
+	gtk_widget_set_sensitive (GTK_WIDGET (self), TRUE);
+	gtk_widget_show (self->label);
 
 	item = gtk_list_box_row_new ();
 	box = padded_label_new (label);
@@ -335,8 +333,7 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 	}
 
 	if (num_items == 0) {
-		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->entry), self->tag);
-		g_clear_object (&self->tag);
+		gtk_widget_hide (self->label);
 		gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
 	}
 }

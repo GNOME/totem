@@ -4,7 +4,6 @@ private_headers = [
   'bacon-time-label.h',
   'bacon-video-widget-gst-missing-plugins.h',
   'bacon-video-widget-properties.h',
-  'gd-tagged-entry.h',
   'icon-helpers.h',
   'screenshot-filename-builder.h',
   'totem-gallery-progress.h',
