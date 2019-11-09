@@ -827,6 +827,13 @@ totem_playlist_init (TotemPlaylist *playlist)
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "cd:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "dvb:");
 	totem_pl_parser_add_ignored_mimetype (playlist->priv->parser, "application/x-trash");
+	totem_pl_parser_add_ignored_mimetype (playlist->priv->parser, "text/html");
+	totem_pl_parser_add_ignored_mimetype (playlist->priv->parser, "application/x-ms-dos-executable");
+	totem_pl_parser_add_ignored_glob (playlist->priv->parser, "*.htm");
+	totem_pl_parser_add_ignored_glob (playlist->priv->parser, "*.html");
+	totem_pl_parser_add_ignored_glob (playlist->priv->parser, "*.nfo");
+	totem_pl_parser_add_ignored_glob (playlist->priv->parser, "*.txt");
+	totem_pl_parser_add_ignored_glob (playlist->priv->parser, "*.exe");
 
 	g_signal_connect (G_OBJECT (playlist->priv->parser),
 			"entry-parsed",
