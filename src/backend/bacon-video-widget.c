@@ -2672,6 +2672,8 @@ bvw_set_http_proxy_on_element (BaconVideoWidget *bvw,
   const char *host, *userinfo;
   guint port;
   char **user_strv;
+  g_autofree char *user = NULL;
+  g_autofree char *password = NULL;
 
   uri = gst_uri_from_string (uri_str);
   if (!uri) {
@@ -2696,9 +2698,12 @@ bvw_set_http_proxy_on_element (BaconVideoWidget *bvw,
     goto finish;
 
   user_strv = g_strsplit (userinfo, ":", 2);
+  user = g_uri_unescape_string (user_strv[0], NULL);
+  password = g_uri_unescape_string (user_strv[1], NULL);
+
   g_object_set (element,
-		"proxy-id", user_strv[0],
-		"proxy-pw", user_strv[1],
+		"proxy-id", user,
+		"proxy-pw", password,
 		NULL);
   g_strfreev (user_strv);
 
