@@ -1,6 +1,6 @@
 # totem ja.po.
 # This file is distributed under the same license as the totem package.
-# Copyright (C) 2002-2019 Free Software Foundation, Inc.
+# Copyright (C) 2002-2020 Free Software Foundation, Inc.
 # James Hashida <khashida@redhat.com>, 2002.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2003-2009.
@@ -12,14 +12,14 @@
 # Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012-2013, 2015.
 # Hajime Taira <htaira@redhat.com>, 2015.
 # Aefgh39622 <aefgh39622@gmail.com>, 2018.
-# sicklylife <translation@sicklylife.jp>, 2019.
+# sicklylife <translation@sicklylife.jp>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
 "POT-Creation-Date: 2019-11-29 21:35+0000\n"
-"PO-Revision-Date: 2019-09-22 18:00+0900\n"
+"PO-Revision-Date: 2020-01-20 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -62,7 +62,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:33
 msgid "The GNOME developers"
-msgstr ""
+msgstr "The GNOME developers"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -117,7 +117,7 @@ msgstr "字幕のフォント"
 
 #: data/org.gnome.totem.gschema.xml.in:40
 msgid "Pango font description for subtitle rendering."
-msgstr "字幕を描画する際に使用するPango形式記述のフォントです。"
+msgstr "字幕を描画する際に使用する Pango 形式記述のフォントです。"
 
 #: data/org.gnome.totem.gschema.xml.in:43
 msgctxt "subtitle-encoding"
@@ -145,14 +145,14 @@ msgstr ""
 
 #: data/org.gnome.totem.gschema.xml.in:60
 msgid "Default location for the “Take Screenshot” dialogs"
-msgstr "“スクリーンショットの取得”ダイアログで表示するデフォルトのフォルダー"
+msgstr "“スクリーンショットを撮る”ダイアログで表示するデフォルトのフォルダー"
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the Pictures "
 "directory."
 msgstr ""
-"“スクリーンショットの取得”ダイアログで表示するデフォルトの場所です。デフォル"
+"“スクリーンショットを撮る”ダイアログで表示するデフォルトの場所です。デフォル"
 "トは画像フォルダーです。"
 
 #: data/org.gnome.totem.gschema.xml.in:65
@@ -175,7 +175,7 @@ msgstr "有効なプラグイン一覧"
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
-msgstr "現在有効(読み込み済みで実行中)であるプラグインの名前の一覧です。"
+msgstr "現在有効 (読み込み済みで実行中) であるプラグインの名前の一覧です。"
 
 #: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
@@ -310,7 +310,7 @@ msgstr "オフラインでも試聴可能にする"
 #: data/shortcuts.ui:35
 msgctxt "shortcut window"
 msgid "Take Screenshot"
-msgstr "スクリーンショットを取得"
+msgstr "スクリーンショットを撮る"
 
 #: data/shortcuts.ui:42
 msgctxt "shortcut window"
@@ -405,12 +405,12 @@ msgstr "60 秒進む"
 #: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Step back one frame"
-msgstr ""
+msgstr "1 フレーム戻る"
 
 #: data/shortcuts.ui:192
 msgctxt "shortcut window"
 msgid "Step forward one frame"
-msgstr ""
+msgstr "1 フレーム進む"
 
 #: data/shortcuts.ui:200 data/shortcuts.ui:248
 msgctxt "shortcut window"
@@ -592,11 +592,11 @@ msgstr ""
 
 #: src/backend/bacon-video-widget.c:3932
 msgid "The server you are trying to connect to is not known."
-msgstr "接続しようとしているサーバーは不明です。"
+msgstr "接続しようとしているサーバーが不明です。"
 
 #: src/backend/bacon-video-widget.c:3935
 msgid "The connection to this server was refused."
-msgstr "このサーバーへの接続は拒否されました。"
+msgstr "このサーバーへの接続が拒否されました。"
 
 #: src/backend/bacon-video-widget.c:3938
 msgid "The specified movie could not be found."
@@ -604,7 +604,7 @@ msgstr "指定した動画は見つかりませんでした。"
 
 #: src/backend/bacon-video-widget.c:3945
 msgid "The server refused access to this file or stream."
-msgstr "サーバーはこのファイルまたはストリームへのアクセスを拒否しました。"
+msgstr "サーバーがこのファイルまたはストリームへのアクセスを拒否しました。"
 
 #: src/backend/bacon-video-widget.c:3951
 msgid "Authentication is required to access this file or stream."
@@ -831,7 +831,7 @@ msgstr "インターフェース (“%s”) を読み込めませんでした: %
 
 #: src/totem-interface.c:179
 msgid "The file does not exist."
-msgstr "ファイルがありません"
+msgstr "ファイルがありません。"
 
 #: src/totem-interface.c:181 src/totem-interface.c:183
 #: src/totem-interface.c:224 src/totem-interface.c:226
@@ -1247,17 +1247,17 @@ msgstr ""
 #: src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "MediaPlayer2オブジェクトは‘%s’インターフェースを実装してません"
+msgstr "MediaPlayer 2 オブジェクトは‘%s’インターフェースを実装してません"
 
 #: src/plugins/dbusservice/dbusservice.py:220
 #, python-format
 msgid "The property ‘%s’ is not writeable."
-msgstr "プロパティー‘%s’は書き込みできません。"
+msgstr "プロパティ‘%s’は書き込みできません。"
 
 #: src/plugins/dbusservice/dbusservice.py:234
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr "MediaPlayer 2オブジェクトの不明なプロパティー‘%s’を要求されました"
+msgstr "MediaPlayer 2 オブジェクトの不明なプロパティー‘%s’を要求されました"
 
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
@@ -1266,7 +1266,7 @@ msgstr "インスタントメッセンジャーのステータス"
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
-"動画を再生している時にインスタントメッセンジャーを離席状態にセットします"
+"動画を再生しているときにインスタントメッセンジャーを離席状態にセットします"
 
 #: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
 msgid "Media Player Keys"
@@ -1316,7 +1316,7 @@ msgstr "OpenSubtitles のウェブサイトにアクセスできませんでし�
 #: src/plugins/opensubtitles/opensubtitles.py:333
 #: src/plugins/opensubtitles/opensubtitles.py:351
 msgid "Could not contact the OpenSubtitles website."
-msgstr "OpenSubtitlesのウェブサイトにアクセスできませんでした。"
+msgstr "OpenSubtitles のウェブサイトにアクセスできませんでした。"
 
 #: src/plugins/opensubtitles/opensubtitles.py:339
 msgid "No results found."
@@ -1349,7 +1349,7 @@ msgstr "字幕を検索中..."
 
 #: src/plugins/opensubtitles/opensubtitles.ui:27
 msgid "Download Movie Subtitles"
-msgstr "動画の字幕のダウンロード"
+msgstr "動画の字幕をダウンロード"
 
 #: src/plugins/opensubtitles/opensubtitles.ui:43
 msgid "Subtitle _language:"
@@ -1542,19 +1542,19 @@ msgstr "0 チャンネル"
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d時間"
+msgstr[0] "%d 時間"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:154
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d分"
+msgstr[0] "%d 分"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:157
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "%d秒"
+msgstr[0] "%d 秒"
 
 #. 5 hours 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:163
@@ -1583,15 +1583,15 @@ msgstr[0] "%0.2f フレーム/秒"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
-msgstr "rpdb2パスワード"
+msgstr "rpdb2 パスワード"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:7
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
-"権限のないリモートアクセスからTotemをデバッグ用rpdb2サーバーを保護するための"
-"パスワード。空の場合は、デフォルトで“totem”を使います。"
+"権限のないリモートアクセスから Totem をデバッグ用 rpdb2 サーバーを保護するた"
+"めのパスワード。空の場合は、デフォルトで“totem”を使用します。"
 
 #: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Python Console"
@@ -1616,7 +1616,7 @@ msgstr "Python デバッガー"
 #: src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
-msgstr "“totem_object”を使って Totem.Object にアクセスできます:\\n%s"
+msgstr "“totem_object”を使用して Totem.Object にアクセスできます:\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
 msgid "Totem Python Console"
@@ -1639,7 +1639,7 @@ msgstr "最近使用したファイル"
 
 #: src/plugins/recent/recent.plugin.desktop.in:7
 msgid "Adds files that have been played to recent files"
-msgstr "最近使ったファイルに再生したファイルを追加します"
+msgstr "最近使用したファイルに再生したファイルを追加します"
 
 #: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Rotation Plugin"
@@ -1667,12 +1667,12 @@ msgstr "現在再生中の動画を複製します"
 
 #: src/plugins/save-file/totem-save-file.c:89
 msgid "The video could not be made available offline."
-msgstr ""
+msgstr "ビデオをオフラインで利用できるようにできませんでした。"
 
 #. translators: “Files” refers to nautilus' name
 #: src/plugins/save-file/totem-save-file.c:91
 msgid "“Files” is not available."
-msgstr "“ファイル”は利用できません。"
+msgstr "“ファイル”が利用できません。"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
@@ -1713,7 +1713,7 @@ msgstr "スクリーンショットの総数:"
 #: src/plugins/screenshot/screenshot-filename-builder.c:145
 #, c-format
 msgid "Screenshot from %s.png"
-msgstr "Screenshot from %s.png"
+msgstr "スクリーンショット %s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
@@ -1721,7 +1721,7 @@ msgstr "Screenshot from %s.png"
 #: src/plugins/screenshot/screenshot-filename-builder.c:152
 #, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "Screenshot from %s - %d.png"
+msgstr "スクリーンショット %s - %d.png"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1733,7 +1733,7 @@ msgstr "ビデオのスクリーンショットやギャラリーを撮ること
 
 #: src/plugins/screenshot/totem-gallery.c:90
 msgid "Save Gallery"
-msgstr "ギャラリーの保存"
+msgstr "ギャラリーを保存"
 
 #: src/plugins/screenshot/totem-gallery.c:97
 msgid "_Save"
@@ -1751,13 +1751,13 @@ msgstr "ギャラリー-%s-%d.jpg"
 #. Set up the window
 #: src/plugins/screenshot/totem-gallery-progress.c:98
 msgid "Creating Gallery…"
-msgstr "ギャラリーの作成中…"
+msgstr "ギャラリーを作成中…"
 
 #. Set the progress label
 #: src/plugins/screenshot/totem-gallery-progress.c:104
 #, c-format
 msgid "Saving gallery as “%s”"
-msgstr "ギャラリー (“%s”) の保存中"
+msgstr "ギャラリー (“%s”) を保存中"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:221
 #: src/plugins/screenshot/totem-screenshot-plugin.c:230
@@ -1774,7 +1774,7 @@ msgstr "スクリーンショットを撮る(_S)"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "ギャラリーの作成(_G)…"
+msgstr "ギャラリーを作成(_G)…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
 #: src/plugins/skipto/totem-skipto.c:216
