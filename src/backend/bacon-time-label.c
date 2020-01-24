@@ -42,11 +42,18 @@ static void
 bacon_time_label_init (BaconTimeLabel *label)
 {
 	char *time_string;
+	PangoAttrList *attrs;
+
 	label->priv = bacon_time_label_get_instance_private (label);
 
 	time_string = totem_time_to_string (0, FALSE, FALSE);
 	gtk_label_set_text (GTK_LABEL (label), time_string);
 	g_free (time_string);
+
+	attrs = pango_attr_list_new ();
+	pango_attr_list_insert (attrs, pango_attr_font_features_new ("tnum=1"));
+	gtk_label_set_attributes (GTK_LABEL (label), attrs);
+	pango_attr_list_unref (attrs);
 
 	label->priv->time = 0;
 	label->priv->length = -1;
