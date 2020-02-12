@@ -260,7 +260,7 @@ class OpenSubtitlesModel:
         self._token = None
 
         try:
-            import locale
+            import locale # pylint: disable=import-outside-toplevel
             (language_code, _) = locale.getlocale ()
             self.lang = LANGUAGES[language_code.split ('_')[0]]
         except (ImportError, IndexError, AttributeError, KeyError):
