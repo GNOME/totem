@@ -159,11 +159,26 @@ time_to_string_text (gint64 msecs)
 
 	if (hour > 0)
 	{
-		/* 5 hours 2 minutes 12 seconds */
-		string = g_strdup_printf (C_("time", "%s %s %s"), hours, mins, secs);
+		if (min > 0 && sec > 0)
+		{
+			/* 5 hours 2 minutes 12 seconds */
+			string = g_strdup_printf (C_("hours minutes seconds", "%s %s %s"), hours, mins, secs);
+		} else if (min > 0) {
+			/* 5 hours 2 minutes */
+			string = g_strdup_printf (C_("hours minutes", "%s %s"), hours, mins);
+		} else {
+			/* 5 hours */
+			string = g_strdup_printf (C_("hours", "%s"), hours);
+		}
 	} else if (min > 0) {
-		/* 2 minutes 12 seconds */
-		string = g_strdup_printf (C_("time", "%s %s"), mins, secs);
+		if (sec > 0)
+		{
+			/* 2 minutes 12 seconds */
+			string = g_strdup_printf (C_("minutes seconds", "%s %s"), mins, secs);
+		} else {
+			/* 2 minutes */
+			string = g_strdup_printf (C_("minutes", "%s"), mins);
+		}
 	} else if (sec > 0) {
 		/* 10 seconds */
 		string = g_strdup (secs);
