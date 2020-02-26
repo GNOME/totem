@@ -172,17 +172,16 @@
             "buildsystem": "meson",
             "config-opts" : [
                 "-Ddocs=false",
-                "-Dfunctional_tests=false",
                 "-Djournal=false",
                 "-Dnetwork_manager=disabled",
                 "-Dstemmer=disabled",
-                "-Dbash_completion=no",
-                "-Dsystemd_user_services=no"
+                "-Dbash_completion=false"
             ],
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/tracker.git"
+                    "url": "https://gitlab.gnome.org/GNOME/tracker.git",
+                    "branch": "tracker-2.3"
                 }
             ]
         },
