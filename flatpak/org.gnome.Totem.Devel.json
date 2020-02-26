@@ -302,7 +302,10 @@
             "name": "totem",
             "buildsystem": "meson",
             /* Keep in sync with .gitlab-ci.yml */
-            "config-opts": ["-Denable-easy-codec-installation=no"],
+            "config-opts": [
+                "-Denable-easy-codec-installation=no",
+                "-Dprofile=development"
+            ],
             "sources": [
                 {
                     "type": "git",
