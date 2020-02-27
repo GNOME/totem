@@ -101,8 +101,8 @@ totem_session_save (Totem *totem)
 
 	file = get_session_file ();
 	if (!totem_playing_dvd (totem->mrl))
-		curr = bacon_video_widget_get_current_time (totem->bvw);
-	totem_playlist_save_session_playlist (totem->playlist, file, curr / 1000);
+		curr = bacon_video_widget_get_current_time (totem->bvw) / 1000;
+	totem_playlist_save_session_playlist (totem->playlist, file, curr);
 }
 
 void
