@@ -315,14 +315,39 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 	return FALSE;
 }
 
+static void
+totem_playlist_save_session_playlist_cb (GObject       *source_object,
+					 GAsyncResult  *res,
+					 gpointer       user_data)
+{
+	g_autoptr(GError) error = NULL;
+	gboolean ret;
+
+	ret = totem_pl_parser_save_finish (TOTEM_PL_PARSER (source_object),
+					   res, &error);
+	if (!ret && !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+		g_warning ("Failed to save the session playlist: %s", error->message);
+}
+
+static void
+totem_playlist_delete_session_playlist_cb (GObject       *source_object,
+					   GAsyncResult  *res,
+					   gpointer       user_data)
+{
+	g_autoptr(GError) error = NULL;
+	gboolean ret;
+
+	ret = g_file_delete_finish (G_FILE (source_object), res, &error);
+	if (!ret && !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+		g_warning ("Failed to delete session playlist: %s", error->message);
+}
+
 void
 totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 				      GFile         *output,
 				      gint64         starttime)
 {
-	TotemPlPlaylist *pl_playlist;
-	GError *error = NULL;
-	gboolean retval;
+	g_autoptr(TotemPlPlaylist) pl_playlist = NULL;
 
 	if (playlist->priv->disable_save_to_disk) {
 		/* On lockdown, we do not touch the disk,
@@ -330,7 +355,7 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 		return;
 	}
 	if (PL_LEN == 0) {
-		g_file_delete (output, NULL, NULL);
+		g_file_delete_async (output, 0, NULL, totem_playlist_delete_session_playlist_cb, NULL);
 		return;
 	}
 
@@ -343,17 +368,14 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 				totem_playlist_save_iter_foreach,
 				pl_playlist);
 
-	retval = totem_pl_parser_save (playlist->priv->parser,
-				       pl_playlist,
-				       output,
-				       NULL, TOTEM_PL_PARSER_XSPF, &error);
-
-	if (retval == FALSE) {
-		g_warning ("Failed to save the session playlist: %s", error->message);
-		g_error_free (error);
-	}
-
-	g_object_unref (pl_playlist);
+	totem_pl_parser_save_async (playlist->priv->parser,
+				    pl_playlist,
+				    output,
+				    NULL,
+				    TOTEM_PL_PARSER_XSPF,
+				    NULL,
+				    totem_playlist_save_session_playlist_cb,
+				    NULL);
 }
 
 static void
