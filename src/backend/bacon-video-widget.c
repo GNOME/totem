@@ -1945,6 +1945,8 @@ bvw_get_http_error_code (GstMessage *err_msg)
     code = 404;
   else if (strstr (dbg, "403") != NULL)
     code = 403;
+  else if (strstr (dbg, "install glib-networking") != NULL)
+    code = 495;
 
 done:
   if (err != NULL)
@@ -3954,6 +3956,12 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   if (http_error_code == 401) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
 			       _("Authentication is required to access this file or stream."));
+    goto done;
+  }
+
+  if (http_error_code == 495) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
+			       _("SSL/TLS support is missing. Check your installation."));
     goto done;
   }
 
