@@ -338,8 +338,11 @@ totem_playlist_delete_session_playlist_cb (GObject       *source_object,
 	gboolean ret;
 
 	ret = g_file_delete_finish (G_FILE (source_object), res, &error);
-	if (!ret && !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+	if (!ret) {
+		if(!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) &&
+		   !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
 		g_warning ("Failed to delete session playlist: %s", error->message);
+	}
 }
 
 void
