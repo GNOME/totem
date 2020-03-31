@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-09-26 11:27+0000\n"
-"PO-Revision-Date: 2020-03-05 19:52+0200\n"
+"POT-Creation-Date: 2020-03-31 11:52+0000\n"
+"PO-Revision-Date: 2020-03-31 20:29+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.07.70\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
@@ -35,35 +35,25 @@ msgid "Play movies"
 msgstr "Програти фільми"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:11
-#| msgid ""
-#| "Videos, also known as Totem, is the official movie player of the GNOME "
-#| "desktop environment. It features a searchable list of local videos, and "
-#| "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-#| "highlights from a number of web sites."
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
 "network video shares (using UPnP/DLNA) and video highlights from a number of "
 "web sites."
 msgstr ""
-"«Відео» — офіційний програвач відеозаписів у стільничному середовищі GNOME."
-" Він надає список локальних відеозаписів, DVD, "
-"оприлюднення відеозаписів у мережі (через UPnP/DLNA) і показ відеозаписів з "
-"декількох сайтів."
+"«Відео» — офіційний програвач відеозаписів у стільничному середовищі GNOME. "
+"Він надає список локальних відеозаписів, DVD, оприлюднення відеозаписів у "
+"мережі (через UPnP/DLNA) і показ відеозаписів з декількох сайтів."
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:17
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, and "
-#| "support for recording DVDs."
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
 "support for recording DVDs."
 msgstr ""
-"«Відео» набув нових можливостей, як-от: засіб отримання субтитрів, можливість"
-" пришвидшення і уповільнення відтворення, створювати галереї знімків з відео"
-" і підтримування "
-"запису DVD."
+"«Відео» набув нових можливостей, як-от: засіб отримання субтитрів, "
+"можливість пришвидшення і уповільнення відтворення, створювати галереї "
+"знімків з відео і підтримування запису DVD."
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:33
 msgid "The GNOME developers"
@@ -71,7 +61,6 @@ msgstr "Розробники GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
-#| msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "Відео;Фільм;Кіно;Кліп;Серія;Програвач;DVD;ТБ;Disc;тотем;Totem;"
 
@@ -186,7 +175,7 @@ msgstr "Показувані каталоги"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Каталоги, які показуються в огляді, типово нічого не показується"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5683
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -572,65 +561,69 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Введіть _адресу файла, який треба відкрити:"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:111
+#: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1994
+#: src/backend/bacon-video-widget.c:2002
 msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
-#: src/backend/bacon-video-widget.c:3912
+#: src/backend/bacon-video-widget.c:3925
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
-"Здається, джерело даних зашифровано — його не можна прочитати. Намагаєтеся"
-" відтворити зашифрований DVD без libdvdcss?"
+"Здається, джерело даних зашифровано — його не можна прочитати. Намагаєтеся "
+"відтворити зашифрований DVD без libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3926
+#: src/backend/bacon-video-widget.c:3939
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, до якого ви намагаєтесь під'єднатись, невідомий."
 
-#: src/backend/bacon-video-widget.c:3929
+#: src/backend/bacon-video-widget.c:3942
 msgid "The connection to this server was refused."
 msgstr "У зв'язку з цим сервером відмовлено."
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3945
 msgid "The specified movie could not be found."
 msgstr "Вказаний фільм неможливо знайти."
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3952
 msgid "The server refused access to this file or stream."
 msgstr "Сервер відмовив у доступі до цього файла або потоку."
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3958
 msgid "Authentication is required to access this file or stream."
 msgstr "Щоб доступитись до цього файла або потоку, потрібно засвідчити право."
 
-#: src/backend/bacon-video-widget.c:3952
+#: src/backend/bacon-video-widget.c:3964
+msgid "SSL/TLS support is missing. Check your installation."
+msgstr ""
+"Не вистачає підтримки SSL/TLS. Перевірте, чи встановлено належні компоненти."
+
+#: src/backend/bacon-video-widget.c:3971
 msgid "You are not allowed to open this file."
 msgstr "Ви не можете відкрити цей файл."
 
-#: src/backend/bacon-video-widget.c:3957
+#: src/backend/bacon-video-widget.c:3976
 msgid "This location is not a valid one."
 msgstr "Ця адреса не є правильною."
 
-#: src/backend/bacon-video-widget.c:3965
+#: src/backend/bacon-video-widget.c:3984
 msgid "The movie could not be read."
 msgstr "Фільм неможливо прочитати."
 
-#: src/backend/bacon-video-widget.c:3971
-#| msgid "Media file could not be played."
+#: src/backend/bacon-video-widget.c:3990
 msgid "This file is encrypted and cannot be played back."
 msgstr "Цей файл зашифровано — його неможливо відтворити."
 
-#: src/backend/bacon-video-widget.c:3977
+#: src/backend/bacon-video-widget.c:3996
 msgid "The file you tried to play is an empty file."
 msgstr "Файл, який ви намагаєтеся відтворити, є порожнім файлом."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4001 src/backend/bacon-video-widget.c:4009
+#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -651,12 +644,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4021
+#: src/backend/bacon-video-widget.c:4040
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Цей потік неможливо програти. Можливо, брандмауер його забороняє."
 
-#: src/backend/bacon-video-widget.c:4024
+#: src/backend/bacon-video-widget.c:4043
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -665,7 +658,7 @@ msgstr ""
 "варто встановити додатки, які надають можливість програвати певні типи "
 "відеозаписів"
 
-#: src/backend/bacon-video-widget.c:4035
+#: src/backend/bacon-video-widget.c:4054
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -673,19 +666,19 @@ msgstr ""
 "Неможливо відтворити цей файл через мережу. Спробуйте спочатку звантажити "
 "його на локальний диск."
 
-#: src/backend/bacon-video-widget.c:5679
+#: src/backend/bacon-video-widget.c:5698
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: src/backend/bacon-video-widget.c:5681
+#: src/backend/bacon-video-widget.c:5700
 msgid "Mono"
 msgstr "Моно"
 
-#: src/backend/bacon-video-widget.c:5969
+#: src/backend/bacon-video-widget.c:5988
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: src/backend/bacon-video-widget.c:6181
+#: src/backend/bacon-video-widget.c:6200
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -693,11 +686,11 @@ msgstr ""
 "Бракує деяких потрібних додатків. Переконайтесь, що програму правильно "
 "встановлено."
 
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:277
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:275
 msgid "Unable to play the file"
 msgstr "Неможливо програти файл"
 
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:280
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:278
 #, c-format
 msgid "%s is required to play the file, but is not installed."
 msgid_plural "%s are required to play the file, but are not installed."
@@ -708,7 +701,7 @@ msgstr[2] "Потрібно %s, щоб програти файл, але їх н
 #. TRANSLATORS: this is a button to launch a codec installer.
 #. * %s will be replaced with the software installer's name, e.g.
 #. * 'Software' in case of gnome-software.
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:288
+#: src/backend/bacon-video-widget-gst-missing-plugins.c:286
 #, c-format
 msgid "_Find in %s"
 msgstr "_Знайти в %s"
@@ -879,12 +872,10 @@ msgid "Search"
 msgstr "Пошук"
 
 #: src/totem-menu.c:408
-#| msgid "Audio Track #%d"
 msgid "Audio Track"
 msgstr "Звукова доріжка"
 
 #: src/totem-menu.c:411
-#| msgid "Subtitles"
 msgid "Subtitle"
 msgstr "Субтитри"
 
@@ -1028,20 +1019,20 @@ msgstr "Неможливо поставити в чергу і замінити 
 msgid "Title %d"
 msgstr "Заголовок %d"
 
-#: src/totem-playlist.c:993
+#: src/totem-playlist.c:1025
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Список композицій «%s» неможливо розібрати. Можливо, його пошкоджено."
 
-#: src/totem-preferences.c:184
+#: src/totem-preferences.c:185
 msgid "Configure Plugins"
 msgstr "Налаштувати додатки"
 
-#: src/totem-preferences.c:187 src/plugins/opensubtitles/opensubtitles.ui:138
+#: src/totem-preferences.c:188 src/plugins/opensubtitles/opensubtitles.ui:138
 msgid "_Close"
 msgstr "_Закрити"
 
-#: src/totem-preferences.c:299
+#: src/totem-preferences.c:300
 msgid "Select Subtitle Font"
 msgstr "Вибір шрифту субтитрів"
 
@@ -1290,12 +1281,10 @@ msgid "Support additional media player keys"
 msgstr "Підтримування додаткових мультимедійних клавіш"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
-#| msgid "Add Directory"
 msgid "Open directory"
 msgstr "Відкрити каталог"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:7
-#| msgid "Save a copy of the currently playing movie"
 msgid "Open the directory of the currently playing movie"
 msgstr "Відкрити каталог із даними поточного відтворюваного фільму"
 
@@ -1481,35 +1470,30 @@ msgstr "Канали:"
 
 #. Title
 #: src/plugins/properties/bacon-video-widget-properties.c:103
-#| msgid "Unknown"
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Artist
 #: src/plugins/properties/bacon-video-widget-properties.c:105
-#| msgid "Unknown"
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Album
 #: src/plugins/properties/bacon-video-widget-properties.c:107
-#| msgid "Unknown"
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Year
 #: src/plugins/properties/bacon-video-widget-properties.c:109
-#| msgid "Unknown"
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:115
-#| msgid "Unknown"
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Невідомий"
@@ -1603,8 +1587,6 @@ msgstr "0 секунд"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:232
 #, c-format
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
 msgstr[0] "%0.2f кадр за секунду"
@@ -1696,7 +1678,6 @@ msgid "Save a copy of the currently playing movie"
 msgstr "Зберегти копію зараз відтворюваного фільму"
 
 #: src/plugins/save-file/totem-save-file.c:89
-#| msgid "The video disc could not be duplicated."
 msgid "The video could not be made available offline."
 msgstr "Відео не вдалося зробити доступним поза інтернетом."
 
@@ -1741,7 +1722,7 @@ msgstr "Кількість знімків екрану:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:147
+#: src/plugins/screenshot/screenshot-filename-builder.c:145
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Знімок%s.png"
@@ -1749,7 +1730,7 @@ msgstr "Знімок%s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:154
+#: src/plugins/screenshot/screenshot-filename-builder.c:152
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Знімок-%s-%d.png"
@@ -1846,37 +1827,37 @@ msgstr "Пере_стрибнути до"
 msgid "_Skip To…"
 msgstr "Пере_стрибнути до…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Звичайна"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
 #, c-format
 msgid "Speed: %s"
 msgstr "Швидкість: %s"
