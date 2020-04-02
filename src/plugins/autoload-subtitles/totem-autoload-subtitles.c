@@ -53,6 +53,7 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_AUTOLOAD_SUBTITLES_PLUGIN, TotemAutoloadSubtitl
 static const char subtitle_ext[][4] = {
 	"sub",
 	"srt",
+	"vtt",
 	"smi",
 	"ssa",
 	"ass",

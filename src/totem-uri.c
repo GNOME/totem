@@ -286,6 +286,7 @@ totem_setup_file_monitoring (Totem *totem)
 static const char subtitle_ext[][4] = {
 	"sub",
 	"srt",
+	"vtt",
 	"smi",
 	"ssa",
 	"ass",
@@ -346,6 +347,7 @@ totem_setup_file_filters (void)
 	gtk_file_filter_set_name (filter_subs, _("Subtitle files"));
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-subrip"); /* *.srt */
 	gtk_file_filter_add_mime_type (filter_subs, "text/plain"); /* *.asc, *.txt */
+	gtk_file_filter_add_mime_type (filter_subs, "text/vtt"); /* *.vtt */
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-sami"); /* *.smi, *.sami */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-microdvd"); /* *.sub */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-mpsub"); /* *.sub */
