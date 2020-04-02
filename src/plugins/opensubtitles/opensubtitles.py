@@ -29,6 +29,7 @@ SUBTITLES_EXT = [
     "asc",
     "txt",
     "sub",
+    "vtt",
     "srt",
     "smi",
     "ssa",
