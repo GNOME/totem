@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
 "POT-Creation-Date: 2020-03-31 18:04+0000\n"
-"PO-Revision-Date: 2020-02-25 00:00+0900\n"
+"PO-Revision-Date: 2020-04-03 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1562,18 +1562,12 @@ msgstr[0] "%d 秒"
 
 #. 5 hours 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:165
-#, fuzzy, c-format
-#| msgctxt "time"
-#| msgid "%s %s %s"
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
 #: src/plugins/properties/bacon-video-widget-properties.c:168
-#, fuzzy, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1583,13 +1577,11 @@ msgstr "%s %s"
 #, c-format
 msgctxt "hours"
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #. 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:177
-#, fuzzy, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
+#, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1599,7 +1591,7 @@ msgstr "%s %s"
 #, c-format
 msgctxt "minutes"
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #. 0 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:187
@@ -1739,20 +1731,22 @@ msgstr "スクリーンショットの総数の計算"
 msgid "Number of screenshots:"
 msgstr "スクリーンショットの総数:"
 
+# ここは英語のままの方がいいようなので「スクリーンショット」から「Screenshot from」に戻しました (sicklylife)
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: src/plugins/screenshot/screenshot-filename-builder.c:145
 #, c-format
 msgid "Screenshot from %s.png"
-msgstr "スクリーンショット %s.png"
+msgstr "Screenshot from %s.png"
 
+# ここは英語のままの方がいいようなので「スクリーンショット」から「Screenshot from」に戻しました (sicklylife)
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: src/plugins/screenshot/screenshot-filename-builder.c:152
 #, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "スクリーンショット %s - %d.png"
+msgstr "Screenshot from %s - %d.png"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
