@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2020-03-31 11:52+0000\n"
-"PO-Revision-Date: 2020-03-31 20:29+0300\n"
+"POT-Creation-Date: 2020-04-05 11:10+0000\n"
+"PO-Revision-Date: 2020-04-06 16:27+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1901 src/totem-object.c:3729
+#: src/totem-grilo.c:1906 src/totem-object.c:3729
 msgid "Videos"
 msgstr "Відео"
 
@@ -812,15 +812,15 @@ msgstr "%s (Сезон %d Серія %d)"
 msgid "Browse Error"
 msgstr "Помилка перегляду"
 
-#: src/totem-grilo.c:821
+#: src/totem-grilo.c:826
 msgid "Search Error"
 msgstr "Помилка пошуку"
 
-#: src/totem-grilo.c:1301
+#: src/totem-grilo.c:1306
 msgid "Local"
 msgstr "Локальне"
 
-#: src/totem-grilo.c:1910
+#: src/totem-grilo.c:1915
 msgid "Channels"
 msgstr "Канали"
 
@@ -1516,7 +1516,7 @@ msgid "N/A"
 msgstr "Н/Д"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:235
+#: src/plugins/properties/bacon-video-widget-properties.c:250
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Н/Д"
@@ -1567,25 +1567,52 @@ msgstr[1] "%d секунди"
 msgstr[2] "%d секунд"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s %s"
+msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
-#. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#. 5 hours 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
+#. 5 hours
+#: src/plugins/properties/bacon-video-widget-properties.c:171
+#, c-format
+msgctxt "hours"
+msgid "%s"
+msgstr "%s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:177
+#, c-format
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "minutes seconds"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:180
+#, c-format
+msgctxt "minutes"
+msgid "%s"
+msgstr "%s"
+
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:187
 msgid "0 seconds"
 msgstr "0 секунд"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:232
+#: src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
