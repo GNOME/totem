@@ -55,6 +55,7 @@ G_MODULE_EXPORT void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist 
 G_MODULE_EXPORT void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_copy_location_action_callback (GtkWidget *button, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_select_subtitle_action_callback (GtkWidget *button, TotemPlaylist *playlist);
+G_MODULE_EXPORT void print_metadata_action_callback (GtkWidget *button, TotemPlaylist *playlist);
 
 
 typedef struct {
@@ -401,6 +402,45 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 			(gpointer) (boolean));
 
 	return retval;
+}
+
+void
+print_metadata_action_callback (GtkWidget *button, TotemPlaylist *playlist)
+{
+	GList *rows, *l;
+	guint i;
+
+	rows = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
+	if (rows == NULL)
+		return;
+
+	i = 0;
+	for (l = rows; l != NULL; l = l->next) {
+		g_autofree char *url = NULL;
+		g_autofree char *sub_url = NULL;
+		gboolean playing;
+		GtkTreeIter iter;
+
+		gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
+		gtk_tree_model_get (playlist->priv->model,
+				    &iter,
+				    PLAYING_COL, &playing,
+				    URI_COL, &url,
+				    SUBTITLE_URI_COL, &sub_url,
+				    -1);
+
+		g_print ("Item #%d\n", i);
+		if (playing)
+			g_print ("\tPlaying\n");
+		g_print ("\tURI: %s\n", url);
+		if (sub_url)
+			g_print ("\tSubtitle URI: %s\n", sub_url);
+
+		gtk_tree_path_free (l->data);
+		i++;
+	}
+
+	g_list_free (rows);
 }
 
 void
