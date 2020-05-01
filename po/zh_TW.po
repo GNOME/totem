@@ -13,20 +13,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.3.92\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-11-27 14:30+0000\n"
-"PO-Revision-Date: 2019-11-27 22:55+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"POT-Creation-Date: 2020-04-13 14:56+0000\n"
+"PO-Revision-Date: 2020-05-02 01:01+0800\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 19.11.80\n"
+"X-Generator: Poedit 2.3\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1901 src/totem-object.c:3729
+#: src/totem-grilo.c:1906 src/totem-object.c:3729
 msgid "Videos"
 msgstr "影片"
 
@@ -173,7 +173,7 @@ msgstr "要顯示的目錄"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "要在瀏覽介面顯示的目錄，預設為沒有"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5689
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
 msgid "Stereo"
 msgstr "立體聲"
 
@@ -466,7 +466,7 @@ msgstr "加入本地端影片(_L)…"
 
 #: data/totem.ui:34
 msgid "Add _Web Video…"
-msgstr "加入網路視訊(_W)..."
+msgstr "加入網路視訊(_W)…"
 
 #: data/totem.ui:51
 msgid "_Aspect Ratio"
@@ -559,62 +559,67 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "請輸入您要開啟檔案的位置(_A):"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:111
+#: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:2000
+#: src/backend/bacon-video-widget.c:2002
 msgid "Password requested for RTSP server"
-msgstr "RTSP 伺服器要求的密碼 "
+msgstr "RTSP 伺服器要求的密碼"
 
-#: src/backend/bacon-video-widget.c:3918
+#: src/backend/bacon-video-widget.c:3925
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
-msgstr "來源似乎有加密且無法讀取。您是否嘗試在沒有 libdvdcss 的情況下播放加密的 DVD？"
+msgstr ""
+"來源似乎有加密且無法讀取。您是否嘗試在沒有 libdvdcss 的情況下播放加密的 DVD？"
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3939
 msgid "The server you are trying to connect to is not known."
 msgstr "您嘗試連線的伺服器不明。"
 
-#: src/backend/bacon-video-widget.c:3935
+#: src/backend/bacon-video-widget.c:3942
 msgid "The connection to this server was refused."
 msgstr "連接到此伺服器被拒絕。"
 
-#: src/backend/bacon-video-widget.c:3938
+#: src/backend/bacon-video-widget.c:3945
 msgid "The specified movie could not be found."
 msgstr "找不到指定的影片。"
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3952
 msgid "The server refused access to this file or stream."
 msgstr "伺服器拒絕存取這個檔案或串流。"
 
-#: src/backend/bacon-video-widget.c:3951
+#: src/backend/bacon-video-widget.c:3958
 msgid "Authentication is required to access this file or stream."
 msgstr "需要核對才能存取這個檔案或串流。"
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3964
+msgid "SSL/TLS support is missing. Check your installation."
+msgstr "缺少 SSL/TLS 支援。請檢查您的安裝。"
+
+#: src/backend/bacon-video-widget.c:3971
 msgid "You are not allowed to open this file."
 msgstr "您不被允許開啟此檔案。"
 
-#: src/backend/bacon-video-widget.c:3963
+#: src/backend/bacon-video-widget.c:3976
 msgid "This location is not a valid one."
 msgstr "此位置不是有效的。"
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3984
 msgid "The movie could not be read."
 msgstr "無法讀取影片。"
 
-#: src/backend/bacon-video-widget.c:3977
+#: src/backend/bacon-video-widget.c:3990
 msgid "This file is encrypted and cannot be played back."
 msgstr "這份檔案有加密且無法回放。"
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:3996
 msgid "The file you tried to play is an empty file."
 msgstr "您試圖播放的是空檔案。"
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4007 src/backend/bacon-video-widget.c:4015
+#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -627,12 +632,12 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4027
+#: src/backend/bacon-video-widget.c:4040
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "無法播放此串流。很可能有防火牆正阻擋播放。"
 
-#: src/backend/bacon-video-widget.c:4030
+#: src/backend/bacon-video-widget.c:4043
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -640,25 +645,25 @@ msgstr ""
 "有音訊或視訊串流沒有處理，因為缺失編解碼器。您可能需要安裝額外的外掛才能播放"
 "某些類型的影片"
 
-#: src/backend/bacon-video-widget.c:4041
+#: src/backend/bacon-video-widget.c:4054
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "無法透過網路播放此檔案。先下載到磁碟後再試。"
 
-#: src/backend/bacon-video-widget.c:5685
+#: src/backend/bacon-video-widget.c:5698
 msgid "Surround"
 msgstr "環繞聲"
 
-#: src/backend/bacon-video-widget.c:5687
+#: src/backend/bacon-video-widget.c:5700
 msgid "Mono"
 msgstr "單聲道"
 
-#: src/backend/bacon-video-widget.c:5975
+#: src/backend/bacon-video-widget.c:5988
 msgid "Media contains no supported video streams."
 msgstr "媒體包含不支援的視訊串流。"
 
-#: src/backend/bacon-video-widget.c:6187
+#: src/backend/bacon-video-widget.c:6200
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -788,15 +793,15 @@ msgstr "%s (第 %d 季，第 %d 集)"
 msgid "Browse Error"
 msgstr "瀏覽器錯誤"
 
-#: src/totem-grilo.c:821
+#: src/totem-grilo.c:826
 msgid "Search Error"
 msgstr "搜尋錯誤"
 
-#: src/totem-grilo.c:1301
+#: src/totem-grilo.c:1306
 msgid "Local"
 msgstr "本地端"
 
-#: src/totem-grilo.c:1910
+#: src/totem-grilo.c:1915
 msgid "Channels"
 msgstr "頻道"
 
@@ -827,7 +832,7 @@ msgstr[0] "%d 已選取"
 #: src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
-msgstr "「%s」的結果 "
+msgstr "「%s」的結果"
 
 #: src/totemmaintoolbar.ui:18
 msgid "Back"
@@ -908,7 +913,7 @@ msgstr "沒有原因。"
 
 #: src/totem-open-location.c:180
 msgid "Add Web Video"
-msgstr "加入網路視訊.."
+msgstr "加入網路視訊"
 
 #: src/totem-open-location.c:182 src/totem-uri.c:399 src/totem-uri.c:460
 #: src/plugins/screenshot/totem-gallery.c:96
@@ -987,12 +992,12 @@ msgstr "不能同時加入佇列和取代"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:231
+#: src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "影片 %d"
 
-#: src/totem-playlist.c:1000
+#: src/totem-playlist.c:1065
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "無法解析播放清單「%s」。它可能已經損壞。"
@@ -1485,7 +1490,7 @@ msgid "N/A"
 msgstr "N/A"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:235
+#: src/plugins/properties/bacon-video-widget-properties.c:250
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/A"
@@ -1530,25 +1535,52 @@ msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s %s"
+msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
-#. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#. 5 hours 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
+#. 5 hours
+#: src/plugins/properties/bacon-video-widget-properties.c:171
+#, c-format
+msgctxt "hours"
+msgid "%s"
+msgstr "%s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:177
+#, c-format
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "minutes seconds"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:180
+#, c-format
+msgctxt "minutes"
+msgid "%s"
+msgstr "%s"
+
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:187
 msgid "0 seconds"
 msgstr "0 秒"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:232
+#: src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
