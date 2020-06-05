@@ -14,24 +14,23 @@
 # tuhaihe <1132321739qq@gmail.com>, 2012.
 # Tong Hui <tonghuix@gmail.com>, 2013, 2014.
 # YunQiang Su <wzssyqa@gmail.com>, 2015.
-# Jeff Bai <jeffbai@aosc.xyz>, 2015, 2016.
+# Mingcong Bai <jeffbai@aosc.xyz>, 2015, 2016, 2018.
 # Dingzhong Chen <wsxy162@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-11 12:25+0000\n"
-"PO-Revision-Date: 2017-03-06 22:42+0800\n"
-"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
+"POT-Creation-Date: 2018-07-26 12:04+0000\n"
+"PO-Revision-Date: 2018-08-11 15:51-0500\n"
+"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.9\n"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
@@ -425,50 +424,60 @@ msgstr "快进 60 秒"
 
 #: ../data/shortcuts.ui.h:23
 msgctxt "shortcut window"
+msgid "Step back one frame"
+msgstr "后退一帧"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "Step forward one frame"
+msgstr "前进一帧"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "快退 5 秒"
 
-#: ../data/shortcuts.ui.h:24
+#: ../data/shortcuts.ui.h:26
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "快进 15 秒"
 
-#: ../data/shortcuts.ui.h:25
+#: ../data/shortcuts.ui.h:27
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "快退 3 分钟"
 
-#: ../data/shortcuts.ui.h:26
+#: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "快进 10 分钟"
 
-#: ../data/shortcuts.ui.h:27
+#: ../data/shortcuts.ui.h:29
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "跳至…"
 
-#: ../data/shortcuts.ui.h:28
+#: ../data/shortcuts.ui.h:30
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD 菜单导航"
 
-#: ../data/shortcuts.ui.h:29
+#: ../data/shortcuts.ui.h:31
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "向上导航"
 
-#: ../data/shortcuts.ui.h:30
+#: ../data/shortcuts.ui.h:32
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "向下导航"
 
-#: ../data/shortcuts.ui.h:31
+#: ../data/shortcuts.ui.h:33
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "向左导航"
 
-#: ../data/shortcuts.ui.h:32
+#: ../data/shortcuts.ui.h:34
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "向右导航"
@@ -1426,18 +1435,18 @@ msgid ""
 "using MPRIS."
 msgstr "发送当前播放的视频通知并允许使用 MPRIS 远程控制。"
 
-#: ../src/plugins/dbusservice/dbusservice.py:208
-#: ../src/plugins/dbusservice/dbusservice.py:236
+#: ../src/plugins/dbusservice/dbusservice.py:207
+#: ../src/plugins/dbusservice/dbusservice.py:235
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "MediaPlayer2 对象未实现“%s”接口"
 
-#: ../src/plugins/dbusservice/dbusservice.py:218
+#: ../src/plugins/dbusservice/dbusservice.py:217
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "“%s”属性不可写。"
 
-#: ../src/plugins/dbusservice/dbusservice.py:231
+#: ../src/plugins/dbusservice/dbusservice.py:230
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "请求了 MediaPlayer 2 对象的未知属性“%s”"
@@ -1506,49 +1515,50 @@ msgstr "为当前播放的影片查找字幕"
 msgid "Brazilian Portuguese"
 msgstr "巴西葡萄牙语"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:182
+#: ../src/plugins/opensubtitles/opensubtitles.py:187
 msgid "Searching for subtitles…"
 msgstr "正在搜索字幕…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:230
-#: ../src/plugins/opensubtitles/opensubtitles.py:611
+#: ../src/plugins/opensubtitles/opensubtitles.py:235
+#: ../src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "正在下载字幕…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:295
+#: ../src/plugins/opensubtitles/opensubtitles.py:300
 msgid "Could not contact the OpenSubtitles website"
 msgstr "无法连接 OpenSubtitles 网站"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:328
-#: ../src/plugins/opensubtitles/opensubtitles.py:346
+#: ../src/plugins/opensubtitles/opensubtitles.py:333
+#: ../src/plugins/opensubtitles/opensubtitles.py:351
 msgid "Could not contact the OpenSubtitles website."
 msgstr "无法连接 OpenSubtitles 网站。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:334
+#: ../src/plugins/opensubtitles/opensubtitles.py:339
 msgid "No results found."
 msgstr "没有找到结果。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:477
+#: ../src/plugins/opensubtitles/opensubtitles.py:482
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Format"
 msgstr "格式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:488
+#: ../src/plugins/opensubtitles/opensubtitles.py:493
 msgid "Rating"
 msgstr "评分"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:528
+#. pylint: disable=no-member
+#: ../src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "下载影片字幕(_D)…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:568
+#: ../src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "正在搜索字幕…"
 
@@ -1616,7 +1626,7 @@ msgstr "Python 控制台(_P)"
 msgid "Python Debugger"
 msgstr "Python 调试器"
 
-#. pylint: disable-msg=E1101
+#. pylint: disable=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
@@ -1626,7 +1636,7 @@ msgstr "您可以通过“totem_object”访问 totem 对象：\\n%s"
 msgid "Totem Python Console"
 msgstr "Totem Python 控制台"
 
-#. pylint: disable-msg=W0613
+#. pylint: disable=W0613
 #: ../src/plugins/pythonconsole/pythonconsole.py:111
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
