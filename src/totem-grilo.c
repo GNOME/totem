@@ -53,6 +53,7 @@
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
 #define MIN_DURATION          5
+#define MAX_DURATION          G_MAXINT
 
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
@@ -752,7 +753,7 @@ browse (TotemGrilo   *self,
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	if (grl_caps_is_key_range_filter (caps, GRL_METADATA_KEY_DURATION))
 		grl_operation_options_set_key_range_filter (default_options,
-							    GRL_METADATA_KEY_DURATION, MIN_DURATION, NULL,
+							    GRL_METADATA_KEY_DURATION, MIN_DURATION, MAX_DURATION,
 							    NULL);
 
 	bud = g_slice_new0 (BrowseUserData);
