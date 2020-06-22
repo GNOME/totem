@@ -47,13 +47,11 @@ UI help by Seth Nickell <snickell@stanford.edu>
 
 Automatic GStreamer codec installation (optional)
 ================================================================
-- requires GStreamer core and gst-plugins-base >= 0.10.12
 - calls (via GStreamer) a predefined external helper script (which is to be
   installed by the distro and can be defined via gst-plugins-base's configure
   script when building gst-plugins-base) with details of missing GStreamer
-  plugins. See
-  http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-libs/html/gst-plugins-base-libs-gstpbutilsinstallplugins.html#id511743
-  for more information on how this all works together.
+  plugins. For more information on how this all works together see
+  https://gstreamer.freedesktop.org/documentation/pbutils/gstpbutilsinstallplugins.html
 
 BUGS
 ====
