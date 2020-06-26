@@ -1,14 +1,14 @@
 # Kazakh translation for totem.
 # Copyright (C) 2010-2017 totem's COPYRIGHT HOLDER
 # This file is distributed under the same license as the totem package.
-# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010-2017.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem gnome-2-32\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-02-12 16:34+0000\n"
-"PO-Revision-Date: 2019-02-16 18:52+0500\n"
+"POT-Creation-Date: 2020-03-31 17:28+0000\n"
+"PO-Revision-Date: 2020-06-26 09:48+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,17,-1,-1\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1892 src/totem-object.c:3658
+#: src/totem-grilo.c:1901 src/totem-object.c:3729
 msgid "Videos"
 msgstr "Видеолар"
 
@@ -52,17 +52,12 @@ msgstr ""
 "алу, ойнатуды баяулату немесе жылдамдату, скриншоттар галереяларын жасау "
 "және DVD-ді қайта кодтау."
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr ""
-"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Видео;Кино;Фильм;Клип;"
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;Видео;Кино;Фильм;Клип;"
 "Телехикая;Ойнатқыш;Диск;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.Totem.desktop.in.in:9
-msgid "org.gnome.Totem"
-msgstr "org.gnome.Totem"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "The brightness of the video"
@@ -86,7 +81,7 @@ msgstr "Қайталау режимі"
 
 #: data/org.gnome.totem.gschema.xml.in:26
 msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr ""
+msgstr "Фильмдерде суреттің жоларалық қасиетін қалдыру керек пе, жоқ па"
 
 #: data/org.gnome.totem.gschema.xml.in:30
 msgid "Type of audio output to use"
@@ -157,17 +152,13 @@ msgstr "Пернетақта жарлықтарын сөндіру керек п
 
 #: data/org.gnome.totem.gschema.xml.in:73
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr ""
+msgstr "Фильм жүктелгенде субтитрларды автожүктеу керек пе"
 
 #: data/org.gnome.totem.gschema.xml.in:77
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr "Фильм жүктелген кезде сыртқы тараулар файлын автожүктеу керек пе"
-
-#: data/org.gnome.totem.gschema.xml.in:81
 msgid "Active plugins list"
 msgstr "Белсенді плагиндер тізімі"
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -175,15 +166,15 @@ msgstr ""
 "Ағымдағы уақытта белсенді болып тұрған плагиндер тізімі (жүктелген және "
 "орындалып тұрған)."
 
-#: data/org.gnome.totem.gschema.xml.in:86
+#: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
 msgstr "Көрсетілетін бумалар"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
-msgstr ""
+msgstr "Шолу интерфейсінде көрсетілетін бумалар, бастапқыда бос"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5644
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5684
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -205,7 +196,7 @@ msgstr "5.1 арналы"
 
 #: data/preferences.ui:28
 msgid "AC3 Passthrough"
-msgstr ""
+msgstr "AC3 Passthrough"
 
 #: data/preferences.ui:80
 msgid "Preferences"
@@ -228,71 +219,63 @@ msgid "_Encoding:"
 msgstr "Код_талуы:"
 
 #: data/preferences.ui:312
-msgid "External Chapters"
-msgstr "Сыртқы тараулар"
-
-#: data/preferences.ui:360
-msgid "Load _chapter files when movie is loaded"
-msgstr "Видео жүктелген кезде _тараулар файлдарын жүктеу"
-
-#: data/preferences.ui:403
 msgid "Plugins"
 msgstr "Плагиндер"
 
-#: data/preferences.ui:429
+#: data/preferences.ui:338
 msgid "Plugins…"
 msgstr "Плагиндер…"
 
-#: data/preferences.ui:464 src/plugins/properties/properties.ui:23
+#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Жалпы"
 
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:498 src/plugins/properties/properties.ui:321
+#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Видео"
 
-#: data/preferences.ui:527
+#: data/preferences.ui:436
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr ""
+msgstr "Жоларалық қасиетін жасыру_ды сөндіру"
 
-#: data/preferences.ui:568
+#: data/preferences.ui:477
 msgid "Color Balance"
 msgstr "Түстер балансы"
 
-#: data/preferences.ui:622
+#: data/preferences.ui:531
 msgid "_Brightness:"
-msgstr "Жар_ықтылығы"
+msgstr "Жар_ықтылығы:"
 
-#: data/preferences.ui:649
+#: data/preferences.ui:558
 msgid "Co_ntrast:"
 msgstr "Ко_нтраст:"
 
-#: data/preferences.ui:715
+#: data/preferences.ui:624
 msgid "Sat_uration:"
 msgstr "Қаң_ықтылығы:"
 
-#: data/preferences.ui:742
+#: data/preferences.ui:651
 msgid "_Hue:"
 msgstr "Р_еңі:"
 
-#: data/preferences.ui:817
+#: data/preferences.ui:726
 msgid "Reset to _Defaults"
 msgstr "Бастапқ_ы түріне келтіру"
 
-#: data/preferences.ui:864
+#: data/preferences.ui:773
 msgid "Display"
 msgstr "Көрініс"
 
-#: data/preferences.ui:905
+#: data/preferences.ui:814
 msgid "Audio Output"
 msgstr "Аудио шығысы"
 
-#: data/preferences.ui:949
+#: data/preferences.ui:858
 msgid "_Audio output type:"
 msgstr "_Аудио шығыс түрі:"
 
-#: data/preferences.ui:1023 src/plugins/properties/properties.ui:512
+#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Аудио"
 
@@ -409,12 +392,12 @@ msgstr "60 секундқа алға өту"
 #: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Step back one frame"
-msgstr ""
+msgstr "Бір кадрға артқа өту"
 
 #: data/shortcuts.ui:192
 msgctxt "shortcut window"
 msgid "Step forward one frame"
-msgstr ""
+msgstr "Бір кадрға алға өту"
 
 #: data/shortcuts.ui:200 data/shortcuts.ui:248
 msgctxt "shortcut window"
@@ -526,7 +509,7 @@ msgstr "Үлкейту"
 
 #: data/totem.ui:86
 msgid "Switch An_gles"
-msgstr ""
+msgstr "_Бұрыштарды ауыстыру"
 
 #: data/totem.ui:93
 msgid "_Languages"
@@ -577,58 +560,64 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Ашу үшін файлдың _адресін енгізіңіз:"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:113
+#: src/backend/bacon-time-label.c:114
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1971
+#: src/backend/bacon-video-widget.c:1995
 msgid "Password requested for RTSP server"
 msgstr "RTSP сервері үшін пароль керек"
 
-#: src/backend/bacon-video-widget.c:3357
-#, c-format
-msgid "Audio Track #%d"
-msgstr "Аудио трек #%d"
+#: src/backend/bacon-video-widget.c:3913
+msgid ""
+"The source seems encrypted and can’t be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"Дереккөз шифрленген сияқты және оны оқу мүмкін емес. Шифрленген DVD-"
+"дискілерді libdvdccs-сыз ойнатуға тырысып жатырсыз ба?"
 
-#: src/backend/bacon-video-widget.c:3359
-#, c-format
-msgid "Subtitle #%d"
-msgstr "Субтитрлар №%d"
-
-#: src/backend/bacon-video-widget.c:3900
+#: src/backend/bacon-video-widget.c:3927
 msgid "The server you are trying to connect to is not known."
 msgstr "Сіз байланысам деген сервер белгісіз."
 
-#: src/backend/bacon-video-widget.c:3903
+#: src/backend/bacon-video-widget.c:3930
 msgid "The connection to this server was refused."
 msgstr "Сервермен байланыст тайдырдырылды."
 
-#: src/backend/bacon-video-widget.c:3906
+#: src/backend/bacon-video-widget.c:3933
 msgid "The specified movie could not be found."
 msgstr "Көрсетілген фильмді табу мүмкін емес."
 
-#: src/backend/bacon-video-widget.c:3913
+#: src/backend/bacon-video-widget.c:3940
 msgid "The server refused access to this file or stream."
 msgstr "Сервер бұл файл немесе ағынға қатынауды тайдырды."
 
-#: src/backend/bacon-video-widget.c:3919
+#: src/backend/bacon-video-widget.c:3946
 msgid "Authentication is required to access this file or stream."
 msgstr "Бұл файл немесе ағынға қатынау үшін аутентификация керек."
 
-#: src/backend/bacon-video-widget.c:3926
+#: src/backend/bacon-video-widget.c:3953
 msgid "You are not allowed to open this file."
 msgstr "Сіздің бұл файлды ашу құқығыңыз жоқ."
 
-#: src/backend/bacon-video-widget.c:3931
+#: src/backend/bacon-video-widget.c:3958
 msgid "This location is not a valid one."
 msgstr "Дұрыс орналасу емес."
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3966
 msgid "The movie could not be read."
 msgstr "Фильмді оқу мүмкін емес."
 
+#: src/backend/bacon-video-widget.c:3972
+msgid "This file is encrypted and cannot be played back."
+msgstr "Бұл файл шифрленген және оны қайта ойнау мүмкін емес."
+
+#: src/backend/bacon-video-widget.c:3978
+msgid "The file you tried to play is an empty file."
+msgstr "Ойнатуға таңдалған файл бос."
+
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3962 src/backend/bacon-video-widget.c:3970
+#: src/backend/bacon-video-widget.c:4002 src/backend/bacon-video-widget.c:4010
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -641,41 +630,46 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3982
+#: src/backend/bacon-video-widget.c:4022
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Ағынды ойнату мүмкін емес. Оны желілік экран блоктауы мүмкін."
 
-#: src/backend/bacon-video-widget.c:3985
+#: src/backend/bacon-video-widget.c:4025
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
 msgstr ""
+"Кодектердің болмауына байланысты аудио немесе видео ағын өңделмейді. "
+"Фильмдердің кейбір түрлерін ойнату үшін қосымша плагиндерді орнату қажет "
+"болуы мүмкін"
 
-#: src/backend/bacon-video-widget.c:3996
+#: src/backend/bacon-video-widget.c:4036
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "Бұл файлды желі арқылы ойнату мүмкін емес. Оны алдымен жүктеп алып көріңіз."
 
-#: src/backend/bacon-video-widget.c:5640
+#: src/backend/bacon-video-widget.c:5680
 msgid "Surround"
 msgstr "Қоршаулы"
 
-#: src/backend/bacon-video-widget.c:5642
+#: src/backend/bacon-video-widget.c:5682
 msgid "Mono"
 msgstr "Моно"
 
-#: src/backend/bacon-video-widget.c:5930
+#: src/backend/bacon-video-widget.c:5970
 msgid "Media contains no supported video streams."
 msgstr "Мультимедиа ішінде қолдауы бар видео ағындары жоқ."
 
-#: src/backend/bacon-video-widget.c:6142
+#: src/backend/bacon-video-widget.c:6182
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
+"Кейбір қажетті плагиндер жоқ. Бағдарламаның дұрыс орнатылғанына көз "
+"жеткізіңіз."
 
 #: src/backend/bacon-video-widget-gst-missing-plugins.c:277
 msgid "Unable to play the file"
@@ -701,7 +695,7 @@ msgstr "%s ішінен _табу"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:63 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -713,7 +707,7 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:71
+#: src/gst/totem-time-helpers.c:78
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
@@ -725,7 +719,7 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:82
+#: src/gst/totem-time-helpers.c:89
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
@@ -737,7 +731,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:91
+#: src/gst/totem-time-helpers.c:98
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -754,6 +748,7 @@ msgstr "Ештеңе таңдамау"
 #: src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr ""
+"Ағыдармен қауіпсіз түрде жасайты библиотекаларды іске қосу мүмкін емес."
 
 #: src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
@@ -801,15 +796,15 @@ msgstr "%s (Сезон %d Эпизод %d)"
 msgid "Browse Error"
 msgstr "Шолу қатесі"
 
-#: src/totem-grilo.c:818
+#: src/totem-grilo.c:821
 msgid "Search Error"
 msgstr "Іздеу қатесі"
 
-#: src/totem-grilo.c:1298
+#: src/totem-grilo.c:1301
 msgid "Local"
 msgstr "Жергілікті"
 
-#: src/totem-grilo.c:1901
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Арналар"
 
@@ -858,56 +853,64 @@ msgstr "Бас тарту"
 msgid "Search"
 msgstr "Іздеу"
 
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:431
+#: src/totem-menu.c:408
+msgid "Audio Track"
+msgstr "Аудио трек"
+
+#: src/totem-menu.c:411
+msgid "Subtitle"
+msgstr "Субтитр"
+
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:531
 msgid "None"
 msgstr "Ешнәрсе"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:435
+#: src/totem-menu.c:535
 msgctxt "Language"
 msgid "Auto"
 msgstr "Авто"
 
-#: src/totem-object.c:1377 src/totem-options.c:51
+#: src/totem-object.c:1391 src/totem-options.c:51
 msgid "Pause"
 msgstr "Аялдату"
 
-#: src/totem-object.c:1382 src/totem-object.c:1392 src/totem-options.c:50
+#: src/totem-object.c:1396 src/totem-object.c:1406 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Ойнату"
 
-#: src/totem-object.c:1459 src/totem-object.c:1486 src/totem-object.c:1978
+#: src/totem-object.c:1473 src/totem-object.c:1501 src/totem-object.c:2048
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem \"%s\" ойната алмады."
 
-#: src/totem-object.c:2149
+#: src/totem-object.c:2220
 msgid "Totem could not display the help contents."
 msgstr "Totem көмекті көрсете алмады."
 
-#: src/totem-object.c:2410
+#: src/totem-object.c:2482
 msgid "An error occurred"
 msgstr "Қате кетті"
 
-#: src/totem-object.c:3756
+#: src/totem-object.c:3827
 msgid "Previous Chapter/Movie"
 msgstr "Алдыңғы тарау/видео"
 
-#: src/totem-object.c:3762
+#: src/totem-object.c:3833
 msgid "Play / Pause"
 msgstr "Ойнату / Аялдату"
 
-#: src/totem-object.c:3768
+#: src/totem-object.c:3839
 msgid "Next Chapter/Movie"
 msgstr "Келесі тарау/видео"
 
-#: src/totem-object.c:3991
+#: src/totem-object.c:4062
 msgid "Totem could not startup."
 msgstr "Totem іске қосыла алмады."
 
-#: src/totem-object.c:3991
+#: src/totem-object.c:4062
 msgid "No reason."
 msgstr "Себебі жоқ."
 
@@ -978,6 +981,10 @@ msgstr "Алмастыру"
 msgid "Seek"
 msgstr "Айналдыру"
 
+#: src/totem-options.c:64
+msgid "Show version information and exit"
+msgstr "Нұсқа ақпаратын шығару және шығу"
+
 #: src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Ойнатылатын видеолар"
@@ -988,12 +995,12 @@ msgstr "Бір уақытта кезекке қосу және алмастыр�
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:231
 #, c-format
 msgid "Title %d"
 msgstr "Атау %d"
 
-#: src/totem-playlist.c:992
+#: src/totem-playlist.c:993
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "\"%s\" ойнату тізімін талдау мүмкін емес. Ол зақымдалған болуы мүмкін."
@@ -1006,7 +1013,7 @@ msgstr "Плагиндерді баптау"
 msgid "_Close"
 msgstr "_Жабу"
 
-#: src/totem-preferences.c:303
+#: src/totem-preferences.c:299
 msgid "Select Subtitle Font"
 msgstr "Субтитрлар қарібін таңдау"
 
@@ -1168,18 +1175,6 @@ msgstr "Батыс"
 msgid "Vietnamese"
 msgstr "Вьетнам"
 
-#. Elapsed / Total Length
-#: src/totem-time-label.c:64
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#. Seeking to Time / Total Length
-#: src/totem-time-label.c:67
-#, c-format
-msgid "Seek to %s / %s"
-msgstr "%s / %s өту"
-
 #: src/totem-uri.c:329
 msgid "All files"
 msgstr "Барлық файлдар"
@@ -1220,41 +1215,6 @@ msgstr "Субтитрларды автожүктеу"
 msgid "Autoloads text subtitles"
 msgstr "Мәтіндік субтитрларды автожүктейді"
 
-#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:6
-msgid "Video Disc Recorder"
-msgstr "Видео дисктерін жазушы"
-
-#: src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.desktop.in:7
-msgid "Records (S)VCDs or video DVDs"
-msgstr "(S)VCD немесе DVD дисктерін жазу"
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:101
-msgid "The video disc could not be duplicated."
-msgstr "Бұл видео дисктің көшірмесін жасау мүмкін емес."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:103
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:249
-msgid "The movie could not be recorded."
-msgstr "Фильмді жазу мүмкін емес."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:139
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:235
-msgid "Unable to write a project."
-msgstr "Жобаны жазу мүмкін емес."
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:375
-msgid "_Create Video Disc…"
-msgstr "Видео дискін жа_сау…"
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:376
-msgid "Copy Vide_o DVD…"
-msgstr "Виде_о DVD көшіру…"
-
-#: src/plugins/brasero-disc-recorder/totem-disc-recorder.c:377
-msgid "Copy (S)VCD…"
-msgstr "(S)VCD көшіру…"
-
 #: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus интерфейсі"
@@ -1264,46 +1224,33 @@ msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
+"Ағымдағы ойнатылып жатқан видео туралы хабарламаларды жіберу және MPRIS "
+"арқылы қашықтан басқаруды рұқсат ету."
 
-#: src/plugins/dbusservice/dbusservice.py:208
-#: src/plugins/dbusservice/dbusservice.py:236
+#: src/plugins/dbusservice/dbusservice.py:210
+#: src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr ""
+msgstr "MediaPlayer2 объекті ‘%s’ интерфейсін жүзеге асырмайды"
 
-#: src/plugins/dbusservice/dbusservice.py:218
+#: src/plugins/dbusservice/dbusservice.py:220
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "‘%s’ қасиетіне жазу мүмкін емес."
 
-#: src/plugins/dbusservice/dbusservice.py:231
+#: src/plugins/dbusservice/dbusservice.py:234
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr ""
+msgstr "MediaPlayer 2 объектінің белгісіз ‘%s’ қасиеті сұралды"
 
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
-msgstr ""
+msgstr "Лездік хабар алмасу күйі"
 
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
-
-#: src/plugins/lirc/lirc.plugin.desktop.in:5
-msgid "Infrared Remote Control"
-msgstr ""
-
-#: src/plugins/lirc/lirc.plugin.desktop.in:6
-msgid "Support infrared remote control"
-msgstr ""
-
-#: src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn’t initialize lirc."
-msgstr ""
-
-#: src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn’t read lirc configuration."
-msgstr ""
+"Фильм ойнап жатқанда лездік хабар алмасу күйін кетіп қалған етіп орнату"
 
 #: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
 msgid "Media Player Keys"
@@ -1312,6 +1259,18 @@ msgstr "Медиа плеер пернелері"
 #: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:6
 msgid "Support additional media player keys"
 msgstr "Қосымша медиа плеер пернелерін қолдау"
+
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+msgid "Open directory"
+msgstr "Буманы ашу"
+
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+msgid "Open the directory of the currently playing movie"
+msgstr "Ағымдағы ойнатылып жатқан фильмнің бумасын ашу"
+
+#: src/plugins/open-directory/totem-open-directory.c:189
+msgid "Open Containing Folder"
+msgstr "Орналасқан бумасын ашу"
 
 #: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Subtitle Downloader"
@@ -1330,7 +1289,7 @@ msgid "Searching for subtitles…"
 msgstr "Субтитрларды іздеу…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:615
+#: src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
 msgstr "Субтитрларды жүктеп алу…"
 
@@ -1347,28 +1306,28 @@ msgstr "OpenSubtitles сайтына байланысу мүмкін емес."
 msgid "No results found."
 msgstr "Нәтижелер жоқ."
 
-#: src/plugins/opensubtitles/opensubtitles.py:482
+#: src/plugins/opensubtitles/opensubtitles.py:486
 msgid "Subtitles"
 msgstr "Субтитрлар"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:488
+#: src/plugins/opensubtitles/opensubtitles.py:492
 msgid "Format"
 msgstr "Пішімі"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:493
+#: src/plugins/opensubtitles/opensubtitles.py:497
 msgid "Rating"
 msgstr "Рейтинг"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:533
+#: src/plugins/opensubtitles/opensubtitles.py:537
 msgid "_Download Movie Subtitles…"
 msgstr "Фильмнің субтитрларын _жүктеп алу…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:572
+#: src/plugins/opensubtitles/opensubtitles.py:576
 msgid "Searching subtitles…"
 msgstr "Субтитрларды іздеу…"
 
@@ -1400,38 +1359,38 @@ msgstr "Видео қасиеттері"
 msgid "Adds movie properties menu item"
 msgstr "Фильм қасиеттері бар мәзір элементін қосады"
 
-#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:152
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:155
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d kbps"
 msgstr "%d КБит/с"
 
-#: src/plugins/properties/totem-movie-properties.c:154
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:155
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
-#: src/plugins/properties/totem-movie-properties.c:168
+#: src/plugins/properties/totem-movie-properties.c:169
 #, c-format
 msgid "%d Hz"
 msgstr "%d Гц"
 
-#: src/plugins/properties/totem-movie-properties.c:168
+#: src/plugins/properties/totem-movie-properties.c:169
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
-#: src/plugins/properties/totem-movie-properties.c:261
+#: src/plugins/properties/totem-movie-properties.c:280
 msgid "Properties"
 msgstr "Қасиеттері"
 
-#: src/plugins/properties/totem-movie-properties.c:286
+#: src/plugins/properties/totem-movie-properties.c:305
 msgid "_Properties"
 msgstr "Қас_иеттері"
 
@@ -1483,122 +1442,128 @@ msgstr "Битрейт:"
 
 #: src/plugins/properties/properties.ui:536
 msgid "Sample rate:"
-msgstr ""
+msgstr "Дискреттеу жиілігі:"
 
 #: src/plugins/properties/properties.ui:646
 msgid "Channels:"
 msgstr "Арналар:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:106
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:108
+#: src/plugins/properties/bacon-video-widget-properties.c:109
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:110
+#: src/plugins/properties/bacon-video-widget-properties.c:111
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:112
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:119
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:124
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:129
-#: src/plugins/properties/bacon-video-widget-properties.c:237
+#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:239
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:133
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:135
+#: src/plugins/properties/bacon-video-widget-properties.c:136
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Қолжетерсіз"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:137
+#: src/plugins/properties/bacon-video-widget-properties.c:138
 msgid "0 Hz"
 msgstr "0 Гц"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:139
+#: src/plugins/properties/bacon-video-widget-properties.c:140
 msgid "0 Channels"
 msgstr "0 арна"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:155
+#: src/plugins/properties/bacon-video-widget-properties.c:156
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d сағат"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:158
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d минут"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:161
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d секунд"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:167
 #, c-format
 msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:169
+#: src/plugins/properties/bacon-video-widget-properties.c:170
 #, c-format
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:176
 msgid "0 seconds"
 msgstr "0 секунд"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:236
+#, c-format
+msgid "%0.2f frame per second"
+msgid_plural "%0.2f frames per second"
+msgstr[0] "%0.2f кадр/сек"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
@@ -1609,6 +1574,8 @@ msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
+"Totem-ді жөндеудің rpdb2 серверін авторизацияланбаған қатынаудан қорғайтын "
+"пароль. Бос болса, \"totem\" бастапқы мәні қолданылады."
 
 #: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Python Console"
@@ -1633,7 +1600,7 @@ msgstr "Python жөндеушісі"
 #: src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
-msgstr ""
+msgstr "Сіз Totem.объектіне \"totem_object\" арқылы қатынай аласыз :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
 msgid "Totem Python Console"
@@ -1646,6 +1613,9 @@ msgid ""
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
+"Сіз ОК басқаннан кейін Тотем сіз winpdb немесе rpdb2-мен қосылғанша күтеді. "
+"Егер DConf бағдарламасында жөндеуші паролін орнатпасаңыз, ол бастапқы "
+"парольді (\"totem\") қолданады."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1686,7 +1656,7 @@ msgstr "Бұл видеоны желіден тыс қолжетерлік жа�
 #. translators: “Files” refers to nautilus' name
 #: src/plugins/save-file/totem-save-file.c:91
 msgid "“Files” is not available."
-msgstr ""
+msgstr "\"Файлдар\" қол жетімді емес."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
@@ -1828,37 +1798,37 @@ msgstr "Дейін а_ттау"
 msgid "_Skip To…"
 msgstr "Дейін а_ттау…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Қалыпты"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
 #, c-format
 msgid "Speed: %s"
 msgstr "Жылдамдығы: %s"
@@ -1869,7 +1839,7 @@ msgstr "Ауыспалы кадрлар жиілігі"
 
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
 msgid "Provides the variable rate menu item"
-msgstr ""
+msgstr "Айнымалы жиілігі мәзір элементін ұсынады"
 
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:6
 msgid "Vimeo"
@@ -1879,6 +1849,51 @@ msgstr "Vimeo"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Vimeo сайты үшін пайдаланушы агентін орнату"
 
+#~ msgid "org.gnome.Totem"
+#~ msgstr "org.gnome.Totem"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded"
+#~ msgstr "Фильм жүктелген кезде сыртқы тараулар файлын автожүктеу керек пе"
+
+#~ msgid "External Chapters"
+#~ msgstr "Сыртқы тараулар"
+
+#~ msgid "Load _chapter files when movie is loaded"
+#~ msgstr "Видео жүктелген кезде _тараулар файлдарын жүктеу"
+
+#~ msgid "Subtitle #%d"
+#~ msgstr "Субтитрлар №%d"
+
+#~ msgid "%s / %s"
+#~ msgstr "%s / %s"
+
+#~ msgid "Seek to %s / %s"
+#~ msgstr "%s / %s өту"
+
+#~ msgid "Video Disc Recorder"
+#~ msgstr "Видео дисктерін жазушы"
+
+#~ msgid "Records (S)VCDs or video DVDs"
+#~ msgstr "(S)VCD немесе DVD дисктерін жазу"
+
+#~ msgid "The video disc could not be duplicated."
+#~ msgstr "Бұл видео дисктің көшірмесін жасау мүмкін емес."
+
+#~ msgid "The movie could not be recorded."
+#~ msgstr "Фильмді жазу мүмкін емес."
+
+#~ msgid "Unable to write a project."
+#~ msgstr "Жобаны жазу мүмкін емес."
+
+#~ msgid "_Create Video Disc…"
+#~ msgstr "Видео дискін жа_сау…"
+
+#~ msgid "Copy Vide_o DVD…"
+#~ msgstr "Виде_о DVD көшіру…"
+
+#~ msgid "Copy (S)VCD…"
+#~ msgstr "(S)VCD көшіру…"
+
 #~ msgid "Video thumbnailer for the file manager"
 #~ msgstr "Файлдық басқарушы үшін видеолардың кіші көріністерін жасау қызметі"
 
@@ -1887,10 +1902,6 @@ msgstr "Vimeo сайты үшін пайдаланушы агентін орна
 
 #~ msgid "_Quit"
 #~ msgstr "_Шығу"
-
-#~ msgid "%d frame per second"
-#~ msgid_plural "%d frames per second"
-#~ msgstr[0] "Секундына %d кадр"
 
 #~ msgid "Audio Preview"
 #~ msgstr "Аудионы алдын-ала қарау"
