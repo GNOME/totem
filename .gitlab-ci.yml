@@ -68,3 +68,29 @@ nightly:
   needs: ['flatpak:master']
   dependencies: ['flatpak:master']
   extends: '.publish_nightly'
+
+flathub beta:
+  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/flat-manager-client'
+  stage: 'deploy'
+  # FIXME: This needs to depend on a app build against a stable runtime if its
+  # going to be on flathub-beta
+  needs: ['flatpak:master']
+  dependencies: ['flatpak:master']
+  script:
+    - tar xf repo.tar
+    - export REPO_TOKEN=$FLATHUB_BETA_TOKEN
+    - flatpak build-update-repo --generate-static-deltas repo/
+    - BUILD_ID=$(flat-manager-client create ${FLAT_MANAGER_URL} ${FLATPAK_REPO})
+    - flat-manager-client push --commit --publish --wait ${BUILD_ID} repo/ || result=$?
+    - flat-manager-client purge ${BUILD_ID}
+    - exit $result
+  variables:
+    FLAT_MANAGER_URL: 'https://hub.flathub.org'
+    FLATPAK_REPO: 'beta'
+  only:
+    refs:
+      - 'master'
+      # FIXME: remove once done testing
+      - 'alatiera/flathub-beta'
+    variables:
+      - $FLATHUB_BETA_TOKEN
