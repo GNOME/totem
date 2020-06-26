@@ -35,4 +35,6 @@ flatpak:master:
         APP_ID: "org.gnome.Totem.Devel"
 
 nightly:
+  needs: ['flatpak:master']
+  dependencies: ['flatpak:master']
   extends: '.publish_nightly'
