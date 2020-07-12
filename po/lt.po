@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-10-23 17:16+0000\n"
-"PO-Revision-Date: 2020-02-02 19:46+0200\n"
+"POT-Creation-Date: 2020-06-26 04:51+0000\n"
+"PO-Revision-Date: 2020-07-12 20:24+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -23,12 +23,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1901 src/totem-object.c:3729
+#: src/totem-grilo.c:1906 src/totem-object.c:3729
 msgid "Videos"
 msgstr "Vaizdo įrašai"
 
@@ -178,7 +178,7 @@ msgstr "Rodomi aplankai"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Naršyklės sąsajoje rodomi aplankai, nenumatyta jokių"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5689
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -566,15 +566,15 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Įveskite norimo atverti failo _adresą:"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:111
+#: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:2000
+#: src/backend/bacon-video-widget.c:2002
 msgid "Password requested for RTSP server"
 msgstr "RTSP serverio slaptažodis"
 
-#: src/backend/bacon-video-widget.c:3918
+#: src/backend/bacon-video-widget.c:3925
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -582,48 +582,52 @@ msgstr ""
 "Atrodo šaltinis yra šifruotas ir negali būti perskaitytas. Ar bandote groti "
 "šifruotą DVD be libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3939
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio mėginate jungtis, nežinomas."
 
-#: src/backend/bacon-video-widget.c:3935
+#: src/backend/bacon-video-widget.c:3942
 msgid "The connection to this server was refused."
 msgstr "Neleista prisijungti prie šio serverio."
 
-#: src/backend/bacon-video-widget.c:3938
+#: src/backend/bacon-video-widget.c:3945
 msgid "The specified movie could not be found."
 msgstr "Nepavyko rasti nurodyto filmo."
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3952
 msgid "The server refused access to this file or stream."
 msgstr "Serveris neleido prieiti prie šio failo ar srauto."
 
-#: src/backend/bacon-video-widget.c:3951
+#: src/backend/bacon-video-widget.c:3958
 msgid "Authentication is required to access this file or stream."
 msgstr "Šiam failui ar srautui priteiti reikia patvirtinti tapatybę."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3964
+msgid "SSL/TLS support is missing. Check your installation."
+msgstr "Trūksta SSL/TLS palaikymo. Patikrinkite savo įdiegtį."
+
+#: src/backend/bacon-video-widget.c:3971
 msgid "You are not allowed to open this file."
 msgstr "Jums neleista atverti šio failo."
 
-#: src/backend/bacon-video-widget.c:3963
+#: src/backend/bacon-video-widget.c:3976
 msgid "This location is not a valid one."
 msgstr "Ši vieta nėra tinkama."
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3984
 msgid "The movie could not be read."
 msgstr "Filmo nepavyko perskaityti."
 
-#: src/backend/bacon-video-widget.c:3977
+#: src/backend/bacon-video-widget.c:3990
 msgid "This file is encrypted and cannot be played back."
 msgstr "Šis failas yra šifruotas ir jo negalima groti."
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:3996
 msgid "The file you tried to play is an empty file."
 msgstr "Failas, kurį bandote groti, yra tuščias."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4007 src/backend/bacon-video-widget.c:4015
+#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -641,12 +645,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4027
+#: src/backend/bacon-video-widget.c:4040
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Šio srauto negalima groti. Gali būti, kad jį blokuoja ugniasienė."
 
-#: src/backend/bacon-video-widget.c:4030
+#: src/backend/bacon-video-widget.c:4043
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -654,7 +658,7 @@ msgstr ""
 "Garso ar vaizdo srautas nėra apdorojamas dėl trūkstamų kodekų. Gali reikėti "
 "įdiegti papildomus įskiepius, kad galėtumėt groti tam tikro tipo filmus"
 
-#: src/backend/bacon-video-widget.c:4041
+#: src/backend/bacon-video-widget.c:4054
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -662,19 +666,19 @@ msgstr ""
 "Nepavyko groti šio failo per tinklą. Pabandykite pirma jį parsisiųsti į "
 "diską."
 
-#: src/backend/bacon-video-widget.c:5685
+#: src/backend/bacon-video-widget.c:5698
 msgid "Surround"
 msgstr "Apsupimas"
 
-#: src/backend/bacon-video-widget.c:5687
+#: src/backend/bacon-video-widget.c:5700
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5975
+#: src/backend/bacon-video-widget.c:5988
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų vaizdo įrašų srautų."
 
-#: src/backend/bacon-video-widget.c:6187
+#: src/backend/bacon-video-widget.c:6200
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -808,15 +812,15 @@ msgstr "%s (sezonas %d, epizodas %d)"
 msgid "Browse Error"
 msgstr "Naršymo klaida"
 
-#: src/totem-grilo.c:821
+#: src/totem-grilo.c:826
 msgid "Search Error"
 msgstr "Paieškos klaida"
 
-#: src/totem-grilo.c:1301
+#: src/totem-grilo.c:1306
 msgid "Local"
 msgstr "Vietinis"
 
-#: src/totem-grilo.c:1910
+#: src/totem-grilo.c:1915
 msgid "Channels"
 msgstr "Kanalai"
 
@@ -1010,12 +1014,12 @@ msgstr "Negalima įdėti į eilę ir pakeisti tuo pačiu metu"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:231
+#: src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "%d įrašas"
 
-#: src/totem-playlist.c:993
+#: src/totem-playlist.c:1065
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Nepavyko perskaityti grojaraščio „%s“. Jis gali būti sugadintas."
@@ -1541,7 +1545,7 @@ msgstr "N/A"
 #  Video Codec
 #  Audio Codec
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:235
+#: src/plugins/properties/bacon-video-widget-properties.c:250
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/A"
@@ -1598,27 +1602,55 @@ msgstr[2] "%d sekundžių"
 
 #  hour:minutes:seconds
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s %s"
+msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #  minutes:seconds
-#. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#. 5 hours 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-msgctxt "time"
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
+#. 5 hours
+#: src/plugins/properties/bacon-video-widget-properties.c:171
+#, c-format
+msgctxt "hours"
+msgid "%s"
+msgstr "%s"
+
+#  minutes:seconds
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:177
+#, c-format
+#| msgctxt "time"
+#| msgid "%s %s"
+msgctxt "minutes seconds"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:180
+#, c-format
+msgctxt "minutes"
+msgid "%s"
+msgstr "%s"
+
 #  0 seconds
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:187
 msgid "0 seconds"
 msgstr "0 sekundžių"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:232
+#: src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1756,7 +1788,7 @@ msgstr "Ekrano nuotraukų skaičius:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:147
+#: src/plugins/screenshot/screenshot-filename-builder.c:145
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Nuotrauka iš %s.png"
@@ -1764,7 +1796,7 @@ msgstr "Nuotrauka iš %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:154
+#: src/plugins/screenshot/screenshot-filename-builder.c:152
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Nuotrauka iš %s - %d.png"
