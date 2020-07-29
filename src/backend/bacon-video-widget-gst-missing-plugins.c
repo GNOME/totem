@@ -25,7 +25,7 @@
 #include "bacon-video-widget-gst-missing-plugins.h"
 
 #define GST_USE_UNSTABLE_API 1
-#include <gst/gst.h> /* for gst_registry_update and functions in bacon_video_widget_gst_missing_plugins_blacklist */
+#include <gst/gst.h> /* for gst_registry_update and functions in bacon_video_widget_gst_missing_plugins_block */
 
 #include "bacon-video-widget.h"
 
@@ -41,8 +41,8 @@
 GST_DEBUG_CATEGORY_EXTERN (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
-/* list of blacklisted detail strings */
-static GList *blacklisted_plugins = NULL;
+/* list of blocked detail strings */
+static GList *blocked_plugins = NULL;
 
 typedef struct
 {
@@ -54,23 +54,23 @@ typedef struct
 TotemCodecInstallContext;
 
 static gboolean
-bacon_video_widget_gst_codec_install_plugin_is_blacklisted (const gchar * detail)
+bacon_video_widget_gst_codec_install_plugin_is_blocked (const gchar * detail)
 {
 	GList *res;
 
-	res = g_list_find_custom (blacklisted_plugins,
+	res = g_list_find_custom (blocked_plugins,
 	                          detail,
 	                          (GCompareFunc) strcmp);
 
-	return (res != NULL);	
+	return (res != NULL);
 }
 
 static void
-bacon_video_widget_gst_codec_install_blacklist_plugin (const gchar * detail)
+bacon_video_widget_gst_codec_install_block_plugin (const gchar * detail)
 {
-	if (!bacon_video_widget_gst_codec_install_plugin_is_blacklisted (detail))
+	if (!bacon_video_widget_gst_codec_install_plugin_is_blocked (detail))
 	{
-		blacklisted_plugins = g_list_prepend (blacklisted_plugins,
+		blocked_plugins = g_list_prepend (blocked_plugins,
 		                                      g_strdup (detail));
 	}
 }
@@ -98,10 +98,10 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 		case GST_INSTALL_PLUGINS_PARTIAL_SUCCESS:
 		case GST_INSTALL_PLUGINS_SUCCESS:
 			{
-				/* blacklist installed plugins too, so that we don't get
+				/* block installed plugins too, so that we don't get
 				 * into endless installer loops in case of inconsistencies */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_block_plugin (*p);
 
 				bacon_video_widget_stop (ctx->bvw);
 				g_message ("Missing plugins installed. Updating plugin registry ...");
@@ -124,11 +124,11 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				/* NOT_FOUND should only be returned if not a single one of the
 				 * requested plugins was found; if we managed to play something
 				 * anyway, we should just continue playing what we have and
-				 * blacklist the requested plugins for this session; if we
-				 * could not play anything we should blacklist them as well,
+				 * block the requested plugins for this session; if we
+				 * could not play anything we should block them as well,
 				 * so the install wizard isn't called again for nothing */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_block_plugin (*p);
 
 				if (ctx->playing)
 				{
@@ -143,10 +143,10 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 			break;
 		case GST_INSTALL_PLUGINS_USER_ABORT:
 			{
-				/* blacklist on user abort, so we show an error next time (or
+				/* block on user abort, so we show an error next time (or
 				 * just play what we can) instead of calling the installer */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_block_plugin (*p);
 
 				if (ctx->playing) {
 					bacon_video_widget_play (ctx->bvw, NULL);
@@ -360,7 +360,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 
 	for (i = 0; i < num; ++i)
 	{
-		if (bacon_video_widget_gst_codec_install_plugin_is_blacklisted (ctx->details[i]))
+		if (bacon_video_widget_gst_codec_install_plugin_is_blocked (ctx->details[i]))
 		{
 			g_message ("Missing plugin: %s (ignoring)", ctx->details[i]);
 			g_free (ctx->details[i]);
@@ -378,7 +378,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 
 	if (num == 0)
 	{
-		g_message ("All missing plugins are blacklisted, doing nothing");
+		g_message ("All missing plugins are blocked, doing nothing");
 		bacon_video_widget_gst_codec_install_context_free (ctx);
 		return FALSE;
 	}
@@ -422,12 +422,12 @@ bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 }
 
 void
-bacon_video_widget_gst_missing_plugins_blacklist (void)
+bacon_video_widget_gst_missing_plugins_block (void)
 {
 	struct {
 		const char *name;
 		gboolean remove;
-	} blacklisted_elements[] = {
+	} blocked_elements[] = {
 		{ "ffdemux_flv", 0 },
 		{ "avdemux_flv", 0 },
 		{ "dvdreadsrc" , 1 }
@@ -437,17 +437,17 @@ bacon_video_widget_gst_missing_plugins_blacklist (void)
 
 	registry = gst_registry_get ();
 
-	for (i = 0; i < G_N_ELEMENTS (blacklisted_elements); ++i) {
+	for (i = 0; i < G_N_ELEMENTS (blocked_elements); ++i) {
 		GstPluginFeature *feature;
 
 		feature = gst_registry_find_feature (registry,
-						     blacklisted_elements[i].name,
+						     blocked_elements[i].name,
 						     GST_TYPE_ELEMENT_FACTORY);
 
 		if (!feature)
 			continue;
 
-		if (blacklisted_elements[i].remove)
+		if (blocked_elements[i].remove)
 			gst_registry_remove_feature (registry, feature);
 		else
 			gst_plugin_feature_set_rank (feature, GST_RANK_NONE);

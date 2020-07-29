@@ -1533,7 +1533,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   priv->busy_popup_ht = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
-  bacon_video_widget_gst_missing_plugins_blacklist ();
+  bacon_video_widget_gst_missing_plugins_block ();
 }
 
 static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
