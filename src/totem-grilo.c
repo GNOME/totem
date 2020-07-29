@@ -192,7 +192,7 @@ strv_has_prefix (const char * const *strv,
 }
 
 static gboolean
-source_is_blacklisted (GrlSource *source)
+source_is_blocked (GrlSource *source)
 {
 	const char *id;
 	const char * const sources[] = {
@@ -210,7 +210,7 @@ source_is_blacklisted (GrlSource *source)
 }
 
 static gboolean
-source_is_browse_blacklisted (GrlSource *source)
+source_is_browse_blocked (GrlSource *source)
 {
 	const char *id;
 	const char * const sources[] = {
@@ -226,7 +226,7 @@ source_is_browse_blacklisted (GrlSource *source)
 }
 
 static gboolean
-source_is_search_blacklisted (GrlSource *source)
+source_is_search_blocked (GrlSource *source)
 {
 	const char *id;
 	const char * const sources[] = {
@@ -1286,7 +1286,7 @@ source_added_cb (GrlRegistry *registry,
 	if (self->priv->plugins_activated == FALSE)
 		return;
 
-	if (source_is_blacklisted (source) ||
+	if (source_is_blocked (source) ||
 	    source_is_forbidden (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
 		grl_registry_unregister_source (registry,
@@ -1317,7 +1317,7 @@ source_added_cb (GrlRegistry *registry,
 			/* https://gitlab.gnome.org/GNOME/grilo-plugins/merge_requests/29 */
 			if (g_str_equal (id, "grl-tracker-source") == FALSE)
 				monitor = TRUE;
-		} else if (!source_is_browse_blacklisted (source)) {
+		} else if (!source_is_browse_blocked (source)) {
 			const GdkPixbuf *icon;
 
 			icon = totem_grilo_get_channel_icon ();
@@ -1343,7 +1343,7 @@ source_added_cb (GrlRegistry *registry,
 		}
 	}
 	if ((ops & GRL_OP_SEARCH) &&
-	    !source_is_search_blacklisted (source)) {
+	    !source_is_search_blocked (source)) {
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
 					       grl_source_get_id (source),
 					       name,
