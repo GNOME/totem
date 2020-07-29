@@ -78,7 +78,7 @@ void
 totem_gst_disable_display_decoders (void)
 {
 	GstRegistry *registry;
-	const char *blacklisted_plugins[] = {
+	const char *blocked_plugins[] = {
 	  "bmcdec",
 	  "vaapi",
 	  "video4linux2"
@@ -91,10 +91,10 @@ totem_gst_disable_display_decoders (void)
 	 * https://bugzilla.gnome.org/show_bug.cgi?id=749605 */
 	registry = gst_registry_get ();
 
-	for (i = 0; i < G_N_ELEMENTS (blacklisted_plugins); i++) {
+	for (i = 0; i < G_N_ELEMENTS (blocked_plugins); i++) {
 		GstPlugin *plugin =
 			gst_registry_find_plugin (registry,
-						  blacklisted_plugins[i]);
+						  blocked_plugins[i]);
 		if (plugin)
 			gst_registry_remove_plugin (registry, plugin);
 	}
