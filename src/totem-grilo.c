@@ -67,6 +67,7 @@ struct _TotemGriloPrivate {
 
 	gboolean plugins_activated;
 
+	GrlSource *tracker_src;
 	GrlSource *local_metadata_src;
 	GrlSource *title_parsing_src;
 	GrlSource *metadata_store_src;
@@ -247,6 +248,7 @@ source_is_recent (GrlSource *source)
 	const char *id;
 	const char * const sources[] = {
 		"grl-tracker-source",
+		"grl-tracker3-source",
 		"grl-optical-media",
 		"grl-bookmarks",
 		NULL
@@ -612,7 +614,8 @@ get_source_priority (GrlSource *source)
 		return 100;
 	if (g_str_equal (id, "grl-bookmarks"))
 		return 75;
-	if (g_str_equal (id, "grl-tracker-source"))
+	if (g_str_equal (id, "grl-tracker-source") ||
+	    g_str_equal (id, "grl-tracker3-source"))
 		return 50;
 	if (g_str_has_prefix (id, "grl-upnp-") ||
 	    g_str_has_prefix (id, "grl-dleyna-"))
@@ -1283,6 +1286,9 @@ source_added_cb (GrlRegistry *registry,
 		self->priv->metadata_store_src = source;
 	else if (g_str_equal (id, "grl-bookmarks"))
 		self->priv->bookmarks_src = source;
+	else if (g_str_equal (id, "grl-tracker-source") ||
+		 g_str_equal (id, "grl-tracker3-source"))
+		self->priv->tracker_src = source;
 
 	if (self->priv->plugins_activated == FALSE)
 		return;
@@ -1303,7 +1309,8 @@ source_added_cb (GrlRegistry *registry,
 	}
 
 	/* The local search source */
-	if (g_str_equal (id, "grl-tracker-source"))
+	if (g_str_equal (id, "grl-tracker-source") ||
+	    g_str_equal (id, "grl-tracker3-source"))
 		name = _("Local");
 	else
 		name = grl_source_get_name (source);
@@ -1951,7 +1958,7 @@ search_mode_changed (GObject          *gobject,
 		/* Try to guess which source should be used for search */
 		model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
 		if (model == self->priv->recent_sort_model) {
-			id = "grl-tracker-source";
+			id = grl_source_get_id (self->priv->tracker_src);
 			self->priv->last_page = g_strdup ("recent");
 		} else {
 			GtkTreeIter iter;
