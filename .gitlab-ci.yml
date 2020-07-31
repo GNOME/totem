@@ -33,14 +33,12 @@ variables:
       libpeas-devel
       pygobject3-devel
       python3-typed_ast
-      https://kojipkgs.fedoraproject.org//packages/python-lazy-object-proxy/1.4.3/1.fc31/x86_64/python3-lazy-object-proxy-1.4.3-1.fc31.x86_64.rpm
       pylint
       python3-devel
       totem-pl-parser-devel
       flatpak-builder
       xorg-x11-server-Xvfb
-      https://kojipkgs.fedoraproject.org//packages/totem-pl-parser/3.26.5/1.fc33/x86_64/totem-pl-parser-3.26.5-1.fc33.x86_64.rpm
-      https://kojipkgs.fedoraproject.org//packages/totem-pl-parser/3.26.5/1.fc33/x86_64/totem-pl-parser-devel-3.26.5-1.fc33.x86_64.rpm
+      totem-pl-parser-devel
 
 build-fedora:
   image: fedora:latest
