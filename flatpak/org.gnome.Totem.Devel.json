@@ -18,9 +18,6 @@
         "--share=network",
         /* Online accounts support */
         "--talk-name=org.gnome.OnlineAccounts",
-        /* Tracker */
-        "--talk-name=org.freedesktop.Tracker1",
-        "--env=TRACKER_SPARQL_BACKEND=bus",
         /* XXX This sucks */
         "--filesystem=home",
         /* Avahi */
@@ -163,25 +160,6 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gom.git"
-                }
-            ]
-        },
-        {
-            "name": "tracker",
-            "cleanup": [ "/bin", "/etc", "/libexec" ],
-            "buildsystem": "meson",
-            "config-opts" : [
-                "-Ddocs=false",
-                "-Djournal=false",
-                "-Dnetwork_manager=disabled",
-                "-Dstemmer=disabled",
-                "-Dbash_completion=false"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/tracker.git",
-                    "branch": "tracker-2.3"
                 }
             ]
         },
