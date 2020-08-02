@@ -1,0 +1,11 @@
+diff --git a/src/totem-grilo.conf b/src/totem-grilo.conf
+index dd9c9f0e5..f419a8f05 100644
+--- a/src/totem-grilo.conf
++++ b/src/totem-grilo.conf
+@@ -23,3 +23,6 @@ xlarge          = true
+ # GStreamer does not support VCDs:
+ # https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/merge_requests/203
+ ignored-scheme=vcd
++
++[grl-tracker3]
++miner-service=org.gnome.Totem.Devel.Tracker3.Miner.Files

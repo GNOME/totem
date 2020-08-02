@@ -164,6 +164,24 @@
             ]
         },
         {
+            "name": "tracker-miners",
+            "cleanup": [ "/bin", "/etc", "/share/dbus-1/services" ],
+            "buildsystem": "meson",
+            "config-opts" : [
+                "-Dman=false",
+                "-Dminer_fs=true",
+                "-Dminer_rss=false",
+                "-Dsystemd_user_services=false",
+                "-Dwriteback=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/tracker-miners.git"
+                }
+            ]
+        },
+        {
             "name": "libmediaart",
             "cleanup": [ "/bin", "/etc", "/libexec" ],
             "config-opts": [ "--disable-qt" ],
@@ -211,8 +229,8 @@
                 "-Denable-lua-factory=yes",
                 "-Denable-metadata-store=yes",
                 "-Denable-vimeo=yes",
-                "-Denable-tracker=yes",
-                "-Denable-tracker3=no",
+                "-Denable-tracker=no",
+                "-Denable-tracker3=yes",
                 "-Denable-local-metadata=yes",
                 "-Denable-dleyna=yes",
                 "-Denable-thetvdb=yes",
@@ -285,10 +303,23 @@
                 "-Denable-easy-codec-installation=no",
                 "-Dprofile=development"
             ],
+            "post-install": [
+                "install --mode=644 -D --target-directory=/app/share/tracker3/domain-ontologies ../org.gnome.Totem.Devel.domain.rule",
+                "install --mode=644 -D --target-directory=/app/share/dbus-1/services ../org.gnome.Totem.Devel.Tracker3.Miner.Files.service",
+                "install --mode=644 -D --target-directory=/app/share/dbus-1/services ../org.gnome.Totem.Devel.Tracker3.Miner.Extract.service"
+            ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/totem.git"
+                },
+                {
+                    "type": "dir",
+                    "path": "./tracker"
+                },
+                {
+                    "type": "patch",
+                    "path": "tracker-miner-service-appid.patch"
                 }
             ]
         }

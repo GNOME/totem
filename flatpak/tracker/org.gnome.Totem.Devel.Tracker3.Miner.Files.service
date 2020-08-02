@@ -1,0 +1,7 @@
+[D-BUS Service]
+Name=org.gnome.Totem.Devel.Tracker3.Miner.Files
+Exec=/app/libexec/tracker-miner-fs-3 --domain-ontology /app/share/tracker3/domain-ontologies/org.gnome.Totem.Devel.domain.rule --initial-sleep 0
+
+# Miner details needed for tracker-control
+Path=/org/freedesktop/Tracker3/Miner/Files
+NameSuffix=Miner.Files
