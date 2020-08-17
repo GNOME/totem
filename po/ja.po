@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2020-03-31 18:04+0000\n"
+"POT-Creation-Date: 2020-07-18 15:35+0000\n"
 "PO-Revision-Date: 2020-04-03 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1901 src/totem-object.c:3729
+#: src/totem-grilo.c:1906 src/totem-object.c:3729
 msgid "Videos"
 msgstr "ビデオ"
 
@@ -816,15 +816,15 @@ msgstr "%s (シーズン %d エピソード %d)"
 msgid "Browse Error"
 msgstr "表示エラー"
 
-#: src/totem-grilo.c:821
+#: src/totem-grilo.c:826
 msgid "Search Error"
 msgstr "検索エラー"
 
-#: src/totem-grilo.c:1301
+#: src/totem-grilo.c:1306
 msgid "Local"
 msgstr "ローカル"
 
-#: src/totem-grilo.c:1910
+#: src/totem-grilo.c:1915
 msgid "Channels"
 msgstr "チャンネル"
 
@@ -1015,12 +1015,12 @@ msgstr "キューへの追加と置き換えは同時にできません"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:231
+#: src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "タイトル %d"
 
-#: src/totem-playlist.c:1025
+#: src/totem-playlist.c:1065
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "プレイリスト“%s”を解析できませんでした。おそらく壊れています。"
@@ -1562,12 +1562,14 @@ msgstr[0] "%d 秒"
 
 #. 5 hours 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:165
+#, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
 #: src/plugins/properties/bacon-video-widget-properties.c:168
+#, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
