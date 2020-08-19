@@ -1460,12 +1460,6 @@ load_grilo_plugins (TotemGrilo *self)
 	}
 	g_strfreev (configs);
 
-	/* GStreamer does not support VCDs:
-	 * https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad/merge_requests/203 */
-	config = grl_config_new ("grl-optical-media", NULL);
-	grl_config_set_string (config, "ignored-scheme", "vcd");
-	grl_registry_add_config (registry, config, NULL);
-
 	g_signal_connect (registry, "source-added",
 	                  G_CALLBACK (source_added_cb), self);
 	g_signal_connect (registry, "source-removed",
