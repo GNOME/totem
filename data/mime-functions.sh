@@ -12,3 +12,7 @@ get_video_mimetypes ()
 	MIMETYPES="$MIMETYPES audio/x-pn-realaudio"
 }
 
+get_playlist_media_mimetypes ()
+{
+	MIMETYPES=`grep -v '^#' $1 | grep -E "text/google-video-pointer|application/x-quicktime-media-link|application/smil|application/smil+xml|application/x-smil|application/xspf+xml|x-content/*"`
+}
