@@ -3287,6 +3287,9 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		bacon_video_widget_dvd_event (totem->bvw,
 				BVW_DVD_CHAPTER_MENU);
 		break;
+	case GDK_KEY_F1:
+		totem_object_show_help (totem);
+		break;
 	case GDK_KEY_F5:
 		/* Start presentation button */
 		totem_object_set_fullscreen (totem, TRUE);
