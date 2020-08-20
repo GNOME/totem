@@ -200,6 +200,16 @@ flash_area (GtkWidget *widget)
 			   NULL);
 }
 
+static char *
+escape_video_name (const char *orig)
+{
+	g_auto(GStrv) elems = NULL;
+
+	/* '/' can't be in a filename */
+	elems = g_strsplit (orig, "/", -1);
+	return g_strjoinv ("–", elems);
+}
+
 static void
 take_screenshot_action_cb (GSimpleAction         *action,
 			   GVariant              *parameter,
@@ -209,7 +219,8 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	GdkPixbuf *pixbuf;
 	GError *err = NULL;
 	ScreenshotSaveJob *job;
-	char *video_name;
+	g_autofree char *video_name = NULL;
+	g_autofree char *escaped_video_name = NULL;
 
 	if (bacon_video_widget_get_logo_mode (priv->bvw) != FALSE)
 		return;
@@ -232,14 +243,13 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	}
 
 	video_name = totem_object_get_short_title (self->priv->totem);
+	escaped_video_name = escape_video_name (video_name);
 
 	job = g_slice_new (ScreenshotSaveJob);
 	job->plugin = self;
 	job->pixbuf = pixbuf;
 
-	screenshot_build_filename_async (NULL, video_name, screenshot_name_ready_cb, job);
-
-	g_free (video_name);
+	screenshot_build_filename_async (NULL, escaped_video_name, screenshot_name_ready_cb, job);
 }
 
 static void
