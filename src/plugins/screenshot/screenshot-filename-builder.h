@@ -14,15 +14,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
  * USA
  *
  * 28th June 2012: Bastien Nocera: Add exception clause.
  * See license_change file for details.
  */
 
-#ifndef __SCREENSHOT_FILENAME_BUILDER_H__
-#define __SCREENSHOT_FILENAME_BUILDER_H__
+#pragma once
 
 #include <gio/gio.h>
 
@@ -32,5 +31,3 @@ void screenshot_build_filename_async (const char *save_dir,
                                       gpointer user_data);
 gchar *screenshot_build_filename_finish (GAsyncResult *result,
                                          GError **error);
-
-#endif /* __SCREENSHOT_FILENAME_BUILDER_H__ */
