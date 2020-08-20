@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. `dirname $0`/mime-functions.sh
+
 echo_mime () {
 	printf "$i;";
 }
@@ -8,7 +10,12 @@ echo_handler () {
 	printf "x-scheme-handler/$i;";
 }
 
-MIMETYPES=`grep -v ^# $1`
+get_video_mimetypes $1;
+for i in $MIMETYPES ; do
+	echo_mime;
+done
+
+get_playlist_media_mimetypes $1;
 for i in $MIMETYPES ; do
 	echo_mime;
 done
