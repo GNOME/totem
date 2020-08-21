@@ -3585,6 +3585,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		switch (event->keyval) {
 		case GDK_KEY_E:
 		case GDK_KEY_e:
+		case GDK_KEY_f:
+		case GDK_KEY_F:
 		case GDK_KEY_O:
 		case GDK_KEY_o:
 		case GDK_KEY_L:
