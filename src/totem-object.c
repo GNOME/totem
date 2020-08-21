@@ -3400,6 +3400,19 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_Left:
 	case GDK_KEY_Right:
+		if (event->state & GDK_MOD1_MASK) {
+			gboolean is_forward;
+
+			is_forward = (event->keyval == GDK_KEY_Right);
+			/* Switch direction in RTL environment */
+			if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
+				is_forward = !is_forward;
+			if (is_forward)
+				totem_object_seek_next (totem);
+			else
+				totem_object_seek_previous (totem);
+			break;
+		}
 		switch_rtl = TRUE;
 		/* fall through */
 	case GDK_KEY_Page_Up:
@@ -3621,6 +3634,18 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		default:
 			break;
 		}
+	}
+
+	if (event->state != 0 && (event->state & GDK_MOD1_MASK)) {
+		switch (event->keyval) {
+		case GDK_KEY_Left:
+		case GDK_KEY_Right:
+			if (event->type == GDK_KEY_PRESS)
+				return totem_object_handle_key_press (totem, event);
+		default:
+			break;
+		}
+
 	}
 
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
