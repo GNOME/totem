@@ -204,7 +204,7 @@ impl_activate (PeasActivatable *plugin)
 
 	menu = totem_object_get_menu_section (priv->totem, "skipto-placeholder");
 	item = g_menu_item_new (_("_Skip To…"), "app.skip-to");
-	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl>K");
+	g_menu_item_set_attribute (item, "accel", "s", "<Primary>k");
 	g_menu_append_item (G_MENU (menu), item);
 
 	totem_skipto_update_from_state (priv->totem, pi);
