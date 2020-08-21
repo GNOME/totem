@@ -1169,11 +1169,16 @@ content_changed (TotemGrilo   *self,
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 		GtkTreeIter *iter;
-		char *str;
+		g_autofree char *str;
 
 		str = grl_media_serialize (media);
+		if (!grl_media_is_video (media) &&
+		    !grl_media_is_container (media)) {
+			g_debug ("Ignoring content changes for %s", str);
+			continue;
+		}
+
 		g_debug ("About to change %s in the store", str);
-		g_free (str);
 
 		if (find_media (model, media, &iter)) {
 			update_media (GTK_TREE_STORE (model), iter, source, media);
@@ -1198,11 +1203,10 @@ content_removed (TotemGrilo   *self,
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 		GtkTreeIter *iter;
-		char *str;
+		g_autofree char *str;
 
 		str = grl_media_serialize (media);
 		g_debug ("About to remove %s from the store", str);
-		g_free (str);
 
 		if (find_media (model, media, &iter)) {
 			gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
@@ -1229,11 +1233,15 @@ content_added (TotemGrilo   *self,
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
-		char *str;
+		g_autofree char *str;
 
 		str = grl_media_serialize (media);
+		if (!grl_media_is_video (media) &&
+		    !grl_media_is_container (media)) {
+			g_debug ("Ignoring content added for %s", str);
+			continue;
+		}
 		g_debug ("About to add %s to the store", str);
-		g_free (str);
 
 		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
