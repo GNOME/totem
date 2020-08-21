@@ -3393,6 +3393,9 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 				}
 			} else
 				retval = FALSE;
+		} else {
+			if (event->keyval == GDK_KEY_space)
+				totem_object_play_pause (totem);
 		}
 		break;
 	case GDK_KEY_Left:
@@ -3593,6 +3596,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_l:
 		case GDK_KEY_q:
 		case GDK_KEY_Q:
+		case GDK_KEY_space:
 		case GDK_KEY_Right:
 		case GDK_KEY_Left:
 		case GDK_KEY_plus:
