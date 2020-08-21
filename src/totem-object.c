@@ -3554,7 +3554,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		return FALSE;
 
 	/* Handle Quit */
-	if (event->state & GDK_CONTROL_MASK &&
+	if ((event->state & GDK_CONTROL_MASK) &&
 	    event->type == GDK_KEY_PRESS &&
 	    (event->keyval == GDK_KEY_Q ||
 	     event->keyval == GDK_KEY_q)) {
@@ -3562,7 +3562,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 	}
 
 	/* Handle back/quit */
-	if (event->state & GDK_CONTROL_MASK &&
+	if ((event->state & GDK_CONTROL_MASK) &&
 	    event->type == GDK_KEY_PRESS &&
 	    (event->keyval == GDK_KEY_W ||
 	     event->keyval == GDK_KEY_w)) {
@@ -3580,8 +3580,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 
 	/* Special case Eject, Open, Open URI,
 	 * seeking and zoom keyboard shortcuts */
-	if (event->state != 0
-			&& (event->state & GDK_CONTROL_MASK))
+	if (event->state != 0 && (event->state & GDK_CONTROL_MASK))
 	{
 		switch (event->keyval) {
 		case GDK_KEY_E:
@@ -3618,15 +3617,14 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		}
 	}
 
-
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
 	 * let Gtk+ handle the key */
-	if (event->state != 0
-			&& ((event->state & GDK_CONTROL_MASK)
-			|| (event->state & GDK_MOD1_MASK)
-			|| (event->state & GDK_MOD3_MASK)
-			|| (event->state & GDK_MOD4_MASK)))
+	if (event->state != 0 &&
+	    ((event->state & GDK_CONTROL_MASK) ||
+	     (event->state & GDK_MOD1_MASK) ||
+	     (event->state & GDK_MOD3_MASK) ||
+	     (event->state & GDK_MOD4_MASK)))
 		return FALSE;
 
 	if (event->type == GDK_KEY_PRESS)
