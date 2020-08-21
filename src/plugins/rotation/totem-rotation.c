@@ -226,6 +226,8 @@ impl_activate (PeasActivatable *plugin)
 	GMenu *menu;
 	GMenuItem *item;
 	char *mrl;
+	const char * const rotate_cw[]= { "<Primary>r", NULL };
+	const char * const rotate_ccw[]= { "<Primary><Shift>r", NULL };
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = totem_object_get_video_widget (priv->totem);
@@ -248,12 +250,18 @@ impl_activate (PeasActivatable *plugin)
 			  G_CALLBACK (cb_rotate_left), pi);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem),
 				 G_ACTION (priv->rotate_left_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.rotate-left",
+					       rotate_ccw);
 
 	priv->rotate_right_action = g_simple_action_new ("rotate-right", NULL);
 	g_signal_connect (G_OBJECT (priv->rotate_right_action), "activate",
 			  G_CALLBACK (cb_rotate_right), pi);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem),
 				 G_ACTION (priv->rotate_right_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.rotate-right",
+					       rotate_cw);
 
 	item = g_menu_item_new (_("_Rotate ↷"), "app.rotate-right");
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>R");
@@ -273,6 +281,7 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemRotationPlugin *pi = TOTEM_ROTATION_PLUGIN (plugin);
 	TotemRotationPluginPrivate *priv = pi->priv;
+	const char * const accels[] = { NULL };
 
 	if (priv->cancellable != NULL) {
 		g_cancellable_cancel (priv->cancellable);
@@ -281,6 +290,13 @@ impl_deactivate (PeasActivatable *plugin)
 
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_rotation_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_rotation_file_closed, plugin);
+
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.rotate-right",
+					       accels);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.rotate-left",
+					       accels);
 
 	totem_object_empty_menu_section (priv->totem, "rotation-placeholder");
 	g_action_map_remove_action (G_ACTION_MAP (priv->totem), "rotate-left");
