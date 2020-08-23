@@ -1330,6 +1330,9 @@ source_added_cb (GrlRegistry *registry,
 		if (source_is_recent (source)) {
 			browse (self, self->priv->recent_model,
 				NULL, source, NULL, -1);
+			/* https://gitlab.gnome.org/GNOME/grilo-plugins/merge_requests/29 */
+			if (g_str_equal (id, "grl-tracker-source") == FALSE)
+				monitor = TRUE;
 		} else if (!source_is_browse_blocked (source)) {
 			const GdkPixbuf *icon;
 
