@@ -30,9 +30,6 @@
         "--filesystem=xdg-videos",
         /* Browse gvfs */
         "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*",
-        /* Needed for dconf to work */
-        "--filesystem=xdg-run/dconf", "--filesystem=~/.config/dconf:ro",
-        "--talk-name=ca.desrt.dconf", "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
         /* screensaver plugin */
         "--talk-name=org.gnome.ScreenSaver",
         /* screenshot plugin */
