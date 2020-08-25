@@ -69,6 +69,7 @@ media_is_local (GrlMedia *media)
 
 	id = grl_media_get_source (media);
 	if (g_strcmp0 (id, "grl-tracker-source") == 0 ||
+	    g_strcmp0 (id, "grl-tracker3-source") == 0 ||
 	    g_strcmp0 (id, "grl-filesystem") == 0 ||
 	    g_strcmp0 (id, "grl-bookmarks") == 0)
 		return TRUE;
