@@ -330,8 +330,10 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 		}
 	}
 
-	if (current_removed)
-		totem_search_entry_set_selected_id (self, "grl-tracker-source");
+	if (current_removed) {
+		if (!totem_search_entry_set_selected_id (self, "grl-tracker3-source"))
+			totem_search_entry_set_selected_id (self, "grl-tracker-source");
+	}
 
 	if (num_items == 0) {
 		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag);
