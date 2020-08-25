@@ -606,6 +606,11 @@ int main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/* Call before the global thread pool is setup */
+	errno = 0;
+	if (nice (20) != 20 && errno != 0)
+		g_warning ("Couldn't change nice value of process.");
+
 	context = g_option_context_new ("Thumbnail movies");
 	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
@@ -616,14 +621,6 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		return 1;
 	}
-
-#ifdef G_OS_UNIX
-	if (time_limit != FALSE) {
-		errno = 0;
-		if (nice (20) != 20 && errno != 0)
-			g_warning ("Couldn't change nice value of process.");
-	}
-#endif
 
 	if (print_progress) {
 		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
