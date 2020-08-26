@@ -213,7 +213,12 @@ thumbnail_media_async_thread (GTask    *task,
 	}
 
 	if (!uri || !mtime) {
-		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI or mtime missing");
+		if (!uri && !mtime)
+			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI and mtime missing");
+		else if (!uri)
+			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI missing");
+		else
+			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "mtime missing");
 		g_object_unref (task);
 		return;
 	}
