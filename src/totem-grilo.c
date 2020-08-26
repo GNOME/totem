@@ -378,6 +378,12 @@ get_thumbnail_cb (GObject *source_object,
 	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 		goto out;
 
+	if (!thumbnail && GRL_IS_MEDIA (thumb_data->media)) {
+		g_debug ("Failed to get thumbnail for '%s': %s",
+			 grl_media_get_url (thumb_data->media),
+			 error->message);
+	}
+
 	path = gtk_tree_row_reference_get_path (thumb_data->reference);
 	if (!path)
 		goto out;
