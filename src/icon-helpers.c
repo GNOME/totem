@@ -193,6 +193,7 @@ thumbnail_media_async_thread (GTask    *task,
 	GdkPixbuf *pixbuf, *tmp_pixbuf;
 	const char *uri;
 	GDateTime *mtime;
+	gint64 unix_date;
 
 	if (g_task_return_error_if_cancelled (task)) {
 		g_object_unref (task);
@@ -211,14 +212,10 @@ thumbnail_media_async_thread (GTask    *task,
 		key_id = grl_registry_lookup_metadata_key (registry, "bookmark-date");
 		mtime = grl_data_get_boxed (GRL_DATA (media), key_id);
 	}
+	unix_date = mtime ? g_date_time_to_unix (mtime) : g_get_real_time () / 1000000;
 
-	if (!uri || !mtime) {
-		if (!uri && !mtime)
-			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI and mtime missing");
-		else if (!uri)
-			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI missing");
-		else
-			g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "mtime missing");
+	if (!uri) {
+		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI missing");
 		g_object_unref (task);
 		return;
 	}
@@ -231,7 +228,7 @@ thumbnail_media_async_thread (GTask    *task,
 		return;
 	}
 
-	gnome_desktop_thumbnail_factory_save_thumbnail (factory, tmp_pixbuf, uri, g_date_time_to_unix (mtime));
+	gnome_desktop_thumbnail_factory_save_thumbnail (factory, tmp_pixbuf, uri, unix_date);
 
 	/* Save the thumbnail URL for the bookmarks source */
 	save_bookmark_thumbnail (media, uri);
