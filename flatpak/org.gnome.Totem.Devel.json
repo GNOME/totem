@@ -169,16 +169,14 @@
                 "-Dsystemd_user_services=false",
                 "-Dwriteback=false",
                 "-Ddomain_prefix=org.gnome.Totem.Devel",
-                "-Dminer_fs_cache_location=$XDG_CACHE_HOME/totem/miner/files"
+                "-Dminer_fs_cache_location=$XDG_CACHE_HOME/totem/miner/files",
+                "-Ddefault_index_recursive_dirs=['&VIDEOS']",
+                "-Ddefault_index_single_dirs=['&DOWNLOAD']"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/tracker-miners.git"
-                },
-                {
-                    "type": "patch",
-                    "path": "0001-Only-index-Videos-and-the-root-of-the-Downloads-dir.patch"
                 }
             ]
         },
