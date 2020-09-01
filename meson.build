@@ -223,12 +223,21 @@ endif
 
 meson.add_install_script('meson_post_install.py')
 
-meson.add_dist_script(
-  find_program('check-news.sh').path(),
-  '@0@'.format(meson.project_version()),
-  'NEWS',
-  'data/appdata/org.gnome.Totem.appdata.xml.in'
-)
+is_stable = totem_minor_version.is_even()
+if is_stable
+  meson.add_dist_script(
+    find_program('check-news.sh').path(),
+    '@0@'.format(meson.project_version()),
+    'NEWS',
+    'data/appdata/org.gnome.Totem.appdata.xml.in'
+  )
+else
+  meson.add_dist_script(
+    find_program('check-news.sh').path(),
+    '@0@'.format(meson.project_version()),
+    'NEWS',
+  )
+endif
 
 message('Totem was configured with the following options:')
 message('** Using the GStreamer-1.0 backend')
