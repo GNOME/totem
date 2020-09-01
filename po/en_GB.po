@@ -3,29 +3,29 @@
 # This file is distributed under the same license as the totem package.
 # Abigail Brady <morwen@evilmagic.org>, Bastien Nocera <hadess@hadess.net>, 2005.
 # Philip Withnall <philip@tecnocode.co.uk>, 2010, 2012.
-# Bruce Cowan <bruce@bcowan.eu>, 2010, 2011, 2018.
 # Chris Leonard <cjl@laptop.org>, 2012.
-# Zander Brown <zbrown@gnome.org>, 2019.
+# Zander Brown <zbrown@gnome.org>, 2019-2020.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2010-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2019-10-28 06:14+0000\n"
-"PO-Revision-Date: 2019-11-21 14:59+0000\n"
-"Last-Translator: Zander Brown <zbrown@gnome.org>\n"
-"Language-Team: English - United Kingdom <en_GB@li.org>\n"
+"POT-Creation-Date: 2020-08-27 09:15+0000\n"
+"PO-Revision-Date: 2020-09-01 20:08+0100\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: English - United Kingdom <en@li.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1901 src/totem-object.c:3729
+#: src/totem-grilo.c:1922 src/totem-object.c:3761
 msgid "Videos"
 msgstr "Videos"
 
@@ -150,7 +150,7 @@ msgstr ""
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
-msgstr "Whether to disable the plugins in the user’s home directory"
+msgstr "Whether to disable the plug-ins in the user’s home directory"
 
 #: data/org.gnome.totem.gschema.xml.in:69
 msgid "Whether to disable the keyboard shortcuts"
@@ -162,14 +162,14 @@ msgstr "Whether to autoload text subtitle files when a movie is loaded"
 
 #: data/org.gnome.totem.gschema.xml.in:77
 msgid "Active plugins list"
-msgstr "Active plugins list"
+msgstr "Active plug-ins list"
 
 #: data/org.gnome.totem.gschema.xml.in:78
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr ""
-"A list of the names of the plugins which are currently active (loaded and "
+"A list of the names of the plug-ins which are currently active (loaded and "
 "running)."
 
 #: data/org.gnome.totem.gschema.xml.in:82
@@ -180,7 +180,7 @@ msgstr "Directories to show"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Directories to show in the browse interface, none by default"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5689
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -226,11 +226,11 @@ msgstr "_Encoding:"
 
 #: data/preferences.ui:312
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Plug-ins"
 
 #: data/preferences.ui:338
 msgid "Plugins…"
-msgstr "Plugins…"
+msgstr "Plug-ins…"
 
 #: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
@@ -566,15 +566,15 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Enter the _address of the file you would like to open:"
 
 #. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:111
+#: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:2000
+#: src/backend/bacon-video-widget.c:2002
 msgid "Password requested for RTSP server"
 msgstr "Password requested for RTSP server"
 
-#: src/backend/bacon-video-widget.c:3918
+#: src/backend/bacon-video-widget.c:3925
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -582,48 +582,52 @@ msgstr ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3932
+#: src/backend/bacon-video-widget.c:3939
 msgid "The server you are trying to connect to is not known."
 msgstr "The server you are trying to connect to is not known."
 
-#: src/backend/bacon-video-widget.c:3935
+#: src/backend/bacon-video-widget.c:3942
 msgid "The connection to this server was refused."
 msgstr "The connection to this server was refused."
 
-#: src/backend/bacon-video-widget.c:3938
+#: src/backend/bacon-video-widget.c:3945
 msgid "The specified movie could not be found."
 msgstr "The specified movie could not be found."
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3952
 msgid "The server refused access to this file or stream."
 msgstr "The server refused access to this file or stream."
 
-#: src/backend/bacon-video-widget.c:3951
+#: src/backend/bacon-video-widget.c:3958
 msgid "Authentication is required to access this file or stream."
 msgstr "Authentication is required to access this file or stream."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3964
+msgid "SSL/TLS support is missing. Check your installation."
+msgstr "SSL/TLS support is missing. Check your installation."
+
+#: src/backend/bacon-video-widget.c:3971
 msgid "You are not allowed to open this file."
 msgstr "You are not allowed to open this file."
 
-#: src/backend/bacon-video-widget.c:3963
+#: src/backend/bacon-video-widget.c:3976
 msgid "This location is not a valid one."
 msgstr "This location is not a valid one."
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3984
 msgid "The movie could not be read."
 msgstr "The movie could not be read."
 
-#: src/backend/bacon-video-widget.c:3977
+#: src/backend/bacon-video-widget.c:3990
 msgid "This file is encrypted and cannot be played back."
 msgstr "This file is encrypted and cannot be played back."
 
-#: src/backend/bacon-video-widget.c:3983
+#: src/backend/bacon-video-widget.c:3996
 msgid "The file you tried to play is an empty file."
 msgstr "The file you tried to play is an empty file."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4007 src/backend/bacon-video-widget.c:4015
+#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -632,28 +636,28 @@ msgid_plural ""
 "\n"
 "%s"
 msgstr[0] ""
-"The playback of this movie requires a %s plugin which is not installed."
+"The playback of this movie requires a %s plug-in which is not installed."
 msgstr[1] ""
-"The playback of this movie requires the following plugins which are not "
+"The playback of this movie requires the following plug-ins which are not "
 "installed:\n"
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4027
+#: src/backend/bacon-video-widget.c:4040
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 
-#: src/backend/bacon-video-widget.c:4030
+#: src/backend/bacon-video-widget.c:4043
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
 msgstr ""
 "An audio or video stream is not handled due to missing codecs. You might "
-"need to install additional plugins to be able to play some types of movies"
+"need to install additional plug-ins to be able to play some types of movies"
 
-#: src/backend/bacon-video-widget.c:4041
+#: src/backend/bacon-video-widget.c:4054
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -661,19 +665,19 @@ msgstr ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 
-#: src/backend/bacon-video-widget.c:5685
+#: src/backend/bacon-video-widget.c:5698
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5687
+#: src/backend/bacon-video-widget.c:5700
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5975
+#: src/backend/bacon-video-widget.c:5988
 msgid "Media contains no supported video streams."
 msgstr "Media contains no supported video streams."
 
-#: src/backend/bacon-video-widget.c:6187
+#: src/backend/bacon-video-widget.c:6200
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -790,31 +794,31 @@ msgstr "Resolution"
 msgid "Duration"
 msgstr "Duration"
 
-#: src/totem-grilo.c:285
+#: src/totem-grilo.c:288
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Season %d Episode %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:322
+#: src/totem-grilo.c:325
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Season %d Episode %d)"
 
-#: src/totem-grilo.c:677
+#: src/totem-grilo.c:687
 msgid "Browse Error"
 msgstr "Browse Error"
 
-#: src/totem-grilo.c:821
+#: src/totem-grilo.c:836
 msgid "Search Error"
 msgstr "Search Error"
 
-#: src/totem-grilo.c:1301
+#: src/totem-grilo.c:1328
 msgid "Local"
 msgstr "Local"
 
-#: src/totem-grilo.c:1910
+#: src/totem-grilo.c:1931
 msgid "Channels"
 msgstr "Channels"
 
@@ -905,23 +909,23 @@ msgstr "Totem could not display the help contents."
 msgid "An error occurred"
 msgstr "An error occurred"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3859
 msgid "Previous Chapter/Movie"
 msgstr "Previous Chapter/Movie"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3865
 msgid "Play / Pause"
 msgstr "Play/Pause"
 
-#: src/totem-object.c:3839
+#: src/totem-object.c:3871
 msgid "Next Chapter/Movie"
 msgstr "Next Chapter/Movie"
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4094
 msgid "Totem could not startup."
 msgstr "Totem could not startup."
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4094
 msgid "No reason."
 msgstr "No reason."
 
@@ -929,14 +933,14 @@ msgstr "No reason."
 msgid "Add Web Video"
 msgstr "Add Web Video"
 
-#: src/totem-open-location.c:182 src/totem-uri.c:399 src/totem-uri.c:460
+#: src/totem-open-location.c:182 src/totem-uri.c:401 src/totem-uri.c:462
 #: src/plugins/screenshot/totem-gallery.c:96
 #: src/plugins/screenshot/totem-gallery-progress.c:100
 #: src/plugins/skipto/totem-skipto.c:218
 msgid "_Cancel"
 msgstr "_Cancel"
 
-#: src/totem-open-location.c:183 src/totem-uri.c:461
+#: src/totem-open-location.c:183 src/totem-uri.c:463
 msgid "_Add"
 msgstr "_Add"
 
@@ -1006,12 +1010,12 @@ msgstr "Can’t enqueue and replace at the same time"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:231
+#: src/totem-playlist.c:232
 #, c-format
 msgid "Title %d"
 msgstr "Title %d"
 
-#: src/totem-playlist.c:993
+#: src/totem-playlist.c:1065
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "The playlist “%s” could not be parsed. It might be damaged."
@@ -1186,27 +1190,27 @@ msgstr "Western"
 msgid "Vietnamese"
 msgstr "Vietnamese"
 
-#: src/totem-uri.c:329
+#: src/totem-uri.c:330
 msgid "All files"
 msgstr "All files"
 
-#: src/totem-uri.c:335
+#: src/totem-uri.c:336
 msgid "Video files"
 msgstr "Video files"
 
-#: src/totem-uri.c:346
+#: src/totem-uri.c:347
 msgid "Subtitle files"
 msgstr "Subtitle files"
 
-#: src/totem-uri.c:396
+#: src/totem-uri.c:398
 msgid "Select Text Subtitles"
 msgstr "Select Text Subtitles"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:402
 msgid "_Open"
 msgstr "_Open"
 
-#: src/totem-uri.c:457
+#: src/totem-uri.c:459
 msgid "Add Videos"
 msgstr "Add Videos"
 
@@ -1290,54 +1294,54 @@ msgstr "Subtitle Downloader"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Look for subtitles for the currently playing movie"
 
-#: src/plugins/opensubtitles/opensubtitles.py:46
+#: src/plugins/opensubtitles/opensubtitles.py:47
 msgid "Brazilian Portuguese"
 msgstr "Brazilian Portuguese"
 
-#: src/plugins/opensubtitles/opensubtitles.py:187
+#: src/plugins/opensubtitles/opensubtitles.py:188
 msgid "Searching for subtitles…"
 msgstr "Searching for subtitles…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:619
+#: src/plugins/opensubtitles/opensubtitles.py:236
+#: src/plugins/opensubtitles/opensubtitles.py:620
 msgid "Downloading the subtitles…"
 msgstr "Downloading the subtitles…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:300
+#: src/plugins/opensubtitles/opensubtitles.py:301
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Could not contact the OpenSubtitles website"
 
-#: src/plugins/opensubtitles/opensubtitles.py:333
-#: src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:334
+#: src/plugins/opensubtitles/opensubtitles.py:352
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Could not contact the OpenSubtitles website."
 
-#: src/plugins/opensubtitles/opensubtitles.py:339
+#: src/plugins/opensubtitles/opensubtitles.py:340
 msgid "No results found."
 msgstr "No results found."
 
-#: src/plugins/opensubtitles/opensubtitles.py:486
+#: src/plugins/opensubtitles/opensubtitles.py:487
 msgid "Subtitles"
 msgstr "Subtitles"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:492
+#: src/plugins/opensubtitles/opensubtitles.py:493
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:497
+#: src/plugins/opensubtitles/opensubtitles.py:498
 msgid "Rating"
 msgstr "Rating"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:537
+#: src/plugins/opensubtitles/opensubtitles.py:538
 msgid "_Download Movie Subtitles…"
 msgstr "_Download Movie Subtitles…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:576
+#: src/plugins/opensubtitles/opensubtitles.py:577
 msgid "Searching subtitles…"
 msgstr "Searching subtitles…"
 
@@ -1506,7 +1510,7 @@ msgid "N/A"
 msgstr "N/A"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:235
+#: src/plugins/properties/bacon-video-widget-properties.c:250
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/A"
@@ -1554,25 +1558,46 @@ msgstr[0] "%d second"
 msgstr[1] "%d seconds"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-msgctxt "time"
+msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
-#. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#. 5 hours 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-msgctxt "time"
+msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
+#. 5 hours
+#: src/plugins/properties/bacon-video-widget-properties.c:171
+#, c-format
+msgctxt "hours"
+msgid "%s"
+msgstr "%s"
+
+#. 2 minutes 12 seconds
+#: src/plugins/properties/bacon-video-widget-properties.c:177
+#, c-format
+msgctxt "minutes seconds"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 2 minutes
+#: src/plugins/properties/bacon-video-widget-properties.c:180
+#, c-format
+msgctxt "minutes"
+msgid "%s"
+msgstr "%s"
+
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:187
 msgid "0 seconds"
 msgstr "0 seconds"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:232
+#: src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1647,11 +1672,11 @@ msgstr "Rotation Plugin"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Allows videos to be rotated if they are in the wrong orientation"
 
-#: src/plugins/rotation/totem-rotation.c:258
+#: src/plugins/rotation/totem-rotation.c:266
 msgid "_Rotate ↷"
 msgstr "_Rotate ↷"
 
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:270
 msgid "Rotate ↶"
 msgstr "Rotate ↶"
 
@@ -1708,7 +1733,7 @@ msgstr "Number of screenshots:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:145
+#: src/plugins/screenshot/screenshot-filename-builder.c:132
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Screenshot from %s.png"
@@ -1716,7 +1741,7 @@ msgstr "Screenshot from %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:152
+#: src/plugins/screenshot/screenshot-filename-builder.c:139
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Screenshot from %s - %d.png"
@@ -1757,20 +1782,20 @@ msgstr "Creating Gallery…"
 msgid "Saving gallery as “%s”"
 msgstr "Saving gallery as “%s”"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:232
+#: src/plugins/screenshot/totem-screenshot-plugin.c:241
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem could not get a screenshot of the video."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:241
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "This is not supposed to happen; please file a bug report."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:339
+#: src/plugins/screenshot/totem-screenshot-plugin.c:349
 msgid "Take _Screenshot"
 msgstr "Take _Screenshot"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:345
+#: src/plugins/screenshot/totem-screenshot-plugin.c:355
 msgid "Create Screenshot _Gallery…"
 msgstr "Create Screenshot _Gallery…"
 
@@ -3081,9 +3106,6 @@ msgstr "Sets the user agent for the Vimeo site"
 #~ "Could not find the video output. You may need to install additional "
 #~ "GStreamer plugins, or select another video output in the Multimedia "
 #~ "Systems Selector."
-
-#~ msgid "%s"
-#~ msgstr "%s"
 
 #~ msgid "Coherence DLNA/UPnP Client"
 #~ msgstr "Coherence DLNA/UPnP Client"
