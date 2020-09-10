@@ -49,6 +49,7 @@ build-fedora:
     - meson _build
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build test
     - ninja -C _build install
+    - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build dist
 
 flatpak:master:
     extends: .flatpak
