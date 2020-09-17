@@ -397,9 +397,11 @@ static const char *
 get_language_name_no_und (const char   *lang,
 			  BvwTrackType  track_type)
 {
-	const char *ret;
+	const char *ret = NULL;
 
-	ret =  gst_tag_get_language_name (lang);
+	if (g_strcmp0 (lang, "und") != 0)
+		ret =  gst_tag_get_language_name (lang);
+
 	if (ret != NULL)
 		return ret;
 
