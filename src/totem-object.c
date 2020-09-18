@@ -3591,8 +3591,13 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 	}
 
 	/* Check whether we're in the player panel */
-	if (!g_str_equal (totem_object_get_main_page (totem), "player"))
+	if (!g_str_equal (totem_object_get_main_page (totem), "player")) {
+		if (event->type == GDK_KEY_PRESS &&
+		    event->keyval == GDK_KEY_Back &&
+		    totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)))
+			back_button_clicked_cb (NULL, totem);
 		return FALSE;
+	}
 
 	/* Special case Eject, Open, Open URI,
 	 * seeking and zoom keyboard shortcuts */
