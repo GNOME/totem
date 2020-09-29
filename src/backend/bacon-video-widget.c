@@ -2045,6 +2045,35 @@ bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
   return ret;
 }
 
+static gboolean
+bvw_check_mpeg_eos (BaconVideoWidget *bvw, GstMessage *err_msg)
+{
+  gboolean ret = FALSE;
+  g_autoptr(GError) err = NULL;
+  g_autofree char *dbg = NULL;
+
+  gst_message_parse_error (err_msg, &err, &dbg);
+
+  /* Error from gst-libs/gst/video/gstvideodecoder.c
+   * thrown by mpeg2dec */
+
+  if (err != NULL &&
+      dbg != NULL &&
+      is_error (err, STREAM, DECODE) &&
+      strstr (dbg, "no valid frames found")) {
+    if (bvw->priv->eos_id == 0) {
+      bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
+      g_source_set_name_by_id (bvw->priv->eos_id, "[totem] bvw_signal_eos_delayed");
+      GST_DEBUG ("Throwing EOS instead of an error when seeking to the end of an MPEG file");
+    } else {
+      GST_DEBUG ("Not throwing EOS instead of an error when seeking to the end of an MPEG file, EOS already planned");
+    }
+    ret = TRUE;
+  }
+
+  return ret;
+}
+
 /* returns TRUE if the error/signal has been handled and should be ignored */
 static gboolean
 bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
@@ -2413,7 +2442,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       totem_gst_message_print (message, bvw->priv->play, "totem-error");
 
       if (!bvw_check_missing_plugins_error (bvw, message) &&
-	  !bvw_check_missing_auth (bvw, message)) {
+	  !bvw_check_missing_auth (bvw, message) &&
+	  !bvw_check_mpeg_eos (bvw, message)) {
         GError *error;
 
         error = bvw_error_from_gst_error (bvw, message);
