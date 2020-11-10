@@ -293,8 +293,7 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
             except SyntaxError:
                 exec(command, self.namespace) # pylint: disable=W0122
         except: # pylint: disable=W0702
-            if hasattr(sys, 'last_type') and \
-               sys.last_type == SystemExit: # pylint: disable=E1101
+            if hasattr(sys, 'last_type') and sys.last_type == SystemExit: # pylint: disable=E1101
                 self.destroy()
             else:
                 traceback.print_exc()
