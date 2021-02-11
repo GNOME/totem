@@ -11,21 +11,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.12\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2020-06-01 20:14+0000\n"
-"PO-Revision-Date: 2020-08-14 22:39-0300\n"
-"Last-Translator: Juliano Camargo <julianosc@pm.me>\n"
+"POT-Creation-Date: 2020-08-19 16:59+0000\n"
+"PO-Revision-Date: 2021-02-11 16:42+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1906 src/totem-object.c:3729
+#: src/totem-grilo.c:1901 src/totem-object.c:3729
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -35,11 +35,6 @@ msgid "Play movies"
 msgstr "Reproduzir filmes"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:11
-#| msgid ""
-#| "Videos, also known as Totem, is the official movie player of the GNOME "
-#| "desktop environment. It features a searchable list of local videos, and "
-#| "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-#| "highlights from a number of web sites."
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -52,9 +47,6 @@ msgstr ""
 "vídeos de inúmeras páginas Web."
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:17
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, and "
-#| "support for recording DVDs."
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -70,7 +62,6 @@ msgstr "Os programadores GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
-#| msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "Vídeo;Filme;Filme;Clip;Séries;Reprodutor;DVD;TV;Disco;Totem;"
 
@@ -136,14 +127,10 @@ msgid "Encoding character set for subtitle."
 msgstr "Codificação de caracteres das legendas."
 
 #: data/org.gnome.totem.gschema.xml.in:55
-#| msgid "Default location for the \"Open...\" dialogs"
 msgid "Default location for the “Open…” dialogs"
 msgstr "Localização predefinida para os diálogos \"Abrir...\""
 
 #: data/org.gnome.totem.gschema.xml.in:56
-#| msgid ""
-#| "Default location for the \"Open...\" dialogs. Default is the current "
-#| "directory."
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
@@ -151,14 +138,10 @@ msgstr ""
 "pasta atual."
 
 #: data/org.gnome.totem.gschema.xml.in:60
-#| msgid "Default location for the \"Take Screenshot\" dialogs"
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Localização predefinida para os diálogos \"Capturar Ecrã\""
 
 #: data/org.gnome.totem.gschema.xml.in:61
-#| msgid ""
-#| "Default location for the \"Take Screenshot\" dialogs. Default is the "
-#| "Pictures directory."
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the Pictures "
 "directory."
@@ -167,7 +150,6 @@ msgstr ""
 "a pasta Imagens."
 
 #: data/org.gnome.totem.gschema.xml.in:65
-#| msgid "Whether to disable the plugins in the user's home directory"
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "Se deve desativar as extensões na pasta pessoal do utilizador"
 
@@ -199,7 +181,7 @@ msgstr "Pastas a mostrar"
 
 #: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
-msgstr "Pastas a mostrar no ambiente do navegador. A predefinição é nenhuma."
+msgstr "Pastas a mostrar no ambiente do navegador. A predefinição é nenhuma"
 
 #: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
 msgid "Stereo"
@@ -243,16 +225,15 @@ msgstr "_Letra:"
 
 #: data/preferences.ui:226
 msgid "_Encoding:"
-msgstr "_Codificação"
+msgstr "_Codificação:"
 
 #: data/preferences.ui:312
 msgid "Plugins"
 msgstr "Extensões"
 
 #: data/preferences.ui:338
-#| msgid "Plugins"
 msgid "Plugins…"
-msgstr "Extensões..."
+msgstr "Plugins…"
 
 #: data/preferences.ui:373 src/plugins/properties/properties.ui:23
 msgid "General"
@@ -313,19 +294,16 @@ msgid "General"
 msgstr "Geral"
 
 #: data/shortcuts.ui:21
-#| msgid "Properties"
 msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Propriedades"
 
 #: data/shortcuts.ui:28
-#| msgid "Make Available Offline"
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Tornar disponível quando desligado"
 
 #: data/shortcuts.ui:35
-#| msgid "Take _Screenshot"
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Capturar Ecrã"
@@ -376,13 +354,11 @@ msgid "Zoom out"
 msgstr "Reduzir"
 
 #: data/shortcuts.ui:103
-#| msgid "_Rotate ↷"
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Rodar ↷"
 
 #: data/shortcuts.ui:110
-#| msgid "Rotate ↶"
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Rodar ↶"
@@ -602,9 +578,6 @@ msgid "Password requested for RTSP server"
 msgstr "Foi pedida uma senha de acesso ao servidor RTSP"
 
 #: src/backend/bacon-video-widget.c:3925
-#| msgid ""
-#| "The source seems encrypted and can't be read. Are you trying to play an "
-#| "encrypted DVD without libdvdcss?"
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -674,9 +647,6 @@ msgstr[1] ""
 "%s"
 
 #: src/backend/bacon-video-widget.c:4040
-#| msgid ""
-#| "This stream cannot be played. It's possible that a firewall is blocking "
-#| "it."
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
@@ -829,37 +799,36 @@ msgstr "Resolução"
 msgid "Duration"
 msgstr "Duração"
 
-#: src/totem-grilo.c:285
+#: src/totem-grilo.c:286
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Temporada %d, episódio %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:322
+#: src/totem-grilo.c:323
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Temporada %d, episódio %d)"
 
-#: src/totem-grilo.c:677
+#: src/totem-grilo.c:678
 msgid "Browse Error"
 msgstr "Erro de navegação"
 
-#: src/totem-grilo.c:826
+#: src/totem-grilo.c:827
 msgid "Search Error"
 msgstr "Erro de procura"
 
-#: src/totem-grilo.c:1306
+#: src/totem-grilo.c:1307
 msgid "Local"
 msgstr "Local"
 
-#: src/totem-grilo.c:1915
+#: src/totem-grilo.c:1910
 msgid "Channels"
 msgstr "Canais"
 
 #: src/totem-interface.c:179 src/totem-interface.c:222
 #, c-format
-#| msgid "Couldn't load the '%s' interface. %s"
 msgid "Couldn’t load the “%s” interface. %s"
 msgstr "Impossível carregar a interface \"%s\". %s"
 
@@ -905,12 +874,10 @@ msgid "Search"
 msgstr "Procurar"
 
 #: src/totem-menu.c:408
-#| msgid "Audio Track #%d"
 msgid "Audio Track"
 msgstr "Faixa de áudio"
 
 #: src/totem-menu.c:411
-#| msgid "Subtitles"
 msgid "Subtitle"
 msgstr "Legendas"
 
@@ -936,7 +903,6 @@ msgstr "Reproduzir"
 
 #: src/totem-object.c:1473 src/totem-object.c:1501 src/totem-object.c:2048
 #, c-format
-#| msgid "Totem could not play '%s'."
 msgid "Totem could not play “%s”."
 msgstr "O Totem não pôde reproduzir \"%s\"."
 
@@ -972,14 +938,14 @@ msgstr "Sem motivo."
 msgid "Add Web Video"
 msgstr "Adicionar vídeo Web"
 
-#: src/totem-open-location.c:182 src/totem-uri.c:399 src/totem-uri.c:460
+#: src/totem-open-location.c:182 src/totem-uri.c:401 src/totem-uri.c:462
 #: src/plugins/screenshot/totem-gallery.c:96
 #: src/plugins/screenshot/totem-gallery-progress.c:100
 #: src/plugins/skipto/totem-skipto.c:218
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: src/totem-open-location.c:183 src/totem-uri.c:461
+#: src/totem-open-location.c:183 src/totem-uri.c:463
 msgid "_Add"
 msgstr "_Adicionar"
 
@@ -1044,7 +1010,6 @@ msgid "Movies to play"
 msgstr "Filmes a reproduzir"
 
 #: src/totem-options.c:100
-#| msgid "Can't enqueue and replace at the same time"
 msgid "Can’t enqueue and replace at the same time"
 msgstr "Impossível colocar na fila e substituir ao mesmo tempo"
 
@@ -1057,7 +1022,6 @@ msgstr "Título %d"
 
 #: src/totem-playlist.c:1065
 #, c-format
-#| msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "Impossível processar a lista de reprodução \"%s\". Poderá estar danificada."
@@ -1232,27 +1196,27 @@ msgstr "Ocidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: src/totem-uri.c:329
+#: src/totem-uri.c:330
 msgid "All files"
 msgstr "Todos os ficheiros"
 
-#: src/totem-uri.c:335
+#: src/totem-uri.c:336
 msgid "Video files"
 msgstr "Ficheiros de vídeo"
 
-#: src/totem-uri.c:346
+#: src/totem-uri.c:347
 msgid "Subtitle files"
 msgstr "Ficheiro de legendas"
 
-#: src/totem-uri.c:396
+#: src/totem-uri.c:398
 msgid "Select Text Subtitles"
 msgstr "Selecionar as legendas"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:402
 msgid "_Open"
 msgstr "_Abrir"
 
-#: src/totem-uri.c:457
+#: src/totem-uri.c:459
 msgid "Add Videos"
 msgstr "Adicionar vídeos"
 
@@ -1319,12 +1283,10 @@ msgid "Support additional media player keys"
 msgstr "Suportar teclas adicionais de reprodução de média"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
-#| msgid "Add Directory"
 msgid "Open directory"
 msgstr "Abrir pasta"
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:7
-#| msgid "Save a copy of the currently playing movie"
 msgid "Open the directory of the currently playing movie"
 msgstr "Abrir a pasta do vídeo atualmente a ser reproduzido"
 
@@ -1340,54 +1302,54 @@ msgstr "Transferidor de legendas"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Procurar legendas para o filme atualmente a ser reproduzido"
 
-#: src/plugins/opensubtitles/opensubtitles.py:46
+#: src/plugins/opensubtitles/opensubtitles.py:47
 msgid "Brazilian Portuguese"
 msgstr "Português do Brasil"
 
-#: src/plugins/opensubtitles/opensubtitles.py:187
+#: src/plugins/opensubtitles/opensubtitles.py:188
 msgid "Searching for subtitles…"
 msgstr "A procurar legendas…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:619
+#: src/plugins/opensubtitles/opensubtitles.py:236
+#: src/plugins/opensubtitles/opensubtitles.py:620
 msgid "Downloading the subtitles…"
 msgstr "A transferir as legendas…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:300
+#: src/plugins/opensubtitles/opensubtitles.py:301
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Impossível contactar o servidor do OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:333
-#: src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:334
+#: src/plugins/opensubtitles/opensubtitles.py:352
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Impossível contactar o servidor do OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:339
+#: src/plugins/opensubtitles/opensubtitles.py:340
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
-#: src/plugins/opensubtitles/opensubtitles.py:486
+#: src/plugins/opensubtitles/opensubtitles.py:487
 msgid "Subtitles"
 msgstr "Legendas"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:492
+#: src/plugins/opensubtitles/opensubtitles.py:493
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:497
+#: src/plugins/opensubtitles/opensubtitles.py:498
 msgid "Rating"
 msgstr "Pontuação"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:537
+#: src/plugins/opensubtitles/opensubtitles.py:538
 msgid "_Download Movie Subtitles…"
 msgstr "Transferir as legendas do filme…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:576
+#: src/plugins/opensubtitles/opensubtitles.py:577
 msgid "Searching subtitles…"
 msgstr "A procurar legendas…"
 
@@ -1510,35 +1472,30 @@ msgstr "Canais:"
 
 #. Title
 #: src/plugins/properties/bacon-video-widget-properties.c:103
-#| msgid "Unknown"
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #. Artist
 #: src/plugins/properties/bacon-video-widget-properties.c:105
-#| msgid "Unknown"
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #. Album
 #: src/plugins/properties/bacon-video-widget-properties.c:107
-#| msgid "Unknown"
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #. Year
 #: src/plugins/properties/bacon-video-widget-properties.c:109
-#| msgid "Unknown"
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #. Container
 #: src/plugins/properties/bacon-video-widget-properties.c:115
-#| msgid "Unknown"
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Desconhecido"
@@ -1611,8 +1568,6 @@ msgstr[1] "%d segundos"
 #. 5 hours 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s %s"
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
@@ -1620,8 +1575,6 @@ msgstr "%s %s %s"
 #. 5 hours 2 minutes
 #: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1629,7 +1582,6 @@ msgstr "%s %s"
 #. 5 hours
 #: src/plugins/properties/bacon-video-widget-properties.c:171
 #, c-format
-#| msgid "%s"
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
@@ -1637,8 +1589,6 @@ msgstr "%s"
 #. 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:177
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1646,7 +1596,6 @@ msgstr "%s %s"
 #. 2 minutes
 #: src/plugins/properties/bacon-video-widget-properties.c:180
 #, c-format
-#| msgid "%s"
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
@@ -1658,8 +1607,6 @@ msgstr "0 segundos"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
-#| msgid "%d frame per second"
-#| msgid_plural "%d frames per second"
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
 msgstr[0] "%0.2f quadro por segundo"
@@ -1667,13 +1614,9 @@ msgstr[1] "%0.2f quadros por segundo"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
 msgid "rpdb2 password"
-msgstr "Senha rpdb2"
+msgstr "palavra-passe rpdb2"
 
 #: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:7
-#| msgid ""
-#| "A password to protect the rpdb2 server for debugging Totem from "
-#| "unauthorized remote access. If this is empty, a default of 'totem' will "
-#| "be used."
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of “totem” will be used."
@@ -1703,7 +1646,6 @@ msgstr "Depurador Python"
 #. pylint: disable=E1101
 #: src/plugins/pythonconsole/pythonconsole.py:97
 #, python-format
-#| msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Pode aceder ao Totem.Object através de \"totem_object\" :\\n%s"
 
@@ -1713,10 +1655,6 @@ msgstr "Consola Python do Totem"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
-#| msgid ""
-#| "After you press OK, Totem will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
-#| "the default password ('totem')."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1759,9 +1697,8 @@ msgid "Save a copy of the currently playing movie"
 msgstr "Gravar uma cópia do vídeo atualmente a ser reproduzido"
 
 #: src/plugins/save-file/totem-save-file.c:89
-#| msgid "The video disc could not be duplicated."
 msgid "The video could not be made available offline."
-msgstr "Impossível disponibilizar o vídeo \"offline\""
+msgstr "Impossível disponibilizar o vídeo \"offline\"."
 
 #. translators: “Files” refers to nautilus' name
 #: src/plugins/save-file/totem-save-file.c:91
@@ -1850,7 +1787,6 @@ msgstr "A criar galeria…"
 #. Set the progress label
 #: src/plugins/screenshot/totem-gallery-progress.c:104
 #, c-format
-#| msgid "Saving gallery as \"%s\""
 msgid "Saving gallery as “%s”"
 msgstr "A gravar a galeria como \"%s\""
 
@@ -1869,7 +1805,7 @@ msgstr "Capturar _ecrã"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery…"
-msgstr "Criar _galeria de capturas de ecrã..."
+msgstr "Criar _galeria de capturas de ecrã…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
 #: src/plugins/skipto/totem-skipto.c:216
@@ -1877,7 +1813,6 @@ msgid "Skip To"
 msgstr "Saltar para"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:7
-#| msgid "Provides the \"Skip to\" dialog"
 msgid "Provides the “Skip to” dialog"
 msgstr "Disponibiliza o diálogo \"Saltar para\""
 
