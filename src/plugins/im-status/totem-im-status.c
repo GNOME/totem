@@ -120,17 +120,19 @@ got_proxy_cb (GObject             *source_object,
 {
 	GError *error = NULL;
 	TotemObject *totem;
+	GDBusProxy *proxy;
 
-	pi->priv->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
-
-	g_object_unref (pi->priv->cancellable);
-	pi->priv->cancellable = NULL;
-
-	if (pi->priv->proxy == NULL) {
-		g_warning ("Failed to contact session manager: %s", error->message);
+	proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+	if (!proxy) {
+		g_debug ("Could not connect to SessionManager: %s", error->message);
 		g_error_free (error);
 		return;
 	}
+
+	pi->priv->proxy = proxy;
+	g_object_unref (pi->priv->cancellable);
+	pi->priv->cancellable = NULL;
+
 	g_object_get (pi, "object", &totem, NULL);
 	totem_im_status_update_from_state (totem, pi);
 	g_object_unref (totem);
