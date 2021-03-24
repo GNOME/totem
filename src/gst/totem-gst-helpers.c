@@ -81,14 +81,25 @@ totem_gst_disable_display_decoders (void)
 	const char *blocked_plugins[] = {
 	  "bmcdec",
 	  "vaapi",
-	  "video4linux2"
+	  "video4linux2",
+	  "nvmpegvideodec",
+	  "nvmpeg2videodec",
+	  "nvmpeg4videodec",
+	  "nvh264sldec",
+	  "nvh264dec",
+	  "nvjpegdec",
+	  "nvh265sldec",
+	  "nvh265dec",
+	  "nvvp8dec",
 	};
 	guint i;
 
 	/* Disable the vaapi plugin as it will not work with the
 	 * fakesink we use:
-	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186 and
-	 * https://bugzilla.gnome.org/show_bug.cgi?id=749605 */
+	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186
+	 *      https://bugzilla.gnome.org/show_bug.cgi?id=749605
+	 *      https://gitlab.gnome.org/GNOME/tracker-miners/-/commit/1d3accb9187611629c9be3727c729809d96d9ea6
+	 */
 	registry = gst_registry_get ();
 
 	for (i = 0; i < G_N_ELEMENTS (blocked_plugins); i++) {
