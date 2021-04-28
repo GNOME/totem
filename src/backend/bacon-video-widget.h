@@ -25,12 +25,9 @@
  *
  */
 
-#ifndef HAVE_BACON_VIDEO_WIDGET_H
-#define HAVE_BACON_VIDEO_WIDGET_H
+#pragma once
 
 #include <clutter-gtk/clutter-gtk.h>
-
-G_BEGIN_DECLS
 
 #ifndef glib_autoptr_clear_GtkClutterEmbed
 G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkClutterEmbed, g_object_unref)
@@ -436,7 +433,3 @@ void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
 
 GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
 GObject * bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw);
-
-G_END_DECLS
-
-#endif				/* HAVE_BACON_VIDEO_WIDGET_H */
