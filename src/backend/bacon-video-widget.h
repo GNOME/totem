@@ -32,45 +32,13 @@
 
 G_BEGIN_DECLS
 
+#ifndef glib_autoptr_clear_GtkClutterEmbed
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkClutterEmbed, g_object_unref)
+#endif
+
 #define BACON_TYPE_VIDEO_WIDGET		     (bacon_video_widget_get_type ())
-#define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))
-#define BACON_VIDEO_WIDGET_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), bacon_video_widget_get_type (), BaconVideoWidgetClass))
-#define BACON_IS_VIDEO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, bacon_video_widget_get_type ()))
-#define BACON_IS_VIDEO_WIDGET_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), bacon_video_widget_get_type ()))
+G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkClutterEmbed)
 #define BVW_ERROR bacon_video_widget_error_quark ()
-
-typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
-
-/**
- * BaconVideoWidget:
- *
- * All the fields in the #BaconVideoWidget structure are private and should never be accessed directly.
- **/
-typedef struct {
-	/*< private >*/
-	GtkClutterEmbed parent;
-	BaconVideoWidgetPrivate *priv;
-} BaconVideoWidget;
-
-/**
- * BaconVideoWidgetClass:
- *
- * All the fields in the #BaconVideoWidgetClass structure are private and should never be accessed directly.
- **/
-typedef struct {
-	/*< private >*/
-	GtkClutterEmbedClass parent_class;
-
-	void (*error) (GtkWidget *bvw, const char *message, gboolean playback_stopped);
-	void (*eos) (GtkWidget *bvw);
-	void (*got_metadata) (GtkWidget *bvw);
-	void (*got_redirect) (GtkWidget *bvw, const char *mrl);
-	void (*channels_change) (GtkWidget *bvw);
-	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
-			double current_position, gboolean seekable);
-	void (*buffering) (GtkWidget *bvw, gdouble percentage);
-	void (*download_buffering) (GtkWidget *bvw, gdouble percentage);
-} BaconVideoWidgetClass;
 
 /**
  * BvwError:
