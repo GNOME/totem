@@ -95,17 +95,15 @@ libbacon_video_widget_dep = declare_dependency(
   sources: enum_sources
 )
 
-if have_easy_codec
-  backend_test = 'bvw-test'
+backend_test = 'bvw-test'
 
-  executable(
-    backend_test,
-    backend_test + '.c',
-    include_directories: libbacon_video_widget_incs,
-    dependencies: libbacon_video_widget_dep,
-    c_args: libbacon_video_widget_cflags + [
-      '-DLOGO_PATH="@0@"'.format(join_paths(totem_pkgdatadir, meson.project_name(), 'totem_logo.png')),
-      '-DG_LOG_DOMAIN="@0@"'.format(backend_test)
-    ]
-  )
-endif
+executable(
+  backend_test,
+  backend_test + '.c',
+  include_directories: libbacon_video_widget_incs,
+  dependencies: libbacon_video_widget_dep,
+  c_args: libbacon_video_widget_cflags + [
+    '-DLOGO_PATH="@0@"'.format(join_paths(totem_pkgdatadir, meson.project_name(), 'totem_logo.png')),
+    '-DG_LOG_DOMAIN="@0@"'.format(backend_test)
+  ]
+)
