@@ -966,9 +966,10 @@ bacon_video_widget_swipe (ClutterSwipeAction    *action,
   if ((direction & CLUTTER_SWIPE_DIRECTION_UP) ||
       (direction & CLUTTER_SWIPE_DIRECTION_DOWN)) {
     if ((direction & CLUTTER_SWIPE_DIRECTION_LEFT) ||
-        (direction & CLUTTER_SWIPE_DIRECTION_RIGHT))
+        (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)) {
       GST_DEBUG ("Ignoring diagonal swipe 0x%X", direction);
       return CLUTTER_EVENT_PROPAGATE;
+    }
   }
 
   if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
