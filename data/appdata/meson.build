@@ -13,6 +13,7 @@ appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test(
       'validate-appdata', appstream_util,
+      depends: appdata_file,
       args: ['validate', '--nonet', appdata_file.full_path()]
       )
 endif

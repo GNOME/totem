@@ -83,6 +83,7 @@ if desktop_file_validate.found()
   test(
       'validate-desktop',
       desktop_file_validate,
+      depends: desktop_file,
       args: [desktop_file.full_path()]
       )
 endif
