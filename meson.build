@@ -1,6 +1,6 @@
 project(
   'totem', 'c',
-  version: '3.38.0',
+  version: '41.alpha.0',
   license: 'GPL2+ with exception',
   default_options: 'buildtype=debugoptimized',
   meson_version: '>= 0.50.0'
@@ -9,7 +9,7 @@ project(
 totem_version = meson.project_version()
 version_array = totem_version.split('.')
 totem_major_version = version_array[0].to_int()
-totem_minor_version = version_array[1].to_int()
+totem_minor_version = version_array[1]
 totem_micro_version = version_array[2].to_int()
 
 totem_api_version = '1.0'
@@ -225,7 +225,9 @@ endif
 
 meson.add_install_script('meson_post_install.py')
 
-is_stable = totem_minor_version.is_even()
+is_stable = (totem_minor_version != 'alpha' and
+  totem_minor_version != 'beta' and
+  totem_minor_version != 'rc')
 if is_stable
   meson.add_dist_script(
     find_program('check-news.sh').path(),
