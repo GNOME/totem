@@ -123,6 +123,7 @@ int main
 	g_signal_connect (G_OBJECT (bvw), "got-redirect", G_CALLBACK (on_redirect), NULL);
 	g_signal_connect (G_OBJECT (bvw), "error", G_CALLBACK (error_cb), NULL);
 
+#if 0
 	box = g_object_get_data (bacon_video_widget_get_controls_object (BACON_VIDEO_WIDGET (bvw)), "controls_box");
 
 	/* Previous */
@@ -150,7 +151,7 @@ int main
 	gtk_button_set_image (GTK_BUTTON (item), image);
 
 	gtk_widget_show_all (GTK_WIDGET (box));
-
+#endif
 	gtk_container_add (GTK_CONTAINER (win),bvw);
 
 	gtk_widget_realize (GTK_WIDGET (win));

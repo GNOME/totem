@@ -83,7 +83,6 @@
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
-#include "bacon-video-controls-actor.h"
 #include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
 
@@ -109,6 +108,19 @@
    e->code == GST_##d##_ERROR_##c)
 
 #define I_(string) (g_intern_static_string (string))
+
+typedef enum
+{
+  GST_GTK_GL_ROTATE_METHOD_IDENTITY,
+  GST_GTK_GL_ROTATE_METHOD_90R,
+  GST_GTK_GL_ROTATE_METHOD_180,
+  GST_GTK_GL_ROTATE_METHOD_90L,
+  GST_GTK_GL_ROTATE_METHOD_FLIP_HORIZ,
+  GST_GTK_GL_ROTATE_METHOD_FLIP_VERT,
+  GST_GTK_GL_ROTATE_METHOD_FLIP_UL_LR,
+  GST_GTK_GL_ROTATE_METHOD_FLIP_UR_LL,
+  GST_GTK_GL_ROTATE_METHOD_AUTO,
+} GstGtkGLRotateMethod;
 
 static void bacon_video_widget_initable_iface_init (GInitableIface *iface);
 
@@ -162,7 +174,7 @@ static const gchar *video_props_str[4] = {
 
 struct _BaconVideoWidget
 {
-  GtkClutterEmbed              parent;
+  GtkOverlay                   parent;
 
   char                        *user_agent;
 
@@ -279,7 +291,7 @@ struct _BaconVideoWidget
   float                        rate;
 };
 
-G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_CLUTTER_TYPE_EMBED,
+G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_OVERLAY,
 			 G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
 						bacon_video_widget_initable_iface_init))
 
@@ -770,6 +782,7 @@ set_controls_visibility (BaconVideoWidget *bvw,
 			 gboolean          visible,
 			 gboolean          animate)
 {
+#if 0
   guint8 opacity = visible ? OVERLAY_OPACITY : 0;
   gint header_controls_height;
   gfloat header_controls_y;
@@ -796,6 +809,7 @@ set_controls_visibility (BaconVideoWidget *bvw,
 
   bvw->reveal_controls = visible;
   g_object_notify (G_OBJECT (bvw), "reveal-controls");
+#endif
 }
 
 static void
@@ -1476,7 +1490,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_type_class_ref (BVW_TYPE_DVD_EVENT);
   g_type_class_ref (BVW_TYPE_ROTATION);
 
-  g_object_set (G_OBJECT (bvw), "use-layout-size", TRUE, NULL);
+  //g_object_set (G_OBJECT (bvw), "use-layout-size", TRUE, NULL);
 
   bvw->update_id = 0;
   bvw->tagcache = NULL;
@@ -1543,9 +1557,9 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     /* This is necessary for the pixel-aspect-ratio of the
      * display to be taken into account. */
     get_media_size (bvw, &w, &h);
-    clutter_actor_set_size (bvw->texture, w, h);
+    //clutter_actor_set_size (bvw->texture, w, h);
 
-    set_current_actor (bvw);
+    //set_current_actor (bvw);
   } else {
     g_debug ("Unhandled application message %s", msg_name);
   }
@@ -2085,7 +2099,7 @@ update_orientation_from_video (BaconVideoWidget *bvw)
   g_free (orientation_str);
 
   angle = rotation * 90.0;
-  totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
+  //totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
 }
 
 static void
@@ -3813,6 +3827,7 @@ void
 bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
 				      const char       *reason)
 {
+#if 0
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   g_hash_table_remove (bvw->busy_popup_ht, reason);
@@ -3824,40 +3839,7 @@ bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
     GST_DEBUG ("Will hide popup soon");
     schedule_hiding_popup (bvw);
   }
-}
-
-/**
- * bacon_video_widget_get_controls_object:
- * @bvw: a #BaconVideoWidget
- *
- * Get the widget which displays the video controls.
- *
- * Returns: (transfer none): controls widget
- * Since: 3.12
- */
-GObject *
-bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
-
-  return G_OBJECT (bvw->controls);
-}
-
-/**
- * bacon_video_widget_get_header_controls_object:
- * @bvw: a #BaconVideoWidget
- *
- * Get the widget which displays the video header controls.
- *
- * Returns: (transfer none): header controls widget
- * Since: 3.20
- */
-GObject *
-bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
-
-  return G_OBJECT (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (bvw->header_controls)));
+#endif
 }
 
 /* =========================================== */
@@ -4981,7 +4963,7 @@ bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
   bvw->rotation = rotation;
 
   angle = rotation * 90.0;
-  totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
+  //totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
 }
 
 /**
@@ -6006,6 +5988,15 @@ element_make_or_warn (const char *plugin,
   return element;
 }
 
+static void
+rotate_method_changed_cb (GObject *video_sink)
+{
+  GstGtkGLRotateMethod method;
+
+  g_object_get (video_sink, "rotate-method", &method, NULL);
+  g_message ("video sink's rotate method %d", method);
+}
+
 static gboolean
 bacon_video_widget_initable_init (GInitable     *initable,
 				  GCancellable  *cancellable,
@@ -6015,8 +6006,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstElement *audio_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
+  GtkWidget *area;
   ClutterActor *layout;
-  GstElement *audio_bin;
+  GstElement *glsinkbin, *audio_bin;
   GstPad *audio_pad;
   ClutterAction *action;
   GObject *item;
@@ -6040,7 +6032,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* Instantiate all the fallible plugins */
   bvw->play = element_make_or_warn ("playbin", "play");
   bvw->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
-  bvw->video_sink = GST_ELEMENT (clutter_gst_video_sink_new ());
+  bvw->video_sink = element_make_or_warn ("gtkglsink", "video-sink");
+  glsinkbin = element_make_or_warn ("glsinkbin", "glsinkbin");
+  g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->play ||
@@ -6082,6 +6076,17 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   bvw->cursor_shown = TRUE;
 
+  g_object_get (bvw->video_sink, "widget", &area, NULL);
+  gtk_container_add (GTK_CONTAINER (bvw), area);
+  gtk_widget_show (area);
+  //g_object_unref (area);
+
+  g_object_set (bvw->video_sink,
+                "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
+                NULL);
+  g_signal_connect (bvw->video_sink, "notify::rotate-method",
+		    G_CALLBACK (rotate_method_changed_cb), NULL);
+#if 0
   bvw->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_actor_set_text_direction (bvw->stage,
 				    CLUTTER_TEXT_DIRECTION_LTR);
@@ -6178,9 +6183,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
   item = g_object_get_data (G_OBJECT (bvw->controls), "volume_button");
   g_signal_connect (item, "scroll-event",
 		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
-
+#endif
   /* And tell playbin */
-  g_object_set (bvw->play, "video-sink", bvw->video_sink, NULL);
+  g_object_set (bvw->play, "video-sink", glsinkbin, NULL);
 
   /* Link the audiopitch element */
   bvw->audio_capsfilter =
@@ -6330,7 +6335,8 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw,
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  g_object_set (bvw->header_controls, "visible", fullscreen, NULL);
+  //FIXME
+  //g_object_set (bvw->header_controls, "visible", fullscreen, NULL);
 }
 
 /*

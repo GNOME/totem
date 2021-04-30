@@ -29,12 +29,8 @@
 
 #include <clutter-gtk/clutter-gtk.h>
 
-#ifndef glib_autoptr_clear_GtkClutterEmbed
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkClutterEmbed, g_object_unref)
-#endif
-
 #define BACON_TYPE_VIDEO_WIDGET		     (bacon_video_widget_get_type ())
-G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkClutterEmbed)
+G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkOverlay)
 #define BVW_ERROR bacon_video_widget_error_quark ()
 
 /**
@@ -422,6 +418,3 @@ void bacon_video_widget_mark_popup_busy           (BaconVideoWidget *bvw,
 						   const char       *reason);
 void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
 						   const char       *reason);
-
-GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
-GObject * bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw);

@@ -205,11 +205,23 @@ totem_object_app_activate (GApplication *app)
 
 	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
 
-	totem->seek = g_object_get_data (totem->controls, "seek_scale");
+	totem->controls = gtk_builder_new ();
+	const char *objects[] = { "toolbar", NULL };
+	GError *error = NULL;
+        if (gtk_builder_add_objects_from_file (totem->controls, DATADIR "/totem/controls.ui", (gchar **) objects, &error) == 0)
+		g_assert_not_reached ();
+	gtk_grid_attach (GTK_GRID (totem->bvw_grid),
+			 GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")),
+			 0, 2, 1, 1);
+	gtk_widget_set_hexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
+	gtk_widget_set_vexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
+	gtk_widget_set_valign (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), GTK_ALIGN_END);
+
+	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->controls, "seek_scale"));
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
-	totem->volume = g_object_get_data (totem->controls, "volume_button");
-	totem->time_label = g_object_get_data (totem->controls, "time_label");
-	totem->time_rem_label = g_object_get_data (totem->controls, "time_rem_label");
+	totem->volume = GTK_WIDGET (gtk_builder_get_object (totem->controls, "volume_button"));
+	totem->time_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->controls, "time_label"));
+	totem->time_rem_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->controls, "time_rem_label"));
 	totem->pause_start = optionstate.pause;
 
 	totem_callback_connect (totem);
@@ -1636,8 +1648,9 @@ window_state_event_cb (GtkWidget           *window,
 		show_controls (totem, TRUE);
 	}
 
-	bacon_video_widget_set_fullscreen (totem->bvw,
-					   totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
+	g_object_set (totem->fullscreen_header,
+		      "visible", totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN,
+		      NULL);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
@@ -3814,6 +3827,7 @@ create_control_button (TotemObject *totem,
 	gtk_button_set_image (GTK_BUTTON (button), image);
 	gtk_widget_set_valign (GTK_WIDGET (button), GTK_ALIGN_CENTER);
 	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
+	g_message ("action_name: %s", action_name);
 	if (g_str_equal (action_name, "app.play")) {
 		g_object_set (G_OBJECT (image),
 			      "margin-start", 16,
@@ -3846,7 +3860,7 @@ totem_callback_connect (TotemObject *totem)
 				   g_variant_new_boolean (totem_playlist_get_repeat (totem->playlist)));
 
 	/* Controls */
-	box = g_object_get_data (totem->controls, "controls_box");
+	box = GTK_BOX (gtk_builder_get_object (totem->controls, "controls_box"));
 	gtk_widget_insert_action_group (GTK_WIDGET (box), "app", G_ACTION_GROUP (totem));
 
 	/* Previous */
@@ -3859,6 +3873,7 @@ totem_callback_connect (TotemObject *totem)
 	item = create_control_button (totem, "app.play",
 				      "media-playback-start-symbolic",
 				      _("Play / Pause"));
+	g_assert (item);
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Next */
@@ -3883,7 +3898,7 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (volume_button_menu_shown_cb), totem);
 
 	/* Go button */
-	item = g_object_get_data (totem->controls, "go_button");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->controls, "go_button"));
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
@@ -4032,12 +4047,11 @@ grilo_widget_setup (TotemObject *totem)
 }
 
 static void
-add_fullscreen_toolbar (TotemObject *totem)
+add_fullscreen_toolbar (TotemObject *totem,
+			GtkWidget   *container)
 {
-	GtkWidget *container, *item;
+	GtkWidget *item;
 	GMenuModel *menu;
-
-	container = GTK_WIDGET (bacon_video_widget_get_header_controls_object (totem->bvw));
 
 	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
 						 "show-search-button", FALSE,
@@ -4071,8 +4085,11 @@ add_fullscreen_toolbar (TotemObject *totem)
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
-	gtk_container_add (GTK_CONTAINER (container), totem->fullscreen_header);
+	gtk_grid_attach (GTK_GRID (container), totem->fullscreen_header, 0, 0, 1, 1);
+	gtk_widget_set_halign (totem->fullscreen_header, GTK_ALIGN_FILL);
+	gtk_widget_set_hexpand (totem->fullscreen_header, TRUE);
 	gtk_widget_show_all (totem->fullscreen_header);
+	gtk_widget_hide (totem->fullscreen_header);
 }
 
 void
@@ -4095,8 +4112,8 @@ video_widget_create (TotemObject *totem)
 	window = gtk_widget_get_window (totem->win);
 
 	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
-	bacon_video_widget_set_fullscreen (totem->bvw, fullscreen);
-	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
+	//FIXME doesn't exist yet
+	g_object_set (totem->fullscreen_header, "visible", fullscreen, NULL);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",
@@ -4151,7 +4168,13 @@ video_widget_create (TotemObject *totem)
 	gtk_container_add (container,
 			GTK_WIDGET (totem->bvw));
 
-	add_fullscreen_toolbar (totem);
+	//FIXME
+	totem->bvw_grid = gtk_grid_new ();
+	gtk_overlay_add_overlay (GTK_OVERLAY (totem->bvw), totem->bvw_grid);
+	gtk_widget_set_halign (totem->bvw_grid, GTK_ALIGN_FILL);
+	gtk_widget_set_valign (totem->bvw_grid, GTK_ALIGN_FILL);
+	gtk_widget_show (totem->bvw_grid);
+	add_fullscreen_toolbar (totem, totem->bvw_grid);
 
 	/* Events for the widget video window as well */
 	gtk_widget_add_events (GTK_WIDGET (totem->bvw),

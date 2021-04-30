@@ -46,7 +46,7 @@
 		widget = GTK_WIDGET (gtk_builder_get_object (xml, name));	\
 		gtk_widget_set_sensitive (widget, state);			\
 	}
-#define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (g_object_get_data (totem->controls, name), state)
+#define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (totem->controls, name)), state)
 
 #define totem_object_set_sensitivity2(name, state)					\
 	{										\
@@ -75,13 +75,14 @@ struct _TotemObject {
 	GtkWidget *win;
 	GtkWidget *stack;
 	BaconVideoWidget *bvw;
+	GtkWidget *bvw_grid;
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
 	GtkWindow *shortcuts_win;
 
 	GtkWidget *grilo;
 
-	GObject *controls;
+	GtkBuilder *controls;
 	GtkWidget *play_button;
 	BaconTimeLabel *time_label;
 	BaconTimeLabel *time_rem_label;
