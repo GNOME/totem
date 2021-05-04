@@ -43,7 +43,7 @@
 #define TOTEM_IS_ROTATION_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_ROTATION_PLUGIN))
 #define TOTEM_ROTATION_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_ROTATION_PLUGIN, TotemRotationPluginClass))
 
-#define GIO_ROTATION_FILE_ATTRIBUTE "metadata::totem::rotation"
+#define GIO_ROTATION_FILE_ATTRIBUTE "metadata::totem::rotation2"
 #define STATE_COUNT 4
 
 typedef struct {
@@ -164,8 +164,6 @@ update_state (TotemRotationPlugin *pi,
 	TotemRotationPluginPrivate *priv = pi->priv;
 
 	if (mrl == NULL) {
-		bacon_video_widget_set_rotation (BACON_VIDEO_WIDGET (priv->bvw),
-					 BVW_ROTATION_R_ZERO);
 		g_simple_action_set_enabled (priv->rotate_left_action, FALSE);
 		g_simple_action_set_enabled (priv->rotate_right_action, FALSE);
 	} else {
@@ -301,9 +299,6 @@ impl_deactivate (PeasActivatable *plugin)
 	totem_object_empty_menu_section (priv->totem, "rotation-placeholder");
 	g_action_map_remove_action (G_ACTION_MAP (priv->totem), "rotate-left");
 	g_action_map_remove_action (G_ACTION_MAP (priv->totem), "rotate-right");
-
-	bacon_video_widget_set_rotation (BACON_VIDEO_WIDGET (priv->bvw),
-					 BVW_ROTATION_R_ZERO);
 
 	priv->totem = NULL;
 	priv->bvw = NULL;

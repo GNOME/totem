@@ -2071,37 +2071,6 @@ bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
 }
 
 static void
-update_orientation_from_video (BaconVideoWidget *bvw)
-{
-  BvwRotation rotation = BVW_ROTATION_R_ZERO;
-  char *orientation_str = NULL;
-  gboolean ret;
-  gdouble angle;
-
-  /* Don't change the rotation if explicitely set */
-  if (bvw->rotation != BVW_ROTATION_R_ZERO)
-    return;
-
-  ret = gst_tag_list_get_string_index (bvw->tagcache,
-				       GST_TAG_IMAGE_ORIENTATION, 0, &orientation_str);
-  if (!ret || !orientation_str || g_str_equal (orientation_str, "rotate-0"))
-    rotation = BVW_ROTATION_R_ZERO;
-  else if (g_str_equal (orientation_str, "rotate-90"))
-    rotation = BVW_ROTATION_R_90R;
-  else if (g_str_equal (orientation_str, "rotate-180"))
-    rotation = BVW_ROTATION_R_180;
-  else if (g_str_equal (orientation_str, "rotate-270"))
-    rotation = BVW_ROTATION_R_90L;
-  else
-    g_warning ("Unhandled orientation value: '%s'", orientation_str);
-
-  g_free (orientation_str);
-
-  angle = rotation * 90.0;
-  //totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
-}
-
-static void
 bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type)
 {
   GstTagList **cache = NULL;
@@ -2141,8 +2110,6 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
     gst_tag_list_unref (tag_list);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
-
-  update_orientation_from_video (bvw);
 
   set_current_actor (bvw);
 }
@@ -4393,7 +4360,9 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->movie_par_n = bvw->movie_par_d = 1;
   clutter_actor_hide (bvw->spinner);
   g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
-  totem_aspect_frame_set_internal_rotation (TOTEM_ASPECT_FRAME (bvw->frame), 0.0);
+  g_object_set (bvw->video_sink,
+                "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
+                NULL);
   GST_DEBUG ("stopped");
 }
 
@@ -4910,11 +4879,7 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  if (bvw->frame == NULL)
-    return;
-
-  totem_aspect_frame_set_expand (TOTEM_ASPECT_FRAME (bvw->frame),
-			      (mode == BVW_ZOOM_EXPAND));
+  g_warning ("Not implemented");
 }
 
 /**
@@ -4930,10 +4895,10 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 {
   gboolean expand;
 
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 1.0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_ZOOM_NONE);
 
-  expand = totem_aspect_frame_get_expand (TOTEM_ASPECT_FRAME (bvw->frame));
-  return expand ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE;
+  g_warning ("Not implemented");
+  return BVW_ZOOM_NONE;
 }
 
 /**
@@ -4947,12 +4912,7 @@ void
 bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
 				 BvwRotation       rotation)
 {
-  gfloat angle;
-
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  if (bvw->frame == NULL)
-    return;
 
   GST_DEBUG ("Rotating to %s (%f degrees) from %s",
 	     get_type_name (BVW_TYPE_ROTATION, rotation),
@@ -4960,9 +4920,8 @@ bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
 	     get_type_name (BVW_TYPE_ROTATION, bvw->rotation));
 
   bvw->rotation = rotation;
-
-  angle = rotation * 90.0;
-  //totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->frame), angle);
+  //FIXME figure out when to reset "auto"
+  g_object_set (bvw->video_sink, "rotate-method", rotation, NULL);
 }
 
 /**
@@ -6094,14 +6053,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_name (bvw->stage, "stage");
   clutter_actor_set_background_color (bvw->stage, CLUTTER_COLOR_Black);
 
-  /* Video sink, with aspect frame */
-  bvw->texture = g_object_new (CLUTTER_TYPE_ACTOR,
-                                     "content", g_object_new (CLUTTER_GST_TYPE_CONTENT,
-                                                              "sink", bvw->video_sink,
-                                                              NULL),
-				     "name", "texture",
-				     "reactive", TRUE,
-				     NULL);
   listen_navigation_events (bvw->texture, bvw);
 
   /* The logo */
@@ -6112,17 +6063,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_content_gravity (bvw->logo_frame, CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT);
   clutter_actor_add_child (bvw->stage, bvw->logo_frame);
   clutter_actor_hide (CLUTTER_ACTOR (bvw->logo_frame));
-
-  /* The video */
-  bvw->frame = totem_aspect_frame_new ();
-  clutter_actor_set_name (bvw->frame, "frame");
-  totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->frame), bvw->texture);
-
-  clutter_actor_add_child (bvw->stage, bvw->frame);
-
-  clutter_actor_set_child_above_sibling (bvw->stage,
-					 bvw->logo_frame,
-					 bvw->frame);
 
   /* The video's actions */
   action = clutter_tap_action_new ();
