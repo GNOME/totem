@@ -1074,7 +1074,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   GtkWidgetClass *widget_class;
 
   disable_vaapi ();
-  clutter_gst_init (NULL, NULL);
 
   object_class = (GObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
