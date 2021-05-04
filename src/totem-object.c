@@ -4088,6 +4088,7 @@ add_fullscreen_toolbar (TotemObject *totem,
 	gtk_grid_attach (GTK_GRID (container), totem->fullscreen_header, 0, 0, 1, 1);
 	gtk_widget_set_halign (totem->fullscreen_header, GTK_ALIGN_FILL);
 	gtk_widget_set_hexpand (totem->fullscreen_header, TRUE);
+	gtk_widget_set_opacity (totem->fullscreen_header, 0.86);
 	gtk_widget_show_all (totem->fullscreen_header);
 	gtk_widget_hide (totem->fullscreen_header);
 }

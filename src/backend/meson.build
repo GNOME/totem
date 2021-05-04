@@ -38,7 +38,6 @@ sources = files(
   'bacon-video-widget-gst-missing-plugins.c',
   'bacon-video-widget.c',
   'clock.c',
-  'totem-aspect-frame.c'
 )
 
 enum = 'bacon-video-widget-enums'

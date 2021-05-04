@@ -64,7 +64,6 @@
 #include <gst/tag/tag.h>
 
 #include <clutter-gst/clutter-gst.h>
-#include "totem-aspect-frame.h"
 
 /* system */
 #include <unistd.h>
