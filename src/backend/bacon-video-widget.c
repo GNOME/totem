@@ -5946,15 +5946,6 @@ element_make_or_warn (const char *plugin,
   return element;
 }
 
-static void
-rotate_method_changed_cb (GObject *video_sink)
-{
-  GstGtkGLRotateMethod method;
-
-  g_object_get (video_sink, "rotate-method", &method, NULL);
-  g_message ("video sink's rotate method %d", method);
-}
-
 static gboolean
 bacon_video_widget_initable_init (GInitable     *initable,
 				  GCancellable  *cancellable,
@@ -6042,8 +6033,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   g_object_set (bvw->video_sink,
                 "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
                 NULL);
-  g_signal_connect (bvw->video_sink, "notify::rotate-method",
-		    G_CALLBACK (rotate_method_changed_cb), NULL);
 #if 0
   bvw->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_actor_set_text_direction (bvw->stage,
