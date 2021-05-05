@@ -91,6 +91,8 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <property name="use-header-bar">1</property>
+  <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+  <signal name="response" handler="gtk_widget_hide"/>
 
   <child internal-child="vbox">
     <object class="GtkVBox" id="tpw_dialog_vbox">
