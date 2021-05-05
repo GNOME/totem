@@ -236,7 +236,6 @@ totem_setup_preferences (Totem *totem)
 
 	bvw = totem_object_get_video_widget (totem);
 
-	totem->prefs = PWID ("totem_preferences_window");
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
