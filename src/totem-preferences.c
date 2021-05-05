@@ -301,8 +301,6 @@ totem_setup_preferences (Totem *totem)
 
 	/* Subtitle font selection */
 	item = POBJ ("font_sel_button");
-	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
-				   _("Select Subtitle Font"));
 	font = g_settings_get_string (totem->settings, "subtitle-font");
 	if (*font != '\0') {
 		gtk_font_chooser_set_font (GTK_FONT_CHOOSER (item), font);
