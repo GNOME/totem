@@ -37,7 +37,7 @@
  * @stability: Unstable
  * @include: bacon-video-widget.h
  *
- * #BaconVideoWidget is a widget to play audio or video streams, with support for visualisations for audio-only streams. It has a GStreamer
+ * #BaconVideoWidget is a widget to play audio or video streams It has a GStreamer
  * backend, and abstracts away the differences to provide a simple interface to the functionality required by Totem. It handles all the low-level
  * audio and video work for Totem (or passes the work off to the backend).
  **/
@@ -687,9 +687,7 @@ set_current_actor (BaconVideoWidget *bvw)
   if (bvw->stage == NULL)
     return;
 
-  /* If there's only audio and no visualisation, draw the logo as well.
-   * If we have a cover image to display, we display it regardless of whether we're
-   * doing visualisations. */
+  /* If there's only audio draw the logo as well. */
   draw_logo = bvw->media_has_audio &&
       !bvw->media_has_video && bvw->cover_pixbuf;
 
@@ -5918,8 +5916,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
  * Determines whether individual frames from the current stream can
  * be returned using bacon_video_widget_get_current_frame().
  *
- * Frames cannot be returned for audio-only streams, unless visualisations
- * are enabled.
+ * Frames cannot be returned for audio-only streams.
  *
  * Return value: %TRUE if frames can be captured, %FALSE otherwise
  **/
