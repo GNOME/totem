@@ -251,9 +251,6 @@ totem_object_app_activate (GApplication *app)
 			totem_object_set_fullscreen (totem, TRUE);
 	}
 
-	/* Set the logo at the last minute so we won't try to show it before a video */
-	bacon_video_widget_set_logo (totem->bvw, APPLICATION_ID);
-
 	g_application_unmark_busy (G_APPLICATION (totem));
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));

@@ -627,6 +627,22 @@ leave_notify_cb (GtkWidget        *widget,
 }
 
 static void
+bvw_set_logo (BaconVideoWidget *bvw, const gchar *name)
+{
+  GtkIconTheme *theme;
+  GError *error = NULL;
+
+  theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (bvw)));
+  bvw->logo_pixbuf = gtk_icon_theme_load_icon (theme, name, LOGO_SIZE, 0, &error);
+
+  if (error) {
+    g_warning ("An error occurred trying to open logo %s: %s", name, error->message);
+    g_error_free (error);
+    return;
+  }
+}
+
+static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
@@ -635,6 +651,8 @@ bacon_video_widget_realize (GtkWidget * widget)
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   gtk_widget_set_realized (widget, TRUE);
+
+  bvw_set_logo (bvw, APPLICATION_ID);
 
   /* get screen size changes */
   g_signal_connect (G_OBJECT (gtk_widget_get_screen (widget)),
@@ -4689,37 +4707,6 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       GST_WARNING ("unhandled type %d", type);
       break;
   }
-}
-
-/**
- * bacon_video_widget_set_logo:
- * @bvw: a #BaconVideoWidget
- * @name: the icon name of the logo
- *
- * Sets the logo displayed on the video widget when no stream is loaded.
- **/
-void
-bacon_video_widget_set_logo (BaconVideoWidget *bvw, const gchar *name)
-{
-  GtkIconTheme *theme;
-  GError *error = NULL;
-
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (name != NULL);
-
-  if (bvw->logo_pixbuf != NULL)
-    g_object_unref (bvw->logo_pixbuf);
-
-  theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (bvw)));
-  bvw->logo_pixbuf = gtk_icon_theme_load_icon (theme, name, LOGO_SIZE, 0, &error);
-
-  if (error) {
-    g_warning ("An error occurred trying to open logo %s: %s", name, error->message);
-    g_error_free (error);
-    return;
-  }
-
-  set_current_actor (bvw);
 }
 
 static gboolean
