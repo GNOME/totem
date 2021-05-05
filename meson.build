@@ -214,7 +214,9 @@ top_inc = include_directories('.')
 
 subdir('po')
 subdir('data')
-subdir('help')
+if get_option('help')
+  subdir('help')
+endif
 subdir('src')
 
 if get_option('enable-gtk-doc')
