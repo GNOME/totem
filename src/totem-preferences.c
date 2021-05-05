@@ -234,7 +234,8 @@ totem_setup_preferences (Totem *totem)
 
 	g_return_if_fail (totem->settings != NULL);
 
-	totem->prefs_xml = totem_interface_load ("preferences.ui", TRUE, NULL, totem);
+	totem->prefs_xml = gtk_builder_new_from_resource ("/org/gnome/totem/ui/preferences.ui");
+	gtk_builder_connect_signals (totem->prefs_xml, totem);
 	totem->prefs = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "totem_preferences_window"));
 
 	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));

@@ -42,7 +42,6 @@ endif
 ui_files = files(
   'controls.ui',
   'playlist.ui',
-  'preferences.ui',
   'shortcuts.ui',
   'totem.ui',
   'uri.ui'
@@ -51,6 +50,14 @@ ui_files = files(
 install_data(
   ui_files,
   install_dir: totem_pkgdatadir
+)
+
+ui_resources = gnome.compile_resources(
+  'totemresources',
+  'totem.gresource.xml',
+  export: true,
+  source_dir: '.',
+  c_name: 'totem'
 )
 
 r = run_command(desktop_sh, mime_type_list, uri_schemes_list)

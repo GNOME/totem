@@ -137,6 +137,8 @@ libtotem_sources += gnome.compile_resources(
   c_name: '_totem'
 )
 
+libtotem_sources += ui_resources
+
 libtotem_deps = [
   libtotem_player_dep,
   libbacon_video_widget_dep,
