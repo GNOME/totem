@@ -697,8 +697,7 @@ set_current_actor (BaconVideoWidget *bvw)
   /* If there's only audio and no visualisation, draw the logo as well.
    * If we have a cover image to display, we display it regardless of whether we're
    * doing visualisations. */
-  draw_logo = bvw->media_has_audio &&
-      !bvw->media_has_video && bvw->cover_pixbuf;
+  draw_logo = bvw->media_has_audio && !bvw->media_has_video;
 
   if (bvw->logo_mode || draw_logo) {
     const GdkPixbuf *pixbuf;
