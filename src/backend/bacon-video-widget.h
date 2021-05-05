@@ -131,10 +131,6 @@ void bacon_video_widget_set_text_subtitle	(BaconVideoWidget * bvw,
 						 const gchar * subtitle_uri);
 void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
 						  const char *name);
-void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
-						  gboolean logo_mode);
-gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
-
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,

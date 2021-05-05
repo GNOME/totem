@@ -1862,7 +1862,6 @@ totem_object_set_mrl (TotemObject *totem,
 		totem_object_set_sensitivity2 ("select-subtitle", FALSE);
 
 		/* Set the logo */
-		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
 
 		g_object_notify (G_OBJECT (totem), "playing");
@@ -1870,8 +1869,6 @@ totem_object_set_mrl (TotemObject *totem,
 		gboolean caps;
 		char *user_agent;
 		char *autoload_sub;
-
-		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
 		autoload_sub = NULL;
 		if (subtitle == NULL)
@@ -3198,9 +3195,6 @@ static gboolean
 on_eos_event (GtkWidget *widget, TotemObject *totem)
 {
 	reset_seek_status (totem);
-
-	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
-		return FALSE;
 
 	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE &&
 	    totem_playlist_get_repeat (totem->playlist) == FALSE &&

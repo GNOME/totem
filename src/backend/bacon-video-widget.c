@@ -134,7 +134,6 @@ enum
 enum
 {
   PROP_0,
-  PROP_LOGO_MODE,
   PROP_POSITION,
   PROP_CURRENT_TIME,
   PROP_STREAM_LENGTH,
@@ -221,7 +220,6 @@ struct _BaconVideoWidget
   GstElement                  *audio_pitchcontrol;
 
   /* Other stuff */
-  gboolean                     logo_mode;
   gboolean                     cursor_shown;
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
@@ -469,7 +467,117 @@ set_display_pixel_aspect_ratio (GdkMonitor *monitor,
 static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 {
-  if (bvw->logo_mode) {
+  if (bvw->media_has_video) {
+    GValue disp_par = {0, };
+    guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
+
+    /* Create and init the fraction value */
+    g_value_init (&disp_par, GST_TYPE_FRACTION);
+
+    /* Square pixel is our default */
+    gst_value_set_fraction (&disp_par, 1, 1);
+
+    /* Now try getting display's pixel aspect ratio */
+    if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
+      GdkDisplay *display;
+      GdkWindow *window;
+      GdkMonitor *monitor;
+
+      display = gtk_widget_get_display (GTK_WIDGET (bvw));
+      window = gtk_widget_get_window (GTK_WIDGET (bvw));
+      if (window)
+        monitor = gdk_display_get_monitor_at_window (display, window);
+      else
+        monitor = gdk_display_get_primary_monitor (display);
+      set_display_pixel_aspect_ratio (monitor, &disp_par);
+    }
+
+    disp_par_n = gst_value_get_fraction_numerator (&disp_par);
+    disp_par_d = gst_value_get_fraction_denominator (&disp_par);
+
+    GST_DEBUG ("display PAR is %d/%d", disp_par_n, disp_par_d);
+
+    /* If movie pixel aspect ratio is enforced, use that */
+    if (bvw->ratio_type != BVW_RATIO_AUTO) {
+      switch (bvw->ratio_type) {
+        case BVW_RATIO_SQUARE:
+          movie_par_n = 1;
+          movie_par_d = 1;
+          break;
+        case BVW_RATIO_FOURBYTHREE:
+          movie_par_n = 4 * bvw->video_height;
+          movie_par_d = 3 * bvw->video_width;
+          break;
+        case BVW_RATIO_ANAMORPHIC:
+          movie_par_n = 16 * bvw->video_height;
+          movie_par_d = 9 * bvw->video_width;
+          break;
+        case BVW_RATIO_DVB:
+          movie_par_n = 20 * bvw->video_height;
+          movie_par_d = 9 * bvw->video_width;
+          break;
+        /* handle these to avoid compiler warnings */
+        case BVW_RATIO_AUTO:
+        default:
+          movie_par_n = 0;
+          movie_par_d = 0;
+          g_assert_not_reached ();
+      }
+    } else {
+      /* Use the movie pixel aspect ratio if any */
+      movie_par_n = bvw->movie_par_n;
+      movie_par_d = bvw->movie_par_d;
+    }
+
+    GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
+
+    if (bvw->video_width == 0 || bvw->video_height == 0) {
+      GST_DEBUG ("width and/or height 0, assuming 1/1 ratio");
+      num = 1;
+      den = 1;
+    } else if (!gst_video_calculate_display_ratio (&num, &den,
+        bvw->video_width, bvw->video_height,
+        movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
+      GST_WARNING ("overflow calculating display aspect ratio!");
+      num = 1;   /* FIXME: what values to use here? */
+      den = 1;
+    }
+
+    GST_DEBUG ("calculated scaling ratio %d/%d for video %dx%d", num, den,
+        bvw->video_width, bvw->video_height);
+
+    /* now find a width x height that respects this display ratio.
+     * prefer those that have one of w/h the same as the incoming video
+     * using wd / hd = num / den */
+
+    /* start with same height, because of interlaced video */
+    /* check hd / den is an integer scale factor, and scale wd with the PAR */
+    if (bvw->video_height % den == 0) {
+      GST_DEBUG ("keeping video height");
+      bvw->video_width_pixels =
+          (guint) gst_util_uint64_scale (bvw->video_height, num, den);
+      bvw->video_height_pixels = bvw->video_height;
+    } else if (bvw->video_width % num == 0) {
+      GST_DEBUG ("keeping video width");
+      bvw->video_width_pixels = bvw->video_width;
+      bvw->video_height_pixels =
+          (guint) gst_util_uint64_scale (bvw->video_width, den, num);
+    } else {
+      GST_DEBUG ("approximating while keeping video height");
+      bvw->video_width_pixels =
+          (guint) gst_util_uint64_scale (bvw->video_height, num, den);
+      bvw->video_height_pixels = bvw->video_height;
+    }
+    GST_DEBUG ("scaling to %dx%d", bvw->video_width_pixels,
+        bvw->video_height_pixels);
+
+    *width = bvw->video_width_pixels;
+    *height = bvw->video_height_pixels;
+
+    /* Free the PAR fraction */
+    g_value_unset (&disp_par);
+  }
+  else {
     const GdkPixbuf *pixbuf;
 
     pixbuf = bvw_get_logo_pixbuf (bvw);
@@ -482,121 +590,6 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 	*width = (int) ((float) *height / 9. * 16.);
       }
     } else {
-      *width = 0;
-      *height = 0;
-    }
-  } else {
-    if (bvw->media_has_video) {
-      GValue disp_par = {0, };
-      guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
-
-      /* Create and init the fraction value */
-      g_value_init (&disp_par, GST_TYPE_FRACTION);
-
-      /* Square pixel is our default */
-      gst_value_set_fraction (&disp_par, 1, 1);
-
-      /* Now try getting display's pixel aspect ratio */
-      if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
-	GdkDisplay *display;
-	GdkWindow *window;
-	GdkMonitor *monitor;
-
-	display = gtk_widget_get_display (GTK_WIDGET (bvw));
-	window = gtk_widget_get_window (GTK_WIDGET (bvw));
-	if (window)
-	  monitor = gdk_display_get_monitor_at_window (display, window);
-	else
-	  monitor = gdk_display_get_primary_monitor (display);
-	set_display_pixel_aspect_ratio (monitor, &disp_par);
-      }
-
-      disp_par_n = gst_value_get_fraction_numerator (&disp_par);
-      disp_par_d = gst_value_get_fraction_denominator (&disp_par);
-
-      GST_DEBUG ("display PAR is %d/%d", disp_par_n, disp_par_d);
-
-      /* If movie pixel aspect ratio is enforced, use that */
-      if (bvw->ratio_type != BVW_RATIO_AUTO) {
-        switch (bvw->ratio_type) {
-          case BVW_RATIO_SQUARE:
-            movie_par_n = 1;
-            movie_par_d = 1;
-            break;
-          case BVW_RATIO_FOURBYTHREE:
-            movie_par_n = 4 * bvw->video_height;
-            movie_par_d = 3 * bvw->video_width;
-            break;
-          case BVW_RATIO_ANAMORPHIC:
-            movie_par_n = 16 * bvw->video_height;
-            movie_par_d = 9 * bvw->video_width;
-            break;
-          case BVW_RATIO_DVB:
-            movie_par_n = 20 * bvw->video_height;
-            movie_par_d = 9 * bvw->video_width;
-            break;
-          /* handle these to avoid compiler warnings */
-          case BVW_RATIO_AUTO:
-          default:
-            movie_par_n = 0;
-            movie_par_d = 0;
-            g_assert_not_reached ();
-        }
-      } else {
-        /* Use the movie pixel aspect ratio if any */
-        movie_par_n = bvw->movie_par_n;
-        movie_par_d = bvw->movie_par_d;
-      }
-
-      GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
-
-      if (bvw->video_width == 0 || bvw->video_height == 0) {
-        GST_DEBUG ("width and/or height 0, assuming 1/1 ratio");
-        num = 1;
-        den = 1;
-      } else if (!gst_video_calculate_display_ratio (&num, &den,
-          bvw->video_width, bvw->video_height,
-          movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
-        GST_WARNING ("overflow calculating display aspect ratio!");
-        num = 1;   /* FIXME: what values to use here? */
-        den = 1;
-      }
-
-      GST_DEBUG ("calculated scaling ratio %d/%d for video %dx%d", num, den,
-          bvw->video_width, bvw->video_height);
-      
-      /* now find a width x height that respects this display ratio.
-       * prefer those that have one of w/h the same as the incoming video
-       * using wd / hd = num / den */
-    
-      /* start with same height, because of interlaced video */
-      /* check hd / den is an integer scale factor, and scale wd with the PAR */
-      if (bvw->video_height % den == 0) {
-        GST_DEBUG ("keeping video height");
-        bvw->video_width_pixels =
-            (guint) gst_util_uint64_scale (bvw->video_height, num, den);
-        bvw->video_height_pixels = bvw->video_height;
-      } else if (bvw->video_width % num == 0) {
-        GST_DEBUG ("keeping video width");
-        bvw->video_width_pixels = bvw->video_width;
-        bvw->video_height_pixels =
-            (guint) gst_util_uint64_scale (bvw->video_width, den, num);
-      } else {
-        GST_DEBUG ("approximating while keeping video height");
-        bvw->video_width_pixels =
-            (guint) gst_util_uint64_scale (bvw->video_height, num, den);
-        bvw->video_height_pixels = bvw->video_height;
-      }
-      GST_DEBUG ("scaling to %dx%d", bvw->video_width_pixels,
-          bvw->video_height_pixels);
-      
-      *width = bvw->video_width_pixels;
-      *height = bvw->video_height_pixels;
-      
-      /* Free the PAR fraction */
-      g_value_unset (&disp_par);
-    }
-    else {
       *width = 0;
       *height = 0;
     }
@@ -700,7 +693,7 @@ set_current_actor (BaconVideoWidget *bvw)
   draw_logo = bvw->media_has_audio &&
       !bvw->media_has_video && bvw->cover_pixbuf;
 
-  if (bvw->logo_mode || draw_logo) {
+  if (draw_logo) {
     const GdkPixbuf *pixbuf;
 
     pixbuf = bvw_get_logo_pixbuf (bvw);
@@ -861,7 +854,7 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 
   g_return_val_if_fail (bvw->play != NULL, FALSE);
 
-  if (bvw->navigation && !bvw->logo_mode)
+  if (bvw->navigation)
     gst_navigation_send_mouse_event (bvw->navigation, "mouse-move", 0, event->x, event->y);
 
   if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
@@ -908,7 +901,6 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
     goto bail;
 
   if (bvw->navigation &&
-      !bvw->logo_mode &&
       event->button == 1 &&
       bvw->is_menu != FALSE) {
     const char *event_str;
@@ -1100,18 +1092,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   object_class->finalize = bacon_video_widget_finalize;
 
   /* Properties */
-  /**
-   * BaconVideoWidget:logo-mode:
-   *
-   * Whether the logo should be displayed when no stream is loaded, or the widget
-   * should take up no space.
-   **/
-  g_object_class_install_property (object_class, PROP_LOGO_MODE,
-                                   g_param_spec_boolean ("logo-mode", "Logo mode?",
-                                                         "Whether the logo should be displayed when no stream is loaded.", FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_STATIC_STRINGS));
-
   /**
    * BaconVideoWidget:position:
    *
@@ -3102,9 +3082,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
   bvw = BACON_VIDEO_WIDGET (object);
 
   switch (property_id) {
-    case PROP_LOGO_MODE:
-      bacon_video_widget_set_logo_mode (bvw, g_value_get_boolean (value));
-      break;
     case PROP_REFERRER:
       bacon_video_widget_set_referrer (bvw, g_value_get_string (value));
       break;
@@ -3150,9 +3127,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
   bvw = BACON_VIDEO_WIDGET (object);
 
   switch (property_id) {
-    case PROP_LOGO_MODE:
-      g_value_set_boolean (value, bacon_video_widget_get_logo_mode (bvw));
-      break;
     case PROP_POSITION:
       g_value_set_double (value, bacon_video_widget_get_position (bvw));
       break;
@@ -4750,49 +4724,6 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, const gchar *name)
   set_current_actor (bvw);
 }
 
-/**
- * bacon_video_widget_set_logo_mode:
- * @bvw: a #BaconVideoWidget
- * @logo_mode: %TRUE to display the logo, %FALSE otherwise
- *
- * Sets whether to display a logo set with @bacon_video_widget_set_logo when
- * no stream is loaded. If @logo_mode is %FALSE, nothing will be displayed
- * and the video widget will take up no space. Otherwise, the logo will be
- * displayed and will requisition a corresponding amount of space.
- **/
-void
-bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  logo_mode = logo_mode != FALSE;
-
-  if (bvw->logo_mode != logo_mode) {
-    bvw->logo_mode = logo_mode;
-
-    set_current_actor (bvw);
-
-    g_object_notify (G_OBJECT (bvw), "logo-mode");
-    g_object_notify (G_OBJECT (bvw), "seekable");
-  }
-}
-
-/**
- * bacon_video_widget_get_logo_mode
- * @bvw: a #BaconVideoWidget
- *
- * Gets whether the logo is displayed when no stream is loaded.
- *
- * Return value: %TRUE if the logo is displayed, %FALSE otherwise
- **/
-gboolean
-bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-
-  return bvw->logo_mode;
-}
-
 static gboolean
 bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw)
 {
@@ -6242,7 +6173,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->ratio_type = BVW_RATIO_AUTO;
 
   bvw->cursor_shown = TRUE;
-  bvw->logo_mode = FALSE;
 
   bvw->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_actor_set_text_direction (bvw->stage,

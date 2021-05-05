@@ -52,7 +52,6 @@ typedef struct {
 	BaconVideoWidget *bvw;
 
 	gulong got_metadata_signal;
-	gulong notify_logo_mode_signal;
 
 	GSettings *settings;
 	gboolean save_to_disk;
@@ -222,9 +221,6 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	g_autofree char *video_name = NULL;
 	g_autofree char *escaped_video_name = NULL;
 
-	if (bacon_video_widget_get_logo_mode (priv->bvw) != FALSE)
-		return;
-
 	if (bacon_video_widget_can_get_frames (priv->bvw, &err) == FALSE) {
 		if (err == NULL)
 			return;
@@ -269,9 +265,6 @@ take_gallery_action_cb (GAction               *action,
 	Totem *totem = self->priv->totem;
 	GtkDialog *dialog;
 
-	if (bacon_video_widget_get_logo_mode (self->priv->bvw) != FALSE)
-		return;
-
 	dialog = GTK_DIALOG (totem_gallery_new (totem));
 
 	g_signal_connect (dialog, "response",
@@ -286,7 +279,6 @@ update_state (TotemScreenshotPlugin *self)
 	gboolean sensitive;
 
 	sensitive = bacon_video_widget_can_get_frames (priv->bvw, NULL) &&
-		    (bacon_video_widget_get_logo_mode (priv->bvw) == FALSE) &&
 		    priv->save_to_disk;
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->screenshot_action), sensitive);
@@ -295,12 +287,6 @@ update_state (TotemScreenshotPlugin *self)
 
 static void
 got_metadata_cb (BaconVideoWidget *bvw, TotemScreenshotPlugin *self)
-{
-	update_state (self);
-}
-
-static void
-notify_logo_mode_cb (GObject *object, GParamSpec *pspec, TotemScreenshotPlugin *self)
 {
 	update_state (self);
 }
@@ -326,11 +312,6 @@ impl_activate (PeasActivatable *plugin)
 						      "got-metadata",
 						      G_CALLBACK (got_metadata_cb),
 						      self);
-	priv->notify_logo_mode_signal = g_signal_connect (G_OBJECT (priv->bvw),
-							  "notify::logo-mode",
-							  G_CALLBACK (notify_logo_mode_cb),
-							  self);
-
 	priv->screenshot_action = g_simple_action_new ("take-screenshot", NULL);
 	g_signal_connect (G_OBJECT (priv->screenshot_action), "activate",
 			  G_CALLBACK (take_screenshot_action_cb), plugin);
@@ -375,7 +356,6 @@ impl_deactivate (PeasActivatable *plugin)
 
 	/* Disconnect signal handlers */
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
-	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->notify_logo_mode_signal);
 
 	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
 					       "app.take-screenshot",

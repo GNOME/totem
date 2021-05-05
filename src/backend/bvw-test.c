@@ -164,8 +164,6 @@ int main
 		test_bvw_set_mrl (bvw, filenames[0]);
 		argument = g_strdup (filenames[0]);
 		bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
-	} else {
-		bacon_video_widget_set_logo_mode (BACON_VIDEO_WIDGET (bvw), TRUE);
 	}
 
 	gtk_main ();
