@@ -179,7 +179,6 @@ struct _BaconVideoWidget
   guint                        fill_id;
 
   GdkPixbuf                   *logo_pixbuf;
-  GdkPixbuf                   *cover_pixbuf; /* stream-specific image */
 
   gboolean                     media_has_video;
   gboolean                     media_has_audio;
@@ -296,11 +295,8 @@ static void bacon_video_widget_get_property (GObject * object,
 static void bacon_video_widget_finalize (GObject * object);
 
 static void bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs);
-static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
-static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
-static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
 static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      gint64 _time,
@@ -578,12 +574,9 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     g_value_unset (&disp_par);
   }
   else {
-    const GdkPixbuf *pixbuf;
-
-    pixbuf = bvw_get_logo_pixbuf (bvw);
-    if (pixbuf) {
-      *width = gdk_pixbuf_get_width (pixbuf);
-      *height = gdk_pixbuf_get_height (pixbuf);
+    if (bvw->logo_pixbuf) {
+      *width = gdk_pixbuf_get_width (bvw->logo_pixbuf);
+      *height = gdk_pixbuf_get_height (bvw->logo_pixbuf);
       if (*width == *height) {
 	/* The icons will be square, so lie so we get a 16:9
 	 * ratio */
@@ -654,10 +647,6 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   bvw_set_logo (bvw, APPLICATION_ID);
 
-  /* get screen size changes */
-  g_signal_connect (G_OBJECT (gtk_widget_get_screen (widget)),
-		    "size-changed", G_CALLBACK (size_changed_cb), bvw);
-
   /* setup the toplevel, ready to be resized */
   toplevel = gtk_widget_get_toplevel (widget);
   gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
@@ -680,8 +669,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
   gtk_widget_set_realized (widget, FALSE);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gtk_widget_get_screen (widget)),
-					size_changed_cb, bvw);
   toplevel = gtk_widget_get_toplevel (widget);
   g_signal_handlers_disconnect_by_func (G_OBJECT (toplevel),
 					leave_notify_cb, bvw);
@@ -689,12 +676,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
   g_cancellable_cancel (bvw->missing_plugins_cancellable);
   bvw->missing_plugins_cancellable = NULL;
   g_object_set_data (G_OBJECT (bvw), "missing-plugins-cancellable", NULL);
-}
-
-static void
-size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
-{
-  bvw_check_for_cover_pixbuf (bvw);
 }
 
 static void
@@ -706,23 +687,19 @@ set_current_actor (BaconVideoWidget *bvw)
     return;
 
   /* If there's only audio draw the logo as well. */
-  draw_logo = bvw->media_has_audio &&
-      !bvw->media_has_video && bvw->cover_pixbuf;
+  draw_logo = bvw->media_has_audio && !bvw->media_has_video;
 
   if (draw_logo) {
-    const GdkPixbuf *pixbuf;
-
-    pixbuf = bvw_get_logo_pixbuf (bvw);
-    if (pixbuf != NULL) {
+    if (bvw->logo_pixbuf != NULL) {
       gboolean ret;
       GError *err = NULL;
 
       ret = clutter_image_set_data (CLUTTER_IMAGE (bvw->logo),
-				    gdk_pixbuf_get_pixels (pixbuf),
-				    gdk_pixbuf_get_has_alpha (pixbuf) ? COGL_PIXEL_FORMAT_RGBA_8888 : COGL_PIXEL_FORMAT_RGB_888,
-				    gdk_pixbuf_get_width (pixbuf),
-				    gdk_pixbuf_get_height (pixbuf),
-				    gdk_pixbuf_get_rowstride (pixbuf),
+				    gdk_pixbuf_get_pixels (bvw->logo_pixbuf),
+				    gdk_pixbuf_get_has_alpha (bvw->logo_pixbuf) ? COGL_PIXEL_FORMAT_RGBA_8888 : COGL_PIXEL_FORMAT_RGB_888,
+				    gdk_pixbuf_get_width (bvw->logo_pixbuf),
+				    gdk_pixbuf_get_height (bvw->logo_pixbuf),
+				    gdk_pixbuf_get_rowstride (bvw->logo_pixbuf),
 				    &err);
       if (ret == FALSE) {
 	g_warning ("clutter_image_set_data() failed %s", err->message);
@@ -2150,8 +2127,6 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   if (tag_list)
     gst_tag_list_unref (tag_list);
 
-  bvw_check_for_cover_pixbuf (bvw);
-
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
 
   update_orientation_from_video (bvw);
@@ -2975,8 +2950,6 @@ parse_stream_info (BaconVideoWidget *bvw)
 
   g_object_get (G_OBJECT (bvw->play), "n-audio", &n_audio,
       "n-video", &n_video, NULL);
-
-  bvw_check_for_cover_pixbuf (bvw);
 
   bvw->media_has_video = FALSE;
   if (n_video > 0) {
@@ -4437,7 +4410,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->buffering_left = -1;
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->movie_par_n = bvw->movie_par_d = 1;
-  g_clear_object (&bvw->cover_pixbuf);
   clutter_actor_hide (bvw->spinner);
   g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
   totem_aspect_frame_set_internal_rotation (TOTEM_ASPECT_FRAME (bvw->frame), 0.0);
@@ -4707,37 +4679,6 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       GST_WARNING ("unhandled type %d", type);
       break;
   }
-}
-
-static gboolean
-bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw)
-{
-  GValue value = { 0, };
-
-  /* for efficiency reasons (decoding of encoded image into pixbuf) we assume
-   * that all potential images come in the same taglist, so once we've
-   * determined the best image/cover, we assume that's really the best one
-   * for this stream, even if more tag messages come in later (this should
-   * not be a problem in practice) */
-  if (bvw->cover_pixbuf)
-    return TRUE;
-
-  bacon_video_widget_get_metadata (bvw, BVW_INFO_COVER, &value);
-  if (G_VALUE_HOLDS_OBJECT (&value)) {
-    bvw->cover_pixbuf = g_value_dup_object (&value);
-    g_value_unset (&value);
-  }
-
-  return (bvw->cover_pixbuf != NULL);
-}
-
-static const GdkPixbuf *
-bvw_get_logo_pixbuf (BaconVideoWidget * bvw)
-{
-  if (bvw_check_for_cover_pixbuf (bvw))
-    return bvw->cover_pixbuf;
-  else
-    return bvw->logo_pixbuf;
 }
 
 /**
