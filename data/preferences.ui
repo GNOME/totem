@@ -530,7 +530,7 @@
 
 			  <child>
 			    <object class="GtkLabel" id="tpw_brightness_label">
-			      <property name="visible">True</property>
+			      <property name="visible" bind-source="tpw_bright_scale" bind-property="visible" bind-flags="default|sync-create"/>
 			      <property name="label" translatable="yes">_Brightness:</property>
 			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
@@ -557,7 +557,7 @@
 
 			  <child>
 			    <object class="GtkLabel" id="tpw_contrast_label">
-			      <property name="visible">True</property>
+			      <property name="visible" bind-source="tpw_contrast_scale" bind-property="visible" bind-flags="default|sync-create"/>
 			      <property name="label" translatable="yes">Co_ntrast:</property>
 			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
@@ -623,7 +623,7 @@
 
 			  <child>
 			    <object class="GtkLabel" id="tpw_saturation_label">
-			      <property name="visible">True</property>
+			      <property name="visible" bind-source="tpw_saturation_scale" bind-property="visible" bind-flags="default|sync-create"/>
 			      <property name="label" translatable="yes">Sat_uration:</property>
 			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
@@ -650,7 +650,7 @@
 
 			  <child>
 			    <object class="GtkLabel" id="tpw_hue_label">
-			      <property name="visible">True</property>
+			      <property name="visible" bind-source="tpw_hue_scale" bind-property="visible" bind-flags="default|sync-create"/>
 			      <property name="label" translatable="yes">_Hue:</property>
 			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>

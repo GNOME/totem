@@ -274,8 +274,6 @@ totem_setup_preferences (Totem *totem)
 			item = POBJ (props[i].name);
 			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
 			gtk_widget_hide (GTK_WIDGET (item));
-			item = POBJ (props[i].label);
-			gtk_widget_hide (GTK_WIDGET (item));
 			hidden++;
 		}
 	}
