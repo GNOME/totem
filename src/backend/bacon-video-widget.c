@@ -5584,7 +5584,6 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
     case BVW_INFO_DURATION:
     case BVW_INFO_TRACK_NUMBER:
-    case BVW_INFO_COVER:
     case BVW_INFO_HAS_VIDEO:
     case BVW_INFO_DIMENSION_X:
     case BVW_INFO_DIMENSION_Y:
@@ -5684,7 +5683,6 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
     case BVW_INFO_YEAR:
     case BVW_INFO_COMMENT:
     case BVW_INFO_ALBUM:
-    case BVW_INFO_COVER:
     case BVW_INFO_CONTAINER:
     case BVW_INFO_HAS_VIDEO:
     case BVW_INFO_VIDEO_CODEC:
@@ -5736,7 +5734,6 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
     case BVW_INFO_ALBUM:
     case BVW_INFO_DURATION:
     case BVW_INFO_TRACK_NUMBER:
-    case BVW_INFO_COVER:
     case BVW_INFO_CONTAINER:
     case BVW_INFO_DIMENSION_X:
     case BVW_INFO_DIMENSION_Y:
@@ -5801,20 +5798,6 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_HAS_VIDEO:
     case BVW_INFO_HAS_AUDIO:
       bacon_video_widget_get_metadata_bool (bvw, type, value);
-      break;
-    case BVW_INFO_COVER:
-      {
-	GdkPixbuf *pixbuf;
-
-	if (!bvw->tagcache)
-	  break;
-
-	pixbuf = totem_gst_tag_list_get_cover (bvw->tagcache);
-	if (pixbuf) {
-	  g_value_init (value, GDK_TYPE_PIXBUF);
-	  g_value_take_object (value, pixbuf);
-        }
-      }
       break;
     case BVW_INFO_FPS:
       {

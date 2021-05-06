@@ -157,7 +157,6 @@ void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
  * @BVW_INFO_ALBUM: the album in which the work was released
  * @BVW_INFO_DURATION: the stream's duration, in seconds
  * @BVW_INFO_TRACK_NUMBER: the track number of the work on the album
- * @BVW_INFO_COVER: a #GdkPixbuf of the cover artwork
  * @BVW_INFO_CONTAINER: the type of stream container
  * @BVW_INFO_HAS_VIDEO: whether the stream has video
  * @BVW_INFO_DIMENSION_X: the video's width, in pixels
@@ -182,7 +181,6 @@ typedef enum {
 	BVW_INFO_ALBUM,
 	BVW_INFO_DURATION,
 	BVW_INFO_TRACK_NUMBER,
-	BVW_INFO_COVER,
 	BVW_INFO_CONTAINER,
 	/* Video */
 	BVW_INFO_HAS_VIDEO,
