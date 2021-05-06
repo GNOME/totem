@@ -44,13 +44,30 @@
 #include "totem-subtitle-encoding.h"
 #include "totem-plugins-engine.h"
 
-#define PWID(x) (GtkWidget *) gtk_builder_get_object (totem->prefs_xml, x)
-#define POBJ(x) gtk_builder_get_object (totem->prefs_xml, x)
+struct _TotemPreferencesDialog {
+	GtkDialog parent_instance;
 
-/* Callback functions for GtkBuilder */
-G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
-G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
-G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
+	Totem *totem;
+
+	GtkRange *tpw_bright_scale;
+	GtkAdjustment *tpw_bright_adjustment;
+	GtkRange *tpw_contrast_scale;
+	GtkAdjustment *tpw_contrast_adjustment;
+	GtkRange *tpw_hue_scale;
+	GtkAdjustment *tpw_hue_adjustment;
+	GtkRange *tpw_saturation_scale;
+	GtkAdjustment *tpw_saturation_adjustment;
+
+	GtkFontChooser *font_sel_button;
+	GtkCheckButton *tpw_auto_subtitles_checkbutton;
+	GtkWidget *tpw_bright_contr_vbox;
+	GtkCheckButton *tpw_no_deinterlace_checkbutton;
+	GtkButton *tpw_plugins_button;
+	GtkComboBox *tpw_sound_output_combobox;
+	GtkComboBox *subtitle_encoding_combo;
+};
+
+G_DEFINE_TYPE (TotemPreferencesDialog, totem_preferences_dialog, GTK_TYPE_DIALOG)
 
 static void
 disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
@@ -58,27 +75,19 @@ disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemOb
 	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
 }
 
-void
-tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
+static void
+tpw_color_reset_clicked_cb (GtkButton *button, TotemPreferencesDialog *prefs)
 {
-	guint i;
-	const char *scales[] = {
-		"tpw_bright_scale",
-		"tpw_contrast_scale",
-		"tpw_saturation_scale",
-		"tpw_hue_scale"
-	};
-
-	for (i = 0; i < G_N_ELEMENTS (scales); i++) {
-		GtkRange *item;
-		item = GTK_RANGE (POBJ (scales[i]));
-		gtk_range_set_value (item, 65535/2);
-	}
+	gtk_range_set_value (prefs->tpw_bright_scale, 65535/2);
+	gtk_range_set_value (prefs->tpw_contrast_scale, 65535/2);
+	gtk_range_set_value (prefs->tpw_hue_scale, 65535/2);
+	gtk_range_set_value (prefs->tpw_saturation_scale, 65535/2);
 }
 
-void
-font_set_cb (GtkFontButton * fb, Totem * totem)
+static void
+font_set_cb (GtkFontButton * fb, TotemPreferencesDialog * prefs)
 {
+	Totem *totem = prefs->totem;
 	gchar *font;
 
 	font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER (fb));
@@ -86,9 +95,10 @@ font_set_cb (GtkFontButton * fb, Totem * totem)
 	g_free (font);
 }
 
-void
-encoding_set_cb (GtkComboBox *cb, Totem *totem)
+static void
+encoding_set_cb (GtkComboBox *cb, TotemPreferencesDialog *prefs)
 {
+	Totem *totem = prefs->totem;
 	const gchar *encoding;
 
 	encoding = totem_subtitle_encoding_get_selected (cb);
@@ -99,12 +109,11 @@ encoding_set_cb (GtkComboBox *cb, Totem *totem)
 static void
 font_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
+	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (totem->prefs);
 	gchar *font;
-	GtkFontButton *item;
 
-	item = GTK_FONT_BUTTON (POBJ ("font_sel_button"));
 	font = g_settings_get_string (settings, "subtitle-font");
-	gtk_font_chooser_set_font (GTK_FONT_CHOOSER (item), font);
+	gtk_font_chooser_set_font (prefs->font_sel_button, font);
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	g_free (font);
 }
@@ -112,12 +121,11 @@ font_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 static void
 encoding_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
+	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (totem->prefs);
 	gchar *encoding;
-	GtkComboBox *item;
 
-	item = GTK_COMBO_BOX (POBJ ("subtitle_encoding_combo"));
 	encoding = g_settings_get_string (settings, "subtitle-encoding");
-	totem_subtitle_encoding_set (item, encoding);
+	totem_subtitle_encoding_set (prefs->subtitle_encoding_combo, encoding);
 	bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
 	g_free (encoding);
 }
@@ -210,32 +218,55 @@ plugin_button_clicked_cb (GtkButton *button,
 	gtk_window_present (GTK_WINDOW (totem->plugins));
 }
 
+static void
+totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
+{
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/preferences.ui");
+
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, font_sel_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_auto_subtitles_checkbutton);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_contr_vbox);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_deinterlace_checkbutton);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_sound_output_combobox);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, subtitle_encoding_combo);
+
+	gtk_widget_class_bind_template_callback (widget_class, encoding_set_cb);
+	gtk_widget_class_bind_template_callback (widget_class, font_set_cb);
+	gtk_widget_class_bind_template_callback (widget_class, tpw_color_reset_clicked_cb);
+}
+
+static void
+totem_preferences_dialog_init (TotemPreferencesDialog *self)
+{
+	gtk_widget_init_template (GTK_WIDGET (self));
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
+	TotemPreferencesDialog *prefs;
 	GtkWidget *bvw;
 	guint i, hidden;
 	char *font, *encoding;
-	GObject *item;
-
-	static struct {
-		const char *name;
-		BvwVideoProperty prop;
-		const char *label;
-		const gchar *key;
-		const gchar *adjustment;
-	} props[4] = {
-		{ "tpw_contrast_scale", BVW_VIDEO_CONTRAST, "tpw_contrast_label", "contrast", "tpw_contrast_adjustment" },
-		{ "tpw_saturation_scale", BVW_VIDEO_SATURATION, "tpw_saturation_label", "saturation", "tpw_saturation_adjustment" },
-		{ "tpw_bright_scale", BVW_VIDEO_BRIGHTNESS, "tpw_brightness_label", "brightness", "tpw_bright_adjustment" },
-		{ "tpw_hue_scale", BVW_VIDEO_HUE, "tpw_hue_label", "hue", "tpw_hue_adjustment" }
-	};
 
 	g_return_if_fail (totem->settings != NULL);
 
-	totem->prefs_xml = gtk_builder_new_from_resource ("/org/gnome/totem/ui/preferences.ui");
-	gtk_builder_connect_signals (totem->prefs_xml, totem);
-	totem->prefs = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "totem_preferences_window"));
+	totem->prefs = g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
+				     "use-header-bar", 1,
+				     NULL);
+	prefs = TOTEM_PREFERENCES_DIALOG (totem->prefs);
+	prefs->totem = totem;
 
 	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
 
@@ -245,73 +276,77 @@ totem_setup_preferences (Totem *totem)
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
 	/* Disable deinterlacing */
-	item = POBJ ("tpw_no_deinterlace_checkbutton");
-	g_settings_bind (totem->settings, "disable-deinterlacing", item, "active", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "disable-deinterlacing",
+			 prefs->tpw_no_deinterlace_checkbutton, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
 	/* Auto-load subtitles */
-	item = POBJ ("tpw_auto_subtitles_checkbutton");
-	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "autoload-subtitles",
+			 prefs->tpw_auto_subtitles_checkbutton, "active", G_SETTINGS_BIND_DEFAULT);
 
 	/* Plugins button */
-	item = POBJ ("tpw_plugins_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
+	g_signal_connect (prefs->tpw_plugins_button, "clicked",
 			  G_CALLBACK (plugin_button_clicked_cb), totem);
 
 	/* Brightness and all */
+	struct {
+		GtkRange *range;
+		BvwVideoProperty prop;
+		const gchar *key;
+		GtkAdjustment *adjustment;
+	} props[4] = {
+		{ prefs->tpw_contrast_scale, BVW_VIDEO_CONTRAST, "contrast", prefs->tpw_contrast_adjustment },
+		{ prefs->tpw_saturation_scale, BVW_VIDEO_SATURATION, "saturation", prefs->tpw_saturation_adjustment },
+		{ prefs->tpw_bright_scale, BVW_VIDEO_BRIGHTNESS, "brightness", prefs->tpw_bright_adjustment },
+		{ prefs->tpw_hue_scale, BVW_VIDEO_HUE, "hue", prefs->tpw_hue_adjustment }
+	};
+
 	hidden = 0;
 	for (i = 0; i < G_N_ELEMENTS (props); i++) {
 		int prop_value;
 
-		item = POBJ (props[i].adjustment);
-		g_settings_bind (totem->settings, props[i].key, item, "value", G_SETTINGS_BIND_DEFAULT);
+		g_settings_bind (totem->settings, props[i].key, props[i].adjustment, "value", G_SETTINGS_BIND_DEFAULT);
 		g_settings_bind (totem->settings, props[i].key, bvw, props[i].key, G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 		prop_value = bacon_video_widget_get_video_property (totem->bvw, props[i].prop);
 		if (prop_value < 0) {
 			/* The property's unsupported, so hide the widget and its label */
-			item = POBJ (props[i].name);
-			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
-			gtk_widget_hide (GTK_WIDGET (item));
+			gtk_range_set_value (props[i].range, (gdouble) 65535/2);
+			gtk_widget_hide (GTK_WIDGET (props[i].range));
 			hidden++;
 		}
 	}
 
 	/* If all the properties have been hidden, hide their section box */
-	if (hidden == G_N_ELEMENTS (props)) {
-		item = POBJ ("tpw_bright_contr_vbox");
-		gtk_widget_hide (GTK_WIDGET (item));
-	}
+	gtk_widget_set_visible (prefs->tpw_bright_contr_vbox, hidden < G_N_ELEMENTS (props));
 
 	/* Sound output type */
-	item = POBJ ("tpw_sound_output_combobox");
 	g_settings_bind (totem->settings, "audio-output-type", bvw, "audio-output-type",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-	g_settings_bind_with_mapping (totem->settings, "audio-output-type", item, "active", G_SETTINGS_BIND_DEFAULT,
+	g_settings_bind_with_mapping (totem->settings, "audio-output-type",
+				      prefs->tpw_sound_output_combobox, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_AUDIO_OUTPUT_TYPE), (GDestroyNotify) g_type_class_unref);
 
 	/* Subtitle font selection */
-	item = POBJ ("font_sel_button");
 	font = g_settings_get_string (totem->settings, "subtitle-font");
 	if (*font != '\0') {
-		gtk_font_chooser_set_font (GTK_FONT_CHOOSER (item), font);
+		gtk_font_chooser_set_font (prefs->font_sel_button, font);
 		bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	}
 	g_free (font);
 	g_signal_connect (totem->settings, "changed::subtitle-font", (GCallback) font_changed_cb, totem);
 
 	/* Subtitle encoding selection */
-	item = POBJ ("subtitle_encoding_combo");
-	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
+	totem_subtitle_encoding_init (prefs->subtitle_encoding_combo);
 	encoding = g_settings_get_string (totem->settings, "subtitle-encoding");
 	/* Make sure the default is UTF-8 */
 	if (*encoding == '\0') {
 		g_free (encoding);
 		encoding = g_strdup ("UTF-8");
 	}
-	totem_subtitle_encoding_set (GTK_COMBO_BOX(item), encoding);
+	totem_subtitle_encoding_set (prefs->subtitle_encoding_combo, encoding);
 	if (encoding && strcasecmp (encoding, "") != 0) {
 		bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
 	}

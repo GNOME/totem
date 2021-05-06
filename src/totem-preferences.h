@@ -29,7 +29,12 @@
 #ifndef TOTEM_PREFERENCES_H
 #define TOTEM_PREFERENCES_H
 
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
+
+#define TOTEM_TYPE_PREFERENCES_DIALOG (totem_preferences_dialog_get_type())
+G_DECLARE_FINAL_TYPE (TotemPreferencesDialog, totem_preferences_dialog, TOTEM, PREFERENCES_DIALOG, GtkDialog)
 
 void totem_setup_preferences (Totem *totem);
 

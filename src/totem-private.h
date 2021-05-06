@@ -76,7 +76,6 @@ struct _TotemObject {
 	GtkWidget *stack;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
-	GtkBuilder *prefs_xml;
 	GtkWindow *shortcuts_win;
 
 	GtkWidget *grilo;
