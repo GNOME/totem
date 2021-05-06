@@ -1871,7 +1871,7 @@ totem_object_set_mrl (TotemObject *totem,
 		/* Subtitle selection */
 		totem_object_set_sensitivity2 ("select-subtitle", FALSE);
 
-		/* Set the logo */
+		/* Set the label */
 		update_mrl_label (totem, NULL);
 
 		g_object_notify (G_OBJECT (totem), "playing");
