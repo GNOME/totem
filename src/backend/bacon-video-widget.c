@@ -5929,24 +5929,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
                 "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
                 NULL);
 #if 0
-  bvw->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-  clutter_actor_set_text_direction (bvw->stage,
-				    CLUTTER_TEXT_DIRECTION_LTR);
-  clutter_actor_set_layout_manager (bvw->stage,
-                                    clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_FILL));
-  clutter_actor_set_name (bvw->stage, "stage");
-  clutter_actor_set_background_color (bvw->stage, CLUTTER_COLOR_Black);
-
-  listen_navigation_events (bvw->texture, bvw);
-
-  /* The logo */
-  bvw->logo_frame = clutter_actor_new ();
-  clutter_actor_set_name (bvw->logo_frame, "logo-frame");
-  bvw->logo = clutter_image_new ();
-  clutter_actor_set_content (bvw->logo_frame, bvw->logo);
-  clutter_actor_set_content_gravity (bvw->logo_frame, CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT);
-  clutter_actor_add_child (bvw->stage, bvw->logo_frame);
-  clutter_actor_hide (CLUTTER_ACTOR (bvw->logo_frame));
 
   /* The video's actions */
   action = clutter_tap_action_new ();

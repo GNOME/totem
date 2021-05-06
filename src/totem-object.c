@@ -212,10 +212,13 @@ totem_object_app_activate (GApplication *app)
 		g_assert_not_reached ();
 	gtk_grid_attach (GTK_GRID (totem->bvw_grid),
 			 GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")),
-			 0, 2, 1, 1);
+			 0, 4, 3, 1);
 	gtk_widget_set_hexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
 	gtk_widget_set_vexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
 	gtk_widget_set_valign (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), GTK_ALIGN_END);
+
+	totem->spinner = gtk_label_new ("");
+	gtk_grid_attach (GTK_GRID (totem->bvw_grid), totem->spinner, 1, 2, 1, 1);
 
 	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->controls, "seek_scale"));
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
@@ -2490,19 +2493,18 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 }
 
 static void
-on_buffering_event (BaconVideoWidget *bvw, gdouble percentage, TotemObject *totem)
+on_buffering_event (BaconVideoWidget *bvw, gdouble percent, TotemObject *totem)
 {
-	g_message ("YEAH! spinner! %g", percentage);
-#if 0
-  if (percent >= 100.0) {
-    clutter_actor_hide (bvw->spinner);
-    /* Reset */
-    g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
-  } else {
-    clutter_actor_show (bvw->spinner);
-    g_object_set (G_OBJECT (bvw->spinner), "percent", (float) percent, NULL);
-  }
-#endif
+	if (percent >= 1.0) {
+		gtk_widget_hide (totem->spinner);
+		gtk_label_set_markup (GTK_LABEL (totem->spinner), "");
+	} else {
+		g_autofree char *text = NULL;
+
+		text = g_strdup_printf ("<span size=\"larger\">%.2f%%</span>", percent * 100);
+		gtk_label_set_markup (GTK_LABEL (totem->spinner), text);
+		gtk_widget_show (totem->spinner);
+	}
 }
 
 static void
@@ -4095,7 +4097,7 @@ add_fullscreen_toolbar (TotemObject *totem,
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
-	gtk_grid_attach (GTK_GRID (container), totem->fullscreen_header, 0, 0, 1, 1);
+	gtk_grid_attach (GTK_GRID (container), totem->fullscreen_header, 0, 0, 3, 1);
 	gtk_widget_set_halign (totem->fullscreen_header, GTK_ALIGN_FILL);
 	gtk_widget_set_hexpand (totem->fullscreen_header, TRUE);
 	gtk_widget_set_opacity (totem->fullscreen_header, 0.86);

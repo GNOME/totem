@@ -79,6 +79,7 @@ struct _TotemObject {
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
 	GtkWindow *shortcuts_win;
+	GtkWidget *spinner;
 
 	GtkWidget *grilo;
 
