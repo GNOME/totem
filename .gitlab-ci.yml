@@ -47,7 +47,7 @@ build-fedora:
     # See https://bugzilla.redhat.com/show_bug.cgi?id=1896438
     - dnf remove -y pylint
   script:
-    - meson _build
+    - meson _build -Dhelp=true -Denable-gtk-doc=true -Denable-easy-codec-installation=yes -Denable-python=yes -Dprofile=default
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build test
     - ninja -C _build install
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build dist
