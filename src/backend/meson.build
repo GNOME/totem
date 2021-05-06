@@ -34,10 +34,8 @@ endforeach
 
 sources = files(
   'bacon-time-label.c',
-  'bacon-video-spinner-actor.c',
   'bacon-video-widget-gst-missing-plugins.c',
   'bacon-video-widget.c',
-  'clock.c',
 )
 
 enum = 'bacon-video-widget-enums'

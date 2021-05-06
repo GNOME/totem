@@ -82,7 +82,6 @@
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
-#include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
