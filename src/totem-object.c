@@ -2492,7 +2492,17 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 static void
 on_buffering_event (BaconVideoWidget *bvw, gdouble percentage, TotemObject *totem)
 {
-	//FIXME show that somehow
+	g_message ("YEAH! spinner! %g", percentage);
+#if 0
+  if (percent >= 100.0) {
+    clutter_actor_hide (bvw->spinner);
+    /* Reset */
+    g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
+  } else {
+    clutter_actor_show (bvw->spinner);
+    g_object_set (G_OBJECT (bvw->spinner), "percent", (float) percent, NULL);
+  }
+#endif
 }
 
 static void

@@ -2215,16 +2215,6 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
   gst_message_parse_buffering (message, &percent);
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, (gdouble) percent / 100.0);
 
-#if 0
-  if (percent >= 100) {
-    clutter_actor_hide (bvw->spinner);
-    /* Reset */
-    g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
-  } else {
-    clutter_actor_show (bvw->spinner);
-    g_object_set (G_OBJECT (bvw->spinner), "percent", (float) percent, NULL);
-  }
-#endif
   if (percent >= 100) {
     /* a 100% message means buffering is done */
     bvw->buffering = FALSE;
@@ -4299,10 +4289,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->buffering_left = -1;
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->movie_par_n = bvw->movie_par_d = 1;
-#if 0
-  clutter_actor_hide (bvw->spinner);
-  g_object_set (G_OBJECT (bvw->spinner), "percent", 0.0, NULL);
-#endif
+  g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, 100.0);
   g_object_set (bvw->video_sink,
                 "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
                 NULL);
@@ -5972,15 +5959,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_add_action (bvw->texture, action);
   g_signal_connect (action, "swipe",
 		    G_CALLBACK (bacon_video_widget_swipe), bvw);
-
-  /* The spinner */
-  bvw->spinner = bacon_video_spinner_actor_new ();
-  clutter_actor_set_name (bvw->spinner, "spinner");
-  clutter_actor_add_child (bvw->stage, bvw->spinner);
-  clutter_actor_set_child_above_sibling (bvw->stage,
-					 bvw->spinner,
-					 bvw->frame);
-  clutter_actor_hide (bvw->spinner);
 
   /* Fullscreen header controls */
   bvw->header_controls = gtk_clutter_actor_new ();
