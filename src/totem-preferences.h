@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 #define TOTEM_TYPE_PREFERENCES_DIALOG (totem_preferences_dialog_get_type())
 G_DECLARE_FINAL_TYPE (TotemPreferencesDialog, totem_preferences_dialog, TOTEM, PREFERENCES_DIALOG, GtkDialog)
 
-void totem_setup_preferences (Totem *totem);
+GtkWidget *totem_preferences_dialog_new (Totem *totem);
 
 G_END_DECLS
 

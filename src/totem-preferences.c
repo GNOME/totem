@@ -413,15 +413,11 @@ totem_preferences_dialog_init (TotemPreferencesDialog *self)
 	gtk_widget_init_template (GTK_WIDGET (self));
 }
 
-void
-totem_setup_preferences (Totem *totem)
+GtkWidget *
+totem_preferences_dialog_new (Totem *totem)
 {
-	g_return_if_fail (totem->settings != NULL);
-
-	totem->prefs = g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
-				     "totem", totem,
-				     "use-header-bar", 1,
-				     NULL);
-
-	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
+	return  g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
+			      "totem", totem,
+			      "use-header-bar", 1,
+			      NULL);
 }
