@@ -57,7 +57,7 @@
 #include "totem-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "totem-preferences.h"
+#include "totem-preferences-dialog.h"
 #include "totem-session.h"
 #include "totem-main-toolbar.h"
 

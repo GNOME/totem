@@ -39,7 +39,7 @@
 #include "bacon-video-widget-enums.h"
 #include "totem.h"
 #include "totem-private.h"
-#include "totem-preferences.h"
+#include "totem-preferences-dialog.h"
 #include "totem-interface.h"
 #include "totem-subtitle-encoding.h"
 #include "totem-plugins-engine.h"
@@ -384,7 +384,7 @@ totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
 
 	g_object_class_install_properties (object_class, N_PROPS, properties);
 
-	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/preferences.ui");
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/totem-preferences-dialog.ui");
 
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, font_sel_button);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_auto_subtitles_checkbutton);
