@@ -218,10 +218,67 @@ plugin_button_clicked_cb (GtkButton *button,
 	gtk_window_present (GTK_WINDOW (totem->plugins));
 }
 
+enum {
+	PROP_0,
+	PROP_TOTEM,
+	N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
+
+static void
+totem_preferences_dialog_get_property (GObject *object,
+                                       guint prop_id,
+                                       GValue *value,
+                                       GParamSpec *pspec)
+{
+	TotemPreferencesDialog *self = TOTEM_PREFERENCES_DIALOG (object);
+
+	switch (prop_id)
+	  {
+	  case PROP_TOTEM:
+		  g_value_set_object (value, self->totem);
+		  break;
+	  default:
+		  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+	  }
+}
+
+static void
+totem_preferences_dialog_set_property (GObject *object,
+                                       guint prop_id,
+                                       const GValue *value,
+                                       GParamSpec *pspec)
+{
+	TotemPreferencesDialog *self = TOTEM_PREFERENCES_DIALOG (object);
+
+	switch (prop_id)
+	  {
+	  case PROP_TOTEM:
+		  g_assert (self->totem == NULL);
+		  self->totem = g_value_get_object (value);
+		  break;
+	  default:
+		  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+	  }
+}
+
 static void
 totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	object_class->get_property = totem_preferences_dialog_get_property;
+	object_class->set_property = totem_preferences_dialog_set_property;
+
+	properties[PROP_TOTEM] = g_param_spec_object ("totem", "Totem object", "Totem object",
+						      TOTEM_TYPE_OBJECT,
+						      G_PARAM_READWRITE |
+						      G_PARAM_CONSTRUCT_ONLY |
+						      G_PARAM_STATIC_STRINGS);
+
+	g_object_class_install_properties (object_class, N_PROPS, properties);
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/preferences.ui");
 
@@ -263,10 +320,10 @@ totem_setup_preferences (Totem *totem)
 	g_return_if_fail (totem->settings != NULL);
 
 	totem->prefs = g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
+				     "totem", totem,
 				     "use-header-bar", 1,
 				     NULL);
 	prefs = TOTEM_PREFERENCES_DIALOG (totem->prefs);
-	prefs->totem = totem;
 
 	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
 
