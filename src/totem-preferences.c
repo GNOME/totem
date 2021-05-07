@@ -264,73 +264,22 @@ totem_preferences_dialog_set_property (GObject *object,
 }
 
 static void
-totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
+totem_preferences_dialog_constructed (GObject *object)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-	object_class->get_property = totem_preferences_dialog_get_property;
-	object_class->set_property = totem_preferences_dialog_set_property;
-
-	properties[PROP_TOTEM] = g_param_spec_object ("totem", "Totem object", "Totem object",
-						      TOTEM_TYPE_OBJECT,
-						      G_PARAM_READWRITE |
-						      G_PARAM_CONSTRUCT_ONLY |
-						      G_PARAM_STATIC_STRINGS);
-
-	g_object_class_install_properties (object_class, N_PROPS, properties);
-
-	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/preferences.ui");
-
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, font_sel_button);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_auto_subtitles_checkbutton);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_contr_vbox);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_adjustment);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_scale);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_adjustment);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_scale);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_adjustment);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_scale);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_deinterlace_checkbutton);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_button);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_adjustment);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_scale);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_sound_output_combobox);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, subtitle_encoding_combo);
-
-	gtk_widget_class_bind_template_callback (widget_class, encoding_set_cb);
-	gtk_widget_class_bind_template_callback (widget_class, font_set_cb);
-	gtk_widget_class_bind_template_callback (widget_class, tpw_color_reset_clicked_cb);
-}
-
-static void
-totem_preferences_dialog_init (TotemPreferencesDialog *self)
-{
-	gtk_widget_init_template (GTK_WIDGET (self));
-}
-
-void
-totem_setup_preferences (Totem *totem)
-{
-	TotemPreferencesDialog *prefs;
+	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (object);
+	TotemObject *totem;
 	GtkWidget *bvw;
 	guint i, hidden;
 	char *font, *encoding;
 
-	g_return_if_fail (totem->settings != NULL);
+	G_OBJECT_CLASS (totem_preferences_dialog_parent_class)->constructed (object);
 
-	totem->prefs = g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
-				     "totem", totem,
-				     "use-header-bar", 1,
-				     NULL);
-	prefs = TOTEM_PREFERENCES_DIALOG (totem->prefs);
-
-	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
+	g_assert (prefs->totem != NULL);
+	totem = prefs->totem;
 
 	bvw = totem_object_get_video_widget (totem);
 
-        g_signal_connect (totem->prefs, "destroy",
-                          G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
+        g_signal_connect (prefs, "destroy", G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
 	/* Disable deinterlacing */
 	g_settings_bind (totem->settings, "disable-deinterlacing",
@@ -415,4 +364,64 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (totem->settings, "changed::disable-keyboard-shortcuts", (GCallback) disable_kbd_shortcuts_changed_cb, totem);
 
 	g_object_unref (bvw);
+}
+
+static void
+totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
+{
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	object_class->get_property = totem_preferences_dialog_get_property;
+	object_class->set_property = totem_preferences_dialog_set_property;
+	object_class->constructed = totem_preferences_dialog_constructed;
+
+	properties[PROP_TOTEM] = g_param_spec_object ("totem", "Totem object", "Totem object",
+						      TOTEM_TYPE_OBJECT,
+						      G_PARAM_READWRITE |
+						      G_PARAM_CONSTRUCT_ONLY |
+						      G_PARAM_STATIC_STRINGS);
+
+	g_object_class_install_properties (object_class, N_PROPS, properties);
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/preferences.ui");
+
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, font_sel_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_auto_subtitles_checkbutton);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_contr_vbox);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_bright_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_contrast_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_deinterlace_checkbutton);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_adjustment);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_scale);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_sound_output_combobox);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, subtitle_encoding_combo);
+
+	gtk_widget_class_bind_template_callback (widget_class, encoding_set_cb);
+	gtk_widget_class_bind_template_callback (widget_class, font_set_cb);
+	gtk_widget_class_bind_template_callback (widget_class, tpw_color_reset_clicked_cb);
+}
+
+static void
+totem_preferences_dialog_init (TotemPreferencesDialog *self)
+{
+	gtk_widget_init_template (GTK_WIDGET (self));
+}
+
+void
+totem_setup_preferences (Totem *totem)
+{
+	g_return_if_fail (totem->settings != NULL);
+
+	totem->prefs = g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
+				     "totem", totem,
+				     "use-header-bar", 1,
+				     NULL);
+
+	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
 }
