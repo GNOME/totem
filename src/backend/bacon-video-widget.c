@@ -228,13 +228,8 @@ struct _BaconVideoWidget
 
   BvwRotation                  rotation;
 
-  //FIXME
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
-  gint                         movie_par_n; /* Movie pixel aspect ratio numerator */
-  gint                         movie_par_d; /* Movie pixel aspect ratio denominator */
-  gint                         video_width_pixels; /* Scaled movie width */
-  gint                         video_height_pixels; /* Scaled movie height */
   gint                         video_fps_n;
   gint                         video_fps_d;
 
@@ -1251,7 +1246,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->audiotags = NULL;
   bvw->videotags = NULL;
   bvw->volume = -1.0;
-  bvw->movie_par_n = bvw->movie_par_d = 1;
   bvw->rate = FORWARD_RATE;
 
   bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
@@ -2632,29 +2626,12 @@ caps_set (GObject * obj,
   /* Get video decoder caps */
   s = gst_caps_get_structure (caps, 0);
   if (s) {
-    const GValue *movie_par;
-
     /* We need at least width/height and framerate */
-    if (!(gst_structure_get_fraction (s, "framerate", &bvw->video_fps_n, 
+    if (!(gst_structure_get_fraction (s, "framerate", &bvw->video_fps_n,
           &bvw->video_fps_d) &&
           gst_structure_get_int (s, "width", &bvw->video_width) &&
           gst_structure_get_int (s, "height", &bvw->video_height)))
       return;
-    
-    /* Get the movie PAR if available */
-    movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
-    if (movie_par) {
-      bvw->movie_par_n = gst_value_get_fraction_numerator (movie_par);
-      bvw->movie_par_d = gst_value_get_fraction_denominator (movie_par);
-    }
-    else {
-      /* Square pixels */
-      bvw->movie_par_n = 1;
-      bvw->movie_par_d = 1;
-    }
-    
-    /* Now set for real */
-    bacon_video_widget_set_aspect_ratio (bvw, bvw->ratio_type);
   }
 
   gst_caps_unref (caps);
@@ -4095,7 +4072,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   g_clear_pointer (&bvw->download_filename, g_free);
   bvw->buffering_left = -1;
   bvw_reconfigure_fill_timeout (bvw, 0);
-  bvw->movie_par_n = bvw->movie_par_d = 1;
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, 100.0);
   g_object_set (bvw->video_sink,
                 "rotate-method", GST_GTK_GL_ROTATE_METHOD_AUTO,
