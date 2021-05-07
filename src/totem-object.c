@@ -4126,7 +4126,7 @@ video_widget_create (TotemObject *totem)
 
 	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
 	//FIXME doesn't exist yet
-	g_object_set (totem->fullscreen_header, "visible", fullscreen, NULL);
+	//g_object_set (totem->fullscreen_header, "visible", fullscreen, NULL);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",
