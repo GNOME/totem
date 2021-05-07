@@ -46,7 +46,6 @@
 #include "totem-options.h"
 #include "totem-menu.h"
 #include "totem-uri.h"
-#include "totem-preferences.h"
 #include "totem-session.h"
 
 int
