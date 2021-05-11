@@ -72,11 +72,7 @@ totem_gallery_new (Totem *totem)
 	/* Create the gallery and its interface */
 	gallery = g_object_new (TOTEM_TYPE_GALLERY, NULL);
 
-	builder = totem_plugin_load_interface ("screenshot", "gallery.ui", TRUE, NULL, gallery);
-	if (builder == NULL) {
-		g_object_unref (gallery);
-		return NULL;
-	}
+	builder = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/screenshot/gallery.ui");
 
 	/* Grab the widgets */
 	gallery->priv->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));

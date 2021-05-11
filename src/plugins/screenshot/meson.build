@@ -9,6 +9,14 @@ plugin_files = files(
   'totem-gallery-progress.c'
 )
 
+plugin_files += gnome.compile_resources(
+  'screenshotresources',
+  'screenshot.gresource.xml',
+  export: true,
+  source_dir: '.',
+  c_name: 'screenshot'
+)
+
 test_cflags = [
   '-Wno-error=format-nonliteral',
   '-Wno-format-nonliteral'
@@ -40,10 +48,5 @@ custom_target(
   output: plugin_data,
   command: msgfmt_plugin_cmd,
   install: true,
-  install_dir: plugin_dir
-)
-
-install_data(
-  'gallery.ui',
   install_dir: plugin_dir
 )
