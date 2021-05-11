@@ -65,18 +65,8 @@ totem_get_plugin_paths (void)
 	GPtrArray *paths;
 	char  *path;
 	GSettings *settings;
-	gboolean uninstalled;
 
 	paths = g_ptr_array_new ();
-	uninstalled = FALSE;
-
-#ifdef TOTEM_RUN_IN_SOURCE_TREE
-	path = g_build_filename (UNINSTALLED_PLUGINS_LOCATION, NULL);
-	if (g_file_test (path, G_FILE_TEST_IS_DIR) != FALSE) {
-		uninstalled = TRUE;
-		g_ptr_array_add (paths, path);
-	}
-#endif
 
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 	if (g_settings_get_boolean (settings, "disable-user-plugins") == FALSE) {
@@ -86,10 +76,8 @@ totem_get_plugin_paths (void)
 
 	g_object_unref (settings);
 
-	if (uninstalled == FALSE) {
-		path = g_strdup (TOTEM_PLUGIN_DIR);
-		g_ptr_array_add (paths, path);
-	}
+	path = g_strdup (TOTEM_PLUGIN_DIR);
+	g_ptr_array_add (paths, path);
 
 	/* And null-terminate the array */
 	g_ptr_array_add (paths, NULL);
