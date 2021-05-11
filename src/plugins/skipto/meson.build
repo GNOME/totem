@@ -8,6 +8,14 @@ plugin_files = files(
   'totem-' + plugin_name + '.c'
 )
 
+plugin_files += gnome.compile_resources(
+  'skiptoresources',
+  'skipto.gresource.xml',
+  export: true,
+  source_dir: '.',
+  c_name: 'skipto'
+)
+
 shared_module(
   plugin_name,
   sources: plugin_files,
@@ -26,10 +34,5 @@ custom_target(
   output: plugin_data,
   command: msgfmt_plugin_cmd,
   install: true,
-  install_dir: plugin_dir
-)
-
-install_data(
-  plugin_name + '.ui',
   install_dir: plugin_dir
 )

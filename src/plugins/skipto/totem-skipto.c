@@ -184,14 +184,7 @@ totem_skipto_new (TotemObject *totem)
 	skipto->priv->class_ref = g_type_class_ref (TOTEM_TYPE_TIME_ENTRY);
 
 	skipto->priv->totem = totem;
-	skipto->priv->xml = totem_plugin_load_interface ("skipto",
-							 "skipto.ui", TRUE,
-							 NULL, skipto);
-
-	if (skipto->priv->xml == NULL) {
-		g_object_unref (skipto);
-		return NULL;
-	}
+	skipto->priv->xml = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/skipto/skipto.ui");
 
 	skipto->priv->adj = GTK_ADJUSTMENT (WID("tstw_skip_adjustment"));
 	g_signal_connect (skipto->priv->adj, "value-changed",
