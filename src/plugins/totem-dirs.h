@@ -29,5 +29,3 @@
 #include <gtk/gtk.h>
 
 char ** totem_get_plugin_paths (void);
-char * totem_plugin_find_file (const char *plugin_name,
-			       const char *file);
