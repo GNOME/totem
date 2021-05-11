@@ -49,6 +49,7 @@
 static GtkBuilder *
 totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 				     GtkWindow *parent, gpointer user_data);
+static char *totem_interface_get_full_path (const char *name);
 
 static GtkWidget *
 totem_interface_error_dialog (const char *title, const char *reason,
@@ -203,7 +204,7 @@ totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 	return builder;
 }
 
-char *
+static char *
 totem_interface_get_full_path (const char *name)
 {
 	char *filename;

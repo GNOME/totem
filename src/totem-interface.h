@@ -28,7 +28,6 @@
 
 G_BEGIN_DECLS
 
-char		*totem_interface_get_full_path	(const char *name);
 GtkBuilder	*totem_interface_load		(const char *name,
 						 gboolean fatal,
 						 GtkWindow *parent,
