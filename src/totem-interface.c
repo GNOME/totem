@@ -119,43 +119,6 @@ totem_interface_error_blocking (const char *title, const char *reason,
 }
 
 /**
- * totem_interface_error_with_link:
- * @title: the error title
- * @reason: the error reason (secondary text)
- * @uri: the URI to open
- * @label: a label for the URI's button, or %NULL to use @uri as the label
- * @parent: the error dialogue's parent #GtkWindow
- *
- * Display a modal error dialogue like totem_interface_error(),
- * but add a button which will open @uri in a browser window.
- **/
-void
-totem_interface_error_with_link (const char *title, const char *reason,
-				 const char *uri, const char *label, GtkWindow *parent)
-{
-	GtkWidget *error_dialog, *link_button, *hbox;
-
-	if (label == NULL)
-		label = uri;
-
-	error_dialog = totem_interface_error_dialog (title, reason, parent);
-	link_button = gtk_link_button_new_with_label (uri, label);
-
-	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (error_dialog))), hbox, TRUE, FALSE, 0);
-	gtk_widget_show_all (hbox);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog), GTK_RESPONSE_OK);
-
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-
-	gtk_window_present (GTK_WINDOW (error_dialog));
-}
-
-/**
  * totem_interface_load:
  * @name: the #GtkBuilder UI file to load
  * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise

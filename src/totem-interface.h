@@ -43,11 +43,6 @@ void		 totem_interface_error		(const char *title,
 void		 totem_interface_error_blocking	(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);
-void		 totem_interface_error_with_link (const char *title,
-						  const char *reason,
-						  const char *uri,
-						  const char *label,
-						  GtkWindow *parent);
 GtkWidget *	 totem_interface_create_header_button (GtkWidget  *header,
 						       GtkWidget  *button,
 						       const char *icon_name,
