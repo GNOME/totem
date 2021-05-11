@@ -46,6 +46,10 @@
 
 #include "totem-interface.h"
 
+static GtkBuilder *
+totem_interface_load_with_full_path (const char *filename, gboolean fatal,
+				     GtkWindow *parent, gpointer user_data);
+
 static GtkWidget *
 totem_interface_error_dialog (const char *title, const char *reason,
 		GtkWindow *parent)
@@ -156,7 +160,7 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 	return builder;
 }
 
-/**
+/*
  * totem_interface_load_with_full_path:
  * @filename: the #GtkBuilder UI file path to load
  * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise
@@ -167,7 +171,7 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
  *
  * Return value: (transfer full): the loaded #GtkBuilder object, or %NULL
  */
-GtkBuilder *
+static GtkBuilder *
 totem_interface_load_with_full_path (const char *filename, gboolean fatal, 
 				     GtkWindow *parent, gpointer user_data)
 {
