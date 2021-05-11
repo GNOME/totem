@@ -31,9 +31,3 @@
 char ** totem_get_plugin_paths (void);
 char * totem_plugin_find_file (const char *plugin_name,
 			       const char *file);
-GtkBuilder * totem_plugin_load_interface (const char *plugin_name,
-					  const char *name,
-					  gboolean fatal,
-					  GtkWindow *parent,
-					  gpointer user_data);
-

@@ -159,38 +159,3 @@ totem_plugin_find_file (const char *plugin_name,
 #endif
 	return ret;
 }
-
-/**
- * totem_plugin_load_interface:
- * @plugin_name: the plugin name
- * @name: interface filename
- * @fatal: %TRUE if it's a fatal error if the interface can't be loaded
- * @parent: (allow-none): the interface's parent #GtkWindow
- * @user_data: (allow-none): a pointer to be passed to each signal handler in the interface when they're called
- *
- * Loads an interface file (GtkBuilder UI file) for a plugin, given its filename and
- * assuming it's installed in the plugin's data directory.
- *
- * This should be used instead of attempting to load interfaces manually in plugins.
- *
- * Return value: (transfer full): the #GtkBuilder instance for the interface
- **/
-GtkBuilder *
-totem_plugin_load_interface (const char *plugin_name,
-			     const char *name,
-			     gboolean fatal,
-			     GtkWindow *parent,
-			     gpointer user_data)
-{
-	GtkBuilder *builder = NULL;
-	char *filename;
-
-	filename = totem_plugin_find_file (plugin_name, name);
-	builder = totem_interface_load_with_full_path (filename,
-						       fatal,
-						       parent,
-						       user_data);
-	g_free (filename);
-
-	return builder;
-}
