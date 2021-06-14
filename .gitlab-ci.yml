@@ -51,6 +51,12 @@ build-fedora:
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build test
     - ninja -C _build install
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build dist
+  artifacts:
+    when: always
+    name: "totem-${CI_COMMIT_REF_NAME}"
+    paths:
+      - "${CI_PROJECT_DIR}/_build/meson-logs"
+      - "${CI_PROJECT_DIR}/_build/meson-dist"
 
 flatpak:master:
     extends: .flatpak
