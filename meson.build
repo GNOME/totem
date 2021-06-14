@@ -243,6 +243,10 @@ else
   )
 endif
 
+meson.add_dist_script(
+  find_program('remove-flatpak-dist.sh').path()
+)
+
 message('Totem was configured with the following options:')
 message('** Using the GStreamer-1.0 backend')
 
