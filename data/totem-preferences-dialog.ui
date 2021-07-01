@@ -470,225 +470,212 @@
 		  </child>
 
 		  <child>
-		    <object class="GtkAlignment" id="alignment6">
-		      <property name="visible">True</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xscale">1</property>
-		      <property name="yscale">1</property>
-		      <property name="top_padding">0</property>
-		      <property name="bottom_padding">0</property>
-		      <property name="left_padding">12</property>
-		      <property name="right_padding">0</property>
+		    <object class="GtkGrid">
+                      <property name="visible">True</property>
+                      <property name="margin-start">12</property>
+                      <property name="row_spacing">6</property>
+                      <property name="column_spacing">12</property>
 
-		      <child>
-			<object class="GtkGrid">
-			  <property name="visible">True</property>
-			  <property name="row_spacing">6</property>
-			  <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="tpw_brightness_label">
+                          <property name="visible" bind-source="tpw_bright_scale" bind-property="visible" bind-flags="default|sync-create"/>
+                          <property name="label" translatable="yes">_Brightness:</property>
+                          <property name="hexpand">True</property>
+                          <property name="use_underline">True</property>
+                          <property name="use_markup">False</property>
+                          <property name="justify">GTK_JUSTIFY_LEFT</property>
+                          <property name="wrap">False</property>
+                          <property name="selectable">False</property>
+                          <property name="xalign">0</property>
+                          <property name="yalign">0.5</property>
+                          <property name="mnemonic_widget">tpw_bright_scale</property>
+                          <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                          <property name="width_chars">-1</property>
+                          <property name="single_line_mode">False</property>
+                          <property name="angle">0</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkLabel" id="tpw_brightness_label">
-			      <property name="visible" bind-source="tpw_bright_scale" bind-property="visible" bind-flags="default|sync-create"/>
-			      <property name="label" translatable="yes">_Brightness:</property>
-			      <property name="hexpand">True</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">0</property>
-			      <property name="yalign">0.5</property>
-			      <property name="mnemonic_widget">tpw_bright_scale</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">0</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">0</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkLabel" id="tpw_contrast_label">
+                          <property name="visible" bind-source="tpw_contrast_scale" bind-property="visible" bind-flags="default|sync-create"/>
+                          <property name="label" translatable="yes">Co_ntrast:</property>
+                          <property name="hexpand">True</property>
+                          <property name="use_underline">True</property>
+                          <property name="use_markup">False</property>
+                          <property name="justify">GTK_JUSTIFY_LEFT</property>
+                          <property name="wrap">False</property>
+                          <property name="selectable">False</property>
+                          <property name="xalign">0</property>
+                          <property name="yalign">0.5</property>
+                          <property name="mnemonic_widget">tpw_contrast_scale</property>
+                          <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                          <property name="width_chars">-1</property>
+                          <property name="single_line_mode">False</property>
+                          <property name="angle">0</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">1</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkLabel" id="tpw_contrast_label">
-			      <property name="visible" bind-source="tpw_contrast_scale" bind-property="visible" bind-flags="default|sync-create"/>
-			      <property name="label" translatable="yes">Co_ntrast:</property>
-			      <property name="hexpand">True</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">0</property>
-			      <property name="yalign">0.5</property>
-			      <property name="mnemonic_widget">tpw_contrast_scale</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">0</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">1</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkScale" id="tpw_bright_scale">
+                          <property name="visible">True</property>
+                          <property name="hexpand">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="draw_value">False</property>
+                          <property name="value_pos">GTK_POS_TOP</property>
+                          <property name="digits">1</property>
+                          <property name="inverted">False</property>
+                          <property name="adjustment">tpw_bright_adjustment</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkScale" id="tpw_bright_scale">
-			      <property name="visible">True</property>
-			      <property name="hexpand">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="draw_value">False</property>
-			      <property name="value_pos">GTK_POS_TOP</property>
-			      <property name="digits">1</property>
-			      <property name="inverted">False</property>
-			      <property name="adjustment">tpw_bright_adjustment</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">0</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkScale" id="tpw_contrast_scale">
+                          <property name="visible">True</property>
+                          <property name="hexpand">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="draw_value">False</property>
+                          <property name="value_pos">GTK_POS_TOP</property>
+                          <property name="digits">1</property>
+                          <property name="inverted">False</property>
+                          <property name="adjustment">tpw_contrast_adjustment</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">1</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkScale" id="tpw_contrast_scale">
-			      <property name="visible">True</property>
-			      <property name="hexpand">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="draw_value">False</property>
-			      <property name="value_pos">GTK_POS_TOP</property>
-			      <property name="digits">1</property>
-			      <property name="inverted">False</property>
-			      <property name="adjustment">tpw_contrast_adjustment</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">1</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkLabel" id="tpw_saturation_label">
+                          <property name="visible" bind-source="tpw_saturation_scale" bind-property="visible" bind-flags="default|sync-create"/>
+                          <property name="label" translatable="yes">Sat_uration:</property>
+                          <property name="hexpand">True</property>
+                          <property name="use_underline">True</property>
+                          <property name="use_markup">False</property>
+                          <property name="justify">GTK_JUSTIFY_LEFT</property>
+                          <property name="wrap">False</property>
+                          <property name="selectable">False</property>
+                          <property name="xalign">0</property>
+                          <property name="yalign">0.5</property>
+                          <property name="mnemonic_widget">tpw_saturation_scale</property>
+                          <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                          <property name="width_chars">-1</property>
+                          <property name="single_line_mode">False</property>
+                          <property name="angle">0</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">2</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkLabel" id="tpw_saturation_label">
-			      <property name="visible" bind-source="tpw_saturation_scale" bind-property="visible" bind-flags="default|sync-create"/>
-			      <property name="label" translatable="yes">Sat_uration:</property>
-			      <property name="hexpand">True</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">0</property>
-			      <property name="yalign">0.5</property>
-			      <property name="mnemonic_widget">tpw_saturation_scale</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">0</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">2</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkLabel" id="tpw_hue_label">
+                          <property name="visible" bind-source="tpw_hue_scale" bind-property="visible" bind-flags="default|sync-create"/>
+                          <property name="label" translatable="yes">_Hue:</property>
+                          <property name="hexpand">True</property>
+                          <property name="use_underline">True</property>
+                          <property name="use_markup">False</property>
+                          <property name="justify">GTK_JUSTIFY_LEFT</property>
+                          <property name="wrap">False</property>
+                          <property name="selectable">False</property>
+                          <property name="xalign">0</property>
+                          <property name="yalign">0.5</property>
+                          <property name="mnemonic_widget">tpw_hue_scale</property>
+                          <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                          <property name="width_chars">-1</property>
+                          <property name="single_line_mode">False</property>
+                          <property name="angle">0</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">3</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkLabel" id="tpw_hue_label">
-			      <property name="visible" bind-source="tpw_hue_scale" bind-property="visible" bind-flags="default|sync-create"/>
-			      <property name="label" translatable="yes">_Hue:</property>
-			      <property name="hexpand">True</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">0</property>
-			      <property name="yalign">0.5</property>
-			      <property name="mnemonic_widget">tpw_hue_scale</property>
-			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-			      <property name="width_chars">-1</property>
-			      <property name="single_line_mode">False</property>
-			      <property name="angle">0</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">0</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">3</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkScale" id="tpw_saturation_scale">
+                          <property name="visible">True</property>
+                          <property name="hexpand">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="draw_value">False</property>
+                          <property name="value_pos">GTK_POS_TOP</property>
+                          <property name="digits">1</property>
+                          <property name="inverted">False</property>
+                          <property name="adjustment">tpw_saturation_adjustment</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">2</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkScale" id="tpw_saturation_scale">
-			      <property name="visible">True</property>
-			      <property name="hexpand">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="draw_value">False</property>
-			      <property name="value_pos">GTK_POS_TOP</property>
-			      <property name="digits">1</property>
-			      <property name="inverted">False</property>
-			      <property name="adjustment">tpw_saturation_adjustment</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">2</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
+                      <child>
+                        <object class="GtkScale" id="tpw_hue_scale">
+                          <property name="visible">True</property>
+                          <property name="hexpand">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="draw_value">False</property>
+                          <property name="value_pos">GTK_POS_TOP</property>
+                          <property name="digits">1</property>
+                          <property name="inverted">False</property>
+                          <property name="adjustment">tpw_hue_adjustment</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">3</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
 
-			  <child>
-			    <object class="GtkScale" id="tpw_hue_scale">
-			      <property name="visible">True</property>
-			      <property name="hexpand">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="draw_value">False</property>
-			      <property name="value_pos">GTK_POS_TOP</property>
-			      <property name="digits">1</property>
-			      <property name="inverted">False</property>
-			      <property name="adjustment">tpw_hue_adjustment</property>
-			    </object>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">3</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
-
-			  <child>
-			    <object class="GtkButton" id="tpw_color_reset">
-			      <property name="visible">True</property>
-			      <property name="hexpand">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="halign">end</property>
-			      <property name="label" translatable="yes">Reset to _Defaults</property>
-			      <property name="use_underline">True</property>
-			      <property name="relief">GTK_RELIEF_NORMAL</property>
-			      <property name="focus_on_click">True</property>
-			      <signal name="clicked" handler="tpw_color_reset_clicked_cb" object="TotemPreferencesDialog" swapped="no"/>
-			    </object>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="width">1</property>
-			      <property name="top_attach">4</property>
-			      <property name="height">1</property>
-			    </packing>
-			  </child>
-			</object>
-		      </child>
-		    </object>
+                      <child>
+                        <object class="GtkButton" id="tpw_color_reset">
+                          <property name="visible">True</property>
+                          <property name="hexpand">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="halign">end</property>
+                          <property name="label" translatable="yes">Reset to _Defaults</property>
+                          <property name="use_underline">True</property>
+                          <property name="relief">GTK_RELIEF_NORMAL</property>
+                          <property name="focus_on_click">True</property>
+                          <signal name="clicked" handler="tpw_color_reset_clicked_cb" object="TotemPreferencesDialog" swapped="no"/>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="width">1</property>
+                          <property name="top_attach">4</property>
+                          <property name="height">1</property>
+                        </packing>
+                      </child>
+                    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
