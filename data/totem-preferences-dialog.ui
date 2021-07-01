@@ -85,7 +85,7 @@
   <signal name="response" handler="gtk_widget_hide"/>
 
   <child internal-child="vbox">
-    <object class="GtkVBox" id="tpw_dialog_vbox">
+    <object class="GtkBox" id="tpw_dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="orientation">vertical</property>
@@ -102,7 +102,7 @@
 	  <property name="enable_popup">False</property>
 
 	  <child>
-	    <object class="GtkVBox" id="tpw_general_vbox">
+	    <object class="GtkBox" id="tpw_general_vbox">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
@@ -110,7 +110,7 @@
               <property name="orientation">vertical</property>
 
 	      <child>
-		<object class="GtkVBox" id="vbox6">
+		<object class="GtkBox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
@@ -293,9 +293,10 @@
 	      </child>
 
               <child>
-                <object class="GtkVBox" id="vbox3">
+                <object class="GtkBox">
                   <property name="visible">True</property>
                   <property name="can_focus">False</property>
+                  <property name="orientation">vertical</property>
                   <property name="spacing">6</property>
                   <child>
                     <object class="GtkLabel" id="tpw_plugins_label">
@@ -380,7 +381,7 @@
 	  </child>
 
 	  <child>
-	    <object class="GtkVBox" id="vbox1">
+	    <object class="GtkBox">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
@@ -388,7 +389,7 @@
               <property name="orientation">vertical</property>
 
 	      <child>
-		<object class="GtkVBox" id="tpw_visuals_display_vbox">
+		<object class="GtkBox" id="tpw_visuals_display_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
@@ -452,7 +453,7 @@
 	      </child>
 
 	      <child>
-		<object class="GtkVBox" id="tpw_bright_contr_vbox">
+		<object class="GtkBox" id="tpw_bright_contr_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
@@ -780,7 +781,7 @@
 	  </child>
 
 	  <child>
-	    <object class="GtkVBox" id="vbox12">
+	    <object class="GtkBox">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
@@ -788,14 +789,14 @@
               <property name="orientation">vertical</property>
 
 	      <child>
-		<object class="GtkVBox" id="vbox13">
+		<object class="GtkBox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
                   <property name="orientation">vertical</property>
 
 		  <child>
-		    <object class="GtkVBox" id="vbox22">
+		    <object class="GtkBox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
