@@ -52,8 +52,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2020-07-18 15:35+0000\n"
-"PO-Revision-Date: 2020-04-28 16:34+0300\n"
+"POT-Creation-Date: 2021-04-30 19:06+0000\n"
+"PO-Revision-Date: 2021-08-06 23:18+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <>\n"
 "Language: tr\n"
@@ -62,11 +62,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2012-08-31 06:01+0000\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in:6
 #: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1906 src/totem-object.c:3729
+#: src/totem-grilo.c:1922 src/totem-object.c:3766
 msgid "Videos"
 msgstr "Videolar"
 
@@ -228,7 +228,7 @@ msgstr ""
 "Gözatma arayüzünde gösterilecek dizinler (öntanımlı olarak hiçbiri "
 "gösterilmez)"
 
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
+#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5718
 msgid "Stereo"
 msgstr "Çiftli"
 
@@ -620,11 +620,11 @@ msgstr "Açmak istediğiniz dosyanın _adresini giriniz:"
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:2002
+#: src/backend/bacon-video-widget.c:2000
 msgid "Password requested for RTSP server"
 msgstr "RTSP sunucusu için parola isteniyor"
 
-#: src/backend/bacon-video-widget.c:3925
+#: src/backend/bacon-video-widget.c:3951
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -632,52 +632,52 @@ msgstr ""
 "Kaynak şifrelenmiş gözüküyor ve okunamıyor. Şifrelenmiş DVD’yi libdvdcss "
 "olmadan oynatmayı mı deniyorsunuz?"
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3965
 msgid "The server you are trying to connect to is not known."
 msgstr "Bağlanmaya çalıştığınız sunucu bilinmiyor."
 
-#: src/backend/bacon-video-widget.c:3942
+#: src/backend/bacon-video-widget.c:3968
 msgid "The connection to this server was refused."
 msgstr "Bu sunucuya bağlantı reddedildi."
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3971
 msgid "The specified movie could not be found."
 msgstr "Belirtilen film bulunamadı."
 
-#: src/backend/bacon-video-widget.c:3952
+#: src/backend/bacon-video-widget.c:3978
 msgid "The server refused access to this file or stream."
 msgstr "Sunucu bu dosya veya akışa erişimi reddetti."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3984
 msgid "Authentication is required to access this file or stream."
 msgstr "Bu dosya veya akışa erişmek için kimlik doğrulama gerekir."
 
-#: src/backend/bacon-video-widget.c:3964
+#: src/backend/bacon-video-widget.c:3990
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "SSL/TLS desteği eksik. Kurulumunuzu gözden geçirin."
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3997
 msgid "You are not allowed to open this file."
 msgstr "Bu dosyayı açmanıza izin verilmiyor."
 
-#: src/backend/bacon-video-widget.c:3976
+#: src/backend/bacon-video-widget.c:4002
 msgid "This location is not a valid one."
 msgstr "Bu, geçerli bir konum değil."
 
-#: src/backend/bacon-video-widget.c:3984
+#: src/backend/bacon-video-widget.c:4010
 msgid "The movie could not be read."
 msgstr "Film okunamadı."
 
-#: src/backend/bacon-video-widget.c:3990
+#: src/backend/bacon-video-widget.c:4016
 msgid "This file is encrypted and cannot be played back."
 msgstr "Dosya şifrelenmiştir ve oynatılamaz."
 
-#: src/backend/bacon-video-widget.c:3996
+#: src/backend/bacon-video-widget.c:4022
 msgid "The file you tried to play is an empty file."
 msgstr "Oynatmayı denediğiniz dosya boş bir dosyadır."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
+#: src/backend/bacon-video-widget.c:4046 src/backend/bacon-video-widget.c:4054
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -690,12 +690,12 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4040
+#: src/backend/bacon-video-widget.c:4066
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Bu akış oynatılamaz. Bir güvenlik duvarı engelliyor olabilir."
 
-#: src/backend/bacon-video-widget.c:4043
+#: src/backend/bacon-video-widget.c:4069
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -703,25 +703,25 @@ msgstr ""
 "Bir ses veya görüntü akışı, kod çözücü eksikliği nedeniyle çalıştırılamıyor. "
 "Bazı film türlerini oynatabilmek için daha çok eklenti yüklemeniz gerekebilir"
 
-#: src/backend/bacon-video-widget.c:4054
+#: src/backend/bacon-video-widget.c:4080
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Bu dosya ağ üzerinden oynatılamıyor. Önce diskinize indirmeyi deneyin."
 
-#: src/backend/bacon-video-widget.c:5698
+#: src/backend/bacon-video-widget.c:5714
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5700
+#: src/backend/bacon-video-widget.c:5716
 msgid "Mono"
 msgstr "Tekli"
 
-#: src/backend/bacon-video-widget.c:5988
+#: src/backend/bacon-video-widget.c:6004
 msgid "Media contains no supported video streams."
 msgstr "Ortamda desteklenen akışkan video bulunmuyor."
 
-#: src/backend/bacon-video-widget.c:6200
+#: src/backend/bacon-video-widget.c:6216
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -837,31 +837,31 @@ msgstr "Çözünürlük"
 msgid "Duration"
 msgstr "Süre"
 
-#: src/totem-grilo.c:285
+#: src/totem-grilo.c:288
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "%d. Sezon %d. Bölüm"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:322
+#: src/totem-grilo.c:325
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (%d. Sezon %d. Bölüm)"
 
-#: src/totem-grilo.c:677
+#: src/totem-grilo.c:687
 msgid "Browse Error"
 msgstr "Göz Atma Hatası"
 
-#: src/totem-grilo.c:826
+#: src/totem-grilo.c:836
 msgid "Search Error"
 msgstr "Arama Hatası"
 
-#: src/totem-grilo.c:1306
+#: src/totem-grilo.c:1328
 msgid "Local"
 msgstr "Yerel"
 
-#: src/totem-grilo.c:1915
+#: src/totem-grilo.c:1931
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -910,21 +910,21 @@ msgstr "İptal"
 msgid "Search"
 msgstr "Ara"
 
-#: src/totem-menu.c:408
+#: src/totem-menu.c:410
 msgid "Audio Track"
 msgstr "Ses Parçası"
 
-#: src/totem-menu.c:411
+#: src/totem-menu.c:413
 msgid "Subtitle"
 msgstr "Alt Yazı"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:531
+#: src/totem-menu.c:533
 msgid "None"
 msgstr "Hiçbiri"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:535
+#: src/totem-menu.c:537
 msgctxt "Language"
 msgid "Auto"
 msgstr "Kendiliğinden"
@@ -951,23 +951,23 @@ msgstr "Totem yardım içeriğini gösteremiyor."
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3864
 msgid "Previous Chapter/Movie"
 msgstr "Önceki Bölüm/Film"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3870
 msgid "Play / Pause"
 msgstr "Oynat / Beklet"
 
-#: src/totem-object.c:3839
+#: src/totem-object.c:3876
 msgid "Next Chapter/Movie"
 msgstr "Sonraki Bölüm/Film"
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4099
 msgid "Totem could not startup."
 msgstr "Totem başlatılamadı."
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4099
 msgid "No reason."
 msgstr "Neden yok."
 
@@ -975,14 +975,14 @@ msgstr "Neden yok."
 msgid "Add Web Video"
 msgstr "Web Videosu Ekle"
 
-#: src/totem-open-location.c:182 src/totem-uri.c:399 src/totem-uri.c:460
+#: src/totem-open-location.c:182 src/totem-uri.c:401 src/totem-uri.c:462
 #: src/plugins/screenshot/totem-gallery.c:96
 #: src/plugins/screenshot/totem-gallery-progress.c:100
 #: src/plugins/skipto/totem-skipto.c:218
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: src/totem-open-location.c:183 src/totem-uri.c:461
+#: src/totem-open-location.c:183 src/totem-uri.c:463
 msgid "_Add"
 msgstr "_Ekle"
 
@@ -1232,27 +1232,27 @@ msgstr "Batı"
 msgid "Vietnamese"
 msgstr "Vietnamca"
 
-#: src/totem-uri.c:329
+#: src/totem-uri.c:330
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: src/totem-uri.c:335
+#: src/totem-uri.c:336
 msgid "Video files"
 msgstr "Video dosyaları"
 
-#: src/totem-uri.c:346
+#: src/totem-uri.c:347
 msgid "Subtitle files"
 msgstr "Alt Yazı dosyaları"
 
-#: src/totem-uri.c:396
+#: src/totem-uri.c:398
 msgid "Select Text Subtitles"
 msgstr "Metin Alt Yazılarını Seç"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:402
 msgid "_Open"
 msgstr "_Aç"
 
-#: src/totem-uri.c:457
+#: src/totem-uri.c:459
 msgid "Add Videos"
 msgstr "Video Ekle"
 
@@ -1338,54 +1338,54 @@ msgstr "Alt Yazı İndirici"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Şu anda oynatılan film için alt yazı ara"
 
-#: src/plugins/opensubtitles/opensubtitles.py:46
+#: src/plugins/opensubtitles/opensubtitles.py:47
 msgid "Brazilian Portuguese"
 msgstr "Brezilya Portekizcesi"
 
-#: src/plugins/opensubtitles/opensubtitles.py:187
+#: src/plugins/opensubtitles/opensubtitles.py:188
 msgid "Searching for subtitles…"
 msgstr "Alt yazılar aranıyor…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:619
+#: src/plugins/opensubtitles/opensubtitles.py:236
+#: src/plugins/opensubtitles/opensubtitles.py:620
 msgid "Downloading the subtitles…"
 msgstr "Alt yazılar indiriliyor…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:300
+#: src/plugins/opensubtitles/opensubtitles.py:301
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles web sitesine bağlanılamadı"
 
-#: src/plugins/opensubtitles/opensubtitles.py:333
-#: src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:334
+#: src/plugins/opensubtitles/opensubtitles.py:352
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles web sitesine ulaşılamadı."
 
-#: src/plugins/opensubtitles/opensubtitles.py:339
+#: src/plugins/opensubtitles/opensubtitles.py:340
 msgid "No results found."
 msgstr "Hiçbir sonuç bulunamadı."
 
-#: src/plugins/opensubtitles/opensubtitles.py:486
+#: src/plugins/opensubtitles/opensubtitles.py:487
 msgid "Subtitles"
 msgstr "Alt yazılar"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:492
+#: src/plugins/opensubtitles/opensubtitles.py:493
 msgid "Format"
 msgstr "Biçim"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:497
+#: src/plugins/opensubtitles/opensubtitles.py:498
 msgid "Rating"
 msgstr "Sıralama"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:537
+#: src/plugins/opensubtitles/opensubtitles.py:538
 msgid "_Download Movie Subtitles…"
 msgstr "Film Alt Yazılarını _İndir…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:576
+#: src/plugins/opensubtitles/opensubtitles.py:577
 msgid "Searching subtitles…"
 msgstr "Alt yazılar aranıyor…"
 
@@ -1658,17 +1658,17 @@ msgstr ""
 
 #: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Python Console"
-msgstr "Python Konsolu"
+msgstr "Python Uçbirimi"
 
 #: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
 msgid "Interactive Python console"
-msgstr "Etkileşimli Python konsolu"
+msgstr "Etkileşimli Python uçbirimi"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
 #: src/plugins/pythonconsole/pythonconsole.py:80
 msgid "_Python Console"
-msgstr "_Python Konsolu"
+msgstr "_Python Uçbirimi"
 
 #. pylint: disable=no-member
 #: src/plugins/pythonconsole/pythonconsole.py:86
@@ -1683,7 +1683,7 @@ msgstr "Totem.Object’e, “totem_object” üzerinden erişebilirsiniz :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
 msgid "Totem Python Console"
-msgstr "Totem Python Konsolu"
+msgstr "Totem Python Uçbirimi"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
@@ -1712,11 +1712,11 @@ msgstr "Döndürme Eklentisi"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Eğer yanlış yönelimdeyseler videoları döndürmeyi sağlar"
 
-#: src/plugins/rotation/totem-rotation.c:258
+#: src/plugins/rotation/totem-rotation.c:266
 msgid "_Rotate ↷"
 msgstr "_Döndür ↷"
 
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:270
 msgid "Rotate ↶"
 msgstr "Döndür ↶"
 
@@ -1773,7 +1773,7 @@ msgstr "Ekran görüntüleri sayısı:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:145
+#: src/plugins/screenshot/screenshot-filename-builder.c:132
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Ekran Görüntüsü - %s.png"
@@ -1781,7 +1781,7 @@ msgstr "Ekran Görüntüsü - %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:152
+#: src/plugins/screenshot/screenshot-filename-builder.c:139
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Ekran Görüntüsü - %s - %d.png"
@@ -1822,20 +1822,20 @@ msgstr "Galeri Oluşturuluyor…"
 msgid "Saving gallery as “%s”"
 msgstr "Galeri, “%s” olarak kaydediliyor"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:232
+#: src/plugins/screenshot/totem-screenshot-plugin.c:241
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem video için bir ekran görüntüsü alamadı."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:241
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Bunun gerçekleşmemesi gerekiyordu, lütfen bir hata raporu oluşturun."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:339
+#: src/plugins/screenshot/totem-screenshot-plugin.c:349
 msgid "Take _Screenshot"
 msgstr "Ekran _Görüntüsü Al"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:345
+#: src/plugins/screenshot/totem-screenshot-plugin.c:355
 msgid "Create Screenshot _Gallery…"
 msgstr "Ekran _Görüntüsü Galerisi Oluştur…"
 
