@@ -323,7 +323,7 @@ class Root (dbus.service.Object): # pylint: disable=R0904
                           in_signature = 's', # pylint: disable=C0103
                           out_signature = '')
     def OpenUri (self, uri): # pylint: disable=C0103
-        self.totem.add_to_playlist_and_play (uri)
+        self.totem.add_to_playlist (uri, None, True)
 
     @dbus.service.signal (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           signature = 'x') # pylint: disable=C0103
