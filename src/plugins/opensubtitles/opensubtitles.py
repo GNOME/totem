@@ -158,10 +158,11 @@ class SearchThread (threading.Thread):
     """
     This is the thread started when the dialog is searching for subtitles
     """
-    def __init__ (self, model, movie_hash, movie_size):
+    def __init__ (self, model, movie_hash, movie_size, movie_title):
         self._model = model
         self._movie_hash = movie_hash
         self._movie_size = movie_size
+        self._movie_title = movie_title
         self._done = False
         self._results = []
         self._lock = threading.Lock ()
@@ -172,7 +173,8 @@ class SearchThread (threading.Thread):
         self._lock.acquire (True)
         (self._results,
          self._message) = self._model.search_subtitles (self._movie_hash,
-                                                        self._movie_size)
+                                                        self._movie_size,
+                                                        self._movie_title)
         self._done = True
         self._lock.release ()
 
@@ -318,7 +320,7 @@ class OpenSubtitlesModel:
 
         return result
 
-    def search_subtitles (self, movie_hash, movie_size):
+    def search_subtitles (self, movie_hash, movie_size, movie_title):
         self._lock.acquire (True)
 
         message = ''
@@ -329,6 +331,19 @@ class OpenSubtitlesModel:
             searchdata = {'sublanguageid': self.lang,
                           'moviehash'    : movie_hash,
                           'moviebytesize': str (movie_size)}
+            try:
+                result = self._server.SearchSubtitles (self._token,
+                                                       [searchdata])
+            except xmlrpc.client.ProtocolError:
+                message = _(u'Could not contact the OpenSubtitles website.')
+
+            if result.get ('data'):
+                self._lock.release ()
+                return (result['data'], message)
+
+            """Not found by movie_hash and moviebytesize, fallback to title"""
+            searchdata = {'sublanguageid': self.lang,
+                          'query'   : movie_title}
             try:
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
@@ -562,7 +577,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
     def _delete_menu (self):
         self._totem.empty_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
 
-    def _get_results (self, movie_hash, movie_size):
+    def _get_results (self, movie_hash, movie_size, movie_title):
         self._list_store.clear ()
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
@@ -570,7 +585,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
         self._dialog.get_window ().set_cursor (cursor)
 
-        thread = SearchThread (self._model, movie_hash, movie_size)
+        thread = SearchThread (self._model, movie_hash, movie_size, movie_title)
         thread.start ()
         GLib.idle_add (self._populate_treeview, thread)
 
@@ -776,5 +791,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._find_button.set_sensitive (False)
         self._filename = self._totem.get_current_mrl () # pylint: disable=no-member
         (movie_hash, movie_size) = hash_file (self._filename)
+        movie_title = self._totem.get_title_at_playlist_pos(self._totem.get_playlist_pos())
 
-        self._get_results (movie_hash, movie_size)
+        self._get_results (movie_hash, movie_size, movie_title)
