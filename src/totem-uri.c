@@ -290,6 +290,7 @@ static const char subtitle_ext[][4] = {
 	"smi",
 	"ssa",
 	"ass",
+	"mpl",
 	"asc"
 };
 
@@ -347,6 +348,7 @@ totem_setup_file_filters (void)
 	gtk_file_filter_set_name (filter_subs, _("Subtitle files"));
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-subrip"); /* *.srt */
 	gtk_file_filter_add_mime_type (filter_subs, "text/plain"); /* *.asc, *.txt */
+	gtk_file_filter_add_mime_type (filter_subs, "text/x-mpl2"); /* *.mpl */
 	gtk_file_filter_add_mime_type (filter_subs, "text/vtt"); /* *.vtt */
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-sami"); /* *.smi, *.sami */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-microdvd"); /* *.sub */
