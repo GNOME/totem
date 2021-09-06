@@ -34,6 +34,7 @@ SUBTITLES_EXT = [
     "smi",
     "ssa",
     "ass",
+    "mpl",
 ]
 
 # Map of the language codes used by opensubtitles.org's API to their
