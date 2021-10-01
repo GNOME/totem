@@ -57,6 +57,7 @@ static const char subtitle_ext[][4] = {
 	"smi",
 	"ssa",
 	"ass",
+	"mpl",
 	"asc"
 };
 
