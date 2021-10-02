@@ -800,7 +800,7 @@ setup_save_timeout_cb (Totem    *totem,
  * totem_object_add_to_playlist:
  * @totem: a #TotemObject
  * @uri: the URI to add to the playlist
- * @display_name: the display name of the URI
+ * @display_name: (allow-none): the display name of the URI
  * @play: whether to play the added item
  *
  * Add @uri to the playlist and play it immediately.
