@@ -279,8 +279,8 @@ gir_extra_args = [
   '--pkg-export=totem'
 ]
 
-gir_dir = join_paths(totem_datadir, 'gir-' + totem_api_version)
-typelib_dir = join_paths(totem_libdir, 'girepository-' + totem_api_version)
+gir_dir = join_paths(totem_datadir, 'gir-1.0')
+typelib_dir = join_paths(totem_libdir, 'girepository-1.0')
 
 libtotem_gir = gnome.generate_gir(
   libtotem,
