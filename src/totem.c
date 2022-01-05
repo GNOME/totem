@@ -32,6 +32,7 @@
 #include <glib-object.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <libhandy-1/handy.h>
 #include <locale.h>
 #include <string.h>
 
@@ -62,6 +63,7 @@ main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
+		hdy_init ();
 		g_set_application_name (_("Videos"));
 		totem_object_show_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}

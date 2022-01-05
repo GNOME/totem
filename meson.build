@@ -125,6 +125,7 @@ add_project_arguments(common_flags, language: 'c')
 
 glib_req_version = '>= 2.56.0'
 gtk_req_version = '>= 3.22.0'
+hdy_req_version = '>= 1.5.0'
 gst_req_version = '>= 1.6.0'
 grilo_req_version = '>= 0.3.0'
 peas_req_version = '>= 1.1.0'
@@ -134,6 +135,7 @@ glib_dep =  dependency('glib-2.0', version: glib_req_version)
 gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
 gio_dep = dependency('gio-2.0', version: '>= 2.43.4')
 gtk_dep = dependency('gtk+-3.0', version: gtk_req_version)
+hdy_dep = dependency('libhandy-1', version: hdy_req_version)
 gst_dep = dependency('gstreamer-1.0', version: gst_req_version)
 gst_tag_dep = dependency('gstreamer-tag-1.0', version: '>= 0.11.93')
 gst_video_dep = dependency('gstreamer-video-1.0')

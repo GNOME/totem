@@ -54,6 +54,7 @@ totem_common_deps = libbacon_video_widget_deps + python_deps + [
   glib_dep,
   gio_dep,
   gtk_dep,
+  hdy_dep,
   dependency('gmodule-2.0'),
   totem_plparser_dep,
   gir_dep,

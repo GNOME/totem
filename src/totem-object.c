@@ -43,6 +43,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 #include <libgd/gd.h>
+#include <libhandy-1/handy.h>
 
 #include <string.h>
 
@@ -496,13 +497,14 @@ totem_object_class_init (TotemObjectClass *klass)
 static void
 totem_object_init (TotemObject *totem)
 {
-	GtkSettings *gtk_settings;
+	HdyStyleManager *style_manager;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
 
-	gtk_settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+	hdy_init ();
+	style_manager = hdy_style_manager_get_default ();
+	hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
 
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
