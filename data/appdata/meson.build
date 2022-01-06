@@ -1,7 +1,6 @@
 appdata = 'org.gnome.Totem.appdata.xml'
 
 appdata_file = i18n.merge_file (
-    'appdata',
     input: appdata + '.in',
     output: appdata,
     install: true,
