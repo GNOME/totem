@@ -15,7 +15,7 @@ gst_base_plugins = [
 ]
 
 foreach plugin: gst_base_plugins
-  r = run_command(gst_inspect, plugin)
+  r = run_command(gst_inspect, plugin, check: false)
   assert(r.returncode() == 0,
          'Cannot find required GStreamer-1.0 plugin "' + plugin + '". It should be part of gst-plugins-base. Please install it.')
 endforeach
@@ -27,7 +27,7 @@ gst_good_plugins = [
 ]
 
 foreach plugin: gst_good_plugins
-  r = run_command(gst_inspect, plugin)
+  r = run_command(gst_inspect, plugin, check: false)
   assert(r.returncode() == 0,
          'Cannot find required GStreamer-1.0 plugin "' + plugin + '". It should be part of gst-plugins-good. Please install it.')
 endforeach

@@ -177,7 +177,7 @@ if python_option != 'no'
   if python.found()
     python_req_version = '>= 3.0'
 
-    r = run_command([python, '--version'])
+    r = run_command([python, '--version'], check: true)
     python_version = r.stdout().split(' ')[1]
 
     pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)

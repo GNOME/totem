@@ -60,7 +60,7 @@ ui_resources = gnome.compile_resources(
   c_name: 'totem'
 )
 
-r = run_command(desktop_sh, mime_type_list, uri_schemes_list)
+r = run_command(desktop_sh, mime_type_list, uri_schemes_list, check: true)
 
 desktop_conf = configuration_data()
 desktop_conf.set('VERSION', totem_version)
@@ -109,7 +109,7 @@ configure_file(
   configuration: service_conf
 )
 
-r = run_command(thumbnailer_sh, mime_type_list)
+r = run_command(thumbnailer_sh, mime_type_list, check: true)
 
 thumbnailer_conf = configuration_data()
 thumbnailer_conf.set('BINDIR', totem_bindir)
