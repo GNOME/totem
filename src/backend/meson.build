@@ -1,10 +1,12 @@
 backend_inc = include_directories('.')
 
-gst_inspect = find_program(
-  'gst-inspect-1.0',
-  join_paths(gst_dep.get_pkgconfig_variable('toolsdir'), 'gst-inspect-1.0'),
-  required: false
-)
+#gst_inspect = find_program(
+#  'gst-inspect-1.0',
+#  join_paths(gst_dep.get_pkgconfig_variable('toolsdir'), 'gst-inspect-1.0'),
+#  required: false
+#)
+
+gst_inspect = find_program ('gst-inspect-debug.sh', 'src/backend/gst-inspect-debug.sh')
 
 assert(gst_inspect.found(),
        'Cannot find required GStreamer-1.0 tool "gst-inspect-1.0". It should be part of gstreamer-1_0-utils. Please install it.')
