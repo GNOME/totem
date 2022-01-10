@@ -39,7 +39,7 @@ variables:
       xorg-x11-server-Xvfb
 
 build-fedora:
-  image: fedora:latest
+  image: fedora:34
   stage: test
   before_script:
     - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
