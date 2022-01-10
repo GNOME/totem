@@ -42,7 +42,7 @@ build-fedora:
   image: fedora:latest
   stage: test
   before_script:
-    - dnf install -y $FEDORA_DEPS
+    - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
     # See https://bugzilla.redhat.com/show_bug.cgi?id=1896438
     - dnf remove -y pylint
   script:
