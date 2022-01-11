@@ -42,13 +42,19 @@ build-fedora:
   image: fedora:35
   stage: test
   before_script:
-    - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS coreutils tree psmisc
+    - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS coreutils tree psmisc 'dnf-command(builddep)'
     # See https://bugzilla.redhat.com/show_bug.cgi?id=1896438
     - dnf remove -y pylint
     # Update meson
     - dnf remove -y meson
     - dnf install -y python3-pip
     - pip3 install --pre meson
+    - dnf builddep -y glib2
+    - git clone --branch glib-2-70 https://gitlab.gnome.org/GNOME/glib.git
+    - cd glib
+    - meson setup _build -Dprefix=/usr
+    - ninja -C _build install
+    - cd ..
   script:
     - GST_DEBUG=*:9 gst-inspect-1.0 &
     - sleep 1200
