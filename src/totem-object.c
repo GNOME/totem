@@ -257,12 +257,18 @@ totem_object_app_handle_local_options (GApplication *application,
 				       GVariantDict *options)
 {
 	GError *error = NULL;
+	HdyStyleManager *style_manager;
 
 	if (!g_application_register (application, NULL, &error)) {
 		g_warning ("Failed to register application: %s", error->message);
 		g_error_free (error);
 		return 1;
 	}
+
+	hdy_init ();
+	style_manager = hdy_style_manager_get_default ();
+	hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
+
 	totem_options_process_for_server (TOTEM_OBJECT (application), &optionstate);
 	return 0;
 }
@@ -497,14 +503,8 @@ totem_object_class_init (TotemObjectClass *klass)
 static void
 totem_object_init (TotemObject *totem)
 {
-	HdyStyleManager *style_manager;
-
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
-
-	hdy_init ();
-	style_manager = hdy_style_manager_get_default ();
-	hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
 
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
