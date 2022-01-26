@@ -8,15 +8,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"POT-Creation-Date: 2020-06-09 21:24+0000\n"
-"PO-Revision-Date: 2020-09-08 00:00+0200\n"
-"Last-Translator: scootergrisen\n"
+"POT-Creation-Date: 2021-09-14 20:12+0000\n"
+"PO-Revision-Date: 2022-01-23 14:07+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -31,7 +32,7 @@ msgstr ""
 
 #. (itstool) path: license/p
 #: C/adjust-speed.page:16 C/channels.page:20 C/file-open.page:25
-#: C/index.page:23 C/navigation.page:14 C/playing-DVD.page:19
+#: C/index.page:27 C/navigation.page:14 C/playing-DVD.page:19
 #: C/preferences.page:20 C/properties.page:23 C/screenshot-gallery.page:19
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
@@ -174,8 +175,8 @@ msgid ""
 msgstr ""
 "Tryk på <gui style=\"button\">+</gui>-knappen i øverste venstre hjørne af "
 "vinduet og vælg <gui style=\"menuitem\">Tilføj lokal video …</gui>. Vælg en "
-"eller flere videoer, du vil åbne. Tryk på <gui style=\"button\">Tilføj</gui>. Videoen "
-"tilføjes til listen i hovedvinduet, hvor du kan vælge den."
+"eller flere videoer, du vil åbne. Tryk på <gui style=\"button\">Tilføj</"
+"gui>. Videoen tilføjes til listen i hovedvinduet, hvor du kan vælge den."
 
 #. (itstool) path: item/p
 #: C/file-open.page:52
@@ -192,18 +193,36 @@ msgstr ""
 "\">Tilføj</gui>. Videoen tilføjes til listen i hovedvinduet, hvor du kan "
 "vælge den."
 
+#. (itstool) path: info/title
+#: C/index.page:7
+msgctxt "link:trail"
+msgid "Videos"
+msgstr "Videoer"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+msgctxt "link"
+msgid "Videos"
+msgstr "Videoer"
+
+#. (itstool) path: info/title
+#: C/index.page:9
+msgctxt "text"
+msgid "Videos"
+msgstr "Videoer"
+
 #. (itstool) path: info/desc
-#: C/index.page:26
+#: C/index.page:30
 msgid "Index"
 msgstr "Indeks"
 
 #. (itstool) path: page/title
-#: C/index.page:29
+#: C/index.page:33
 msgid "<_:media-1/><span> Videos</span>"
 msgstr "<_:media-1/><span> Videoer</span>"
 
 #. (itstool) path: page/p
-#: C/index.page:32
+#: C/index.page:36
 msgid ""
 "<app>Videos</app>, also known as <app>Totem</app>, is an application for "
 "playing videos. You can use it to watch movies or stream media from the "
@@ -214,17 +233,17 @@ msgstr ""
 "internettet."
 
 #. (itstool) path: section/title
-#: C/index.page:36
+#: C/index.page:40
 msgid "Playing media"
 msgstr "Afspil medier"
 
 #. (itstool) path: section/title
-#: C/index.page:40
+#: C/index.page:44
 msgid "Advanced options"
 msgstr "Avancerede indstillinger"
 
 #. (itstool) path: section/title
-#: C/index.page:44
+#: C/index.page:48
 msgid "Troubleshooting"
 msgstr "Fejlsøgning"
 
@@ -555,8 +574,8 @@ msgid ""
 "and dragging along sliders."
 msgstr ""
 "Denne indstilling giver dig mulighed for at justere <gui>Lysstyrke</gui>, "
-"<gui>Kontrast</gui>, <gui>Farvemætning</gui> eller <gui>Farvetone</gui> "
-"i de viste videoer. Gør det ved at klikke og trække langs skyderne."
+"<gui>Kontrast</gui>, <gui>Farvemætning</gui> eller <gui>Farvetone</gui> i de "
+"viste videoer. Gør det ved at klikke og trække langs skyderne."
 
 #. (itstool) path: note/p
 #: C/preferences.page:79
@@ -615,14 +634,12 @@ msgid ""
 "Information about the title, artist, album, year, duration, comment and "
 "container."
 msgstr ""
-"Information om titel, kunstner, album, år, varighed, kommentar "
-"og container."
+"Information om titel, kunstner, album, år, varighed, kommentar og container."
 
 #. (itstool) path: item/p
 #: C/properties.page:42
 msgid "Information about the dimensions, codec, framerate and bitrate."
-msgstr ""
-"Information om dimensioner, codec, billedhastighed og bithastighed."
+msgstr "Information om dimensioner, codec, billedhastighed og bithastighed."
 
 #. (itstool) path: item/title
 #: C/properties.page:45
@@ -632,8 +649,7 @@ msgstr "<gui>Lyd</gui>"
 #. (itstool) path: item/p
 #: C/properties.page:46
 msgid "Information about the codec, channels, sample rate and bitrate."
-msgstr ""
-"Informationen om codec, kanaler, samplefrekvens og bithastighed."
+msgstr "Informationen om codec, kanaler, samplefrekvens og bithastighed."
 
 #. (itstool) path: info/desc
 #: C/screenshot-gallery.page:9
@@ -893,9 +909,10 @@ msgid ""
 "<app>Videos</app> will display a dialog which will allow you to search for "
 "missing plugins (codecs) and install them."
 msgstr ""
-"Hvis du prøver og åbne et format, som ikke understøttes, så vil <app>Videoer</"
-"app>, på mange distributioner, vise en dialog som giver dig mulighed for at "
-"søge efter manglende udvidelsesmoduler (codecs) og installere dem."
+"Hvis du prøver og åbne et format, som ikke understøttes, så vil "
+"<app>Videoer</app>, på mange distributioner, vise en dialog som giver dig "
+"mulighed for at søge efter manglende udvidelsesmoduler (codecs) og "
+"installere dem."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -989,10 +1006,10 @@ msgid ""
 "available for your distribution, please ask in a support forum of your "
 "distribution."
 msgstr ""
-"For at åbne krypterede dvd'er kan du overveje at installere <sys>libdvdcss</sys>-"
-"pakken. Bemærk dog, at det ikke at lovligt at bruge pakken i alle lande. "
-"Spørg venligst i et supportforum til din distribution for "
-"yderligere information om hvorvidt og hvor pakken er tilgængelig."
+"For at åbne krypterede dvd'er kan du overveje at installere <sys>libdvdcss</"
+"sys>-pakken. Bemærk dog, at det ikke at lovligt at bruge pakken i alle "
+"lande. Spørg venligst i et supportforum til din distribution for yderligere "
+"information om hvorvidt og hvor pakken er tilgængelig."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1011,9 +1028,10 @@ msgid ""
 "from <link xref=\"subtitles\"/> page or <link xref=\"preferences\"/> page, "
 "<app>Videos</app> still does not load subtitles. The reason for that may be:"
 msgstr ""
-"Det kan ske, at <app>Videoer</app> stadigvæk ikke indlæser undertekster, selv "
-"hvis du har fulgt instruktionerne om undertekster på <link xref=\"subtitles"
-"\"/>-siden eller <link xref=\"preferences\"/>-siden. Årsagen kan være:"
+"Det kan ske, at <app>Videoer</app> stadigvæk ikke indlæser undertekster, "
+"selv hvis du har fulgt instruktionerne om undertekster på <link xref="
+"\"subtitles\"/>-siden eller <link xref=\"preferences\"/>-siden. Årsagen kan "
+"være:"
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:35
@@ -1057,7 +1075,8 @@ msgid ""
 "In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui style="
 "\"button\">Plugins…</gui>."
 msgstr ""
-"Tryk på <gui style=\"button\">Udvidelsesmoduler …</gui> i <gui>Generelt</gui>-fanebladet under <gui>Udvidelsesmoduler</gui>."
+"Tryk på <gui style=\"button\">Udvidelsesmoduler …</gui> i <gui>Generelt</"
+"gui>-fanebladet under <gui>Udvidelsesmoduler</gui>."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:56
@@ -1066,8 +1085,9 @@ msgid ""
 "Downloader</gui> plugin. It will try to find and download subtitles for the "
 "currently played movie."
 msgstr ""
-"Aktivér <gui>Underteksthenter</gui>-udvidelsesmodulet i <gui>Konfigurér udvidelsesmoduler</gui>-vinduet. Den vil prøve at finde og "
-"downloade undertekster til den film, som afspilles på nuværende tidspunkt."
+"Aktivér <gui>Underteksthenter</gui>-udvidelsesmodulet i <gui>Konfigurér "
+"udvidelsesmoduler</gui>-vinduet. Den vil prøve at finde og downloade "
+"undertekster til den film, som afspilles på nuværende tidspunkt."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-subtitles.page:63
@@ -1141,18 +1161,18 @@ msgstr "<gui>Kvadratisk</gui>"
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:50
-msgid "<gui>4:3 (TV)</gui>"
-msgstr "<gui>4:3 (tv)</gui>"
+msgid "<gui>4∶3 (TV)</gui>"
+msgstr "<gui>4∶3 (tv)</gui>"
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:51
-msgid "<gui>16:9 (Widescreen)</gui>"
-msgstr "<gui>16:9 (widescreen)</gui>"
+msgid "<gui>16∶9 (Widescreen)</gui>"
+msgstr "<gui>16∶9 (widescreen)</gui>"
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:52
-msgid "<gui>2.11:1 (DVB)</gui>"
-msgstr "<gui>2,11:1 (DVB)</gui>"
+msgid "<gui>2.11∶1 (DVB)</gui>"
+msgstr "<gui>2,11∶1 (DVB)</gui>"
 
 #. (itstool) path: note/p
 #: C/view-zoom.page:58
@@ -1160,6 +1180,6 @@ msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
 "you to force different aspect ratio to be used for displaying movie."
 msgstr ""
-"Højde-/breddeforholdet er det indbyrdes størrelsesforhold mellem højden og bredden. Indstillingen "
-"giver dig mulighed for at tvinge film til at blive vist med andre højde-/"
-"breddeforhold."
+"Højde-/breddeforholdet er det indbyrdes størrelsesforhold mellem højden og "
+"bredden. Indstillingen giver dig mulighed for at tvinge film til at blive "
+"vist med andre højde-/breddeforhold."
