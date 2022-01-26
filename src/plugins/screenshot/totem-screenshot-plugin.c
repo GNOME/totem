@@ -218,10 +218,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	g_autofree char *escaped_video_name = NULL;
 
 	if (bacon_video_widget_can_get_frames (priv->bvw, &err) == FALSE) {
-		if (err == NULL)
-			return;
-
-		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
+		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message ?: _("No reason."));
 		g_error_free (err);
 		return;
 	}
