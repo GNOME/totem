@@ -4,6 +4,7 @@ import xmlrpc.client
 import threading
 import zlib
 from os import sep
+import os
 import gettext
 
 import gi
@@ -445,10 +446,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
     # UI related code
 
     def _build_dialog (self):
-        builder = Totem.plugin_load_interface ("opensubtitles",
-                                               "opensubtitles.ui", True,
-                                               self._totem.get_main_window (), # pylint: disable=no-member
-                                               None)
+        ui_file_path = os.path.dirname (os.path.abspath (__file__)) + sep + 'opensubtitles.ui'
+        builder = Gtk.Builder.new_from_file (ui_file_path)
 
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
