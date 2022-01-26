@@ -101,6 +101,8 @@
         },
         {
             "name": "librest",
+            "buildsystem": "meson",
+            "config-opts": [ "-Dgtk_doc=false", "-Dtests=false" ],
             "sources": [
                 {
                     "type": "git",
