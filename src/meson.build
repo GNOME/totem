@@ -53,9 +53,9 @@ totem_common_incs = [
 totem_common_deps = libbacon_video_widget_deps + python_deps + [
   glib_dep,
   gio_dep,
+  gmodule_dep,
   gtk_dep,
   hdy_dep,
-  dependency('gmodule-2.0'),
   totem_plparser_dep,
   gir_dep,
   peas_dep,
@@ -189,7 +189,7 @@ totem = executable(
   meson.project_name(),
   'totem.c',
   include_directories: totem_common_incs,
-  dependencies: libtotem_dep,
+  dependencies: [ libtotem_dep, x11_dep ],
   c_args: totem_common_cflags + [
     '-DG_LOG_DOMAIN="Totem"'
   ],

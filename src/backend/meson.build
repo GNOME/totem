@@ -73,7 +73,9 @@ libbacon_video_widget_deps = [
   m_dep,
   libtotem_gst_helpers_dep,
   libtotem_gst_pixbuf_helpers_dep,
-  libtotem_time_helpers_dep
+  libtotem_time_helpers_dep,
+  gtk_dep,
+  gmodule_dep,
 ]
 
 libbacon_video_widget_cflags = common_flags + warn_flags + [
@@ -101,7 +103,7 @@ executable(
   backend_test,
   backend_test + '.c',
   include_directories: libbacon_video_widget_incs,
-  dependencies: libbacon_video_widget_dep,
+  dependencies: [libbacon_video_widget_dep, x11_dep],
   c_args: libbacon_video_widget_cflags + [
     '-DLOGO_PATH="@0@"'.format(join_paths(totem_pkgdatadir, meson.project_name(), 'totem_logo.png')),
     '-DG_LOG_DOMAIN="@0@"'.format(backend_test)

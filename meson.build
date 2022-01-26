@@ -133,8 +133,15 @@ totem_plparser_req_version = '>= 3.26.5'
 
 glib_dep =  dependency('glib-2.0', version: glib_req_version)
 gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
+gmodule_dep = dependency('gmodule-2.0', version: glib_req_version)
 gio_dep = dependency('gio-2.0', version: '>= 2.43.4')
 gtk_dep = dependency('gtk+-3.0', version: gtk_req_version)
+targets = gtk_dep.get_pkgconfig_variable('targets')
+if targets.split(' ').contains('x11')
+  x11_dep = dependency('x11')
+else
+  x11_dep = dependency('', required : false)
+endif
 hdy_dep = dependency('libhandy-1', version: hdy_req_version)
 gst_dep = dependency('gstreamer-1.0', version: gst_req_version)
 gst_tag_dep = dependency('gstreamer-tag-1.0', version: '>= 0.11.93')
