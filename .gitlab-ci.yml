@@ -43,6 +43,8 @@ build-fedora:
   stage: test
   before_script:
     - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
+    # Package with this fix https://gitlab.gnome.org/GNOME/glib/-/merge_requests/2435
+    - rpm -Fvh https://kojipkgs.fedoraproject.org//work/tasks/3086/81943086/glib2-2.71.0-3.fc36.x86_64.rpm https://kojipkgs.fedoraproject.org//work/tasks/3086/81943086/glib2-devel-2.71.0-3.fc36.x86_64.rpm
     # See https://bugzilla.redhat.com/show_bug.cgi?id=1896438
     - dnf remove -y pylint
   script:
