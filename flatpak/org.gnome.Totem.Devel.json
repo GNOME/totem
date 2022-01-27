@@ -311,38 +311,6 @@
             ]
         },
         {
-            "name": "clutter",
-            "config-opts": [
-                "--enable-egl-backend",
-                "--enable-wayland-backend"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/clutter.git"
-                }
-            ]
-        },
-        {
-            "name": "clutter-gtk",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/clutter-gtk.git"
-                }
-            ]
-        },
-        {
-            "name": "clutter-gst",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/clutter-gst.git",
-                    "branch": "clutter-gst-3.0"
-                }
-            ]
-        },
-        {
             "name" : "libhandy",
             "buildsystem" : "meson",
             "config-opts" : [
