@@ -160,8 +160,6 @@ update_state (TotemRotationPlugin *pi,
 	TotemRotationPluginPrivate *priv = pi->priv;
 
 	if (mrl == NULL) {
-		bacon_video_widget_set_rotation (BACON_VIDEO_WIDGET (priv->bvw),
-					 BVW_ROTATION_R_ZERO);
 		g_simple_action_set_enabled (priv->rotate_left_action, FALSE);
 		g_simple_action_set_enabled (priv->rotate_right_action, FALSE);
 	} else {
@@ -297,9 +295,6 @@ impl_deactivate (PeasActivatable *plugin)
 	totem_object_empty_menu_section (priv->totem, "rotation-placeholder");
 	g_action_map_remove_action (G_ACTION_MAP (priv->totem), "rotate-left");
 	g_action_map_remove_action (G_ACTION_MAP (priv->totem), "rotate-right");
-
-	bacon_video_widget_set_rotation (BACON_VIDEO_WIDGET (priv->bvw),
-					 BVW_ROTATION_R_ZERO);
 
 	priv->totem = NULL;
 	priv->bvw = NULL;

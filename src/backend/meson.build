@@ -35,12 +35,8 @@ endforeach
 
 sources = files(
   'bacon-time-label.c',
-  'bacon-video-controls-actor.c',
-  'bacon-video-spinner-actor.c',
   'bacon-video-widget-gst-missing-plugins.c',
   'bacon-video-widget.c',
-  'clock.c',
-  'totem-aspect-frame.c'
 )
 
 enum_headers = files('bacon-video-widget.h')
@@ -62,10 +58,6 @@ libbacon_video_widget_deps = [
   gst_tag_dep,
   dependency('gstreamer-audio-1.0'),
   gst_video_dep,
-  dependency('clutter-1.0', version: '>= 1.17.3'),
-  dependency('clutter-gst-3.0', version: '>= 2.99.2'),
-  clutter_gtk_dep,
-  dependency('cairo', version: '>= 1.14.0'),
   dependency('gsettings-desktop-schemas'),
   m_dep,
   libtotem_gst_helpers_dep,

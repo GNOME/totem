@@ -27,14 +27,10 @@
 
 #pragma once
 
-#include <clutter-gtk/clutter-gtk.h>
-
-#ifndef glib_autoptr_clear_GtkClutterEmbed
-G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkClutterEmbed, g_object_unref)
-#endif
+#include <gtk/gtk.h>
 
 #define BACON_TYPE_VIDEO_WIDGET		     (bacon_video_widget_get_type ())
-G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkClutterEmbed)
+G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkOverlay)
 #define BVW_ERROR bacon_video_widget_error_quark ()
 
 /**
@@ -144,8 +140,8 @@ gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
 						  gfloat new_rate);
 gfloat bacon_video_widget_get_rate		 (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
-                                                  gboolean          fullscreen);
+void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
+						  gboolean          show_cursor);
 
 /* Metadata */
 /**
@@ -415,13 +411,3 @@ BvwAudioOutputType bacon_video_widget_get_audio_output_type
 						 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 						  BvwAudioOutputType type);
-
-/* OSD */
-void bacon_video_widget_show_popup                (BaconVideoWidget *bvw);
-void bacon_video_widget_mark_popup_busy           (BaconVideoWidget *bvw,
-						   const char       *reason);
-void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
-						   const char       *reason);
-
-GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
-GObject * bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw);

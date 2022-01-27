@@ -152,7 +152,6 @@ gst_pbutils_dep = dependency('gstreamer-pbutils-1.0')
 peas_dep = dependency('libpeas-1.0', version: peas_req_version)
 peas_gtk_dep = dependency('libpeas-gtk-1.0', version: peas_req_version)
 totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_version)
-clutter_gtk_dep = dependency('clutter-gtk-1.0', version: '>= 1.8.1')
 m_dep = cc.find_library('m', required: true)
 
 libgd = subproject(
