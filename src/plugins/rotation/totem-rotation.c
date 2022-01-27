@@ -122,7 +122,7 @@ restore_state_cb (GObject      *source_object,
 	pi = user_data;
 
 	rotation_s = g_file_info_get_attribute_string (info, GIO_ROTATION_FILE_ATTRIBUTE);
-	if (!rotation_s)
+	if (!rotation_s || *rotation_s == '\0')
 		goto out;
 
 	rotation = atoi (rotation_s);
