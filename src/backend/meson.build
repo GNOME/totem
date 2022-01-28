@@ -22,7 +22,6 @@ endforeach
 
 gst_good_plugins = [
   'autoaudiosink',
-  'goom',
   'scaletempo'
 ]
 
