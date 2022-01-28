@@ -118,9 +118,6 @@ enum
   SIGNAL_BUFFERING,
   SIGNAL_MISSING_PLUGINS,
   SIGNAL_DOWNLOAD_BUFFERING,
-  SIGNAL_SEEK_REQUESTED,
-  SIGNAL_TRACK_SKIP_REQUESTED,
-  SIGNAL_VOLUME_CHANGE_REQUESTED,
   SIGNAL_PLAY_STARTING,
   LAST_SIGNAL
 };
@@ -880,52 +877,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   0,
                   NULL, NULL,
                   g_cclosure_marshal_VOID__DOUBLE, G_TYPE_NONE, 1, G_TYPE_DOUBLE);
-
-  /**
-   * BaconVideoWidget::seek-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @forward: whether the seek requested is a forward or backward seek.
-   *
-   * Emitted when a gesture, our mouse movement that should seek is made.
-   **/
-  bvw_signals[SIGNAL_SEEK_REQUESTED] =
-    g_signal_new ("seek-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
-  /**
-   * BaconVideoWidget::track-skip-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @forward: whether the track change requested is a forward or backward skip.
-   *
-   * Emitted when a gesture, our mouse movement that should seek is made.
-   **/
-  bvw_signals[SIGNAL_TRACK_SKIP_REQUESTED] =
-    g_signal_new ("track-skip-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
-  /**
-   * BaconVideoWidget::volume-change-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @increase: whether the volume change requested is an increase or decrease.
-   *
-   * Emitted when a gesture, our mouse movement that should change the volume
-   * is emitted.
-   **/
-  bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED] =
-    g_signal_new ("volume-change-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
   /**
    * BaconVideoWidget::play-starting:
