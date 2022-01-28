@@ -22,7 +22,9 @@ endforeach
 
 gst_good_plugins = [
   'autoaudiosink',
-  'scaletempo'
+  'scaletempo',
+  'gtkglsink',
+  'glsinkbin'
 ]
 
 foreach plugin: gst_good_plugins
