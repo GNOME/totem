@@ -43,14 +43,10 @@ sources = files(
   'totem-aspect-frame.c'
 )
 
-enum = 'bacon-video-widget-enums'
 enum_headers = files('bacon-video-widget.h')
-
-enum_sources = gnome.mkenums(
-  enum,
+enum_sources = gnome.mkenums_simple(
+  'bacon-video-widget-enums',
   sources: enum_headers,
-  c_template: enum + '.c.template',
-  h_template: enum + '.h.template'
 )
 
 libbacon_video_widget_incs = [
