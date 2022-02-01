@@ -5257,6 +5257,16 @@ element_make_or_warn (const char *plugin,
 }
 
 static gboolean
+is_feature_enabled (const char *env)
+{
+  const char *value;
+
+  g_return_val_if_fail (env != NULL, FALSE);
+  value = g_getenv (env);
+  return g_strcmp0 (value, "1") == 0;
+}
+
+static gboolean
 bacon_video_widget_initable_init (GInitable     *initable,
 				  GCancellable  *cancellable,
 				  GError       **error)
@@ -5345,7 +5355,14 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gtk_container_add (GTK_CONTAINER (bvw), bvw->stack);
   gtk_widget_show (bvw->stack);
 
-  g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
+  if (is_feature_enabled ("FPS_DISPLAY")) {
+    GstElement *fps;
+    fps = gst_element_factory_make ("fpsdisplaysink", "fpsdisplaysink");
+    g_object_set (glsinkbin, "sink", fps, NULL);
+    g_object_set (fps, "video-sink", bvw->video_sink, NULL);
+  } else {
+    g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
+  }
   g_object_get (bvw->video_sink, "widget", &tmp, NULL);
   gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "video");
   gtk_widget_show (tmp);
