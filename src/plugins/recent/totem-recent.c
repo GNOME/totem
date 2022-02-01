@@ -70,6 +70,8 @@ recent_info_cb (GFile *file,
 		groups[0] = (gchar*) "TotemStreams";
 	} else {
 		data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
+		if (!data.mime_type)
+			data.mime_type = g_strdup ("video/x-totem-stream");
 		data.display_name = g_strdup (g_file_info_get_display_name (file_info));
 		g_object_unref (file_info);
 		groups[0] = (gchar*) "Totem";
