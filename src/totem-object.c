@@ -257,7 +257,6 @@ totem_object_app_handle_local_options (GApplication *application,
 				       GVariantDict *options)
 {
 	GError *error = NULL;
-	HdyStyleManager *style_manager;
 
 	if (!g_application_register (application, NULL, &error)) {
 		g_warning ("Failed to register application: %s", error->message);
@@ -265,9 +264,13 @@ totem_object_app_handle_local_options (GApplication *application,
 		return 1;
 	}
 
-	hdy_init ();
-	style_manager = hdy_style_manager_get_default ();
-	hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
+	if (!g_application_get_is_remote (application)) {
+		HdyStyleManager *style_manager;
+
+		hdy_init ();
+		style_manager = hdy_style_manager_get_default ();
+		hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
+	}
 
 	totem_options_process_for_server (TOTEM_OBJECT (application), &optionstate);
 	return 0;
