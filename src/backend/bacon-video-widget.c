@@ -3341,6 +3341,12 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
   return g_list_reverse (ret);
 }
 
+/**
+ * bacon_video_widget_lang_info_free:
+ * @info: a #BvwLangInfo
+ *
+ * Frees a #BvwLangInfo structure.
+ */
 void
 bacon_video_widget_lang_info_free (BvwLangInfo *info)
 {
