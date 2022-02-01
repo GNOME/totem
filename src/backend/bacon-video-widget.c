@@ -85,7 +85,7 @@
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
-#define LOGO_SIZE 256                          /* Maximum size of the logo */
+#define LOGO_SIZE 64                           /* Maximum size of the logo */
 #define REWIND_OR_PREVIOUS 4000
 
 #define MAX_NETWORK_SPEED 10752
@@ -171,6 +171,7 @@ struct _BaconVideoWidget
   guint                        fill_id;
 
   gboolean                     media_has_video;
+  gboolean                     media_has_unsupported_video;
   gboolean                     media_has_audio;
   gint                         seekable; /* -1 = don't know, FALSE = no */
   gint64                       stream_length;
@@ -188,6 +189,7 @@ struct _BaconVideoWidget
   gboolean                     got_redirect;
 
   GtkWidget                   *stack;
+  GtkWidget                   *video_widget;
 
   GdkCursor                   *cursor;
 
@@ -341,6 +343,25 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 {
   GList *l;
 
+  for (l = bvw->missing_plugins; l != NULL; l = l->next) {
+    GstMessage *msg = GST_MESSAGE (l->data);
+    g_autofree char *d = NULL;
+    char *f;
+
+    if ((d = gst_missing_plugin_message_get_installer_detail (msg))) {
+      if ((f = strstr (d, "|decoder-")) && strstr (f, "video")) {
+	bvw->media_has_unsupported_video = TRUE;
+	break;
+      }
+    }
+  }
+}
+
+static void
+bvw_show_error_if_video_decoder_is_missing (BaconVideoWidget * bvw)
+{
+  GList *l;
+
   if (bvw->media_has_video || bvw->missing_plugins == NULL)
     return;
 
@@ -396,12 +417,16 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 static void
 set_current_actor (BaconVideoWidget *bvw)
 {
-  gboolean draw_logo;
+  const char *page;
 
-  /* If there's only audio draw the logo */
-  draw_logo = bvw->media_has_audio && !bvw->media_has_video;
-  gtk_stack_set_visible_child_name (GTK_STACK (bvw->stack),
-				    draw_logo ? "logo" : "video");
+  if (bvw->media_has_audio && !bvw->media_has_video)
+    page = "audio-only";
+  else if (bvw->media_has_unsupported_video)
+    page = "broken-video";
+  else
+    page = "video";
+
+  gtk_stack_set_visible_child_name (GTK_STACK (bvw->stack), page);
 }
 
 static void
@@ -1420,6 +1445,8 @@ bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
   if (is_error (err, CORE, MISSING_PLUGIN) ||
       is_error (err, STREAM, CODEC_NOT_FOUND) ||
       (is_error (err, STREAM, WRONG_TYPE) && error_src_is_playbin)) {
+    bvw_check_if_video_decoder_is_missing (bvw);
+    set_current_actor (bvw);
     ret = bvw_emit_missing_plugins_signal (bvw, FALSE);
     if (ret) {
       /* If it was handled, stop playback to make sure we're not processing any
@@ -1871,7 +1898,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
         bvw_update_stream_info (bvw);
         if (!bvw_check_missing_plugins_on_preroll (bvw)) {
           /* show a non-fatal warning message if we can't decode the video */
-          bvw_check_if_video_decoder_is_missing (bvw);
+          bvw_show_error_if_video_decoder_is_missing (bvw);
         }
 	/* Now that we have the length, check whether we wanted
 	 * to pause or to stop the pipeline */
@@ -1880,6 +1907,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->media_has_video = FALSE;
         bvw->media_has_audio = FALSE;
+	bvw->media_has_unsupported_video = FALSE;
 
         /* clean metadata cache */
 	g_clear_pointer (&bvw->tagcache, gst_tag_list_unref);
@@ -2311,6 +2339,7 @@ parse_stream_info (BaconVideoWidget *bvw)
       "n-video", &n_video, NULL);
 
   bvw->media_has_video = FALSE;
+  bvw->media_has_unsupported_video = FALSE;
   if (n_video > 0) {
     gint i;
 
@@ -3376,6 +3405,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
 
   bvw->got_redirect = FALSE;
   bvw->media_has_video = FALSE;
+  bvw->media_has_unsupported_video = FALSE;
   bvw->media_has_audio = FALSE;
 
   /* Flush the bus to make sure we don't get any messages
@@ -5363,14 +5393,19 @@ bacon_video_widget_initable_init (GInitable     *initable,
   } else {
     g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
   }
-  g_object_get (bvw->video_sink, "widget", &tmp, NULL);
-  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "video");
-  gtk_widget_show (tmp);
-  g_object_unref (tmp);
+  g_object_get (bvw->video_sink, "widget", &bvw->video_widget, NULL);
+  gtk_stack_add_named (GTK_STACK (bvw->stack), bvw->video_widget, "video");
+  gtk_widget_show (bvw->video_widget);
+  g_object_unref (bvw->video_widget);
 
-  tmp = gtk_image_new_from_icon_name (APPLICATION_ID, GTK_ICON_SIZE_DIALOG);
+  tmp = gtk_image_new_from_icon_name ("audio-only-symbolic", GTK_ICON_SIZE_DIALOG);
   gtk_image_set_pixel_size (GTK_IMAGE (tmp), LOGO_SIZE);
-  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "logo");
+  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "audio-only");
+  gtk_widget_show (tmp);
+
+  tmp = gtk_image_new_from_icon_name ("broken-video-symbolic", GTK_ICON_SIZE_DIALOG);
+  gtk_image_set_pixel_size (GTK_IMAGE (tmp), LOGO_SIZE);
+  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "broken-video");
   gtk_widget_show (tmp);
 
   g_object_set (bvw->video_sink,
