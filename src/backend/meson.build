@@ -94,7 +94,6 @@ executable(
   include_directories: libbacon_video_widget_incs,
   dependencies: [libbacon_video_widget_dep, x11_dep],
   c_args: libbacon_video_widget_cflags + [
-    '-DLOGO_PATH="@0@"'.format(join_paths(totem_pkgdatadir, meson.project_name(), 'totem_logo.png')),
     '-DG_LOG_DOMAIN="@0@"'.format(backend_test)
   ]
 )
