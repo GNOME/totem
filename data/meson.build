@@ -67,18 +67,19 @@ desktop_conf.set('VERSION', totem_version)
 desktop_conf.set('APPLICATION_ID', application_id)
 desktop_conf.set('MIME_TYPE', r.stdout().strip())
 
-desktop = 'org.gnome.Totem.desktop'
+source_desktop = 'org.gnome.Totem.desktop'
+dest_desktop = application_id + '.desktop'
 
 desktop_in = configure_file(
-  input: desktop + '.in.in',
-  output: desktop + '.in',
+  input: source_desktop + '.in.in',
+  output: source_desktop + '.in',
   configuration: desktop_conf
 )
 
 desktop_file = i18n.merge_file (
     type: 'desktop',
     input: desktop_in,
-    output: desktop,
+    output: dest_desktop,
     po_dir: po_dir,
     install: true,
     install_dir: join_paths(totem_datadir, 'applications')

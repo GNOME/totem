@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2013 Richard Hughes <richard@hughsie.com>
+     Copyright 2013 William Jon McCann <william.jon.mccann@gmail.com> -->
+<component type="desktop-application">
+  <id>org.gnome.Totem.desktop</id>
+  <name>Videos</name>
+  <summary>Play movies</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license><!-- with the GStreamer exception -->
+  <description>
+    <p>
+      Videos is the official movie player of the GNOME desktop environment.
+      It features a searchable list of local videos, and DVDs, as well as local
+      network video shares (using UPnP/DLNA) and video highlights from a number
+      of web sites.
+    </p>
+    <p>
+      Videos comes with added functionality such as a subtitle downloader,
+      the ability to speed up or down playback, create screenshot galleries,
+      and support for recording DVDs.
+    </p>
+  </description>
+  <url type="homepage">https://wiki.gnome.org/Apps/Videos</url>
+  <url type="bugtracker">https://gitlab.gnome.org/GNOME/totem/issues</url>
+  <url type="donation">https://www.gnome.org/friends/</url>
+  <url type="translate">https://l10n.gnome.org/module/totem/</url>
+  <url type="help">https://help.gnome.org/users/totem/stable/</url>
+  <screenshots>
+    <screenshot type="default" width="1024" height="576">https://gitlab.gnome.org/GNOME/totem/raw/master/data/appdata/ss-videos.png</screenshot>
+    <screenshot width="1024" height="576">https://gitlab.gnome.org/GNOME/totem/raw/master/data/appdata/ss-player.png</screenshot>
+  </screenshots>
+  <update_contact>hadess@hadess.net</update_contact>
+  <developer_name>The GNOME developers</developer_name>
+  <project_group>GNOME</project_group>
+  <translation type="gettext">totem</translation>
+  <launchable type="desktop-id">org.gnome.Totem.desktop</launchable>
+  <releases>
+    <release version="3.38.0" date="2020-09-10">
+      <description>
+        <p>
+          This new version does not rely on Tracker running on the host,
+          and updates translations.
+        </p>
+      </description>
+    </release>
+    <release version="3.34.1" date="2019-10-04">
+      <description>
+        <p>
+          This new version fixes the top bar icon appearing as a square,
+          and updates translations.
+        </p>
+      </description>
+    </release>
+    <release version="3.34.0" date="2019-09-06">
+      <description>
+        <p>
+          We are proud to announce Videos 3.34.0 as the latest stable version.
+        </p>
+        <p>
+          This new version fixes a number of bugs, adds an "Open Containing Folder" plugin,
+          and removes the obsolete Brasero and LIRC plugins.
+        </p>
+      </description>
+    </release>
+    <release version="3.32.0" date="2019-03-08">
+      <description>
+        <p>
+          We are proud to announce Videos 3.32.0 as the latest stable version.
+        </p>
+      </description>
+    </release>
+  </releases>
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+    <kudo>UserDocs</kudo>
+  </kudos>
+  <content_rating type="oars-1.1" />
+</component>
