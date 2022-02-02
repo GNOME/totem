@@ -1,6 +1,3 @@
-subdir('appdata')
-subdir('icons')
-
 desktop_sh = find_program('desktop.sh')
 thumbnailer_sh = find_program('thumbnailer.sh')
 mime_type_include_sh = find_program('mime-type-include.sh')
@@ -188,3 +185,6 @@ install_data(
   'totem.convert',
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
 )
+
+subdir('appdata')
+subdir('icons')
