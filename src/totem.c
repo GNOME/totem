@@ -70,7 +70,11 @@ main (int argc, char **argv)
 #endif
 
 	g_set_prgname ("totem");
+#if DEVELOPMENT_VERSION
+	g_set_application_name (_("Videos Preview"));
+#else
 	g_set_application_name (_("Videos"));
+#endif
 	gtk_window_set_default_icon_name (APPLICATION_ID);
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	g_setenv("PULSE_PROP_application.icon_name", APPLICATION_ID, TRUE);

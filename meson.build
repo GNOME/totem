@@ -41,12 +41,13 @@ totem_debug = get_option('buildtype').contains('debug')
 
 cc = meson.get_compiler('c')
 
+# The app_name needs to match src/totem.c
 if get_option('profile') == 'development'
   profile = '.Devel'
-  name_suffix = ' ☢️'
+  application_name = 'Videos Preview'
 else
   profile = ''
-  name_suffix = ''
+  application_name = 'Videos'
 endif
 
 application_id = 'org.gnome.Totem@0@'.format(profile)
@@ -70,6 +71,7 @@ set_defines = [
 foreach define: set_defines
   config_h.set_quoted(define[0], define[1])
 endforeach
+config_h.set10('DEVELOPMENT_VERSION', get_option('profile') == 'development')
 
 # Compiler flags
 common_flags = [
