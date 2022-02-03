@@ -177,6 +177,14 @@ totem_object_app_activate (GApplication *app)
 		totem_object_exit (NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
+#if DEVELOPMENT_VERSION
+	{
+		GtkStyleContext *style_context;
+		style_context = gtk_widget_get_style_context (GTK_WIDGET (totem->win));
+		gtk_style_context_add_class (style_context, "devel");
+	}
+#endif
+
 
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
