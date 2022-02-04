@@ -4321,6 +4321,7 @@ video_widget_create (TotemObject *totem)
 			   GDK_ACTION_MOVE);
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
+	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 }
 
 /**
