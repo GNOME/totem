@@ -1107,6 +1107,7 @@ totem_object_set_main_page (TotemObject *totem,
 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
 			gtk_widget_show (totem->add_button);
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
+		unschedule_hiding_popup (totem);
 	}
 
 	g_object_notify (G_OBJECT (totem), "main-page");
@@ -1911,7 +1912,8 @@ unmark_popup_busy (TotemObject      *totem,
 	g_debug ("Removing popup busy for reason %s", reason);
 
 	if (g_hash_table_size (totem->busy_popup_ht) == 0 &&
-	    gtk_widget_get_opacity (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar"))) != 0.0) {
+	    gtk_widget_get_opacity (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar"))) != 0.0 &&
+	    g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (totem->stack)), "player") == 0) {
 		g_debug ("Will hide popup soon");
 		schedule_hiding_popup (totem);
 	}
