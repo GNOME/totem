@@ -41,10 +41,9 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN, TotemOpenDirectoryPlugin
 static char *
 get_notification_id (void)
 {
-	GTimeVal time;
-
-	g_get_current_time (&time);
-	return g_strdup_printf ("%s_TIME%ld", "totem", time.tv_sec);
+	return g_strdup_printf ("%s_TIME%ld",
+				"totem",
+				g_get_monotonic_time () / G_TIME_SPAN_SECOND);
 }
 
 static void
