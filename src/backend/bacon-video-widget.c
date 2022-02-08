@@ -927,6 +927,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
   g_resources_register (_bvw_get_resource ());
+  GtkIconTheme *default_theme;
+  default_theme = gtk_icon_theme_get_default ();
+  gtk_icon_theme_add_resource_path (default_theme, "/org/gnome/totem/bvw");
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/bvw/bacon-video-widget.ui");
   gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, stack);
   gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, audio_only);
