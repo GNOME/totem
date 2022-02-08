@@ -77,9 +77,6 @@ int main
 	GError *error = NULL;
 	GtkWidget *win, *bvw;
 	GtkSettings *gtk_settings;
-	GtkBox *box;
-	GtkToolItem *item;
-	GtkWidget *image;
 
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
