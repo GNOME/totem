@@ -25,36 +25,12 @@
  * GTK+ at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef __TOTEM_MAIN_TOOLBAR_H__
-#define __TOTEM_MAIN_TOOLBAR_H__
+#pragma once
 
 #include <gtk/gtkbox.h>
 
-G_BEGIN_DECLS
-
 #define TOTEM_TYPE_MAIN_TOOLBAR                 (totem_main_toolbar_get_type ())
-#define TOTEM_MAIN_TOOLBAR(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_MAIN_TOOLBAR, TotemMainToolbar))
-#define TOTEM_MAIN_TOOLBAR_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_MAIN_TOOLBAR, TotemMainToolbarClass))
-#define TOTEM_IS_MAIN_TOOLBAR(obj)              (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_MAIN_TOOLBAR))
-#define TOTEM_IS_MAIN_TOOLBAR_CLASS(klass)      (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_MAIN_TOOLBAR))
-#define TOTEM_MAIN_TOOLBAR_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_MAIN_TOOLBAR, TotemMainToolbarClass))
-
-typedef struct _TotemMainToolbar        TotemMainToolbar;
-typedef struct _TotemMainToolbarPrivate TotemMainToolbarPrivate;
-typedef struct _TotemMainToolbarClass   TotemMainToolbarClass;
-
-struct _TotemMainToolbar
-{
-  /*< private >*/
-  GtkHeaderBar parent;
-
-  TotemMainToolbarPrivate *priv;
-};
-
-struct _TotemMainToolbarClass
-{
-  GtkHeaderBarClass parent_class;
-};
+G_DECLARE_FINAL_TYPE (TotemMainToolbar, totem_main_toolbar, TOTEM, MAIN_TOOLBAR, GtkHeaderBar)
 
 GType           totem_main_toolbar_get_type              (void) G_GNUC_CONST;
 GtkWidget*      totem_main_toolbar_new                   (void);
@@ -86,7 +62,3 @@ void            totem_main_toolbar_pack_start            (TotemMainToolbar *bar,
 							  GtkWidget        *child);
 void            totem_main_toolbar_pack_end              (TotemMainToolbar *bar,
 							  GtkWidget        *child);
-
-G_END_DECLS
-
-#endif /* __TOTEM_MAIN_TOOLBAR_H__ */

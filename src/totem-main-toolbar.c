@@ -44,7 +44,9 @@
  * Since: 3.10
  */
 
-struct _TotemMainToolbarPrivate {
+struct _TotemMainToolbar {
+  GtkHeaderBar parent;
+
   /* Template widgets */
   GtkWidget   *search_button;
   GtkWidget   *select_button;
@@ -76,8 +78,7 @@ struct _TotemMainToolbarPrivate {
   GtkWidget   *selection_menu_button;
 };
 
-G_DEFINE_TYPE_WITH_CODE (TotemMainToolbar, totem_main_toolbar, GTK_TYPE_HEADER_BAR,
-                         G_ADD_PRIVATE (TotemMainToolbar));
+G_DEFINE_TYPE(TotemMainToolbar, totem_main_toolbar, GTK_TYPE_HEADER_BAR)
 
 enum {
   PROP_0,
@@ -117,67 +118,65 @@ change_class (GtkWidget  *widget,
 static void
 update_toolbar_state (TotemMainToolbar *bar)
 {
-  TotemMainToolbarPrivate *priv = bar->priv;
-
-  if (priv->select_mode)
+  if (bar->select_mode)
     {
-      gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), SELECTION_PAGE);
-      gtk_widget_hide (priv->select_button);
-      gtk_widget_show (priv->done_button);
+      gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), SELECTION_PAGE);
+      gtk_widget_hide (bar->select_button);
+      gtk_widget_show (bar->done_button);
 
-      if (priv->n_selected == 0)
+      if (bar->n_selected == 0)
         {
-          gtk_button_set_label (GTK_BUTTON (priv->selection_menu_button), _("Click on items to select them"));
+          gtk_button_set_label (GTK_BUTTON (bar->selection_menu_button), _("Click on items to select them"));
         }
       else
         {
           char *label;
 
-          label = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d selected", "%d selected", priv->n_selected), priv->n_selected);
-          gtk_button_set_label (GTK_BUTTON (priv->selection_menu_button), label);
+          label = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d selected", "%d selected", bar->n_selected), bar->n_selected);
+          gtk_button_set_label (GTK_BUTTON (bar->selection_menu_button), label);
           g_free (label);
         }
 
       change_class (GTK_WIDGET (bar), "selection-mode", TRUE);
     }
-  else if (priv->search_mode)
+  else if (bar->search_mode)
     {
-      if (!priv->search_string || *priv->search_string == '\0')
+      if (!bar->search_string || *bar->search_string == '\0')
         {
-          if (priv->custom_title)
-            gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), CUSTOM_TITLE_PAGE);
+          if (bar->custom_title)
+            gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), CUSTOM_TITLE_PAGE);
           else
-            gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), DEFAULT_PAGE);
+            gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), DEFAULT_PAGE);
         }
       else
         {
           char *label;
 
-          gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), SEARCH_RESULTS_PAGE);
-          label = g_strdup_printf (_("Results for “%s”"), priv->search_string);
+          gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), SEARCH_RESULTS_PAGE);
+          label = g_strdup_printf (_("Results for “%s”"), bar->search_string);
 
-          gtk_label_set_label (GTK_LABEL (priv->search_results_label), label);
+          gtk_label_set_label (GTK_LABEL (bar->search_results_label), label);
           g_free (label);
         }
 
-      if (priv->show_select_button)
-        gtk_widget_show (priv->select_button);
-      gtk_widget_hide (priv->done_button);
+      if (bar->show_select_button)
+        gtk_widget_show (bar->select_button);
+      gtk_widget_hide (bar->done_button);
 
       change_class (GTK_WIDGET (bar), "selection-mode", FALSE);
     }
   else
     {
-      if (priv->custom_title == NULL)
-        gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), DEFAULT_PAGE);
+      if (bar->custom_title == NULL)
+        gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), DEFAULT_PAGE);
       else
-        gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), CUSTOM_TITLE_PAGE);
+        gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), CUSTOM_TITLE_PAGE);
 
-      if (priv->show_select_button)
-        gtk_widget_show (priv->select_button);
-      gtk_widget_hide (priv->done_button);
-      if (priv->show_search_button)
-        gtk_widget_show (priv->search_button);
+      if (bar->show_select_button)
+        gtk_widget_show (bar->select_button);
+      gtk_widget_hide (bar->done_button);
+      if (bar->show_search_button)
+        gtk_widget_show (bar->search_button);
 
       change_class (GTK_WIDGET (bar), "selection-mode", FALSE);
     }
@@ -204,7 +203,6 @@ totem_main_toolbar_set_property (GObject         *object,
                                  GParamSpec      *pspec)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
-  TotemMainToolbarPrivate *priv = bar->priv;
 
   switch (prop_id)
     {
@@ -229,8 +227,8 @@ totem_main_toolbar_set_property (GObject         *object,
       break;
 
     case PROP_SHOW_SEARCH_BUTTON:
-      priv->show_search_button = g_value_get_boolean (value);
-      gtk_widget_set_visible (priv->search_button, priv->show_search_button);
+      bar->show_search_button = g_value_get_boolean (value);
+      gtk_widget_set_visible (bar->search_button, bar->show_search_button);
       break;
 
     case PROP_SELECT_MODE:
@@ -238,12 +236,12 @@ totem_main_toolbar_set_property (GObject         *object,
       break;
 
     case PROP_SHOW_SELECT_BUTTON:
-      priv->show_select_button = g_value_get_boolean (value);
-      gtk_widget_set_visible (priv->select_button, priv->show_select_button);
+      bar->show_select_button = g_value_get_boolean (value);
+      gtk_widget_set_visible (bar->select_button, bar->show_select_button);
       break;
 
     case PROP_SHOW_BACK_BUTTON:
-      gtk_widget_set_visible (priv->back_button, g_value_get_boolean (value));
+      gtk_widget_set_visible (bar->back_button, g_value_get_boolean (value));
       break;
 
     case PROP_CUSTOM_TITLE:
@@ -267,7 +265,6 @@ totem_main_toolbar_get_property (GObject         *object,
                                  GParamSpec      *pspec)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
-  TotemMainToolbarPrivate *priv = bar->priv;
 
   switch (prop_id)
     {
@@ -292,23 +289,23 @@ totem_main_toolbar_get_property (GObject         *object,
       break;
 
     case PROP_SHOW_SEARCH_BUTTON:
-      g_value_set_boolean (value, priv->show_search_button);
+      g_value_set_boolean (value, bar->show_search_button);
       break;
 
     case PROP_SELECT_MODE:
-      g_value_set_boolean (value, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->select_button)));
+      g_value_set_boolean (value, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (bar->select_button)));
       break;
 
     case PROP_SHOW_SELECT_BUTTON:
-      g_value_set_boolean (value, priv->show_select_button);
+      g_value_set_boolean (value, bar->show_select_button);
       break;
 
     case PROP_SHOW_BACK_BUTTON:
-      g_value_set_boolean (value, gtk_widget_get_visible (priv->back_button));
+      g_value_set_boolean (value, gtk_widget_get_visible (bar->back_button));
       break;
 
     case PROP_CUSTOM_TITLE:
-      g_value_set_object (value, priv->custom_title);
+      g_value_set_object (value, bar->custom_title);
       break;
 
     case PROP_SELECT_MENU_MODEL:
@@ -326,7 +323,7 @@ totem_main_toolbar_finalize (GObject *object)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
 
-  g_free (bar->priv->search_string);
+  g_free (bar->search_string);
 
   G_OBJECT_CLASS (totem_main_toolbar_parent_class)->finalize (object);
 }
@@ -440,12 +437,12 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/totemmaintoolbar.ui");
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, search_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, select_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, selection_menu_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, done_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, stack);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, search_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, select_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, selection_menu_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, done_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, back_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, stack);
 }
 
 static GtkWidget *
@@ -497,32 +494,30 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
 {
   GtkWidget *title_widget;
 
-  bar->priv = totem_main_toolbar_get_instance_private (bar);
-
   gtk_widget_init_template (GTK_WIDGET (bar));
 
-  gtk_widget_set_no_show_all (bar->priv->search_button, TRUE);
-  gtk_widget_set_no_show_all (bar->priv->select_button, TRUE);
+  gtk_widget_set_no_show_all (bar->search_button, TRUE);
+  gtk_widget_set_no_show_all (bar->select_button, TRUE);
 
   /* Back button */
-  g_signal_connect (G_OBJECT (bar->priv->back_button), "clicked",
+  g_signal_connect (G_OBJECT (bar->back_button), "clicked",
                     G_CALLBACK (back_button_clicked_cb), bar);
 
   /* Titles */
-  title_widget = create_title_box ("", "", &bar->priv->title_label, &bar->priv->subtitle_label);
-  gtk_stack_add_named (GTK_STACK (bar->priv->stack), title_widget, DEFAULT_PAGE);
+  title_widget = create_title_box ("", "", &bar->title_label, &bar->subtitle_label);
+  gtk_stack_add_named (GTK_STACK (bar->stack), title_widget, DEFAULT_PAGE);
   /* Custom title page will be added as needed in _set_custom_title() */
 
-  title_widget = create_title_box ("Results", NULL, &bar->priv->search_results_label, NULL);
-  gtk_stack_add_named (GTK_STACK (bar->priv->stack), title_widget, SEARCH_RESULTS_PAGE);
+  title_widget = create_title_box ("Results", NULL, &bar->search_results_label, NULL);
+  gtk_stack_add_named (GTK_STACK (bar->stack), title_widget, SEARCH_RESULTS_PAGE);
   /* The drop-down is added using _set_select_menu_model() */
 
   /* Select and Search buttons */
-  g_signal_connect (G_OBJECT (bar->priv->done_button), "clicked",
+  g_signal_connect (G_OBJECT (bar->done_button), "clicked",
                     G_CALLBACK (done_button_clicked_cb), bar);
-  g_object_bind_property (bar->priv->search_button, "active",
+  g_object_bind_property (bar->search_button, "active",
                             bar, "search-mode", 0);
-  g_object_bind_property (bar->priv->select_button, "active",
+  g_object_bind_property (bar->select_button, "active",
                             bar, "select-mode", 0);
 };
 
@@ -557,12 +552,12 @@ totem_main_toolbar_set_search_mode (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  if (bar->priv->search_mode == search_mode)
+  if (bar->search_mode == search_mode)
     return;
 
-  bar->priv->search_mode = search_mode;
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bar->priv->search_button),
-                                bar->priv->search_mode);
+  bar->search_mode = search_mode;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bar->search_button),
+                                bar->search_mode);
   update_toolbar_state (bar);
   if (search_mode == FALSE)
     totem_main_toolbar_set_search_string (bar, "");
@@ -574,7 +569,7 @@ totem_main_toolbar_get_search_mode (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), FALSE);
 
-  return bar->priv->search_mode;
+  return bar->search_mode;
 }
 
 void
@@ -583,12 +578,12 @@ totem_main_toolbar_set_select_mode (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  if (bar->priv->select_mode == select_mode)
+  if (bar->select_mode == select_mode)
     return;
 
-  bar->priv->select_mode = select_mode;
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bar->priv->select_button),
-                                bar->priv->select_mode);
+  bar->select_mode = select_mode;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bar->select_button),
+                                bar->select_mode);
   update_toolbar_state (bar);
   g_object_notify (G_OBJECT (bar), "select-mode");
 }
@@ -598,7 +593,7 @@ totem_main_toolbar_get_select_mode (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), FALSE);
 
-  return bar->priv->select_mode;
+  return bar->select_mode;
 }
 
 void
@@ -607,7 +602,7 @@ totem_main_toolbar_set_title (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_label_set_text (GTK_LABEL (bar->priv->title_label), title);
+  gtk_label_set_text (GTK_LABEL (bar->title_label), title);
   gtk_header_bar_set_title (GTK_HEADER_BAR (bar), title);
 }
 
@@ -625,7 +620,7 @@ totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_label_set_text (GTK_LABEL (bar->priv->subtitle_label), subtitle);
+  gtk_label_set_text (GTK_LABEL (bar->subtitle_label), subtitle);
   gtk_header_bar_set_subtitle (GTK_HEADER_BAR (bar), subtitle);
 }
 
@@ -645,8 +640,8 @@ totem_main_toolbar_set_search_string (TotemMainToolbar *bar,
 
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  tmp = bar->priv->search_string;
-  bar->priv->search_string = g_strdup (search_string);
+  tmp = bar->search_string;
+  bar->search_string = g_strdup (search_string);
   g_free (tmp);
 
   update_toolbar_state (bar);
@@ -658,7 +653,7 @@ totem_main_toolbar_get_search_string (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return bar->priv->search_string;
+  return bar->search_string;
 }
 
 void
@@ -667,10 +662,10 @@ totem_main_toolbar_set_n_selected (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  if (bar->priv->n_selected == n_selected)
+  if (bar->n_selected == n_selected)
     return;
 
-  bar->priv->n_selected = n_selected;
+  bar->n_selected = n_selected;
 
   update_toolbar_state (bar);
   g_object_notify (G_OBJECT (bar), "n-selected");
@@ -681,7 +676,7 @@ totem_main_toolbar_get_n_selected (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), 0);
 
-  return bar->priv->n_selected;
+  return bar->n_selected;
 }
 
 void
@@ -708,7 +703,7 @@ totem_main_toolbar_set_select_menu_model (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (bar->priv->selection_menu_button), model);
+  gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (bar->selection_menu_button), model);
 }
 
 GMenuModel *
@@ -716,45 +711,41 @@ totem_main_toolbar_get_select_menu_model (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return gtk_menu_button_get_menu_model (GTK_MENU_BUTTON (bar->priv->selection_menu_button));
+  return gtk_menu_button_get_menu_model (GTK_MENU_BUTTON (bar->selection_menu_button));
 }
 
 void
 totem_main_toolbar_set_custom_title (TotemMainToolbar *bar,
                                      GtkWidget        *title_widget)
 {
-  TotemMainToolbarPrivate *priv;
-
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
   if (title_widget)
     g_return_if_fail (GTK_IS_WIDGET (title_widget));
 
-  priv = bar->priv;
-
   /* No need to do anything if the custom widget stays the same */
-  if (priv->custom_title == title_widget)
+  if (bar->custom_title == title_widget)
     return;
 
-  if (priv->custom_title)
+  if (bar->custom_title)
     {
-      GtkWidget *custom = priv->custom_title;
+      GtkWidget *custom = bar->custom_title;
 
-      priv->custom_title = NULL;
-      gtk_container_remove (GTK_CONTAINER (bar->priv->stack), custom);
+      bar->custom_title = NULL;
+      gtk_container_remove (GTK_CONTAINER (bar->stack), custom);
     }
 
   if (title_widget != NULL)
     {
-      priv->custom_title = title_widget;
+      bar->custom_title = title_widget;
 
-      gtk_stack_add_named (GTK_STACK (bar->priv->stack), title_widget, CUSTOM_TITLE_PAGE);
+      gtk_stack_add_named (GTK_STACK (bar->stack), title_widget, CUSTOM_TITLE_PAGE);
       gtk_widget_show (title_widget);
 
       update_toolbar_state (bar);
     }
   else
     {
-      gtk_stack_set_visible_child_name (GTK_STACK (bar->priv->stack), DEFAULT_PAGE);
+      gtk_stack_set_visible_child_name (GTK_STACK (bar->stack), DEFAULT_PAGE);
     }
 
   g_object_notify (G_OBJECT (bar), "custom-title");
@@ -765,5 +756,5 @@ totem_main_toolbar_get_custom_title (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return bar->priv->custom_title;
+  return bar->custom_title;
 }
