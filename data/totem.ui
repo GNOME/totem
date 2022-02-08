@@ -183,35 +183,24 @@
     <signal name="key-press-event" handler="window_key_press_event_cb" swapped="no"/>
     <signal name="delete-event" handler="main_window_destroy_cb" swapped="no"/>
     <child>
-      <object class="GtkVBox" id="totem_main_vbox">
+      <object class="GtkStack" id="tmw_main_stack">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="homogeneous">True</property>
         <child>
-          <object class="GtkStack" id="tmw_main_stack">
+          <object class="GtkOverlay" id="tmw_bvw_box">
             <property name="visible">True</property>
-            <property name="homogeneous">True</property>
-            <child>
-              <object class="GtkOverlay" id="tmw_bvw_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child type="overlay">
-                  <object class="GtkRevealer" id="toolbar-revealer">
-                    <property name="halign">fill</property>
-                    <property name="valign">start</property>
-                    <property name="visible">False</property>
-                    <property name="no-show-all">True</property>
-                  </object>
-                </child>
+            <property name="can_focus">False</property>
+            <child type="overlay">
+              <object class="GtkRevealer" id="toolbar-revealer">
+                <property name="halign">fill</property>
+                <property name="valign">start</property>
+                <property name="visible">False</property>
+                <property name="no-show-all">True</property>
               </object>
-              <packing>
-                <property name="name">player</property>
-              </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="name">player</property>
           </packing>
         </child>
       </object>
