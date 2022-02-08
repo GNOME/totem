@@ -3852,8 +3852,6 @@ totem_setup_window (TotemObject *totem)
 	int w, h;
 	char *filename;
 	GError *err = NULL;
-	GtkWidget *vbox;
-	GdkRGBA black;
 
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
@@ -3896,11 +3894,6 @@ totem_setup_window (TotemObject *totem)
 	} else if (totem->maximised != FALSE) {
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
-
-	/* Set the vbox to be completely black */
-	vbox = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
-	gdk_rgba_parse (&black, "Black");
-	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
 	/* Headerbar */
 	totem->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
@@ -4238,7 +4231,6 @@ void
 video_widget_create (TotemObject *totem)
 {
 	GError *err = NULL;
-	GtkContainer *container;
 
 	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
@@ -4297,9 +4289,9 @@ video_widget_create (TotemObject *totem)
 			  G_CALLBACK (on_bvw_motion_notify_cb),
 			  totem);
 
-	container = GTK_CONTAINER (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
-	gtk_container_add (container,
-			GTK_WIDGET (totem->bvw));
+	gtk_stack_add_named (GTK_STACK (totem->stack),
+			     GTK_WIDGET (totem->bvw),
+			     "player");
 
 	totem->bvw_grid = gtk_grid_new ();
 	gtk_overlay_add_overlay (GTK_OVERLAY (totem->bvw), totem->bvw_grid);
