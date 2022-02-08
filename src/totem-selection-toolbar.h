@@ -25,36 +25,14 @@
  * GTK+ at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef __TOTEM_SELECTION_TOOLBAR_H__
-#define __TOTEM_SELECTION_TOOLBAR_H__
+#pragma once
 
-#include <gtk/gtkbox.h>
+#include <gtk/gtkactionbar.h>
 
 G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SELECTION_TOOLBAR                 (totem_selection_toolbar_get_type ())
-#define TOTEM_SELECTION_TOOLBAR(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SELECTION_TOOLBAR, TotemSelectionToolbar))
-#define TOTEM_SELECTION_TOOLBAR_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SELECTION_TOOLBAR, TotemSelectionToolbarClass))
-#define TOTEM_IS_SELECTION_TOOLBAR(obj)              (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_SELECTION_TOOLBAR))
-#define TOTEM_IS_SELECTION_TOOLBAR_CLASS(klass)      (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SELECTION_TOOLBAR))
-#define TOTEM_SELECTION_TOOLBAR_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_SELECTION_TOOLBAR, TotemSelectionToolbarClass))
-
-typedef struct _TotemSelectionToolbar        TotemSelectionToolbar;
-typedef struct _TotemSelectionToolbarPrivate TotemSelectionToolbarPrivate;
-typedef struct _TotemSelectionToolbarClass   TotemSelectionToolbarClass;
-
-struct _TotemSelectionToolbar
-{
-  /*< private >*/
-  GtkActionBar parent;
-
-  TotemSelectionToolbarPrivate *priv;
-};
-
-struct _TotemSelectionToolbarClass
-{
-  GtkActionBarClass parent_class;
-};
+G_DECLARE_FINAL_TYPE (TotemSelectionToolbar, totem_selection_toolbar, TOTEM, SELECTION_TOOLBAR, GtkActionBar)
 
 GType           totem_selection_toolbar_get_type               (void) G_GNUC_CONST;
 GtkWidget*      totem_selection_toolbar_new                    (void);
@@ -70,7 +48,3 @@ gboolean        totem_selection_toolbar_get_show_delete_button (TotemSelectionTo
 void            totem_selection_toolbar_set_delete_button_sensitive (TotemSelectionToolbar *bar,
                                                                      gboolean               sensitive);
 gboolean        totem_selection_toolbar_get_delete_button_sensitive (TotemSelectionToolbar *bar);
-
-G_END_DECLS
-
-#endif /* __TOTEM_SELECTION_TOOLBAR_H__ */

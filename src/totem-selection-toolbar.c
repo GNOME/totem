@@ -42,7 +42,9 @@
  * styled properly when in specific mode.
  */
 
-struct _TotemSelectionToolbarPrivate {
+struct _TotemSelectionToolbar {
+  GtkActionBar parent;
+
   /* Template widgets */
   GtkWidget   *add_to_fav;
   GtkWidget   *play;
@@ -57,8 +59,7 @@ struct _TotemSelectionToolbarPrivate {
   guint        n_selected;
 };
 
-G_DEFINE_TYPE_WITH_CODE (TotemSelectionToolbar, totem_selection_toolbar, GTK_TYPE_ACTION_BAR,
-                         G_ADD_PRIVATE (TotemSelectionToolbar));
+G_DEFINE_TYPE (TotemSelectionToolbar, totem_selection_toolbar, GTK_TYPE_ACTION_BAR)
 
 enum {
   PROP_0,
@@ -84,23 +85,22 @@ change_class (GtkWidget  *widget,
 static void
 update_toolbar_state (TotemSelectionToolbar *bar)
 {
-  TotemSelectionToolbarPrivate *priv = bar->priv;
   gboolean sensitive;
 
-  if (priv->n_selected == 0)
+  if (bar->n_selected == 0)
     {
       sensitive = FALSE;
-      change_class (GTK_WIDGET (priv->delete), "destructive-action", FALSE);
+      change_class (GTK_WIDGET (bar->delete), "destructive-action", FALSE);
     }
   else
     {
       sensitive = TRUE;
-      change_class (GTK_WIDGET (priv->delete), "destructive-action", TRUE);
+      change_class (GTK_WIDGET (bar->delete), "destructive-action", TRUE);
     }
 
-  gtk_widget_set_sensitive (priv->add_to_fav, sensitive);
-  gtk_widget_set_sensitive (priv->play, sensitive);
-  gtk_widget_set_sensitive (priv->shuffle, sensitive);
+  gtk_widget_set_sensitive (bar->add_to_fav, sensitive);
+  gtk_widget_set_sensitive (bar->play, sensitive);
+  gtk_widget_set_sensitive (bar->shuffle, sensitive);
 }
 
 static void
@@ -166,7 +166,6 @@ totem_selection_toolbar_get_property (GObject         *object,
                                       GParamSpec      *pspec)
 {
   TotemSelectionToolbar *bar = TOTEM_SELECTION_TOOLBAR (object);
-  TotemSelectionToolbarPrivate *priv = bar->priv;
 
   switch (prop_id)
     {
@@ -175,11 +174,11 @@ totem_selection_toolbar_get_property (GObject         *object,
       break;
 
     case PROP_SHOW_DELETE_BUTTON:
-      g_value_set_boolean (value, priv->show_delete_button);
+      g_value_set_boolean (value, bar->show_delete_button);
       break;
 
     case PROP_DELETE_BUTTON_SENSITIVE:
-      g_value_set_boolean (value, priv->delete_sensitive);
+      g_value_set_boolean (value, bar->delete_sensitive);
       break;
 
     default:
@@ -256,31 +255,29 @@ totem_selection_toolbar_class_init (TotemSelectionToolbarClass *klass)
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/totemselectiontoolbar.ui");
-  gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, add_to_fav);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, delete);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, play);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemSelectionToolbar, shuffle);
+  gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, add_to_fav);
+  gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, delete);
+  gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, play);
+  gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, shuffle);
 }
 
 static void
 totem_selection_toolbar_init (TotemSelectionToolbar *bar)
 {
-  bar->priv = totem_selection_toolbar_get_instance_private (bar);
-
   gtk_widget_init_template (GTK_WIDGET (bar));
 
-  gtk_widget_hide (bar->priv->add_to_fav);
+  gtk_widget_hide (bar->add_to_fav);
 
   /* So that the default FALSE actually gets applied */
-  bar->priv->delete_sensitive = TRUE;
+  bar->delete_sensitive = TRUE;
 
-  g_signal_connect (bar->priv->add_to_fav, "clicked",
+  g_signal_connect (bar->add_to_fav, "clicked",
                     G_CALLBACK (add_to_fav_clicked_cb), bar);
-  g_signal_connect (bar->priv->delete, "clicked",
+  g_signal_connect (bar->delete, "clicked",
                     G_CALLBACK (delete_clicked_cb), bar);
-  g_signal_connect (bar->priv->play, "clicked",
+  g_signal_connect (bar->play, "clicked",
                     G_CALLBACK (play_clicked_cb), bar);
-  g_signal_connect (bar->priv->shuffle, "clicked",
+  g_signal_connect (bar->shuffle, "clicked",
                     G_CALLBACK (shuffle_clicked_cb), bar);
 };
 
@@ -305,10 +302,10 @@ totem_selection_toolbar_set_n_selected (TotemSelectionToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar));
 
-  if (bar->priv->n_selected == n_selected)
+  if (bar->n_selected == n_selected)
     return;
 
-  bar->priv->n_selected = n_selected;
+  bar->n_selected = n_selected;
 
   update_toolbar_state (bar);
   g_object_notify (G_OBJECT (bar), "n-selected");
@@ -319,7 +316,7 @@ totem_selection_toolbar_get_n_selected (TotemSelectionToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar), 0);
 
-  return bar->priv->n_selected;
+  return bar->n_selected;
 }
 
 void
@@ -328,11 +325,11 @@ totem_selection_toolbar_set_show_delete_button (TotemSelectionToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar));
 
-  if (bar->priv->show_delete_button == show_delete_button)
+  if (bar->show_delete_button == show_delete_button)
     return;
 
-  bar->priv->show_delete_button = show_delete_button;
-  gtk_widget_set_visible (bar->priv->delete, bar->priv->show_delete_button);
+  bar->show_delete_button = show_delete_button;
+  gtk_widget_set_visible (bar->delete, bar->show_delete_button);
 
   g_object_notify (G_OBJECT (bar), "show-delete-button");
 }
@@ -342,7 +339,7 @@ totem_selection_toolbar_get_show_delete_button (TotemSelectionToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar), 0);
 
-  return bar->priv->show_delete_button;
+  return bar->show_delete_button;
 }
 
 void
@@ -351,11 +348,11 @@ totem_selection_toolbar_set_delete_button_sensitive (TotemSelectionToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar));
 
-  if (bar->priv->delete_sensitive == sensitive)
+  if (bar->delete_sensitive == sensitive)
     return;
 
-  bar->priv->delete_sensitive = sensitive;
-  gtk_widget_set_sensitive (bar->priv->delete, sensitive);
+  bar->delete_sensitive = sensitive;
+  gtk_widget_set_sensitive (bar->delete, sensitive);
 
   g_object_notify (G_OBJECT (bar), "delete-button-sensitive");
 }
@@ -365,5 +362,5 @@ totem_selection_toolbar_get_delete_button_sensitive (TotemSelectionToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar), 0);
 
-  return bar->priv->delete_sensitive;
+  return bar->delete_sensitive;
 }
