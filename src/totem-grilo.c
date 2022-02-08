@@ -2524,8 +2524,6 @@ static void
 totem_grilo_finalize (GObject *object)
 {
 	TotemGrilo *self = TOTEM_GRILO (object);
-	GList *sources;
-	GList *s;
 	GrlRegistry *registry;
 
 	if (self->thumbnail_update_id > 0) {
