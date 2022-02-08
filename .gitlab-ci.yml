@@ -40,6 +40,8 @@ variables:
 build-fedora:
   image: fedora:36
   stage: test
+  tags:
+    - crun
   before_script:
     - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
     # Package with this fix https://gitlab.gnome.org/GNOME/glib/-/merge_requests/2435
