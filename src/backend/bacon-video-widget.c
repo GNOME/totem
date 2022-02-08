@@ -81,6 +81,7 @@
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-widget-enums.h"
+#include "bacon-video-widget-resources.h"
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
@@ -156,6 +157,12 @@ struct _BaconVideoWidget
 {
   GtkOverlay                   parent;
 
+  /* widgets */
+  GtkWidget                   *stack;
+  GtkWidget                   *audio_only;
+  GtkWidget                   *broken_video;
+  GtkWidget                   *video_widget;
+
   char                        *user_agent;
 
   char                        *referrer;
@@ -187,9 +194,6 @@ struct _BaconVideoWidget
   guint                        tag_update_id;
 
   gboolean                     got_redirect;
-
-  GtkWidget                   *stack;
-  GtkWidget                   *video_widget;
 
   GdkCursor                   *cursor;
 
@@ -921,6 +925,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   0,
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+  g_resources_register (_bvw_get_resource ());
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/bvw/bacon-video-widget.ui");
+  gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, stack);
+  gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, audio_only);
+  gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, broken_video);
 }
 
 static void
@@ -5305,7 +5315,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstElement *audio_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
-  GtkWidget *tmp;
   GstElement *glsinkbin, *audio_bin;
   GstPad *audio_pad;
   char *template;
@@ -5333,6 +5342,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 			 GDK_BUTTON_PRESS_MASK |
 			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_KEY_PRESS_MASK);
+  gtk_widget_init_template (GTK_WIDGET (bvw));
 
   /* Instantiate all the fallible plugins */
   bvw->play = element_make_or_warn ("playbin", "play");
@@ -5380,10 +5390,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   bvw->cursor_shown = TRUE;
 
-  /* Create video output widget and logo */
-  bvw->stack = gtk_stack_new ();
-  gtk_container_add (GTK_CONTAINER (bvw), bvw->stack);
-  gtk_widget_show (bvw->stack);
+  /* Create video output widget */
 
   if (is_feature_enabled ("FPS_DISPLAY")) {
     GstElement *fps;
@@ -5394,19 +5401,10 @@ bacon_video_widget_initable_init (GInitable     *initable,
     g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
   }
   g_object_get (bvw->video_sink, "widget", &bvw->video_widget, NULL);
-  gtk_stack_add_named (GTK_STACK (bvw->stack), bvw->video_widget, "video");
   gtk_widget_show (bvw->video_widget);
+  gtk_stack_add_named (GTK_STACK (bvw->stack), bvw->video_widget, "video");
   g_object_unref (bvw->video_widget);
-
-  tmp = gtk_image_new_from_icon_name ("audio-only-symbolic", GTK_ICON_SIZE_DIALOG);
-  gtk_image_set_pixel_size (GTK_IMAGE (tmp), LOGO_SIZE);
-  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "audio-only");
-  gtk_widget_show (tmp);
-
-  tmp = gtk_image_new_from_icon_name ("broken-video-symbolic", GTK_ICON_SIZE_DIALOG);
-  gtk_image_set_pixel_size (GTK_IMAGE (tmp), LOGO_SIZE);
-  gtk_stack_add_named (GTK_STACK (bvw->stack), tmp, "broken-video");
-  gtk_widget_show (tmp);
+  gtk_stack_set_visible_child_name (GTK_STACK (bvw->stack), "video");
 
   g_object_set (bvw->video_sink,
                 "rotate-method", GST_VIDEO_ORIENTATION_AUTO,

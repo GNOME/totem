@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="BaconVideoWidget" parent="GtkOverlay">
+    <property name="visible">True</property>
+    <property name="border_width">0</property>
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkImage" id="audio_only">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon-name">audio-only-symbolic</property>
+            <property name="icon-size">6</property>
+          </object>
+          <packing>
+            <property name="name">audio-only</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="broken_video">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon-name">broken-video-symbolic</property>
+            <property name="icon-size">6</property>
+          </object>
+          <packing>
+            <property name="name">broken-video</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

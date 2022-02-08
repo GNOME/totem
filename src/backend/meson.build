@@ -39,6 +39,14 @@ sources = files(
   'bacon-video-widget.c',
 )
 
+sources += gnome.compile_resources(
+  'bacon-video-widget-resources',
+  'bacon-video-widget.gresource.xml',
+  export: true,
+  source_dir: '.',
+  c_name: '_bvw'
+)
+
 enum_headers = files('bacon-video-widget.h')
 enum_sources = gnome.mkenums_simple(
   'bacon-video-widget-enums',
