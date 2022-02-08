@@ -25,13 +25,15 @@
 #include <glib/gi18n.h>
 #include "totem-time-helpers.h"
 
-struct _BaconTimeLabelPrivate {
+struct _BaconTimeLabel {
+	GtkLabel parent;
+
 	gint64 time;
 	gint64 length;
 	gboolean remaining;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (BaconTimeLabel, bacon_time_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE(BaconTimeLabel, bacon_time_label, GTK_TYPE_LABEL)
 
 enum {
 	PROP_0,
@@ -44,8 +46,6 @@ bacon_time_label_init (BaconTimeLabel *label)
 	char *time_string;
 	PangoAttrList *attrs;
 
-	label->priv = bacon_time_label_get_instance_private (label);
-
 	time_string = totem_time_to_string (0, FALSE, FALSE);
 	gtk_label_set_text (GTK_LABEL (label), time_string);
 	g_free (time_string);
@@ -55,9 +55,9 @@ bacon_time_label_init (BaconTimeLabel *label)
 	gtk_label_set_attributes (GTK_LABEL (label), attrs);
 	pango_attr_list_unref (attrs);
 
-	label->priv->time = 0;
-	label->priv->length = -1;
-	label->priv->remaining = FALSE;
+	label->time = 0;
+	label->length = -1;
+	label->remaining = FALSE;
 }
 
 GtkWidget *
@@ -103,22 +103,22 @@ update_label_text (BaconTimeLabel *label)
 	gboolean force_hour = FALSE;
 	gint64 _time, length;
 
-	_time = label->priv->time;
-	length = label->priv->length;
+	_time = label->time;
+	length = label->length;
 
 	if (length > 60 * 60 * 1000)
 		force_hour = TRUE;
 
 	if (length <= 0 ||
 	    _time > length) {
-		if (!label->priv->remaining) {
+		if (!label->remaining) {
 			label_str = totem_time_to_string (_time, FALSE, force_hour);
 		} else {
 			/* translators: Unknown remaining time */
 			label_str = g_strdup (_("--:--"));
 		}
 	} else {
-		if (!label->priv->remaining) {
+		if (!label->remaining) {
 			/* Elapsed */
 			label_str = totem_time_to_string (_time, FALSE, force_hour);
 		} else {
@@ -138,16 +138,16 @@ bacon_time_label_set_time (BaconTimeLabel *label,
 {
 	g_return_if_fail (BACON_IS_TIME_LABEL (label));
 
-	if (label->priv->length == -1 &&
+	if (label->length == -1 &&
 	    length == -1)
 		return;
 
-	if (_time / 1000 == label->priv->time / 1000 &&
-	    length / 1000 == label->priv->length / 1000)
+	if (_time / 1000 == label->time / 1000 &&
+	    length / 1000 == label->length / 1000)
 		return;
 
-	label->priv->time = _time;
-	label->priv->length = length;
+	label->time = _time;
+	label->length = length;
 
 	update_label_text (label);
 }
@@ -158,6 +158,6 @@ bacon_time_label_set_remaining (BaconTimeLabel *label,
 {
 	g_return_if_fail (BACON_IS_TIME_LABEL (label));
 
-	label->priv->remaining = remaining;
+	label->remaining = remaining;
 	update_label_text (label);
 }
