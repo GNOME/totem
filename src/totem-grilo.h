@@ -25,37 +25,13 @@
  * See license_change file for details.
  */
 
-#ifndef TOTEM_GRILO_H
-#define TOTEM_GRILO_H
+#pragma once
 
 #include <gtk/gtk.h>
 #include <totem.h>
 
-G_BEGIN_DECLS
-
 #define TOTEM_TYPE_GRILO                 (totem_grilo_get_type ())
-#define TOTEM_GRILO(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_GRILO, TotemGrilo))
-#define TOTEM_GRILO_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_GRILO, TotemGriloClass))
-#define TOTEM_IS_GRILO(obj)              (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_GRILO))
-#define TOTEM_IS_GRILO_CLASS(klass)      (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_GRILO))
-#define TOTEM_GRILO_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_GRILO, TotemGriloClass))
-
-typedef struct _TotemGrilo        TotemGrilo;
-typedef struct _TotemGriloPrivate TotemGriloPrivate;
-typedef struct _TotemGriloClass   TotemGriloClass;
-
-struct _TotemGrilo
-{
-  /*< private >*/
-  GtkBox parent;
-
-  TotemGriloPrivate *priv;
-};
-
-struct _TotemGriloClass
-{
-  GtkBoxClass parent_class;
-};
+G_DECLARE_FINAL_TYPE (TotemGrilo, totem_grilo, TOTEM, GRILO, GtkBox)
 
 typedef enum{
   TOTEM_GRILO_PAGE_RECENT,
@@ -76,7 +52,3 @@ gboolean        totem_grilo_add_item_to_recent    (TotemGrilo     *self,
                                                    const char     *uri,
                                                    const char     *title,
                                                    gboolean        is_web);
-
-G_END_DECLS
-
-#endif /* TOTEM_GRILO_H */

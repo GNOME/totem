@@ -61,7 +61,9 @@ static const GtkTargetEntry target_table[] = {
 	{ (gchar*) "_NETSCAPE_URL", 0, 1 }
 };
 
-struct _TotemGriloPrivate {
+struct _TotemGrilo {
+	GtkBox parent;
+
 	Totem *totem;
 	GtkWindow *main_window;
 
@@ -132,8 +134,7 @@ enum {
 	PROP_CURRENT_PAGE
 };
 
-G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
-                         G_ADD_PRIVATE (TotemGrilo));
+G_DEFINE_TYPE(TotemGrilo, totem_grilo, GTK_TYPE_BOX)
 
 typedef struct {
 	TotemGrilo *totem_grilo;
@@ -403,7 +404,7 @@ get_thumbnail_cb (GObject *source_object,
 	g_clear_object (&thumbnail);
 
 	/* Can we find that thumbnail in the view model? */
-	view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->priv->browser));
+	view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->browser));
 	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 		GtkTreePath *parent_path;
 		parent_path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model), path);
@@ -450,7 +451,7 @@ set_thumbnail_async (TotemGrilo   *self,
 	thumb_data->model = g_object_ref (model);
 	thumb_data->reference = gtk_tree_row_reference_new (model, path);
 
-	totem_grilo_get_thumbnail (object, self->priv->thumbnail_cancellable, get_thumbnail_cb, thumb_data);
+	totem_grilo_get_thumbnail (object, self->thumbnail_cancellable, get_thumbnail_cb, thumb_data);
 }
 
 static gboolean
@@ -463,9 +464,9 @@ update_search_thumbnails_idle (TotemGrilo *self)
 	GtkTreeModel *view_model, *model;
 	GtkIconView *icon_view;
 
-	self->priv->thumbnail_update_id = 0;
+	self->thumbnail_update_id = 0;
 
-	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->priv->browser)));
+	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->browser)));
 	if (!gtk_icon_view_get_visible_range (icon_view, &start_path, &end_path)) {
 		return FALSE;
 	}
@@ -527,10 +528,10 @@ update_search_thumbnails_idle (TotemGrilo *self)
 static void
 update_search_thumbnails (TotemGrilo *self)
 {
-	if (self->priv->thumbnail_update_id > 0)
+	if (self->thumbnail_update_id > 0)
 		return;
-	self->priv->thumbnail_update_id = g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) update_search_thumbnails_idle, self, NULL);
-	g_source_set_name_by_id (self->priv->thumbnail_update_id, "[totem] update_search_thumbnails_idle");
+	self->thumbnail_update_id = g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) update_search_thumbnails_idle, self, NULL);
+	g_source_set_name_by_id (self->thumbnail_update_id, "[totem] update_search_thumbnails_idle");
 }
 
 static void
@@ -575,7 +576,7 @@ add_local_metadata (TotemGrilo *self,
 		return;
 
 	/* Avoid trying to get metadata for web radios */
-	if (source == self->priv->bookmarks_src) {
+	if (source == self->bookmarks_src) {
 		char *scheme;
 
 		scheme = g_uri_parse_scheme (grl_media_get_url (media));
@@ -589,19 +590,19 @@ add_local_metadata (TotemGrilo *self,
 
 	options = grl_operation_options_new (NULL);
 	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_NORMAL);
-	grl_source_resolve_sync (self->priv->title_parsing_src,
+	grl_source_resolve_sync (self->title_parsing_src,
 				 media,
-				 self->priv->metadata_keys,
+				 self->metadata_keys,
 				 options,
 				 NULL);
-	grl_source_resolve_sync (self->priv->local_metadata_src,
+	grl_source_resolve_sync (self->local_metadata_src,
 				 media,
-				 self->priv->metadata_keys,
+				 self->metadata_keys,
 				 options,
 				 NULL);
-	grl_source_resolve_sync (self->priv->metadata_store_src,
+	grl_source_resolve_sync (self->metadata_store_src,
 				 media,
-				 self->priv->metadata_keys,
+				 self->metadata_keys,
 				 options,
 				 NULL);
 	g_object_unref (options);
@@ -683,7 +684,7 @@ browse_cb (GrlSource    *source,
 	    g_error_matches (error,
 	                     GRL_CORE_ERROR,
 	                     GRL_CORE_ERROR_OPERATION_CANCELLED) == FALSE) {
-		window = totem_object_get_main_window (self->priv->totem);
+		window = totem_object_get_main_window (self->totem);
 		totem_interface_error (_("Browse Error"), error->message, window);
 	}
 
@@ -775,7 +776,7 @@ browse (TotemGrilo   *self,
 	g_application_mark_busy (g_application_get_default ());
 	grl_source_browse (source,
 			   container,
-			   self->priv->metadata_keys,
+			   self->metadata_keys,
 			   default_options,
 			   browse_cb,
 			   bud);
@@ -802,9 +803,9 @@ play (TotemGrilo *self,
 		return;
 	}
 
-	totem_object_clear_playlist (self->priv->totem);
+	totem_object_clear_playlist (self->totem);
 	title = get_title (media);
-	totem_object_add_to_playlist (self->priv->totem, url,
+	totem_object_add_to_playlist (self->totem, url,
 				      title,
 				      TRUE);
 	g_free (title);
@@ -828,17 +829,17 @@ search_cb (GrlSource    *source,
 	                             GRL_CORE_ERROR,
 	                             GRL_CORE_ERROR_OPERATION_CANCELLED)) {
 			g_application_unmark_busy (g_application_get_default ());
-			/* Don't zero out self->priv->search_id to avoid a race
+			/* Don't zero out self->search_id to avoid a race
 			 * condition with next search. Don't update thumbnails. */
 			return;
 		} else {
-			window = totem_object_get_main_window (self->priv->totem);
+			window = totem_object_get_main_window (self->totem);
 			totem_interface_error (_("Search Error"), error->message, window);
 		}
 	}
 
 	if (media != NULL) {
-		self->priv->search_remaining--;
+		self->search_remaining--;
 
 		if (grl_media_is_image (media) ||
 		    grl_media_is_audio (media)) {
@@ -847,7 +848,7 @@ search_cb (GrlSource    *source,
 		}
 
 		add_local_metadata (self, source, media);
-		add_media_to_model (GTK_TREE_STORE (self->priv->search_results_model),
+		add_media_to_model (GTK_TREE_STORE (self->search_results_model),
 				    NULL, source, media);
 
 		g_object_unref (media);
@@ -855,7 +856,7 @@ search_cb (GrlSource    *source,
 
 	if (remaining == 0) {
 		g_application_unmark_busy (g_application_get_default ());
-		self->priv->search_id = 0;
+		self->search_id = 0;
 		update_search_thumbnails (self);
 	}
 }
@@ -868,7 +869,7 @@ get_search_options (TotemGrilo *self)
 
 	default_options = grl_operation_options_new (NULL);
 	grl_operation_options_set_resolution_flags (default_options, BROWSE_FLAGS);
-	grl_operation_options_set_skip (default_options, self->priv->search_page * PAGE_SIZE);
+	grl_operation_options_set_skip (default_options, self->search_page * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
 	grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	grl_operation_options_set_key_range_filter (default_options,
@@ -877,7 +878,7 @@ get_search_options (TotemGrilo *self)
 
 	/* And now remove all the unsupported filters and options */
 	grl_operation_options_obey_caps (default_options,
-					 grl_source_get_caps (GRL_SOURCE (self->priv->search_source), GRL_OP_SEARCH),
+					 grl_source_get_caps (GRL_SOURCE (self->search_source), GRL_OP_SEARCH),
 					 &supported_options,
 					 NULL);
 	g_object_unref (default_options);
@@ -892,32 +893,32 @@ search_more (TotemGrilo *self)
 
 	search_options = get_search_options (self);
 
-	self->priv->search_page++;
-	self->priv->search_remaining = PAGE_SIZE;
+	self->search_page++;
+	self->search_remaining = PAGE_SIZE;
 
 	g_application_mark_busy (g_application_get_default ());
 
-	if (self->priv->search_source != NULL) {
-		self->priv->search_id =
-			grl_source_search (self->priv->search_source,
-			                   self->priv->search_text,
-			                   self->priv->metadata_keys,
+	if (self->search_source != NULL) {
+		self->search_id =
+			grl_source_search (self->search_source,
+			                   self->search_text,
+			                   self->metadata_keys,
 			                   search_options,
 			                   search_cb,
 			                   self);
 	} else {
-		self->priv->search_id =
+		self->search_id =
 			grl_multiple_search (NULL,
-			                     self->priv->search_text,
-			                     self->priv->metadata_keys,
+			                     self->search_text,
+			                     self->metadata_keys,
 			                     search_options,
 			                     search_cb,
 			                     self);
 	}
 	g_object_unref (search_options);
 
-	if (self->priv->search_id == 0)
-		search_cb (self->priv->search_source, 0, NULL, 0, self, NULL);
+	if (self->search_id == 0)
+		search_cb (self->search_source, 0, NULL, 0, self, NULL);
 }
 
 static void
@@ -925,17 +926,17 @@ search (TotemGrilo  *self,
 	GrlSource   *source,
 	const gchar *text)
 {
-	g_clear_handle_id (&self->priv->search_id, grl_operation_cancel);
+	g_clear_handle_id (&self->search_id, grl_operation_cancel);
 
-	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
-//	g_hash_table_remove_all (self->priv->cache_thumbnails);
-	self->priv->search_source = source;
-	g_free (self->priv->search_text);
-	self->priv->search_text = g_strdup (text);
-	self->priv->search_page = 0;
-	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-				self->priv->search_results_model);
-	self->priv->browser_filter_model = NULL;
+	gtk_tree_store_clear (GTK_TREE_STORE (self->search_results_model));
+//	g_hash_table_remove_all (self->cache_thumbnails);
+	self->search_source = source;
+	g_free (self->search_text);
+	self->search_text = g_strdup (text);
+	self->search_page = 0;
+	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
+				self->search_results_model);
+	self->browser_filter_model = NULL;
 	search_more (self);
 }
 
@@ -950,18 +951,18 @@ search_entry_activate_cb (GtkEntry   *entry,
 
 	g_object_set (self, "show-back-button", FALSE, NULL);
 
-	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
+	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->search_entry));
 	g_return_if_fail (id != NULL);
 	registry = grl_registry_get_default ();
 	source = grl_registry_lookup_source (registry, id);
 	g_return_if_fail (source != NULL);
 
-	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
+	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->search_entry));
 	g_return_if_fail (text != NULL);
 
-	g_object_set (self->priv->header, "search-string", text, NULL);
+	g_object_set (self->header, "search-string", text, NULL);
 
-	self->priv->in_search = TRUE;
+	self->in_search = TRUE;
 	search (self, source, text);
 }
 
@@ -973,14 +974,14 @@ set_browser_filter_model_for_path (TotemGrilo    *self,
 	int can_remove = CAN_REMOVE_FALSE;
 	char *text = NULL;
 
-	g_clear_object (&self->priv->browser_filter_model);
-	self->priv->browser_filter_model = gtk_tree_model_filter_new (self->priv->browser_model, path);
+	g_clear_object (&self->browser_filter_model);
+	self->browser_filter_model = gtk_tree_model_filter_new (self->browser_model, path);
 
-	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-				self->priv->browser_filter_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
+				self->browser_filter_model);
 
-	if (path != NULL && gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
-		gtk_tree_model_get (self->priv->browser_model, &iter,
+	if (path != NULL && gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
+		gtk_tree_model_get (self->browser_model, &iter,
 				    GD_MAIN_COLUMN_PRIMARY_TEXT, &text,
 				    MODEL_RESULTS_CAN_REMOVE, &can_remove,
 				    -1);
@@ -988,13 +989,13 @@ set_browser_filter_model_for_path (TotemGrilo    *self,
 
 	g_object_set (self, "show-back-button", path != NULL, NULL);
 	if (path == NULL) {
-		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
+		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->header), self->switcher);
 	} else {
-		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), NULL);
-		totem_main_toolbar_set_title (TOTEM_MAIN_TOOLBAR (self->priv->header), text);
+		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->header), NULL);
+		totem_main_toolbar_set_title (TOTEM_MAIN_TOOLBAR (self->header), text);
 	}
 
-	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar),
+	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->selection_bar),
 							can_remove != CAN_REMOVE_UNSUPPORTED);
 	g_free (text);
 }
@@ -1033,16 +1034,16 @@ browser_activated_cb (GdMainView  *view,
 	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model),
 							  &real_model_iter, &iter);
 
-	treepath = gtk_tree_model_get_path (self->priv->browser_model, &real_model_iter);
+	treepath = gtk_tree_model_get_path (self->browser_model, &real_model_iter);
 	set_browser_filter_model_for_path (self, treepath);
 
 	/* We need to fill the model with browse data */
 	if (remaining == 0) {
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model), &real_model_iter,
+		gtk_tree_store_set (GTK_TREE_STORE (self->browser_model), &real_model_iter,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, self->priv->browser_model, treepath, source, content, page);
+		browse (self, self->browser_model, treepath, source, content, page);
 	}
 	gtk_tree_path_free (treepath);
 
@@ -1057,11 +1058,11 @@ search_entry_source_changed_cb (GObject    *object,
                                 TotemGrilo *self)
 {
 	/* FIXME: Do we actually want to do that? */
-	if (self->priv->search_id > 0) {
-		grl_operation_cancel (self->priv->search_id);
-		self->priv->search_id = 0;
+	if (self->search_id > 0) {
+		grl_operation_cancel (self->search_id);
+		self->search_id = 0;
 	}
-	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
+	gtk_tree_store_clear (GTK_TREE_STORE (self->search_results_model));
 }
 
 static void
@@ -1098,10 +1099,10 @@ item_activated_cb (GdMainView  *view,
 
 	model = gd_main_view_get_model (view);
 
-	if (model == self->priv->search_results_model) {
+	if (model == self->search_results_model) {
 		search_activated_cb (view, path, user_data);
 	} else {
-		totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header), FALSE);
+		totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->header), FALSE);
 		browser_activated_cb (view, path, user_data);
 	}
 }
@@ -1157,9 +1158,9 @@ get_tree_model_for_source (TotemGrilo *self,
 			   GrlSource  *source)
 {
 	if (source_is_recent (source))
-		return self->priv->recent_model;
+		return self->recent_model;
 
-	return self->priv->browser_model;
+	return self->browser_model;
 }
 
 static void
@@ -1234,7 +1235,7 @@ content_added (TotemGrilo   *self,
 
 	model = get_tree_model_for_source (self, source);
 	/* We're missing a container for the new media */
-	if (model != self->priv->recent_model)
+	if (model != self->recent_model)
 		return;
 
 	for (i = 0; i < changed_medias->len; i++) {
@@ -1293,18 +1294,18 @@ source_added_cb (GrlRegistry *registry,
 
 	/* Metadata */
 	if (g_str_equal (id, "grl-video-title-parsing"))
-		self->priv->title_parsing_src = source;
+		self->title_parsing_src = source;
 	else if (g_str_equal (id, "grl-local-metadata"))
-		self->priv->local_metadata_src = source;
+		self->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
-		self->priv->metadata_store_src = source;
+		self->metadata_store_src = source;
 	else if (g_str_equal (id, "grl-bookmarks"))
-		self->priv->bookmarks_src = source;
+		self->bookmarks_src = source;
 	else if (g_str_equal (id, "grl-tracker-source") ||
 		 g_str_equal (id, "grl-tracker3-source"))
-		self->priv->tracker_src = source;
+		self->tracker_src = source;
 
-	if (self->priv->plugins_activated == FALSE)
+	if (self->plugins_activated == FALSE)
 		return;
 
 	if (source_is_blocked (source) ||
@@ -1318,7 +1319,7 @@ source_added_cb (GrlRegistry *registry,
 
 	/* The filesystem plugin */
 	if (g_str_equal (id, "grl-filesystem") &&
-	    self->priv->fs_plugin_configured == FALSE) {
+	    self->fs_plugin_configured == FALSE) {
 		return;
 	}
 
@@ -1334,7 +1335,7 @@ source_added_cb (GrlRegistry *registry,
 		gboolean monitor = FALSE;
 
 		if (source_is_recent (source)) {
-			browse (self, self->priv->recent_model,
+			browse (self, self->recent_model,
 				NULL, source, NULL, -1);
 			/* https://gitlab.gnome.org/GNOME/grilo-plugins/merge_requests/29 */
 			if (g_str_equal (id, "grl-tracker-source") == FALSE)
@@ -1344,7 +1345,7 @@ source_added_cb (GrlRegistry *registry,
 
 			icon = totem_grilo_get_channel_icon ();
 
-			gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
+			gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->browser_model),
 							   NULL, NULL, -1,
 							   MODEL_RESULTS_SOURCE, source,
 							   MODEL_RESULTS_CONTENT, NULL,
@@ -1366,7 +1367,7 @@ source_added_cb (GrlRegistry *registry,
 	}
 	if ((ops & GRL_OP_SEARCH) &&
 	    !source_is_search_blocked (source)) {
-		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
+		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->search_entry),
 					       grl_source_get_id (source),
 					       name,
 					       get_source_priority (source));
@@ -1410,16 +1411,16 @@ source_removed_cb (GrlRegistry *registry,
 	/* Remove source and content from browse results */
 	if (ops & GRL_OP_BROWSE) {
 		/* Inside the removed browse source? */
-		if (self->priv->browser_filter_model) {
+		if (self->browser_filter_model) {
 			GtkTreePath *path;
 			GtkTreeIter iter;
 
-			g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
+			g_object_get (G_OBJECT (self->browser_filter_model), "virtual-root", &path, NULL);
 			if (path != NULL &&
-			    gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+			    gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
 				GrlSource *current_source;
 
-				gtk_tree_model_get (self->priv->browser_model, &iter,
+				gtk_tree_model_get (self->browser_model, &iter,
 						    MODEL_RESULTS_SOURCE, &current_source,
 						    -1);
 				if (current_source == source)
@@ -1429,7 +1430,7 @@ source_removed_cb (GrlRegistry *registry,
 			g_clear_pointer (&path, gtk_tree_path_free);
 		}
 
-		gtk_tree_model_foreach (self->priv->browser_model,
+		gtk_tree_model_foreach (self->browser_model,
 		                        remove_browse_result,
 		                        source);
 	}
@@ -1439,13 +1440,13 @@ source_removed_cb (GrlRegistry *registry,
 	if (ops & GRL_OP_SEARCH) {
 		const char *id;
 
-		if (self->priv->search_source == source) {
-			gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
-			self->priv->search_source = NULL;
+		if (self->search_source == source) {
+			gtk_tree_store_clear (GTK_TREE_STORE (self->search_results_model));
+			self->search_source = NULL;
 		}
 
 		id = grl_source_get_id (source);
-		totem_search_entry_remove_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
+		totem_search_entry_remove_source (TOTEM_SEARCH_ENTRY (self->search_entry), id);
 	}
 }
 
@@ -1477,7 +1478,7 @@ load_grilo_plugins (TotemGrilo *self)
 		config = grl_config_new ("grl-filesystem", NULL);
 		grl_config_set_string (config, "base-uri", configs[i]);
 		grl_registry_add_config (registry, config, NULL);
-		self->priv->fs_plugin_configured = TRUE;
+		self->fs_plugin_configured = TRUE;
 	}
 	g_strfreev (configs);
 
@@ -1543,13 +1544,13 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	if (adjustment_over_limit (adjustment) == FALSE)
 		return;
 
-	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->priv->browser)));
+	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->browser)));
 
 	if (gtk_icon_view_get_visible_range (icon_view, &start_path, &end_path) == FALSE)
 		return;
 
-	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
-	if (model == self->priv->recent_sort_model)
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
+	if (model == self->recent_sort_model)
 		return;
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
@@ -1591,12 +1592,12 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		}
 
 		/* Continue browsing */
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
+		gtk_tree_store_set (GTK_TREE_STORE (self->browser_model),
 		                    &iter,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, self->priv->browser_model, parent_path, source, container, page);
+		browse (self, self->browser_model, parent_path, source, container, page);
 		stop_processing = TRUE;
 
 	free_elements:
@@ -1619,17 +1620,17 @@ adjustment_value_changed_cb (GtkAdjustment *adjustment,
 {
 	update_search_thumbnails (self);
 
-	if (self->priv->in_search == FALSE) {
+	if (self->in_search == FALSE) {
 		get_more_browse_results_cb (adjustment, self);
 		return;
 	}
 
 	/* Do not get more results if search is in progress */
-	if (self->priv->search_id != 0)
+	if (self->search_id != 0)
 		return;
 
 	/* Do not get more results if there are no more results to get :) */
-	if (self->priv->search_remaining > 0)
+	if (self->search_remaining > 0)
 		return;
 
 	if (adjustment_over_limit (adjustment))
@@ -1644,29 +1645,29 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 
 	g_return_if_fail (TOTEM_IS_GRILO (self));
 
-	g_assert (self->priv->show_back_button);
-	g_assert (self->priv->browser_filter_model);
-	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
+	g_assert (self->show_back_button);
+	g_assert (self->browser_filter_model);
+	g_object_get (G_OBJECT (self->browser_filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
 
 	/* We don't call set_browser_filter_model_for_path() to avoid
 	 * the back button getting hidden and re-shown */
-	g_clear_object (&self->priv->browser_filter_model);
-	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
+	g_clear_object (&self->browser_filter_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->browser), NULL);
 
-	totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header), FALSE);
-	gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->priv->browser), FALSE);
+	totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->header), FALSE);
+	gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->browser), FALSE);
 
 	/* Remove all the items at that level */
-	if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+	if (gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
 		GtkTreeIter child;
 
-		if (gtk_tree_model_iter_children (self->priv->browser_model, &child, &iter)) {
-			while (gtk_tree_store_remove (GTK_TREE_STORE (self->priv->browser_model), &child))
+		if (gtk_tree_model_iter_children (self->browser_model, &child, &iter)) {
+			while (gtk_tree_store_remove (GTK_TREE_STORE (self->browser_model), &child))
 				;
 		}
 
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model), &iter,
+		gtk_tree_store_set (GTK_TREE_STORE (self->browser_model), &iter,
 		                    MODEL_RESULTS_PAGE, 0,
 		                    MODEL_RESULTS_REMAINING, 0,
 		                    -1);
@@ -1688,7 +1689,7 @@ window_key_press_event_cb (GtkWidget   *win,
 	guint state;
 
 	/* Check whether we're in the browse panel */
-	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), "grilo"))
+	if (!g_str_equal (totem_object_get_main_page (self->totem), "grilo"))
 		return GDK_EVENT_PROPAGATE;
 
 	state = event->state & gtk_accelerator_get_default_mod_mask ();
@@ -1697,20 +1698,20 @@ window_key_press_event_cb (GtkWidget   *win,
 	if (state == GDK_CONTROL_MASK) {
 		if (event->keyval == GDK_KEY_F ||
 		    event->keyval == GDK_KEY_f) {
-			gtk_search_bar_set_search_mode (GTK_SEARCH_BAR (self->priv->search_bar),
-							!gtk_search_bar_get_search_mode (GTK_SEARCH_BAR (self->priv->search_bar)));
+			gtk_search_bar_set_search_mode (GTK_SEARCH_BAR (self->search_bar),
+							!gtk_search_bar_get_search_mode (GTK_SEARCH_BAR (self->search_bar)));
 			return GDK_EVENT_STOP;
 		}
 	}
 
 	if (state == 0 &&
 	    event->keyval == GDK_KEY_Escape &&
-	    gd_main_view_get_selection_mode (GD_MAIN_VIEW (self->priv->browser))) {
-		gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->priv->browser), FALSE);
+	    gd_main_view_get_selection_mode (GD_MAIN_VIEW (self->browser))) {
+		gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->browser), FALSE);
 		return GDK_EVENT_STOP;
 	}
 
-	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), (GdkEvent *) event);
+	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->search_bar), (GdkEvent *) event);
 }
 
 static void
@@ -1721,9 +1722,9 @@ selection_mode_requested (GdMainView  *view,
 
 	/* Don't allow selections when at the root of the
 	 * "Channels" view */
-	if (self->priv->current_page == TOTEM_GRILO_PAGE_CHANNELS &&
-	    self->priv->browser_filter_model != NULL) {
-		g_object_get (self->priv->browser_filter_model,
+	if (self->current_page == TOTEM_GRILO_PAGE_CHANNELS &&
+	    self->browser_filter_model != NULL) {
+		g_object_get (self->browser_filter_model,
 			      "virtual-root", &root,
 			      NULL);
 		if (root == NULL)
@@ -1774,9 +1775,9 @@ view_selection_changed_cb (GdMainView   *view,
 	}
 	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 
-	totem_main_toolbar_set_n_selected (TOTEM_MAIN_TOOLBAR (self->priv->header), count);
-	totem_selection_toolbar_set_n_selected (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), count);
-	totem_selection_toolbar_set_delete_button_sensitive (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), data.all_removable);
+	totem_main_toolbar_set_n_selected (TOTEM_MAIN_TOOLBAR (self->header), count);
+	totem_selection_toolbar_set_n_selected (TOTEM_SELECTION_TOOLBAR (self->selection_bar), count);
+	totem_selection_toolbar_set_delete_button_sensitive (TOTEM_SELECTION_TOOLBAR (self->selection_bar), data.all_removable);
 }
 
 static void
@@ -1784,7 +1785,7 @@ select_all_action_cb (GSimpleAction    *action,
 		      GVariant         *parameter,
 		      TotemGrilo       *self)
 {
-	gd_main_view_select_all (GD_MAIN_VIEW (self->priv->browser));
+	gd_main_view_select_all (GD_MAIN_VIEW (self->browser));
 }
 
 static void
@@ -1792,7 +1793,7 @@ select_none_action_cb (GSimpleAction    *action,
 		       GVariant         *parameter,
 		       TotemGrilo       *self)
 {
-	gd_main_view_unselect_all (GD_MAIN_VIEW (self->priv->browser));
+	gd_main_view_unselect_all (GD_MAIN_VIEW (self->browser));
 }
 
 static void
@@ -1841,20 +1842,20 @@ static void
 totem_grilo_set_drop_enabled (TotemGrilo *self,
 			      gboolean    enabled)
 {
-	if (enabled == (self->priv->dnd_handler_id != 0))
+	if (enabled == (self->dnd_handler_id != 0))
 		return;
 
 	if (enabled) {
-		self->priv->dnd_handler_id = g_signal_connect (G_OBJECT (self->priv->browser), "drag_data_received",
+		self->dnd_handler_id = g_signal_connect (G_OBJECT (self->browser), "drag_data_received",
 							       G_CALLBACK (drop_video_cb), self);
-		gtk_drag_dest_set (GTK_WIDGET (self->priv->browser), GTK_DEST_DEFAULT_ALL,
+		gtk_drag_dest_set (GTK_WIDGET (self->browser), GTK_DEST_DEFAULT_ALL,
 				   target_table, G_N_ELEMENTS (target_table),
 				   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 	} else {
-		g_signal_handler_disconnect (G_OBJECT (self->priv->browser),
-					     self->priv->dnd_handler_id);
-		self->priv->dnd_handler_id = 0;
-		gtk_drag_dest_unset (GTK_WIDGET (self->priv->browser));
+		g_signal_handler_disconnect (G_OBJECT (self->browser),
+					     self->dnd_handler_id);
+		self->dnd_handler_id = 0;
+		gtk_drag_dest_unset (GTK_WIDGET (self->browser));
 	}
 }
 
@@ -1869,24 +1870,24 @@ source_switched (GtkToggleButton  *button,
 
 	id = g_object_get_data (G_OBJECT (button), "name");
 	if (g_str_equal (id, "recent")) {
-		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-					self->priv->recent_sort_model);
-		self->priv->current_page = TOTEM_GRILO_PAGE_RECENT;
+		gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
+					self->recent_sort_model);
+		self->current_page = TOTEM_GRILO_PAGE_RECENT;
 		totem_grilo_set_drop_enabled (self, TRUE);
 	} else if (g_str_equal (id, "channels")) {
-		if (self->priv->browser_filter_model != NULL)
-			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-						self->priv->browser_filter_model);
+		if (self->browser_filter_model != NULL)
+			gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
+						self->browser_filter_model);
 		else
 			set_browser_filter_model_for_path (self, NULL);
-		self->priv->current_page = TOTEM_GRILO_PAGE_CHANNELS;
+		self->current_page = TOTEM_GRILO_PAGE_CHANNELS;
 		totem_grilo_set_drop_enabled (self, FALSE);
 	} else if (g_str_equal (id, "search")) {
 		return;
 	}
 
-	g_clear_pointer (&self->priv->last_page, g_free);
-	g_object_set (self->priv->header, "search-mode", FALSE, NULL);
+	g_clear_pointer (&self->last_page, g_free);
+	g_object_set (self->header, "search-mode", FALSE, NULL);
 
 	g_object_notify (G_OBJECT (self), "current-page");
 }
@@ -1916,34 +1917,34 @@ setup_source_switcher (TotemGrilo *self)
 {
 	GtkStyleContext *context;
 
-	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_set_homogeneous (GTK_BOX (self->priv->switcher), TRUE);
+	self->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_set_homogeneous (GTK_BOX (self->switcher), TRUE);
 
-	self->priv->recent = create_switcher_button (self, _("Videos"), "recent");
-	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
+	self->recent = create_switcher_button (self, _("Videos"), "recent");
+	gtk_container_add (GTK_CONTAINER (self->switcher), self->recent);
 
-	g_signal_connect (G_OBJECT (self->priv->recent), "drag_data_received",
+	g_signal_connect (G_OBJECT (self->recent), "drag_data_received",
 			  G_CALLBACK (drop_video_cb), self);
-	gtk_drag_dest_set (GTK_WIDGET (self->priv->recent), GTK_DEST_DEFAULT_ALL,
+	gtk_drag_dest_set (GTK_WIDGET (self->recent), GTK_DEST_DEFAULT_ALL,
 			   target_table, G_N_ELEMENTS (target_table),
 			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
-	self->priv->channels = create_switcher_button (self, _("Channels"), "channels");
-	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->priv->channels),
-				     GTK_RADIO_BUTTON (self->priv->recent));
-	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->channels);
+	self->channels = create_switcher_button (self, _("Channels"), "channels");
+	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->channels),
+				     GTK_RADIO_BUTTON (self->recent));
+	gtk_container_add (GTK_CONTAINER (self->switcher), self->channels);
 
-	self->priv->search_hidden_button = create_switcher_button (self, "HIDDEN SEARCH BUTTON", "search");
-	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->priv->search_hidden_button),
-				     GTK_RADIO_BUTTON (self->priv->recent));
-	g_object_ref_sink (G_OBJECT (self->priv->search_hidden_button));
+	self->search_hidden_button = create_switcher_button (self, "HIDDEN SEARCH BUTTON", "search");
+	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->search_hidden_button),
+				     GTK_RADIO_BUTTON (self->recent));
+	g_object_ref_sink (G_OBJECT (self->search_hidden_button));
 
-	context = gtk_widget_get_style_context (self->priv->switcher);
+	context = gtk_widget_get_style_context (self->switcher);
 	gtk_style_context_add_class (context, "stack-switcher");
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_LINKED);
 
-	gtk_widget_show_all (self->priv->switcher);
-	g_object_ref_sink (self->priv->switcher);
+	gtk_widget_show_all (self->switcher);
+	g_object_ref_sink (self->switcher);
 }
 
 static void
@@ -1953,37 +1954,37 @@ search_mode_changed (GObject          *gobject,
 {
 	gboolean search_mode;
 
-	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
+	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->header));
 	if (!search_mode) {
-		if (self->priv->last_page ==  NULL) {
+		if (self->last_page ==  NULL) {
 			/* Already reset */
-		} else if (g_str_equal (self->priv->last_page, "recent")) {
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->recent), TRUE);
-		} else if (g_str_equal (self->priv->last_page, "channels")) {
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->channels), TRUE);
+		} else if (g_str_equal (self->last_page, "recent")) {
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->recent), TRUE);
+		} else if (g_str_equal (self->last_page, "channels")) {
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->channels), TRUE);
 		} else {
 			g_assert_not_reached ();
 		}
-		g_clear_pointer (&self->priv->last_page, g_free);
+		g_clear_pointer (&self->last_page, g_free);
 	} else {
 		GtkTreeModel *model;
 		const char *id = NULL;
 
 		/* Try to guess which source should be used for search */
-		model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
-		if (model == self->priv->recent_sort_model) {
-			id = grl_source_get_id (self->priv->tracker_src);
-			self->priv->last_page = g_strdup ("recent");
+		model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
+		if (model == self->recent_sort_model) {
+			id = grl_source_get_id (self->tracker_src);
+			self->last_page = g_strdup ("recent");
 		} else {
 			GtkTreeIter iter;
 			GtkTreePath *path;
 
 			g_object_get (G_OBJECT (model), "virtual-root", &path, NULL);
 			if (path != NULL &&
-			    gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+			    gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
 				GrlSource *source;
 
-				gtk_tree_model_get (self->priv->browser_model, &iter,
+				gtk_tree_model_get (self->browser_model, &iter,
 						    MODEL_RESULTS_SOURCE, &source,
 						    -1);
 				id = source ? grl_source_get_id (source) : NULL;
@@ -1991,16 +1992,16 @@ search_mode_changed (GObject          *gobject,
 			}
 			g_clear_pointer (&path, gtk_tree_path_free);
 
-			self->priv->last_page = g_strdup ("channels");
+			self->last_page = g_strdup ("channels");
 		}
 
 		if (id != NULL)
-			totem_search_entry_set_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
+			totem_search_entry_set_selected_id (TOTEM_SEARCH_ENTRY (self->search_entry), id);
 
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->search_hidden_button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->search_hidden_button), TRUE);
 	}
 
-	self->priv->in_search = search_mode;
+	self->in_search = search_mode;
 }
 
 typedef struct {
@@ -2061,8 +2062,8 @@ play_selection (TotemGrilo *self,
 	GPtrArray *items;
 	guint i;
 
-	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->priv->browser));
-	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
+	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->browser));
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
 
 	/* Stuff the items in an array */
 	if (shuffle) {
@@ -2076,7 +2077,7 @@ play_selection (TotemGrilo *self,
 	}
 	g_list_free (list);
 
-	totem_object_clear_playlist (self->priv->totem);
+	totem_object_clear_playlist (self->totem);
 	list = NULL;
 
 	for (i = 0; i < items->len; i++) {
@@ -2112,9 +2113,9 @@ next_item:
 
 	g_ptr_array_free (items, FALSE);
 
-	totem_object_add_items_to_playlist (self->priv->totem, g_list_reverse (list));
+	totem_object_add_items_to_playlist (self->totem, g_list_reverse (list));
 
-	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
+	g_object_set (G_OBJECT (self->browser), "selection-mode", FALSE, NULL);
 }
 
 static void
@@ -2227,10 +2228,10 @@ delete_cb (TotemSelectionToolbar *bar,
 	GtkTreeModel *model;
 	GList *list, *l;
 
-	g_signal_handlers_block_by_func (self->priv->browser, "view-selection-changed", self);
+	g_signal_handlers_block_by_func (self->browser, "view-selection-changed", self);
 
-	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
-	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->priv->browser));
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
+	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->browser));
 
 	/* GList of GtkTreePaths to a GList of GtkTreeRowReferences */
 	for (l = list; l != NULL; l = l->next) {
@@ -2242,9 +2243,9 @@ delete_cb (TotemSelectionToolbar *bar,
 	}
 	g_list_foreach (list, delete_foreach, model);
 
-	g_signal_handlers_unblock_by_func (self->priv->browser, "view-selection-changed", self);
+	g_signal_handlers_unblock_by_func (self->browser, "view-selection-changed", self);
 
-	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
+	g_object_set (G_OBJECT (self->browser), "selection-mode", FALSE, NULL);
 }
 
 static void
@@ -2255,96 +2256,96 @@ setup_browse (TotemGrilo *self)
 	const char * const select_none_accels[] = { "<Shift><Primary>A", NULL };
 
 	/* Search */
-	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
-				      totem_search_entry_get_entry (TOTEM_SEARCH_ENTRY (self->priv->search_entry)));
+	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->search_bar),
+				      totem_search_entry_get_entry (TOTEM_SEARCH_ENTRY (self->search_entry)));
 
-	g_signal_connect (self->priv->main_window, "key-press-event",
+	g_signal_connect (self->main_window, "key-press-event",
 			  G_CALLBACK (window_key_press_event_cb), self);
-	g_signal_connect (self->priv->search_entry, "activate",
+	g_signal_connect (self->search_entry, "activate",
 	                  G_CALLBACK (search_entry_activate_cb),
 	                  self);
 
 	//FIXME also setup a timeout for that
-	g_signal_connect (self->priv->search_entry, "notify::selected-id",
+	g_signal_connect (self->search_entry, "notify::selected-id",
 			  G_CALLBACK (search_entry_source_changed_cb), self);
 
 	/* Toolbar */
-	self->priv->select_all_action = g_simple_action_new ("select-all", NULL);
-	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
+	self->select_all_action = g_simple_action_new ("select-all", NULL);
+	g_signal_connect (G_OBJECT (self->select_all_action), "activate",
 			  G_CALLBACK (select_all_action_cb), self);
-	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_all_action));
-	gtk_application_set_accels_for_action (GTK_APPLICATION (self->priv->totem), "app.select-all", select_all_accels);
-	g_object_bind_property (self->priv->header, "select-mode",
-				self->priv->select_all_action, "enabled",
+	g_action_map_add_action (G_ACTION_MAP (self->totem), G_ACTION (self->select_all_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self->totem), "app.select-all", select_all_accels);
+	g_object_bind_property (self->header, "select-mode",
+				self->select_all_action, "enabled",
 				G_BINDING_SYNC_CREATE);
 
-	self->priv->select_none_action = g_simple_action_new ("select-none", NULL);
-	g_signal_connect (G_OBJECT (self->priv->select_none_action), "activate",
+	self->select_none_action = g_simple_action_new ("select-none", NULL);
+	g_signal_connect (G_OBJECT (self->select_none_action), "activate",
 			  G_CALLBACK (select_none_action_cb), self);
-	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_none_action));
-	gtk_application_set_accels_for_action (GTK_APPLICATION (self->priv->totem), "app.select-none", select_none_accels);
-	g_object_bind_property (self->priv->header, "select-mode",
-				self->priv->select_none_action, "enabled",
+	g_action_map_add_action (G_ACTION_MAP (self->totem), G_ACTION (self->select_none_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self->totem), "app.select-none", select_none_accels);
+	g_object_bind_property (self->header, "select-mode",
+				self->select_none_action, "enabled",
 				G_BINDING_SYNC_CREATE);
 
 	setup_source_switcher (self);
-	totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
+	totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->header), self->switcher);
 
-	g_object_bind_property (self->priv->header, "search-mode",
-				self->priv->search_bar, "search-mode-enabled",
+	g_object_bind_property (self->header, "search-mode",
+				self->search_bar, "search-mode-enabled",
 				G_BINDING_BIDIRECTIONAL);
-	g_signal_connect (self->priv->header, "notify::search-mode",
+	g_signal_connect (self->header, "notify::search-mode",
 			  G_CALLBACK (search_mode_changed), self);
 
 	/* Main view */
-	self->priv->recent_sort_model = gtk_tree_model_sort_new_with_model (self->priv->recent_model);
+	self->recent_sort_model = gtk_tree_model_sort_new_with_model (self->recent_model);
 	/* FIXME: Sorting is disabled for now
 	 * https://bugzilla.gnome.org/show_bug.cgi?id=722781
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->recent_sort_model),
 					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING); */
 
-	g_object_bind_property (self->priv->header, "select-mode",
-				self->priv->browser, "selection-mode",
+	g_object_bind_property (self->header, "select-mode",
+				self->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
-	g_object_bind_property (self->priv->header, "select-mode",
-				self->priv->header, "show-close-button",
+	g_object_bind_property (self->header, "select-mode",
+				self->header, "show-close-button",
 				G_BINDING_INVERT_BOOLEAN);
 
-	g_signal_connect (self->priv->browser, "view-selection-changed",
+	g_signal_connect (self->browser, "view-selection-changed",
 			  G_CALLBACK (view_selection_changed_cb), self);
-	g_signal_connect (self->priv->browser, "item-activated",
+	g_signal_connect (self->browser, "item-activated",
 	                  G_CALLBACK (item_activated_cb), self);
-	g_signal_connect (self->priv->browser, "selection-mode-request",
+	g_signal_connect (self->browser, "selection-mode-request",
 			  G_CALLBACK (selection_mode_requested), self);
 
 	totem_grilo_set_drop_enabled (self, TRUE);
 
 	/* Selection toolbar */
-	g_object_set (G_OBJECT (self->priv->header), "select-menu-model", self->priv->selectmenu, NULL);
-	self->priv->selection_bar = totem_selection_toolbar_new ();
-	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), TRUE);
-	gtk_container_add (GTK_CONTAINER (self->priv->selection_revealer),
-			   self->priv->selection_bar);
-	gtk_widget_show (self->priv->selection_bar);
-	g_object_bind_property (self->priv->header, "select-mode",
-				self->priv->selection_revealer, "reveal-child",
+	g_object_set (G_OBJECT (self->header), "select-menu-model", self->selectmenu, NULL);
+	self->selection_bar = totem_selection_toolbar_new ();
+	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->selection_bar), TRUE);
+	gtk_container_add (GTK_CONTAINER (self->selection_revealer),
+			   self->selection_bar);
+	gtk_widget_show (self->selection_bar);
+	g_object_bind_property (self->header, "select-mode",
+				self->selection_revealer, "reveal-child",
 				G_BINDING_SYNC_CREATE);
-	g_signal_connect (self->priv->selection_bar, "play-clicked",
+	g_signal_connect (self->selection_bar, "play-clicked",
 			  G_CALLBACK (play_cb), self);
-	g_signal_connect (self->priv->selection_bar, "shuffle-clicked",
+	g_signal_connect (self->selection_bar, "shuffle-clicked",
 			  G_CALLBACK (shuffle_cb), self);
-	g_signal_connect (self->priv->selection_bar, "delete-clicked",
+	g_signal_connect (self->selection_bar, "delete-clicked",
 			  G_CALLBACK (delete_cb), self);
 
 	/* Loading thumbnails or more search results */
-	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (self->priv->browser));
+	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (self->browser));
 	g_signal_connect (adj, "value_changed",
 	                  G_CALLBACK (adjustment_value_changed_cb), self);
 	g_signal_connect (adj, "changed",
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
-	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-				self->priv->recent_sort_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
+				self->recent_sort_model);
 }
 
 static void
@@ -2496,9 +2497,9 @@ setup_ui (TotemGrilo *self)
 	totem_grilo_setup_icons ();
 	setup_browse (self);
 
-	/* create_debug_window (self, self->priv->browser_model); */
-	/* create_debug_window (self, self->priv->recent_model); */
-	/* create_debug_window (self, self->priv->search_results_model); */
+	/* create_debug_window (self, self->browser_model); */
+	/* create_debug_window (self, self->recent_model); */
+	/* create_debug_window (self, self->search_results_model); */
 }
 
 static void
@@ -2527,36 +2528,36 @@ totem_grilo_finalize (GObject *object)
 	GList *s;
 	GrlRegistry *registry;
 
-	if (self->priv->thumbnail_update_id > 0) {
-		g_source_remove (self->priv->thumbnail_update_id);
-		self->priv->thumbnail_update_id = 0;
+	if (self->thumbnail_update_id > 0) {
+		g_source_remove (self->thumbnail_update_id);
+		self->thumbnail_update_id = 0;
 	}
 
-	g_cancellable_cancel (self->priv->thumbnail_cancellable);
-	g_clear_object (&self->priv->thumbnail_cancellable);
+	g_cancellable_cancel (self->thumbnail_cancellable);
+	g_clear_object (&self->thumbnail_cancellable);
 
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
 
-	g_clear_pointer (&self->priv->metadata_keys, g_list_free);
+	g_clear_pointer (&self->metadata_keys, g_list_free);
 
 	grl_deinit ();
 
 	totem_grilo_clear_icons ();
 
-	g_clear_object (&self->priv->switcher);
-	g_clear_object (&self->priv->search_hidden_button);
+	g_clear_object (&self->switcher);
+	g_clear_object (&self->search_hidden_button);
 
 	/* Empty results */
 	//FIXME
-	//gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
-	//g_clear_object (&self->priv->browser_filter_model);
-	//gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
-	//gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
+	//gd_main_view_set_model (GD_MAIN_VIEW (self->browser), NULL);
+	//g_clear_object (&self->browser_filter_model);
+	//gtk_tree_store_clear (GTK_TREE_STORE (self->browser_model));
+	//gtk_tree_store_clear (GTK_TREE_STORE (self->search_results_model));
 
-	g_object_unref (self->priv->main_window);
-	g_object_unref (self->priv->totem);
+	g_object_unref (self->main_window);
+	g_object_unref (self->totem);
 
 	G_OBJECT_CLASS (totem_grilo_parent_class)->finalize (object);
 }
@@ -2571,13 +2572,13 @@ totem_grilo_start (TotemGrilo *self)
 
 	totem_grilo_resume_icon_thumbnailing ();
 
-	if (self->priv->plugins_activated)
+	if (self->plugins_activated)
 		return;
 
 	g_debug ("TotemGrilo: Activating plugins");
 
 	registry = grl_registry_get_default ();
-	self->priv->plugins_activated = TRUE;
+	self->plugins_activated = TRUE;
 
 	/* Load the others */
 	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
@@ -2598,7 +2599,7 @@ totem_grilo_constructed (GObject *object)
 {
 	TotemGrilo *self = TOTEM_GRILO (object);
 
-	self->priv->main_window = totem_object_get_main_window (self->priv->totem);
+	self->main_window = totem_object_get_main_window (self->totem);
 
 	setup_ui (self);
 	grl_init (0, NULL);
@@ -2611,7 +2612,7 @@ totem_grilo_get_show_back_button (TotemGrilo *self)
 {
 	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
 
-	return self->priv->show_back_button;
+	return self->show_back_button;
 }
 
 void
@@ -2623,13 +2624,13 @@ totem_grilo_set_current_page (TotemGrilo     *self,
 	g_return_if_fail (TOTEM_IS_GRILO (self));
 
 	if (page == TOTEM_GRILO_PAGE_RECENT)
-		button = self->priv->recent;
+		button = self->recent;
 	else if (page == TOTEM_GRILO_PAGE_CHANNELS)
-		button = self->priv->channels;
+		button = self->channels;
 	else
 		g_assert_not_reached ();
 
-	self->priv->current_page = page;
+	self->current_page = page;
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
@@ -2641,7 +2642,7 @@ totem_grilo_get_current_page (TotemGrilo *self)
 {
 	g_return_val_if_fail (TOTEM_IS_GRILO (self), TOTEM_GRILO_PAGE_RECENT);
 
-	return self->priv->current_page;
+	return self->current_page;
 }
 
 gboolean
@@ -2698,7 +2699,7 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 	data.key = GRL_METADATA_KEY_URL;
 	data.media = media;
 	data.iter = NULL;
-	gtk_tree_model_foreach (self->priv->recent_model, (GtkTreeModelForeachFunc) find_media_cb, &data);
+	gtk_tree_model_foreach (self->recent_model, (GtkTreeModelForeachFunc) find_media_cb, &data);
 
 	if (data.found) {
 		g_debug ("URI '%s' is already present in the bookmarks, not adding duplicate", uri);
@@ -2708,7 +2709,7 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 	}
 
 	/* This should be quick, just adding the item to the DB */
-	grl_source_store_sync (self->priv->bookmarks_src,
+	grl_source_store_sync (self->bookmarks_src,
 			       NULL,
 			       media,
 			       GRL_WRITE_NORMAL,
@@ -2723,21 +2724,20 @@ totem_grilo_set_property (GObject         *object,
                           GParamSpec      *pspec)
 {
 	TotemGrilo *self = TOTEM_GRILO (object);
-	TotemGriloPrivate *priv = self->priv;
 
 	switch (prop_id)
 	{
 	case PROP_TOTEM:
-		priv->totem = g_value_dup_object (value);
+		self->totem = g_value_dup_object (value);
 		break;
 
 	case PROP_HEADER:
-		priv->header = g_value_dup_object (value);
+		self->header = g_value_dup_object (value);
 		break;
 
 	case PROP_SHOW_BACK_BUTTON:
-		priv->show_back_button = g_value_get_boolean (value);
-		g_object_set (self->priv->header, "show-back-button", priv->show_back_button, NULL);
+		self->show_back_button = g_value_get_boolean (value);
+		g_object_set (self->header, "show-back-button", self->show_back_button, NULL);
 		break;
 
 	case PROP_CURRENT_PAGE:
@@ -2760,11 +2760,11 @@ totem_grilo_get_property (GObject         *object,
 
 	switch (prop_id) {
 	case PROP_SHOW_BACK_BUTTON:
-		g_value_set_boolean (value, self->priv->show_back_button);
+		g_value_set_boolean (value, self->show_back_button);
 		break;
 
 	case PROP_CURRENT_PAGE:
-		g_value_set_int (value, self->priv->current_page);
+		g_value_set_int (value, self->current_page);
 		break;
 
 	default:
@@ -2817,27 +2817,22 @@ totem_grilo_class_init (TotemGriloClass *klass)
 							   G_PARAM_READWRITE));
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/grilo.ui");
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selectmenu);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_bar);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_entry);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, browser);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selection_revealer);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, selectmenu);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, search_bar);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, search_entry);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, browser);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, selection_revealer);
 
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_results_model);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, browser_model);
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, recent_model);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, search_results_model);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, browser_model);
+	gtk_widget_class_bind_template_child (widget_class, TotemGrilo, recent_model);
 }
 
 static void
 totem_grilo_init (TotemGrilo *self)
 {
-	TotemGriloPrivate *priv;
-
-	self->priv = totem_grilo_get_instance_private (self);
-	priv = self->priv;
-
-	priv->thumbnail_cancellable = g_cancellable_new ();
-	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+	self->thumbnail_cancellable = g_cancellable_new ();
+	self->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
 							 GRL_METADATA_KEY_AUTHOR,
 							 GRL_METADATA_KEY_DURATION,
 							 GRL_METADATA_KEY_MODIFICATION_DATE,
