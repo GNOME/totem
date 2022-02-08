@@ -1075,8 +1075,8 @@ handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gch
 static void
 add_mrl_cb (TotemPlParser *parser, GAsyncResult *result, AddMrlData *data)
 {
+	g_autoptr(GTask) task = NULL;
 	TotemPlParserResult res;
-	GSimpleAsyncResult *async_result;
 	GError *error = NULL;
 	gboolean ret;
 
@@ -1091,19 +1091,14 @@ add_mrl_cb (TotemPlParser *parser, GAsyncResult *result, AddMrlData *data)
 
 	/* Create an async result which will return the result to the code which called totem_playlist_add_mrl() */
 	ret = handle_parse_result (res, data->playlist, data->mrl, data->display_name, &error);
-	async_result = g_simple_async_result_new (G_OBJECT (data->playlist), data->callback, data->user_data, totem_playlist_add_mrl);
+	task = g_task_new (data->playlist, NULL, data->callback, data->user_data);
+	g_task_set_task_data (task, data, (GDestroyNotify) add_mrl_data_free);
+	g_task_set_source_tag (task, totem_playlist_add_mrl);
+
 	if (error != NULL)
-		g_simple_async_result_take_error (async_result, error);
-
-	/* Handle the various return cases from the playlist parser */
-	g_simple_async_result_set_op_res_gboolean (async_result, ret);
-
-	/* Free the closure's data, now that we're finished with it */
-	add_mrl_data_free (data);
-
-	/* Synchronously call the calling code's callback function (i.e. what was passed to totem_playlist_add_mrl()'s @callback parameter)
-	 * in the main thread to return the result */
-	g_simple_async_result_complete (async_result);
+		g_task_return_error (task, error);
+	else
+		g_task_return_boolean (task, ret);
 }
 
 void
@@ -1135,12 +1130,9 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl, const char *di
 gboolean
 totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result, GError **error)
 {
-	g_assert (g_simple_async_result_get_source_tag (G_SIMPLE_ASYNC_RESULT (result)) == totem_playlist_add_mrl);
+	g_assert (g_task_get_source_tag (G_TASK (result)) == totem_playlist_add_mrl);
 
-	if (g_simple_async_result_get_op_res_gboolean (G_SIMPLE_ASYNC_RESULT (result)))
-		return TRUE;
-	g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (result), error);
-	return FALSE;
+	return g_task_propagate_boolean (G_TASK (result), error);
 }
 
 gboolean
@@ -1265,14 +1257,12 @@ add_mrls_finish_operation (AddMrlsOperationData *operation_data)
 	/* Check whether this is the final callback invocation; iff it is, we can call the user's callback for the entire operation and free the
 	 * operation data */
 	if (g_atomic_int_dec_and_test (&(operation_data->entries_remaining)) == TRUE) {
-		GSimpleAsyncResult *async_result;
+		g_autoptr(GTask) task = NULL;
 
-		async_result = g_simple_async_result_new (G_OBJECT (operation_data->playlist), operation_data->callback, operation_data->user_data,
-		                                          totem_playlist_add_mrls);
-		g_simple_async_result_complete (async_result);
-		g_object_unref (async_result);
-
-		add_mrls_operation_data_free (operation_data);
+		task = g_task_new (operation_data->playlist, NULL, operation_data->callback, operation_data->user_data);
+		g_task_set_task_data (task, operation_data, (GDestroyNotify) add_mrls_operation_data_free);
+		g_task_set_source_tag (task, totem_playlist_add_mrls);
+		g_task_return_boolean (task, TRUE);
 	}
 }
 
@@ -1417,12 +1407,12 @@ totem_playlist_add_mrls_finish (TotemPlaylist *self,
                                 GError **error)
 {
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (self), FALSE);
-	g_return_val_if_fail (G_IS_ASYNC_RESULT (result), FALSE);
+	g_return_val_if_fail (G_IS_TASK (result), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-	g_return_val_if_fail (g_simple_async_result_is_valid (result, G_OBJECT (self), totem_playlist_add_mrls), FALSE);
+	g_return_val_if_fail (g_task_is_valid (result, G_OBJECT (self)), FALSE);
 
 	/* We don't have anything to return at the moment. */
-	return TRUE;
+	return g_task_propagate_boolean (G_TASK (result), error);
 }
 
 static gboolean
