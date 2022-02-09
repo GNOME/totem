@@ -242,12 +242,13 @@ totem_interface_create_header_button (GtkWidget  *header,
 	gtk_style_context_add_class (context, "image-button");
 	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
 	if (GTK_IS_MENU_BUTTON (button))
-		      g_object_set (G_OBJECT (button), "use-popover", TRUE, NULL);
+		g_object_set (G_OBJECT (button), "use-popover", TRUE, NULL);
 
 	if (pack_type == GTK_PACK_END)
 		gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 	else
 		gtk_header_bar_pack_start (GTK_HEADER_BAR (header), button);
+	gtk_widget_show_all (button);
 
 	return button;
 }

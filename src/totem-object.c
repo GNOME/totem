@@ -4035,7 +4035,6 @@ totem_callback_connect (TotemObject *totem)
 				 NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "appmenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	gtk_widget_show (item);
 
 	/* Player menu */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
@@ -4047,6 +4046,8 @@ totem_callback_connect (TotemObject *totem)
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
+	gtk_widget_hide (item);
+	gtk_widget_set_no_show_all (item, TRUE);
 
 	/* Add button */
 	item = totem->add_button = totem_interface_create_header_button (totem->header,
@@ -4055,7 +4056,6 @@ totem_callback_connect (TotemObject *totem)
 									 GTK_PACK_START);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	gtk_widget_show (item);
 
 	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
 			  G_CALLBACK (update_add_button_visibility), totem);
@@ -4068,6 +4068,8 @@ totem_callback_connect (TotemObject *totem)
 										"view-fullscreen-symbolic",
 										GTK_PACK_END);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
+	gtk_widget_hide (item);
+	gtk_widget_set_no_show_all (item, TRUE);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
@@ -4170,12 +4172,7 @@ add_fullscreen_toolbar (TotemObject *totem,
 	GtkWidget *item;
 	GMenuModel *menu;
 
-	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
-						 "show-search-button", FALSE,
-						 "show-select-button", FALSE,
-						 "show-back-button", TRUE,
-						 "opacity", OVERLAY_OPACITY,
-						 NULL);
+	totem->fullscreen_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_header"));
 	g_object_bind_property (totem->header, "title",
 				totem->fullscreen_header, "title", 0);
 	g_object_bind_property (totem->header, "subtitle",
@@ -4202,13 +4199,6 @@ add_fullscreen_toolbar (TotemObject *totem,
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
-
-	gtk_grid_attach (GTK_GRID (container), totem->fullscreen_header, 0, 0, 3, 1);
-	gtk_widget_set_halign (totem->fullscreen_header, GTK_ALIGN_FILL);
-	gtk_widget_set_hexpand (totem->fullscreen_header, TRUE);
-	gtk_widget_set_opacity (totem->fullscreen_header, OVERLAY_OPACITY);
-	gtk_widget_show_all (totem->fullscreen_header);
-	gtk_widget_hide (totem->fullscreen_header);
 }
 
 void
