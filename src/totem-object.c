@@ -4232,9 +4232,9 @@ video_widget_create (TotemObject *totem)
 {
 	GError *err = NULL;
 
-	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
+	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new ());
 
-	if (totem->bvw == NULL) {
+	if (!bacon_video_widget_check_init (totem->bvw, &err)) {
 		totem_object_show_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
 			g_error_free (err);
