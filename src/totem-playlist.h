@@ -20,20 +20,14 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_PLAYLIST_H
-#define TOTEM_PLAYLIST_H
+#pragma once
 
 #include <gtk/gtk.h>
 #include <totem-pl-parser.h>
 #include <gio/gio.h>
 
-G_BEGIN_DECLS
-
 #define TOTEM_TYPE_PLAYLIST            (totem_playlist_get_type ())
-#define TOTEM_PLAYLIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_PLAYLIST, TotemPlaylist))
-#define TOTEM_PLAYLIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_PLAYLIST, TotemPlaylistClass))
-#define TOTEM_IS_PLAYLIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_PLAYLIST))
-#define TOTEM_IS_PLAYLIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLAYLIST))
+G_DECLARE_FINAL_TYPE(TotemPlaylist, totem_playlist, TOTEM, PLAYLIST, GtkBox)
 
 typedef enum {
 	TOTEM_PLAYLIST_STATUS_NONE,
@@ -52,31 +46,10 @@ typedef enum {
 } TotemPlaylistSelectDialog;
 
 
-typedef struct TotemPlaylist	       TotemPlaylist;
-typedef struct TotemPlaylistClass      TotemPlaylistClass;
-typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
-
 typedef void (*TotemPlaylistForeachFunc) (TotemPlaylist *playlist,
 					  const gchar   *filename,
 					  const gchar   *uri,
 					  gpointer       user_data);
-
-struct TotemPlaylist {
-	GtkBox parent;
-	TotemPlaylistPrivate *priv;
-};
-
-struct TotemPlaylistClass {
-	GtkBoxClass parent_class;
-
-	void (*changed) (TotemPlaylist *playlist);
-	void (*item_activated) (TotemPlaylist *playlist);
-	void (*active_name_changed) (TotemPlaylist *playlist);
-	void (*current_removed) (TotemPlaylist *playlist);
-	void (*subtitle_changed) (TotemPlaylist *playlist);
-	void (*item_added) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
-	void (*item_removed) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
-};
 
 GType    totem_playlist_get_type (void);
 GtkWidget *totem_playlist_new      (void);
@@ -158,7 +131,3 @@ void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 int        totem_playlist_get_current (TotemPlaylist *playlist);
 int        totem_playlist_get_last (TotemPlaylist *playlist);
 void       totem_playlist_set_current (TotemPlaylist *playlist, guint current_index);
-
-G_END_DECLS
-
-#endif /* TOTEM_PLAYLIST_H */
