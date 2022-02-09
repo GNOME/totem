@@ -4288,11 +4288,7 @@ video_widget_create (TotemObject *totem)
 			  G_CALLBACK (on_bvw_motion_notify_cb),
 			  totem);
 
-	totem->bvw_grid = gtk_grid_new ();
-	gtk_overlay_add_overlay (GTK_OVERLAY (totem->bvw), totem->bvw_grid);
-	gtk_widget_set_halign (totem->bvw_grid, GTK_ALIGN_FILL);
-	gtk_widget_set_valign (totem->bvw_grid, GTK_ALIGN_FILL);
-	gtk_widget_show (totem->bvw_grid);
+	totem->bvw_grid = GTK_WIDGET (gtk_builder_get_object (totem->xml, "bvw_grid"));
 	add_fullscreen_toolbar (totem, totem->bvw_grid);
 
 	/* Events for the widget video window as well */

@@ -189,6 +189,13 @@
         <child>
           <object class="BaconVideoWidget" id="bvw">
             <property name="visible">True</property>
+            <child type="overlay">
+              <object class="GtkGrid" id="bvw_grid">
+                <property name="visible">True</property>
+                <property name="halign">fill</property>
+                <property name="valign">fill</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="name">player</property>
