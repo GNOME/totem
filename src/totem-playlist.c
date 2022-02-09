@@ -877,13 +877,7 @@ totem_playlist_dispose (GObject *object)
 static void
 totem_playlist_init (TotemPlaylist *playlist)
 {
-	GtkWidget *container;
-	GtkBuilder *xml;
-	GtkWidget *widget;
-	GtkStyleContext *context;
-
-	gtk_orientable_set_orientation (GTK_ORIENTABLE (playlist),
-					GTK_ORIENTATION_VERTICAL);
+	gtk_widget_init_template (GTK_WIDGET (playlist));
 
 	playlist->parser = totem_pl_parser_new ();
 
@@ -905,37 +899,10 @@ totem_playlist_init (TotemPlaylist *playlist)
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
 
-	xml = totem_interface_load ("playlist.ui", TRUE, NULL, playlist);
-
-	if (xml == NULL)
-		return;
-
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
 			  G_CALLBACK (totem_playlist_key_press), playlist);
 
-	/* Buttons */
-	playlist->remove_button = GTK_WIDGET (gtk_builder_get_object (xml, "remove_button"));
-
-	/* Join treeview and buttons */
-	widget = GTK_WIDGET (gtk_builder_get_object (xml, ("scrolledwindow1")));
-	context = gtk_widget_get_style_context (widget);
-	gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
-	widget = GTK_WIDGET (gtk_builder_get_object (xml, ("toolbar1")));
-	context = gtk_widget_get_style_context (widget);
-	gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
-
-	/* Reparent the vbox */
-	container = GTK_WIDGET (gtk_builder_get_object (xml, "vbox4"));
-	g_object_ref (container);
-	gtk_box_pack_start (GTK_BOX (playlist),
-			container,
-			TRUE,       /* expand */
-			TRUE,       /* fill */
-			0);         /* padding */
-	g_object_unref (container);
-
-	playlist->treeview = GTK_WIDGET (gtk_builder_get_object (xml, "treeview1"));
 	init_treeview (playlist->treeview, playlist);
 	playlist->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->treeview));
@@ -948,8 +915,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 	init_config (playlist);
 
 	gtk_widget_show_all (GTK_WIDGET (playlist));
-
-	g_object_unref (xml);
 }
 
 GtkWidget*
@@ -2115,6 +2080,7 @@ static void
 totem_playlist_class_init (TotemPlaylistClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
 	object_class->set_property = totem_playlist_set_property;
 	object_class->get_property = totem_playlist_get_property;
@@ -2182,4 +2148,8 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 					 g_param_spec_boolean ("repeat", "Repeat",
 							       "Whether repeat mode is enabled.", FALSE,
 							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/playlist.ui");
+	gtk_widget_class_bind_template_child (widget_class, TotemPlaylist, remove_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemPlaylist, treeview);
 }

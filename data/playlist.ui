@@ -25,17 +25,18 @@
       <column type="gint64"/>
     </columns>
   </object>
-  <object class="GtkVBox" id="vbox4">
+  <template class="TotemPlaylist" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="spacing">0</property>
+    <property name="orientation">vertical</property>
     <child>
-      <object class="GtkScrolledWindow" id="scrolledwindow1">
+      <object class="GtkScrolledWindow" id="scrolled_window">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="shadow_type">in</property>
         <child>
-          <object class="GtkTreeView" id="treeview1">
+          <object class="GtkTreeView" id="treeview">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="model">playlist_list_store</property>
@@ -53,7 +54,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkToolbar" id="toolbar1">
+      <object class="GtkToolbar" id="toolbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="icon_size">1</property>
@@ -143,5 +144,5 @@
         <property name="position">1</property>
       </packing>
     </child>
-  </object>
+  </template>
 </interface>
