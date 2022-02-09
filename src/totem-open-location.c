@@ -40,9 +40,8 @@
 #include "totem-open-location.h"
 #include "totem-interface.h"
 
-struct _TotemOpenLocation
-{
-	GtkWidget *uri_container;
+struct _TotemOpenLocation {
+	GtkDialog parent;
 	GtkEntry *uri_entry;
 };
 
@@ -54,27 +53,10 @@ G_MODULE_EXPORT void uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog
 static void
 totem_open_location_class_init (TotemOpenLocationClass *klass)
 {
-}
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
-static void
-totem_open_location_init (TotemOpenLocation *self)
-{
-	GtkBuilder *builder;
-
-	builder = totem_interface_load ("uri.ui", FALSE, NULL, self);
-
-	if (builder == NULL)
-		return;
-
-	self->uri_container = GTK_WIDGET (gtk_builder_get_object (builder, "open_uri_dialog_content"));
-	g_object_ref (self->uri_container);
-
-	self->uri_entry = GTK_ENTRY (gtk_builder_get_object (builder, "uri"));
-	gtk_entry_set_width_chars (self->uri_entry, 50);
-
-	gtk_window_set_modal (GTK_WINDOW (self), TRUE);
-
-	g_object_unref (builder);
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/uri.ui");
+	gtk_widget_class_bind_template_child (widget_class, TotemOpenLocation, uri_entry);
 }
 
 static gboolean
@@ -162,28 +144,19 @@ uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog)
 GtkWidget *
 totem_open_location_new (void)
 {
-	TotemOpenLocation *open_location;
+	return GTK_WIDGET (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
+}
+
+static void
+totem_open_location_init (TotemOpenLocation *open_location)
+{
 	char *clipboard_location;
 	GtkEntryCompletion *completion;
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
 
-	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION,
-							   "use-header-bar", 1, NULL));
-
-	if (open_location->uri_container == NULL) {
-		g_object_unref (open_location);
-		return NULL;
-	}
-
-	gtk_window_set_title (GTK_WINDOW (open_location), _("Add Web Video"));
-	gtk_dialog_add_buttons (GTK_DIALOG (open_location),
-				_("_Cancel"), GTK_RESPONSE_CANCEL,
-				_("_Add"), GTK_RESPONSE_OK,
-				NULL);
+	gtk_widget_init_template (GTK_WIDGET (open_location));
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (open_location), GTK_RESPONSE_OK, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);
 
 	/* Get item from clipboard to fill GtkEntry */
 	clipboard_location = totem_open_location_set_from_clipboard (open_location);
@@ -198,8 +171,7 @@ totem_open_location_new (void)
 
 	recent_items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
 
-	if (recent_items != NULL)
-	{
+	if (recent_items != NULL) {
 		GList *p;
 		GtkTreeIter iter;
 
@@ -233,14 +205,4 @@ totem_open_location_new (void)
 	gtk_entry_completion_set_model (completion, model);
 	gtk_entry_completion_set_text_column (completion, 0);
 	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
-
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (open_location))),
-				open_location->uri_container,
-				TRUE,       /* expand */
-				TRUE,       /* fill */
-				0);         /* padding */
-
-	gtk_widget_show_all (gtk_dialog_get_content_area (GTK_DIALOG (open_location)));
-
-	return GTK_WIDGET (open_location);
 }
