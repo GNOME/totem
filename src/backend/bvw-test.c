@@ -74,7 +74,7 @@ int main
 {
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 	GtkWidget *win, *bvw;
 	GtkSettings *gtk_settings;
 
@@ -91,7 +91,6 @@ int main
 
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print ("Failed to parse options: %s\n", error->message);
-		g_error_free (error);
 		return 1;
 	}
 	if (filenames != NULL &&
@@ -110,7 +109,11 @@ int main
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
-	bvw = bacon_video_widget_new (NULL);
+	bvw = bacon_video_widget_new (&error);
+	if (!bvw) {
+		g_warning ("Failed to instantiate video widget: %s", error->message);
+		return 1;
+	}
 
 	g_signal_connect (G_OBJECT (bvw), "eos", G_CALLBACK (on_eos_event), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-metadata", G_CALLBACK (on_got_metadata), NULL);
