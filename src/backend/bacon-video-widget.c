@@ -945,28 +945,14 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_type_class_ref (BVW_TYPE_DVD_EVENT);
   g_type_class_ref (BVW_TYPE_ROTATION);
 
-  bvw->update_id = 0;
-  bvw->tagcache = NULL;
-  bvw->audiotags = NULL;
-  bvw->videotags = NULL;
   bvw->volume = -1.0;
   bvw->rate = FORWARD_RATE;
-
   bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
-  bvw->tag_update_id = 0;
-
   g_mutex_init (&bvw->seek_mutex);
   bvw->clock = gst_system_clock_obtain ();
   bvw->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->seek_time = -1;
-
-  bvw->missing_plugins = NULL;
-  bvw->plugin_install_in_progress = FALSE;
-
-  bvw->mount_cancellable = NULL;
-  bvw->mount_in_progress = FALSE;
   bvw->auth_last_result = G_MOUNT_OPERATION_HANDLED;
-  bvw->auth_dialog = NULL;
 
   bacon_video_widget_gst_missing_plugins_block ();
 }
