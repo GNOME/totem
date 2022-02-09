@@ -27,36 +27,13 @@
  * Author: Bastien Nocera <hadess@hadess.net>, Philip Withnall <philip@tecnocode.co.uk>
  */
 
-#ifndef TOTEM_OPEN_LOCATION_H
-#define TOTEM_OPEN_LOCATION_H
+#pragma once
 
 #include <gtk/gtk.h>
 
-G_BEGIN_DECLS
-
 #define TOTEM_TYPE_OPEN_LOCATION		(totem_open_location_get_type ())
-#define TOTEM_OPEN_LOCATION(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocation))
-#define TOTEM_OPEN_LOCATION_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationClass))
-#define TOTEM_IS_OPEN_LOCATION(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_OPEN_LOCATION))
-#define TOTEM_IS_OPEN_LOCATION_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_OPEN_LOCATION))
-
-typedef struct TotemOpenLocation		TotemOpenLocation;
-typedef struct TotemOpenLocationClass		TotemOpenLocationClass;
-typedef struct TotemOpenLocationPrivate		TotemOpenLocationPrivate;
-
-struct TotemOpenLocation {
-	GtkDialog parent;
-	TotemOpenLocationPrivate *priv;
-};
-
-struct TotemOpenLocationClass {
-	GtkDialogClass parent_class;
-};
+G_DECLARE_FINAL_TYPE(TotemOpenLocation, totem_open_location, TOTEM, OPEN_LOCATION, GtkDialog)
 
 GType totem_open_location_get_type		(void);
 GtkWidget *totem_open_location_new		(void);
 char *totem_open_location_get_uri		(TotemOpenLocation *open_location);
-
-G_END_DECLS
-
-#endif /* TOTEM_OPEN_LOCATION_H */

@@ -40,13 +40,13 @@
 #include "totem-open-location.h"
 #include "totem-interface.h"
 
-struct TotemOpenLocationPrivate
+struct _TotemOpenLocation
 {
 	GtkWidget *uri_container;
 	GtkEntry *uri_entry;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
 
 /* GtkBuilder callbacks */
 G_MODULE_EXPORT void uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog);
@@ -61,17 +61,16 @@ totem_open_location_init (TotemOpenLocation *self)
 {
 	GtkBuilder *builder;
 
-	self->priv = totem_open_location_get_instance_private (self);
 	builder = totem_interface_load ("uri.ui", FALSE, NULL, self);
 
 	if (builder == NULL)
 		return;
 
-	self->priv->uri_container = GTK_WIDGET (gtk_builder_get_object (builder, "open_uri_dialog_content"));
-	g_object_ref (self->priv->uri_container);
+	self->uri_container = GTK_WIDGET (gtk_builder_get_object (builder, "open_uri_dialog_content"));
+	g_object_ref (self->uri_container);
 
-	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (builder, "uri"));
-	gtk_entry_set_width_chars (self->priv->uri_entry, 50);
+	self->uri_entry = GTK_ENTRY (gtk_builder_get_object (builder, "uri"));
+	gtk_entry_set_width_chars (self->uri_entry, 50);
 
 	gtk_window_set_modal (GTK_WINDOW (self), TRUE);
 
@@ -114,7 +113,7 @@ totem_open_location_get_uri (TotemOpenLocation *open_location)
 
 	g_return_val_if_fail (TOTEM_IS_OPEN_LOCATION (open_location), NULL);
 
-	uri = g_strdup (gtk_entry_get_text (open_location->priv->uri_entry));
+	uri = g_strdup (gtk_entry_get_text (open_location->uri_entry));
 
 	if (*uri == '\0')
 		g_clear_pointer (&uri, g_free);
@@ -172,7 +171,7 @@ totem_open_location_new (void)
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION,
 							   "use-header-bar", 1, NULL));
 
-	if (open_location->priv->uri_container == NULL) {
+	if (open_location->uri_container == NULL) {
 		g_object_unref (open_location);
 		return NULL;
 	}
@@ -189,13 +188,13 @@ totem_open_location_new (void)
 	/* Get item from clipboard to fill GtkEntry */
 	clipboard_location = totem_open_location_set_from_clipboard (open_location);
 	if (clipboard_location != NULL && strcmp (clipboard_location, "") != 0)
-		gtk_entry_set_text (open_location->priv->uri_entry, clipboard_location);
+		gtk_entry_set_text (open_location->uri_entry, clipboard_location);
 	g_free (clipboard_location);
 
 	/* Add items in Totem's GtkRecentManager to the URI GtkEntry's GtkEntryCompletion */
 	completion = gtk_entry_completion_new();
 	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
-	gtk_entry_set_completion (open_location->priv->uri_entry, completion);
+	gtk_entry_set_completion (open_location->uri_entry, completion);
 
 	recent_items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
 
@@ -236,7 +235,7 @@ totem_open_location_new (void)
 	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
 
 	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (open_location))),
-				open_location->priv->uri_container,
+				open_location->uri_container,
 				TRUE,       /* expand */
 				TRUE,       /* fill */
 				0);         /* padding */
