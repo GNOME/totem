@@ -37,7 +37,6 @@ else
 endif
 
 ui_files = files(
-  'controls.ui',
   'playlist.ui',
   'shortcuts.ui',
   'totem.ui',

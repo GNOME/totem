@@ -215,25 +215,13 @@ totem_object_app_activate (GApplication *app)
 
 	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
 
-	totem->controls = gtk_builder_new ();
-	const char *objects[] = { "toolbar", NULL };
-	GError *error = NULL;
-        if (gtk_builder_add_objects_from_file (totem->controls, DATADIR "/totem/controls.ui", (gchar **) objects, &error) == 0)
-		g_assert_not_reached ();
-	gtk_grid_attach (GTK_GRID (totem->bvw_grid),
-			 GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")),
-			 0, 2, 3, 1);
-	gtk_widget_set_hexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
-	gtk_widget_set_vexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
-	gtk_widget_set_valign (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), GTK_ALIGN_END);
-
 	totem->spinner = GTK_WIDGET (gtk_builder_get_object (totem->xml, "spinner"));
 
-	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->controls, "seek_scale"));
+	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->xml, "seek_scale"));
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
-	totem->volume = GTK_WIDGET (gtk_builder_get_object (totem->controls, "volume_button"));
-	totem->time_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->controls, "time_label"));
-	totem->time_rem_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->controls, "time_rem_label"));
+	totem->volume = GTK_WIDGET (gtk_builder_get_object (totem->xml, "volume_button"));
+	totem->time_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->xml, "time_label"));
+	totem->time_rem_label = BACON_TIME_LABEL (gtk_builder_get_object (totem->xml, "time_rem_label"));
 	totem->pause_start = optionstate.pause;
 
 	totem_callback_connect (totem);
@@ -1878,7 +1866,7 @@ set_controls_visibility (TotemObject      *totem,
 			 gboolean          visible,
 			 gboolean          animate)
 {
-	gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), visible);
+	gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar")), visible);
 	gtk_widget_set_visible (totem->fullscreen_header, visible &&
 				totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 	bacon_video_widget_set_show_cursor (totem->bvw, visible);
@@ -1908,7 +1896,7 @@ unmark_popup_busy (TotemObject      *totem,
 	g_debug ("Removing popup busy for reason %s", reason);
 
 	if (g_hash_table_size (totem->busy_popup_ht) == 0 &&
-	    gtk_widget_get_opacity (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar"))) != 0.0 &&
+	    gtk_widget_get_opacity (GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar"))) != 0.0 &&
 	    g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (totem->stack)), "player") == 0) {
 		g_debug ("Will hide popup soon");
 		schedule_hiding_popup (totem);
@@ -3988,7 +3976,7 @@ totem_callback_connect (TotemObject *totem)
 				   g_variant_new_boolean (totem_playlist_get_repeat (totem->playlist)));
 
 	/* Controls */
-	box = GTK_BOX (gtk_builder_get_object (totem->controls, "controls_box"));
+	box = GTK_BOX (gtk_builder_get_object (totem->xml, "controls_box"));
 	gtk_widget_insert_action_group (GTK_WIDGET (box), "app", G_ACTION_GROUP (totem));
 
 	/* Previous */
@@ -4029,7 +4017,7 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (volume_button_menu_shown_cb), totem);
 
 	/* Go button */
-	item = GTK_WIDGET (gtk_builder_get_object (totem->controls, "go_button"));
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "go_button"));
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
