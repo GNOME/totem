@@ -186,6 +186,14 @@
       <object class="GtkStack" id="tmw_main_stack">
         <property name="visible">True</property>
         <property name="homogeneous">True</property>
+        <child>
+          <object class="BaconVideoWidget" id="bvw">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">player</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>

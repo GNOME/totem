@@ -180,6 +180,7 @@ totem_object_app_activate (GApplication *app)
 	if (totem->xml == NULL)
 		totem_object_exit (NULL);
 
+	totem->bvw = BACON_VIDEO_WIDGET (gtk_builder_get_object (totem->xml, "bvw"));
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 #if DEVELOPMENT_VERSION
 	style_context = gtk_widget_get_style_context (GTK_WIDGET (totem->win));
@@ -4232,8 +4233,6 @@ video_widget_create (TotemObject *totem)
 {
 	GError *err = NULL;
 
-	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new ());
-
 	if (!bacon_video_widget_check_init (totem->bvw, &err)) {
 		totem_object_show_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
@@ -4289,10 +4288,6 @@ video_widget_create (TotemObject *totem)
 			  G_CALLBACK (on_bvw_motion_notify_cb),
 			  totem);
 
-	gtk_stack_add_named (GTK_STACK (totem->stack),
-			     GTK_WIDGET (totem->bvw),
-			     "player");
-
 	totem->bvw_grid = gtk_grid_new ();
 	gtk_overlay_add_overlay (GTK_OVERLAY (totem->bvw), totem->bvw_grid);
 	gtk_widget_set_halign (totem->bvw_grid, GTK_ALIGN_FILL);
@@ -4314,7 +4309,6 @@ video_widget_create (TotemObject *totem)
 			   target_table, G_N_ELEMENTS (target_table),
 			   GDK_ACTION_MOVE);
 
-	gtk_widget_show (GTK_WIDGET (totem->bvw));
 	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 }
 
