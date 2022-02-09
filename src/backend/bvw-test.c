@@ -109,8 +109,8 @@ int main
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
-	bvw = bacon_video_widget_new (&error);
-	if (!bvw) {
+	bvw = bacon_video_widget_new ();
+	if (!bacon_video_widget_check_init (BACON_VIDEO_WIDGET (bvw), &error)) {
 		g_warning ("Failed to instantiate video widget: %s", error->message);
 		return 1;
 	}
