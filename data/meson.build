@@ -39,7 +39,6 @@ endif
 ui_files = files(
   'shortcuts.ui',
   'totem.ui',
-  'uri.ui'
 )
 
 install_data(

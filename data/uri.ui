@@ -1,35 +1,69 @@
 <?xml version="1.0" ?>
-<!DOCTYPE glade-interface
-  SYSTEM 'glade-2.0.dtd'>
-<!--*- mode: xml -*--><interface>
-<object class="GtkVBox" id="open_uri_dialog_content">
-  <property name="visible">True</property>
-  <property name="border_width">5</property>
-  <property name="spacing">6</property>
-  <property name="orientation">vertical</property>
-  <child>
-    <object class="GtkLabel" id="label1">
-      <property name="visible">True</property>
-      <property name="xalign">0</property>
-      <property name="label" translatable="yes">Enter the _address of the file you would like to open:</property>
-      <property name="use_underline">True</property>
-      <property name="wrap">True</property>
-      <property name="mnemonic_widget">uri</property>
-    </object>
-    <packing>
-      <property name="expand">False</property>
-      <property name="fill">False</property>
-    </packing>
-  </child>
-  <child>
-    <object class="GtkEntry" id="uri">
-      <property name="visible">True</property>
-      <property name="activates_default">True</property>
-      <signal name="changed" handler="uri_entry_changed_cb"/>
-    </object>
-    <packing>
-      <property name="position">1</property>
-    </packing>
-  </child>
-</object>
+<interface>
+<requires lib="gtk+" version="3.24"/>
+  <template class="TotemOpenLocation" parent="GtkDialog">
+    <property name="title" translatable="yes">Add Web Video</property>
+    <property name="type_hint">dialog</property>
+    <property name="modal">1</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="open_uri_dialog_content">
+        <property name="visible">True</property>
+        <property name="border_width">5</property>
+        <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
+        <property name="expand">True</property>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Enter the _address of the file you would like to open:</property>
+            <property name="use_underline">True</property>
+            <property name="wrap">True</property>
+            <property name="mnemonic_widget">uri_entry</property>
+            </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="uri_entry">
+            <property name="visible">True</property>
+            <property name="activates_default">True</property>
+            <property name="width-chars">50</property>
+            <signal name="changed" handler="uri_entry_changed_cb"/>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="cancel_button">
+        <property name="label" translatable="yes">_Cancel</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="use_underline">True</property>
+        <property name="receives-default">True</property>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="add_button">
+        <property name="label" translatable="yes">_Add</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="can-default">True</property>
+        <property name="has-default">True</property>
+        <property name="receives-default">True</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">cancel_button</action-widget>
+      <action-widget response="-5" default="True">add_button</action-widget>
+    </action-widgets>
+    <initial-focus name="uri_entry"/>
+  </template>
 </interface>
