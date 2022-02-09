@@ -105,8 +105,6 @@
 
 #define I_(string) (g_intern_static_string (string))
 
-static void bacon_video_widget_initable_iface_init (GInitableIface *iface);
-
 /* Signals */
 enum
 {
@@ -162,6 +160,8 @@ struct _BaconVideoWidget
   GtkWidget                   *audio_only;
   GtkWidget                   *broken_video;
   GtkWidget                   *video_widget;
+
+  GError                      *init_error;
 
   char                        *user_agent;
 
@@ -258,9 +258,7 @@ struct _BaconVideoWidget
   float                        rate;
 };
 
-G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_OVERLAY,
-			 G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
-						bacon_video_widget_initable_iface_init))
+G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_OVERLAY)
 
 static void bacon_video_widget_set_property (GObject * object,
                                              guint property_id,
@@ -934,27 +932,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, stack);
   gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, audio_only);
   gtk_widget_class_bind_template_child (widget_class, BaconVideoWidget, broken_video);
-}
-
-static void
-bacon_video_widget_init (BaconVideoWidget * bvw)
-{
-  gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
-
-  g_type_class_ref (BVW_TYPE_METADATA_TYPE);
-  g_type_class_ref (BVW_TYPE_DVD_EVENT);
-  g_type_class_ref (BVW_TYPE_ROTATION);
-
-  bvw->volume = -1.0;
-  bvw->rate = FORWARD_RATE;
-  bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
-  g_mutex_init (&bvw->seek_mutex);
-  bvw->clock = gst_system_clock_obtain ();
-  bvw->seek_req_time = GST_CLOCK_TIME_NONE;
-  bvw->seek_time = -1;
-  bvw->auth_last_result = G_MOUNT_OPERATION_HANDLED;
-
-  bacon_video_widget_gst_missing_plugins_block ();
 }
 
 static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
@@ -2197,7 +2174,7 @@ playbin_element_setup_cb (GstElement *playbin,
   if (g_strcmp0 (G_OBJECT_TYPE_NAME (element), "GstDownloadBuffer") != 0)
     return;
 
-  /* See also bacon_video_widget_initable_init() */
+  /* See also bacon_video_widget_init() */
   template = g_build_filename (g_get_user_cache_dir (), "totem", "stream-buffer", "XXXXXX", NULL);
   g_object_set (element, "temp-template", template, NULL);
   GST_DEBUG ("Reconfigured file download template to '%s'", template);
@@ -2400,6 +2377,7 @@ bacon_video_widget_finalize (GObject * object)
     g_clear_pointer (&bvw->bus, gst_object_unref);
   }
 
+  g_clear_error (&bvw->init_error);
   g_clear_pointer (&bvw->user_agent, g_free);
   g_clear_pointer (&bvw->referrer, g_free);
   g_clear_pointer (&bvw->mrl, g_free);
@@ -5295,12 +5273,9 @@ is_feature_enabled (const char *env)
   return g_strcmp0 (value, "1") == 0;
 }
 
-static gboolean
-bacon_video_widget_initable_init (GInitable     *initable,
-				  GCancellable  *cancellable,
-				  GError       **error)
+static void
+bacon_video_widget_init (BaconVideoWidget *bvw)
 {
-  BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
@@ -5308,7 +5283,22 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstPad *audio_pad;
   char *template;
 
-  bvw = BACON_VIDEO_WIDGET (initable);
+  gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
+
+  g_type_class_ref (BVW_TYPE_METADATA_TYPE);
+  g_type_class_ref (BVW_TYPE_DVD_EVENT);
+  g_type_class_ref (BVW_TYPE_ROTATION);
+
+  bvw->volume = -1.0;
+  bvw->rate = FORWARD_RATE;
+  bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
+  g_mutex_init (&bvw->seek_mutex);
+  bvw->clock = gst_system_clock_obtain ();
+  bvw->seek_req_time = GST_CLOCK_TIME_NONE;
+  bvw->seek_time = -1;
+  bvw->auth_last_result = G_MOUNT_OPERATION_HANDLED;
+
+  bacon_video_widget_gst_missing_plugins_block ();
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -5348,10 +5338,10 @@ bacon_video_widget_initable_init (GInitable     *initable,
       g_object_ref_sink (bvw->video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
-    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
-			 _("Some necessary plug-ins are missing. "
-			   "Make sure that the program is correctly installed."));
-    return FALSE;
+    bvw->init_error = g_error_new_literal (BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+					   _("Some necessary plug-ins are missing. "
+					     "Make sure that the program is correctly installed."));
+    return;
   }
 
   bvw->bus = gst_element_get_bus (bvw->play);
@@ -5447,30 +5437,41 @@ bacon_video_widget_initable_init (GInitable     *initable,
       G_CALLBACK (audio_tags_changed_cb), bvw);
   g_signal_connect (bvw->play, "text-tags-changed",
       G_CALLBACK (text_tags_changed_cb), bvw);
-
-  return TRUE;
-}
-
-static void
-bacon_video_widget_initable_iface_init (GInitableIface *iface)
-{
-  iface->init = bacon_video_widget_initable_init;
 }
 
 /**
  * bacon_video_widget_new:
- * @error: a #GError, or %NULL
  *
  * Creates a new #BaconVideoWidget.
  *
- * A #BvwError will be returned on error.
- *
- * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
+ * Return value: a new #BaconVideoWidget; destroy with gtk_widget_destroy()
  **/
 GtkWidget *
-bacon_video_widget_new (GError ** error)
+bacon_video_widget_new (void)
 {
-  return GTK_WIDGET (g_initable_new (BACON_TYPE_VIDEO_WIDGET, NULL, error, NULL));
+  return GTK_WIDGET (g_object_new (BACON_TYPE_VIDEO_WIDGET, NULL));
+}
+
+/**
+ * bacon_video_widget_check_init:
+ * @error: a #GError, or %NULL.
+ *
+ * Return value: if an error occured during initialisation, %FALSE is returned
+ *   and @error is set. Otherwise, %TRUE is returned.
+ **/
+gboolean
+bacon_video_widget_check_init (BaconVideoWidget  *bvw,
+			       GError           **error)
+{
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  if (!bvw->init_error)
+    return TRUE;
+
+  g_propagate_error (error, bvw->init_error);
+  bvw->init_error = NULL;
+  return FALSE;
 }
 
 /**

@@ -86,7 +86,9 @@ GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 GOptionGroup* bacon_video_widget_get_option_group (void);
 
-GtkWidget *bacon_video_widget_new		 (GError **error);
+GtkWidget *bacon_video_widget_new		 (void);
+gboolean bacon_video_widget_check_init		 (BaconVideoWidget  *bvw,
+						  GError           **error);
 
 /* Actions */
 void bacon_video_widget_open			 (BaconVideoWidget *bvw,
