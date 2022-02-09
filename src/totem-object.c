@@ -227,12 +227,7 @@ totem_object_app_activate (GApplication *app)
 	gtk_widget_set_vexpand (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), TRUE);
 	gtk_widget_set_valign (GTK_WIDGET (gtk_builder_get_object (totem->controls, "toolbar")), GTK_ALIGN_END);
 
-	totem->spinner = gtk_spinner_new ();
-	gtk_grid_attach (GTK_GRID (totem->bvw_grid), totem->spinner, 1, 2, 1, 1);
-	gtk_widget_set_vexpand (totem->spinner, TRUE);
-	gtk_widget_set_hexpand (totem->spinner, TRUE);
-	style_context = gtk_widget_get_style_context (totem->spinner);
-	gtk_style_context_add_class (style_context, "osd");
+	totem->spinner = GTK_WIDGET (gtk_builder_get_object (totem->xml, "spinner"));
 
 	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->controls, "seek_scale"));
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));

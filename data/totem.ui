@@ -194,6 +194,22 @@
                 <property name="visible">True</property>
                 <property name="halign">fill</property>
                 <property name="valign">fill</property>
+                <child>
+                  <object class="GtkSpinner" id="spinner">
+                    <property name="visible">False</property>
+                    <property name="vexpand">True</property>
+                    <property name="hexpand">True</property>
+                    <style>
+                      <class name="osd"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">1</property>
+                    <property name="height">1</property>
+                  </packing>
+                </child>
               </object>
             </child>
           </object>
