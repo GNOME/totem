@@ -949,7 +949,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 
 	uri = totem_create_full_path (mrl);
 
-	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %"G_GINT64_FORMAT " %s\n", filename_for_display, uri, display_name, subtitle_uri, starttime, playing ? "true" : "false");
+	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %"G_GINT64_FORMAT " %s", filename_for_display, uri, display_name, subtitle_uri, starttime, playing ? "true" : "false");
 
 	store = GTK_LIST_STORE (playlist->model);
 
