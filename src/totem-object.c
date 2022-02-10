@@ -3519,6 +3519,8 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		totem_object_set_zoom (totem, TRUE);
 		break;
 	case GDK_KEY_Subtitle:
+	case GDK_KEY_V:
+	case GDK_KEY_v:
 		bacon_video_widget_set_next_subtitle (totem->bvw);
 		break;
 	case GDK_KEY_t:
