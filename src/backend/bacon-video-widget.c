@@ -2775,6 +2775,7 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 
     if (tags) {
       gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &info->language);
+      gst_tag_list_get_string (tags, GST_TAG_TITLE, &info->title);
       if (g_str_equal (type_name, "AUDIO"))
 	gst_tag_list_get_string (tags, GST_TAG_AUDIO_CODEC, &info->codec);
 
@@ -2800,6 +2801,7 @@ bacon_video_widget_lang_info_free (BvwLangInfo *info)
 {
   if (info == NULL)
     return;
+  g_free (info->title);
   g_free (info->language);
   g_free (info->codec);
   g_free (info);

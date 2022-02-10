@@ -339,15 +339,17 @@ void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
 
 /**
  * BvwLangInfo:
+ * @title: the title of the track, or %NULL if unset.
  * @language: the ISO-639 language code for the track, or "und" if unknown.
- * Can never be %NULL.
+ *   Can never be %NULL.
  * @codec: the codec for the track, or %NULL if unknown or unset.
  *
- * #BvwLangInfo holds the language code and codec for each subtitle
- * or audio track for a media, which would allow the front-ends to
- * present appropriate information to the user.
+ * #BvwLangInfo holds the title, language code and codec for each
+ * subtitle or audio track for a media, which would allow the
+ * front-ends to present appropriate information to the user.
  */
 typedef struct {
+	char *title;
 	char *language;
 	char *codec;
 } BvwLangInfo;
