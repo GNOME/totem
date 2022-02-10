@@ -4092,9 +4092,6 @@ playlist_widget_setup (TotemObject *totem)
 {
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
 
-	if (totem->playlist == NULL)
-		totem_object_exit (totem);
-
 #if 0
 	{
 		GtkWidget *window;
