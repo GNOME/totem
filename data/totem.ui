@@ -84,23 +84,7 @@
 			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
 		</item>
 	</section>
-	<section>
-		<submenu>
-			<attribute name="label" translatable="yes">_Languages</attribute>
-			<section id="languages-placeholder"/>
-		</submenu>
-		<submenu>
-			<attribute name="label" translatable="yes">S_ubtitles</attribute>
-			<section>
-				<item>
-					<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
-					<attribute name="action">app.select-subtitle</attribute>
-				</item>
-				<section id="subtitle-download-placeholder"/>
-				<section id="subtitles-placeholder"/>
-			</section>
-		</submenu>
-	</section>
+
 	<section>
 		<item>
 			<attribute name="label" translatable="yes">Prefere_nces</attribute>
@@ -121,6 +105,26 @@
 			<attribute name="accel">&lt;Ctrl&gt;E</attribute>
 			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
+	</section>
+</menu>
+
+<menu id="subtitlesmenu">
+  <section>
+		<submenu>
+			<attribute name="label" translatable="yes">_Languages</attribute>
+			<section id="languages-placeholder"/>
+		</submenu>
+		<submenu>
+			<attribute name="label" translatable="yes">S_ubtitles</attribute>
+			<section>
+				<item>
+					<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
+					<attribute name="action">app.select-subtitle</attribute>
+				</item>
+				<section id="subtitle-download-placeholder"/>
+				<section id="subtitles-placeholder"/>
+			</section>
+		</submenu>
 	</section>
 </menu>
 

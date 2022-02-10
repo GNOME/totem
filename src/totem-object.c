@@ -512,6 +512,7 @@ totem_object_class_init (TotemObjectClass *klass)
 			      accumulator_first_non_null_wins, NULL,
 	                      g_cclosure_marshal_generic,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
+
 }
 
 static void
@@ -1065,6 +1066,7 @@ totem_object_set_main_page (TotemObject *totem,
 			      NULL);
 		gtk_widget_show (totem->fullscreen_button);
 		gtk_widget_show (totem->gear_button);
+		gtk_widget_show (totem->subtitles_button);
 		gtk_widget_hide (totem->add_button);
 		gtk_widget_hide (totem->main_menu_button);
 		show_popup (totem);
@@ -1088,6 +1090,7 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_show (totem->main_menu_button);
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
+		gtk_widget_hide (totem->subtitles_button);
 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
 			gtk_widget_show (totem->add_button);
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
@@ -4046,6 +4049,19 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_hide (item);
 	gtk_widget_set_no_show_all (item, TRUE);
 
+	/* Subtitles menu */
+	item = totem->subtitles_button = totem_interface_create_header_button (totem->header,
+									       gtk_menu_button_new (),
+									       "media-view-subtitles-symbolic",
+									       GTK_PACK_END);
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "subtitlesmenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	g_signal_connect (G_OBJECT (item), "toggled",
+			  G_CALLBACK (popup_menu_shown_cb), totem);
+	gtk_widget_hide (item);
+	gtk_widget_set_no_show_all (item, TRUE);
+
 	/* Add button */
 	item = totem->add_button = totem_interface_create_header_button (totem->header,
 									 gtk_menu_button_new (),
@@ -4193,6 +4209,16 @@ add_fullscreen_toolbar (TotemObject *totem,
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
+
+	item = totem_interface_create_header_button (totem->fullscreen_header,
+						     gtk_menu_button_new (),
+						     "media-view-subtitles-symbolic",
+						     GTK_PACK_END);
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "subtitlesmenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	g_signal_connect (G_OBJECT (item), "toggled",
+			  G_CALLBACK (popup_menu_shown_cb), totem);
+	totem->fullscreen_subtitles_button = item;
 }
 
 void

@@ -89,6 +89,7 @@ struct _TotemObject {
 
 	GtkWidget *fullscreen_header;
 	GtkWidget *fullscreen_gear_button;
+	GtkWidget *fullscreen_subtitles_button;
 
 	/* Plugins */
 	GtkWidget *plugins;
@@ -140,6 +141,7 @@ struct _TotemObject {
 	GtkWidget *gear_button;
 	GtkWidget *add_button;
 	GtkWidget *main_menu_button;
+	GtkWidget *subtitles_button;
 
 	char *player_title;
 
