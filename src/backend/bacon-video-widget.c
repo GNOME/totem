@@ -2906,6 +2906,11 @@ print_lang_list (GList *list)
 {
   GList *l;
 
+  if (list == NULL) {
+    GST_DEBUG ("  Empty list");
+    return;
+  }
+
   for (l = list; l != NULL; l = l->next) {
     BvwLangInfo *info = l->data;
     GST_DEBUG ("  %d: %s / %s / %s", info->id,
