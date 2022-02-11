@@ -99,6 +99,9 @@
 #define REVERSE_RATE -1.0
 #define DIRECTION_STR (forward == FALSE ? "reverse" : "forward")
 
+#define BVW_TRACK_NONE -2
+#define BVW_TRACK_AUTO -1
+
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
@@ -2585,12 +2588,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
  * bacon_video_widget_get_subtitle:
  * @bvw: a #BaconVideoWidget
  *
- * Returns the index of the current subtitles.
+ * Returns the id of the current subtitles.
  *
- * If the widget is not playing, <code class="literal">-2</code> will be returned. If no subtitles are
- * being used, <code class="literal">-1</code> is returned.
- *
- * Return value: the subtitle index
+ * Return value: the subtitle id
  **/
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
@@ -2598,13 +2598,13 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   int subtitle = -1;
   gint flags;
 
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
-  g_return_val_if_fail (bvw->play != NULL, -2);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_TRACK_NONE);
+  g_return_val_if_fail (bvw->play != NULL, BVW_TRACK_NONE);
 
   g_object_get (bvw->play, "flags", &flags, NULL);
 
   if ((flags & GST_PLAY_FLAG_TEXT) == 0)
-    return -2;
+    return BVW_TRACK_NONE;
 
   g_object_get (G_OBJECT (bvw->play), "current-text", &subtitle, NULL);
 
@@ -2615,8 +2615,8 @@ static gboolean
 sublang_is_valid (int sublang,
 		  int n_sublang)
 {
-  if (sublang == -1 ||
-      sublang == -2)
+  if (sublang == BVW_TRACK_AUTO ||
+      sublang == BVW_TRACK_NONE)
     return TRUE;
   if (sublang < 0)
     return FALSE;
@@ -2628,10 +2628,9 @@ sublang_is_valid (int sublang,
 /**
  * bacon_video_widget_set_subtitle:
  * @bvw: a #BaconVideoWidget
- * @subtitle: a subtitle index
+ * @subtitle: a subtitle id
  *
- * Sets the subtitle index for @bvw. If @subtitle is <code class="literal">-1</code>, no subtitles will
- * be used.
+ * Sets the subtitle id for @bvw.
  **/
 void
 bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
@@ -2647,7 +2646,7 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 
   g_return_if_fail (sublang_is_valid (subtitle, n_text));
 
-  if (subtitle == -2) {
+  if (subtitle == BVW_TRACK_NONE) {
     flags &= ~GST_PLAY_FLAG_TEXT;
     subtitle = -1;
   } else {
@@ -2664,11 +2663,30 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   }
 }
 
+static BvwLangInfo *
+find_next_info_for_id (GList *list,
+		       int    current)
+{
+  GList *l;
+
+  if (list == NULL)
+    return NULL;
+  for (l = list; l != NULL; l = l->next) {
+    BvwLangInfo *info = l->data;
+    if (info->id == current) {
+      if (l->next == NULL)
+        return list->data;
+      return l->next->data;
+    }
+  }
+  return NULL;
+}
+
 /**
  * bacon_video_widget_set_next_subtitle:
  * @bvw: a #BaconVideoWidget
  *
- * Switch to the next text subtitle index for the current video. See
+ * Switch to the next text subtitle for the current video. See
  * bacon_video_widget_set_subtitle().
  *
  * Since: 3.12
@@ -2676,16 +2694,18 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 void
 bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
 {
-  int n_text;
+  BvwLangInfo *info;
   int current_text;
 
-  g_object_get (bvw->play, "current-text", &current_text, "n-text", &n_text, NULL);
-
-  current_text++;
-  if (current_text >= n_text)
-    current_text = -2;
-
-  bacon_video_widget_set_subtitle (bvw, current_text);
+  current_text = bacon_video_widget_get_subtitle (bvw);
+  info = find_next_info_for_id (bvw->subtitles, current_text);
+  if (!info) {
+    GST_DEBUG ("Could not find next subtitle id (current = %d)", current_text);
+    return;
+  }
+  GST_DEBUG ("Switching from subtitle %d to next %d", current_text, info->id);
+  bacon_video_widget_set_subtitle (bvw, info->id);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_SUBTITLES_CHANGED], 0);
 }
 
 static gboolean
@@ -2845,6 +2865,7 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
     g_signal_emit_by_name (G_OBJECT (bvw->play), signal, i, &tags);
 
     info = g_new0 (BvwLangInfo, 1);
+    info->id = i;
 
     if (tags) {
       gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &info->language);
@@ -2867,11 +2888,10 @@ static void
 print_lang_list (GList *list)
 {
   GList *l;
-  guint i;
 
-  for (l = list, i = 0; l != NULL; l = l->next, i++) {
+  for (l = list; l != NULL; l = l->next) {
     BvwLangInfo *info = l->data;
-    GST_DEBUG ("  %d: %s / %s / %s", i,
+    GST_DEBUG ("  %d: %s / %s / %s", info->id,
 	       GST_STR_NULL (info->title),
 	       GST_STR_NULL (info->language),
 	       GST_STR_NULL (info->codec));
@@ -2884,6 +2904,15 @@ update_subtitles_tracks (BaconVideoWidget *bvw)
   g_autolist(BvwLangInfo) list;
 
   list = get_lang_list_for_type (bvw, "TEXT");
+
+  /* Add "none" if there's subs */
+  if (list != NULL || bvw->subtitle_uri != NULL) {
+    BvwLangInfo *info;
+    info = g_new0 (BvwLangInfo, 1);
+    info->id = BVW_TRACK_NONE;
+    info->codec = g_strdup ("none");
+    list = g_list_prepend (list, info);
+  }
   if (bvw_lang_infos_equal (list, bvw->subtitles))
     return FALSE;
   if (bvw->subtitles)
@@ -2900,6 +2929,15 @@ update_languages_tracks (BaconVideoWidget *bvw)
   g_autolist(BvwLangInfo) list;
 
   list = get_lang_list_for_type (bvw, "AUDIO");
+
+  /* Add "auto" if we have a DVD */
+  if (g_str_has_prefix (bvw->mrl, "dvd:")) {
+    BvwLangInfo *info;
+    info = g_new0 (BvwLangInfo, 1);
+    info->id = 0;
+    info->codec = g_strdup ("auto");
+    list = g_list_prepend (list, info);
+  }
   if (bvw_lang_infos_equal (list, bvw->languages))
     return FALSE;
   if (bvw->languages)
@@ -2965,7 +3003,7 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
  * bacon_video_widget_get_language:
  * @bvw: a #BaconVideoWidget
  *
- * Returns the index of the current audio language.
+ * Returns the id of the current audio language.
  *
  * If the widget is not playing, or the default language is in use, <code class="literal">-1</code> will be returned.
  *
@@ -2989,8 +3027,7 @@ bacon_video_widget_get_language (BaconVideoWidget * bvw)
  * @bvw: a #BaconVideoWidget
  * @language: an audio language index
  *
- * Sets the audio language index for @bvw. If @language is <code class="literal">-1</code>, the default language will
- * be used.
+ * Sets the audio language id for @bvw.
  **/
 void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
@@ -3004,11 +3041,6 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   g_object_get (bvw->play, "n-audio", &n_lang, NULL);
 
   g_return_if_fail (sublang_is_valid (language, n_lang));
-
-  if (language == -1)
-    language = 0;
-  else if (language == -2)
-    language = -1;
 
   GST_DEBUG ("setting language to %d", language);
 
@@ -3030,7 +3062,7 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
  * bacon_video_widget_set_next_language:
  * @bvw: a #BaconVideoWidget
  *
- * Switch to the next audio language index for the current video. See
+ * Switch to the next audio language for the current video. See
  * bacon_video_widget_set_language().
  *
  * Since: 3.12
@@ -3038,16 +3070,18 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 void
 bacon_video_widget_set_next_language (BaconVideoWidget *bvw)
 {
-  int n_audio;
+  BvwLangInfo *info;
   int current_audio;
 
-  g_object_get (bvw->play, "current-audio", &current_audio, "n-audio", &n_audio, NULL);
-
-  current_audio++;
-  if (current_audio >= n_audio)
-    current_audio = -2;
-
-  bacon_video_widget_set_language (bvw, current_audio);
+  g_object_get (bvw->play, "current-audio", &current_audio, NULL);
+  info = find_next_info_for_id (bvw->languages, current_audio);
+  if (!info) {
+    GST_DEBUG ("Could not find next language id (current = %d)", current_audio);
+    return;
+  }
+  GST_DEBUG ("Switching from audio track %d to next %d", current_audio, info->id);
+  bacon_video_widget_set_language (bvw, info->id);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_LANGUAGES_CHANGED], 0);
 }
 
 /**

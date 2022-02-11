@@ -23,6 +23,15 @@ bvw_lang_info_new (const char *title,
 	return info;
 }
 
+static const char *
+nth_label (GList *list, guint index)
+{
+	MenuItem *item = g_list_nth_data (list, index);
+	if (!item)
+		return NULL;
+	return item->label;
+}
+
 static void
 test_menus_lang_info (void)
 {
@@ -36,8 +45,8 @@ test_menus_lang_info (void)
 	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
-	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "Audio Track #1");
-	g_assert_cmpstr (g_list_nth_data (ret, 1), ==, "Audio Track #2");
+	g_assert_cmpstr (nth_label (ret, 0), ==, "Audio Track #1");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "Audio Track #2");
 	g_list_free_full (ret, g_free);
 
 	/* Same language, same codecs */
@@ -49,9 +58,9 @@ test_menus_lang_info (void)
 	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
-	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English #1");
-	g_assert_cmpstr (g_list_nth_data (ret, 1), ==, "English #2");
-	g_assert_cmpstr (g_list_nth_data (ret, 2), ==, "French");
+	g_assert_cmpstr (nth_label (ret, 0), ==, "English #1");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "English #2");
+	g_assert_cmpstr (nth_label (ret, 2), ==, "French");
 	g_list_free_full (ret, g_free);
 
 	/* Same language, different codecs */
@@ -63,9 +72,9 @@ test_menus_lang_info (void)
 	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
-	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English — Dolby Pro Racing");
-	g_assert_cmpstr (g_list_nth_data (ret, 1), ==, "English — Dolby Amateur 5.1");
-	g_assert_cmpstr (g_list_nth_data (ret, 2), ==, "French");
+	g_assert_cmpstr (nth_label (ret, 0), ==, "English — Dolby Pro Racing");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "English — Dolby Amateur 5.1");
+	g_assert_cmpstr (nth_label (ret, 2), ==, "French");
 	g_list_free_full (ret, g_free);
 
 	/* Different languages */
@@ -77,9 +86,9 @@ test_menus_lang_info (void)
 	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_AUDIO);
 	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
 
-	g_assert_cmpstr (g_list_nth_data (ret, 0), ==, "English");
-	g_assert_cmpstr (g_list_nth_data (ret, 1), ==, "Spanish; Castilian");
-	g_assert_cmpstr (g_list_nth_data (ret, 2), ==, "French");
+	g_assert_cmpstr (nth_label (ret, 0), ==, "English");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "Spanish; Castilian");
+	g_assert_cmpstr (nth_label (ret, 2), ==, "French");
 	g_list_free_full (ret, g_free);
 }
 

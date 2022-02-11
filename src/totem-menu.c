@@ -419,6 +419,36 @@ get_language_name_no_und (const char   *lang,
 	return NULL;
 }
 
+void
+free_menu_item (MenuItem *item)
+{
+	if (!item)
+		return;
+	g_free (item->label);
+	g_free (item);
+}
+
+static MenuItem *
+create_special_menu_item (BvwLangInfo *info)
+{
+	MenuItem *menu_item;
+	const char *label;
+
+	if (g_strcmp0 (info->codec, "auto") == 0) {
+		/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
+		label = C_("Language", "Auto");
+	} else if (g_strcmp0 (info->codec, "none") == 0) {
+		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
+		label = _("None");
+	} else
+		return NULL;
+
+	menu_item = g_new0 (MenuItem, 1);
+	menu_item->label = g_strdup (_(label));
+	menu_item->id = info->id;
+	return menu_item;
+}
+
 GList *
 bvw_lang_info_to_menu_labels (GList        *langs,
 			      BvwTrackType  track_type)
@@ -434,6 +464,9 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 		BvwLangInfo *info = l->data;
 		int num;
 		char *id;
+
+		if (!info->language)
+			continue;
 
 		num = hash_table_num_instances (lang_table, info->language);
 		num++;
@@ -453,8 +486,15 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 	printed_table = g_hash_table_new (g_str_hash, g_str_equal);
 	for (l = langs; l != NULL; l = l->next) {
 		BvwLangInfo *info = l->data;
+		MenuItem *menu_item;
 		int num;
 		char *str;
+
+		menu_item = create_special_menu_item (info);
+		if (menu_item) {
+			ret = g_list_prepend (ret, menu_item);
+			continue;
+		}
 
 		num = hash_table_num_instances (lang_table, info->language);
 		g_assert (num >= 1);
@@ -483,7 +523,10 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 			str = g_strdup (get_language_name_no_und (info->language, track_type));
 		}
 
-		ret = g_list_prepend (ret, str);
+		menu_item = g_new0 (MenuItem, 1);
+		menu_item->label = str;
+		menu_item->id = info->id;
+		ret = g_list_prepend (ret, menu_item);
 	}
 
 	g_hash_table_destroy (printed_table);
@@ -510,13 +553,12 @@ static void
 add_lang_action (GMenu *menu,
 		 const char *action,
 		 const char *label,
-		 int lang_id)
+		 int         id)
 {
-	char *escaped_label;
+	g_autofree char *escaped_label = NULL;
 
 	escaped_label = escape_label_for_menu (label);
-	add_lang_item (menu, escaped_label, action, lang_id);
-	g_free (escaped_label);
+	add_lang_item (menu, escaped_label, action, id);
 }
 
 static void
@@ -526,22 +568,15 @@ create_lang_actions (GMenu        *menu,
 		     BvwTrackType  track_type)
 {
 	GList *ui_list, *l;
-	guint i;
-
-	if (track_type == BVW_TRACK_TYPE_SUBTITLE) {
-		/* Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD */
-		add_lang_action (menu, action, _("None"), -2);
-	}
-
-	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
-	add_lang_action (menu, action, C_("Language", "Auto"), -1);
 
 	ui_list = bvw_lang_info_to_menu_labels (list, track_type);
 
-	for (l = ui_list, i = 0; l != NULL; l = l->next, i++)
-		add_lang_action (menu, action, l->data, i);
+	for (l = ui_list; l != NULL; l = l->next) {
+		MenuItem *item = l->data;
+		add_lang_action (menu, action, item->label, item->id);
+	}
 
-	g_list_free_full (ui_list, (GDestroyNotify) g_free);
+	g_list_free_full (ui_list, (GDestroyNotify) free_menu_item);
 }
 
 static void
