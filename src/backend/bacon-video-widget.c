@@ -3940,6 +3940,7 @@ bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
 				      const gchar * subtitle_uri)
 {
   GstState cur_state;
+  int lang;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->play));
@@ -3950,6 +3951,9 @@ bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
   if (subtitle_uri == NULL &&
       bvw->subtitle_uri == NULL)
     return;
+
+  /* Save current audio track */
+  lang = bacon_video_widget_get_language (bvw);
 
   /* Wait for the previous state change to finish */
   gst_element_get_state (bvw->play, NULL, NULL, GST_CLOCK_TIME_NONE);
@@ -3973,9 +3977,11 @@ bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
     gst_element_get_state (bvw->play, NULL, NULL, GST_CLOCK_TIME_NONE);
   }
 
-  if (bvw->current_time > 0)
+  if (bvw->current_time > 0) {
     bacon_video_widget_seek_time_no_lock (bvw, bvw->current_time,
 					  GST_SEEK_FLAG_ACCURATE, NULL);
+    bacon_video_widget_set_language (bvw, lang);
+  }
 }
 
 static void
