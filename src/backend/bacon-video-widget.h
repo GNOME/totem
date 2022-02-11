@@ -354,6 +354,10 @@ typedef struct {
 	char *codec;
 } BvwLangInfo;
 
+void         bacon_video_widget_lang_info_free           (BvwLangInfo *info);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(BvwLangInfo, bacon_video_widget_lang_info_free)
+
 /**
  * BvwTrackType:
  * @BVW_TRACK_TYPE_AUDIO: an audio track
@@ -367,8 +371,6 @@ typedef enum {
 	BVW_TRACK_TYPE_SUBTITLE,
 	BVW_TRACK_TYPE_VIDEO
 } BvwTrackType;
-
-void bacon_video_widget_lang_info_free           (BvwLangInfo *info);
 
 GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
