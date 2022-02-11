@@ -2671,6 +2671,29 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   }
 }
 
+/**
+ * bacon_video_toggle_subtitles:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Toggles the visibility of subtitles.
+ **/
+void
+bacon_video_toggle_subtitles (BaconVideoWidget *bvw)
+{
+  guint flags;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->play != NULL);
+
+  g_object_get (bvw->play, "flags", &flags, NULL);
+  if (flags & GST_PLAY_FLAG_TEXT)
+    flags &= ~GST_PLAY_FLAG_TEXT;
+  else
+    flags |= GST_PLAY_FLAG_TEXT;
+  g_object_set (bvw->play, "flags", flags, NULL);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_SUBTITLES_CHANGED], 0);
+}
+
 static BvwLangInfo *
 find_next_info_for_id (GList *list,
 		       int    current)

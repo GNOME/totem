@@ -385,6 +385,7 @@ int bacon_video_widget_get_subtitle              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
 		                                  int subtitle);
 void bacon_video_widget_set_next_subtitle        (BaconVideoWidget *bvw);
+void bacon_video_toggle_subtitles                (BaconVideoWidget *bvw);
 
 gboolean bacon_video_widget_has_next_track	 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_has_previous_track	 (BaconVideoWidget *bvw);
