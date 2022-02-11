@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.12\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-03 17:19+0000\n"
-"PO-Revision-Date: 2022-02-06 21:59+0000\n"
+"POT-Creation-Date: 2022-02-11 17:58+0000\n"
+"PO-Revision-Date: 2022-02-11 23:00+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <gnome-pt-translation@googlegroups.com>\n"
 "Language: pt\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1922 src/totem-object.c:3765
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -187,7 +187,7 @@ msgstr "Pastas a mostrar"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Pastas a mostrar no ambiente do navegador. A predefinição é nenhuma"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5500
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -458,13 +458,28 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navegar à direita"
 
-#: data/totem.ui:11 data/totem.ui:106
+#: data/shortcuts.ui:307
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "Legendas"
+
+#: data/shortcuts.ui:312
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "Selecionar a próxima legenda"
+
+#: data/shortcuts.ui:319
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "Alternar legendas"
+
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "Preferê_ncias"
 
-#: data/totem.ui:15 data/totem.ui:110
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
-msgstr "_Atalhos de teclado"
+msgstr "_Teclas de atalho"
 
 #: data/totem.ui:19
 msgid "_Help"
@@ -516,64 +531,79 @@ msgstr "2.11∶1 (DVB)"
 msgid "Switch An_gles"
 msgstr "Alternar ân_gulos"
 
-#: data/totem.ui:89
-msgid "_Languages"
-msgstr "_Idiomas"
-
-#: data/totem.ui:93
-msgid "S_ubtitles"
-msgstr "Le_gendas"
-
-#: data/totem.ui:96
-msgid "_Select Text Subtitles…"
-msgstr "_Selecionar as legendas…"
-
-#: data/totem.ui:119
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "_Ejetar"
 
-#: data/totem.ui:130
+#: data/totem.ui:114
+msgid "Languages"
+msgstr "Idiomas"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "Legendas"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "_Selecionar as legendas…"
+
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "_Repetir"
 
-#: data/totem.ui:136
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "Menu de _DVD"
 
-#: data/totem.ui:142
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "Menu de _Título"
 
-#: data/totem.ui:147
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "Menu de á_udio"
 
-#: data/totem.ui:152
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "_Menu de ângulo"
 
-#: data/totem.ui:157
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "Menu de _capítulos"
 
-#: data/totem.ui:166
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "Velocidade"
 
-#: data/uri.ui:14
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "Adicionar vídeo Web"
+
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Insira a _localização do ficheiro que deseja abrir:"
+
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "_Adicionar"
 
 #. translators: Unknown remaining time
 #: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1892
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Foi pedida uma senha de acesso ao servidor RTSP"
 
-#: src/backend/bacon-video-widget.c:3839
+#: src/backend/bacon-video-widget.c:3353
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -581,52 +611,52 @@ msgstr ""
 "A origem parece estar encriptada e não pode ser lida. Está a tentar "
 "reproduzir um DVD encriptado sem a libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3853
+#: src/backend/bacon-video-widget.c:3367
 msgid "The server you are trying to connect to is not known."
 msgstr "O servidor a que se está a tentar ligar é desconhecido."
 
-#: src/backend/bacon-video-widget.c:3856
+#: src/backend/bacon-video-widget.c:3370
 msgid "The connection to this server was refused."
 msgstr "A ligação a este servidor foi recusada."
 
-#: src/backend/bacon-video-widget.c:3859
+#: src/backend/bacon-video-widget.c:3373
 msgid "The specified movie could not be found."
 msgstr "Impossível encontrar o filme especificado."
 
-#: src/backend/bacon-video-widget.c:3866
+#: src/backend/bacon-video-widget.c:3380
 msgid "The server refused access to this file or stream."
 msgstr "O servidor recusou o acesso e este ficheiro ou transmissão."
 
-#: src/backend/bacon-video-widget.c:3872
+#: src/backend/bacon-video-widget.c:3386
 msgid "Authentication is required to access this file or stream."
 msgstr "É necessária autenticação para aceder a este ficheiro ou transmissão."
 
-#: src/backend/bacon-video-widget.c:3878
+#: src/backend/bacon-video-widget.c:3392
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Falta o suporte SSL/TLS! Verifique a sua instalação."
 
-#: src/backend/bacon-video-widget.c:3885
+#: src/backend/bacon-video-widget.c:3399
 msgid "You are not allowed to open this file."
 msgstr "Não possui permissões para abrir este ficheiro."
 
-#: src/backend/bacon-video-widget.c:3890
+#: src/backend/bacon-video-widget.c:3404
 msgid "This location is not a valid one."
 msgstr "Esta localização não é válida."
 
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3412
 msgid "The movie could not be read."
 msgstr "Impossível ler o filme."
 
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3418
 msgid "This file is encrypted and cannot be played back."
 msgstr "Este ficheiro está encriptado e não pode ser reproduzido."
 
-#: src/backend/bacon-video-widget.c:3910
+#: src/backend/bacon-video-widget.c:3424
 msgid "The file you tried to play is an empty file."
 msgstr "O ficheiro que tentou reproduzir é um ficheiro vazio."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3934 src/backend/bacon-video-widget.c:3942
+#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -642,14 +672,14 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3954
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "A transmissão não pode ser reproduzida. É possível que esteja a ser "
 "bloqueada por uma 'firewall'."
 
-#: src/backend/bacon-video-widget.c:3957
+#: src/backend/bacon-video-widget.c:3471
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -658,7 +688,7 @@ msgstr ""
 "codecs. Poderá ter de instalar extensões adicionais para ser capaz de "
 "reproduzir alguns tipos de filmes"
 
-#: src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3482
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -666,19 +696,19 @@ msgstr ""
 "Impossível reproduzir este ficheiro através da rede. Tente transferi-lo para "
 "o seu disco primeiro."
 
-#: src/backend/bacon-video-widget.c:5496
+#: src/backend/bacon-video-widget.c:5070
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5498
+#: src/backend/bacon-video-widget.c:5072
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5768
+#: src/backend/bacon-video-widget.c:5342
 msgid "Media contains no supported video streams."
 msgstr "O suporte não contém qualquer transmissão de vídeo suportado."
 
-#: src/backend/bacon-video-widget.c:5979
+#: src/backend/bacon-video-widget.c:5531
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -799,31 +829,31 @@ msgstr "Resolução"
 msgid "Duration"
 msgstr "Duração"
 
-#: src/totem-grilo.c:288
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Temporada %d, episódio %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:325
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Temporada %d, episódio %d)"
 
-#: src/totem-grilo.c:687
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "Erro de navegação"
 
-#: src/totem-grilo.c:836
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "Erro de procura"
 
-#: src/totem-grilo.c:1328
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "Local"
 
-#: src/totem-grilo.c:1931
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "Canais"
 
@@ -841,18 +871,18 @@ msgstr "O ficheiro não existe."
 msgid "Make sure that Totem is properly installed."
 msgstr "Certifique-se de que o Vídeos está corretamente instalado."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Clique nos itens para os selecionar"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d selecionado"
 msgstr[1] "%d selecionados"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "Resultados para “%s”"
@@ -881,73 +911,58 @@ msgstr "Faixa de áudio"
 msgid "Subtitle"
 msgstr "Legendas"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:533
-msgid "None"
-msgstr "Nenhum"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:537
+#: src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#: src/totem-object.c:1396 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:442
+msgid "None"
+msgstr "Nenhum"
+
+#: src/totem-object.c:1441 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/totem-object.c:1401 src/totem-object.c:1411 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Reproduzir"
 
-#: src/totem-object.c:1478 src/totem-object.c:1506 src/totem-object.c:2050
+#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "O Totem não pôde reproduzir \"%s\"."
 
-#: src/totem-object.c:2222
+#: src/totem-object.c:2309
 msgid "Totem could not display the help contents."
 msgstr "O Totem não pôde mostrar o conteúdo da ajuda."
 
-#: src/totem-object.c:2484
+#: src/totem-object.c:2570
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
-#: src/totem-object.c:3863
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/Filme anterior"
 
-#: src/totem-object.c:3869
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Reproduzir/Pausar"
 
-#: src/totem-object.c:3875
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/Filme seguinte"
 
-#: src/totem-object.c:4098
+#: src/totem-object.c:4235
 msgid "Totem could not startup."
 msgstr "O Vídeos não pôde iniciar."
 
-#: src/totem-object.c:4098 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Sem motivo."
-
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "Adicionar vídeo Web"
-
-#: src/totem-open-location.c:182 src/totem-uri.c:403 src/totem-uri.c:464
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:465
-msgid "_Add"
-msgstr "_Adicionar"
 
 #: src/totem-options.c:49
 msgid "Play/Pause"
@@ -1015,12 +1030,12 @@ msgstr "Impossível colocar na fila e substituir ao mesmo tempo"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "Título %d"
 
-#: src/totem-playlist.c:1065
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
@@ -1279,7 +1294,7 @@ msgstr "Abrir pasta"
 msgid "Open the directory of the currently playing movie"
 msgstr "Abrir a pasta do vídeo atualmente a ser reproduzido"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Abrir a Pasta Respetiva"
 
@@ -1317,10 +1332,6 @@ msgstr "Impossível contactar o servidor do OpenSubtitles."
 #: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
-
-#: src/plugins/opensubtitles/opensubtitles.py:502
-msgid "Subtitles"
-msgstr "Legendas"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
@@ -1670,11 +1681,11 @@ msgstr "Extensão de rotação"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Permite rodar vídeos se estiverem com a orientação incorreta"
 
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:260
 msgid "_Rotate ↷"
 msgstr "_Rodar ↷"
 
-#: src/plugins/rotation/totem-rotation.c:266
+#: src/plugins/rotation/totem-rotation.c:264
 msgid "Rotate ↶"
 msgstr "Rodar ↶"
 
@@ -1885,6 +1896,9 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Define o agente de utilizador para o Vimeo"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "Le_gendas"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
