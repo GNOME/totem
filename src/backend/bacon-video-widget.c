@@ -2919,17 +2919,16 @@ static gboolean
 update_subtitles_tracks (BaconVideoWidget *bvw)
 {
   g_autolist(BvwLangInfo) list;
+  BvwLangInfo *info;
 
   list = get_lang_list_for_type (bvw, "TEXT");
 
-  /* Add "none" if there's subs */
-  if (list != NULL || bvw->subtitle_uri != NULL) {
-    BvwLangInfo *info;
-    info = g_new0 (BvwLangInfo, 1);
-    info->id = BVW_TRACK_NONE;
-    info->codec = g_strdup ("none");
-    list = g_list_prepend (list, info);
-  }
+  /* Add "None" */
+  info = g_new0 (BvwLangInfo, 1);
+  info->id = BVW_TRACK_NONE;
+  info->codec = g_strdup ("none");
+  list = g_list_prepend (list, info);
+
   if (bvw_lang_infos_equal (list, bvw->subtitles))
     return FALSE;
   if (bvw->subtitles)
