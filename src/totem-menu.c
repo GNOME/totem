@@ -589,13 +589,19 @@ totem_subtitles_update (Totem *totem, GList *list)
 }
 
 void
-totem_sublang_update (Totem *totem)
+totem_subtitles_menu_update (Totem *totem)
+{
+	GList *list;
+
+	list = bacon_video_widget_get_subtitles (totem->bvw);
+	totem_subtitles_update (totem, list);
+}
+
+void
+totem_languages_menu_update (Totem *totem)
 {
 	GList *list;
 
 	list = bacon_video_widget_get_languages (totem->bvw);
 	totem_languages_update (totem, list);
-
-	list = bacon_video_widget_get_subtitles (totem->bvw);
-	totem_subtitles_update (totem, list);
 }

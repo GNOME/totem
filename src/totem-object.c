@@ -2510,7 +2510,8 @@ on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
 	gchar *name;
 
-	totem_sublang_update (totem);
+	totem_subtitles_menu_update (totem);
+	totem_languages_menu_update (totem);
 	update_media_menu_items (totem);
 
 	/* updated stream info (new song) */
@@ -2549,7 +2550,8 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 		g_free (name);
 	}
 
-	totem_sublang_update (totem);
+	totem_subtitles_menu_update (totem);
+	totem_languages_menu_update (totem);
 	update_buttons (totem);
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }

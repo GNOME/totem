@@ -31,7 +31,8 @@ G_BEGIN_DECLS
 void totem_app_menu_setup (Totem *totem);
 void totem_app_actions_setup (Totem *totem);
 
-void totem_sublang_update (Totem *totem);
+void totem_subtitles_menu_update (Totem *totem);
+void totem_languages_menu_update (Totem *totem);
 
 /* For test use only */
 GList *bvw_lang_info_to_menu_labels (GList        *langs,
