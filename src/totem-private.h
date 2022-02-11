@@ -108,8 +108,6 @@ struct _TotemObject {
 
 	/* Subtitles/Languages menus */
 	gboolean updating_menu;
-	GList *subtitles_list;
-	GList *languages_list;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;

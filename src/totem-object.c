@@ -1404,7 +1404,6 @@ totem_object_exit (TotemObject *totem)
 
 	totem_object_save_state (totem);
 
-	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
 
 	g_clear_object (&totem->settings);

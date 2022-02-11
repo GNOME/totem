@@ -544,39 +544,6 @@ create_lang_actions (GMenu        *menu,
 	g_list_free_full (ui_list, (GDestroyNotify) g_free);
 }
 
-static gboolean
-totem_sublang_equal_lists (GList *orig, GList *new)
-{
-	GList *o, *n;
-	gboolean retval;
-
-	if ((orig == NULL && new != NULL) || (orig != NULL && new == NULL))
-		return FALSE;
-	if (orig == NULL && new == NULL)
-		return TRUE;
-
-	if (g_list_length (orig) != g_list_length (new))
-		return FALSE;
-
-	retval = TRUE;
-	o = orig;
-	n = new;
-	while (o != NULL && n != NULL && retval != FALSE) {
-		BvwLangInfo *info_o, *info_n;
-
-		info_o = o->data;
-		info_n = n->data;
-		if (g_strcmp0 (info_o->language, info_n->language) != 0)
-			retval = FALSE;
-		if (g_strcmp0 (info_o->codec, info_n->codec) != 0)
-			retval = FALSE;
-                o = g_list_next (o);
-                n = g_list_next (n);
-	}
-
-	return retval;
-}
-
 static void
 totem_languages_update (Totem *totem, GList *list)
 {
@@ -597,9 +564,6 @@ totem_languages_update (Totem *totem, GList *list)
 	current = bacon_video_widget_get_language (totem->bvw);
 	g_action_change_state (action, g_variant_new_int32 (current));
 	totem->updating_menu = FALSE;
-
-	g_list_free_full (totem->languages_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-	totem->languages_list = list;
 }
 
 static void
@@ -622,9 +586,6 @@ totem_subtitles_update (Totem *totem, GList *list)
 	current = bacon_video_widget_get_subtitle (totem->bvw);
 	g_action_change_state (action, g_variant_new_int32 (current));
 	totem->updating_menu = FALSE;
-
-	g_list_free_full (totem->subtitles_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-	totem->subtitles_list = list;
 }
 
 void
@@ -633,23 +594,8 @@ totem_sublang_update (Totem *totem)
 	GList *list;
 
 	list = bacon_video_widget_get_languages (totem->bvw);
-	if (totem_sublang_equal_lists (totem->languages_list, list) == TRUE) {
-		g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-	} else {
-		totem_languages_update (totem, list);
-	}
+	totem_languages_update (totem, list);
 
 	list = bacon_video_widget_get_subtitles (totem->bvw);
-	if (totem_sublang_equal_lists (totem->subtitles_list, list) == TRUE) {
-		g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-	} else {
-		totem_subtitles_update (totem, list);
-	}
-}
-
-void
-totem_sublang_exit (Totem *totem)
-{
-	g_list_free_full (totem->subtitles_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-	g_list_free_full (totem->languages_list, (GDestroyNotify) bacon_video_widget_lang_info_free);
+	totem_subtitles_update (totem, list);
 }

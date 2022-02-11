@@ -208,6 +208,8 @@ struct _BaconVideoWidget
   gboolean                     is_menu;
   gboolean                     has_angles;
   GList                       *chapters;
+  GList                       *subtitles; /* GList of BvwLangInfo */
+  GList                       *languages; /* GList of BvwLangInfo */
 
   BvwRotation                  rotation;
   
@@ -279,6 +281,8 @@ static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      gint64 _time,
 						      GstSeekFlags flag,
 						      GError **error);
+static gboolean update_subtitles_tracks (BaconVideoWidget *bvw);
+static gboolean update_languages_tracks (BaconVideoWidget *bvw);
 
 typedef struct {
   GstTagList *tags;
@@ -946,6 +950,8 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
   parse_stream_info (bvw);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+  update_subtitles_tracks (bvw);
+  update_languages_tracks (bvw);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
@@ -2741,6 +2747,41 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
   return FALSE;
 }
 
+static gboolean
+bvw_lang_infos_equal (GList *orig, GList *new)
+{
+  GList *o, *n;
+  gboolean retval;
+
+  if ((orig == NULL && new != NULL) || (orig != NULL && new == NULL))
+    return FALSE;
+  if (orig == NULL && new == NULL)
+    return TRUE;
+
+  if (g_list_length (orig) != g_list_length (new))
+    return FALSE;
+
+  retval = TRUE;
+  o = orig;
+  n = new;
+  while (o != NULL && n != NULL && retval != FALSE) {
+    BvwLangInfo *info_o, *info_n;
+
+    info_o = o->data;
+    info_n = n->data;
+    if (g_strcmp0 (info_o->title, info_n->title) != 0)
+      retval = FALSE;
+    if (g_strcmp0 (info_o->language, info_n->language) != 0)
+      retval = FALSE;
+    if (g_strcmp0 (info_o->codec, info_n->codec) != 0)
+      retval = FALSE;
+    o = g_list_next (o);
+    n = g_list_next (n);
+  }
+
+  return retval;
+}
+
 static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
@@ -2790,6 +2831,53 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
   return g_list_reverse (ret);
 }
 
+static void
+print_lang_list (GList *list)
+{
+  GList *l;
+  guint i;
+
+  for (l = list, i = 0; l != NULL; l = l->next, i++) {
+    BvwLangInfo *info = l->data;
+    GST_DEBUG ("  %d: %s / %s / %s", i,
+	       GST_STR_NULL (info->title),
+	       GST_STR_NULL (info->language),
+	       GST_STR_NULL (info->codec));
+  }
+}
+
+static gboolean
+update_subtitles_tracks (BaconVideoWidget *bvw)
+{
+  g_autolist(BvwLangInfo) list;
+
+  list = get_lang_list_for_type (bvw, "TEXT");
+  if (bvw_lang_infos_equal (list, bvw->subtitles))
+    return FALSE;
+  if (bvw->subtitles)
+    g_list_free_full (bvw->subtitles, (GDestroyNotify) bacon_video_widget_lang_info_free);
+  GST_DEBUG ("subtitles changed:");
+  print_lang_list (list);
+  bvw->subtitles = g_steal_pointer (&list);
+  return TRUE;
+}
+
+static gboolean
+update_languages_tracks (BaconVideoWidget *bvw)
+{
+  g_autolist(BvwLangInfo) list;
+
+  list = get_lang_list_for_type (bvw, "AUDIO");
+  if (bvw_lang_infos_equal (list, bvw->languages))
+    return FALSE;
+  if (bvw->languages)
+    g_list_free_full (bvw->languages, (GDestroyNotify) bacon_video_widget_lang_info_free);
+  GST_DEBUG ("languages changed:");
+  print_lang_list (list);
+  bvw->languages = g_steal_pointer (&list);
+  return TRUE;
+}
+
 /**
  * bacon_video_widget_lang_info_free:
  * @info: a #BvwLangInfo
@@ -2813,19 +2901,15 @@ bacon_video_widget_lang_info_free (BvwLangInfo *info)
  *
  * Returns a list of #BvwLangInfo for each subtitle track.
  *
- * Return value: a #GList of #BvwLangInfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
+ * Return value: a #GList of #BvwLangInfo, or %NULL; this list is owned by the @bvw, do not free.
  **/
 GList *
 bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
-  GList *list;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->play != NULL, NULL);
 
-  list = get_lang_list_for_type (bvw, "TEXT");
-
-  return list;
+  return bvw->subtitles;
 }
 
 /**
@@ -2834,26 +2918,15 @@ bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
  *
  * Returns a list of #BvwLangInfo for each audio track.
  *
- * Return value: a #GList of #BvwLangInfo, or %NULL; free each element with bacon_video_widget_lang_info_free() and the list with g_list_free()
+ * Return value: a #GList of #BvwLangInfo, or %NULL; this list is owned by the @bvw, do not free.
  **/
 GList *
 bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
-  GList *list;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->play != NULL, NULL);
 
-  list = get_lang_list_for_type (bvw, "AUDIO");
-
-  /* When we have only one language, we don't need to show
-   * any languages, we default to the only track */
-  if (g_list_length (list) == 1) {
-    g_list_free_full (list, (GDestroyNotify) bacon_video_widget_lang_info_free);
-    return NULL;
-  }
-
-  return list;
+  return bvw->languages;
 }
 
 /**
@@ -2914,6 +2987,7 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 
   g_signal_emit_by_name (G_OBJECT (bvw->play), "get-audio-tags", language, &tags);
   bvw_update_tags (bvw, tags, "audio");
+  update_languages_tracks (bvw);
 
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
@@ -3405,6 +3479,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
 
   gst_element_set_state (bvw->play, GST_STATE_PAUSED);
 
+  update_subtitles_tracks (bvw);
+  update_languages_tracks (bvw);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
@@ -3740,6 +3816,14 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   if (bvw->chapters) {
     g_list_free_full (bvw->chapters, (GDestroyNotify) gst_mini_object_unref);
     bvw->chapters = NULL;
+  }
+  if (bvw->subtitles) {
+    g_list_free_full (bvw->subtitles, (GDestroyNotify) bacon_video_widget_lang_info_free);
+    bvw->subtitles = NULL;
+  }
+  if (bvw->languages) {
+    g_list_free_full (bvw->languages, (GDestroyNotify) bacon_video_widget_lang_info_free);
+    bvw->languages = NULL;
   }
 
   g_clear_pointer (&bvw->tagcache, gst_tag_list_unref);
