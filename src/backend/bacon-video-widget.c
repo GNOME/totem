@@ -2611,20 +2611,6 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   return subtitle;
 }
 
-static gboolean
-sublang_is_valid (int sublang,
-		  int n_sublang)
-{
-  if (sublang == BVW_TRACK_AUTO ||
-      sublang == BVW_TRACK_NONE)
-    return TRUE;
-  if (sublang < 0)
-    return FALSE;
-  if (sublang >= n_sublang)
-    return FALSE;
-  return TRUE;
-}
-
 static BvwLangInfo *
 find_info_for_id (GList *list,
 		  int    id)
@@ -3064,21 +3050,14 @@ void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
   GstTagList *tags;
-  int n_lang;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->play != NULL);
-
-  g_object_get (bvw->play, "n-audio", &n_lang, NULL);
-
-  g_return_if_fail (sublang_is_valid (language, n_lang));
+  g_return_if_fail (find_info_for_id (bvw->languages, language) != NULL);
 
   GST_DEBUG ("setting language to %d", language);
 
   g_object_set (bvw->play, "current-audio", language, NULL);
-
-  g_object_get (bvw->play, "current-audio", &language, NULL);
-  GST_DEBUG ("current-audio now: %d", language);
 
   g_signal_emit_by_name (G_OBJECT (bvw->play), "get-audio-tags", language, &tags);
   bvw_update_tags (bvw, tags, "audio");
