@@ -2625,6 +2625,22 @@ sublang_is_valid (int sublang,
   return TRUE;
 }
 
+static BvwLangInfo *
+find_info_for_id (GList *list,
+		  int    id)
+{
+  GList *l;
+
+  if (list == NULL)
+    return NULL;
+  for (l = list; l != NULL; l = l->next) {
+    BvwLangInfo *info = l->data;
+    if (info->id == id)
+        return info;
+  }
+  return NULL;
+}
+
 /**
  * bacon_video_widget_set_subtitle:
  * @bvw: a #BaconVideoWidget
@@ -2636,28 +2652,20 @@ void
 bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
   GstTagList *tags;
-  gint flags;
-  gint n_text;
+  int flags;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->play != NULL);
+  g_return_if_fail (find_info_for_id (bvw->subtitles, subtitle) != NULL);
 
-  g_object_get (bvw->play, "flags", &flags, "n-text", &n_text, NULL);
-
-  g_return_if_fail (sublang_is_valid (subtitle, n_text));
+  g_object_get (bvw->play, "flags", &flags, NULL);
 
   if (subtitle == BVW_TRACK_NONE) {
     flags &= ~GST_PLAY_FLAG_TEXT;
-    subtitle = -1;
+    g_object_set (bvw->play, "flags", flags, NULL);
   } else {
     flags |= GST_PLAY_FLAG_TEXT;
-  }
-  
-  g_object_set (bvw->play, "flags", flags, "current-text", subtitle, NULL);
-  
-  if (flags & GST_PLAY_FLAG_TEXT) {
-    g_object_get (bvw->play, "current-text", &subtitle, NULL);
-
+    g_object_set (bvw->play, "flags", flags, "current-text", subtitle, NULL);
     g_signal_emit_by_name (G_OBJECT (bvw->play), "get-text-tags", subtitle, &tags);
     bvw_update_tags (bvw, tags, "text");
   }
