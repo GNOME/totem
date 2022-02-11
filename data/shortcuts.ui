@@ -142,13 +142,6 @@
                 <property name="title" translatable="yes" context="shortcut window">Next video or chapter</property>
               </object>
             </child>
-            <child>
-              <object class="GtkShortcutsShortcut" id="cycle-subtitle">
-                <property name="visible">1</property>
-                <property name="accelerator">V</property>
-                <property name="title" translatable="yes" context="shortcut window">Select next Subtitle</property>
-              </object>
-            </child>
           </object>
         </child>
         <child>
@@ -308,7 +301,26 @@
             </child>
           </object>
         </child>
-
+        <child>
+          <object class="GtkShortcutsGroup" id="subtitles-menu">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes" context="shortcut window">Subtitles</property>
+            <child>
+              <object class="GtkShortcutsShortcut" id="cycle-subtitle">
+                <property name="visible">1</property>
+                <property name="accelerator">V</property>
+                <property name="title" translatable="yes" context="shortcut window">Select next subtitle</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut" id="cycle-subtitle">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Shift&gt;V</property>
+                <property name="title" translatable="yes" context="shortcut window">Toggle subtitles</property>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </object>

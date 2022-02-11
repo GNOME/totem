@@ -3521,7 +3521,10 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Subtitle:
 	case GDK_KEY_V:
 	case GDK_KEY_v:
-		bacon_video_widget_set_next_subtitle (totem->bvw);
+		if (mask == GDK_SHIFT_MASK)
+			bacon_video_toggle_subtitles (totem->bvw);
+		else
+			bacon_video_widget_set_next_subtitle (totem->bvw);
 		break;
 	case GDK_KEY_t:
 	case GDK_KEY_T:
