@@ -118,6 +118,8 @@ enum
   SIGNAL_MISSING_PLUGINS,
   SIGNAL_DOWNLOAD_BUFFERING,
   SIGNAL_PLAY_STARTING,
+  SIGNAL_SUBTITLES_CHANGED,
+  SIGNAL_LANGUAGES_CHANGED,
   LAST_SIGNAL
 };
 
@@ -929,6 +931,34 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+  /**
+   * BaconVideoWidget::subtitles-changed:
+   * @bvw: the #BaconVideoWidget which received the signal
+   *
+   * Emitted when the list of subtitle tracks has changed.
+   **/
+  bvw_signals[SIGNAL_SUBTITLES_CHANGED] =
+    g_signal_new ("subtitles-changed",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+  /**
+   * BaconVideoWidget::languages-changed:
+   * @bvw: the #BaconVideoWidget which received the signal
+   *
+   * Emitted when the list of languages/audio tracks has changed.
+   **/
+  bvw_signals[SIGNAL_LANGUAGES_CHANGED] =
+    g_signal_new ("languages-changed",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
   g_resources_register (_bvw_get_resource ());
 
   default_theme = gtk_icon_theme_get_default ();
@@ -950,8 +980,10 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
   parse_stream_info (bvw);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-  update_subtitles_tracks (bvw);
-  update_languages_tracks (bvw);
+  if (update_subtitles_tracks (bvw))
+    g_signal_emit (bvw, bvw_signals[SIGNAL_SUBTITLES_CHANGED], 0);
+  if (update_languages_tracks (bvw))
+    g_signal_emit (bvw, bvw_signals[SIGNAL_LANGUAGES_CHANGED], 0);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
@@ -2987,11 +3019,11 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 
   g_signal_emit_by_name (G_OBJECT (bvw->play), "get-audio-tags", language, &tags);
   bvw_update_tags (bvw, tags, "audio");
-  update_languages_tracks (bvw);
+  if (update_languages_tracks (bvw))
+    g_signal_emit (bvw, bvw_signals[SIGNAL_LANGUAGES_CHANGED], 0);
 
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-  g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
 /**
@@ -3479,8 +3511,10 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
 
   gst_element_set_state (bvw->play, GST_STATE_PAUSED);
 
-  update_subtitles_tracks (bvw);
-  update_languages_tracks (bvw);
+  if (update_subtitles_tracks (bvw))
+    g_signal_emit (bvw, bvw_signals[SIGNAL_SUBTITLES_CHANGED], 0);
+  if (update_languages_tracks (bvw))
+    g_signal_emit (bvw, bvw_signals[SIGNAL_LANGUAGES_CHANGED], 0);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
@@ -3831,6 +3865,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_clear_pointer (&bvw->videotags, gst_tag_list_unref);
 
   g_object_notify (G_OBJECT (bvw), "seekable");
+  g_signal_emit (bvw, bvw_signals[SIGNAL_SUBTITLES_CHANGED], 0);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_LANGUAGES_CHANGED], 0);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   got_time_tick (GST_ELEMENT (bvw->play), 0, bvw);
 }

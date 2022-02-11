@@ -2510,8 +2510,6 @@ on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
 	gchar *name;
 
-	totem_subtitles_menu_update (totem);
-	totem_languages_menu_update (totem);
 	update_media_menu_items (totem);
 
 	/* updated stream info (new song) */
@@ -2550,8 +2548,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 		g_free (name);
 	}
 
-	totem_subtitles_menu_update (totem);
-	totem_languages_menu_update (totem);
 	update_buttons (totem);
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
@@ -4226,6 +4222,14 @@ video_widget_create (TotemObject *totem)
 			"channels-change",
 			G_CALLBACK (on_channels_change_event),
 			totem);
+	g_signal_connect_swapped (G_OBJECT (totem->bvw),
+				  "subtitles-changed",
+				  G_CALLBACK (totem_subtitles_menu_update),
+				  totem);
+	g_signal_connect_swapped (G_OBJECT (totem->bvw),
+				  "languages-changed",
+				  G_CALLBACK (totem_languages_menu_update),
+				  totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"tick",
 			G_CALLBACK (update_current_time),
