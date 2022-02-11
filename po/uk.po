@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-03 17:19+0000\n"
-"PO-Revision-Date: 2022-02-03 19:22+0200\n"
+"POT-Creation-Date: 2022-02-11 17:58+0000\n"
+"PO-Revision-Date: 2022-02-11 22:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1922 src/totem-object.c:3765
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Відео"
 
@@ -59,8 +59,7 @@ msgstr "Розробники GNOME"
 
 #: data/org.gnome.Totem.desktop.in.in:3
 msgid "@APPLICATION_NAME@"
-msgstr ""
-"@APPLICATION_NAME@"
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -178,7 +177,7 @@ msgstr "Показувані каталоги"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Каталоги, які показуються в огляді, типово нічого не показується"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5500
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -449,11 +448,29 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Праворуч"
 
-#: data/totem.ui:11 data/totem.ui:106
+#: data/shortcuts.ui:307
+#| msgid "Subtitles"
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "Субтитри"
+
+#: data/shortcuts.ui:312
+#| msgid "Select Text Subtitles"
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "Вибір наступних субтитрів"
+
+#: data/shortcuts.ui:319
+#| msgid "Autoloads text subtitles"
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "Увімкнути/Вимкнути субтитри"
+
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "П_араметри"
 
-#: data/totem.ui:15 data/totem.ui:110
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавіатурні скорочення"
 
@@ -507,64 +524,80 @@ msgstr "2.11∶1 (DVB)"
 msgid "Switch An_gles"
 msgstr "Перемкнути к_ути"
 
-#: data/totem.ui:89
-msgid "_Languages"
-msgstr "М_ови"
-
-#: data/totem.ui:93
-msgid "S_ubtitles"
-msgstr "С_убтитри"
-
-#: data/totem.ui:96
-msgid "_Select Text Subtitles…"
-msgstr "_Вибрати текстові субтитри…"
-
-#: data/totem.ui:119
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "Ви_йняти"
 
-#: data/totem.ui:130
+#: data/totem.ui:114
+#| msgid "_Languages"
+msgid "Languages"
+msgstr "Мови"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "Субтитри"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "_Вибрати текстові субтитри…"
+
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "Пов_торювати"
 
-#: data/totem.ui:136
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "Меню _DVD"
 
-#: data/totem.ui:142
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "Меню _епізоду"
 
-#: data/totem.ui:147
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "Меню _звуку"
 
-#: data/totem.ui:152
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "_Кутове меню"
 
-#: data/totem.ui:157
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "Меню _фрагментів"
 
-#: data/totem.ui:166
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "Швидкість"
 
-#: data/uri.ui:14
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "Додати інтернетний відеозапис"
+
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Введіть _адресу файла, який треба відкрити:"
+
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_Скасувати"
+
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "_Додати"
 
 #. translators: Unknown remaining time
 #: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1892
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
-#: src/backend/bacon-video-widget.c:3839
+#: src/backend/bacon-video-widget.c:3353
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -572,53 +605,53 @@ msgstr ""
 "Здається, джерело даних зашифровано — його не можна прочитати. Намагаєтеся "
 "відтворити зашифрований DVD без libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3853
+#: src/backend/bacon-video-widget.c:3367
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, до якого ви намагаєтесь під'єднатись, невідомий."
 
-#: src/backend/bacon-video-widget.c:3856
+#: src/backend/bacon-video-widget.c:3370
 msgid "The connection to this server was refused."
 msgstr "У зв'язку з цим сервером відмовлено."
 
-#: src/backend/bacon-video-widget.c:3859
+#: src/backend/bacon-video-widget.c:3373
 msgid "The specified movie could not be found."
 msgstr "Вказаний фільм неможливо знайти."
 
-#: src/backend/bacon-video-widget.c:3866
+#: src/backend/bacon-video-widget.c:3380
 msgid "The server refused access to this file or stream."
 msgstr "Сервер відмовив у доступі до цього файла або потоку."
 
-#: src/backend/bacon-video-widget.c:3872
+#: src/backend/bacon-video-widget.c:3386
 msgid "Authentication is required to access this file or stream."
 msgstr "Щоб доступитись до цього файла або потоку, потрібно засвідчити право."
 
-#: src/backend/bacon-video-widget.c:3878
+#: src/backend/bacon-video-widget.c:3392
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr ""
 "Не вистачає підтримки SSL/TLS. Перевірте, чи встановлено належні компоненти."
 
-#: src/backend/bacon-video-widget.c:3885
+#: src/backend/bacon-video-widget.c:3399
 msgid "You are not allowed to open this file."
 msgstr "Ви не можете відкрити цей файл."
 
-#: src/backend/bacon-video-widget.c:3890
+#: src/backend/bacon-video-widget.c:3404
 msgid "This location is not a valid one."
 msgstr "Ця адреса не є правильною."
 
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3412
 msgid "The movie could not be read."
 msgstr "Фільм неможливо прочитати."
 
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3418
 msgid "This file is encrypted and cannot be played back."
 msgstr "Цей файл зашифровано — його неможливо відтворити."
 
-#: src/backend/bacon-video-widget.c:3910
+#: src/backend/bacon-video-widget.c:3424
 msgid "The file you tried to play is an empty file."
 msgstr "Файл, який ви намагаєтеся відтворити, є порожнім файлом."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3934 src/backend/bacon-video-widget.c:3942
+#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -639,12 +672,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3954
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Цей потік неможливо програти. Можливо, брандмауер його забороняє."
 
-#: src/backend/bacon-video-widget.c:3957
+#: src/backend/bacon-video-widget.c:3471
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -653,7 +686,7 @@ msgstr ""
 "варто встановити додатки, які надають можливість програвати певні типи "
 "відеозаписів"
 
-#: src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3482
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -661,19 +694,19 @@ msgstr ""
 "Неможливо відтворити цей файл через мережу. Спробуйте спочатку звантажити "
 "його на локальний диск."
 
-#: src/backend/bacon-video-widget.c:5496
+#: src/backend/bacon-video-widget.c:5070
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: src/backend/bacon-video-widget.c:5498
+#: src/backend/bacon-video-widget.c:5072
 msgid "Mono"
 msgstr "Моно"
 
-#: src/backend/bacon-video-widget.c:5768
+#: src/backend/bacon-video-widget.c:5342
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: src/backend/bacon-video-widget.c:5979
+#: src/backend/bacon-video-widget.c:5531
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -766,7 +799,6 @@ msgid "Verify your system installation. Totem will now exit."
 msgstr "Перевірте систему. Totem завершується."
 
 #: src/totem.c:74
-#| msgid "Video files"
 msgid "Videos Preview"
 msgstr "Попередній перегляд відео"
 
@@ -796,31 +828,31 @@ msgstr "Роздільна здатність"
 msgid "Duration"
 msgstr "Тривалість"
 
-#: src/totem-grilo.c:288
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Сезон %d Серія %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:325
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Сезон %d Серія %d)"
 
-#: src/totem-grilo.c:687
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "Помилка перегляду"
 
-#: src/totem-grilo.c:836
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "Помилка пошуку"
 
-#: src/totem-grilo.c:1328
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "Локальне"
 
-#: src/totem-grilo.c:1931
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "Канали"
 
@@ -838,11 +870,11 @@ msgstr "Файл не існує."
 msgid "Make sure that Totem is properly installed."
 msgstr "Переконайтесь, що Totem встановлено коректно."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Натисніть на об'єкти, щоб їх вибрати"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
@@ -850,7 +882,7 @@ msgstr[0] "%d вибрано"
 msgstr[1] "%d вибрано"
 msgstr[2] "%d вибрано"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "Результати на «%s»"
@@ -879,74 +911,59 @@ msgstr "Звукова доріжка"
 msgid "Subtitle"
 msgstr "Субтитри"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:533
-msgid "None"
-msgstr "Немає"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:537
+#: src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Автоматично"
 
-#: src/totem-object.c:1396 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:442
+msgid "None"
+msgstr "Немає"
+
+#: src/totem-object.c:1441 src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/totem-object.c:1401 src/totem-object.c:1411 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Відтворення"
 
 # c-format
-#: src/totem-object.c:1478 src/totem-object.c:1506 src/totem-object.c:2050
+#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Неможливо програти «%s»."
 
-#: src/totem-object.c:2222
+#: src/totem-object.c:2309
 msgid "Totem could not display the help contents."
 msgstr "Неможливо показати вміст довідки."
 
-#: src/totem-object.c:2484
+#: src/totem-object.c:2570
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: src/totem-object.c:3863
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: src/totem-object.c:3869
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: src/totem-object.c:3875
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: src/totem-object.c:4098
+#: src/totem-object.c:4235
 msgid "Totem could not startup."
 msgstr "Не вдалось запустити Totem."
 
-#: src/totem-object.c:4098 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Причина невідома."
-
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "Додати інтернетний відеозапис"
-
-#: src/totem-open-location.c:182 src/totem-uri.c:403 src/totem-uri.c:464
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_Скасувати"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:465
-msgid "_Add"
-msgstr "_Додати"
 
 #: src/totem-options.c:49
 msgid "Play/Pause"
@@ -1014,12 +1031,12 @@ msgstr "Неможливо поставити в чергу і замінити 
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "Заголовок %d"
 
-#: src/totem-playlist.c:1065
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Список композицій «%s» неможливо розібрати. Можливо, його пошкоджено."
@@ -1277,7 +1294,7 @@ msgstr "Відкрити каталог"
 msgid "Open the directory of the currently playing movie"
 msgstr "Відкрити каталог із даними поточного відтворюваного фільму"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Відкрити теку з даними"
 
@@ -1315,10 +1332,6 @@ msgstr "Неможливо з'єднатись із сайтом OpenSubtitles."
 #: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "Нічого не знайдено"
-
-#: src/plugins/opensubtitles/opensubtitles.py:502
-msgid "Subtitles"
-msgstr "Субтитри"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
@@ -1672,11 +1685,11 @@ msgstr "Додаток обертання"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Дозволяє відеозаписам обертатись, якщо воно у неправильній орієнтації."
 
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:260
 msgid "_Rotate ↷"
 msgstr "_Обернути ↷"
 
-#: src/plugins/rotation/totem-rotation.c:266
+#: src/plugins/rotation/totem-rotation.c:264
 msgid "Rotate ↶"
 msgstr "Обернути ↶"
 
@@ -1888,6 +1901,9 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Встановлює користувацького агента для сайту Vimeo"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "С_убтитри"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
