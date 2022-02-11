@@ -109,22 +109,20 @@
 </menu>
 
 <menu id="subtitlesmenu">
-  <section>
-		<submenu>
-			<attribute name="label" translatable="yes">_Languages</attribute>
+	<section>
+		<section>
+			<attribute name="label" translatable="yes">Languages</attribute>
 			<section id="languages-placeholder"/>
-		</submenu>
-		<submenu>
-			<attribute name="label" translatable="yes">S_ubtitles</attribute>
-			<section>
-				<item>
-					<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
-					<attribute name="action">app.select-subtitle</attribute>
-				</item>
-				<section id="subtitle-download-placeholder"/>
-				<section id="subtitles-placeholder"/>
-			</section>
-		</submenu>
+		</section>
+		<section>
+			<attribute name="label" translatable="yes">Subtitles</attribute>
+			<section id="subtitles-placeholder"/>
+			<item>
+				<attribute name="label" translatable="yes">_Select Text Subtitles…</attribute>
+				<attribute name="action">app.select-subtitle</attribute>
+			</item>
+			<section id="subtitle-download-placeholder"/>
+		</section>
 	</section>
 </menu>
 
