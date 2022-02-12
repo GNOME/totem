@@ -6,12 +6,12 @@
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015, 2016, 2017.
 # Julen Ruiz Aizpuru <julenx@gmail.com>, 2011.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2022.
 msgid ""
 msgstr "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2021-08-18 14:01+0000\n"
-"PO-Revision-Date: 2021-08-18 10:00+0100\n"
+"POT-Creation-Date: 2022-02-11 17:58+0000\n"
+"PO-Revision-Date: 2022-02-12 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -21,18 +21,17 @@ msgstr "Project-Id-Version: totem master\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:6
-#: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:65 src/totem.c:71
-#: src/totem-grilo.c:1922 src/totem-object.c:3752
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Bideoak"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:7
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:4
 msgid "Play movies"
 msgstr "Filmen erreprodukzioa"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:11
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -40,16 +39,20 @@ msgid ""
 "web sites."
 msgstr "Videos (Bideoak) GNOME mahaigaineko ingurunearen film-erreproduzigailu ofiziala da. Bideo lokalen eta DVDen zerrenda bilagarria sortzen du, bai eta sareko bideo partekatuena (UPnP/DLNA erabilita) eta hainbat webgunetako bideo nabarmenena ere."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:17
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
 "support for recording DVDs."
 msgstr "Videos aplikazioak funtzionaltasun gehigarriak ditu, adibidez azpitituluen deskarga, erreprodukzioa azkartu edo moteltzeko aukera, pantaila-kapturen galerien sorrera eta DVDak grabatzeko euskarria."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:33
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:33
 msgid "The GNOME developers"
 msgstr "GNOME garatzaileak"
+
+#: data/org.gnome.Totem.desktop.in.in:3
+msgid "@APPLICATION_NAME@"
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -164,7 +167,7 @@ msgstr "Direktorioak erakusteko"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Direktorioak arakatzailearen interfazean erakusteko (bat ere ez lehenetsi gisa)"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5575
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
 msgid "Stereo"
 msgstr "Estereoa"
 
@@ -332,124 +335,129 @@ msgstr "Irten pantaila osotik"
 
 #: data/shortcuts.ui:89
 msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "Handiagotu"
-
-#: data/shortcuts.ui:96
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "Txikiagotu"
-
-#: data/shortcuts.ui:103
-msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Biratu ↷"
 
-#: data/shortcuts.ui:110
+#: data/shortcuts.ui:96
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Biratu ↶"
 
-#: data/shortcuts.ui:119
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Erreproduzitu"
 
-#: data/shortcuts.ui:124
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Erreproduzitu/pausarazi"
 
-#: data/shortcuts.ui:132 data/shortcuts.ui:148
+#: data/shortcuts.ui:118 data/shortcuts.ui:134
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Aurreko bideoa edo kapitulua"
 
-#: data/shortcuts.ui:140 data/shortcuts.ui:156
+#: data/shortcuts.ui:126 data/shortcuts.ui:142
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Hurrengo bideoa edo kapitulua"
 
-#: data/shortcuts.ui:164
+#: data/shortcuts.ui:150
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Saltatu"
 
-#: data/shortcuts.ui:170 data/shortcuts.ui:232
+#: data/shortcuts.ui:156 data/shortcuts.ui:218
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Joan 15 segundo atzera"
 
-#: data/shortcuts.ui:178 data/shortcuts.ui:240
+#: data/shortcuts.ui:164 data/shortcuts.ui:226
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Joan 60 segundo aurrera"
 
-#: data/shortcuts.ui:185
+#: data/shortcuts.ui:171
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Fotograma bat atzera"
 
-#: data/shortcuts.ui:192
+#: data/shortcuts.ui:178
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Fotograma bat aurrera"
 
-#: data/shortcuts.ui:200 data/shortcuts.ui:248
+#: data/shortcuts.ui:186 data/shortcuts.ui:234
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Joan 5 segundo atzera"
 
-#: data/shortcuts.ui:208 data/shortcuts.ui:256
+#: data/shortcuts.ui:194 data/shortcuts.ui:242
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Joan 15 segundo aurrera"
 
-#: data/shortcuts.ui:216 data/shortcuts.ui:264
+#: data/shortcuts.ui:202 data/shortcuts.ui:250
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Joan 3 minutu atzera"
 
-#: data/shortcuts.ui:224 data/shortcuts.ui:272
+#: data/shortcuts.ui:210 data/shortcuts.ui:258
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Joan 10 minutu aurrera"
 
-#: data/shortcuts.ui:279
+#: data/shortcuts.ui:265
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Saltatu hona…"
 
-#: data/shortcuts.ui:287
+#: data/shortcuts.ui:273
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVDaren menuaren nabigazioa"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:278
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Nabigatu gora"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Nabigatu behera"
 
-#: data/shortcuts.ui:306
+#: data/shortcuts.ui:292
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Nabigatu ezkerrera"
 
-#: data/shortcuts.ui:313
+#: data/shortcuts.ui:299
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Nabigatu eskuinera"
 
-#: data/totem.ui:11 data/totem.ui:110
+#: data/shortcuts.ui:307
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "Azpitituluak"
+
+#: data/shortcuts.ui:312
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "Hautatu hurrengo azpititulua"
+
+#: data/shortcuts.ui:319
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "Txandakatu azpitituluak"
+
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "_Hobespenak"
 
-#: data/totem.ui:15 data/totem.ui:114
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "Las_ter-teklak"
 
@@ -499,123 +507,134 @@ msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:81
-msgid "Zoom In"
-msgstr "Handiagotu"
-
-#: data/totem.ui:86
+#: data/totem.ui:82
 msgid "Switch An_gles"
 msgstr "Aldatu an_geluak"
 
-#: data/totem.ui:93
-msgid "_Languages"
-msgstr "_Hizkuntzak"
-
-#: data/totem.ui:97
-msgid "S_ubtitles"
-msgstr "A_zpitituluak"
-
-#: data/totem.ui:100
-msgid "_Select Text Subtitles…"
-msgstr "_Hautatu testuaren azpitituluak…"
-
-#: data/totem.ui:123
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "E_gotzi"
 
-#: data/totem.ui:134
+#: data/totem.ui:114
+msgid "Languages"
+msgstr "Hizkuntzak"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "Azpitituluak"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "_Hautatu testuaren azpitituluak…"
+
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "E_rrepikatze-modua"
 
-#: data/totem.ui:140
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "_DVD menua"
 
-#: data/totem.ui:146
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "_Tituluaren menua"
 
-#: data/totem.ui:151
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "A_udioaren menua"
 
-#: data/totem.ui:156
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "_Angeluaren menua"
 
-#: data/totem.ui:161
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "A_talen menua"
 
-#: data/totem.ui:170
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "Abiadura"
 
-#: data/uri.ui:14
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "Gehitu webeko bideoa"
+
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Idatzi fitxategiaren _helbidea irekitzeko:"
+
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "_Gehitu"
 
 #. translators: Unknown remaining time
 #: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1973
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "RTSP zerbitzariak pasahitza eskatzen du"
 
-#: src/backend/bacon-video-widget.c:3914
+#: src/backend/bacon-video-widget.c:3353
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr "Iturburua zifratuta dagoela dirudi, ezin da irakurri. Zifratutako DVD bat erreproduzitzen saiatzen ari zara, libdvdcss instalatuta izan gabe?"
 
-#: src/backend/bacon-video-widget.c:3928
+#: src/backend/bacon-video-widget.c:3367
 msgid "The server you are trying to connect to is not known."
 msgstr "Konektatzea saiatzen ari zaren zerbitzaria ez da ezaguna."
 
-#: src/backend/bacon-video-widget.c:3931
+#: src/backend/bacon-video-widget.c:3370
 msgid "The connection to this server was refused."
 msgstr "Zerbitzari honekiko konexioa ukatu da."
 
-#: src/backend/bacon-video-widget.c:3934
+#: src/backend/bacon-video-widget.c:3373
 msgid "The specified movie could not be found."
 msgstr "Ezin izan da zehaztutako filma aurkitu."
 
-#: src/backend/bacon-video-widget.c:3941
+#: src/backend/bacon-video-widget.c:3380
 msgid "The server refused access to this file or stream."
 msgstr "Zerbitzariak fitxategi edo korronte honen atzipena ukatu du."
 
-#: src/backend/bacon-video-widget.c:3947
+#: src/backend/bacon-video-widget.c:3386
 msgid "Authentication is required to access this file or stream."
 msgstr "Autentifikazioa behar da fitxategi edo korronte hau atzitzeko."
 
-#: src/backend/bacon-video-widget.c:3953
+#: src/backend/bacon-video-widget.c:3392
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Ez dago SSL/TLS euskarririk. Egiaztatu instalazioa."
 
-#: src/backend/bacon-video-widget.c:3960
+#: src/backend/bacon-video-widget.c:3399
 msgid "You are not allowed to open this file."
 msgstr "Ez daukazu baimenik fitxategi hau irekitzeko."
 
-#: src/backend/bacon-video-widget.c:3965
+#: src/backend/bacon-video-widget.c:3404
 msgid "This location is not a valid one."
 msgstr "Helbide hau ez da baliozkoa."
 
-#: src/backend/bacon-video-widget.c:3973
+#: src/backend/bacon-video-widget.c:3412
 msgid "The movie could not be read."
 msgstr "Ezin izan da filma irakurri."
 
-#: src/backend/bacon-video-widget.c:3979
+#: src/backend/bacon-video-widget.c:3418
 msgid "This file is encrypted and cannot be played back."
 msgstr "Fitxategi hau zifratuta dago eta ezin da erreproduzitu."
 
-#: src/backend/bacon-video-widget.c:3985
+#: src/backend/bacon-video-widget.c:3424
 msgid "The file you tried to play is an empty file."
 msgstr "Erreproduzitzen saiatzen ari zaren fitxategia hutsik dago."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4009 src/backend/bacon-video-widget.c:4017
+#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -628,36 +647,36 @@ msgstr[1] "Filma hau erreproduzitzeko ondorengo pluginak behar dira, baina ez da
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4029
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Korronte hau ezin da erreproduzitu. Baliteke suebakiak hura blokeatzea."
 
-#: src/backend/bacon-video-widget.c:4032
+#: src/backend/bacon-video-widget.c:3471
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
 msgstr "Ez da audio- edo bideo-korrontea kudeatu kodekak falta direlako. Plugin gehigarri batzuk instalatu beharko dituzu filma mota batzuk erreproduzitzeko."
 
-#: src/backend/bacon-video-widget.c:4043
+#: src/backend/bacon-video-widget.c:3482
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Ezin da fitxategia erreproduzitu sarearen bitartez. Saiatu aurrenik lokalera deskargatzen."
 
-#: src/backend/bacon-video-widget.c:5571
+#: src/backend/bacon-video-widget.c:5070
 msgid "Surround"
 msgstr "Ingurakaria"
 
-#: src/backend/bacon-video-widget.c:5573
+#: src/backend/bacon-video-widget.c:5072
 msgid "Mono"
 msgstr "Monoa"
 
-#: src/backend/bacon-video-widget.c:5843
+#: src/backend/bacon-video-widget.c:5342
 msgid "Media contains no supported video streams."
 msgstr "Euskarriak onartzen ez den bideo-korrontea dauka."
 
-#: src/backend/bacon-video-widget.c:6055
+#: src/backend/bacon-video-widget.c:5531
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -738,13 +757,17 @@ msgstr "Hautatu dena"
 msgid "Select None"
 msgstr "Ez hautatu ezer"
 
-#: src/totem.c:66
+#: src/totem.c:68
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ezin izan dira hari seguruko liburutegiak abiarazi."
 
-#: src/totem.c:66
+#: src/totem.c:68
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Egiaztatu sistemaren instalazioa. Totem itxi egingo da orain."
+
+#: src/totem.c:74
+msgid "Videos Preview"
+msgstr "Bideoen aurrebista"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -771,31 +794,31 @@ msgstr "Bereizmena"
 msgid "Duration"
 msgstr "Iraupena"
 
-#: src/totem-grilo.c:288
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "%d. denboraldia, %d. pasartea"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:325
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (%d. denboraldia, %d. pasartea)"
 
-#: src/totem-grilo.c:687
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "Arakatze-errorea"
 
-#: src/totem-grilo.c:836
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "Bilaketa-errorea"
 
-#: src/totem-grilo.c:1328
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "Lokala"
 
-#: src/totem-grilo.c:1931
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "Kanalak"
 
@@ -813,18 +836,18 @@ msgstr "Fitxategia ez da existitzen."
 msgid "Make sure that Totem is properly installed."
 msgstr "Ziurtatu Totem behar bezala instalatuta dagoela."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Egin klik elementuen gainean hautatzeko"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d hautatuta"
 msgstr[1] "%d hautatuta"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "'“%s'(r)en emaitzak”"
@@ -853,73 +876,58 @@ msgstr "Audio-pista"
 msgid "Subtitle"
 msgstr "Azpititulua"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:533
-msgid "None"
-msgstr "Bat ere ez"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:537
+#: src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem-object.c:1383 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:442
+msgid "None"
+msgstr "Bat ere ez"
+
+#: src/totem-object.c:1441 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausatu"
 
-#: src/totem-object.c:1388 src/totem-object.c:1398 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: src/totem-object.c:1465 src/totem-object.c:1493 src/totem-object.c:2037
+#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Videos aplikazioak ezin izan du “%s” erreproduzitu."
 
-#: src/totem-object.c:2209
+#: src/totem-object.c:2309
 msgid "Totem could not display the help contents."
 msgstr "Videos aplikazioak ezin du laguntzako edukia bistaratu."
 
-#: src/totem-object.c:2471
+#: src/totem-object.c:2570
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
-#: src/totem-object.c:3850
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Aurreko kapitulua/filma"
 
-#: src/totem-object.c:3856
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Erreproduzitu / pausarazi"
 
-#: src/totem-object.c:3862
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Hurrengo kapitulua/filma"
 
-#: src/totem-object.c:4085
+#: src/totem-object.c:4235
 msgid "Totem could not startup."
 msgstr "Ezin izan da Videos abiarazi."
 
-#: src/totem-object.c:4085
+#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Ez dago arrazoirik."
-
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "Gehitu webeko bideoa"
-
-#: src/totem-open-location.c:182 src/totem-uri.c:401 src/totem-uri.c:462
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_Utzi"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:463
-msgid "_Add"
-msgstr "_Gehitu"
 
 #: src/totem-options.c:49
 msgid "Play/Pause"
@@ -987,12 +995,12 @@ msgstr "Ezin da ilaratu eta ordeztu aldi berean"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "%d. titulua"
 
-#: src/totem-playlist.c:1065
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "“%s” erreprodukzio-zerrenda ezin izan da analizatu, hondatuta egongo da."
@@ -1164,27 +1172,27 @@ msgstr "Mendebalekoa"
 msgid "Vietnamese"
 msgstr "Vietnamera"
 
-#: src/totem-uri.c:330
+#: src/totem-uri.c:331
 msgid "All files"
 msgstr "Fitxategi denak"
 
-#: src/totem-uri.c:336
+#: src/totem-uri.c:337
 msgid "Video files"
 msgstr "Bideo-fitxategiak"
 
-#: src/totem-uri.c:347
+#: src/totem-uri.c:348
 msgid "Subtitle files"
 msgstr "Azpitituluen fitxategiak"
 
-#: src/totem-uri.c:398
+#: src/totem-uri.c:400
 msgid "Select Text Subtitles"
 msgstr "Hautatu testuaren azpitituluak"
 
-#: src/totem-uri.c:402
+#: src/totem-uri.c:404
 msgid "_Open"
 msgstr "_Ireki"
 
-#: src/totem-uri.c:459
+#: src/totem-uri.c:461
 msgid "Add Videos"
 msgstr "Gehitu bideoak"
 
@@ -1238,14 +1246,6 @@ msgstr "Berehalako mezularitzaren egoera"
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Ezarri berehalako mezularitzaren egoera kanpoan filma erreproduzitzean"
 
-#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
-msgid "Media Player Keys"
-msgstr "Multimedia-erreproduzitzailearen teklak"
-
-#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:6
-msgid "Support additional media player keys"
-msgstr "Onartu multimediaren erreproduzitzailearen tekla gehiago"
-
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open directory"
 msgstr "Ireki direktorioa"
@@ -1254,7 +1254,7 @@ msgstr "Ireki direktorioa"
 msgid "Open the directory of the currently playing movie"
 msgstr "Ireki unean erreproduzitzen ari den filmaren direktorioa"
 
-#: src/plugins/open-directory/totem-open-directory.c:189
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Ireki karpeta edukitzailea"
 
@@ -1266,54 +1266,51 @@ msgstr "Azpitituluen deskargatzailea"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Bilatu unean erreproduzitzen ari den filmaren azpitituluak"
 
-#: src/plugins/opensubtitles/opensubtitles.py:47
+#: src/plugins/opensubtitles/opensubtitles.py:49
 msgid "Brazilian Portuguese"
 msgstr "Portugesa (Brasil)"
 
-#: src/plugins/opensubtitles/opensubtitles.py:188
+#: src/plugins/opensubtitles/opensubtitles.py:192
 msgid "Searching for subtitles…"
 msgstr "Azpitituluak bilatzen…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:236
-#: src/plugins/opensubtitles/opensubtitles.py:620
+#: src/plugins/opensubtitles/opensubtitles.py:240
+#: src/plugins/opensubtitles/opensubtitles.py:635
 msgid "Downloading the subtitles…"
 msgstr "Azpitituluak deskargatzen…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:301
+#: src/plugins/opensubtitles/opensubtitles.py:305
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Ezin izan da OpenSubtitles webgunearekin kontaktatu"
 
-#: src/plugins/opensubtitles/opensubtitles.py:334
-#: src/plugins/opensubtitles/opensubtitles.py:352
+#: src/plugins/opensubtitles/opensubtitles.py:338
+#: src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:369
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Ezin izan da OpenSubtitles webgunearekin kontaktatu."
 
-#: src/plugins/opensubtitles/opensubtitles.py:340
+#: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "Ez da emaitzarik aurkitu."
 
-#: src/plugins/opensubtitles/opensubtitles.py:487
-msgid "Subtitles"
-msgstr "Azpitituluak"
-
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:493
+#: src/plugins/opensubtitles/opensubtitles.py:508
 msgid "Format"
 msgstr "Formatua"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:498
+#: src/plugins/opensubtitles/opensubtitles.py:513
 msgid "Rating"
 msgstr "Balorazioa"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:538
+#: src/plugins/opensubtitles/opensubtitles.py:553
 msgid "_Download Movie Subtitles…"
 msgstr "_Deskargatu filmaren azpitituluak…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:577
+#: src/plugins/opensubtitles/opensubtitles.py:592
 msgid "Searching subtitles…"
 msgstr "Azpitituluak bilatzen…"
 
@@ -1345,38 +1342,38 @@ msgstr "Filmaren propietateak"
 msgid "Adds movie properties menu item"
 msgstr "Filmaren propietateak menuko elementuari gehitzen dizkio"
 
-#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:148
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:155
-#: src/plugins/properties/totem-movie-properties.c:166
+#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:162
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:155
-#: src/plugins/properties/totem-movie-properties.c:166
+#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:162
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/totem-movie-properties.c:169
+#: src/plugins/properties/totem-movie-properties.c:165
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:169
+#: src/plugins/properties/totem-movie-properties.c:165
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/totem-movie-properties.c:280
+#: src/plugins/properties/totem-movie-properties.c:276
 msgid "Properties"
 msgstr "Propietateak"
 
-#: src/plugins/properties/totem-movie-properties.c:305
+#: src/plugins/properties/totem-movie-properties.c:301
 msgid "_Properties"
 msgstr "_Propietateak"
 
@@ -1639,11 +1636,11 @@ msgstr "Biratzeko plugina"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Bideoak biratzea baimentzen du orientazio okerrean baleude"
 
-#: src/plugins/rotation/totem-rotation.c:266
+#: src/plugins/rotation/totem-rotation.c:260
 msgid "_Rotate ↷"
 msgstr "_Biratu ↷"
 
-#: src/plugins/rotation/totem-rotation.c:270
+#: src/plugins/rotation/totem-rotation.c:264
 msgid "Rotate ↶"
 msgstr "Biratu ↶"
 
@@ -1655,22 +1652,22 @@ msgstr "Gorde kopia bat"
 msgid "Save a copy of the currently playing movie"
 msgstr "Gorde unean erreproduzitzen ari den filmaren kopia"
 
-#: src/plugins/save-file/totem-save-file.c:89
+#: src/plugins/save-file/totem-save-file.c:85
 msgid "The video could not be made available offline."
 msgstr "Bideoa ezin izan da lineaz kanpo erabilgarri jarri."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:91
+#: src/plugins/save-file/totem-save-file.c:87
 msgid "“Files” is not available."
 msgstr "Files ez dago erabilgarri."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:172
+#: src/plugins/save-file/totem-save-file.c:168
 msgid "Movie"
 msgstr "Filma"
 
-#: src/plugins/save-file/totem-save-file.c:456
+#: src/plugins/save-file/totem-save-file.c:452
 msgid "Make Available Offline"
 msgstr "Egin erabilgarri lineaz kanpo"
 
@@ -1682,7 +1679,7 @@ msgstr "Pantaila-babeslea"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Pantaila-babeslea desgaitzen du filma bat erreproduzitzean"
 
-#: src/plugins/screensaver/totem-screensaver.c:79
+#: src/plugins/screensaver/totem-screensaver.c:75
 msgid "Playing a movie"
 msgstr "Filma erreproduzitzea"
 
@@ -1749,20 +1746,20 @@ msgstr "Galeria sortzen…"
 msgid "Saving gallery as “%s”"
 msgstr "Galeria “%s” gisa gordetzen"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:228
-#: src/plugins/screenshot/totem-screenshot-plugin.c:237
+#: src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem-ek ezin izan du bideo horren pantaila-argazkia egin."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:237
+#: src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Honek ez luke gertatu behar: bidali errore honi buruzko txostena."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:330
+#: src/plugins/screenshot/totem-screenshot-plugin.c:323
 msgid "Take _Screenshot"
 msgstr "Egin _pantaila-argazkia"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:336
+#: src/plugins/screenshot/totem-screenshot-plugin.c:329
 msgid "Create Screenshot _Gallery…"
 msgstr "Sortu pantaila-argazkien _galeria…"
 
@@ -1800,41 +1797,41 @@ msgstr "7"
 msgid "_Skip To"
 msgstr "_Saltatu hona"
 
-#: src/plugins/skipto/totem-skipto-plugin.c:206
+#: src/plugins/skipto/totem-skipto-plugin.c:202
 msgid "_Skip To…"
 msgstr "_Saltatu hona…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0,75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Arrunta"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1,1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1,25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1,5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1,75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
 #, c-format
 msgid "Speed: %s"
 msgstr "Abiadura: %s"
@@ -1854,6 +1851,26 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Erabiltzailearen agentea ezartzen du Vimeo gunearentzako"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom in"
+#~ msgstr "Handiagotu"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom out"
+#~ msgstr "Txikiagotu"
+
+#~ msgid "Zoom In"
+#~ msgstr "Handiagotu"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "A_zpitituluak"
+
+#~ msgid "Media Player Keys"
+#~ msgstr "Multimedia-erreproduzitzailearen teklak"
+
+#~ msgid "Support additional media player keys"
+#~ msgstr "Onartu multimediaren erreproduzitzailearen tekla gehiago"
 
 #~ msgid "org.gnome.Totem"
 #~ msgstr "org.gnome.Totem"
