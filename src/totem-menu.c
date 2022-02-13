@@ -429,9 +429,19 @@ free_menu_item (MenuItem *item)
 }
 
 static MenuItem *
-create_special_menu_item (BvwLangInfo *info)
+create_menu_item (char *str,
+		  int   id)
 {
 	MenuItem *menu_item;
+	menu_item = g_new0 (MenuItem, 1);
+	menu_item->label = str;
+	menu_item->id = id;
+	return menu_item;
+}
+
+static MenuItem *
+create_special_menu_item (BvwLangInfo *info)
+{
 	const char *label;
 
 	if (g_strcmp0 (info->codec, "auto") == 0) {
@@ -443,10 +453,7 @@ create_special_menu_item (BvwLangInfo *info)
 	} else
 		return NULL;
 
-	menu_item = g_new0 (MenuItem, 1);
-	menu_item->label = g_strdup (_(label));
-	menu_item->id = info->id;
-	return menu_item;
+	return create_menu_item (g_strdup (_(label)), info->id);
 }
 
 GList *
@@ -523,10 +530,7 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 			str = g_strdup (get_language_name_no_und (info->language, track_type));
 		}
 
-		menu_item = g_new0 (MenuItem, 1);
-		menu_item->label = str;
-		menu_item->id = info->id;
-		ret = g_list_prepend (ret, menu_item);
+		ret = g_list_prepend (ret, create_menu_item (str, info->id));
 	}
 
 	g_hash_table_destroy (printed_table);
