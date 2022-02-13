@@ -381,6 +381,14 @@ bvw_lang_info_to_id (BvwLangInfo *info)
 	return g_strdup_printf ("%s-%s", info->language, info->codec);
 }
 
+static char *
+bvw_lang_info_to_id2 (BvwLangInfo *info)
+{
+	if (!info->title)
+		return NULL;
+	return g_strdup_printf ("%s-%s", info->title, info->language);
+}
+
 static int
 hash_table_num_instances (GHashTable *ht,
 			  const char *key)
@@ -461,10 +469,11 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 			      BvwTrackType  track_type)
 {
 	GList *l, *ret;
-	GHashTable *lang_table, *lang_codec_table, *printed_table;
+	GHashTable *lang_table, *lang_codec_table, *title_lang_table, *printed_table;
 
 	lang_table = g_hash_table_new (g_str_hash, g_str_equal);
 	lang_codec_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	title_lang_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
 	/* Populate the hash tables */
 	for (l = langs; l != NULL; l = l->next) {
@@ -487,6 +496,15 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 		g_hash_table_insert (lang_codec_table,
 				     id,
 				     GINT_TO_POINTER (num));
+
+		id = bvw_lang_info_to_id2 (info);
+		if (id) {
+			num = hash_table_num_instances (title_lang_table, id);
+			num++;
+			g_hash_table_insert (title_lang_table,
+					     id,
+					     GINT_TO_POINTER (num));
+		}
 	}
 
 	ret = NULL;
@@ -500,6 +518,32 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 		menu_item = create_special_menu_item (info);
 		if (menu_item) {
 			ret = g_list_prepend (ret, menu_item);
+			continue;
+		}
+
+		if (info->title) {
+			char *id;
+
+			id = bvw_lang_info_to_id2 (info);
+			num = hash_table_num_instances (title_lang_table, id);
+			if (num > 1) {
+				num = hash_table_num_instances (printed_table, info->language);
+				num++;
+				g_hash_table_insert (printed_table,
+						     (gpointer) info->language,
+						     GINT_TO_POINTER (num));
+
+				str = g_strdup_printf ("%s (%s) #%d",
+						       info->title,
+						       get_language_name_no_und (info->language, track_type),
+						       num);
+			} else {
+				str = g_strdup_printf ("%s (%s)",
+						       info->title,
+						       get_language_name_no_und (info->language, track_type));
+			}
+			g_free (id);
+			ret = g_list_prepend (ret, create_menu_item (str, info->id));
 			continue;
 		}
 
@@ -535,6 +579,7 @@ bvw_lang_info_to_menu_labels (GList        *langs,
 
 	g_hash_table_destroy (printed_table);
 	g_hash_table_destroy (lang_codec_table);
+	g_hash_table_destroy (title_lang_table);
 	g_hash_table_destroy (lang_table);
 
 	return g_list_reverse (ret);

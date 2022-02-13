@@ -90,6 +90,33 @@ test_menus_lang_info (void)
 	g_assert_cmpstr (nth_label (ret, 1), ==, "Spanish; Castilian");
 	g_assert_cmpstr (nth_label (ret, 2), ==, "French");
 	g_list_free_full (ret, g_free);
+
+	/* Tracks with titles */
+	l = NULL;
+	l = g_list_append (l, bvw_lang_info_new ("Closed Captions", "eng", NULL));
+	l = g_list_append (l, bvw_lang_info_new ("Closed Captions", "fre", NULL));
+	l = g_list_append (l, bvw_lang_info_new ("SDH", "eng", NULL));
+	l = g_list_append (l, bvw_lang_info_new ("SDH", "fre", NULL));
+
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_SUBTITLE);
+	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
+
+	g_assert_cmpstr (nth_label (ret, 0), ==, "Closed Captions (English)");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "Closed Captions (French)");
+	g_assert_cmpstr (nth_label (ret, 2), ==, "SDH (English)");
+	g_assert_cmpstr (nth_label (ret, 3), ==, "SDH (French)");
+	g_list_free_full (ret, g_free);
+
+	l = NULL;
+	l = g_list_append (l, bvw_lang_info_new ("Closed Captions", "eng", NULL));
+	l = g_list_append (l, bvw_lang_info_new ("Closed Captions", "eng", NULL));
+
+	ret = bvw_lang_info_to_menu_labels (l, BVW_TRACK_TYPE_SUBTITLE);
+	g_list_free_full (l, (GDestroyNotify) bacon_video_widget_lang_info_free);
+
+	g_assert_cmpstr (nth_label (ret, 0), ==, "Closed Captions (English) #1");
+	g_assert_cmpstr (nth_label (ret, 1), ==, "Closed Captions (English) #2");
+	g_list_free_full (ret, g_free);
 }
 
 static void
