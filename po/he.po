@@ -9,19 +9,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-03 17:19+0000\n"
-"PO-Revision-Date: 2022-02-07 19:08+0200\n"
+"POT-Creation-Date: 2022-02-11 17:58+0000\n"
+"PO-Revision-Date: 2022-02-14 16:47+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
-"Language-Team: Hebrew <yoseforb@gmail.com>\n"
+"Language-Team: Hebrew <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 40.0\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1922 src/totem-object.c:3765
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "סרטים"
 
@@ -180,7 +180,7 @@ msgstr "Directories to show"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Directories to show in the browse interface, none by default"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5500
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
 msgid "Stereo"
 msgstr "דו־קולי (סטריאו)"
 
@@ -451,11 +451,29 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "ניווט ימינה"
 
-#: data/totem.ui:11 data/totem.ui:106
+#: data/shortcuts.ui:307
+#| msgid "Subtitles"
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "כתוביות"
+
+#: data/shortcuts.ui:312
+#| msgid "Select Text Subtitles"
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "בחירת הכתובית הבאה"
+
+#: data/shortcuts.ui:319
+#| msgid "Autoloads text subtitles"
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "הצגת כתוביות"
+
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "ה_עדפות"
 
-#: data/totem.ui:15 data/totem.ui:110
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "צירופי מ_קשים"
 
@@ -509,116 +527,132 @@ msgstr "‏2.11:1 (DVB)"
 msgid "Switch An_gles"
 msgstr "ה_חלפת זוויות"
 
-#: data/totem.ui:89
-msgid "_Languages"
-msgstr "_שפות"
-
-#: data/totem.ui:93
-msgid "S_ubtitles"
-msgstr "_כתוביות"
-
-#: data/totem.ui:96
-msgid "_Select Text Subtitles…"
-msgstr "בחירת _כתוביות…"
-
-#: data/totem.ui:119
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "_שליפה"
 
-#: data/totem.ui:130
+#: data/totem.ui:114
+#| msgid "_Languages"
+msgid "Languages"
+msgstr "שפות"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "כתוביות"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "בחירת _כתוביות…"
+
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "מצב _חזרה"
 
-#: data/totem.ui:136
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "תפריט _DVD"
 
-#: data/totem.ui:142
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "תפריט _כותרת"
 
-#: data/totem.ui:147
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "תפריט _שמע"
 
-#: data/totem.ui:152
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "תפריט _זווית"
 
-#: data/totem.ui:157
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "תפריט _פרקים"
 
-#: data/totem.ui:166
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "מהירות"
 
-#: data/uri.ui:14
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "הוספת סרטון מהרשת"
+
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "נא להזין את _מיקום הקובץ שברצונך לפתוח:"
+
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_ביטול"
+
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "הו_ספה"
 
 #. translators: Unknown remaining time
 #: src/backend/bacon-time-label.c:118
 msgid "--:--"
 msgstr "--:--"
 
-#: src/backend/bacon-video-widget.c:1892
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "נדרשת סיסמה עבור שרת ה־RTSP"
 
-#: src/backend/bacon-video-widget.c:3839
+#: src/backend/bacon-video-widget.c:3353
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "המקור נראה מוצפן, ולא ניתן לקריאה. האם אתה מנסה לנגן DVD מוצפן ללא libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3853
+#: src/backend/bacon-video-widget.c:3367
 msgid "The server you are trying to connect to is not known."
 msgstr "השרת אליו אתה מנסה להתחבר אינו ידוע."
 
-#: src/backend/bacon-video-widget.c:3856
+#: src/backend/bacon-video-widget.c:3370
 msgid "The connection to this server was refused."
 msgstr "החיבור לשרת זה נדחה."
 
-#: src/backend/bacon-video-widget.c:3859
+#: src/backend/bacon-video-widget.c:3373
 msgid "The specified movie could not be found."
 msgstr "לא ניתן למצוא את הסרט שצוין."
 
-#: src/backend/bacon-video-widget.c:3866
+#: src/backend/bacon-video-widget.c:3380
 msgid "The server refused access to this file or stream."
 msgstr "השרת מונע גישה לקובץ או שידור זה."
 
-#: src/backend/bacon-video-widget.c:3872
+#: src/backend/bacon-video-widget.c:3386
 msgid "Authentication is required to access this file or stream."
 msgstr "נדרש אישור כדי לגשת לקובץ או שידור זה."
 
-#: src/backend/bacon-video-widget.c:3878
+#: src/backend/bacon-video-widget.c:3392
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "חסרה תמיכת SSL/TLS. יש לבדוק את ההתקנה שלך."
 
-#: src/backend/bacon-video-widget.c:3885
+#: src/backend/bacon-video-widget.c:3399
 msgid "You are not allowed to open this file."
 msgstr "אינך מורשה לפתוח קובץ זה."
 
-#: src/backend/bacon-video-widget.c:3890
+#: src/backend/bacon-video-widget.c:3404
 msgid "This location is not a valid one."
 msgstr "מיקום זה אינו תקני."
 
-#: src/backend/bacon-video-widget.c:3898
+#: src/backend/bacon-video-widget.c:3412
 msgid "The movie could not be read."
 msgstr "לא ניתן לקרוא את הסרט"
 
-#: src/backend/bacon-video-widget.c:3904
+#: src/backend/bacon-video-widget.c:3418
 msgid "This file is encrypted and cannot be played back."
 msgstr "קובץ זה מוצפן ולא יכול להתנגן אחורה."
 
-#: src/backend/bacon-video-widget.c:3910
+#: src/backend/bacon-video-widget.c:3424
 msgid "The file you tried to play is an empty file."
 msgstr "הקובץ שניסית לפתוח הוא קובץ ריק."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3934 src/backend/bacon-video-widget.c:3942
+#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -632,12 +666,12 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3954
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "התזרים לא ניתן לניגון. יתכן שחומת אש חוסמת אותו."
 
-#: src/backend/bacon-video-widget.c:3957
+#: src/backend/bacon-video-widget.c:3471
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -645,25 +679,25 @@ msgstr ""
 "תזרים שמע או וידאו לא מטופל כראוי עקב מפענחים חסרים. יתכן שיהיה עליך להתקין "
 "תוספים נוספים כדי לנגן סוגים מסוימים של סרטים"
 
-#: src/backend/bacon-video-widget.c:3968
+#: src/backend/bacon-video-widget.c:3482
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "לא ניתן לנגן קובץ זה דרך הרשת. כדאי לנסות לשמור אותו על הכונן קודם."
 
-#: src/backend/bacon-video-widget.c:5496
+#: src/backend/bacon-video-widget.c:5070
 msgid "Surround"
 msgstr "צליל היקפי"
 
-#: src/backend/bacon-video-widget.c:5498
+#: src/backend/bacon-video-widget.c:5072
 msgid "Mono"
 msgstr "מונו"
 
-#: src/backend/bacon-video-widget.c:5768
+#: src/backend/bacon-video-widget.c:5342
 msgid "Media contains no supported video streams."
 msgstr "המדיה איננה כוללת זרמי וידאו נתמכים"
 
-#: src/backend/bacon-video-widget.c:5979
+#: src/backend/bacon-video-widget.c:5531
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -753,7 +787,6 @@ msgid "Verify your system installation. Totem will now exit."
 msgstr "נא לוודא את התקנת המערכת שלך. Totem ייצא עכשיו."
 
 #: src/totem.c:74
-#| msgid "Audio Preview"
 msgid "Videos Preview"
 msgstr "תצוגה מקדימה לסרטים"
 
@@ -783,31 +816,31 @@ msgstr "הפרדה"
 msgid "Duration"
 msgstr "משך"
 
-#: src/totem-grilo.c:288
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "עונה %d פרק %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:325
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "‏%s ‏(עונה %d פרק %d)"
 
-#: src/totem-grilo.c:687
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "שגיאת עיון"
 
-#: src/totem-grilo.c:836
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "שגיאה בחיפוש"
 
-#: src/totem-grilo.c:1328
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "מקומי"
 
-#: src/totem-grilo.c:1931
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "ערוצים"
 
@@ -825,18 +858,18 @@ msgstr "הקובץ אינו קיים."
 msgid "Make sure that Totem is properly installed."
 msgstr "נא לוודא ש־Totem מותקן כראוי."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "יש ללחוץ על פריטים כדי לבחור אותם"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "אחד נבחר"
 msgstr[1] "%d נבחרו"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "תוצאות עבור „%s”"
@@ -865,73 +898,58 @@ msgstr "רצועת שמע"
 msgid "Subtitle"
 msgstr "כתוביות"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:533
-msgid "None"
-msgstr "ללא"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:537
+#: src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: src/totem-object.c:1396 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:442
+msgid "None"
+msgstr "ללא"
+
+#: src/totem-object.c:1441 src/totem-options.c:51
 msgid "Pause"
 msgstr "השהיה"
 
-#: src/totem-object.c:1401 src/totem-object.c:1411 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "ניגון"
 
-#: src/totem-object.c:1478 src/totem-object.c:1506 src/totem-object.c:2050
+#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "‏Totem לא יכול לנגן את „%s”."
 
-#: src/totem-object.c:2222
+#: src/totem-object.c:2309
 msgid "Totem could not display the help contents."
 msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
-#: src/totem-object.c:2484
+#: src/totem-object.c:2570
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
-#: src/totem-object.c:3863
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "הפרק/סרט הקודם"
 
-#: src/totem-object.c:3869
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "ניגון / השהיה"
 
-#: src/totem-object.c:3875
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "הפרק/סרט הבא"
 
-#: src/totem-object.c:4098
+#: src/totem-object.c:4235
 msgid "Totem could not startup."
 msgstr "Totem לא יכול לעלות."
 
-#: src/totem-object.c:4098 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "אין סיבה."
-
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "הוספת סרטון מהרשת"
-
-#: src/totem-open-location.c:182 src/totem-uri.c:403 src/totem-uri.c:464
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_ביטול"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:465
-msgid "_Add"
-msgstr "הו_ספה"
 
 #: src/totem-options.c:49
 msgid "Play/Pause"
@@ -999,12 +1017,12 @@ msgstr "Can’t enqueue and replace at the same time"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "שם %d"
 
-#: src/totem-playlist.c:1065
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "The playlist “%s” could not be parsed. It might be damaged."
@@ -1259,7 +1277,7 @@ msgstr "פתיחת תיקייה"
 msgid "Open the directory of the currently playing movie"
 msgstr "פתיחת התיקייה של הסרט המתנגן כעת"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "פתיחת תיקייה מכילה"
 
@@ -1297,10 +1315,6 @@ msgstr "לא ניתן לגשת לאתר OpenSubtitles."
 #: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "אין תוצאות."
-
-#: src/plugins/opensubtitles/opensubtitles.py:502
-msgid "Subtitles"
-msgstr "כתוביות"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
@@ -1649,11 +1663,11 @@ msgstr "תוסף ההטיה"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "מתן האפשרות לסיבוב קטעי וידאו אם אינם מופיעים בכיוון הנכון"
 
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:260
 msgid "_Rotate ↷"
 msgstr "_סיבוב ↷"
 
-#: src/plugins/rotation/totem-rotation.c:266
+#: src/plugins/rotation/totem-rotation.c:264
 msgid "Rotate ↶"
 msgstr "סיבוב ↶"
 
@@ -1864,6 +1878,9 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "הגדרת סוכן המשתמש ל־Vimeo"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "_כתוביות"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
