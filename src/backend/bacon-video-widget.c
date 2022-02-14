@@ -2601,6 +2601,9 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_TRACK_NONE);
   g_return_val_if_fail (bvw->play != NULL, BVW_TRACK_NONE);
 
+  if (g_list_length (bvw->subtitles) == 1)
+    return BVW_TRACK_NONE;
+
   g_object_get (bvw->play, "flags", &flags, NULL);
 
   if ((flags & GST_PLAY_FLAG_TEXT) == 0)
