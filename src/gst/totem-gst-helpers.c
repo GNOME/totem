@@ -72,43 +72,43 @@ totem_gst_message_print (GstMessage *msg,
   g_free (dbg);
 }
 
+static gboolean
+filter_hw_decoders (GstPluginFeature *feature,
+		    gpointer          user_data)
+{
+  GstElementFactory *factory;
+
+  if (!GST_IS_ELEMENT_FACTORY (feature))
+    return FALSE;
+
+  factory = GST_ELEMENT_FACTORY (feature);
+  if (!gst_element_factory_list_is_type (factory,
+					 GST_ELEMENT_FACTORY_TYPE_DECODER |
+					 GST_ELEMENT_FACTORY_TYPE_MEDIA_VIDEO |
+					 GST_ELEMENT_FACTORY_TYPE_MEDIA_IMAGE)) {
+    return FALSE;
+  }
+
+  return gst_element_factory_list_is_type (factory,
+					   GST_ELEMENT_FACTORY_TYPE_HARDWARE);
+}
+
 /* Disable decoders that require a display environment to work,
  * and that might cause crashes */
 void
 totem_gst_disable_display_decoders (void)
 {
-	GstRegistry *registry;
-	const char *blocked_plugins[] = {
-	  "bmcdec",
-	  "vaapi",
-	  "video4linux2",
-	  "nvmpegvideodec",
-	  "nvmpeg2videodec",
-	  "nvmpeg4videodec",
-	  "nvh264sldec",
-	  "nvh264dec",
-	  "nvjpegdec",
-	  "nvh265sldec",
-	  "nvh265dec",
-	  "nvvp8dec",
-	};
-	guint i;
+  GstRegistry *registry;
+  g_autolist(GstPluginFeature) hw_list = NULL;
+  GList *l;
 
-	/* Disable the vaapi plugin as it will not work with the
-	 * fakesink we use:
-	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186
-	 *      https://bugzilla.gnome.org/show_bug.cgi?id=749605
-	 *      https://gitlab.gnome.org/GNOME/tracker-miners/-/commit/1d3accb9187611629c9be3727c729809d96d9ea6
-	 */
-	registry = gst_registry_get ();
-
-	for (i = 0; i < G_N_ELEMENTS (blocked_plugins); i++) {
-		GstPlugin *plugin =
-			gst_registry_find_plugin (registry,
-						  blocked_plugins[i]);
-		if (plugin)
-			gst_registry_remove_plugin (registry, plugin);
-	}
+  registry = gst_registry_get ();
+  hw_list = gst_registry_feature_filter (registry, filter_hw_decoders, FALSE, NULL);
+  for (l = hw_list; l != NULL; l = l->next) {
+    g_debug ("Disabling feature %s",
+	     gst_plugin_feature_get_name (l->data));
+    gst_registry_remove_feature (registry, l->data);
+  }
 }
 
 /*
