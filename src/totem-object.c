@@ -47,6 +47,7 @@
 
 #include <string.h>
 
+#include "gst/totem-gst-helpers.h"
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-options.h"
@@ -4248,6 +4249,9 @@ void
 video_widget_create (TotemObject *totem)
 {
 	GError *err = NULL;
+
+	if (g_settings_get_boolean (totem->settings, "force-software-decoders"))
+		totem_gst_disable_hardware_decoders ();
 
 	if (!bacon_video_widget_check_init (totem->bvw, &err)) {
 		totem_object_show_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
