@@ -3492,6 +3492,8 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_AudioPlay:
 	case GDK_KEY_p:
 	case GDK_KEY_P:
+	case GDK_KEY_k:
+	case GDK_KEY_K:
 		totem_object_play_pause (totem);
 		break;
 	case GDK_KEY_comma:
