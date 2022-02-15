@@ -3469,7 +3469,10 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_M:
 	case GDK_KEY_m:
-		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
+		if (totem_playing_dvd (totem->mrl))
+			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
+		else
+			totem_object_volume_toggle_mute (totem);
 		break;
 	case GDK_KEY_AudioNext:
 	case GDK_KEY_Forward:
