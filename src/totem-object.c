@@ -3625,10 +3625,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
 		break;
-	case GDK_KEY_0:
-		if (mask == GDK_CONTROL_MASK)
-			totem_object_set_zoom (totem, FALSE);
-		break;
 	case GDK_KEY_Menu:
 	case GDK_KEY_F10:
 		show_popup (totem);
@@ -3642,6 +3638,23 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_Time:
 		show_popup (totem);
+		break;
+	case GDK_KEY_0:
+		if (mask == GDK_CONTROL_MASK) {
+			totem_object_set_zoom (totem, FALSE);
+			break;
+		}
+		/* fall-through */
+	case GDK_KEY_1:
+	case GDK_KEY_2:
+	case GDK_KEY_3:
+	case GDK_KEY_4:
+	case GDK_KEY_5:
+	case GDK_KEY_6:
+	case GDK_KEY_7:
+	case GDK_KEY_8:
+	case GDK_KEY_9:
+		totem_object_seek (totem, (event->keyval - GDK_KEY_0) * 0.1);
 		break;
 	case GDK_KEY_equal:
 		if (mask == GDK_CONTROL_MASK)
