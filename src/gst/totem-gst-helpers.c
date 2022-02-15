@@ -93,10 +93,8 @@ filter_hw_decoders (GstPluginFeature *feature,
 					   GST_ELEMENT_FACTORY_TYPE_HARDWARE);
 }
 
-/* Disable decoders that require a display environment to work,
- * and that might cause crashes */
 void
-totem_gst_disable_display_decoders (void)
+totem_gst_disable_hardware_decoders (void)
 {
   GstRegistry *registry;
   g_autolist(GstPluginFeature) hw_list = NULL;

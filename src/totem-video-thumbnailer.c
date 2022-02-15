@@ -396,7 +396,7 @@ thumb_app_setup_play (ThumbApp *app)
 
 	app->play = play;
 
-	totem_gst_disable_display_decoders ();
+	totem_gst_disable_hardware_decoders ();
 }
 
 static void

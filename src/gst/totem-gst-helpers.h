@@ -54,7 +54,7 @@ void totem_gst_message_print (GstMessage *msg,
 			      GstElement *play,
 			      const char *filename);
 
-void totem_gst_disable_display_decoders (void);
+void totem_gst_disable_hardware_decoders (void);
 
 G_END_DECLS
 
