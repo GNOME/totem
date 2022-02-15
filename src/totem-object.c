@@ -2785,7 +2785,7 @@ void
 seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem)
 {
 	double pos;
-	gint _time;
+	gint64 _time;
 
 	if (totem->seek_lock == FALSE)
 		return;
