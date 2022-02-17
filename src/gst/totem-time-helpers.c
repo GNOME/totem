@@ -40,7 +40,10 @@ totem_time_to_string (gint64        msecs,
 	int sec, min, hour, _time;
 	double time_f;
 
-	g_return_val_if_fail (msecs >= 0, NULL);
+	if (msecs < 0) {
+		/* translators: Unknown time */
+		return g_strdup (_("--:--"));
+	}
 
 	/* When calculating the remaining time,
 	 * we want to make sure that:

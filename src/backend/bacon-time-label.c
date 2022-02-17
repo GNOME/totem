@@ -110,17 +110,10 @@ update_label_text (BaconTimeLabel *label)
 	if (length > 60 * 60 * 1000)
 		flags |= TOTEM_TIME_FLAG_FORCE_HOUR;
 
-	if (length <= 0 ||
-	    _time > length) {
-		if (!label->remaining) {
-			label_str = totem_time_to_string (_time, flags);
-		} else {
-			/* translators: Unknown remaining time */
-			label_str = g_strdup (_("--:--"));
-		}
-	} else {
+	if (length <= 0 || _time > length)
+		label_str = totem_time_to_string (label->remaining ? -1 : _time, flags);
+	else
 		label_str = totem_time_to_string (label->remaining ? length - _time : _time, flags);
-	}
 
 	gtk_label_set_text (GTK_LABEL (label), label_str);
 }
