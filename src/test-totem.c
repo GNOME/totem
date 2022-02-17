@@ -146,6 +146,33 @@ test_time_label (void)
 		    50 * 60 * 1000, 45 * 60 * 1000,
 		    "50:00", "--:--");
 
+	bacon_time_label_set_show_msecs (BACON_TIME_LABEL (label), TRUE);
+	bacon_time_label_set_show_msecs (BACON_TIME_LABEL (label_remaining), TRUE);
+
+	set_labels (label, label_remaining,
+		    0, 1000,
+		    "0:00.000", "-0:01.000");
+
+	set_labels (label, label_remaining,
+		    500, 1000,
+		    "0:00.500", "-0:00.500");
+
+	set_labels (label, label_remaining,
+		    700, 1400,
+		    "0:00.700", "-0:00.700");
+
+	set_labels (label, label_remaining,
+		    1000, 1400,
+		    "0:01.000", "-0:00.400");
+
+	set_labels (label, label_remaining,
+		    0, 45 * 60 * 1000,
+		    "0:00.000", "-45:00.000");
+
+	set_labels (label, label_remaining,
+		    50 * 60 * 1000, 45 * 60 * 1000,
+		    "50:00.000", "--:--");
+
 	str = totem_time_to_string (0, TOTEM_TIME_FLAG_NONE);
 	g_assert_cmpstr (str, ==, "0:00");
 	g_free (str);

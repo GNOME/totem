@@ -31,13 +31,15 @@ struct _BaconTimeLabel {
 	gint64 time;
 	gint64 length;
 	gboolean remaining;
+	gboolean show_msecs;
 };
 
 G_DEFINE_TYPE(BaconTimeLabel, bacon_time_label, GTK_TYPE_LABEL)
 
 enum {
 	PROP_0,
-	PROP_REMAINING
+	PROP_REMAINING,
+	PROP_SHOW_MSECS
 };
 
 static void
@@ -76,6 +78,9 @@ bacon_time_label_set_property (GObject      *object,
 	case PROP_REMAINING:
 		bacon_time_label_set_remaining (BACON_TIME_LABEL (object), g_value_get_boolean (value));
 		break;
+	case PROP_SHOW_MSECS:
+		bacon_time_label_set_show_msecs (BACON_TIME_LABEL (object), g_value_get_boolean (value));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 		break;
@@ -94,6 +99,10 @@ bacon_time_label_class_init (BaconTimeLabelClass *klass)
 					 g_param_spec_boolean ("remaining", "Remaining",
 							       "Whether to show a remaining time.", FALSE,
 							       G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property (object_class, PROP_SHOW_MSECS,
+					 g_param_spec_boolean ("show-msecs", "Show milliseconds",
+							       "Whether to show milliseconds.", FALSE,
+							       G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS));
 }
 
 static void
@@ -109,6 +118,7 @@ update_label_text (BaconTimeLabel *label)
 	flags = label->remaining ? TOTEM_TIME_FLAG_REMAINING : TOTEM_TIME_FLAG_NONE;
 	if (length > 60 * 60 * 1000)
 		flags |= TOTEM_TIME_FLAG_FORCE_HOUR;
+	flags |= label->show_msecs ? TOTEM_TIME_FLAG_MSECS : TOTEM_TIME_FLAG_NONE;
 
 	if (length <= 0 || _time > length)
 		label_str = totem_time_to_string (label->remaining ? -1 : _time, flags);
@@ -129,9 +139,11 @@ bacon_time_label_set_time (BaconTimeLabel *label,
 	    length == -1)
 		return;
 
-	if (_time / 1000 == label->time / 1000 &&
-	    length / 1000 == label->length / 1000)
-		return;
+	if (!label->show_msecs) {
+		if (_time / 1000 == label->time / 1000 &&
+		    length / 1000 == label->length / 1000)
+			return;
+	}
 
 	label->time = _time;
 	label->length = length;
@@ -144,6 +156,7 @@ bacon_time_label_reset (BaconTimeLabel *label)
 {
 	g_return_if_fail (BACON_IS_TIME_LABEL (label));
 
+	bacon_time_label_set_show_msecs (label, FALSE);
 	bacon_time_label_set_time (label, 0, 0);
 }
 
@@ -155,4 +168,16 @@ bacon_time_label_set_remaining (BaconTimeLabel *label,
 
 	label->remaining = remaining;
 	update_label_text (label);
+}
+
+void
+bacon_time_label_set_show_msecs (BaconTimeLabel *label,
+				 gboolean        show_msecs)
+{
+	g_return_if_fail (BACON_IS_TIME_LABEL (label));
+
+	if (show_msecs != label->show_msecs) {
+		label->show_msecs = show_msecs;
+		update_label_text (label);
+	}
 }

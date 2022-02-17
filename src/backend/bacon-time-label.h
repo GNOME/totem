@@ -33,6 +33,7 @@ void       bacon_time_label_set_time            (BaconTimeLabel *label,
                                                  gint64          length_msecs);
 void       bacon_time_label_reset               (BaconTimeLabel *label);
 
-void
-bacon_time_label_set_remaining                  (BaconTimeLabel *label,
+void       bacon_time_label_set_remaining       (BaconTimeLabel *label,
                                                  gboolean        remaining);
+void       bacon_time_label_set_show_msecs      (BaconTimeLabel *label,
+                                                 gboolean        show_msecs);
