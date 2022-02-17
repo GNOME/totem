@@ -1440,6 +1440,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 	case STATE_PLAYING:
 		id = "media-playback-pause-symbolic";
 		tip = N_("Pause");
+		bacon_time_label_set_show_msecs (totem->time_label, FALSE);
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
@@ -3486,11 +3487,13 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_comma:
 	case GDK_KEY_FrameBack:
 		totem_object_pause (totem);
+		bacon_time_label_set_show_msecs (totem->time_label, TRUE);
 		bacon_video_widget_step (totem->bvw, FALSE, NULL);
 		break;
 	case GDK_KEY_period:
 	case GDK_KEY_FrameForward:
 		totem_object_pause (totem);
+		bacon_time_label_set_show_msecs (totem->time_label, TRUE);
 		bacon_video_widget_step (totem->bvw, TRUE, NULL);
 		break;
 	case GDK_KEY_AudioPause:
