@@ -46,7 +46,7 @@ bacon_time_label_init (BaconTimeLabel *label)
 	char *time_string;
 	PangoAttrList *attrs;
 
-	time_string = totem_time_to_string (0, FALSE, FALSE);
+	time_string = totem_time_to_string (0, TOTEM_TIME_FLAG_NONE);
 	gtk_label_set_text (GTK_LABEL (label), time_string);
 	g_free (time_string);
 
@@ -99,36 +99,30 @@ bacon_time_label_class_init (BaconTimeLabelClass *klass)
 static void
 update_label_text (BaconTimeLabel *label)
 {
-	char *label_str;
-	gboolean force_hour = FALSE;
+	g_autofree char *label_str = NULL;
 	gint64 _time, length;
+	TotemTimeFlag flags;
 
 	_time = label->time;
 	length = label->length;
 
+	flags = label->remaining ? TOTEM_TIME_FLAG_REMAINING : TOTEM_TIME_FLAG_NONE;
 	if (length > 60 * 60 * 1000)
-		force_hour = TRUE;
+		flags |= TOTEM_TIME_FLAG_FORCE_HOUR;
 
 	if (length <= 0 ||
 	    _time > length) {
 		if (!label->remaining) {
-			label_str = totem_time_to_string (_time, FALSE, force_hour);
+			label_str = totem_time_to_string (_time, flags);
 		} else {
 			/* translators: Unknown remaining time */
 			label_str = g_strdup (_("--:--"));
 		}
 	} else {
-		if (!label->remaining) {
-			/* Elapsed */
-			label_str = totem_time_to_string (_time, FALSE, force_hour);
-		} else {
-			/* Remaining */
-			label_str = totem_time_to_string (length - _time, TRUE, force_hour);
-		}
+		label_str = totem_time_to_string (label->remaining ? length - _time : _time, flags);
 	}
 
 	gtk_label_set_text (GTK_LABEL (label), label_str);
-	g_free (label_str);
 }
 
 void

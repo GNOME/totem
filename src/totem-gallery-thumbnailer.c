@@ -620,7 +620,7 @@ create_gallery (ThumbApp *app)
 	g_object_unref (pixbuf);
 
 	/* Build the header information */
-	duration_text = totem_time_to_string (stream_length, FALSE, FALSE);
+	duration_text = totem_time_to_string (stream_length, TOTEM_TIME_FLAG_NONE);
 	file = g_file_new_for_commandline_arg (app->input);
 	filename = g_file_get_basename (file);
 	g_object_unref (file);
@@ -669,7 +669,7 @@ create_gallery (ThumbApp *app)
 		gchar *timestamp_text;
 		gint layout_width, layout_height;
 
-		timestamp_text = totem_time_to_string (pos, FALSE, FALSE);
+		timestamp_text = totem_time_to_string (pos, TOTEM_TIME_FLAG_NONE);
 
 		pango_layout_set_text (layout, timestamp_text, -1);
 		pango_layout_get_pixel_size (layout, &layout_width, &layout_height);

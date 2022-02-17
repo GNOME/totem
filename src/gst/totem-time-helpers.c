@@ -34,9 +34,8 @@
 /* FIXME: Remove
  * See https://gitlab.freedesktop.org/gstreamer/gstreamer/issues/26 */
 char *
-totem_time_to_string (gint64   msecs,
-		      gboolean remaining,
-		      gboolean force_hour)
+totem_time_to_string (gint64        msecs,
+		      TotemTimeFlag flags)
 {
 	int sec, min, hour, _time;
 	double time_f;
@@ -47,7 +46,7 @@ totem_time_to_string (gint64   msecs,
 	 * we want to make sure that:
 	 * current time + time remaining = total run time */
 	time_f = (double) msecs / 1000;
-	if (remaining)
+	if (flags & TOTEM_TIME_FLAG_REMAINING)
 		time_f = ceil (time_f);
 	else
 		time_f = round (time_f);
@@ -59,8 +58,8 @@ totem_time_to_string (gint64   msecs,
 	_time = _time - (min * 60);
 	hour = _time / (60*60);
 
-	if (hour > 0 || force_hour) {
-		if (!remaining) {
+	if (hour > 0 || flags & TOTEM_TIME_FLAG_FORCE_HOUR) {
+		if (!(flags & TOTEM_TIME_FLAG_REMAINING)) {
 			/* hour:minutes:seconds */
 			/* Translators: This is a time format, like "-9:05:02" for 9
 			 * hours, 5 minutes, and 2 seconds. You may change ":" to
@@ -79,7 +78,7 @@ totem_time_to_string (gint64   msecs,
 		}
 	}
 
-	if (remaining) {
+	if (flags & TOTEM_TIME_FLAG_REMAINING) {
 		/* -minutes:seconds */
 		/* Translators: This is a time format, like "-5:02" for 5
 		 * minutes and 2 seconds playback remaining. You may change

@@ -146,23 +146,23 @@ test_time_label (void)
 		    50 * 60 * 1000, 45 * 60 * 1000,
 		    "50:00", "--:--");
 
-	str = totem_time_to_string (0, FALSE, FALSE);
+	str = totem_time_to_string (0, TOTEM_TIME_FLAG_NONE);
 	g_assert_cmpstr (str, ==, "0:00");
 	g_free (str);
 
-	str = totem_time_to_string (500, FALSE, FALSE);
+	str = totem_time_to_string (500, TOTEM_TIME_FLAG_NONE);
 	g_assert_cmpstr (str, ==, "0:01");
 	g_free (str);
 
-	str = totem_time_to_string (500, TRUE, FALSE);
+	str = totem_time_to_string (500, TOTEM_TIME_FLAG_REMAINING);
 	g_assert_cmpstr (str, ==, "-0:01");
 	g_free (str);
 
-	str = totem_time_to_string (1250, FALSE, FALSE);
+	str = totem_time_to_string (1250, TOTEM_TIME_FLAG_NONE);
 	g_assert_cmpstr (str, ==, "0:01");
 	g_free (str);
 
-	str = totem_time_to_string (1250, TRUE, FALSE);
+	str = totem_time_to_string (1250, TOTEM_TIME_FLAG_REMAINING);
 	g_assert_cmpstr (str, ==, "-0:02");
 	g_free (str);
 }
