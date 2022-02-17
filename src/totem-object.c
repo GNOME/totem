@@ -96,6 +96,8 @@ static void update_media_menu_items (TotemObject *totem);
 static void playlist_changed_cb (GtkWidget *playlist, TotemObject *totem);
 static void play_pause_set_label (TotemObject *totem, TotemStates state);
 static void totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle);
+static void mark_popup_busy (TotemObject *totem, const char *reason);
+static void unmark_popup_busy (TotemObject *totem, const char *reason);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
@@ -1278,10 +1280,6 @@ totem_remote_setting_get_type (void)
 }
 
 static void
-unmark_popup_busy (TotemObject      *totem,
-		   const char       *reason);
-
-static void
 reset_seek_status (TotemObject *totem)
 {
 	/* Release the lock and reset everything so that we
@@ -1512,6 +1510,7 @@ totem_object_play (TotemObject *totem)
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
 	if (retval != FALSE) {
+		unmark_popup_busy (totem, "paused");
 		if (totem->has_played_emitted == FALSE) {
 			totem_file_has_played (totem, totem->mrl);
 			totem->has_played_emitted = TRUE;
@@ -1640,6 +1639,7 @@ totem_object_stop (TotemObject *totem)
 	totem_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
 	bacon_video_widget_stop (totem->bvw);
+	mark_popup_busy (totem, "paused");
 	play_pause_set_label (totem, STATE_STOPPED);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 	if (mrl != NULL) {
@@ -1662,6 +1662,7 @@ totem_object_pause (TotemObject *totem)
 {
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
 		bacon_video_widget_pause (totem->bvw);
+		mark_popup_busy (totem, "paused");
 		play_pause_set_label (totem, STATE_PAUSED);
 	}
 }
