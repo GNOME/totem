@@ -357,6 +357,8 @@ totem_app_menu_setup (Totem *totem)
 	accels[0] = "<Primary>E";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.eject", (const char * const *) accels);
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.shortcuts", shortcuts_accels);
+	accels[0] = "F1";
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.help", (const char * const *) accels);
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 
