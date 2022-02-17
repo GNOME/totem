@@ -42,7 +42,9 @@ open_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
-	totem_object_open (TOTEM_OBJECT (user_data));
+	TotemObject *totem = user_data;
+	totem_object_set_fullscreen (totem, FALSE);
+	totem_object_open (totem);
 }
 
 static void
@@ -364,6 +366,9 @@ totem_app_menu_setup (Totem *totem)
 	accels[0] = "<Primary>l";
 	accels[1] = "OpenURL";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.open-location", (const char * const *) accels);
+	accels[0] = "<Primary>o";
+	accels[1] = "Open";
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.open", (const char * const *) accels);
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 

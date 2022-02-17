@@ -3480,12 +3480,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		totem_object_seek_next (totem);
 		show_popup (totem);
 		break;
-	case GDK_KEY_O:
-	case GDK_KEY_o:
-	case GDK_KEY_Open:
-		totem_object_set_fullscreen (totem, FALSE);
-		totem_object_open (totem);
-		break;
 	case GDK_KEY_AudioPlay:
 	case GDK_KEY_p:
 	case GDK_KEY_P:
@@ -3753,8 +3747,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_e:
 		case GDK_KEY_f:
 		case GDK_KEY_F:
-		case GDK_KEY_O:
-		case GDK_KEY_o:
 		case GDK_KEY_q:
 		case GDK_KEY_Q:
 		case GDK_KEY_space:
