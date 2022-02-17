@@ -165,6 +165,10 @@ test_time_label (void)
 	str = totem_time_to_string (1250, TOTEM_TIME_FLAG_REMAINING);
 	g_assert_cmpstr (str, ==, "-0:02");
 	g_free (str);
+
+	str = totem_time_to_string (1250, TOTEM_TIME_FLAG_MSECS);
+	g_assert_cmpstr (str, ==, "0:01.250");
+	g_free (str);
 }
 
 int main (int argc, char **argv)
