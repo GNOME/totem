@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-17 16:08+0000\n"
-"PO-Revision-Date: 2022-02-17 18:41+0200\n"
+"POT-Creation-Date: 2022-02-17 17:02+0000\n"
+"PO-Revision-Date: 2022-02-17 19:09+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3894
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Відео"
 
@@ -308,23 +308,19 @@ msgstr "Загальне"
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Show help"
-msgstr ""
-"Показати довідку"
+msgstr "Показати довідку"
 
 #: data/shortcuts.ui:28
-#| msgid "_Keyboard Shortcuts"
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
 #: data/shortcuts.ui:35
-#| msgid "Add _Local Video…"
 msgctxt "shortcut window"
 msgid "Add local video"
 msgstr "Додати локальний відеозапис"
 
 #: data/shortcuts.ui:42
-#| msgid "Add Web Video"
 msgctxt "shortcut window"
 msgid "Add web video"
 msgstr "Додати відеозапис з інтернету"
@@ -940,22 +936,22 @@ msgstr "Скасувати"
 msgid "Search"
 msgstr "Пошук"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:435
 msgid "Audio Track"
 msgstr "Звукова доріжка"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:438
 msgid "Subtitle"
 msgstr "Субтитри"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:474
 msgctxt "Language"
 msgid "Auto"
 msgstr "Автоматично"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:477
 msgid "None"
 msgstr "Немає"
 
@@ -982,23 +978,23 @@ msgstr "Неможливо показати вміст довідки."
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: src/totem-object.c:3992
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: src/totem-object.c:3998
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: src/totem-object.c:4004
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: src/totem-object.c:4240
+#: src/totem-object.c:4238
 msgid "Totem could not startup."
 msgstr "Не вдалось запустити Totem."
 
-#: src/totem-object.c:4240 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Причина невідома."
 
@@ -1556,7 +1552,7 @@ msgid "N/A"
 msgstr "Н/Д"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:250
+#: src/plugins/properties/bacon-video-widget-properties.c:258
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Н/Д"
@@ -1646,7 +1642,17 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 секунд"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:247
+#: src/plugins/properties/bacon-video-widget-properties.c:251
+#, c-format
+#| msgid "%0.2f frame per second"
+#| msgid_plural "%0.2f frames per second"
+msgid "%0.3f frame per second"
+msgid_plural "%0.3f frames per second"
+msgstr[0] "%0.3f кадр за секунду"
+msgstr[1] "%0.3f кадри за секунду"
+msgstr[2] "%0.3f кадрів за секунду"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
