@@ -243,9 +243,17 @@ bacon_video_widget_properties_set_framerate (BaconVideoWidgetProperties *props,
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
+/* https://en.wikipedia.org/wiki/24p#23.976p */
+#define _24P_FPS (24000.0/1001.0)
+
 	if (framerate > 1.0) {
-		temp = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%0.2f frame per second", "%0.2f frames per second", (int) (ceilf (framerate))),
-					framerate);
+		if (G_APPROX_VALUE (framerate, _24P_FPS, .000001)) {
+			temp = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%0.3f frame per second", "%0.3f frames per second", (int) (ceilf (framerate))),
+						framerate);
+		} else {
+			temp = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%0.2f frame per second", "%0.2f frames per second", (int) (ceilf (framerate))),
+						framerate);
+		}
 	} else {
 		temp = g_strdup (C_("Frame rate", "N/A"));
 	}
