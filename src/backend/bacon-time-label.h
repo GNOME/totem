@@ -29,8 +29,10 @@ G_DECLARE_FINAL_TYPE(BaconTimeLabel, bacon_time_label, BACON, TIME_LABEL, GtkLab
 G_MODULE_EXPORT GType bacon_time_label_get_type (void);
 GtkWidget *bacon_time_label_new                 (void);
 void       bacon_time_label_set_time            (BaconTimeLabel *label,
-                                                 gint64          time,
-                                                 gint64          length);
+                                                 gint64          time_msecs,
+                                                 gint64          length_msecs);
+void       bacon_time_label_reset               (BaconTimeLabel *label);
+
 void
 bacon_time_label_set_remaining                  (BaconTimeLabel *label,
                                                  gboolean        remaining);

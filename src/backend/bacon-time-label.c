@@ -153,6 +153,14 @@ bacon_time_label_set_time (BaconTimeLabel *label,
 }
 
 void
+bacon_time_label_reset (BaconTimeLabel *label)
+{
+	g_return_if_fail (BACON_IS_TIME_LABEL (label));
+
+	bacon_time_label_set_time (label, 0, 0);
+}
+
+void
 bacon_time_label_set_remaining (BaconTimeLabel *label,
 				gboolean        remaining)
 {
