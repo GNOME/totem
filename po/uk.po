@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-17 12:12+0000\n"
-"PO-Revision-Date: 2022-02-17 17:49+0200\n"
+"POT-Creation-Date: 2022-02-17 16:08+0000\n"
+"PO-Revision-Date: 2022-02-17 18:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3911
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3894
 msgid "Videos"
 msgstr "Відео"
 
@@ -179,15 +179,15 @@ msgstr "Каталоги, які показуються в огляді, тип�
 
 #: data/org.gnome.totem.gschema.xml.in:87
 msgid "Disable hardware decoders"
-msgstr ""
-"Вимкнути апаратні декодери"
+msgstr "Вимкнути апаратні декодери"
 
 #: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
 msgstr ""
-"Вимкнути апаратні декодери і використовувати лише програмні декодери. Призначено лише для діагностики."
+"Вимкнути апаратні декодери і використовувати лише програмні декодери. "
+"Призначено лише для діагностики."
 
 #: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
 msgid "Stereo"
@@ -307,176 +307,199 @@ msgstr "Загальне"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
+msgid "Show help"
+msgstr ""
+"Показати довідку"
+
+#: data/shortcuts.ui:28
+#| msgid "_Keyboard Shortcuts"
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Клавіатурні скорочення"
+
+#: data/shortcuts.ui:35
+#| msgid "Add _Local Video…"
+msgctxt "shortcut window"
+msgid "Add local video"
+msgstr "Додати локальний відеозапис"
+
+#: data/shortcuts.ui:42
+#| msgid "Add Web Video"
+msgctxt "shortcut window"
+msgid "Add web video"
+msgstr "Додати відеозапис з інтернету"
+
+#: data/shortcuts.ui:49
+msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Властивості"
 
-#: data/shortcuts.ui:28
+#: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Звантажити"
 
-#: data/shortcuts.ui:35
+#: data/shortcuts.ui:63
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Зробити знімок"
 
-#: data/shortcuts.ui:42
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Вийти"
 
-#: data/shortcuts.ui:50
+#: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Гучність"
 
-#: data/shortcuts.ui:55
+#: data/shortcuts.ui:83
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Збільшити гучність"
 
-#: data/shortcuts.ui:62
+#: data/shortcuts.ui:90
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Зменшити гучність"
 
-#: data/shortcuts.ui:69
+#: data/shortcuts.ui:97
 msgctxt "shortcut window"
 msgid "Mute/unmute"
-msgstr ""
-"Вимкнути/Увімкнути звук"
+msgstr "Вимкнути/Увімкнути звук"
 
-#: data/shortcuts.ui:77
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Перегляд"
 
-#: data/shortcuts.ui:82
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Перемикнути повний екран"
 
-#: data/shortcuts.ui:89
+#: data/shortcuts.ui:117
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Вийти з повноекранного режиму"
 
-#: data/shortcuts.ui:96
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Обернути ↷"
 
-#: data/shortcuts.ui:103
+#: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Обернути ↶"
 
-#: data/shortcuts.ui:112
+#: data/shortcuts.ui:140
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Відтворення"
 
-#: data/shortcuts.ui:117
+#: data/shortcuts.ui:145
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Грати/призупинити"
 
-#: data/shortcuts.ui:125 data/shortcuts.ui:141
+#: data/shortcuts.ui:153 data/shortcuts.ui:169
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Попередній відеозапис або розділ"
 
-#: data/shortcuts.ui:133 data/shortcuts.ui:149
+#: data/shortcuts.ui:161 data/shortcuts.ui:177
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Наступний відеозапис або розділ"
 
-#: data/shortcuts.ui:157
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Пропустити"
 
-#: data/shortcuts.ui:163 data/shortcuts.ui:225
+#: data/shortcuts.ui:191 data/shortcuts.ui:253
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Повернутися на 15 секунд"
 
-#: data/shortcuts.ui:171 data/shortcuts.ui:233
+#: data/shortcuts.ui:199 data/shortcuts.ui:261
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Вперед на 60 секунд"
 
-#: data/shortcuts.ui:178
+#: data/shortcuts.ui:206
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Назад на один кадр"
 
-#: data/shortcuts.ui:185
+#: data/shortcuts.ui:213
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Далі на один кадр"
 
-#: data/shortcuts.ui:193 data/shortcuts.ui:241
+#: data/shortcuts.ui:221 data/shortcuts.ui:269
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Повернутися на 5 секунд"
 
-#: data/shortcuts.ui:201 data/shortcuts.ui:249
+#: data/shortcuts.ui:229 data/shortcuts.ui:277
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Вперед на 15 секунд"
 
-#: data/shortcuts.ui:209 data/shortcuts.ui:257
+#: data/shortcuts.ui:237 data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Повернутися на 3 хвилини"
 
-#: data/shortcuts.ui:217 data/shortcuts.ui:265
+#: data/shortcuts.ui:245 data/shortcuts.ui:293
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Вперед на 10 хвилин"
 
-#: data/shortcuts.ui:272
+#: data/shortcuts.ui:300
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Перестрибнути до…"
 
-#: data/shortcuts.ui:280
+#: data/shortcuts.ui:308
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Пересування по меню DVD"
 
-#: data/shortcuts.ui:285
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Догори"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:320
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Додолу"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:327
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Ліворуч"
 
-#: data/shortcuts.ui:306
+#: data/shortcuts.ui:334
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Праворуч"
 
-#: data/shortcuts.ui:314
+#: data/shortcuts.ui:342
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Субтитри"
 
-#: data/shortcuts.ui:319
+#: data/shortcuts.ui:347
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Вибір наступних субтитрів"
 
-#: data/shortcuts.ui:326
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Увімкнути/Вимкнути субтитри"
@@ -917,22 +940,22 @@ msgstr "Скасувати"
 msgid "Search"
 msgstr "Пошук"
 
-#: src/totem-menu.c:410
+#: src/totem-menu.c:422
 msgid "Audio Track"
 msgstr "Звукова доріжка"
 
-#: src/totem-menu.c:413
+#: src/totem-menu.c:425
 msgid "Subtitle"
 msgstr "Субтитри"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:449
+#: src/totem-menu.c:461
 msgctxt "Language"
 msgid "Auto"
 msgstr "Автоматично"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:452
+#: src/totem-menu.c:464
 msgid "None"
 msgstr "Немає"
 
@@ -959,23 +982,23 @@ msgstr "Неможливо показати вміст довідки."
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: src/totem-object.c:4009
+#: src/totem-object.c:3992
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: src/totem-object.c:4015
+#: src/totem-object.c:3998
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: src/totem-object.c:4021
+#: src/totem-object.c:4004
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: src/totem-object.c:4257
+#: src/totem-object.c:4240
 msgid "Totem could not startup."
 msgstr "Не вдалось запустити Totem."
 
-#: src/totem-object.c:4257 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4240 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Причина невідома."
 
