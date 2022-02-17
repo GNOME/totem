@@ -1448,10 +1448,8 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
 	case STATE_STOPPED:
-		bacon_time_label_set_time (totem->time_label,
-					   0, 0);
-		bacon_time_label_set_time (totem->time_rem_label,
-					   0, 0);
+		bacon_time_label_reset (totem->time_label);
+		bacon_time_label_reset (totem->time_rem_label);
 		id = "media-playback-start-symbolic";
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
@@ -1841,10 +1839,8 @@ update_mrl_label (TotemObject *totem, const char *name)
 		g_clear_pointer (&totem->player_title, g_free);
 		totem->player_title = g_strdup (name);
 	} else {
-		bacon_time_label_set_time (totem->time_label,
-					   0, 0);
-		bacon_time_label_set_time (totem->time_rem_label,
-					   0, 0);
+		bacon_time_label_reset (totem->time_label);
+		bacon_time_label_reset (totem->time_rem_label);
 
 		g_object_notify (G_OBJECT (totem), "stream-length");
 
