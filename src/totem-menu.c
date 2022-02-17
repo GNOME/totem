@@ -50,7 +50,9 @@ open_location_action_cb (GSimpleAction *action,
 			 GVariant      *parameter,
 			 gpointer       user_data)
 {
-	totem_object_open_location (TOTEM_OBJECT (user_data));
+	TotemObject *totem = user_data;
+	totem_object_set_fullscreen (totem, FALSE);
+	totem_object_open_location (totem);
 }
 
 static void
@@ -341,7 +343,7 @@ totem_app_actions_setup (Totem *totem)
 void
 totem_app_menu_setup (Totem *totem)
 {
-	char *accels[] = { NULL, NULL };
+	char *accels[] = { NULL, NULL, NULL };
 	const char * const shortcuts_accels[] = {
 		"<Ctrl>H",
 		"<Ctrl>question",
@@ -359,6 +361,9 @@ totem_app_menu_setup (Totem *totem)
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.shortcuts", shortcuts_accels);
 	accels[0] = "F1";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.help", (const char * const *) accels);
+	accels[0] = "<Primary>l";
+	accels[1] = "OpenURL";
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.open-location", (const char * const *) accels);
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 
