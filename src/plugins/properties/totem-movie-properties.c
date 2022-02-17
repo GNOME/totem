@@ -263,7 +263,7 @@ impl_activate (PeasActivatable *plugin)
 	GtkWindow *parent;
 	GMenu *menu;
 	GMenuItem *item;
-	const char * const accels[] = { "<Primary>p", "View", NULL };
+	const char * const accels[] = { "<Primary>p", "<Primary>i", "View", NULL };
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
