@@ -38,6 +38,16 @@
 #include "totem-profile.h"
 
 static void
+main_menu_cb (GSimpleAction *action,
+	      GVariant      *parameter,
+	      gpointer       user_data)
+{
+	TotemObject *totem = user_data;
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->main_menu_button),
+				      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->main_menu_button)));
+}
+
+static void
 open_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
@@ -302,6 +312,7 @@ remote_command_cb (GSimpleAction *action,
 
 static GActionEntry app_entries[] = {
 	/* Main app menu */
+	{ "main-menu", main_menu_cb, NULL, NULL, NULL },
 	{ "open", open_action_cb, NULL, NULL, NULL },
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
@@ -354,6 +365,8 @@ totem_app_menu_setup (Totem *totem)
 	};
 
 	/* FIXME: https://gitlab.gnome.org/GNOME/glib/issues/700 */
+	accels[0] = "F10";
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.main-menu", (const char * const *) accels);
 	accels[0] = "<Primary>G";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.next-angle", (const char * const *) accels);
 	accels[0] = "<Primary>M";
