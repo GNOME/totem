@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2020-04-03 09:52+0000\n"
-"PO-Revision-Date: 2020-04-05 13:10+0200\n"
+"POT-Creation-Date: 2022-02-18 00:10+0000\n"
+"PO-Revision-Date: 2022-02-18 13:13+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -17,21 +17,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 2.3\n"
+"X-DamnedLies-Scope: partial\n"
+"X-Generator: Poedit 3.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:6
-#: data/org.gnome.Totem.desktop.in.in:3 src/totem.c:66 src/totem.c:72
-#: src/totem-grilo.c:1906 src/totem-object.c:3729
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Videá"
 
 # Desktop entry comment
-#: data/appdata/org.gnome.Totem.appdata.xml.in:7
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:4
 msgid "Play movies"
 msgstr "Prehráva filmy"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:11
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -43,7 +43,7 @@ msgstr ""
 "diskov DVD a sprístupnených videí cez sieť (pomocou UPnP/DLNA) a filmových "
 "noviniek z rôznych webových stránok."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:17
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -53,9 +53,13 @@ msgstr ""
 "titulkov, možnosť zrýchliť alebo spomaliť prehrávanie, vytváranie galérií so "
 "snímkami obrazoviek a podporou záznamu diskov DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in:33
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:33
 msgid "The GNOME developers"
 msgstr "Vývojári prostredia GNOME"
+
+#: data/org.gnome.Totem.desktop.in.in:3
+msgid "@APPLICATION_NAME@"
+msgstr "@APPLICATION_NAME@"
 
 # desktop entry keywords
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
@@ -216,132 +220,139 @@ msgstr ""
 "žiadne"
 
 # list store item - Typ zvukového výstupu
-#: data/preferences.ui:13 src/backend/bacon-video-widget.c:5702
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
 msgid "Stereo"
 msgstr "Stereo"
 
 # list store item
-#: data/preferences.ui:16
+#: data/totem-preferences-dialog.ui:16
 msgid "4-channel"
 msgstr "4-kanálový"
 
 # list store item
-#: data/preferences.ui:19
+#: data/totem-preferences-dialog.ui:19
 msgid "4.1-channel"
 msgstr "4.1-kanálový"
 
 # list store item
-#: data/preferences.ui:22
+#: data/totem-preferences-dialog.ui:22
 msgid "5.0-channel"
 msgstr "5.0-kanálový"
 
 # list store item
-#: data/preferences.ui:25
+#: data/totem-preferences-dialog.ui:25
 msgid "5.1-channel"
 msgstr "5.1-kanálový"
 
 # list store item
-#: data/preferences.ui:28
+#: data/totem-preferences-dialog.ui:28
 msgid "AC3 Passthrough"
 msgstr "Preposielanie AC3"
 
 # dialog title
-#: data/preferences.ui:80
+#: data/totem-preferences-dialog.ui:70
 msgid "Preferences"
 msgstr "Nastavenia"
 
 # label
-#: data/preferences.ui:130
+#: data/totem-preferences-dialog.ui:122
 msgid "External Subtitles"
 msgstr "Externé titulky"
 
 # checkbutton
-#: data/preferences.ui:178
+#: data/totem-preferences-dialog.ui:156
 msgid "_Load subtitle files when movie is loaded"
 msgstr "_Načítať súbory s titulkami pri načítaní filmu"
 
 # label
-#: data/preferences.ui:199
+#: data/totem-preferences-dialog.ui:175
 msgid "_Font:"
 msgstr "_Písmo:"
 
 # label
-#: data/preferences.ui:226
+#: data/totem-preferences-dialog.ui:200
 msgid "_Encoding:"
 msgstr "_Kódovanie:"
 
-#: data/preferences.ui:312
+# font dialog title
+#: data/totem-preferences-dialog.ui:239
+msgid "Select Subtitle Font"
+msgstr "Výber písma pre titulky"
+
+#: data/totem-preferences-dialog.ui:281
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
-#: data/preferences.ui:338
+#: data/totem-preferences-dialog.ui:295
 msgid "Plugins…"
 msgstr "Zásuvné moduly…"
 
 # tab
-#: data/preferences.ui:373 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
 msgid "General"
 msgstr "Všeobecné"
 
 # * https://bugzilla.gnome.org/show_bug.cgi?id=693094
 # radiobutton
 #. Tab label in the Preferences dialogue
-#: data/preferences.ui:407 src/plugins/properties/properties.ui:321
+#: data/totem-preferences-dialog.ui:358
+#: src/plugins/properties/properties.ui:321
 msgid "Video"
 msgstr "Video"
 
 # PM: s prekladaním bol dosť zavádzajúce ako keby si hovoril o zákaze dabingu - zmenil som to
 # checkbutton
-#: data/preferences.ui:436
+#: data/totem-preferences-dialog.ui:383
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Zakázať o_dstraňovanie prekladania vo videách s prekladanými riadkami"
 
 # label
-#: data/preferences.ui:477
+#: data/totem-preferences-dialog.ui:423
 msgid "Color Balance"
 msgstr "Vyváženie farieb"
 
 # label
-#: data/preferences.ui:531
+#: data/totem-preferences-dialog.ui:463
 msgid "_Brightness:"
 msgstr "_Jas:"
 
 # label
-#: data/preferences.ui:558
+#: data/totem-preferences-dialog.ui:489
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
 # label
-#: data/preferences.ui:624
+#: data/totem-preferences-dialog.ui:553
 msgid "Sat_uration:"
 msgstr "Sý_tosť farieb:"
 
 # label
-#: data/preferences.ui:651
+#: data/totem-preferences-dialog.ui:579
 msgid "_Hue:"
 msgstr "_Farebný odtieň:"
 
 # button
-#: data/preferences.ui:726
+#: data/totem-preferences-dialog.ui:646
 msgid "Reset to _Defaults"
 msgstr "_Obnoviť štandardné hodnoty"
 
-#: data/preferences.ui:773
+#: data/totem-preferences-dialog.ui:683
 msgid "Display"
 msgstr "Zobrazenie"
 
 # label
-#: data/preferences.ui:814
+#: data/totem-preferences-dialog.ui:724
 msgid "Audio Output"
 msgstr "Zvukový výstup"
 
 # label
-#: data/preferences.ui:858
+#: data/totem-preferences-dialog.ui:757
 msgid "_Audio output type:"
 msgstr "_Typ zvukového výstupu:"
 
 # tab
-#: data/preferences.ui:932 src/plugins/properties/properties.ui:512
+#: data/totem-preferences-dialog.ui:829
+#: src/plugins/properties/properties.ui:512
 msgid "Audio"
 msgstr "Zvuk"
 
@@ -353,183 +364,216 @@ msgstr "Všeobecné"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Zobrazenie pomocníka"
+
+#: data/shortcuts.ui:28
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Klávesové skratky"
+
+#: data/shortcuts.ui:35
+msgctxt "shortcut window"
+msgid "Add local video"
+msgstr "Pridanie miestneho videa"
+
+# dialog title
+#: data/shortcuts.ui:42
+msgctxt "shortcut window"
+msgid "Add web video"
+msgstr "Pridanie webového videa"
+
+#: data/shortcuts.ui:49
+msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Vlastnosti"
 
 # menu item
-#: data/shortcuts.ui:28
+#: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Sprístupnenie bez pripojenia"
 
 # action entry
-#: data/shortcuts.ui:35
+#: data/shortcuts.ui:63
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Zachytenie snímky obrazovky"
 
 # cmd desc
-#: data/shortcuts.ui:42
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončenie"
 
-#: data/shortcuts.ui:50
+#: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hlasitosť"
 
-#: data/shortcuts.ui:55
+#: data/shortcuts.ui:83
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Zvýšenie hlasitosti"
 
-#: data/shortcuts.ui:62
+#: data/shortcuts.ui:90
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Zníženie hlasitosti"
 
-#: data/shortcuts.ui:70
+#: data/shortcuts.ui:97
+msgctxt "shortcut window"
+msgid "Mute/unmute"
+msgstr "Stlmenie/obnovenie"
+
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Zobrazenie"
 
-#: data/shortcuts.ui:75
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Prepnutie režimu na celú obrazovku"
 
-#: data/shortcuts.ui:82
+#: data/shortcuts.ui:117
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Ukončenie režimu na celú obrazovku"
 
-#: data/shortcuts.ui:89
-msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "Zväčšenie"
-
-#: data/shortcuts.ui:96
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "Zmenšenie"
-
 # menu item
-#: data/shortcuts.ui:103
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Otočenie ↷"
 
 # menu item
-#: data/shortcuts.ui:110
+#: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Otočenie ↶"
 
-#: data/shortcuts.ui:119
+#: data/shortcuts.ui:140
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Prehrávanie"
 
 # cmd desc
-#: data/shortcuts.ui:124
+#: data/shortcuts.ui:145
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Prehrávanie/Pozastavenie"
 
-#: data/shortcuts.ui:132 data/shortcuts.ui:148
+#: data/shortcuts.ui:153 data/shortcuts.ui:169
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Predchádzajúce video alebo kapitola"
 
 # label
-#: data/shortcuts.ui:140 data/shortcuts.ui:156
+#: data/shortcuts.ui:161 data/shortcuts.ui:177
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Nasledujúce video alebo kapitola"
 
-#: data/shortcuts.ui:164
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Preskočenie"
 
-#: data/shortcuts.ui:170 data/shortcuts.ui:232
+#: data/shortcuts.ui:191 data/shortcuts.ui:253
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Prejdenie dozadu o 15 sekúnd"
 
-#: data/shortcuts.ui:178 data/shortcuts.ui:240
+#: data/shortcuts.ui:199 data/shortcuts.ui:261
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Prejdenie dopredu o 60 sekúnd"
 
-#: data/shortcuts.ui:185
+#: data/shortcuts.ui:206
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Krok dozadu o jeden snímok"
 
-#: data/shortcuts.ui:192
+#: data/shortcuts.ui:213
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Krok dopredu o jeden snímok"
 
-#: data/shortcuts.ui:200 data/shortcuts.ui:248
+#: data/shortcuts.ui:221 data/shortcuts.ui:269
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Prejdenie dozadu o 5 sekúnd"
 
 # http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
-#: data/shortcuts.ui:208 data/shortcuts.ui:256
+#: data/shortcuts.ui:229 data/shortcuts.ui:277
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Prejdenie dopredu o 15 sekúnd"
 
-#: data/shortcuts.ui:216 data/shortcuts.ui:264
+#: data/shortcuts.ui:237 data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Prejdenie dozadu o 3 minúty"
 
-#: data/shortcuts.ui:224 data/shortcuts.ui:272
+#: data/shortcuts.ui:245 data/shortcuts.ui:293
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Prejdenie dopredu o 10 minút"
 
-#: data/shortcuts.ui:279
+#: data/shortcuts.ui:300
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Preskočenie na…"
 
-#: data/shortcuts.ui:287
+#: data/shortcuts.ui:308
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Navigovanie v ponuke disku DVD"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navigovanie hore"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:320
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navigovanie dole"
 
-#: data/shortcuts.ui:306
+#: data/shortcuts.ui:327
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navigovanie doľava"
 
-#: data/shortcuts.ui:313
+#: data/shortcuts.ui:334
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navigovanie doprava"
 
+#: data/shortcuts.ui:342
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "Titulky"
+
+# filechooser dialog title
+#: data/shortcuts.ui:347
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "Výber nasledujúcich titulkov"
+
+# plugin desc
+#: data/shortcuts.ui:354
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "Prepnutie titulkov"
+
 # menu item
-#: data/totem.ui:11 data/totem.ui:110
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "Nas_tavenia"
 
-#: data/totem.ui:15 data/totem.ui:114
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "_Klávesové skratky"
 
@@ -587,84 +631,90 @@ msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2,11:1 (DVB)"
 
-# label
-#: data/totem.ui:81
-msgid "Zoom In"
-msgstr "Zväčšiť"
-
 # action
-#: data/totem.ui:86
+#: data/totem.ui:82
 msgid "Switch An_gles"
 msgstr "Prepnúť _uhly"
 
 # action
-#: data/totem.ui:93
-msgid "_Languages"
-msgstr "_Jazyky"
-
-# action
-#: data/totem.ui:97
-msgid "S_ubtitles"
-msgstr "_Titulky"
-
-#: data/totem.ui:100
-msgid "_Select Text Subtitles…"
-msgstr "V_ybrať textové titulky…"
-
-# action
-#: data/totem.ui:123
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "Vy_sunúť"
 
+# action
+#: data/totem.ui:114
+msgid "Languages"
+msgstr "Jazyky"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "Titulky"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "V_ybrať textové titulky…"
+
 # menu item
-#: data/totem.ui:134
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "_Opakovať"
 
 # action
-#: data/totem.ui:140
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "Ponuka _DVD"
 
 # action
-#: data/totem.ui:146
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "Ponuka _titulov"
 
 # action
-#: data/totem.ui:151
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "Z_vuková ponuka"
 
 # action
-#: data/totem.ui:156
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "Ponuka _uhlov"
 
 # action
-#: data/totem.ui:161
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "Ponuka _kapitol"
 
-#: data/totem.ui:170
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "Rýchlosť"
 
+# dialog title
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "Pridanie webového videa"
+
 # label
-#: data/uri.ui:14
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Zadajte _adresu súboru, ktorý chcete otvoriť:"
 
-#. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:118
-msgid "--:--"
-msgstr "--:--"
+# action
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_Zrušiť"
 
-#: src/backend/bacon-video-widget.c:2002
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "P_ridať"
+
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Pre server RTSP je požadované heslo"
 
-#: src/backend/bacon-video-widget.c:3925
+#: src/backend/bacon-video-widget.c:3339
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -672,55 +722,55 @@ msgstr ""
 "Zdá sa, že zdroj je zašifrovaný a nedá sa čítať. Pokúšate sa prehrať "
 "zašifrovaný disk DVD bez knižnice libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3939
+#: src/backend/bacon-video-widget.c:3353
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ku ktorému sa snažíte pripojiť, je neznámy."
 
-#: src/backend/bacon-video-widget.c:3942
+#: src/backend/bacon-video-widget.c:3356
 msgid "The connection to this server was refused."
 msgstr "Spojenie s týmto serverom bolo odmietnuté."
 
-#: src/backend/bacon-video-widget.c:3945
+#: src/backend/bacon-video-widget.c:3359
 msgid "The specified movie could not be found."
 msgstr "Zadaný film sa nepodarilo nájsť."
 
-#: src/backend/bacon-video-widget.c:3952
+#: src/backend/bacon-video-widget.c:3366
 msgid "The server refused access to this file or stream."
 msgstr "Server zamietol prístup k tomuto súboru alebo streamu."
 
-#: src/backend/bacon-video-widget.c:3958
+#: src/backend/bacon-video-widget.c:3372
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Pre prístup k tomuto súboru alebo streamu je vyžadované overenie totožnosti."
 
-#: src/backend/bacon-video-widget.c:3964
+#: src/backend/bacon-video-widget.c:3378
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Chýba podpora protokolu SSL/TLS. Skontrolujte vašu inštaláciu."
 
-#: src/backend/bacon-video-widget.c:3971
+#: src/backend/bacon-video-widget.c:3385
 msgid "You are not allowed to open this file."
 msgstr "Nemáte povolenie na otvorenie tohto súboru."
 
-#: src/backend/bacon-video-widget.c:3976
+#: src/backend/bacon-video-widget.c:3390
 msgid "This location is not a valid one."
 msgstr "Toto umiestnenie je neplatné."
 
 # DK: načítaný?
 # PK: necham precitany, kedze cita sa len cast ale nacitava sa zvecsa celok
-#: src/backend/bacon-video-widget.c:3984
+#: src/backend/bacon-video-widget.c:3398
 msgid "The movie could not be read."
 msgstr "Film nemohol byť prečítaný."
 
-#: src/backend/bacon-video-widget.c:3990
+#: src/backend/bacon-video-widget.c:3404
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tento súbor je zašifrovaný a nedá sa spätne prehrať."
 
-#: src/backend/bacon-video-widget.c:3996
+#: src/backend/bacon-video-widget.c:3410
 msgid "The file you tried to play is an empty file."
 msgstr "Súbor, ktorý ste sa pokúsili prehrať, je prázdny."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:4020 src/backend/bacon-video-widget.c:4028
+#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -742,12 +792,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:4040
+#: src/backend/bacon-video-widget.c:3454
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Tento prúd sa nedá prehrať. Je možné, že ho blokuje brána firewall."
 
-#: src/backend/bacon-video-widget.c:4043
+#: src/backend/bacon-video-widget.c:3457
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -755,25 +805,25 @@ msgstr ""
 "Zvukový alebo video stream sa nedá spracovať kvôli chýbajúcim kodekom. "
 "Musíte nainštalovať dodatočné kodeky na prehranie niektorých typov filmov"
 
-#: src/backend/bacon-video-widget.c:4054
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Tento súbor sa nedá prehrať cez sieť. Skúste ho najprv prebrať."
 
-#: src/backend/bacon-video-widget.c:5698
+#: src/backend/bacon-video-widget.c:5062
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5700
+#: src/backend/bacon-video-widget.c:5064
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5988
+#: src/backend/bacon-video-widget.c:5334
 msgid "Media contains no supported video streams."
 msgstr "Nosič neobsahuje žiadne podporované video streamy."
 
-#: src/backend/bacon-video-widget.c:6200
+#: src/backend/bacon-video-widget.c:5523
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -804,17 +854,36 @@ msgstr[2] ""
 msgid "_Find in %s"
 msgstr "_Nájsť v programe %s"
 
+#. translators: Unknown time
+#: src/gst/totem-time-helpers.c:45
+msgid "--:--"
+msgstr "--:--"
+
 #. hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
+#. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
+
+#. hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:89
+#, c-format
+#| msgctxt "long time format"
+#| msgid "%d:%02d:%02d"
+msgctxt "long time format"
+msgid "%d:%02d:%02d.%03d"
+msgstr "%d:%02d:%02d.%03d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -822,11 +891,25 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:78
+#: src/gst/totem-time-helpers.c:99
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
+
+#. -hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "-9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
+#. * change ":" to the separator that your locale uses or use
+#. * "%Id" instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:107
+#, c-format
+#| msgctxt "long time format"
+#| msgid "-%d:%02d:%02d"
+msgctxt "long time format"
+msgid "-%d:%02d:%02d.%03d"
+msgstr "-%d:%02d:%02d.%03d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -834,11 +917,39 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:89
+#: src/gst/totem-time-helpers.c:120
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
+
+#. -minutes:seconds.msec
+#. Translators: This is a time format, like "-5:02.050" for 5
+#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
+#. * ":" to the separator that your locale uses or use "%Id"
+#. * instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:128
+#, c-format
+#| msgctxt "long time format"
+#| msgid "-%d:%02d:%02d"
+msgctxt "short time format"
+msgid "-%d:%02d.%03d"
+msgstr "-%d:%02d.%03d"
+
+#. minutes:seconds.msec
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:139
+#, c-format
+#| msgctxt "long time format"
+#| msgid "%d:%02d:%02d"
+msgctxt "short time format"
+msgid "%d:%02d.%03d"
+msgstr "%d:%02d.%03d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -846,7 +957,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:98
+#: src/gst/totem-time-helpers.c:148
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -860,13 +971,17 @@ msgstr "Vybrať všetko"
 msgid "Select None"
 msgstr "Zrušiť výber"
 
-#: src/totem.c:67
+#: src/totem.c:68
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nepodarilo sa inicializovať knižnice na bezpečný beh vo vláknach."
 
-#: src/totem.c:67
+#: src/totem.c:68
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Skontrolujte inštaláciu svojho systému. Totem teraz skončí."
+
+#: src/totem.c:74
+msgid "Videos Preview"
+msgstr "Ukážky videí"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -894,54 +1009,54 @@ msgstr "Rozlíšenie"
 msgid "Duration"
 msgstr "Dĺžka"
 
-#: src/totem-grilo.c:285
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Sezóna %d Epizóda %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:322
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Sezóna %d Epizóda %d)"
 
-#: src/totem-grilo.c:677
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "Chyba prehliadania"
 
-#: src/totem-grilo.c:826
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "Chyba hľadania"
 
-#: src/totem-grilo.c:1306
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "Miestne"
 
 # label
-#: src/totem-grilo.c:1915
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "Kanály"
 
-#: src/totem-interface.c:179 src/totem-interface.c:222
+#: src/totem-interface.c:147 src/totem-interface.c:190
 #, c-format
 msgid "Couldn’t load the “%s” interface. %s"
 msgstr "Nepodarilo sa načítať rozhranie „%s“. %s"
 
-#: src/totem-interface.c:179
+#: src/totem-interface.c:147
 msgid "The file does not exist."
 msgstr "Súbor neexistuje."
 
-#: src/totem-interface.c:181 src/totem-interface.c:183
-#: src/totem-interface.c:224 src/totem-interface.c:226
+#: src/totem-interface.c:149 src/totem-interface.c:151
+#: src/totem-interface.c:192 src/totem-interface.c:194
 msgid "Make sure that Totem is properly installed."
 msgstr "Uistite sa, či je program Totem správne nainštalovaný."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Kliknutím na položky ich vyberiete"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
@@ -949,7 +1064,7 @@ msgstr[0] "%d vybratých"
 msgstr[1] "%d vybratý"
 msgstr[2] "%d vybraté"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "Výsledky pre výraz „%s“"
@@ -971,85 +1086,68 @@ msgstr "Zrušiť"
 msgid "Search"
 msgstr "Hľadať"
 
-#: src/totem-menu.c:408
+#: src/totem-menu.c:435
 msgid "Audio Track"
 msgstr "Zvuková stopa"
 
-#: src/totem-menu.c:411
+#: src/totem-menu.c:438
 msgid "Subtitle"
 msgstr "Titulky"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:531
-msgid "None"
-msgstr "Žiadny"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:535
+#: src/totem-menu.c:474
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatický"
 
-#: src/totem-object.c:1391 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:477
+msgid "None"
+msgstr "Žiadny"
+
+#: src/totem-object.c:1440 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pozastaviť"
 
-#: src/totem-object.c:1396 src/totem-object.c:1406 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Prehrať"
 
-#: src/totem-object.c:1473 src/totem-object.c:1501 src/totem-object.c:2048
+#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Prehrávač Totem nemohol prehrať „%s“."
 
 # PM: dal by som Programu Totem (viackrát); mimochodom neskúsený používateľ musí z toho byť zmetený keď sa program vlastne volá "Prehrávač filmov"
 # PK: snad to ujednotia, je to domotane, ale zas balik je totem
-#: src/totem-object.c:2220
+#: src/totem-object.c:2308
 msgid "Totem could not display the help contents."
 msgstr "Programu Totem sa nepodarilo zobraziť obsah pomocníka."
 
-#: src/totem-object.c:2482
+#: src/totem-object.c:2569
 msgid "An error occurred"
 msgstr "Vyskytla sa chyba"
 
-#: src/totem-object.c:3827
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Predchádzajúca kapitola/film"
 
-#: src/totem-object.c:3833
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Prehrať / Pozastaviť"
 
-#: src/totem-object.c:3839
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Ďalšia kapitola/film"
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4238
 msgid "Totem could not startup."
 msgstr "Programu Totem sa nepodarilo naštartovať."
 
-#: src/totem-object.c:4062
+#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Žiaden dôvod."
-
-# dialog title
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "Pridanie webového videa"
-
-# action
-#: src/totem-open-location.c:182 src/totem-uri.c:399 src/totem-uri.c:460
-#: src/plugins/screenshot/totem-gallery.c:96
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:218
-msgid "_Cancel"
-msgstr "_Zrušiť"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:461
-msgid "_Add"
-msgstr "P_ridať"
 
 # cmd desc
 #: src/totem-options.c:49
@@ -1135,28 +1233,24 @@ msgstr "Nedá sa zároveň zaradiť do radu a nahradiť"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:231
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "%d. titul"
 
-#: src/totem-playlist.c:1025
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Zoznam skladieb „%s“ sa nepodarilo analyzovať. Môže byť poškodený."
 
-#: src/totem-preferences.c:185
+#: src/totem-preferences-dialog.c:192
 msgid "Configure Plugins"
 msgstr "Konfigurovať zásuvné moduly"
 
-#: src/totem-preferences.c:188 src/plugins/opensubtitles/opensubtitles.ui:138
+#: src/totem-preferences-dialog.c:195
+#: src/plugins/opensubtitles/opensubtitles.ui:138
 msgid "_Close"
 msgstr "_Zavrieť"
-
-# font dialog title
-#: src/totem-preferences.c:300
-msgid "Select Subtitle Font"
-msgstr "Výber písma pre titulky"
 
 # action
 #: src/totemselectiontoolbar.ui:15
@@ -1323,32 +1417,32 @@ msgid "Vietnamese"
 msgstr "Vietnamské"
 
 # file filter
-#: src/totem-uri.c:329
+#: src/totem-uri.c:331
 msgid "All files"
 msgstr "Všetky súbory"
 
 # file filter
-#: src/totem-uri.c:335
+#: src/totem-uri.c:337
 msgid "Video files"
 msgstr "Video súbory"
 
 # file filter
-#: src/totem-uri.c:346
+#: src/totem-uri.c:348
 msgid "Subtitle files"
 msgstr "Súbory s titulkami"
 
 # filechooser dialog title
-#: src/totem-uri.c:396
+#: src/totem-uri.c:400
 msgid "Select Text Subtitles"
 msgstr "Výber textových titulkov"
 
 # menu item
-#: src/totem-uri.c:400
+#: src/totem-uri.c:404
 msgid "_Open"
 msgstr "_Otvoriť"
 
 # dialog title
-#: src/totem-uri.c:457
+#: src/totem-uri.c:461
 msgid "Add Videos"
 msgstr "Pridanie videí"
 
@@ -1413,16 +1507,6 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "Nastaví stav vo vašom internetovom komunikátore na preč, keď sa prehráva film"
 
-# plugin name
-#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:5
-msgid "Media Player Keys"
-msgstr "Multimediálne klávesy"
-
-# plugin desc
-#: src/plugins/media-player-keys/media-player-keys.plugin.desktop.in:6
-msgid "Support additional media player keys"
-msgstr "Podpora pre dodatočné multimediálne klávesy"
-
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open directory"
 msgstr "Otvorenie adresára"
@@ -1432,7 +1516,7 @@ msgstr "Otvorenie adresára"
 msgid "Open the directory of the currently playing movie"
 msgstr "Otvorí adresár s aktuálne prehrávaným filmom"
 
-#: src/plugins/open-directory/totem-open-directory.c:189
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Otvoriť obsahujúci priečinok"
 
@@ -1459,39 +1543,36 @@ msgstr "Nájde titulky pre práve prehrávaný film"
 # Pozn. prekladateľom iso_639_3 je Ivan Masár
 # http://translationproject.org/team/sk.html
 # Asi by sa to s ním zišlo prediskutovať.
-#: src/plugins/opensubtitles/opensubtitles.py:46
+#: src/plugins/opensubtitles/opensubtitles.py:49
 msgid "Brazilian Portuguese"
 msgstr "Brazílska portugalčina"
 
-#: src/plugins/opensubtitles/opensubtitles.py:187
+#: src/plugins/opensubtitles/opensubtitles.py:192
 msgid "Searching for subtitles…"
 msgstr "Hľadajú sa titulky…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:619
+#: src/plugins/opensubtitles/opensubtitles.py:240
+#: src/plugins/opensubtitles/opensubtitles.py:635
 msgid "Downloading the subtitles…"
 msgstr "Preberajú sa titulky…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:300
+#: src/plugins/opensubtitles/opensubtitles.py:305
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nepodarilo sa kontaktovať webovú stránku OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:333
+#: src/plugins/opensubtitles/opensubtitles.py:338
 #: src/plugins/opensubtitles/opensubtitles.py:351
+#: src/plugins/opensubtitles/opensubtitles.py:369
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nepodarilo sa kontaktovať webovú stránku OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:339
+#: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "Nenájdené žiadne výsledky."
 
-#: src/plugins/opensubtitles/opensubtitles.py:486
-msgid "Subtitles"
-msgstr "Titulky"
-
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:492
+#: src/plugins/opensubtitles/opensubtitles.py:508
 msgid "Format"
 msgstr "Formát"
 
@@ -1499,17 +1580,17 @@ msgstr "Formát"
 # PK: nie, toto sa mi paci
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:497
+#: src/plugins/opensubtitles/opensubtitles.py:513
 msgid "Rating"
 msgstr "Hodnotenie"
 
 # action
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:537
+#: src/plugins/opensubtitles/opensubtitles.py:553
 msgid "_Download Movie Subtitles…"
 msgstr "_Prevziať titulky k filmu…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:576
+#: src/plugins/opensubtitles/opensubtitles.py:592
 msgid "Searching subtitles…"
 msgstr "Hľadajú sa titulky…"
 
@@ -1548,39 +1629,39 @@ msgstr "Vlastnosti filmu"
 msgid "Adds movie properties menu item"
 msgstr "Pridá vlastnosti filmu do položiek ponuky"
 
-#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:148
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:155
-#: src/plugins/properties/totem-movie-properties.c:166
+#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:162
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: src/plugins/properties/totem-movie-properties.c:155
-#: src/plugins/properties/totem-movie-properties.c:166
+#: src/plugins/properties/totem-movie-properties.c:151
+#: src/plugins/properties/totem-movie-properties.c:162
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Neznámy"
 
-#: src/plugins/properties/totem-movie-properties.c:169
+#: src/plugins/properties/totem-movie-properties.c:165
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:169
+#: src/plugins/properties/totem-movie-properties.c:165
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Neznáma"
 
-#: src/plugins/properties/totem-movie-properties.c:280
+#: src/plugins/properties/totem-movie-properties.c:276
 msgid "Properties"
 msgstr "Vlastnosti"
 
 # action
-#: src/plugins/properties/totem-movie-properties.c:305
+#: src/plugins/properties/totem-movie-properties.c:301
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1699,7 +1780,7 @@ msgid "N/A"
 msgstr "Neznámy"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:250
+#: src/plugins/properties/bacon-video-widget-properties.c:258
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Neznáma"
@@ -1756,8 +1837,6 @@ msgstr[2] "%d sekundy"
 #. 5 hours 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:165
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s %s"
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
@@ -1768,8 +1847,6 @@ msgstr "%s %s %s"
 #. 5 hours 2 minutes
 #: src/plugins/properties/bacon-video-widget-properties.c:168
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1787,8 +1864,6 @@ msgstr "%s"
 #. 2 minutes 12 seconds
 #: src/plugins/properties/bacon-video-widget-properties.c:177
 #, c-format
-#| msgctxt "time"
-#| msgid "%s %s"
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
@@ -1806,7 +1881,16 @@ msgid "0 seconds"
 msgstr "0 sekúnd"
 
 # http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
-#: src/plugins/properties/bacon-video-widget-properties.c:247
+#: src/plugins/properties/bacon-video-widget-properties.c:251
+#, c-format
+msgid "%0.3f frame per second"
+msgid_plural "%0.3f frames per second"
+msgstr[0] "%0.3f snímok za sekundu"
+msgstr[1] "%0.3f snímka za sekundu"
+msgstr[2] "%0.3f snímky za sekundu"
+
+# http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
+#: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1893,12 +1977,12 @@ msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Umožňuje otočiť videá, ak majú nesprávnu orientáciu"
 
 # menu item
-#: src/plugins/rotation/totem-rotation.c:258
+#: src/plugins/rotation/totem-rotation.c:260
 msgid "_Rotate ↷"
 msgstr "O_točiť ↷"
 
 # menu item
-#: src/plugins/rotation/totem-rotation.c:262
+#: src/plugins/rotation/totem-rotation.c:264
 msgid "Rotate ↶"
 msgstr "Otočiť ↶"
 
@@ -1912,23 +1996,23 @@ msgstr "Uloženie kópie"
 msgid "Save a copy of the currently playing movie"
 msgstr "Uloží kópiu práve prehrávaného filmu"
 
-#: src/plugins/save-file/totem-save-file.c:89
+#: src/plugins/save-file/totem-save-file.c:85
 msgid "The video could not be made available offline."
 msgstr "Video nemôže byť sprístupnené bez pripojenia."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:91
+#: src/plugins/save-file/totem-save-file.c:87
 msgid "“Files” is not available."
 msgstr "Aplikácia „Súbory“ nie je dostupná."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:172
+#: src/plugins/save-file/totem-save-file.c:168
 msgid "Movie"
 msgstr "Film"
 
 # menu item
-#: src/plugins/save-file/totem-save-file.c:456
+#: src/plugins/save-file/totem-save-file.c:452
 msgid "Make Available Offline"
 msgstr "Sprístupniť bez pripojenia"
 
@@ -1942,7 +2026,7 @@ msgstr "Šetrič obrazovky"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Vypne šetrič obrazovky počas prehrávania filmu"
 
-#: src/plugins/screensaver/totem-screensaver.c:79
+#: src/plugins/screensaver/totem-screensaver.c:75
 msgid "Playing a movie"
 msgstr "Prehráva sa film"
 
@@ -1963,7 +2047,7 @@ msgstr "Počet snímok obrazovky:"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:145
+#: src/plugins/screenshot/screenshot-filename-builder.c:132
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Snímka obrazovky z %s.png"
@@ -1971,7 +2055,7 @@ msgstr "Snímka obrazovky z %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:152
+#: src/plugins/screenshot/screenshot-filename-builder.c:139
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Snímka obrazovky z %s - %d.png"
@@ -1987,12 +2071,12 @@ msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Umožňuje zachytávanie snímok a galérií z videí"
 
 # window title
-#: src/plugins/screenshot/totem-gallery.c:90
+#: src/plugins/screenshot/totem-gallery.c:86
 msgid "Save Gallery"
 msgstr "Uloženie galérie"
 
 # button
-#: src/plugins/screenshot/totem-gallery.c:97
+#: src/plugins/screenshot/totem-gallery.c:93
 msgid "_Save"
 msgstr "_Uložiť"
 
@@ -2000,7 +2084,7 @@ msgstr "_Uložiť"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:114
+#: src/plugins/screenshot/totem-gallery.c:110
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galéria-%s-%d.jpg"
@@ -2026,18 +2110,18 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "Toto by sa nemalo stať; prosím, ohláste chybu."
 
 # action entry
-#: src/plugins/screenshot/totem-screenshot-plugin.c:339
+#: src/plugins/screenshot/totem-screenshot-plugin.c:323
 msgid "Take _Screenshot"
 msgstr "Zachytiť _snímku obrazovky"
 
 # menu item
-#: src/plugins/screenshot/totem-screenshot-plugin.c:345
+#: src/plugins/screenshot/totem-screenshot-plugin.c:329
 msgid "Create Screenshot _Gallery…"
 msgstr "Vytvoriť _galériu zo snímok obrazovky…"
 
 # plugin name
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:216
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "Skip To"
 msgstr "Preskočiť na"
 
@@ -2066,52 +2150,52 @@ msgstr[2] "sekundu"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:210
+#: src/plugins/skipto/totem-skipto.c:203
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
 # plugin name
-#: src/plugins/skipto/totem-skipto.c:219
+#: src/plugins/skipto/totem-skipto.c:212
 msgid "_Skip To"
 msgstr "P_reskočiť na"
 
 # plugin name
-#: src/plugins/skipto/totem-skipto-plugin.c:206
+#: src/plugins/skipto/totem-skipto-plugin.c:202
 msgid "_Skip To…"
 msgstr "P_reskočiť na…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Normálna"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
 #, c-format
 msgid "Speed: %s"
 msgstr "Rýchlosť: %s"
@@ -2132,6 +2216,30 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nastaví používateľského agenta pre stránku služby Vimeo"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom in"
+#~ msgstr "Zväčšenie"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Zoom out"
+#~ msgstr "Zmenšenie"
+
+# label
+#~ msgid "Zoom In"
+#~ msgstr "Zväčšiť"
+
+# action
+#~ msgid "S_ubtitles"
+#~ msgstr "_Titulky"
+
+# plugin name
+#~ msgid "Media Player Keys"
+#~ msgstr "Multimediálne klávesy"
+
+# plugin desc
+#~ msgid "Support additional media player keys"
+#~ msgstr "Podpora pre dodatočné multimediálne klávesy"
 
 # summary
 #~ msgid "Whether to autoload external chapter files when a movie is loaded"
@@ -2242,9 +2350,6 @@ msgstr "Nastaví používateľského agenta pre stránku služby Vimeo"
 
 #~ msgid "Files properties tab"
 #~ msgstr "Karta vlastností súborov"
-
-#~ msgid "Audio Preview"
-#~ msgstr "Zvuková ukážka"
 
 # action
 #~ msgid "Plugins..."
