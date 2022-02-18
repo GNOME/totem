@@ -1,25 +1,16 @@
-# Bulgarian translation of totem po-file.
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
-# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014 Free Software Foundation, Inc.
-# Copyright (C) 2016 Free Software Foundation, Inc.
-# Copyright (C) 2011 Krasimir "Bfaf" Chonov <mk2616@abv.bg>.
+# Bulgarian translation of simple-scan po-file
+# Copyright (C) 2009 Rosetta Contributors and Canonical Ltd 2009
 # Copyright (C) 2021, 2022 Alexander Shopov.
-# This file is distributed under the same license as the totem package.
-# Evgeni Boevski <linkej@yahoo.com>, 2003.
-# Alexander Shopov <ash@kambanaria.org>, 2004, 2005, 2007, 2008, 2009, 2010, 2011.
-# Alexander Shopov <ash@kambanaria.org>, 2013, 2014, 2016, 2021, 2022.
-# Vladimir Petkov <kaladan@gmail.com>, 2006, 2007.
-# Damyan Ivanov <dam+gnome@ktnx.net>, 2010, 2011.
-# Krasimir Chonov <mk2616@abv.bg>, 2011.
-# Ivaylo Valkov <ivaylo@e-valkov.org>, 2012.
-# Lyubomir Vasilev <lyubomirv@abv.bg>, 2017.
+# This file is distributed under the same license as the simple-scan package.
+# Svetoslav Stefanov <svetlisashkov@yahoo.com>, 2009.
+# Alexander Shopov <ash@kambanaria.org>, 2021, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-18 07:07+0000\n"
-"PO-Revision-Date: 2022-02-18 11:43+0100\n"
+"Project-Id-Version: simple-scan\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/simple-scan/issues\n"
+"POT-Creation-Date: 2022-02-13 21:22+0000\n"
+"PO-Revision-Date: 2022-02-18 11:53+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -27,1973 +18,1121 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Launchpad-Export-Date: 2017-04-25 06:09+0000\n"
+"X-Generator: Launchpad (build 18361)\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
-msgid "Videos"
-msgstr "Видео клипове"
+#: data/org.gnome.SimpleScan.gschema.xml:11
+msgid "Device to scan from"
+msgstr "Устройство-скенер"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
-msgid "Play movies"
-msgstr "Изпълнение на филми"
+#: data/org.gnome.SimpleScan.gschema.xml:12
+msgid "SANE device to acquire images from."
+msgstr "Устройство за извличане на изображения по SANE."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/org.gnome.SimpleScan.gschema.xml:20
+msgid "Type of document being scanned"
+msgstr "Вид на сканирания документ"
+
+#: data/org.gnome.SimpleScan.gschema.xml:21
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
-"features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"Type of document being scanned. This setting decides on the scan resolution, "
+"colors and post-processing."
 msgstr ""
-"„Видео клипове“ е официалната програма за гледане на филми в работната среда "
-"GNOME. Може да търсите в списъка от локални файлове и дискове, споделените "
-"ресурси по мрежата (чрез UPnP/DLNA) или видео клиповете от различни уеб "
-"сайтове."
+"Видът на сканирания документ. Тази настройка определя разделителната "
+"способност, дълбочината на цветовете, както и допълнителната обработка."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/org.gnome.SimpleScan.gschema.xml:25
+msgid "Width of paper in tenths of a mm"
+msgstr "Широчина на хартията [десети от милиметъра]"
+
+#: data/org.gnome.SimpleScan.gschema.xml:26
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"The width of the paper in tenths of a mm (or 0 for automatic paper "
+"detection)."
 msgstr ""
-"„Видео клипове“ идва и с допълнителни възможности — изтегляне на субтитри, "
-"промяна на скоростта на видеото, създаване на галерии с кадри, както и "
-"възможност да се записват DVD-та."
+"Широчина на листа [десети от милиметъра] (0 за автоматично разпознаване)."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:33
-msgid "The GNOME developers"
-msgstr "Разработчиците на GNOME"
+#: data/org.gnome.SimpleScan.gschema.xml:30
+msgid "Height of paper in tenths of a mm"
+msgstr "Височина на хартията [десети от милиметъра]"
 
-#: data/org.gnome.Totem.desktop.in.in:3
-msgid "@APPLICATION_NAME@"
-msgstr "@APPLICATION_NAME@"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
-msgstr ""
-"video;movie;film;clip;series;player;dvd;tv;disc;totem;видео;филм;клип;серия;"
-"епизод;плеър;плейър;тв;телевизия;диск;тотем;"
-
-#: data/org.gnome.totem.gschema.xml.in:6
-msgid "The brightness of the video"
-msgstr "Яркост на филма"
-
-#: data/org.gnome.totem.gschema.xml.in:10
-msgid "The contrast of the video"
-msgstr "Контраст на филма"
-
-#: data/org.gnome.totem.gschema.xml.in:14
-msgid "The hue of the video"
-msgstr "Нюанс на филма"
-
-#: data/org.gnome.totem.gschema.xml.in:18
-msgid "The saturation of the video"
-msgstr "Наситеност на филма"
-
-#: data/org.gnome.totem.gschema.xml.in:22
-msgid "Repeat mode"
-msgstr "Режим „Повторение“"
-
-#: data/org.gnome.totem.gschema.xml.in:26
-msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "Забраняване на корекцията на презредова развивка"
-
-#: data/org.gnome.totem.gschema.xml.in:30
-msgid "Type of audio output to use"
-msgstr "Използван вид на изхода на звука"
-
-#: data/org.gnome.totem.gschema.xml.in:34
-msgid "Network buffering threshold"
-msgstr "Праг на буфериране на мрежови данни"
-
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.SimpleScan.gschema.xml:31
 msgid ""
-"Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)."
+"The height of the paper in tenths of a mm (or 0 for automatic paper "
+"detection)."
 msgstr ""
-"Обем данни, идващи по мрежата, които да се сложат в междинен буфер, преди да "
-"започне визуализацията на потока (в секунди)"
+"Височина на хартията [десети от милиметъра] (0 за автоматично разпознаване)."
 
-#: data/org.gnome.totem.gschema.xml.in:39
-msgid "Subtitle font"
-msgstr "Шрифт за субтитрите"
+#: data/org.gnome.SimpleScan.gschema.xml:35
+msgid "Brightness of scan"
+msgstr "Яркост на изображението"
 
-#: data/org.gnome.totem.gschema.xml.in:40
-msgid "Pango font description for subtitle rendering."
-msgstr "Описание на Pango на шрифта за субтитри."
+#: data/org.gnome.SimpleScan.gschema.xml:36
+msgid "The brightness adjustment from -100 to 100 (0 being none)."
+msgstr "Настройката на яркостта от -100 до 100 (0 — без промяна)."
 
-#: data/org.gnome.totem.gschema.xml.in:43
-msgctxt "subtitle-encoding"
-msgid "'UTF-8'"
-msgstr "'UTF-8'"
+#: data/org.gnome.SimpleScan.gschema.xml:40
+msgid "Contrast of scan"
+msgstr "Контраст на изображението"
 
-#: data/org.gnome.totem.gschema.xml.in:50
-msgid "Subtitle encoding"
-msgstr "Кодиране на субтитрите"
+#: data/org.gnome.SimpleScan.gschema.xml:41
+msgid "The contrast adjustment from -100 to 100 (0 being none)."
+msgstr "Настройката на контраста от -100 до 100 (0 — без промяна)."
 
-#: data/org.gnome.totem.gschema.xml.in:51
-msgid "Encoding character set for subtitle."
-msgstr "Кодова таблица на субтитрите"
+#: data/org.gnome.SimpleScan.gschema.xml:45
+msgid "Resolution for text scans"
+msgstr "Разделителна способност при сканиране на текст"
 
-#: data/org.gnome.totem.gschema.xml.in:55
-msgid "Default location for the “Open…” dialogs"
-msgstr "Стандартно местоположение за диалоговите прозорци „Отваряне…“"
+#: data/org.gnome.SimpleScan.gschema.xml:46
+msgid "The resolution in dots-per-inch to use when scanning text."
+msgstr "Разделителна способност [точки/инч] при сканиране на текст."
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.SimpleScan.gschema.xml:50
+msgid "Resolution for image scans"
+msgstr "Разделителна способност при сканиране на изображения"
+
+#: data/org.gnome.SimpleScan.gschema.xml:51
+msgid "The resolution in dots-per-inch to use when scanning images."
+msgstr "Разделителна способност [точки/инч] при сканиране на изображения"
+
+#: data/org.gnome.SimpleScan.gschema.xml:55
+msgid "Page side to scan"
+msgstr "Страна на листа за сканиране"
+
+#: data/org.gnome.SimpleScan.gschema.xml:56
+msgid "The page side to scan."
+msgstr "Коя страница на листа да се сканира."
+
+#: data/org.gnome.SimpleScan.gschema.xml:60
+msgid "Directory to save files to"
+msgstr "Папка за съхраняване на файловете"
+
+#: data/org.gnome.SimpleScan.gschema.xml:61
 msgid ""
-"Default location for the “Open…” dialogs. Default is the current directory."
+"The directory to save files to. Defaults to the documents directory if unset."
 msgstr ""
-"Стандартно местоположение използвано от диалоговите прозорци „Отваряне…“, по "
-"подразбиране е текущата папка."
+"Папка за съхраняване на файловете. По подразбиране се използва папката за "
+"документи."
 
-#: data/org.gnome.totem.gschema.xml.in:60
-msgid "Default location for the “Take Screenshot” dialogs"
-msgstr "Стандартно местоположение за диалоговите прозорци „Снимане на кадър“"
+#: data/org.gnome.SimpleScan.gschema.xml:65
+msgid "File format that is used for saving image files"
+msgstr "Формат на запазваните файлове за изображения"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.SimpleScan.gschema.xml:66
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"MIME type that is used for saving image files. Examples of supported MIME "
+"types: image/jpeg, image/png, application/pdf"
 msgstr ""
-"Стандартно местоположение използвано от диалоговите прозорци „Снимане на "
-"кадър“, по подразбиране е папката „Изображения“."
+"Вид MIME за запазваните файлове за изображения. Напр.: „image/jpeg“, „image/"
+"png“, „application/pdf“"
 
-#: data/org.gnome.totem.gschema.xml.in:65
-msgid "Whether to disable the plugins in the user’s home directory"
-msgstr "Дали да се изключат приставките в домашната директория на потребителя"
+#: data/org.gnome.SimpleScan.gschema.xml:71
+msgid "Quality value to use for JPEG compression"
+msgstr "Стойността на качеството, за използваната JPEG компресия"
 
-#: data/org.gnome.totem.gschema.xml.in:69
-msgid "Whether to disable the keyboard shortcuts"
-msgstr "Дали да се изключат клавишните комбинации"
+#: data/org.gnome.SimpleScan.gschema.xml:72
+msgid "Quality value to use for JPEG compression."
+msgstr "Стойността на качеството за използваната компресия за JPEG."
 
-#: data/org.gnome.totem.gschema.xml.in:73
-msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr "Дали субтитрите да се зареждат автоматично с филмите"
+#: data/org.gnome.SimpleScan.gschema.xml:77
+msgid "Delay in millisecond between pages"
+msgstr "Забавяне [милисекунди] между страниците"
 
-#: data/org.gnome.totem.gschema.xml.in:77
-msgid "Active plugins list"
-msgstr "Списък на активните приставки"
+#: data/org.gnome.SimpleScan.gschema.xml:78
+msgid "Delay in millisecond between pages."
+msgstr "Забавяне в милисекунди между страниците."
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.SimpleScan.gschema.xml:82
+msgid "Whether or not postprocessing is enabled"
+msgstr "Дали допълнителната обработка е включена"
+
+#: data/org.gnome.SimpleScan.gschema.xml:83
+msgid "Whether or not postprocessing is enabled."
+msgstr "Дали допълнителната обработка е включена."
+
+#: data/org.gnome.SimpleScan.gschema.xml:87
+msgid "The path to the postprocessing script"
+msgstr "Път до скрипта за допълнителна обработка"
+
+#: data/org.gnome.SimpleScan.gschema.xml:88
+msgid "The path to the postprocessing script."
+msgstr "Път до скрипта за допълнителна обработка."
+
+#: data/org.gnome.SimpleScan.gschema.xml:92
+msgid "Additional arguments for the postprocessing script"
+msgstr "Допълнителни аргументи за скрипта за допълнителна обработка"
+
+#: data/org.gnome.SimpleScan.gschema.xml:93
+msgid "Additional arguments for the postprocessing script."
+msgstr "Допълнителни аргументи за скрипта за допълнителна обработка."
+
+#: data/org.gnome.SimpleScan.gschema.xml:97
+msgid "Whether or not to keep the original, unprocessed file"
+msgstr "Дали оригиналният, необработен файл да се запазва"
+
+#: data/org.gnome.SimpleScan.gschema.xml:98
 msgid ""
-"A list of the names of the plugins which are currently active (loaded and "
-"running)."
+"Whether or not to keep the original, unprocessed file. The \"_orig\" "
+"filename will be added to the filename immediately before the file extension."
 msgstr ""
-"Списък с имената на действащите в момента приставки (заредени и включени)."
+"Дали оригиналният, необработен файл да се запазва. В края на името на "
+"първоначалния файл се добавя „_orig“."
 
-#: data/org.gnome.totem.gschema.xml.in:82
-msgid "Directories to show"
-msgstr "Папки за показване"
+#. Title of scan window
+#. Set HeaderBar title here because Glade doesn't keep it translated
+#. https://bugzilla.gnome.org/show_bug.cgi?id=782753
+#. Title of scan window
+#: data/simple-scan.appdata.xml.in:6 data/simple-scan.desktop.in:3
+#: data/ui/app-window.ui:454 src/app-window.vala:1558 src/app-window.vala:1832
+msgid "Document Scanner"
+msgstr "Сканиране на документи"
 
-#: data/org.gnome.totem.gschema.xml.in:83
-msgid "Directories to show in the browse interface, none by default"
-msgstr ""
-"Кои папки да се показват в интерфейса за избор на файлове. Стандартно няма "
-"такива"
+#: data/simple-scan.appdata.xml.in:7 data/simple-scan.desktop.in:4
+msgid "Make a digital copy of your photos and documents"
+msgstr "Създаване на цифров дубликат на снимки и документи"
 
-#: data/org.gnome.totem.gschema.xml.in:87
-msgid "Disable hardware decoders"
-msgstr "Изключване на хардуерните декодери"
-
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/simple-scan.appdata.xml.in:9
 msgid ""
-"Disable hardware decoders and use only software decoders. For debugging "
-"purposes only."
+"A really easy way to scan both text and images. You can crop out the bad "
+"parts of an image and rotate it if it is the wrong way round. You can print "
+"your scans, export them to pdf, or save them in a range of image formats."
 msgstr ""
-"Изключване на хардуерните декодери и използване само на софтуерно "
-"декодиране. За изчистване на грешки."
+"Много лесен способ за сканиране на текст и изображения. Може да изрязвате "
+"ненужното и да завъртате документите. Може да печататe, изнасяте към pdf или "
+"други формати за изображения."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
-msgid "Stereo"
-msgstr "стерео"
+#: data/simple-scan.appdata.xml.in:14
+msgid "This app uses the SANE framework to support most existing scanners."
+msgstr "Тази програма ползва SANE за поддръжката на повечето скенери."
 
-#: data/totem-preferences-dialog.ui:16
-msgid "4-channel"
-msgstr "4 канален"
+#: data/simple-scan.appdata.xml.in:26
+msgid "The GNOME Project"
+msgstr "Проектът GNOME"
 
-#: data/totem-preferences-dialog.ui:19
-msgid "4.1-channel"
-msgstr "4.1 канален"
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/simple-scan.desktop.in:6
+msgid "scan;scanner;flatbed;adf;"
+msgstr "scan;scanner;flatbed;adf;скенер;сканиране;копие;копиране;плоскост;"
 
-#: data/totem-preferences-dialog.ui:22
-msgid "5.0-channel"
-msgstr "5.0 канален"
+#. Menu item to rotate page to left (anti-clockwise)
+#: data/ui/app-window.ui:10
+msgid "Rotate _Left"
+msgstr "Завъртане на_ляво"
 
-#: data/totem-preferences-dialog.ui:25
-msgid "5.1-channel"
-msgstr "5.1 канален"
+#. Menu item to rotate page to right (clockwise)
+#: data/ui/app-window.ui:19
+msgid "Rotate _Right"
+msgstr "Завъртане на_дясно"
 
-#: data/totem-preferences-dialog.ui:28
-msgid "AC3 Passthrough"
-msgstr "директен AC3"
+#. Label for page crop submenu
+#: data/ui/app-window.ui:28
+msgid "_Crop"
+msgstr "_Изрязване"
 
-#: data/totem-preferences-dialog.ui:70
-msgid "Preferences"
-msgstr "Настройки"
+#. Radio button for no crop
+#: data/ui/app-window.ui:36
+msgid "_None"
+msgstr "_Нищо"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "Външни субтитри"
+#. Radio button for cropping page to A4 size
+#: data/ui/app-window.ui:46
+msgid "A_4"
+msgstr "A_4"
 
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "_Зареждане на субтитри заедно с филма"
+#. Radio button for cropping page to A5 size
+#: data/ui/app-window.ui:56
+msgid "A_5"
+msgstr "A_5"
 
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_Шрифт:"
+#. Radio button for cropping page to US letter size
+#: data/ui/app-window.ui:75
+msgid "_Letter"
+msgstr "US _Letter"
 
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_Кодова таблица:"
+#. Radio button for cropping to page to US legal size
+#: data/ui/app-window.ui:85
+msgid "Le_gal"
+msgstr "US Le_gal"
 
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "Шрифт за субтитрите"
+#. Radio button for cropping page to 4x6 inch
+#: data/ui/app-window.ui:95
+msgid "4×6"
+msgstr "4×6"
 
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "Приставки"
+#. Radio button for cropping page to A3
+#: data/ui/app-window.ui:105
+msgid "A_3"
+msgstr "A_3"
 
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "Приставки…"
+#. Radio button for cropping to custom page size
+#: data/ui/app-window.ui:115
+msgid "_Custom"
+msgstr "_Персонализирано"
 
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
-msgid "General"
-msgstr "Общи"
+#. Menu item to rotate the crop area
+#: data/ui/app-window.ui:131
+msgid "_Rotate Crop"
+msgstr "_Завъртане на изрязаното"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "Видео"
+#. Menu item to move the selected page to the left
+#: data/ui/app-window.ui:143
+msgid "Move Left"
+msgstr "Преместване наляво ←"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Без _корекция на презредови видео потоци"
+#. Menu item to move the selected page to the right
+#: data/ui/app-window.ui:151
+msgid "Move Right"
+msgstr "Преместване надясно →"
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "Цветови баланс"
+#: data/ui/app-window.ui:225
+msgid "_Single Page"
+msgstr "_Една страница"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_Яркост"
+#: data/ui/app-window.ui:272
+msgid "All Pages From _Feeder"
+msgstr "Всички страници от _листоподаващото устройство"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "_Контраст:"
+#: data/ui/app-window.ui:319
+msgid "_Multiple Pages From Flatbed"
+msgstr "_Много страници от прозрачната плоскост на скенера"
 
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "На_ситеност:"
+#: data/ui/app-window.ui:366
+msgid "_Text"
+msgstr "_Текст"
 
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_Нюанс:"
+#: data/ui/app-window.ui:413
+msgid "_Image"
+msgstr "_Изображение"
 
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "В_ъзстановяване на стандартните настройки"
+#: data/ui/app-window.ui:433 src/app-window.vala:1862
+msgid "_Preferences"
+msgstr "_Настройки"
 
-#: data/totem-preferences-dialog.ui:683
-msgid "Display"
-msgstr "Визуални"
+#. Tooltip for stop button
+#: data/ui/app-window.ui:472
+msgid "Stop the current scan"
+msgstr "Спиране на текущото сканиране"
 
-#: data/totem-preferences-dialog.ui:724
-msgid "Audio Output"
-msgstr "Изход на звука"
+#: data/ui/app-window.ui:493
+msgid "S_top"
+msgstr "_Спиране"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "Вид на изхода на _звука:"
+#: data/ui/app-window.ui:544
+msgid "_Scan"
+msgstr "_Сканиране"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "Звук"
+#. Tooltip for save toolbar button
+#: data/ui/app-window.ui:640
+msgid "Save document to a file"
+msgstr "Запазване на документа във файл"
 
-#: data/shortcuts.ui:16
+#. Tooltip for stop button
+#: data/ui/app-window.ui:714
+msgid "Refresh device list"
+msgstr "Опресняване на списъка с устройства"
+
+#. Button to submit authorization dialog
+#: data/ui/authorize-dialog.ui:22
+msgid "_Authorize"
+msgstr "_Идентификация"
+
+#. Label beside username entry
+#: data/ui/authorize-dialog.ui:80
+msgid "_Username for resource:"
+msgstr "_Потребителско име за ресурса:"
+
+#. Label beside password entry
+#: data/ui/authorize-dialog.ui:92
+msgid "_Password:"
+msgstr "_Парола:"
+
+#: data/ui/help-overlay.ui:12
+msgctxt "shortcut window"
+msgid "Scanning"
+msgstr "Сканиране"
+
+#: data/ui/help-overlay.ui:17
+msgctxt "shortcut window"
+msgid "Scan a single page"
+msgstr "Сканиране на страница със скенера"
+
+#: data/ui/help-overlay.ui:24
+msgctxt "shortcut window"
+msgid "Scan all pages from document feeder"
+msgstr "Сканиране на всички страници в листоподаващото устройство"
+
+#: data/ui/help-overlay.ui:31
+msgctxt "shortcut window"
+msgid "Scan continuously from a flatbed scanner"
+msgstr "Непрекъснато сканиране от прозрачната плоскост на скенер"
+
+#: data/ui/help-overlay.ui:38
+msgctxt "shortcut window"
+msgid "Stop scan in progress"
+msgstr "Спиране на текущото сканиране"
+
+#: data/ui/help-overlay.ui:46
+msgctxt "shortcut window"
+msgid "Document Modification"
+msgstr "Промяна на документа"
+
+#: data/ui/help-overlay.ui:51
+msgctxt "shortcut window"
+msgid "Move page left"
+msgstr "Преместване на страница наляво"
+
+#: data/ui/help-overlay.ui:58
+msgctxt "shortcut window"
+msgid "Move page right"
+msgstr "Преместване на страница надясно"
+
+#: data/ui/help-overlay.ui:65
+msgctxt "shortcut window"
+msgid "Rotate page to the left (anti-clockwise)"
+msgstr "Завъртане на страницата наляво ↶"
+
+#: data/ui/help-overlay.ui:72
+msgctxt "shortcut window"
+msgid "Rotate page to the right (clockwise)"
+msgstr "Завъртане на страницата надясно ↷"
+
+#: data/ui/help-overlay.ui:79
+msgctxt "shortcut window"
+msgid "Delete page"
+msgstr "Изтриване на страница"
+
+#: data/ui/help-overlay.ui:87
+msgctxt "shortcut window"
+msgid "Document Management"
+msgstr "Управление на документи"
+
+#: data/ui/help-overlay.ui:92
+msgctxt "shortcut window"
+msgid "Start new document"
+msgstr "Създаване на нов документ"
+
+#: data/ui/help-overlay.ui:99
+msgctxt "shortcut window"
+msgid "Save scanned document"
+msgstr "Запазване на сканиран документ"
+
+#: data/ui/help-overlay.ui:106
+msgctxt "shortcut window"
+msgid "Email scanned document"
+msgstr "Пращане на сканиран документ по е-поща"
+
+#: data/ui/help-overlay.ui:113
+msgctxt "shortcut window"
+msgid "Print scanned document"
+msgstr "Печат на сканиран документ"
+
+#: data/ui/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Copy current page to clipboard"
+msgstr "Копиране на текущата страница в буфера за обмен"
+
+#: data/ui/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Общи"
 
-#: data/shortcuts.ui:21
+#: data/ui/help-overlay.ui:133
 msgctxt "shortcut window"
 msgid "Show help"
 msgstr "Извеждане на помощта"
 
-#: data/shortcuts.ui:28
+#: data/ui/help-overlay.ui:140
+msgctxt "shortcut window"
+msgid "Open menu"
+msgstr "Отваряне на менюто"
+
+#: data/ui/help-overlay.ui:147
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Клавишни комбинации"
 
-#: data/shortcuts.ui:35
-msgctxt "shortcut window"
-msgid "Add local video"
-msgstr "Добавяне на локален филм"
-
-#: data/shortcuts.ui:42
-msgctxt "shortcut window"
-msgid "Add web video"
-msgstr "Добавяне на уеб клип"
-
-#: data/shortcuts.ui:49
-msgctxt "shortcut window"
-msgid "Properties"
-msgstr "Подробности"
-
-#: data/shortcuts.ui:56
-msgctxt "shortcut window"
-msgid "Make Available Offline"
-msgstr "Клипът да е достъпен и без мрежа"
-
-#: data/shortcuts.ui:63
-msgctxt "shortcut window"
-msgid "Take Screenshot"
-msgstr "Снимане на кадър"
-
-#: data/shortcuts.ui:70
+#: data/ui/help-overlay.ui:154
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Спиране на програмата"
 
-#: data/shortcuts.ui:78
-msgctxt "shortcut window"
-msgid "Volume"
-msgstr "Сила на звука"
-
-#: data/shortcuts.ui:83
-msgctxt "shortcut window"
-msgid "Increase volume"
-msgstr "Увеличаване на звука"
-
-#: data/shortcuts.ui:90
-msgctxt "shortcut window"
-msgid "Decrease volume"
-msgstr "Намаляване на звука"
-
-#: data/shortcuts.ui:97
-msgctxt "shortcut window"
-msgid "Mute/unmute"
-msgstr "Заглушаване/звук"
-
-#: data/shortcuts.ui:105
-msgctxt "shortcut window"
-msgid "View"
-msgstr "Изглед"
-
-#: data/shortcuts.ui:110
-msgctxt "shortcut window"
-msgid "Toggle fullscreen"
-msgstr "На цял екран"
-
-#: data/shortcuts.ui:117
-msgctxt "shortcut window"
-msgid "Exit fullscreen"
-msgstr "Изход от цял екран"
-
-#: data/shortcuts.ui:124
-msgctxt "shortcut window"
-msgid "Rotate ↷"
-msgstr "Завъртане ↷"
-
-#: data/shortcuts.ui:131
-msgctxt "shortcut window"
-msgid "Rotate ↶"
-msgstr "Завъртане ↶"
-
-#: data/shortcuts.ui:140
-msgctxt "shortcut window"
-msgid "Playback"
-msgstr "Изпълнение"
-
-#: data/shortcuts.ui:145
-msgctxt "shortcut window"
-msgid "Play/Pause"
-msgstr "Изпълнение/пауза"
-
-#: data/shortcuts.ui:153 data/shortcuts.ui:169
-msgctxt "shortcut window"
-msgid "Previous video or chapter"
-msgstr "Предишна глава / филм"
-
-#: data/shortcuts.ui:161 data/shortcuts.ui:177
-msgctxt "shortcut window"
-msgid "Next video or chapter"
-msgstr "Следваща глава / филм:"
-
-#: data/shortcuts.ui:185
-msgctxt "shortcut window"
-msgid "Skip"
-msgstr "Прескачане"
-
-#: data/shortcuts.ui:191 data/shortcuts.ui:253
-msgctxt "shortcut window"
-msgid "Go back 15 seconds"
-msgstr "Назад 15 секунди"
-
-#: data/shortcuts.ui:199 data/shortcuts.ui:261
-msgctxt "shortcut window"
-msgid "Go forward 60 seconds"
-msgstr "Напред 60 секунди"
-
-#: data/shortcuts.ui:206
-msgctxt "shortcut window"
-msgid "Step back one frame"
-msgstr "Назад 1 кадър"
-
-#: data/shortcuts.ui:213
-msgctxt "shortcut window"
-msgid "Step forward one frame"
-msgstr "Напред 1 кадър"
-
-#: data/shortcuts.ui:221 data/shortcuts.ui:269
-msgctxt "shortcut window"
-msgid "Go back 5 seconds"
-msgstr "Назад 5 секунди"
-
-#: data/shortcuts.ui:229 data/shortcuts.ui:277
-msgctxt "shortcut window"
-msgid "Go forward 15 seconds"
-msgstr "Напред 15 секунди"
-
-#: data/shortcuts.ui:237 data/shortcuts.ui:285
-msgctxt "shortcut window"
-msgid "Go back 3 minutes"
-msgstr "Назад 3 минути"
-
-#: data/shortcuts.ui:245 data/shortcuts.ui:293
-msgctxt "shortcut window"
-msgid "Go forward 10 minutes"
-msgstr "Напред 10 минути"
-
-#: data/shortcuts.ui:300
-msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "_Прескачане до…"
-
-#: data/shortcuts.ui:308
-msgctxt "shortcut window"
-msgid "DVD menu navigation"
-msgstr "Придвижване по менютата на DVD-та"
-
-#: data/shortcuts.ui:313
-msgctxt "shortcut window"
-msgid "Navigate up"
-msgstr "Нагоре"
-
-#: data/shortcuts.ui:320
-msgctxt "shortcut window"
-msgid "Navigate down"
-msgstr "Надолу"
-
-#: data/shortcuts.ui:327
-msgctxt "shortcut window"
-msgid "Navigate left"
-msgstr "Наляво"
-
-#: data/shortcuts.ui:334
-msgctxt "shortcut window"
-msgid "Navigate right"
-msgstr "Надясно"
-
-#: data/shortcuts.ui:342
-msgctxt "shortcut window"
-msgid "Subtitles"
-msgstr "Субтитри"
-
-#: data/shortcuts.ui:347
-msgctxt "shortcut window"
-msgid "Select next subtitle"
-msgstr "Избор на следващите субтитри"
-
-#: data/shortcuts.ui:354
-msgctxt "shortcut window"
-msgid "Toggle subtitles"
-msgstr "Превключване на субтитрите"
-
-#: data/totem.ui:11 data/totem.ui:90
-msgid "Prefere_nces"
-msgstr "_Настройки"
-
-#: data/totem.ui:15 data/totem.ui:94
-msgid "_Keyboard Shortcuts"
-msgstr "_Клавишни комбинации"
-
-#: data/totem.ui:19
-msgid "_Help"
-msgstr "Помо_щ"
-
-#: data/totem.ui:29
-msgid "Add _Local Video…"
-msgstr "Добавяне на _локален филм"
-
-#: data/totem.ui:34
-msgid "Add _Web Video…"
-msgstr "Добавяне на филм от _мрежата"
-
-#: data/totem.ui:51
-msgid "_Aspect Ratio"
-msgstr "_Съотношението на екрана"
-
-#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
-msgctxt "Aspect ratio"
-msgid "Auto"
-msgstr "Автоматично"
-
-#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
-msgctxt "Aspect ratio"
-msgid "Square"
-msgstr "Квадратно"
-
-#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
-msgctxt "Aspect ratio"
-msgid "4∶3 (TV)"
-msgstr "4:3 (телевизия)"
-
-#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
-msgctxt "Aspect ratio"
-msgid "16∶9 (Widescreen)"
-msgstr "16:9 (широк екран)"
-
-#. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
-msgctxt "Aspect ratio"
-msgid "2.11∶1 (DVB)"
-msgstr "2.11:1 (цифрово видеоразпръскване)"
-
-#: data/totem.ui:82
-msgid "Switch An_gles"
-msgstr "Избор на друг _ъгъл"
-
-#: data/totem.ui:103
-msgid "_Eject"
-msgstr "_Изваждане"
-
-#: data/totem.ui:114
-msgid "Languages"
-msgstr "Езици"
-
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
-msgid "Subtitles"
-msgstr "Субтитри"
-
-#: data/totem.ui:121
-msgid "_Select Text Subtitles…"
-msgstr "_Шрифт за субтитрите…"
-
-#: data/totem.ui:132
-msgid "_Repeat"
-msgstr "_Повторение"
-
-#: data/totem.ui:138
-msgid "_DVD Menu"
-msgstr "_Меню за DVD"
-
-#: data/totem.ui:144
-msgid "_Title Menu"
-msgstr "На_чално меню"
-
-#: data/totem.ui:149
-msgid "A_udio Menu"
-msgstr "Меню за _звука"
-
-#: data/totem.ui:154
-msgid "_Angle Menu"
-msgstr "Меню за избор на _ъгъл"
-
-#: data/totem.ui:159
-msgid "_Chapter Menu"
-msgstr "Меню за избор на _глава"
-
-#: data/totem.ui:168
-msgid "Speed"
-msgstr "Скорост"
-
-#: data/uri.ui:5
-msgid "Add Web Video"
-msgstr "Добавяне на уеб клип"
-
-#: data/uri.ui:19
-msgid "Enter the _address of the file you would like to open:"
-msgstr "Въвеждане на _местоположението на файла за изпълнение"
-
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_Отказ"
-
-#: data/uri.ui:54 src/totem-uri.c:465
-msgid "_Add"
-msgstr "_Добавяне"
-
-#: src/backend/bacon-video-widget.c:1435
-msgid "Password requested for RTSP server"
-msgstr "Сървърът за RTSP изисква парола"
-
-#: src/backend/bacon-video-widget.c:3339
-msgid ""
-"The source seems encrypted and can’t be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"Изглежда източникът е шифриран и не може да бъде прочетен. Дали се пробвате "
-"да пуснете шифрирано DVD, без да сте инсталирали „libdvdcss“?"
-
-#: src/backend/bacon-video-widget.c:3353
-msgid "The server you are trying to connect to is not known."
-msgstr "Опитвате се да се свържете към неизвестен сървър."
-
-#: src/backend/bacon-video-widget.c:3356
-msgid "The connection to this server was refused."
-msgstr "Отказана връзка от сървъра."
-
-#: src/backend/bacon-video-widget.c:3359
-msgid "The specified movie could not be found."
-msgstr "Зададеният филм не може да бъде намерен."
-
-#: src/backend/bacon-video-widget.c:3366
-msgid "The server refused access to this file or stream."
-msgstr "Сървърът не разрешава достъп до този файл или поток."
-
-#: src/backend/bacon-video-widget.c:3372
-msgid "Authentication is required to access this file or stream."
-msgstr "Изисква се удостоверяване за достъп до този файл или поток."
-
-#: src/backend/bacon-video-widget.c:3378
-msgid "SSL/TLS support is missing. Check your installation."
-msgstr "Поддръжката на SSL/TLS липсва, проверете дали е инсталирана."
-
-#: src/backend/bacon-video-widget.c:3385
-msgid "You are not allowed to open this file."
-msgstr "Нямате права за достъп, за да отворите този файл."
-
-#: src/backend/bacon-video-widget.c:3390
-msgid "This location is not a valid one."
-msgstr "Грешно местоположение."
-
-#: src/backend/bacon-video-widget.c:3398
-msgid "The movie could not be read."
-msgstr "Филмът не може да бъде прочетен."
-
-#: src/backend/bacon-video-widget.c:3404
-msgid "This file is encrypted and cannot be played back."
-msgstr "Този файл е шифриран и не може да бъде пуснат."
-
-#: src/backend/bacon-video-widget.c:3410
-msgid "The file you tried to play is an empty file."
-msgstr "Опитвате се да пуснете празен файл."
-
-#. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
-#, c-format
-msgid "The playback of this movie requires a %s plugin which is not installed."
-msgid_plural ""
-"The playback of this movie requires the following plugins which are not "
-"installed:\n"
-"\n"
-"%s"
-msgstr[0] ""
-"Изпълнението на този филм изисква приставката „%s“, която не е инсталирана."
-msgstr[1] ""
-"Изпълнението на този филм изисква следните приставки, които не са "
-"инсталирани:\n"
-"\n"
-"%s"
-
-#: src/backend/bacon-video-widget.c:3454
-msgid ""
-"This stream cannot be played. It’s possible that a firewall is blocking it."
-msgstr ""
-"Потокът не може да бъде изпълнен. Възможно е някоя защитна стена да го "
-"блокира."
-
-#: src/backend/bacon-video-widget.c:3457
-msgid ""
-"An audio or video stream is not handled due to missing codecs. You might "
-"need to install additional plugins to be able to play some types of movies"
-msgstr ""
-"Поради липсващи кодери някои видео или звукови потоци не може да бъдат "
-"възпроизведени. Вероятно трябва да инсталирате допълнителни приставки, за да "
-"гледате някои видове филми"
-
-#: src/backend/bacon-video-widget.c:3468
-msgid ""
-"This file cannot be played over the network. Try downloading it locally "
-"first."
-msgstr ""
-"Файлът не може да бъде изпълнен през мрежата. Опитайте да го изтеглите "
-"локално."
-
-#: src/backend/bacon-video-widget.c:5062
-msgid "Surround"
-msgstr "обемен звук"
-
-#: src/backend/bacon-video-widget.c:5064
-msgid "Mono"
-msgstr "моно"
-
-#: src/backend/bacon-video-widget.c:5334
-msgid "Media contains no supported video streams."
-msgstr "Медията съдържа неподдържани видео потоци."
-
-#: src/backend/bacon-video-widget.c:5523
-msgid ""
-"Some necessary plug-ins are missing. Make sure that the program is correctly "
-"installed."
-msgstr ""
-"Някои необходими приставки липсват. Проверете дали програмата е инсталирана "
-"правилно."
-
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:275
-msgid "Unable to play the file"
-msgstr "Файлът не може да бъде показан"
-
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:278
-#, c-format
-msgid "%s is required to play the file, but is not installed."
-msgid_plural "%s are required to play the file, but are not installed."
-msgstr[0] ""
-"За да пуснете файла, ви е необходим модула %s, който не е инсталиран."
-msgstr[1] ""
-"За да пуснете файла, са ви необходими модулите %s, които не са инсталирани."
-
-#. TRANSLATORS: this is a button to launch a codec installer.
-#. * %s will be replaced with the software installer's name, e.g.
-#. * 'Software' in case of gnome-software.
-#: src/backend/bacon-video-widget-gst-missing-plugins.c:286
-#, c-format
-msgid "_Find in %s"
-msgstr "_Търсене в „%s“"
-
-#. translators: Unknown time
-#: src/gst/totem-time-helpers.c:45
-msgid "--:--"
-msgstr "--:--"
-
-#. hour:minutes:seconds
-#. Translators: This is a time format, like "9:05:02" for 9
-#. * hours, 5 minutes, and 2 seconds. You may change ":" to
-#. * the separator that your locale uses or use "%Id" instead
-#. * of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
-#, c-format
-msgctxt "long time format"
-msgid "%d:%02d:%02d"
-msgstr "%d:%02d:%02d"
-
-#. hour:minutes:seconds.msecs
-#. Translators: This is a time format, like "9:05:02.050" for 9
-#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
-#. * the separator that your locale uses or use "%Id" instead
-#. * of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:89
-#, c-format
-msgctxt "long time format"
-msgid "%d:%02d:%02d.%03d"
-msgstr "%d:%02d:%02d.%03d"
-
-#. -hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
-#. * hours, 5 minutes, and 2 seconds playback remaining. You may
-#. * change ":" to the separator that your locale uses or use
-#. * "%Id" instead of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:99
-#, c-format
-msgctxt "long time format"
-msgid "-%d:%02d:%02d"
-msgstr "-%d:%02d:%02d"
-
-#. -hour:minutes:seconds.msecs
-#. Translators: This is a time format, like "-9:05:02.050" for 9
-#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
-#. * change ":" to the separator that your locale uses or use
-#. * "%Id" instead of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:107
-#, c-format
-msgctxt "long time format"
-msgid "-%d:%02d:%02d.%03d"
-msgstr "-%d:%02d:%02d.%03d"
-
-#. -minutes:seconds
-#. Translators: This is a time format, like "-5:02" for 5
-#. * minutes and 2 seconds playback remaining. You may change
-#. * ":" to the separator that your locale uses or use "%Id"
-#. * instead of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:120
-#, c-format
-msgctxt "short time format"
-msgid "-%d:%02d"
-msgstr "-%d:%02d"
-
-#. -minutes:seconds.msec
-#. Translators: This is a time format, like "-5:02.050" for 5
-#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
-#. * ":" to the separator that your locale uses or use "%Id"
-#. * instead of "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:128
-#, c-format
-msgctxt "short time format"
-msgid "-%d:%02d.%03d"
-msgstr "-%d:%02d.%03d"
-
-#. minutes:seconds.msec
-#. Translators: This is a time format, like "5:02" for 5
-#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
-#. * separator that your locale uses or use "%Id" instead of
-#. * "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:139
-#, c-format
-msgctxt "short time format"
-msgid "%d:%02d.%03d"
-msgstr "%d:%02d.%03d"
-
-#. minutes:seconds
-#. Translators: This is a time format, like "5:02" for 5
-#. * minutes and 2 seconds. You may change ":" to the
-#. * separator that your locale uses or use "%Id" instead of
-#. * "%d" if your locale uses localized digits.
-#.
-#: src/gst/totem-time-helpers.c:148
-#, c-format
-msgctxt "short time format"
-msgid "%d:%02d"
-msgstr "%d:%02d"
-
-#: src/grilo.ui:7
-msgid "Select All"
-msgstr "Избор на всички"
-
-#: src/grilo.ui:12
-msgid "Select None"
-msgstr "Изчистване на избора"
-
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr ""
-"Библиотеките за безопасна работа с нишки не могат да бъдат инициализирани."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Проверете системата си. Totem ще бъде спрян."
-
-#: src/totem.c:74
-msgid "Videos Preview"
-msgstr "Преглед на видео"
-
-#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
-#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
-#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: src/totem-gallery-thumbnailer.c:631
-#, c-format
-msgid ""
-"<b>%s</b>: %s\n"
-"<b>%s</b>: %d×%d\n"
-"<b>%s</b>: %s"
-msgstr ""
-"<b>%s</b>: %s\n"
-"<b>%s</b>: %d × %d\n"
-"<b>%s</b>: %s"
-
-#: src/totem-gallery-thumbnailer.c:632
-msgid "Filename"
-msgstr "Име на файл"
-
-#: src/totem-gallery-thumbnailer.c:634
-msgid "Resolution"
-msgstr "Разделителна способност"
-
-#: src/totem-gallery-thumbnailer.c:637
-msgid "Duration"
-msgstr "Продължителност"
-
-#: src/totem-grilo.c:289
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Сезон %d, епизод %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:326
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (сезон %d, епизод %d)"
-
-#: src/totem-grilo.c:688
-msgid "Browse Error"
-msgstr "Грешка при разглеждане"
-
-#: src/totem-grilo.c:837
-msgid "Search Error"
-msgstr "Грешка при търсене"
-
-#: src/totem-grilo.c:1329
-msgid "Local"
-msgstr "Локални"
-
-#: src/totem-grilo.c:1932
-msgid "Channels"
-msgstr "Канали"
-
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Грешка при зареждането на интерфейса „%s“. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Файлът не съществува."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Проверете дали Totem е инсталиран правилно."
-
-#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
-msgid "Click on items to select them"
-msgstr "За избиране на обекти ги натиснете"
-
-#: src/totem-main-toolbar.c:135
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "%d избран"
-msgstr[1] "%d избрани"
-
-#: src/totem-main-toolbar.c:156
-#, c-format
-msgid "Results for “%s”"
-msgstr "Резултати за „%s“"
-
-#: src/totemmaintoolbar.ui:18
+#. Preferences Dialog: Section label for scanning settings
+#: data/ui/preferences-dialog.ui:52
+msgid "Scanning"
+msgstr "Сканиране"
+
+#. Label beside scan side combo box
+#: data/ui/preferences-dialog.ui:56
+msgid "Scan _Sides"
+msgstr "Сканиране на _страни"
+
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:66
+msgid "Front"
+msgstr "Предна страна"
+
+#. Preferences Dialog: Toggle button to select scanning on the back side of a page
+#: data/ui/preferences-dialog.ui:76
 msgid "Back"
-msgstr "Назад"
+msgstr "Обратна страна"
 
-#: src/totemmaintoolbar.ui:44
-msgid "Select"
-msgstr "Избор"
+#. Preferences Dialog: Toggle button to select scanning on both sides of a page
+#: data/ui/preferences-dialog.ui:86
+msgid "Both"
+msgstr "И двете"
 
-#: src/totemmaintoolbar.ui:69 src/totemmaintoolbar.ui:72
-msgid "Cancel"
-msgstr "Отказ"
+#. Label beside page size combo box
+#: data/ui/preferences-dialog.ui:104
+msgid "_Page Size"
+msgstr "_Размер на страницата:"
 
-#: src/totemmaintoolbar.ui:90
-msgid "Search"
-msgstr "Търсене"
+#. Label beside page delay scale
+#: data/ui/preferences-dialog.ui:120
+msgid "_Delay in Seconds"
+msgstr "_Забавяне в секунди"
 
-#: src/totem-menu.c:435
-msgid "Audio Track"
-msgstr "Аудио пътечка"
+#. Provides context for the page delay scale
+#: data/ui/preferences-dialog.ui:121
+msgid "Interval to scan multiple pages"
+msgstr "Интервал между сканирането на множество страници"
 
-#: src/totem-menu.c:438
-msgid "Subtitle"
-msgstr "Субтитри"
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:131
+msgid "0"
+msgstr "0"
 
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:474
-msgctxt "Language"
-msgid "Auto"
-msgstr "Автоматично"
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:141
+msgid "3"
+msgstr "3"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:477
-msgid "None"
-msgstr "Без"
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:152
+msgid "6"
+msgstr "6"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
-msgid "Pause"
-msgstr "Пауза"
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:163
+msgid "10"
+msgstr "10"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
-msgid "Play"
-msgstr "Изпълнение"
+#. Preferences Dialog: Toggle button to select scanning on front side of a page
+#: data/ui/preferences-dialog.ui:174
+msgid "15"
+msgstr "15"
 
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
-#, c-format
-msgid "Totem could not play “%s”."
-msgstr "Totem не може да изпълни „%s“."
+#. Preferences Dialog: Section label for quality settings
+#: data/ui/preferences-dialog.ui:195
+msgid "Quality"
+msgstr "Количество"
 
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "Ръководството не може да бъде показано."
+#. Label beside scan resolution combo box
+#: data/ui/preferences-dialog.ui:199
+msgid "_Text Resolution"
+msgstr "Разделителна способност за _текст"
 
-#: src/totem-object.c:2569
-msgid "An error occurred"
-msgstr "Получи се грешка"
+#. Label beside scan resolution combo box
+#: data/ui/preferences-dialog.ui:214
+msgid "_Image Resolution"
+msgstr "_Разделителна способност за _изображения"
 
-#: src/totem-object.c:3990
-msgid "Previous Chapter/Movie"
-msgstr "Предишна глава / филм"
+#. Label beside brightness scale
+#: data/ui/preferences-dialog.ui:229
+msgid "_Brightness"
+msgstr "_Яркост"
 
-#: src/totem-object.c:3996
-msgid "Play / Pause"
-msgstr "Изпълнение / пауза"
+#. Label beside contrast scale
+#: data/ui/preferences-dialog.ui:247
+msgid "_Contrast"
+msgstr "_Контраст"
 
-#: src/totem-object.c:4002
-msgid "Next Chapter/Movie"
-msgstr "Следваща глава / филм"
+#. Preferences Dialog: Section label for postprocessing settings
+#: data/ui/preferences-dialog.ui:267
+msgid "Postprocessing"
+msgstr "Допълнителна обработка"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "Totem не може да се стартира."
+#. Switch to enable postprocessing
+#: data/ui/preferences-dialog.ui:271
+msgid "_Enable Postprocessing"
+msgstr "_Допълнителна обработка"
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
-msgid "No reason."
-msgstr "Няма причина."
+#. Label beside postprocesing script name entry
+#: data/ui/preferences-dialog.ui:294
+msgid "_Script"
+msgstr "_Скрипт"
 
-#: src/totem-options.c:49
-msgid "Play/Pause"
-msgstr "Изпълнение / пауза"
+#. Label beside postprocesing arguments entry
+#: data/ui/preferences-dialog.ui:317
+msgid "_Script arguments"
+msgstr "_Аргументи на скрипта"
 
-#: src/totem-options.c:52
-msgid "Next"
-msgstr "Следващ"
+#. Label beside keep keep original file radio
+#: data/ui/preferences-dialog.ui:340
+msgid "_Keep original file"
+msgstr "_Запазване на оригинала"
 
-#: src/totem-options.c:53
-msgid "Previous"
-msgstr "Предишен"
-
-#: src/totem-options.c:54
-msgid "Seek Forwards"
-msgstr "Търсене напред"
-
-#: src/totem-options.c:55
-msgid "Seek Backwards"
-msgstr "Търсене назад"
-
-#: src/totem-options.c:56
-msgid "Volume Up"
-msgstr "Увеличаване на звука"
-
-#: src/totem-options.c:57
-msgid "Volume Down"
-msgstr "Намаляване на звука"
-
-#: src/totem-options.c:58
-msgid "Mute sound"
-msgstr "Заглушаване"
-
-#: src/totem-options.c:59
-msgid "Toggle Fullscreen"
-msgstr "Превключване на цял екран"
-
-#: src/totem-options.c:60
-msgid "Quit"
-msgstr "Спиране на програмата"
-
-#: src/totem-options.c:61
-msgid "Enqueue"
-msgstr "Добавяне"
-
-#: src/totem-options.c:62
-msgid "Replace"
-msgstr "Заместване"
-
-#: src/totem-options.c:63
-msgid "Seek"
-msgstr "Търсене"
-
-#: src/totem-options.c:64
-msgid "Show version information and exit"
-msgstr "Извеждане на информация за версията и спиране на програмата"
-
-#: src/totem-options.c:65
-msgid "Movies to play"
-msgstr "Филми за изпълнение"
-
-#: src/totem-options.c:100
-msgid "Can’t enqueue and replace at the same time"
-msgstr "Не може едновременно да се добавя и заменя"
-
-#. This is "Title 3", where title is a DVD title
-#. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:233
-#, c-format
-msgid "Title %d"
-msgstr "Заглавие %d"
-
-#: src/totem-playlist.c:1030
-#, c-format
-msgid "The playlist “%s” could not be parsed. It might be damaged."
-msgstr "Списъкът „%s“ не може да бъде прочетен, възможно е да е повреден."
-
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "Настройки на приставките"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
+#: src/app-window.vala:229 src/app-window.vala:1660
 msgid "_Close"
 msgstr "_Затваряне"
 
-#: src/totemselectiontoolbar.ui:15
-msgid "Add to Favourites"
-msgstr "Добавяне към любимите"
+#. Label in authorization dialog.  “%s” is replaced with the name of the resource requesting authorization
+#: src/app-window.vala:238
+#, c-format
+msgid "Username and password required to access “%s”"
+msgstr "За достъп до „%s“ са необходими потребителско име и парола"
 
-#: src/totemselectiontoolbar.ui:40
-msgctxt "button"
-msgid "Play"
-msgstr "Изпълнение"
+#. Label shown when searching for scanners
+#: src/app-window.vala:255
+msgid "Searching for Scanners…"
+msgstr "Търсене на скенери…"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
-msgid "Shuffle"
-msgstr "Разбъркано"
+#. Label shown when detected a scanner
+#: src/app-window.vala:263
+msgid "Ready to Scan"
+msgstr "Готовност за сканиране"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
-msgid "Delete"
-msgstr "Изтриване"
+#. Warning displayed when no drivers are installed but a compatible scanner is detected
+#: src/app-window.vala:273
+msgid "Additional Software Needed"
+msgstr "Необходим е допълнителен софтуер"
 
-#: src/totem-subtitle-encoding.c:156
-msgid "Current Locale"
-msgstr "Текущ локал"
-
-#: src/totem-subtitle-encoding.c:159 src/totem-subtitle-encoding.c:161
-#: src/totem-subtitle-encoding.c:163 src/totem-subtitle-encoding.c:165
-msgid "Arabic"
-msgstr "арабско"
-
-#: src/totem-subtitle-encoding.c:168
-msgid "Armenian"
-msgstr "арменско"
-
-#: src/totem-subtitle-encoding.c:171 src/totem-subtitle-encoding.c:173
-#: src/totem-subtitle-encoding.c:175
-msgid "Baltic"
-msgstr "балтийско"
-
-#: src/totem-subtitle-encoding.c:178
-msgid "Celtic"
-msgstr "келтско"
-
-#: src/totem-subtitle-encoding.c:181 src/totem-subtitle-encoding.c:183
-#: src/totem-subtitle-encoding.c:185 src/totem-subtitle-encoding.c:187
-msgid "Central European"
-msgstr "централно-европейско"
-
-#: src/totem-subtitle-encoding.c:190 src/totem-subtitle-encoding.c:192
-#: src/totem-subtitle-encoding.c:194 src/totem-subtitle-encoding.c:196
-msgid "Chinese Simplified"
-msgstr "китайско (опростено)"
-
-#: src/totem-subtitle-encoding.c:199 src/totem-subtitle-encoding.c:201
-#: src/totem-subtitle-encoding.c:203
-msgid "Chinese Traditional"
-msgstr "китайско (традиционно)"
-
-#: src/totem-subtitle-encoding.c:206
-msgid "Croatian"
-msgstr "хърватско"
-
-#: src/totem-subtitle-encoding.c:209 src/totem-subtitle-encoding.c:211
-#: src/totem-subtitle-encoding.c:213 src/totem-subtitle-encoding.c:215
-#: src/totem-subtitle-encoding.c:217 src/totem-subtitle-encoding.c:219
-msgid "Cyrillic"
-msgstr "кирилица"
-
-#: src/totem-subtitle-encoding.c:222
-msgid "Cyrillic/Russian"
-msgstr "кирилица (руска)"
-
-#: src/totem-subtitle-encoding.c:225 src/totem-subtitle-encoding.c:227
-msgid "Cyrillic/Ukrainian"
-msgstr "кирилица (украинска)"
-
-#: src/totem-subtitle-encoding.c:230
-msgid "Georgian"
-msgstr "грузинско"
-
-#: src/totem-subtitle-encoding.c:233 src/totem-subtitle-encoding.c:235
-#: src/totem-subtitle-encoding.c:237
-msgid "Greek"
-msgstr "гръцко"
-
-#: src/totem-subtitle-encoding.c:240
-msgid "Gujarati"
-msgstr "гуджарати"
-
-#: src/totem-subtitle-encoding.c:243
-msgid "Gurmukhi"
-msgstr "гурмуки"
-
-#: src/totem-subtitle-encoding.c:246 src/totem-subtitle-encoding.c:248
-#: src/totem-subtitle-encoding.c:250 src/totem-subtitle-encoding.c:252
-msgid "Hebrew"
-msgstr "иврит"
-
-#: src/totem-subtitle-encoding.c:255
-msgid "Hebrew Visual"
-msgstr "иврит (визуален)"
-
-#: src/totem-subtitle-encoding.c:258
-msgid "Hindi"
-msgstr "хинди"
-
-#: src/totem-subtitle-encoding.c:261
-msgid "Icelandic"
-msgstr "исландско"
-
-#: src/totem-subtitle-encoding.c:264 src/totem-subtitle-encoding.c:266
-#: src/totem-subtitle-encoding.c:268
-msgid "Japanese"
-msgstr "японско"
-
-#: src/totem-subtitle-encoding.c:271 src/totem-subtitle-encoding.c:273
-#: src/totem-subtitle-encoding.c:275 src/totem-subtitle-encoding.c:277
-msgid "Korean"
-msgstr "корейско"
-
-#: src/totem-subtitle-encoding.c:280
-msgid "Nordic"
-msgstr "скандинавско"
-
-#: src/totem-subtitle-encoding.c:283
-msgid "Persian"
-msgstr "персийско"
-
-#: src/totem-subtitle-encoding.c:286 src/totem-subtitle-encoding.c:288
-msgid "Romanian"
-msgstr "румънско"
-
-#: src/totem-subtitle-encoding.c:291
-msgid "South European"
-msgstr "южноевропейско"
-
-#: src/totem-subtitle-encoding.c:294
-msgid "Thai"
-msgstr "тайско"
-
-#: src/totem-subtitle-encoding.c:297 src/totem-subtitle-encoding.c:299
-#: src/totem-subtitle-encoding.c:301 src/totem-subtitle-encoding.c:303
-msgid "Turkish"
-msgstr "турско"
-
-#: src/totem-subtitle-encoding.c:306 src/totem-subtitle-encoding.c:308
-#: src/totem-subtitle-encoding.c:310 src/totem-subtitle-encoding.c:312
-#: src/totem-subtitle-encoding.c:314
-msgid "Unicode"
-msgstr "уникод"
-
-#: src/totem-subtitle-encoding.c:317 src/totem-subtitle-encoding.c:319
-#: src/totem-subtitle-encoding.c:321 src/totem-subtitle-encoding.c:323
-#: src/totem-subtitle-encoding.c:325
-msgid "Western"
-msgstr "западно"
-
-#: src/totem-subtitle-encoding.c:328 src/totem-subtitle-encoding.c:330
-#: src/totem-subtitle-encoding.c:332
-msgid "Vietnamese"
-msgstr "виетнамско"
-
-#: src/totem-uri.c:331
-msgid "All files"
-msgstr "Всички файлове"
-
-#: src/totem-uri.c:337
-msgid "Video files"
-msgstr "Видео файлове"
-
-#: src/totem-uri.c:348
-msgid "Subtitle files"
-msgstr "Файлове със субтитри"
-
-#: src/totem-uri.c:400
-msgid "Select Text Subtitles"
-msgstr "Шрифт за субтитрите"
-
-#: src/totem-uri.c:404
-msgid "_Open"
-msgstr "_Отваряне"
-
-#: src/totem-uri.c:461
-msgid "Add Videos"
-msgstr "Добавяне на клипове"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Реклами на предстоящи филми предоставени от Apple"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr ""
-"Задаване на името на потребителския агент за уеб страницата за преглед на "
-"реклами на предстоящи филми на Apple"
-
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
-msgid "Autoload Subtitles"
-msgstr "Автоматично зареждане на субтитри"
-
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
-msgid "Autoloads text subtitles"
-msgstr "Субтитрите в текстов формат се зареждат автоматично"
-
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
-msgid "MPRIS D-Bus Interface"
-msgstr "Интерфейс MPRIS на D-Bus"
-
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:7
+#. Instructions to install driver software
+#: src/app-window.vala:275
 msgid ""
-"Send notifications of currently-playing videos and allow remote control "
-"using MPRIS."
+"You need to <a href=\"install-firmware\">install driver software</a> for "
+"your scanner."
 msgstr ""
-"Приставка за изпращане на уведомления за текущо пуснатите филми и използване "
-"на дистанционно управление чрез MPRIS."
-
-#: src/plugins/dbusservice/dbusservice.py:210
-#: src/plugins/dbusservice/dbusservice.py:239
-#, python-format
-msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "В обекта MediaPlayer2 липсва реализация на интерфейса „%s“"
-
-#: src/plugins/dbusservice/dbusservice.py:220
-#, python-format
-msgid "The property ‘%s’ is not writeable."
-msgstr "Свойството „%s“ не е достъпно за запис."
-
-#: src/plugins/dbusservice/dbusservice.py:234
-#, python-format
-msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr "Неизвестното свойство „%s“ заяви обект MediaPlayer2"
-
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
-msgid "Instant Messenger Status"
-msgstr "Състояние за моментни съобщения"
-
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
-msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr ""
-"Програмата за бързи съобщения да преминава в състояние „Отсъствам“ при "
-"изпълнението на филм"
-
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
-msgid "Open directory"
-msgstr "Отваряне на папка"
-
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
-msgid "Open the directory of the currently playing movie"
-msgstr "Копиране на папката на текущо изпълнявания филм"
-
-#: src/plugins/open-directory/totem-open-directory.c:184
-msgid "Open Containing Folder"
-msgstr "Отваряне на съдържащата папка"
-
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
-msgid "Subtitle Downloader"
-msgstr "Изтегляне на субтитри"
-
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
-msgid "Look for subtitles for the currently playing movie"
-msgstr "Търсене на субтитри за текущо изпълнявания филм"
-
-#: src/plugins/opensubtitles/opensubtitles.py:49
-msgid "Brazilian Portuguese"
-msgstr "португалско (бразилско)"
-
-#: src/plugins/opensubtitles/opensubtitles.py:192
-msgid "Searching for subtitles…"
-msgstr "Търсене на субтитри…"
-
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
-msgid "Downloading the subtitles…"
-msgstr "Изтегляне на субтитри…"
-
-#: src/plugins/opensubtitles/opensubtitles.py:305
-msgid "Could not contact the OpenSubtitles website"
-msgstr "Няма връзка със сайта OpenSubtitles.org"
-
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
-msgid "Could not contact the OpenSubtitles website."
-msgstr "Няма връзка със сайта OpenSubtitles.org."
-
-#: src/plugins/opensubtitles/opensubtitles.py:357
-msgid "No results found."
-msgstr "Няма резултати."
-
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
-msgid "Format"
-msgstr "Формат"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
-msgid "Rating"
-msgstr "Оценка"
-
-#. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
-msgid "_Download Movie Subtitles…"
-msgstr "Изтегляне на _субтитри за филма…"
-
-#: src/plugins/opensubtitles/opensubtitles.py:592
-msgid "Searching subtitles…"
-msgstr "Търсене на субтитри…"
-
-#: src/plugins/opensubtitles/opensubtitles.ui:27
-msgid "Download Movie Subtitles"
-msgstr "Изтегляне на субтитрите на филма"
-
-#: src/plugins/opensubtitles/opensubtitles.ui:43
-msgid "Subtitle _language:"
-msgstr "_Език на субтитрите:"
-
-#: src/plugins/opensubtitles/opensubtitles.ui:124
-msgid "_Play with Subtitle"
-msgstr "_Изпълнение със субтитри"
-
-#: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
-msgid "Subtitle language"
-msgstr "Език на субтитрите"
-
-#: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:7
-msgid "The language to search for subtitles for movies in."
-msgstr "Езикът, за който да се търсят субтитри на филмите."
-
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
-msgid "Movie Properties"
-msgstr "Информация за филма"
-
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
-msgid "Adds movie properties menu item"
-msgstr "Добавяне на елемент в менюто за показване на информация за филма"
-
-#: src/plugins/properties/totem-movie-properties.c:148
-#, c-format
-msgid "%d × %d"
-msgstr "%d × %d"
-
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
-msgctxt "Stream bit rate"
-msgid "N/A"
-msgstr "Липсва"
-
-#: src/plugins/properties/totem-movie-properties.c:165
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: src/plugins/properties/totem-movie-properties.c:165
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "Липсва"
-
-#: src/plugins/properties/totem-movie-properties.c:276
-msgid "Properties"
-msgstr "Подробности"
-
-#: src/plugins/properties/totem-movie-properties.c:301
-msgid "_Properties"
-msgstr "_Подробности"
-
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "Заглавие:"
-
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "Изпълнител:"
-
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "Продължителност:"
-
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "Година:"
-
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "Албум:"
-
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "Коментар:"
-
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "Контейнер:"
-
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "Размери:"
-
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "Кодер:"
-
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "Кадри/сек.:"
-
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "Бит./сек.:"
-
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "Кадри/сек.:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "Канали:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
-msgctxt "Title"
-msgid "Unknown"
-msgstr "Липсва"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "Липсва"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
-msgctxt "Album"
-msgid "Unknown"
-msgstr "Липсва"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
-msgctxt "Year"
-msgid "Unknown"
-msgstr "Липсва"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "Липсва"
-
-#. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "Липсва"
-
-#. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "Липсва"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:123
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "Липсва"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "Липсва"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:130
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "Липсва"
-
-#. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "Липсва"
-
-#. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
-msgid "0 Hz"
-msgstr "0 Hz"
-
-#. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
-msgid "0 Channels"
-msgstr "0 канала"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:152
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d час"
-msgstr[1] "%d часа"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:154
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d минута"
-msgstr[1] "%d минути"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:157
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d секунда"
-msgstr[1] "%d секунди"
-
-#. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
-#, c-format
-msgctxt "hours minutes seconds"
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
-#, c-format
-msgctxt "hours minutes"
-msgid "%s %s"
-msgstr "%s %s"
-
-#. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
-#, c-format
-msgctxt "hours"
-msgid "%s"
-msgstr "%s"
-
-#. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
-#, c-format
-msgctxt "minutes seconds"
-msgid "%s %s"
-msgstr "%s %s"
-
-#. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
-#, c-format
-msgctxt "minutes"
-msgid "%s"
-msgstr "%s"
-
-#. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
-msgid "0 seconds"
-msgstr "0 секунди"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:251
-#, c-format
-msgid "%0.3f frame per second"
-msgid_plural "%0.3f frames per second"
-msgstr[0] "%0.3f кадър в секунда"
-msgstr[1] "%0.3f кадъра в секунда"
-
-#: src/plugins/properties/bacon-video-widget-properties.c:254
-#, c-format
-msgid "%0.2f frame per second"
-msgid_plural "%0.2f frames per second"
-msgstr[0] "%0.2f кадър в секунда"
-msgstr[1] "%0.2f кадъра в секунда"
-
-#: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:6
-msgid "rpdb2 password"
-msgstr "Парола за rpdb2"
-
-#: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:7
-msgid ""
-"A password to protect the rpdb2 server for debugging Totem from unauthorized "
-"remote access. If this is empty, a default of “totem” will be used."
-msgstr ""
-"Парола за защита на сървъра за изчистване на грешки rpdb2 от неупълномощен "
-"достъп. Ако е празно, се използва стандартната парола „totem“."
-
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
-msgid "Python Console"
-msgstr "Конзола на Python"
-
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
-msgid "Interactive Python console"
-msgstr "Интерактивна конзола на Python"
-
-#. pylint: disable=no-member
-#. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:80
-msgid "_Python Console"
-msgstr "_Конзола на Python"
-
-#. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:86
-msgid "Python Debugger"
-msgstr "Изчистване на грешки на Python"
-
-#. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:97
-#, python-format
-msgid "You can access the Totem.Object through “totem_object” :\\n%s"
-msgstr "Обектът на Totem е достъпен като „totem_object“: \\n%s"
-
-#: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Конзола на Python за Totem"
-
-#. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:111
-msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
-"rpdb2. If you have not set a debugger password in DConf, it will use the "
-"default password (“totem”)."
-msgstr ""
-"След като натиснете „Добре“, Totem ще изчака да се свържете с него чрез "
-"winpdb или rpdb2. Ако не сте задали парола за изчистване на грешки в GConf, "
-"ще се ползва стандартната („totem“)."
-
-#: src/plugins/recent/recent.plugin.desktop.in:6
-msgid "Recent files"
-msgstr "Скоро отваряни файлове"
-
-#: src/plugins/recent/recent.plugin.desktop.in:7
-msgid "Adds files that have been played to recent files"
-msgstr "Изпълнените файлове да се добавят в скоро отваряните файлове"
-
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
-msgid "Rotation Plugin"
-msgstr "Приставка за завъртане"
-
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
-msgid "Allows videos to be rotated if they are in the wrong orientation"
-msgstr "Завъртане на видеото, ако ориентацията му е грешна"
-
-#: src/plugins/rotation/totem-rotation.c:260
-msgid "_Rotate ↷"
-msgstr "_Завъртане ↷"
-
-#: src/plugins/rotation/totem-rotation.c:264
-msgid "Rotate ↶"
-msgstr "Завъртане ↶"
-
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
-msgid "Save Copy"
-msgstr "Запазване на копие"
-
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
-msgid "Save a copy of the currently playing movie"
-msgstr "Копиране на текущия изпълняван филм"
-
-#: src/plugins/save-file/totem-save-file.c:85
-msgid "The video could not be made available offline."
-msgstr "Видеото не може да бъде предоставено, ако не сте свързани към мрежата."
-
-#. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:87
-msgid "“Files” is not available."
-msgstr "Липсва програмата за управление на файлове Nautilus."
-
-#. translators: Movie is the default saved movie filename,
-#. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:168
-msgid "Movie"
-msgstr "Филм"
-
-#: src/plugins/save-file/totem-save-file.c:452
-msgid "Make Available Offline"
-msgstr "Клипът да е достъпен и без мрежа"
-
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
-msgid "Screen Saver"
-msgstr "Предпазител на екрана"
-
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
-msgid "Deactivates the screen saver when a movie is playing"
-msgstr "Изключване на предпазителя на екрана при изпълнение"
-
-#: src/plugins/screensaver/totem-screensaver.c:75
-msgid "Playing a movie"
-msgstr "Изпълнение на филм"
-
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "Широчина на кадъра (пиксели):"
-
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "Изчисляване на броя на кадрите"
-
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "Брой кадри:"
-
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "Филмов_кадър от %s.png"
-
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "Филмов_кадър от %s — %d.png"
-
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
-msgid "Screenshot"
-msgstr "Филмов_кадър"
-
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
-msgid "Allows screenshots and galleries to be taken of videos"
-msgstr "Разрешаване на заснемането на кадри и галерии от филми"
-
-#: src/plugins/screenshot/totem-gallery.c:86
-msgid "Save Gallery"
-msgstr "Запазване на галерията"
-
-#: src/plugins/screenshot/totem-gallery.c:93
+"Трябва да инсталирате <a href='install-firmware'>драйвера</a> на скенера си."
+
+#. Warning displayed when no scanners are detected
+#: src/app-window.vala:282
+msgid "No Scanners Detected"
+msgstr "Не са открити скенери"
+
+#. Hint to user on why there are no scanners detected
+#: src/app-window.vala:284
+msgid "Please check your scanner is connected and powered on."
+msgstr "Проверете дали скенерът ви е свързан и включен."
+
+#. Contents of dialog that shows if autosaved book should be loaded.
+#: src/app-window.vala:388
+msgid "An autosaved book exists. Do you want to open it?"
+msgstr "Има автоматично запазена книга. Искате ли да я отворите?"
+
+#. Save dialog: Dialog title
+#: src/app-window.vala:462
+msgid "Save As…"
+msgstr "Запазване като…"
+
+#: src/app-window.vala:465 src/app-window.vala:764
 msgid "_Save"
 msgstr "_Запазване"
 
-#. Translators: The first argument is the movie title. The second
-#. * argument is a number which is used to prevent overwriting files.
-#. * Just translate "Gallery", and not the ".jpg". Example:
-#. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:110
+#: src/app-window.vala:466 src/app-window.vala:648 src/app-window.vala:763
+msgid "_Cancel"
+msgstr "_Отмяна"
+
+#. Default filename to use when saving document.
+#. To that filename the extension will be added, eg. "Scanned Document.pdf"
+#: src/app-window.vala:476
+msgid "Scanned Document"
+msgstr "Сканиран документ"
+
+#. Save dialog: Filter name to show only supported image files
+#: src/app-window.vala:482
+msgid "Image Files"
+msgstr "Файлове с изображения"
+
+#. Save dialog: Filter name to show all files
+#: src/app-window.vala:492
+msgid "All Files"
+msgstr "Всички файлове"
+
+#. Save dialog: Label for saving in PDF format
+#: src/app-window.vala:501
+msgid "PDF (multi-page document)"
+msgstr "PDF (документ с много страници)"
+
+#. Save dialog: Label for saving in JPEG format
+#: src/app-window.vala:507
+msgid "JPEG (compressed)"
+msgstr "JPEG (компресиран)"
+
+#. Save dialog: Label for saving in PNG format
+#: src/app-window.vala:513
+msgid "PNG (lossless)"
+msgstr "PNG (без загуба на качеството)"
+
+#. Save dialog: Label for sabing in WEBP format
+#: src/app-window.vala:520
+msgid "WebP (compressed)"
+msgstr "WebP (компресирани)"
+
+#. Label in save dialog beside combo box to choose file format (PDF, JPEG, PNG, WEBP)
+#: src/app-window.vala:531
+msgid "File format:"
+msgstr "Формат на файла:"
+
+#. Label in save dialog beside compression slider
+#: src/app-window.vala:554
+msgid "Compression:"
+msgstr "Компресия:"
+
+#: src/app-window.vala:561
+msgid "Minimum size"
+msgstr "Минимален размер"
+
+#: src/app-window.vala:565
+msgid "Full detail"
+msgstr "Висока детайлност"
+
+#. Contents of dialog that shows if saving would overwrite and existing file. %s is replaced with the name of the file.
+#: src/app-window.vala:647
 #, c-format
-msgid "Gallery-%s-%d.jpg"
-msgstr "Галерия-%s-%d.jpg"
+msgid "A file named “%s” already exists.  Do you want to replace it?"
+msgstr "Вече има файл с име „%s“. Искате ли да го замените?"
 
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
-msgid "Creating Gallery…"
-msgstr "Създаване на галерия…"
+#. Button in dialog that shows if saving would overwrite and existing file. Clicking the button allows simple-scan to overwrite the file.
+#: src/app-window.vala:650
+msgid "_Replace"
+msgstr "_Замяна"
 
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/app-window.vala:717
+msgid "Saving"
+msgstr "Запазване"
+
+#. Title of error dialog when save failed
+#: src/app-window.vala:737
+msgid "Failed to save file"
+msgstr "Неуспешно съхраняване на файла"
+
+#. Text in dialog warning when a document is about to be lost
+#: src/app-window.vala:761
+msgid "If you don’t save, changes will be permanently lost."
+msgstr "Ако не запазите, промените ще бъдат изгубени."
+
+#. Text in dialog warning when a document is about to be lost
+#: src/app-window.vala:797
+msgid "Save current document?"
+msgstr "Да се запази ли текущият документ?"
+
+#. Button in dialog to create new document and discard unsaved document
+#: src/app-window.vala:799
+msgid "_Discard Changes"
+msgstr "_Отказване на промените"
+
+#. Label shown when scan started
+#: src/app-window.vala:840
+msgid "Contacting Scanner…"
+msgstr "Свързване със скенера…"
+
+#: src/app-window.vala:911
+msgid "Scan a single page from the scanner"
+msgstr "Сканиране на една страница със скенера"
+
+#: src/app-window.vala:916 src/app-window.vala:921
+msgid "Scan multiple pages from the scanner"
+msgstr "Сканиране на множество страници със скенера"
+
+#. Error message display when unable to save image for preview
+#: src/app-window.vala:1111
+msgid "Unable to save image for preview"
+msgstr "Изображението не може да бъде запазено за предварителен преглед"
+
+#. Error message display when unable to preview image
+#: src/app-window.vala:1123
+msgid "Unable to open image preview application"
+msgstr "Невъзможно е отварянето на приложение за преглед на изображението"
+
+#. Title of dialog to reorder pages
+#: src/app-window.vala:1285
+msgctxt "dialog title"
+msgid "Reorder Pages"
+msgstr "Преподреждане на страниците"
+
+#. Label on button for combining sides in reordering dialog
+#: src/app-window.vala:1308
+msgid "Combine sides"
+msgstr "Сглобяване на страниците"
+
+#. Label on button for combining sides in reverse order in reordering dialog
+#: src/app-window.vala:1318
+msgid "Combine sides (reverse)"
+msgstr "Сглобяване на страниците (обратно)"
+
+#. Label on button for reversing in reordering dialog
+#: src/app-window.vala:1328
+msgid "Reverse"
+msgstr "Обратно"
+
+#. Label on button for cancelling page reordering dialog
+#: src/app-window.vala:1338
+msgid "Keep unchanged"
+msgstr "Без промяна"
+
+#. Error message displayed when unable to launch help browser
+#: src/app-window.vala:1533
+msgid "Unable to open help file"
+msgstr "Помощният файл не може да бъде отворен"
+
+#: src/app-window.vala:1547
+msgid "About Document Scanner"
+msgstr "Относно „Сканиране на документи“"
+
+#: src/app-window.vala:1549
+msgid "Simple document scanning tool"
+msgstr "Инструмент за опростено сканиране на документи"
+
+#: src/app-window.vala:1554
+msgid "translator-credits"
+msgstr ""
+"Светослав Стефанов &lt;<a href='mailto:svetlisashkov@yahoo."
+"com'>svetlisashkov@yahoo.com</a>&gt;\n"
+"Александър Шопов &lt;<a href='mailto:ash@kambanaria.org'>ash@kambanaria.org</"
+"a>&gt;\n"
+"\n"
+"\n"
+"Проектът за превод на GNOME има нужда от подкрепа.\n"
+"Научете повече за нас на <a href='https://fsa-bg.org/project/gtp'>уеб сайта</"
+"a> ни.\n"
+"Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
+"newticket'>съответния раздел</a>.<\n"
+"\n"
+"Сътрудници в Launchpad:\n"
+"<a href='https://launchpad.net/~zdar'>Атанас Ковачки</a>\n"
+"<a href='https://launchpad.net/~lz1dsb'>Боян Сотиров</a>\n"
+"<a href='https://launchpad.net/~kchonov'>Красимир Чонов</a>\n"
+"<a href='https://launchpad.net/~svetlisashkov'>Светослав Стефанов</a>\n"
+"<a href='https://launchpad.net/~tora-shiro'>Тора Широ</a>\n"
+"<a href='https://launchpad.net/~ivaylo-raynov'>Ивайло Райнов</a>\n"
+"<a href='https://launchpad.net/~vonodna'>Филип Андонов</a>"
+
+#. Text in dialog warning when a document is about to be lost
+#: src/app-window.vala:1573
+msgid "Save document before quitting?"
+msgstr "Да се запази ли документът преди спирането на програмата?"
+
+#. Text in dialog warning when a document is about to be lost
+#: src/app-window.vala:1575
+msgid "_Quit without Saving"
+msgstr "Спиране _без запазване"
+
+#. Message to indicate a Brother scanner has been detected
+#: src/app-window.vala:1616
+msgid "You appear to have a Brother scanner."
+msgstr "Изглежда, че скенерът ви е произведен от Brother."
+
+#. Instructions on how to install Brother scanner drivers
+#: src/app-window.vala:1618
+msgid ""
+"Drivers for this are available on the <a href=\"http://support.brother.com"
+"\">Brother website</a>."
+msgstr ""
+"Може да свалите драйвери за него от <a href='http://support.brother.com'>уеб "
+"сайта на Brother</a>."
+
+#. Message to indicate a Canon Pixma scanner has been detected
+#: src/app-window.vala:1622
+msgid ""
+"You appear to have a Canon scanner, which is supported by the <a href="
+"\"http://www.sane-project.org/man/sane-pixma.5.html\">Pixma SANE backend</a>."
+msgstr ""
+"Изглежда, че скенерът ви е произведен от Canon. Може да свалите драйвери за "
+"него от <a href='http://www.sane-project.org/man/sane-pixma.5.html'>уеб "
+"сайта Pixma SANE</a>."
+
+#. Instructions on how to resolve issue with SANE scanner drivers
+#: src/app-window.vala:1624
+msgid ""
+"Please check if your <a href=\"http://www.sane-project.org/sane-supported-"
+"devices.html\">scanner is supported by SANE</a>, otherwise report the issue "
+"to the <a href=\"https://alioth-lists.debian.net/cgi-bin/mailman/listinfo/"
+"sane-devel\">SANE mailing list</a>."
+msgstr ""
+"Проверете дали вашият скенер <a href='http://www.sane-project.org/sane-"
+"supported-devices.html'>се поддържа от SANE</a>. Ако не се поддържа, подайте "
+"доклад до <a href='https://alioth-lists.debian.net/cgi-bin/mailman/listinfo/"
+"sane-devel'>пощенските списъци на проекта SANE</a>."
+
+#. Message to indicate a Samsung scanner has been detected
+#: src/app-window.vala:1628
+msgid "You appear to have a Samsung scanner."
+msgstr "Изглежда, че скенерът ви е произведен от Samsung."
+
+#. Instructions on how to install Samsung scanner drivers.
+#. Because HP acquired Samsung's global printing business in 2017, the support is made on HP site.
+#: src/app-window.vala:1631
+msgid ""
+"Drivers for this are available on the <a href=\"https://support.hp.com\">HP "
+"website</a> (HP acquired Samsung's printing business)."
+msgstr ""
+"Може да свалите драйвери за него от <a href='http://support.hp.com'>уеб "
+"сайта на HP</a> (HP придоби бизнеса на Samsung за печат)."
+
+#. Message to indicate a HP scanner has been detected
+#: src/app-window.vala:1636
+msgid "You appear to have an HP scanner."
+msgstr "Изглежда, че скенерът ви е произведен от HP."
+
+#. Instructions on how to install HP scanner drivers.
+#. smfp is rebranded and slightly modified Samsung devices,
+#. for example: HP Laser MFP 135a is rebranded Samsung Xpress SL-M2070.
+#. It require custom drivers, not available in hpaio package
+#: src/app-window.vala:1644
+msgid ""
+"Drivers for this are available on the <a href=\"https://support.hp.com\">HP "
+"website</a>."
+msgstr ""
+"Може да свалите драйвери за него от <a href='http://support.hp.com'>уеб "
+"сайта на HP</a>."
+
+#. Message to indicate an Epson scanner has been detected
+#: src/app-window.vala:1648
+msgid "You appear to have an Epson scanner."
+msgstr "Изглежда, че скенерът ви е произведен от Epson."
+
+#. Instructions on how to install Epson scanner drivers
+#: src/app-window.vala:1650
+msgid ""
+"Drivers for this are available on the <a href=\"http://support.epson.com"
+"\">Epson website</a>."
+msgstr ""
+"Може да свалите драйвери за него от <a href='http://support.epson.com'>уеб "
+"сайта на Epson</a>."
+
+#. Message to indicate an Lexmark scanner has been detected
+#: src/app-window.vala:1654
+msgid "You appear to have an Lexmark scanner."
+msgstr "Изглежда, че скенерът ви е произведен от Lexmark."
+
+#. Instructions on how to install Lexmark scanner drivers
+#: src/app-window.vala:1656
+msgid ""
+"Drivers for this are available on the <a href=\"http://support.lexmark.com"
+"\">Lexmark website</a>."
+msgstr ""
+"Може да свалите драйвери за него от <a href='http://support.lexmark.com'>уеб "
+"сайта на Lexmark</a>."
+
+#. Title of dialog giving instructions on how to install drivers
+#: src/app-window.vala:1660
+msgid "Install drivers"
+msgstr "Инсталиране на драйвери"
+
+#. Message in driver install dialog
+#: src/app-window.vala:1694
+msgid "Once installed you will need to restart this app."
+msgstr "След инсталацията им ще трябва да рестартирате тази програма."
+
+#. Label shown while installing drivers
+#: src/app-window.vala:1707
+msgid "Installing drivers…"
+msgstr "Инсталиране на драйвери…"
+
+#. Label shown once drivers successfully installed
+#: src/app-window.vala:1715
+msgid "Drivers installed successfully!"
+msgstr "Драйверите са успешно инсталирани!"
+
+#. Label shown if failed to install drivers
+#: src/app-window.vala:1725
 #, c-format
-msgid "Saving gallery as “%s”"
-msgstr "Запазване на галерията като „%s“"
+msgid "Failed to install drivers (error code %d)."
+msgstr "Неуспешно инсталиране на драйвери (код за грешка: %d)."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
-msgid "Totem could not get a screenshot of the video."
-msgstr "Totem не можа да заснеме кадър от този филм."
+#. Label shown if failed to install drivers
+#: src/app-window.vala:1731
+msgid "Failed to install drivers."
+msgstr "Неуспешно инсталиране на драйвери."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
-msgid "This is not supposed to happen; please file a bug report."
-msgstr "Това не трябва да се случва! Молим, подайте доклад за грешка."
-
-#: src/plugins/screenshot/totem-screenshot-plugin.c:323
-msgid "Take _Screenshot"
-msgstr "_Снимане на кадър"
-
-#: src/plugins/screenshot/totem-screenshot-plugin.c:329
-msgid "Create Screenshot _Gallery…"
-msgstr "Заснемане на _галерия от кадри…"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "Skip To"
-msgstr "Прескачане до"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "Предоставя прозореца „Прескачане до“"
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "Пре_скачане до:"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "секунда"
-msgstr[1] "секунди"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "7"
-
-#: src/plugins/skipto/totem-skipto.c:212
-msgid "_Skip To"
-msgstr "_Прескачане до"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:202
-msgid "_Skip To…"
-msgstr "_Прескачане до…"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
-msgctxt "playback rate"
-msgid "× 0.75"
-msgstr "× 0,75"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
-msgctxt "playback rate"
-msgid "Normal"
-msgstr "нормална"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
-msgctxt "playback rate"
-msgid "× 1.1"
-msgstr "× 1,1"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
-msgctxt "playback rate"
-msgid "× 1.25"
-msgstr "× 1,25"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
-msgctxt "playback rate"
-msgid "× 1.5"
-msgstr "× 1,5"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
-msgctxt "playback rate"
-msgid "× 1.75"
-msgstr "× 1,75"
-
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
+#. Label shown to prompt user to install packages (when PackageKit not available)
+#: src/app-window.vala:1738
 #, c-format
-msgid "Speed: %s"
-msgstr "Скорост: %s"
+msgid "You need to install the %s package."
+msgid_plural "You need to install the %s packages."
+msgstr[0] "Трябва да инсталирате пакета %s."
+msgstr[1] "Трябва да инсталирате пакетите %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
-msgid "Variable Rate"
-msgstr "Променлива скорост"
+#: src/app-window.vala:1857
+msgid "_Email"
+msgstr "_E-поща"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
-msgid "Provides the variable rate menu item"
-msgstr "Осигурява менюто за променлива скорост"
+#: src/app-window.vala:1858
+msgid "Pri_nt"
+msgstr "_Печат"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#: src/app-window.vala:1859
+msgctxt "menu"
+msgid "_Reorder Pages"
+msgstr "П_реподреждане на страниците"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Задаване на името на потребителския агент за уеб страницата на Vimeo"
+#: src/app-window.vala:1863
+msgid "_Keyboard Shortcuts"
+msgstr "_Клавишни комбинации"
+
+#: src/app-window.vala:1864
+msgid "_Help"
+msgstr "Помо_щ"
+
+#: src/app-window.vala:1865
+msgid "_About Document Scanner"
+msgstr "_Относно „Сканиране на документи“"
+
+#. Populate ActionBar (not supported in Glade)
+#. https://bugzilla.gnome.org/show_bug.cgi?id=769966
+#. Label on new document button
+#: src/app-window.vala:1873
+msgid "_New Document"
+msgstr "_Нов документ"
+
+#. Tooltip for rotate left (counter-clockwise) button
+#: src/app-window.vala:1892
+msgid "Rotate the page to the left (counter-clockwise)"
+msgstr "Завъртане на страницата наляво ↶"
+
+#. Tooltip for rotate right (clockwise) button
+#: src/app-window.vala:1901
+msgid "Rotate the page to the right (clockwise)"
+msgstr "Завъртане на страницата надясно ↷"
+
+#. Tooltip for crop button
+#: src/app-window.vala:1913
+msgid "Crop the selected page"
+msgstr "Изрязване на избраната страница"
+
+#. Tooltip for delete button
+#: src/app-window.vala:1931
+msgid "Delete the selected page"
+msgstr "Изтриване на избраната страница"
+
+#. Text of button for cancelling save
+#: src/app-window.vala:2107
+msgid "Cancel"
+msgstr "Отмяна"
+
+#: src/book.vala:355 src/book.vala:361
+#, c-format
+msgid "Unable to encode page %i"
+msgstr "Страница %i не може да се кодира"
+
+#. Combo box value for automatic paper size
+#: src/preferences-dialog.vala:71
+msgid "Automatic"
+msgstr "Автоматично"
+
+#: src/preferences-dialog.vala:108
+msgid "Darker"
+msgstr "По-тъмно"
+
+#: src/preferences-dialog.vala:110
+msgid "Lighter"
+msgstr "По-светло"
+
+#: src/preferences-dialog.vala:118
+msgid "Less"
+msgstr "Малко"
+
+#: src/preferences-dialog.vala:120
+msgid "More"
+msgstr "Много"
+
+#. Preferences dialog: Label for default resolution in resolution list
+#: src/preferences-dialog.vala:318
+#, c-format
+msgid "%d dpi (default)"
+msgstr "%d dpi (стандартно)"
+
+#. Preferences dialog: Label for minimum resolution in resolution list
+#: src/preferences-dialog.vala:321
+#, c-format
+msgid "%d dpi (draft)"
+msgstr "%d dpi (чернова)"
+
+#. Preferences dialog: Label for maximum resolution in resolution list
+#: src/preferences-dialog.vala:324
+#, c-format
+msgid "%d dpi (high resolution)"
+msgstr "%d dpi (висока разделителна способност)"
+
+#. Preferences dialog: Label for resolution value in resolution list (dpi = dots per inch)
+#: src/preferences-dialog.vala:327
+#, c-format
+msgid "%d dpi"
+msgstr "%d dpi"
+
+#. Error displayed when no scanners to scan with
+#: src/scanner.vala:897
+msgid "No scanners available.  Please connect a scanner."
+msgstr "Няма налични скенери. Свържете такъв."
+
+#. Error displayed when cannot connect to scanner
+#: src/scanner.vala:927
+msgid "Unable to connect to scanner"
+msgstr "Не може да се осъществи връзка със скенера"
+
+#. Error displayed when no documents at the start of scanning
+#: src/scanner.vala:1357 src/scanner.vala:1492
+msgid "Document feeder empty"
+msgstr "Листоподаващото устройство е празно"
+
+#. Out of memory error message with help instruction.
+#. Message written in Pango text markup language,
+#. A carriage return makes a line break, <tt> tag makes a monospace font
+#: src/scanner.vala:1365
+msgid ""
+"Insufficient memory to perform scan.\n"
+"Try to decrease <tt>Resolution</tt> or <tt>Page Size</tt> in "
+"<tt>Preferences</tt> menu. For some scanners when scanning in high "
+"resolution, the scan size is restricted."
+msgstr ""
+"Недостатъчно памет за сканирането.\n"
+"Пробвайте да намалите <tt>Разделителната способност</tt> или <tt>Размера на "
+"страницата</tt> в менюто за <tt>Настройки</tt>. При някои скенери високата "
+"разделителна способност води до ограничения на размера на сканираното."
+
+#. Error display when unable to start scan
+#: src/scanner.vala:1378
+msgid "Unable to start scan"
+msgstr "Сканирането не може да бъде стартирано"
+
+#. Error displayed when communication with scanner broken
+#: src/scanner.vala:1391 src/scanner.vala:1502
+msgid "Error communicating with scanner"
+msgstr "Грешка при комуникацията със скенера"
+
+#. Help string for command line --version flag
+#: src/simple-scan.vala:21
+msgid "Show release version"
+msgstr "Извеждане на версията"
+
+#. Help string for command line --debug flag
+#: src/simple-scan.vala:24
+msgid "Print debugging messages"
+msgstr "Извеждане на съобщения за изчистване на грешки"
+
+#: src/simple-scan.vala:26
+msgid "Fix PDF files generated with older versions of this app"
+msgstr ""
+"Поправяне на документи PDF, създадени с по-стари версии на тази програма"
+
+#. Title of error dialog when scan failed
+#: src/simple-scan.vala:1758
+msgid "Failed to scan"
+msgstr "Неуспешно сканиране"
+
+#. Attempt to inhibit the screensaver when scanning
+#: src/simple-scan.vala:1773
+msgid "Scan in progress"
+msgstr "В момента се сканира"
+
+#. Arguments and description for --help text
+#: src/simple-scan.vala:1957
+msgid "[DEVICE…] — Scanning utility"
+msgstr "[УСТРОЙСТВО…] — инструмент за сканиране"
+
+#. Text printed out when an unknown command-line argument provided
+#: src/simple-scan.vala:1968
+#, c-format
+msgid "Run “%s --help” to see a full list of available command line options."
+msgstr ""
+"Изпълнете „%s --help“, за да видите списъка с всички опции на командния ред."
