@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-04 15:02+0000\n"
-"PO-Revision-Date: 2022-02-08 10:08+0700\n"
+"POT-Creation-Date: 2022-02-18 00:10+0000\n"
+"PO-Revision-Date: 2022-02-18 09:42+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1922 src/totem-object.c:3908
+#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
 msgid "Videos"
 msgstr "Video"
 
@@ -181,7 +181,19 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Direktori yang akan ditampilkan dalam antar muka peramban, nilai baku nihil"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:4908
+#: data/org.gnome.totem.gschema.xml.in:87
+msgid "Disable hardware decoders"
+msgstr "Nonaktifkan dekoder perangkat keras"
+
+#: data/org.gnome.totem.gschema.xml.in:88
+msgid ""
+"Disable hardware decoders and use only software decoders. For debugging "
+"purposes only."
+msgstr ""
+"Nonaktifkan dekoder perangkat keras dan gunakan hanya dekoder perangkat "
+"lunak. Untuk tujuan awakutu saja."
+
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -299,164 +311,204 @@ msgstr "Umum"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Tampilkan bantuan"
+
+#: data/shortcuts.ui:28
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Pintasan Papan Tik"
+
+#: data/shortcuts.ui:35
+msgctxt "shortcut window"
+msgid "Add local video"
+msgstr "Tambah video lokal"
+
+#: data/shortcuts.ui:42
+msgctxt "shortcut window"
+msgid "Add web video"
+msgstr "Tambah video web"
+
+#: data/shortcuts.ui:49
+msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Properti"
 
-#: data/shortcuts.ui:28
+#: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Buat Tersedia Luring"
 
-#: data/shortcuts.ui:35
+#: data/shortcuts.ui:63
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Ambil Cuplikan"
 
-#: data/shortcuts.ui:42
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Keluar"
 
-#: data/shortcuts.ui:50
+#: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Volume"
 
-#: data/shortcuts.ui:55
+#: data/shortcuts.ui:83
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Naikkan volume"
 
-#: data/shortcuts.ui:62
+#: data/shortcuts.ui:90
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Turunkan volume"
 
-#: data/shortcuts.ui:70
+#: data/shortcuts.ui:97
+msgctxt "shortcut window"
+msgid "Mute/unmute"
+msgstr "Senyapkan/Bunyikan"
+
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Tilik"
 
-#: data/shortcuts.ui:75
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Jungkitkan layar penuh"
 
-#: data/shortcuts.ui:82
+#: data/shortcuts.ui:117
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Keluar layar penuh"
 
-#: data/shortcuts.ui:89
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Putar ↷"
 
-#: data/shortcuts.ui:96
+#: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Putar ↶"
 
-#: data/shortcuts.ui:105
+#: data/shortcuts.ui:140
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Putar"
 
-#: data/shortcuts.ui:110
+#: data/shortcuts.ui:145
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Putar/Tahan"
 
-#: data/shortcuts.ui:118 data/shortcuts.ui:134
+#: data/shortcuts.ui:153 data/shortcuts.ui:169
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Bab atau video sebelumnya"
 
-#: data/shortcuts.ui:126 data/shortcuts.ui:142
+#: data/shortcuts.ui:161 data/shortcuts.ui:177
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Bab atau video selanjutnya"
 
-#: data/shortcuts.ui:150
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Lewati"
 
-#: data/shortcuts.ui:156 data/shortcuts.ui:218
+#: data/shortcuts.ui:191 data/shortcuts.ui:253
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Mundur 15 detik"
 
-#: data/shortcuts.ui:164 data/shortcuts.ui:226
+#: data/shortcuts.ui:199 data/shortcuts.ui:261
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Maju 60 detik"
 
-#: data/shortcuts.ui:171
+#: data/shortcuts.ui:206
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Mundur satu bingkai"
 
-#: data/shortcuts.ui:178
+#: data/shortcuts.ui:213
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Maju satu bingkai"
 
-#: data/shortcuts.ui:186 data/shortcuts.ui:234
+#: data/shortcuts.ui:221 data/shortcuts.ui:269
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Mundur 5 detik"
 
-#: data/shortcuts.ui:194 data/shortcuts.ui:242
+#: data/shortcuts.ui:229 data/shortcuts.ui:277
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Maju 15 detik"
 
-#: data/shortcuts.ui:202 data/shortcuts.ui:250
+#: data/shortcuts.ui:237 data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Mundur 3 menit"
 
-#: data/shortcuts.ui:210 data/shortcuts.ui:258
+#: data/shortcuts.ui:245 data/shortcuts.ui:293
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Maju 10 menit"
 
-#: data/shortcuts.ui:265
+#: data/shortcuts.ui:300
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Lompat Ke…"
 
-#: data/shortcuts.ui:273
+#: data/shortcuts.ui:308
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Navigasi menu DVD"
 
-#: data/shortcuts.ui:278
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Navigasi naik"
 
-#: data/shortcuts.ui:285
+#: data/shortcuts.ui:320
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Navigasi turun"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:327
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Navigasi kiri"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:334
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navigasi kanan"
 
-#: data/totem.ui:11 data/totem.ui:106
+#: data/shortcuts.ui:342
+msgctxt "shortcut window"
+msgid "Subtitles"
+msgstr "Subtitel"
+
+#: data/shortcuts.ui:347
+msgctxt "shortcut window"
+msgid "Select next subtitle"
+msgstr "Pilih subtitel berikutnya"
+
+#: data/shortcuts.ui:354
+msgctxt "shortcut window"
+msgid "Toggle subtitles"
+msgstr "Jungkitkan subtitel"
+
+#: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
 msgstr "Prefere_nsi"
 
-#: data/totem.ui:15 data/totem.ui:110
+#: data/totem.ui:15 data/totem.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "Pintasan Papan Ti_k"
 
@@ -510,64 +562,74 @@ msgstr "2.11:1 (DVB)"
 msgid "Switch An_gles"
 msgstr "Pindah Su_dut"
 
-#: data/totem.ui:89
-msgid "_Languages"
-msgstr "_Bahasa"
-
-#: data/totem.ui:93
-msgid "S_ubtitles"
-msgstr "S_ubtitel"
-
-#: data/totem.ui:96
-msgid "_Select Text Subtitles…"
-msgstr "Pilih Teks _Subtitel…"
-
-#: data/totem.ui:119
+#: data/totem.ui:103
 msgid "_Eject"
 msgstr "K_eluarkan"
 
-#: data/totem.ui:130
+#: data/totem.ui:114
+msgid "Languages"
+msgstr "Bahasa"
+
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+msgid "Subtitles"
+msgstr "Subtitel"
+
+#: data/totem.ui:121
+msgid "_Select Text Subtitles…"
+msgstr "Pilih Teks _Subtitel…"
+
+#: data/totem.ui:132
 msgid "_Repeat"
 msgstr "Be_rulang"
 
-#: data/totem.ui:136
+#: data/totem.ui:138
 msgid "_DVD Menu"
 msgstr "Menu _DVD"
 
-#: data/totem.ui:142
+#: data/totem.ui:144
 msgid "_Title Menu"
 msgstr "Menu _Judul"
 
-#: data/totem.ui:147
+#: data/totem.ui:149
 msgid "A_udio Menu"
 msgstr "Menu A_udio"
 
-#: data/totem.ui:152
+#: data/totem.ui:154
 msgid "_Angle Menu"
 msgstr "Menu S_udut Kamera"
 
-#: data/totem.ui:157
+#: data/totem.ui:159
 msgid "_Chapter Menu"
 msgstr "Menu _Bab"
 
-#: data/totem.ui:166
+#: data/totem.ui:168
 msgid "Speed"
 msgstr "Kecepatan"
 
-#: data/uri.ui:14
+#: data/uri.ui:5
+msgid "Add Web Video"
+msgstr "Tambah Video Web"
+
+#: data/uri.ui:19
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Masukkan alamat berkas yang ingin Anda buka:"
 
-#. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:118
-msgid "--:--"
-msgstr "--:--"
+#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: src/plugins/screenshot/totem-gallery.c:92
+#: src/plugins/screenshot/totem-gallery-progress.c:100
+#: src/plugins/skipto/totem-skipto.c:211
+msgid "_Cancel"
+msgstr "_Batal"
 
-#: src/backend/bacon-video-widget.c:1416
+#: data/uri.ui:54 src/totem-uri.c:465
+msgid "_Add"
+msgstr "T_ambah"
+
+#: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Diperlukan sandi untuk server RTSP"
 
-#: src/backend/bacon-video-widget.c:3201
+#: src/backend/bacon-video-widget.c:3339
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -575,52 +637,52 @@ msgstr ""
 "Sumber tampaknya dienkripsi dan tidak dapat dibaca. Apakah Anda mencoba "
 "memutar DVD terenkripsi tanpa libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3215
+#: src/backend/bacon-video-widget.c:3353
 msgid "The server you are trying to connect to is not known."
 msgstr "Server yang Anda coba hubungi tak diketahui."
 
-#: src/backend/bacon-video-widget.c:3218
+#: src/backend/bacon-video-widget.c:3356
 msgid "The connection to this server was refused."
 msgstr "Koneksi ke server ini ditolak."
 
-#: src/backend/bacon-video-widget.c:3221
+#: src/backend/bacon-video-widget.c:3359
 msgid "The specified movie could not be found."
 msgstr "Tak menemukan film yang dicari."
 
-#: src/backend/bacon-video-widget.c:3228
+#: src/backend/bacon-video-widget.c:3366
 msgid "The server refused access to this file or stream."
 msgstr "Server menolak akses ke berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3234
+#: src/backend/bacon-video-widget.c:3372
 msgid "Authentication is required to access this file or stream."
 msgstr "Otentikasi diperlukan untuk mengakses berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3240
+#: src/backend/bacon-video-widget.c:3378
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Dukungan SSL/TLS tidak ada. Periksa pemasangan Anda."
 
-#: src/backend/bacon-video-widget.c:3247
+#: src/backend/bacon-video-widget.c:3385
 msgid "You are not allowed to open this file."
 msgstr "Anda tak diizinkan untuk membuka berkas ini."
 
-#: src/backend/bacon-video-widget.c:3252
+#: src/backend/bacon-video-widget.c:3390
 msgid "This location is not a valid one."
 msgstr "Lokasi ini tidak sah."
 
-#: src/backend/bacon-video-widget.c:3260
+#: src/backend/bacon-video-widget.c:3398
 msgid "The movie could not be read."
 msgstr "Film tidak dapat dibaca."
 
-#: src/backend/bacon-video-widget.c:3266
+#: src/backend/bacon-video-widget.c:3404
 msgid "This file is encrypted and cannot be played back."
 msgstr "Berkas ini dienkripsi dan tidak dapat diputar."
 
-#: src/backend/bacon-video-widget.c:3272
+#: src/backend/bacon-video-widget.c:3410
 msgid "The file you tried to play is an empty file."
 msgstr "Berkas yang Anda coba putar adalah berkas kosong."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3296 src/backend/bacon-video-widget.c:3304
+#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -631,12 +693,12 @@ msgid_plural ""
 msgstr[0] ""
 "Untuk memutar film ini, memerlukan pengaya %s yang saat ini belum terpasang."
 
-#: src/backend/bacon-video-widget.c:3316
+#: src/backend/bacon-video-widget.c:3454
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Stream ini tak dapat diputar. Mungkin ada firewall yang memblokirnya."
 
-#: src/backend/bacon-video-widget.c:3319
+#: src/backend/bacon-video-widget.c:3457
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -644,7 +706,7 @@ msgstr ""
 "Stream audio atau video tak dapat diputar karena kurangnya kodek. Anda "
 "mungkin harus memasang pengaya tambahan untuk dapat memutarnya"
 
-#: src/backend/bacon-video-widget.c:3330
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -652,19 +714,19 @@ msgstr ""
 "Berkas ini tak bisa diputar melalui jaringan. Cobalah untuk mengunduhnya "
 "lebih dulu."
 
-#: src/backend/bacon-video-widget.c:4904
+#: src/backend/bacon-video-widget.c:5062
 msgid "Surround"
 msgstr "Stereo"
 
-#: src/backend/bacon-video-widget.c:4906
+#: src/backend/bacon-video-widget.c:5064
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5176
+#: src/backend/bacon-video-widget.c:5334
 msgid "Media contains no supported video streams."
 msgstr "Media mengandung siaran video yang tidak didukung."
 
-#: src/backend/bacon-video-widget.c:5353
+#: src/backend/bacon-video-widget.c:5523
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -690,17 +752,34 @@ msgstr[0] "%s diperlukan untuk memutar berkas, tapi tak terpasang."
 msgid "_Find in %s"
 msgstr "_Cari dalam %s"
 
+#. translators: Unknown time
+#: src/gst/totem-time-helpers.c:45
+msgid "--:--"
+msgstr "--:--"
+
 #. hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
+#. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
+
+#. hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:89
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d.%03d"
+msgstr "%d:%02d:%02d.%03d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -708,11 +787,23 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:78
+#: src/gst/totem-time-helpers.c:99
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
+
+#. -hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "-9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
+#. * change ":" to the separator that your locale uses or use
+#. * "%Id" instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:107
+#, c-format
+msgctxt "long time format"
+msgid "-%d:%02d:%02d.%03d"
+msgstr "-%d:%02d:%02d.%03d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -720,11 +811,35 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:89
+#: src/gst/totem-time-helpers.c:120
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
+
+#. -minutes:seconds.msec
+#. Translators: This is a time format, like "-5:02.050" for 5
+#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
+#. * ":" to the separator that your locale uses or use "%Id"
+#. * instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:128
+#, c-format
+msgctxt "short time format"
+msgid "-%d:%02d.%03d"
+msgstr "-%d:%02d.%03d"
+
+#. minutes:seconds.msec
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:139
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d.%03d"
+msgstr "%d:%02d.%03d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -732,7 +847,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:98
+#: src/gst/totem-time-helpers.c:148
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -784,31 +899,31 @@ msgstr "Resolusi"
 msgid "Duration"
 msgstr "Durasi"
 
-#: src/totem-grilo.c:288
+#: src/totem-grilo.c:289
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Musim %d Episode %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: src/totem-grilo.c:325
+#: src/totem-grilo.c:326
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Musim %d Episode %d)"
 
-#: src/totem-grilo.c:687
+#: src/totem-grilo.c:688
 msgid "Browse Error"
 msgstr "Galat Meramban"
 
-#: src/totem-grilo.c:836
+#: src/totem-grilo.c:837
 msgid "Search Error"
 msgstr "Galat Mencari"
 
-#: src/totem-grilo.c:1328
+#: src/totem-grilo.c:1329
 msgid "Local"
 msgstr "Lokal"
 
-#: src/totem-grilo.c:1931
+#: src/totem-grilo.c:1932
 msgid "Channels"
 msgstr "Kanal"
 
@@ -826,17 +941,17 @@ msgstr "Berkas tidak ada."
 msgid "Make sure that Totem is properly installed."
 msgstr "Pastikan Totem telah terpasang dengan baik."
 
-#: src/totem-main-toolbar.c:130 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Klik pada butir untuk memilih mereka"
 
-#: src/totem-main-toolbar.c:136
+#: src/totem-main-toolbar.c:135
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d dipilih"
 
-#: src/totem-main-toolbar.c:157
+#: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "Hasil untuk \"%s\""
@@ -857,81 +972,66 @@ msgstr "Batal"
 msgid "Search"
 msgstr "Cari"
 
-#: src/totem-menu.c:410
+#: src/totem-menu.c:435
 msgid "Audio Track"
 msgstr "Trek Audio"
 
-#: src/totem-menu.c:413
+#: src/totem-menu.c:438
 msgid "Subtitle"
 msgstr "Subtitel"
 
-#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:533
-msgid "None"
-msgstr "Nihil"
-
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:537
+#: src/totem-menu.c:474
 msgctxt "Language"
 msgid "Auto"
 msgstr "Otomatis"
 
-#: src/totem-object.c:1454 src/totem-options.c:51
+#. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
+#: src/totem-menu.c:477
+msgid "None"
+msgstr "Nihil"
+
+#: src/totem-object.c:1440 src/totem-options.c:51
 msgid "Pause"
 msgstr "Tahan"
 
-#: src/totem-object.c:1459 src/totem-object.c:1469 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Putar"
 
-#: src/totem-object.c:1536 src/totem-object.c:1564 src/totem-object.c:2149
+#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem tidak dapat memutar \"%s\"."
 
-#: src/totem-object.c:2321
+#: src/totem-object.c:2308
 msgid "Totem could not display the help contents."
 msgstr "Totem tidak dapat menampilkan bantuan."
 
-#: src/totem-object.c:2584
+#: src/totem-object.c:2569
 msgid "An error occurred"
 msgstr "Terjadi galat"
 
-#: src/totem-object.c:4006
+#: src/totem-object.c:3990
 msgid "Previous Chapter/Movie"
 msgstr "Bab/Film Sebelumnya"
 
-#: src/totem-object.c:4012
+#: src/totem-object.c:3996
 msgid "Play / Pause"
 msgstr "Putar / Tahan"
 
-#: src/totem-object.c:4018
+#: src/totem-object.c:4002
 msgid "Next Chapter/Movie"
 msgstr "Bab/Film Selanjutnya"
 
-#: src/totem-object.c:4244
+#: src/totem-object.c:4238
 msgid "Totem could not startup."
 msgstr "Totem tidak dapat dijalankan."
 
-#: src/totem-object.c:4244 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Tanpa alasan."
-
-#: src/totem-open-location.c:180
-msgid "Add Web Video"
-msgstr "Tambah Video Web"
-
-#: src/totem-open-location.c:182 src/totem-uri.c:403 src/totem-uri.c:464
-#: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
-msgid "_Cancel"
-msgstr "_Batal"
-
-#: src/totem-open-location.c:183 src/totem-uri.c:465
-msgid "_Add"
-msgstr "T_ambah"
 
 #: src/totem-options.c:49
 msgid "Play/Pause"
@@ -999,12 +1099,12 @@ msgstr "Tak bisa mengantrikan dan menggantikan secara bersamaan"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:232
+#: src/totem-playlist.c:233
 #, c-format
 msgid "Title %d"
 msgstr "Judul %d"
 
-#: src/totem-playlist.c:1065
+#: src/totem-playlist.c:1030
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Daftar main \"%s\" tidak dapat dibaca. Sepertinya rusak."
@@ -1261,7 +1361,7 @@ msgstr "Buka direktori"
 msgid "Open the directory of the currently playing movie"
 msgstr "Buka direktori film yang sedang diputar"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Buka Folder Pemuat"
 
@@ -1299,10 +1399,6 @@ msgstr "Tak dapat menghubungi situs web OpenSubtitles."
 #: src/plugins/opensubtitles/opensubtitles.py:357
 msgid "No results found."
 msgstr "Tak memperoleh hasil."
-
-#: src/plugins/opensubtitles/opensubtitles.py:502
-msgid "Subtitles"
-msgstr "Subtitel"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
@@ -1490,7 +1586,7 @@ msgid "N/A"
 msgstr "T/A"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:250
+#: src/plugins/properties/bacon-video-widget-properties.c:258
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "T/A"
@@ -1574,7 +1670,13 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 detik"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:247
+#: src/plugins/properties/bacon-video-widget-properties.c:251
+#, c-format
+msgid "%0.3f frame per second"
+msgid_plural "%0.3f frames per second"
+msgstr[0] "%0.3f gambar per detik"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1863,6 +1965,9 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Atur user agent bagi situs Vimeo"
+
+#~ msgid "S_ubtitles"
+#~ msgstr "S_ubtitel"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
