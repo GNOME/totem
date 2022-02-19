@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.12\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-17 17:02+0000\n"
-"PO-Revision-Date: 2022-02-17 21:39+0000\n"
+"POT-Creation-Date: 2022-02-18 00:10+0000\n"
+"PO-Revision-Date: 2022-02-19 17:37+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <gnome-pt-translation@googlegroups.com>\n"
 "Language: pt\n"
@@ -631,11 +631,6 @@ msgstr "_Cancelar"
 msgid "_Add"
 msgstr "_Adicionar"
 
-#. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:118
-msgid "--:--"
-msgstr "--:--"
-
 #: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Foi pedida uma senha de acesso ao servidor RTSP"
@@ -772,17 +767,36 @@ msgstr[1] "%s necessários para reproduzir o ficheiro mas não estão instalados
 msgid "_Find in %s"
 msgstr "_Localizar em %s"
 
+#. translators: Unknown time
+#: src/gst/totem-time-helpers.c:45
+msgid "--:--"
+msgstr "--:--"
+
 #. hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
+#. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
+
+#. hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:89
+#, c-format
+#| msgctxt "long time format"
+#| msgid "%d:%02d:%02d"
+msgctxt "long time format"
+msgid "%d:%02d:%02d.%03d"
+msgstr "%d:%02d:%02d.%03d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -790,11 +804,25 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:78
+#: src/gst/totem-time-helpers.c:99
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
+
+#. -hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "-9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
+#. * change ":" to the separator that your locale uses or use
+#. * "%Id" instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:107
+#, c-format
+#| msgctxt "long time format"
+#| msgid "-%d:%02d:%02d"
+msgctxt "long time format"
+msgid "-%d:%02d:%02d.%03d"
+msgstr "-%d:%02d:%02d.%03d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -802,11 +830,39 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:89
+#: src/gst/totem-time-helpers.c:120
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
+
+#. -minutes:seconds.msec
+#. Translators: This is a time format, like "-5:02.050" for 5
+#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
+#. * ":" to the separator that your locale uses or use "%Id"
+#. * instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:128
+#, c-format
+#| msgctxt "long time format"
+#| msgid "-%d:%02d:%02d"
+msgctxt "short time format"
+msgid "-%d:%02d.%03d"
+msgstr "-%d:%02d.%03d"
+
+#. minutes:seconds.msec
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:139
+#, c-format
+#| msgctxt "long time format"
+#| msgid "%d:%02d:%02d"
+msgctxt "short time format"
+msgid "%d:%02d.%03d"
+msgstr "%d:%02d.%03d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -814,7 +870,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:98
+#: src/gst/totem-time-helpers.c:148
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -959,25 +1015,25 @@ msgstr "Automático"
 msgid "None"
 msgstr "Nenhum"
 
-#: src/totem-object.c:1442 src/totem-options.c:51
+#: src/totem-object.c:1440 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/totem-object.c:1447 src/totem-object.c:1457 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Reproduzir"
 
-#: src/totem-object.c:1524 src/totem-object.c:1552 src/totem-object.c:2138
+#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "O Totem não pôde reproduzir \"%s\"."
 
-#: src/totem-object.c:2310
+#: src/totem-object.c:2308
 msgid "Totem could not display the help contents."
 msgstr "O Totem não pôde mostrar o conteúdo da ajuda."
 
-#: src/totem-object.c:2571
+#: src/totem-object.c:2569
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
