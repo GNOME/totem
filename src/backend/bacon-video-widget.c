@@ -200,14 +200,16 @@ struct _BaconVideoWidget
 
   gboolean                     got_redirect;
 
-  GdkCursor                   *cursor;
+  GdkCursor                   *blank_cursor;
+  GdkCursor                   *hand_cursor;
+  gboolean                     cursor_shown;
+  gboolean                     hovering_menu;
 
   /* Visual effects */
   GstElement                  *audio_capsfilter;
   GstElement                  *audio_pitchcontrol;
 
   /* Other stuff */
-  gboolean                     cursor_shown;
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
   gboolean                     is_menu;
@@ -401,11 +403,33 @@ bvw_show_error_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 }
 
 static void
+update_cursor (BaconVideoWidget *bvw)
+{
+  GdkWindow *window;
+
+  window = gtk_widget_get_window (GTK_WIDGET (bvw));
+
+  if (bvw->hovering_menu)
+    gdk_window_set_cursor (window, bvw->hand_cursor);
+  else if (bvw->cursor_shown)
+    gdk_window_set_cursor (window, NULL);
+  else
+    gdk_window_set_cursor (window, bvw->blank_cursor);
+}
+
+static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkWindow *window;
+  GdkDisplay *display;
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  window = gtk_widget_get_window (widget);
+  display = gdk_window_get_display (window);
+  bvw->hand_cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+  bvw->blank_cursor = gdk_cursor_new_for_display (display, GDK_BLANK_CURSOR);
 
   bvw->missing_plugins_cancellable = g_cancellable_new ();
   g_object_set_data_full (G_OBJECT (bvw), "missing-plugins-cancellable",
@@ -419,6 +443,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+
+  g_clear_object (&bvw->blank_cursor);
+  g_clear_object (&bvw->hand_cursor);
 
   g_cancellable_cancel (bvw->missing_plugins_cancellable);
   bvw->missing_plugins_cancellable = NULL;
@@ -1182,20 +1209,10 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     switch (nav_msg_type) {
       case GST_NAVIGATION_MESSAGE_MOUSE_OVER: {
         gint active;
-        GdkWindow *window;
-        GdkDisplay *display;
         if (!gst_navigation_message_parse_mouse_over (msg, &active))
           break;
-        window = gtk_widget_get_window (GTK_WIDGET (bvw));
-        if (active) {
-          if (bvw->cursor == NULL) {
-            display = gdk_window_get_display (window);
-            bvw->cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-          }
-        } else {
-	  g_clear_object (&bvw->cursor);
-        }
-        gdk_window_set_cursor (window, bvw->cursor);
+        bvw->hovering_menu = active;
+        update_cursor (bvw);
         goto done;
       }
       case GST_NAVIGATION_MESSAGE_COMMANDS_CHANGED: {
@@ -2455,8 +2472,6 @@ bacon_video_widget_finalize (GObject * object)
     g_source_remove (bvw->eos_id);
     bvw->eos_id = 0;
   }
-
-  g_clear_object (&bvw->cursor);
 
   if (bvw->mount_cancellable)
     g_cancellable_cancel (bvw->mount_cancellable);
@@ -4331,28 +4346,12 @@ void
 bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
                                     gboolean show_cursor)
 {
-  GdkWindow *window;
-
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-
-  bvw->cursor_shown = show_cursor;
-  window = gtk_widget_get_window (GTK_WIDGET (bvw));
-
-  if (!window)
+  if (bvw->cursor_shown == show_cursor)
     return;
-
-  if (show_cursor == FALSE) {
-    GdkCursor *cursor;
-    GdkDisplay *display;
-
-    display = gdk_window_get_display (window);
-    cursor = gdk_cursor_new_for_display (display, GDK_BLANK_CURSOR);
-    gdk_window_set_cursor (window, cursor);
-    g_object_unref (cursor);
-  } else {
-    gdk_window_set_cursor (window, bvw->cursor);
-  }
+  bvw->cursor_shown = show_cursor;
+  update_cursor (bvw);
 }
 
 /**
