@@ -1163,7 +1163,6 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     const GValue *val;
     GFile *file;
     GMountOperation *mount_op;
-    GtkWidget *toplevel;
     GstState target_state;
     const char *uri;
 
@@ -1178,10 +1177,6 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 
     GST_DEBUG ("Trying to mount location '%s'", GST_STR_NULL (uri));
 
-    toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-    if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
-      toplevel = NULL;
-
     val = gst_structure_get_value (structure, "file");
     if (val == NULL)
       goto done;
@@ -1195,7 +1190,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     bacon_video_widget_stop (bvw);
     bvw->target_state = target_state;
 
-    mount_op = gtk_mount_operation_new (toplevel ? GTK_WINDOW (toplevel) : NULL);
+    mount_op = gtk_mount_operation_new (bvw->parent_toplevel);
     bvw->mount_in_progress = TRUE;
     bvw->mount_cancellable = g_cancellable_new ();
     g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
@@ -1424,7 +1419,6 @@ done:
 static gboolean
 bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
 {
-  GtkWidget *toplevel;
   GMountOperationClass *klass;
   int code;
 
@@ -1455,8 +1449,7 @@ bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
   GST_DEBUG ("Trying to get auth for location '%s'", GST_STR_NULL (bvw->mrl));
 
   if (bvw->auth_dialog == NULL) {
-    toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-    bvw->auth_dialog = gtk_mount_operation_new (GTK_WINDOW (toplevel));
+    bvw->auth_dialog = gtk_mount_operation_new (bvw->parent_toplevel);
     g_signal_connect (G_OBJECT (bvw->auth_dialog), "reply",
 		      G_CALLBACK (bvw_auth_reply_cb), bvw);
   }
