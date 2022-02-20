@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-18 00:10+0000\n"
-"PO-Revision-Date: 2022-02-18 13:13+0100\n"
+"POT-Creation-Date: 2022-02-18 12:14+0000\n"
+"PO-Revision-Date: 2022-02-20 22:45+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -218,6 +218,18 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Adresáre na zobrazenie v rozhraní prehliadača, štandardne nie sú určené "
 "žiadne"
+
+#: data/org.gnome.totem.gschema.xml.in:87
+msgid "Disable hardware decoders"
+msgstr "Zakázať hardvérové dekodéry"
+
+#: data/org.gnome.totem.gschema.xml.in:88
+msgid ""
+"Disable hardware decoders and use only software decoders. For debugging "
+"purposes only."
+msgstr ""
+"Zakáže hardvérové dekodéry a použije iba softvérové dekodéry. Iba pre "
+"ladiace účely."
 
 # list store item - Typ zvukového výstupu
 #: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
@@ -879,8 +891,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:89
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
 msgstr "%d:%02d:%02d.%03d"
@@ -905,8 +915,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:107
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
 msgstr "-%d:%02d:%02d.%03d"
@@ -931,8 +939,6 @@ msgstr "-%d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:128
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
 msgstr "-%d:%02d.%03d"
@@ -945,8 +951,6 @@ msgstr "-%d:%02d.%03d"
 #.
 #: src/gst/totem-time-helpers.c:139
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
 msgstr "%d:%02d.%03d"
