@@ -166,6 +166,8 @@ struct _BaconVideoWidget
   GtkWidget                   *broken_video;
   GtkWidget                   *video_widget;
 
+  GtkWindow                   *parent_toplevel;
+
   GError                      *init_error;
 
   char                        *user_agent;
@@ -409,6 +411,11 @@ update_cursor (BaconVideoWidget *bvw)
 
   window = gtk_widget_get_window (GTK_WIDGET (bvw));
 
+  if (!gtk_window_is_active (bvw->parent_toplevel)) {
+    gdk_window_set_cursor (window, NULL);
+    return;
+  }
+
   if (bvw->hovering_menu)
     gdk_window_set_cursor (window, bvw->hand_cursor);
   else if (bvw->cursor_shown)
@@ -431,6 +438,10 @@ bacon_video_widget_realize (GtkWidget * widget)
   bvw->hand_cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
   bvw->blank_cursor = gdk_cursor_new_for_display (display, GDK_BLANK_CURSOR);
 
+  bvw->parent_toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (bvw)));
+  g_signal_connect_swapped (G_OBJECT (bvw->parent_toplevel), "notify::is-active",
+			    G_CALLBACK (update_cursor), bvw);
+
   bvw->missing_plugins_cancellable = g_cancellable_new ();
   g_object_set_data_full (G_OBJECT (bvw), "missing-plugins-cancellable",
 			  bvw->missing_plugins_cancellable, g_object_unref);
@@ -444,6 +455,10 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 
+  if (bvw->parent_toplevel != NULL) {
+    g_signal_handlers_disconnect_by_func (bvw->parent_toplevel, update_cursor, bvw);
+    bvw->parent_toplevel = NULL;
+  }
   g_clear_object (&bvw->blank_cursor);
   g_clear_object (&bvw->hand_cursor);
 
