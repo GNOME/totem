@@ -31,10 +31,12 @@
 #define TOTEM_OPEN_DIRECTORY_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN, TotemOpenDirectoryPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	TotemObject *totem;
 	char        *mrl;
 	GSimpleAction *action;
-} TotemOpenDirectoryPluginPrivate;
+} TotemOpenDirectoryPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN, TotemOpenDirectoryPlugin, totem_open_directory_plugin)
 
@@ -59,7 +61,7 @@ totem_open_directory_plugin_open (GSimpleAction       *action,
 	GVariantBuilder *builder;
 	GVariant *dbus_arguments;
 
-	g_assert (pi->priv->mrl != NULL);
+	g_assert (pi->mrl != NULL);
 
 	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
 					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
@@ -78,7 +80,7 @@ totem_open_directory_plugin_open (GSimpleAction       *action,
 	notification_id = get_notification_id();
 
 	builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
-	g_variant_builder_add (builder, "s", pi->priv->mrl);
+	g_variant_builder_add (builder, "s", pi->mrl);
 	dbus_arguments = g_variant_new ("(ass)", builder, notification_id);
 	g_variant_builder_unref (builder);
 	g_free(notification_id);
@@ -98,9 +100,9 @@ static void
 totem_open_directory_file_closed (TotemObject *totem,
 				 TotemOpenDirectoryPlugin *pi)
 {
-	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->mrl, g_free);
 
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), FALSE);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), FALSE);
 }
 
 static gboolean
@@ -131,7 +133,7 @@ totem_open_directory_file_opened (TotemObject              *totem,
 {
 	char *scheme;
 
-	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->mrl, g_free);
 
 	if (mrl == NULL)
 		return;
@@ -144,15 +146,14 @@ totem_open_directory_file_opened (TotemObject              *totem,
 	}
 	g_free (scheme);
 
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
-	pi->priv->mrl = g_strdup (mrl);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), TRUE);
+	pi->mrl = g_strdup (mrl);
 }
 
 static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemOpenDirectoryPlugin *pi = TOTEM_OPEN_DIRECTORY_PLUGIN (plugin);
-	TotemOpenDirectoryPluginPrivate *priv = pi->priv;
 	GMenu *menu;
 	GMenuItem *item;
 	char *mrl;
@@ -162,30 +163,30 @@ impl_activate (PeasActivatable *plugin)
 	if (g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
 		return; */
 
-	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	g_signal_connect (priv->totem,
+	g_signal_connect (pi->totem,
 			  "file-opened",
 			  G_CALLBACK (totem_open_directory_file_opened),
 			  plugin);
-	g_signal_connect (priv->totem,
+	g_signal_connect (pi->totem,
 			  "file-closed",
 			  G_CALLBACK (totem_open_directory_file_closed),
 			  plugin);
 
-	priv->action = g_simple_action_new ("open-dir", NULL);
-	g_signal_connect (G_OBJECT (priv->action), "activate",
+	pi->action = g_simple_action_new ("open-dir", NULL);
+	g_signal_connect (G_OBJECT (pi->action), "activate",
 			  G_CALLBACK (totem_open_directory_plugin_open), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->action), FALSE);
+	g_action_map_add_action (G_ACTION_MAP (pi->totem), G_ACTION (pi->action));
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), FALSE);
 
 	/* add UI */
-	menu = totem_object_get_menu_section (priv->totem, "opendirectory-placeholder");
+	menu = totem_object_get_menu_section (pi->totem, "opendirectory-placeholder");
 	item = g_menu_item_new (_("Open Containing Folder"), "app.open-dir");
 	g_menu_append_item (G_MENU (menu), item);
 
-	mrl = totem_object_get_current_mrl (priv->totem);
-	totem_open_directory_file_opened (priv->totem, mrl, pi);
+	mrl = totem_object_get_current_mrl (pi->totem);
+	totem_open_directory_file_opened (pi->totem, mrl, pi);
 	g_free (mrl);
 }
 
@@ -193,14 +194,13 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemOpenDirectoryPlugin *pi = TOTEM_OPEN_DIRECTORY_PLUGIN (plugin);
-	TotemOpenDirectoryPluginPrivate *priv = pi->priv;
 
-	g_signal_handlers_disconnect_by_func (priv->totem, totem_open_directory_file_opened, plugin);
-	g_signal_handlers_disconnect_by_func (priv->totem, totem_open_directory_file_closed, plugin);
+	g_signal_handlers_disconnect_by_func (pi->totem, totem_open_directory_file_opened, plugin);
+	g_signal_handlers_disconnect_by_func (pi->totem, totem_open_directory_file_closed, plugin);
 
-	totem_object_empty_menu_section (priv->totem, "opendirectory-placeholder");
+	totem_object_empty_menu_section (pi->totem, "opendirectory-placeholder");
 
-	priv->totem = NULL;
+	pi->totem = NULL;
 
-	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->mrl, g_free);
 }
