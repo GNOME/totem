@@ -38,9 +38,11 @@
 #define TOTEM_VIMEO_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_VIMEO_PLUGIN, TotemVimeoPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	guint signal_id;
 	TotemObject *totem;
-} TotemVimeoPluginPrivate;
+} TotemVimeoPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_VIMEO_PLUGIN, TotemVimeoPlugin, totem_vimeo_plugin)
 
@@ -59,8 +61,8 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemVimeoPlugin *pi = TOTEM_VIMEO_PLUGIN (plugin);
 
-	pi->priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	pi->priv->signal_id = g_signal_connect (G_OBJECT (pi->priv->totem), "get-user-agent",
+	pi->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	pi->signal_id = g_signal_connect (G_OBJECT (pi->totem), "get-user-agent",
 						G_CALLBACK (get_user_agent_cb), NULL);
 }
 
@@ -69,13 +71,13 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemVimeoPlugin *pi = TOTEM_VIMEO_PLUGIN (plugin);
 
-	if (pi->priv->signal_id) {
-		g_signal_handler_disconnect (pi->priv->totem, pi->priv->signal_id);
-		pi->priv->signal_id = 0;
+	if (pi->signal_id) {
+		g_signal_handler_disconnect (pi->totem, pi->signal_id);
+		pi->signal_id = 0;
 	}
 
-	if (pi->priv->totem) {
-		g_object_unref (pi->priv->totem);
-		pi->priv->totem = NULL;
+	if (pi->totem) {
+		g_object_unref (pi->totem);
+		pi->totem = NULL;
 	}
 }
