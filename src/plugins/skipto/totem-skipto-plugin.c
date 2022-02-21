@@ -42,112 +42,109 @@
 #define TOTEM_SKIPTO_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	TotemObject	*totem;
 	TotemSkipto	*st;
 	guint		handler_id_stream_length;
 	guint		handler_id_seekable;
 	guint		handler_id_key_press;
 	GSimpleAction  *action;
-} TotemSkiptoPluginPrivate;
+} TotemSkiptoPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
 
 static void
-destroy_dialog (TotemSkiptoPlugin *plugin)
+destroy_dialog (TotemSkiptoPlugin *pi)
 {
-	TotemSkiptoPluginPrivate *priv = plugin->priv;
-
-	if (priv->st != NULL) {
-		g_object_remove_weak_pointer (G_OBJECT (priv->st),
-					      (gpointer *)&(priv->st));
-		gtk_widget_destroy (GTK_WIDGET (priv->st));
-		priv->st = NULL;
+	if (pi->st != NULL) {
+		g_object_remove_weak_pointer (G_OBJECT (pi->st),
+					      (gpointer *)&(pi->st));
+		gtk_widget_destroy (GTK_WIDGET (pi->st));
+		pi->st = NULL;
 	}
 }
 
 static void
 totem_skipto_update_from_state (TotemObject *totem,
-				TotemSkiptoPlugin *plugin)
+				TotemSkiptoPlugin *pi)
 {
 	gint64 _time;
 	gboolean seekable;
-	TotemSkiptoPluginPrivate *priv = plugin->priv;
 
-	g_object_get (G_OBJECT (totem),
+	g_object_get (G_OBJECT (pi->totem),
 				"stream-length", &_time,
 				"seekable", &seekable,
 				NULL);
 
-	if (priv->st != NULL) {
-		totem_skipto_update_range (priv->st, _time);
-		totem_skipto_set_seekable (priv->st, seekable);
+	if (pi->st != NULL) {
+		totem_skipto_update_range (pi->st, _time);
+		totem_skipto_set_seekable (pi->st, seekable);
 	}
 
 	/* Update the action's sensitivity */
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->action), seekable);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), seekable);
 }
 
 static void
 property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
-		    TotemSkiptoPlugin *plugin)
+		    TotemSkiptoPlugin *pi)
 {
-	totem_skipto_update_from_state (totem, plugin);
+	totem_skipto_update_from_state (totem, pi);
 }
 
 static void
-skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *plugin)
+skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *pi)
 {
 	if (response != GTK_RESPONSE_OK) {
-		destroy_dialog (plugin);
+		destroy_dialog (pi);
 		return;
 	}
 
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
-	totem_object_seek_time (plugin->priv->totem,
-				totem_skipto_get_range (plugin->priv->st),
+	totem_object_seek_time (pi->totem,
+				totem_skipto_get_range (pi->st),
 				TRUE);
-	destroy_dialog (plugin);
+	destroy_dialog (pi);
 }
 
 static void
-run_skip_to_dialog (TotemSkiptoPlugin *plugin)
+run_skip_to_dialog (TotemSkiptoPlugin *pi)
 {
-	TotemSkiptoPluginPrivate *priv = plugin->priv;
-
-	if (totem_object_is_seekable (priv->totem) == FALSE)
+	if (totem_object_is_seekable (pi->totem) == FALSE)
 		return;
 
-	if (priv->st != NULL) {
-		gtk_window_present (GTK_WINDOW (priv->st));
-		totem_skipto_set_current (priv->st, totem_object_get_current_time
-					  (priv->totem));
+	if (pi->st != NULL) {
+		gtk_window_present (GTK_WINDOW (pi->st));
+		totem_skipto_set_current (pi->st, totem_object_get_current_time
+					  (pi->totem));
 		return;
 	}
 
-	priv->st = TOTEM_SKIPTO (totem_skipto_new (priv->totem));
-	g_signal_connect (G_OBJECT (priv->st), "delete-event",
+	pi->st = TOTEM_SKIPTO (totem_skipto_new (pi->totem));
+	g_signal_connect (G_OBJECT (pi->st), "delete-event",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
-	g_signal_connect (G_OBJECT (priv->st), "response",
-			  G_CALLBACK (skip_to_response_callback), plugin);
-	g_object_add_weak_pointer (G_OBJECT (priv->st),
-				   (gpointer *)&(priv->st));
-	totem_skipto_update_from_state (priv->totem, plugin);
-	totem_skipto_set_current (priv->st,
-				  totem_object_get_current_time (priv->totem));
+	g_signal_connect (G_OBJECT (pi->st), "response",
+			  G_CALLBACK (skip_to_response_callback), pi);
+	g_object_add_weak_pointer (G_OBJECT (pi->st),
+				   (gpointer *)&(pi->st));
+	totem_skipto_update_from_state (pi->totem, pi);
+	totem_skipto_set_current (pi->st,
+				  totem_object_get_current_time (pi->totem));
 }
 
 static void
 skip_to_action_callback (GSimpleAction     *action,
 			 GVariant          *parameter,
-			 TotemSkiptoPlugin *plugin)
+			 TotemSkiptoPlugin *pi)
 {
-	run_skip_to_dialog (plugin);
+	run_skip_to_dialog (pi);
 }
 
 static gboolean
-on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlugin *plugin)
+on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlugin *pi)
 {
 
 	if (event->state == 0 || !(event->state & GDK_CONTROL_MASK))
@@ -156,7 +153,7 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlu
 	switch (event->keyval) {
 		case GDK_KEY_k:
 		case GDK_KEY_K:
-			run_skip_to_dialog (plugin);
+			run_skip_to_dialog (pi);
 			break;
 		default:
 			return FALSE;
@@ -170,66 +167,65 @@ impl_activate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
 	TotemSkiptoPlugin *pi = TOTEM_SKIPTO_PLUGIN (plugin);
-	TotemSkiptoPluginPrivate *priv = pi->priv;
 	GMenu *menu;
 	GMenuItem *item;
 
-	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	priv->handler_id_stream_length = g_signal_connect (G_OBJECT (priv->totem),
+	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->handler_id_stream_length = g_signal_connect (G_OBJECT (pi->totem),
 				"notify::stream-length",
 				G_CALLBACK (property_notify_cb),
 				pi);
-	priv->handler_id_seekable = g_signal_connect (G_OBJECT (priv->totem),
+	pi->handler_id_seekable = g_signal_connect (G_OBJECT (pi->totem),
 				"notify::seekable",
 				G_CALLBACK (property_notify_cb),
 				pi);
 
 	/* Key press handler */
-	window = totem_object_get_main_window (priv->totem);
-	priv->handler_id_key_press = g_signal_connect (G_OBJECT(window),
+	window = totem_object_get_main_window (pi->totem);
+	pi->handler_id_key_press = g_signal_connect (G_OBJECT(window),
 				"key-press-event",
 				G_CALLBACK (on_window_key_press_event),
 				pi);
 	g_object_unref (window);
 
 	/* Install the menu */
-	priv->action = g_simple_action_new ("skip-to", NULL);
-	g_signal_connect (G_OBJECT (priv->action), "activate",
+	pi->action = g_simple_action_new ("skip-to", NULL);
+	g_signal_connect (G_OBJECT (pi->action), "activate",
 			  G_CALLBACK (skip_to_action_callback), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
+	g_action_map_add_action (G_ACTION_MAP (pi->totem), G_ACTION (pi->action));
 
-	menu = totem_object_get_menu_section (priv->totem, "skipto-placeholder");
+	menu = totem_object_get_menu_section (pi->totem, "skipto-placeholder");
 	item = g_menu_item_new (_("_Skip To…"), "app.skip-to");
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>k");
 	g_menu_append_item (G_MENU (menu), item);
 
-	totem_skipto_update_from_state (priv->totem, pi);
+	totem_skipto_update_from_state (pi->totem, pi);
 }
 
 static void
 impl_deactivate (PeasActivatable *plugin)
 {
+	TotemSkiptoPlugin *pi = TOTEM_SKIPTO_PLUGIN (plugin);
 	GtkWindow *window;
 	TotemObject *totem;
-	TotemSkiptoPluginPrivate *priv = TOTEM_SKIPTO_PLUGIN (plugin)->priv;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	g_signal_handler_disconnect (G_OBJECT (totem),
-				     priv->handler_id_stream_length);
+				     pi->handler_id_stream_length);
 	g_signal_handler_disconnect (G_OBJECT (totem),
-				     priv->handler_id_seekable);
+				     pi->handler_id_seekable);
 
-	if (priv->handler_id_key_press != 0) {
+	if (pi->handler_id_key_press != 0) {
 		window = totem_object_get_main_window (totem);
 		g_signal_handler_disconnect (G_OBJECT(window),
-					     priv->handler_id_key_press);
-		priv->handler_id_key_press = 0;
+					     pi->handler_id_key_press);
+		pi->handler_id_key_press = 0;
 		g_object_unref (window);
 	}
 
 	/* Remove the menu */
-	totem_object_empty_menu_section (priv->totem, "skipto-placeholder");
+	totem_object_empty_menu_section (totem, "skipto-placeholder");
 
 	destroy_dialog (TOTEM_SKIPTO_PLUGIN (plugin));
 }
