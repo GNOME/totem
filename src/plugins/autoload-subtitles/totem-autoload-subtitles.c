@@ -39,11 +39,13 @@
 #define TOTEM_AUTOLOAD_SUBTITLES_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_AUTOLOAD_SUBTITLES_PLUGIN, TotemAutoloadSubtitlesPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	guint signal_id;
 	TotemObject *totem;
 	GSettings *settings;
 	gboolean autoload_subs;
-} TotemAutoloadSubtitlesPluginPrivate;
+} TotemAutoloadSubtitlesPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_AUTOLOAD_SUBTITLES_PLUGIN, TotemAutoloadSubtitlesPlugin, totem_autoload_subtitles_plugin)
 
@@ -234,7 +236,7 @@ get_text_subtitle_cb (TotemObject                  *totem,
 {
 	char *sub;
 
-	if (pi->priv->autoload_subs == FALSE)
+	if (pi->autoload_subs == FALSE)
 		return NULL;
 
 	sub = totem_uri_get_subtitle_uri (mrl);
@@ -247,7 +249,7 @@ autoload_subs_changed (GSettings                *settings,
 		       char                     *key,
 		       TotemAutoloadSubtitlesPlugin *pi)
 {
-	pi->priv->autoload_subs = g_settings_get_boolean (settings, "autoload-subtitles");
+	pi->autoload_subs = g_settings_get_boolean (settings, "autoload-subtitles");
 }
 
 static void
@@ -255,12 +257,12 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemAutoloadSubtitlesPlugin *pi = TOTEM_AUTOLOAD_SUBTITLES_PLUGIN (plugin);
 
-	pi->priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	pi->priv->settings = g_settings_new ("org.gnome.totem");
-	pi->priv->autoload_subs = g_settings_get_boolean (pi->priv->settings, "autoload-subtitles");
-	g_signal_connect (pi->priv->settings, "changed::autoload-subtitles",
+	pi->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	pi->settings = g_settings_new ("org.gnome.totem");
+	pi->autoload_subs = g_settings_get_boolean (pi->settings, "autoload-subtitles");
+	g_signal_connect (pi->settings, "changed::autoload-subtitles",
 			  G_CALLBACK (autoload_subs_changed), pi);
-	pi->priv->signal_id = g_signal_connect (G_OBJECT (pi->priv->totem), "get-text-subtitle",
+	pi->signal_id = g_signal_connect (G_OBJECT (pi->totem), "get-text-subtitle",
 						G_CALLBACK (get_text_subtitle_cb), pi);
 }
 
@@ -269,16 +271,16 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemAutoloadSubtitlesPlugin *pi = TOTEM_AUTOLOAD_SUBTITLES_PLUGIN (plugin);
 
-	if (pi->priv->signal_id) {
-		g_signal_handler_disconnect (pi->priv->totem, pi->priv->signal_id);
-		pi->priv->signal_id = 0;
+	if (pi->signal_id) {
+		g_signal_handler_disconnect (pi->totem, pi->signal_id);
+		pi->signal_id = 0;
 	}
-	if (pi->priv->totem) {
-		g_object_unref (pi->priv->totem);
-		pi->priv->totem = NULL;
+	if (pi->totem) {
+		g_object_unref (pi->totem);
+		pi->totem = NULL;
 	}
-	if (pi->priv->settings) {
-		g_object_unref (pi->priv->settings);
-		pi->priv->settings = NULL;
+	if (pi->settings) {
+		g_object_unref (pi->settings);
+		pi->settings = NULL;
 	}
 }
