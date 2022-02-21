@@ -43,6 +43,8 @@
 #define TOTEM_SCREENSAVER_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SCREENSAVER_PLUGIN, TotemScreensaverPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	TotemObject *totem;
 	BaconVideoWidget *bvw;
 
@@ -53,7 +55,7 @@ typedef struct {
 	guint          handler_id_playing;
 	guint          inhibit_cookie;
 	guint          uninhibit_timeout;
-} TotemScreensaverPluginPrivate;
+} TotemScreensaverPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
 		      TotemScreensaverPlugin,
@@ -64,23 +66,23 @@ totem_screensaver_update_from_state (TotemObject *totem,
 				     TotemScreensaverPlugin *pi)
 {
 	if (totem_object_is_playing (totem) != FALSE) {
-		if (pi->priv->inhibit_cookie == 0 &&
-		    pi->priv->inhibit_available) {
+		if (pi->inhibit_cookie == 0 &&
+		    pi->inhibit_available) {
 			GtkWindow *window;
 
 			window = totem_object_get_main_window (totem);
-			pi->priv->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (totem),
+			pi->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (totem),
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
 										_("Playing a movie"));
-			if (pi->priv->inhibit_cookie == 0)
-				pi->priv->inhibit_available = FALSE;
+			if (pi->inhibit_cookie == 0)
+				pi->inhibit_available = FALSE;
 			g_object_unref (window);
 		}
 	} else {
-		if (pi->priv->inhibit_cookie != 0) {
-			gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->inhibit_cookie);
-			pi->priv->inhibit_cookie = 0;
+		if (pi->inhibit_cookie != 0) {
+			gtk_application_uninhibit (GTK_APPLICATION (pi->totem), pi->inhibit_cookie);
+			pi->inhibit_cookie = 0;
 		}
 	}
 }
@@ -88,8 +90,8 @@ totem_screensaver_update_from_state (TotemObject *totem,
 static gboolean
 uninhibit_timeout_cb (TotemScreensaverPlugin *pi)
 {
-	totem_screensaver_update_from_state (pi->priv->totem, pi);
-	pi->priv->uninhibit_timeout = 0;
+	totem_screensaver_update_from_state (pi->totem, pi);
+	pi->uninhibit_timeout = 0;
 	return G_SOURCE_REMOVE;
 }
 
@@ -98,14 +100,14 @@ property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemScreensaverPlugin *pi)
 {
-	if (pi->priv->uninhibit_timeout != 0) {
-		g_source_remove (pi->priv->uninhibit_timeout);
-		pi->priv->uninhibit_timeout = 0;
+	if (pi->uninhibit_timeout != 0) {
+		g_source_remove (pi->uninhibit_timeout);
+		pi->uninhibit_timeout = 0;
 	}
 
 	if (totem_object_is_playing (totem) == FALSE) {
-		pi->priv->uninhibit_timeout = g_timeout_add_seconds (5, (GSourceFunc) uninhibit_timeout_cb, pi);
-		g_source_set_name_by_id (pi->priv->uninhibit_timeout, "[totem] uninhibit_timeout_cb");
+		pi->uninhibit_timeout = g_timeout_add_seconds (5, (GSourceFunc) uninhibit_timeout_cb, pi);
+		g_source_set_name_by_id (pi->uninhibit_timeout, "[totem] uninhibit_timeout_cb");
 		return;
 	}
 
@@ -126,7 +128,7 @@ screensaver_signal_cb (GDBusProxy  *proxy,
 
 		g_variant_get (parameters, "(b)", &active);
 		if (active)
-			totem_object_pause (pi->priv->totem);
+			totem_object_pause (pi->totem);
 	}
 }
 
@@ -148,7 +150,7 @@ screensaver_proxy_ready_cb (GObject      *source_object,
 	}
 
 	pi = TOTEM_SCREENSAVER_PLUGIN (user_data);
-	pi->priv->screensaver = proxy;
+	pi->screensaver = proxy;
 	g_signal_connect (G_OBJECT (proxy), "g-signal",
 			  G_CALLBACK (screensaver_signal_cb), pi);
 }
@@ -159,26 +161,26 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
 
-	pi->priv->inhibit_available = TRUE;
+	pi->inhibit_available = TRUE;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (totem));
+	pi->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (totem));
 
-	pi->priv->handler_id_playing = g_signal_connect (G_OBJECT (totem),
+	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 						   "notify::playing",
 						   G_CALLBACK (property_notify_cb),
 						   pi);
 
-	pi->priv->totem = g_object_ref (totem);
+	pi->totem = g_object_ref (totem);
 
-	pi->priv->cancellable = g_cancellable_new ();
+	pi->cancellable = g_cancellable_new ();
 	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
 				  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES | G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
 				  NULL,
 				  "org.gnome.ScreenSaver",
 				  "/org/gnome/ScreenSaver",
 				  "org.gnome.ScreenSaver",
-				  pi->priv->cancellable,
+				  pi->cancellable,
 				  screensaver_proxy_ready_cb,
 				  pi);
 
@@ -191,30 +193,30 @@ impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 
-	if (pi->priv->cancellable) {
-		g_cancellable_cancel (pi->priv->cancellable);
-		g_clear_object (&pi->priv->cancellable);
+	if (pi->cancellable) {
+		g_cancellable_cancel (pi->cancellable);
+		g_clear_object (&pi->cancellable);
 	}
-	g_clear_object (&pi->priv->screensaver);
+	g_clear_object (&pi->screensaver);
 
-	if (pi->priv->handler_id_playing != 0) {
+	if (pi->handler_id_playing != 0) {
 		TotemObject *totem;
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
-		g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_playing);
-		pi->priv->handler_id_playing = 0;
+		g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+		pi->handler_id_playing = 0;
 	}
 
-	if (pi->priv->uninhibit_timeout != 0) {
-		g_source_remove (pi->priv->uninhibit_timeout);
-		pi->priv->uninhibit_timeout = 0;
+	if (pi->uninhibit_timeout != 0) {
+		g_source_remove (pi->uninhibit_timeout);
+		pi->uninhibit_timeout = 0;
 	}
 
-	if (pi->priv->inhibit_cookie != 0) {
-		gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->inhibit_cookie);
-		pi->priv->inhibit_cookie = 0;
+	if (pi->inhibit_cookie != 0) {
+		gtk_application_uninhibit (GTK_APPLICATION (pi->totem), pi->inhibit_cookie);
+		pi->inhibit_cookie = 0;
 	}
 
-	g_object_unref (pi->priv->totem);
-	g_object_unref (pi->priv->bvw);
+	g_object_unref (pi->totem);
+	g_object_unref (pi->bvw);
 }
 
