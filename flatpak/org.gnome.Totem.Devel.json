@@ -259,21 +259,6 @@
             ]
         },
         {
-            "name": "cogl",
-            "config-opts": [
-                "--disable-cogl-gst",
-                "--enable-xlib-egl-platform",
-                "--enable-wayland-egl-platform"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/cogl.git",
-                    "branch": "cogl-1.22"
-                }
-            ]
-        },
-        {
             "name" : "libhandy",
             "buildsystem" : "meson",
             "config-opts" : [
