@@ -15,7 +15,6 @@ plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
 allowed_plugins = [
   'apple-trailers',
   'autoload-subtitles',
-  'dbusservice',
   'im-status',
   'mpris',
   'open-directory',
@@ -58,7 +57,6 @@ if plugins_option != 'none'
 
   if have_python
     plugins += [
-      'dbusservice',
       'opensubtitles',
       'pythonconsole',
       'samplepython'
