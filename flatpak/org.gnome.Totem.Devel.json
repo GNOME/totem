@@ -259,43 +259,6 @@
             ]
         },
         {
-            "name": "dbus-glib",
-            "cleanup": [
-                "*.la",
-                "/bin",
-                "/etc",
-                "/include",
-                "/libexec",
-                "/share/gtk-doc",
-                "/share/man"
-            ],
-            "config-opts": [
-                "--disable-static",
-                "--disable-gtk-doc"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz",
-                    "sha256": "7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
-                }
-            ]
-        },
-        {
-            "name": "python3-dbus-python",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} dbus-python"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz",
-                    "sha256": "11238f1d86c995d8aed2e22f04a1e3779f0d70e587caffeab4857f3c662ed5a4"
-                }
-            ]
-        },
-        {
             "name": "cogl",
             "config-opts": [
                 "--disable-cogl-gst",
