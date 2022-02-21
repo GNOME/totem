@@ -42,13 +42,15 @@
 #define TOTEM_VARIABLE_RATE_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_VARIABLE_RATE_PLUGIN, TotemVariableRatePlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	TotemObject       *totem;
 	guint              handler_id_key_press;
 	guint              handler_id_main_page;
 	GSimpleAction     *action;
 	GMenuItem         *submenu_item;
 	gboolean           player_page;
-} TotemVariableRatePluginPrivate;
+} TotemVariableRatePlugin;
 
 #define NUM_RATES 6
 #define NORMAL_RATE_IDX 1
@@ -81,7 +83,6 @@ variable_rate_action_callback (GSimpleAction           *action,
 			       TotemVariableRatePlugin *plugin)
 {
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
-	TotemVariableRatePluginPrivate *priv = pi->priv;
 	const char *rate_id;
 	char *label;
 	guint i;
@@ -93,11 +94,11 @@ variable_rate_action_callback (GSimpleAction           *action,
 
 	g_assert (i < NUM_RATES);
 
-	if (!totem_object_set_rate (priv->totem, rates[i].rate)) {
+	if (!totem_object_set_rate (pi->totem, rates[i].rate)) {
 		g_warning ("Failed to set rate to %f, resetting", rates[i].rate);
 		i = NORMAL_RATE_IDX;
 
-		if (!totem_object_set_rate (priv->totem, rates[i].rate))
+		if (!totem_object_set_rate (pi->totem, rates[i].rate))
 			g_warning ("And failed to reset rate as well...");
 	} else {
 		g_debug ("Managed to set rate to %f", rates[i].rate);
@@ -114,25 +115,23 @@ variable_rate_action_callback (GSimpleAction           *action,
 static void
 reset_rate (TotemVariableRatePlugin *pi)
 {
-	TotemVariableRatePluginPrivate *priv = pi->priv;
 	GVariant *state;
 
 	g_debug ("Reset rate to 1.0");
 
 	state = g_variant_new_string (rates[NORMAL_RATE_IDX].id);
-	g_action_change_state (G_ACTION (priv->action), state);
+	g_action_change_state (G_ACTION (pi->action), state);
 }
 
 static void
 change_rate (TotemVariableRatePlugin *pi,
 	     gboolean                 increase)
 {
-	TotemVariableRatePluginPrivate *priv = pi->priv;
 	GVariant *state;
 	const char *rate_id;
 	int target, i;
 
-	state = g_action_get_state (G_ACTION (priv->action));
+	state = g_action_get_state (G_ACTION (pi->action));
 	rate_id = g_variant_get_string (state, NULL);
 	g_assert (rate_id);
 
@@ -156,7 +155,7 @@ change_rate (TotemVariableRatePlugin *pi,
 		 rates[i].label, rates[target].label);
 
 	state = g_variant_new_string (rates[target].id);
-	g_action_change_state (G_ACTION (priv->action), state);
+	g_action_change_state (G_ACTION (pi->action), state);
 }
 
 static void
@@ -165,8 +164,8 @@ on_totem_main_page_notify (GObject *object, GParamSpec *spec, TotemVariableRateP
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 	char *main_page;
 
-	g_object_get (pi->priv->totem, "main-page", &main_page, NULL);
-	pi->priv->player_page = (g_strcmp0 (main_page, "player") == 0);
+	g_object_get (pi->totem, "main-page", &main_page, NULL);
+	pi->player_page = (g_strcmp0 (main_page, "player") == 0);
 	g_free (main_page);
 }
 
@@ -175,7 +174,7 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemVariableR
 {
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 
-	if (!pi->priv->player_page ||
+	if (!pi->player_page ||
 	    event->state == 0 ||
 	    event->state & (GDK_CONTROL_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK)) {
 		return FALSE;
@@ -203,37 +202,36 @@ impl_activate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
-	TotemVariableRatePluginPrivate *priv = pi->priv;
 	GMenuItem *item;
 	GMenu *menu;
 	guint i;
 
-	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	/* Cache totem's main page */
-	priv->handler_id_main_page = g_signal_connect (G_OBJECT(priv->totem),
+	pi->handler_id_main_page = g_signal_connect (G_OBJECT(pi->totem),
 						       "notify::main-page",
 						       G_CALLBACK (on_totem_main_page_notify),
 						       pi);
 
 	/* Key press handler */
-	window = totem_object_get_main_window (priv->totem);
-	priv->handler_id_key_press = g_signal_connect (G_OBJECT(window),
+	window = totem_object_get_main_window (pi->totem);
+	pi->handler_id_key_press = g_signal_connect (G_OBJECT(window),
 				"key-press-event",
 				G_CALLBACK (on_window_key_press_event),
 				pi);
 	g_object_unref (window);
 
 	/* Create the variable rate action */
-	priv->action = g_simple_action_new_stateful ("variable-rate",
+	pi->action = g_simple_action_new_stateful ("variable-rate",
 						     G_VARIANT_TYPE_STRING,
 						     g_variant_new_string (rates[NORMAL_RATE_IDX].id));
-	g_signal_connect (G_OBJECT (priv->action), "change-state",
+	g_signal_connect (G_OBJECT (pi->action), "change-state",
 			  G_CALLBACK (variable_rate_action_callback), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
+	g_action_map_add_action (G_ACTION_MAP (pi->totem), G_ACTION (pi->action));
 
 	/* Create the submenu */
-	menu = totem_object_get_menu_section (priv->totem, "variable-rate-placeholder");
+	menu = totem_object_get_menu_section (pi->totem, "variable-rate-placeholder");
 	for (i = 0; i < NUM_RATES; i++) {
 		char *target;
 
@@ -247,30 +245,30 @@ impl_activate (PeasActivatable *plugin)
 static void
 impl_deactivate (PeasActivatable *plugin)
 {
+	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 	GtkWindow *window;
 	TotemObject *totem;
-	TotemVariableRatePluginPrivate *priv = TOTEM_VARIABLE_RATE_PLUGIN (plugin)->priv;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	if (priv->handler_id_key_press != 0) {
+	if (pi->handler_id_key_press != 0) {
 		window = totem_object_get_main_window (totem);
 		g_signal_handler_disconnect (G_OBJECT(window),
-					     priv->handler_id_key_press);
-		priv->handler_id_key_press = 0;
+					     pi->handler_id_key_press);
+		pi->handler_id_key_press = 0;
 		g_object_unref (window);
 	}
 
-	if (priv->handler_id_main_page != 0) {
-		g_signal_handler_disconnect (G_OBJECT(priv->totem),
-					     priv->handler_id_main_page);
-		priv->handler_id_main_page = 0;
+	if (pi->handler_id_main_page != 0) {
+		g_signal_handler_disconnect (G_OBJECT(pi->totem),
+					     pi->handler_id_main_page);
+		pi->handler_id_main_page = 0;
 	}
 
 	/* Remove the menu */
-	totem_object_empty_menu_section (priv->totem, "variable-rate-placeholder");
+	totem_object_empty_menu_section (pi->totem, "variable-rate-placeholder");
 
 	/* Reset the rate */
-	if (!totem_object_set_rate (priv->totem, 1.0))
+	if (!totem_object_set_rate (pi->totem, 1.0))
 		g_warning ("Failed to reset the playback rate to 1.0");
 }
