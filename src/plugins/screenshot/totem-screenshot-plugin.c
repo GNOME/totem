@@ -44,6 +44,8 @@
 #define TOTEM_SCREENSHOT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	Totem *totem;
 	BaconVideoWidget *bvw;
 
@@ -54,7 +56,7 @@ typedef struct {
 
 	GSimpleAction *screenshot_action;
 	GSimpleAction *gallery_action;
-} TotemScreenshotPluginPrivate;
+} TotemScreenshotPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSHOT_PLUGIN,
 		      TotemScreenshotPlugin,
@@ -208,34 +210,33 @@ escape_video_name (const char *orig)
 static void
 take_screenshot_action_cb (GSimpleAction         *action,
 			   GVariant              *parameter,
-			   TotemScreenshotPlugin *self)
+			   TotemScreenshotPlugin *pi)
 {
-	TotemScreenshotPluginPrivate *priv = self->priv;
 	GdkPixbuf *pixbuf;
 	GError *err = NULL;
 	ScreenshotSaveJob *job;
 	g_autofree char *video_name = NULL;
 	g_autofree char *escaped_video_name = NULL;
 
-	if (bacon_video_widget_can_get_frames (priv->bvw, &err) == FALSE) {
-		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message ?: _("No reason."));
+	if (bacon_video_widget_can_get_frames (pi->bvw, &err) == FALSE) {
+		totem_object_show_error (pi->totem, _("Totem could not get a screenshot of the video."), err->message ?: _("No reason."));
 		g_error_free (err);
 		return;
 	}
 
-	flash_area (GTK_WIDGET (priv->bvw));
+	flash_area (GTK_WIDGET (pi->bvw));
 
-	pixbuf = bacon_video_widget_get_current_frame (priv->bvw);
+	pixbuf = bacon_video_widget_get_current_frame (pi->bvw);
 	if (pixbuf == NULL) {
-		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
+		totem_object_show_error (pi->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 
-	video_name = totem_object_get_short_title (self->priv->totem);
+	video_name = totem_object_get_short_title (pi->totem);
 	escaped_video_name = escape_video_name (video_name);
 
 	job = g_slice_new (ScreenshotSaveJob);
-	job->plugin = self;
+	job->plugin = pi;
 	job->pixbuf = pixbuf;
 
 	screenshot_build_filename_async (NULL, escaped_video_name, screenshot_name_ready_cb, job);
@@ -244,7 +245,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 static void
 take_gallery_response_cb (GtkDialog *dialog,
 			  int response_id,
-			  TotemScreenshotPlugin *self)
+			  TotemScreenshotPlugin *pi)
 {
 	if (response_id != GTK_RESPONSE_OK)
 		gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -253,73 +254,70 @@ take_gallery_response_cb (GtkDialog *dialog,
 static void
 take_gallery_action_cb (GAction               *action,
 			GVariant              *parameter,
-			TotemScreenshotPlugin *self)
+			TotemScreenshotPlugin *pi)
 {
-	Totem *totem = self->priv->totem;
 	GtkDialog *dialog;
 
-	dialog = GTK_DIALOG (totem_gallery_new (totem));
+	dialog = GTK_DIALOG (totem_gallery_new (pi->totem));
 
 	g_signal_connect (dialog, "response",
-			  G_CALLBACK (take_gallery_response_cb), self);
+			  G_CALLBACK (take_gallery_response_cb), pi);
 	gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 static void
-update_state (TotemScreenshotPlugin *self)
+update_state (TotemScreenshotPlugin *pi)
 {
-	TotemScreenshotPluginPrivate *priv = self->priv;
 	gboolean sensitive;
 
-	sensitive = bacon_video_widget_can_get_frames (priv->bvw, NULL) &&
-		    priv->save_to_disk;
+	sensitive = bacon_video_widget_can_get_frames (pi->bvw, NULL) &&
+		    pi->save_to_disk;
 
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->screenshot_action), sensitive);
-	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->gallery_action), sensitive);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->screenshot_action), sensitive);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->gallery_action), sensitive);
 }
 
 static void
-got_metadata_cb (BaconVideoWidget *bvw, TotemScreenshotPlugin *self)
+got_metadata_cb (BaconVideoWidget *bvw, TotemScreenshotPlugin *pi)
 {
-	update_state (self);
+	update_state (pi);
 }
 
 static void
-disable_save_to_disk_changed_cb (GSettings *settings, const gchar *key, TotemScreenshotPlugin *self)
+disable_save_to_disk_changed_cb (GSettings *settings, const gchar *key, TotemScreenshotPlugin *pi)
 {
-	self->priv->save_to_disk = !g_settings_get_boolean (settings, "disable-save-to-disk");
+	pi->save_to_disk = !g_settings_get_boolean (settings, "disable-save-to-disk");
 }
 
 static void
 impl_activate (PeasActivatable *plugin)
 {
-	TotemScreenshotPlugin *self = TOTEM_SCREENSHOT_PLUGIN (plugin);
-	TotemScreenshotPluginPrivate *priv = self->priv;
+	TotemScreenshotPlugin *pi = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	GMenu *menu;
 	GMenuItem *item;
 	const char * const accels[]= { "<Primary><Alt>s", NULL };
 
-	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (priv->totem));
-	priv->got_metadata_signal = g_signal_connect (G_OBJECT (priv->bvw),
+	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (pi->totem));
+	pi->got_metadata_signal = g_signal_connect (G_OBJECT (pi->bvw),
 						      "got-metadata",
 						      G_CALLBACK (got_metadata_cb),
-						      self);
-	priv->screenshot_action = g_simple_action_new ("take-screenshot", NULL);
-	g_signal_connect (G_OBJECT (priv->screenshot_action), "activate",
+						      pi);
+	pi->screenshot_action = g_simple_action_new ("take-screenshot", NULL);
+	g_signal_connect (G_OBJECT (pi->screenshot_action), "activate",
 			  G_CALLBACK (take_screenshot_action_cb), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->screenshot_action));
-	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+	g_action_map_add_action (G_ACTION_MAP (pi->totem), G_ACTION (pi->screenshot_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (pi->totem),
 					       "app.take-screenshot",
 					       accels);
 
-	priv->gallery_action = g_simple_action_new ("take-gallery", NULL);
-	g_signal_connect (G_OBJECT (priv->gallery_action), "activate",
+	pi->gallery_action = g_simple_action_new ("take-gallery", NULL);
+	g_signal_connect (G_OBJECT (pi->gallery_action), "activate",
 			  G_CALLBACK (take_gallery_action_cb), plugin);
-	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->gallery_action));
+	g_action_map_add_action (G_ACTION_MAP (pi->totem), G_ACTION (pi->gallery_action));
 
 	/* Install the menu */
-	menu = totem_object_get_menu_section (priv->totem, "screenshot-placeholder");
+	menu = totem_object_get_menu_section (pi->totem, "screenshot-placeholder");
 	item = g_menu_item_new (_("Take _Screenshot"), "app.take-screenshot");
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Alt>s");
 	g_menu_item_set_attribute_value (item, "hidden-when",
@@ -333,34 +331,34 @@ impl_activate (PeasActivatable *plugin)
 	g_object_unref (item);
 
 	/* Set up a GSettings watch for lockdown keys */
-	priv->settings = g_settings_new ("org.gnome.desktop.lockdown");
-	g_signal_connect (priv->settings, "changed::disable-save-to-disk", (GCallback) disable_save_to_disk_changed_cb, self);
-	disable_save_to_disk_changed_cb (priv->settings, "disable-save-to-disk", self);
+	pi->settings = g_settings_new ("org.gnome.desktop.lockdown");
+	g_signal_connect (pi->settings, "changed::disable-save-to-disk", (GCallback) disable_save_to_disk_changed_cb, pi);
+	disable_save_to_disk_changed_cb (pi->settings, "disable-save-to-disk", pi);
 
 	/* Update the menu entries' states */
-	update_state (self);
+	update_state (pi);
 }
 
 static void
 impl_deactivate (PeasActivatable *plugin)
 {
-	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
+	TotemScreenshotPlugin *pi = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	const char * const accels[] = { NULL };
 
 	/* Disconnect signal handlers */
-	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
+	g_signal_handler_disconnect (G_OBJECT (pi->bvw), pi->got_metadata_signal);
 
-	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+	gtk_application_set_accels_for_action (GTK_APPLICATION (pi->totem),
 					       "app.take-screenshot",
 					       accels);
 
 	/* Disconnect from GSettings */
-	g_object_unref (priv->settings);
+	g_object_unref (pi->settings);
 
 	/* Remove the menu */
-	totem_object_empty_menu_section (priv->totem, "screenshot-placeholder");
+	totem_object_empty_menu_section (pi->totem, "screenshot-placeholder");
 
-	g_object_unref (priv->bvw);
+	g_object_unref (pi->bvw);
 }
 
 static char *make_filename_for_dir (const char *directory, const char *format, const char *movie_title) G_GNUC_FORMAT (2);
