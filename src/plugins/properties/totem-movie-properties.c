@@ -45,12 +45,14 @@
 #define TOTEM_MOVIE_PROPERTIES_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN, TotemMoviePropertiesPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	GtkWidget     *props;
 	GtkWidget     *dialog;
 	guint          handler_id_stream_length;
 	guint          handler_id_main_page;
 	GSimpleAction *props_action;
-} TotemMoviePropertiesPluginPrivate;
+} TotemMoviePropertiesPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		      TotemMoviePropertiesPlugin,
@@ -180,7 +182,7 @@ main_page_notify_cb (TotemObject                *totem,
 
 	g_object_get (G_OBJECT (totem), "main-page", &main_page, NULL);
 	if (g_strcmp0 (main_page, "player") == 0)
-		gtk_widget_hide (pi->priv->dialog);
+		gtk_widget_hide (pi->dialog);
 	g_free (main_page);
 }
 
@@ -196,7 +198,7 @@ stream_length_notify_cb (TotemObject *totem,
 		      NULL);
 
 	bacon_video_widget_properties_set_duration
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props),
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props),
 		 stream_length);
 }
 
@@ -209,9 +211,9 @@ totem_movie_properties_plugin_file_opened (TotemObject *totem,
 
 	bvw = totem_object_get_video_widget (totem);
 	update_properties_from_bvw
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
 	g_object_unref (bvw);
-	gtk_widget_set_sensitive (plugin->priv->props, TRUE);
+	gtk_widget_set_sensitive (plugin->props, TRUE);
 }
 
 static void
@@ -220,8 +222,8 @@ totem_movie_properties_plugin_file_closed (TotemObject *totem,
 {
         /* Reset the properties and wait for the signal*/
         bacon_video_widget_properties_reset
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props));
-	gtk_widget_set_sensitive (plugin->priv->props, FALSE);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props));
+	gtk_widget_set_sensitive (plugin->props, FALSE);
 }
 
 static void
@@ -236,7 +238,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 
 	bvw = totem_object_get_video_widget (totem);
 	update_properties_from_bvw
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
 	g_object_unref (bvw);
 }
 
@@ -251,7 +253,7 @@ properties_action_cb (GSimpleAction              *simple,
 	totem = g_object_get_data (G_OBJECT (pi), "object");
 	g_object_get (G_OBJECT (totem), "main-page", &main_page, NULL);
 	if (g_strcmp0 (main_page, "player") == 0)
-		gtk_widget_show (pi->priv->dialog);
+		gtk_widget_show (pi->dialog);
 	g_free (main_page);
 }
 
@@ -268,30 +270,30 @@ impl_activate (PeasActivatable *plugin)
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	pi->priv->props = bacon_video_widget_properties_new ();
-	gtk_widget_show (pi->priv->props);
-	gtk_widget_set_sensitive (pi->priv->props, FALSE);
+	pi->props = bacon_video_widget_properties_new ();
+	gtk_widget_show (pi->props);
+	gtk_widget_set_sensitive (pi->props, FALSE);
 
 	parent = totem_object_get_main_window (totem);
-	pi->priv->dialog = gtk_dialog_new_with_buttons (_("Properties"),
+	pi->dialog = gtk_dialog_new_with_buttons (_("Properties"),
 							parent,
 							GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_USE_HEADER_BAR,
 							NULL,
 							GTK_RESPONSE_CLOSE,
 							NULL);
 	g_object_unref (parent);
-	g_signal_connect (pi->priv->dialog, "delete-event",
+	g_signal_connect (pi->dialog, "delete-event",
 			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
-	g_signal_connect (pi->priv->dialog, "response",
+	g_signal_connect (pi->dialog, "response",
 			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (pi->priv->dialog))),
-			   pi->priv->props);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (pi->dialog))),
+			   pi->props);
 
 	/* Properties action */
-	pi->priv->props_action = g_simple_action_new ("properties", NULL);
-	g_signal_connect (G_OBJECT (pi->priv->props_action), "activate",
+	pi->props_action = g_simple_action_new ("properties", NULL);
+	g_signal_connect (G_OBJECT (pi->props_action), "activate",
 			  G_CALLBACK (properties_action_cb), pi);
-	g_action_map_add_action (G_ACTION_MAP (totem), G_ACTION (pi->priv->props_action));
+	g_action_map_add_action (G_ACTION_MAP (totem), G_ACTION (pi->props_action));
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
 					       "app.properties",
 					       accels);
@@ -315,11 +317,11 @@ impl_activate (PeasActivatable *plugin)
 			  "metadata-updated",
 			  G_CALLBACK (totem_movie_properties_plugin_metadata_updated),
 			  plugin);
-	pi->priv->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
+	pi->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
 							       "notify::stream-length",
 							       G_CALLBACK (stream_length_notify_cb),
 							       plugin);
-	pi->priv->handler_id_main_page = g_signal_connect (G_OBJECT (totem),
+	pi->handler_id_main_page = g_signal_connect (G_OBJECT (totem),
 							   "notify::main-page",
 							   G_CALLBACK (main_page_notify_cb),
 							   plugin);
@@ -335,8 +337,8 @@ impl_deactivate (PeasActivatable *plugin)
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_stream_length);
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_main_page);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_stream_length);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_main_page);
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
 					      totem_movie_properties_plugin_metadata_updated,
 					      plugin);
@@ -346,8 +348,8 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
 					      totem_movie_properties_plugin_file_closed,
 					      plugin);
-	pi->priv->handler_id_stream_length = 0;
-	pi->priv->handler_id_main_page = 0;
+	pi->handler_id_stream_length = 0;
+	pi->handler_id_main_page = 0;
 
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
 					       "app.properties",
