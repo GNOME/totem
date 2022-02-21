@@ -55,6 +55,8 @@ typedef struct {
 #define NUM_RATES 6
 #define NORMAL_RATE_IDX 1
 
+/* NOTE:
+ * Keep in sync with mpris/totem-mpris.c */
 static struct {
 	float rate;
 	const char *label;
