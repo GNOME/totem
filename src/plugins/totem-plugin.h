@@ -52,10 +52,6 @@ G_BEGIN_DECLS
 	typedef struct {							\
 		PeasExtensionBaseClass parent_class;				\
 	} TypeName##Class;							\
-	typedef struct {							\
-		PeasExtensionBase parent;					\
-		TypeName##Private *priv;					\
-	} TypeName;								\
 	GType type_name##_get_type (void) G_GNUC_CONST;				\
 	static void impl_activate (PeasActivatable *plugin);			\
 	static void impl_deactivate (PeasActivatable *plugin);			\
@@ -69,7 +65,6 @@ G_BEGIN_DECLS
 					type_name,				\
 					PEAS_TYPE_EXTENSION_BASE,		\
 					0,					\
-					G_ADD_PRIVATE_DYNAMIC(TypeName)		\
 					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
 								       peas_activatable_iface_init) \
 					TYPE_CODE)				\
@@ -128,7 +123,6 @@ G_BEGIN_DECLS
 	static void								\
 	type_name##_init (TypeName *plugin)					\
 	{									\
-		plugin->priv = type_name##_get_instance_private (plugin);	\
 	}									\
 	G_MODULE_EXPORT void							\
 	peas_register_types (PeasObjectModule *module)				\
