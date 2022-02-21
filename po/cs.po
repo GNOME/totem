@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-11 17:58+0000\n"
-"PO-Revision-Date: 2022-02-12 20:13+0100\n"
+"POT-Creation-Date: 2022-02-18 00:10+0000\n"
+"PO-Revision-Date: 2022-02-21 10:28+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -192,7 +192,19 @@ msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Složky, které se mají zobrazit v rozhraní prohlížeče; výchozí není žádná"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
+#: data/org.gnome.totem.gschema.xml.in:87
+msgid "Disable hardware decoders"
+msgstr "Zakázat hardwarové dekodéry"
+
+#: data/org.gnome.totem.gschema.xml.in:88
+msgid ""
+"Disable hardware decoders and use only software decoders. For debugging "
+"purposes only."
+msgstr ""
+"Zakázat hardwarové dekodéry a používat jen softwarové. Určeno výhradně pro "
+"ladicí účely."
+
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -311,173 +323,198 @@ msgstr "Obecné"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Zobrazit nápovědu"
+
+#: data/shortcuts.ui:28
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Klávesové zkratky"
+
+#: data/shortcuts.ui:35
+msgctxt "shortcut window"
+msgid "Add local video"
+msgstr "Přidat místní video"
+
+#: data/shortcuts.ui:42
+msgctxt "shortcut window"
+msgid "Add web video"
+msgstr "Přidat webové video"
+
+#: data/shortcuts.ui:49
+msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: data/shortcuts.ui:28
+#: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Zpřístupnit bez připojení"
 
-#: data/shortcuts.ui:35
+#: data/shortcuts.ui:63
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Pořídit snímek záběru"
 
-#: data/shortcuts.ui:42
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončit"
 
-#: data/shortcuts.ui:50
+#: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hlasitost"
 
-#: data/shortcuts.ui:55
+#: data/shortcuts.ui:83
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Zvýšit hlasitost"
 
-#: data/shortcuts.ui:62
+#: data/shortcuts.ui:90
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Snížit hlasitost"
 
-#: data/shortcuts.ui:70
+#: data/shortcuts.ui:97
+msgctxt "shortcut window"
+msgid "Mute/unmute"
+msgstr "Ztišit/zrušit ztišení"
+
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Zobrazení"
 
-#: data/shortcuts.ui:75
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Přepnout režim celé obrazovky"
 
-#: data/shortcuts.ui:82
+#: data/shortcuts.ui:117
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Opustit celou obrazovku"
 
-#: data/shortcuts.ui:89
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Otočit ↷"
 
-#: data/shortcuts.ui:96
+#: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Otočit ↶"
 
-#: data/shortcuts.ui:105
+#: data/shortcuts.ui:140
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Přehrávání"
 
-#: data/shortcuts.ui:110
+#: data/shortcuts.ui:145
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Přehrát/pozastavit"
 
-#: data/shortcuts.ui:118 data/shortcuts.ui:134
+#: data/shortcuts.ui:153 data/shortcuts.ui:169
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Předchozí video či kapitola"
 
-#: data/shortcuts.ui:126 data/shortcuts.ui:142
+#: data/shortcuts.ui:161 data/shortcuts.ui:177
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Následující video či kapitola"
 
-#: data/shortcuts.ui:150
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Přeskočit"
 
-#: data/shortcuts.ui:156 data/shortcuts.ui:218
+#: data/shortcuts.ui:191 data/shortcuts.ui:253
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Přeskočit zpět o 15 vteřin"
 
-#: data/shortcuts.ui:164 data/shortcuts.ui:226
+#: data/shortcuts.ui:199 data/shortcuts.ui:261
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Přeskočit vpřed o 60 vteřin"
 
-#: data/shortcuts.ui:171
+#: data/shortcuts.ui:206
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Krok zpět o jeden snímek"
 
-#: data/shortcuts.ui:178
+#: data/shortcuts.ui:213
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Krok vpřed o jeden snímek"
 
-#: data/shortcuts.ui:186 data/shortcuts.ui:234
+#: data/shortcuts.ui:221 data/shortcuts.ui:269
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Přeskočit zpět o 5 vteřin"
 
-#: data/shortcuts.ui:194 data/shortcuts.ui:242
+#: data/shortcuts.ui:229 data/shortcuts.ui:277
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Přeskočit vpřed o 15 vteřin"
 
-#: data/shortcuts.ui:202 data/shortcuts.ui:250
+#: data/shortcuts.ui:237 data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Přeskočit zpět o 3 minuty"
 
-#: data/shortcuts.ui:210 data/shortcuts.ui:258
+#: data/shortcuts.ui:245 data/shortcuts.ui:293
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Přeskočit vpřed o 10 minut"
 
-#: data/shortcuts.ui:265
+#: data/shortcuts.ui:300
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Přeskočit na…"
 
-#: data/shortcuts.ui:273
+#: data/shortcuts.ui:308
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Pohyb v nabídce DVD"
 
-#: data/shortcuts.ui:278
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Pohyb nahoru"
 
-#: data/shortcuts.ui:285
+#: data/shortcuts.ui:320
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Pohyb dolů"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:327
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Pohyb doleva"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:334
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Pohyb doprava"
 
 # TEST
-#: data/shortcuts.ui:307
+#: data/shortcuts.ui:342
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Titulky"
 
 # TEST
-#: data/shortcuts.ui:312
+#: data/shortcuts.ui:347
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Vybrat následující titulky"
 
 # TEST
-#: data/shortcuts.ui:319
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Vypnout/zapnout titulky"
@@ -606,16 +643,11 @@ msgstr "_Zrušit"
 msgid "_Add"
 msgstr "Přid_at"
 
-#. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:118
-msgid "--:--"
-msgstr "--∶--"
-
 #: src/backend/bacon-video-widget.c:1435
 msgid "Password requested for RTSP server"
 msgstr "Heslo vyžadované pro server RTSP"
 
-#: src/backend/bacon-video-widget.c:3353
+#: src/backend/bacon-video-widget.c:3339
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -623,55 +655,55 @@ msgstr ""
 "Vypadá to, že zdroj je šifrovaný a nejde jej přečíst. Nepokoušíte se přehrát "
 "šifrované DVD bez knihovny libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3367
+#: src/backend/bacon-video-widget.c:3353
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ke kterému se snažíte připojit, není známý."
 
-#: src/backend/bacon-video-widget.c:3370
+#: src/backend/bacon-video-widget.c:3356
 msgid "The connection to this server was refused."
 msgstr "Připojení k tomuto serveru bylo zamítnuto."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3373
+#: src/backend/bacon-video-widget.c:3359
 msgid "The specified movie could not be found."
 msgstr "Zadaný film nebyl nalezen."
 
-#: src/backend/bacon-video-widget.c:3380
+#: src/backend/bacon-video-widget.c:3366
 msgid "The server refused access to this file or stream."
 msgstr "Přístup k tomuto souboru či vysílání byl serverem zamítnut."
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3372
 msgid "Authentication is required to access this file or stream."
 msgstr "Pro přístup k tomuto souboru či vysílání je zapotřebí ověření."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3378
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Schází podpora SSL/TLS. Zkontrolujte prosím svoji instalaci."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3385
 msgid "You are not allowed to open this file."
 msgstr "Nemáte oprávnění otevřít tento soubor."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3404
+#: src/backend/bacon-video-widget.c:3390
 msgid "This location is not a valid one."
 msgstr "Toto není platné upístění."
 
 # TEST
-#: src/backend/bacon-video-widget.c:3412
+#: src/backend/bacon-video-widget.c:3398
 msgid "The movie could not be read."
 msgstr "Film se nezdařilo číst."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3404
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tento soubor je šifrovaný a nelze je přehrát."
 
-#: src/backend/bacon-video-widget.c:3424
+#: src/backend/bacon-video-widget.c:3410
 msgid "The file you tried to play is an empty file."
 msgstr "Soubor, kterou zkoušíte přehrát, je prázdný."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
+#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -693,12 +725,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3468
+#: src/backend/bacon-video-widget.c:3454
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Toto vysílání nelze přehrát. Je možné, že jej blokuje firewall."
 
-#: src/backend/bacon-video-widget.c:3471
+#: src/backend/bacon-video-widget.c:3457
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -707,26 +739,26 @@ msgstr ""
 "přehrávání některých typů médií budete potřebovat nainstalovat zásuvné "
 "moduly."
 
-#: src/backend/bacon-video-widget.c:3482
+#: src/backend/bacon-video-widget.c:3468
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "Tento soubor nelze přehrávat po síti. Zkuste jej nejdřív stáhnout na disk."
 
-#: src/backend/bacon-video-widget.c:5070
+#: src/backend/bacon-video-widget.c:5062
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5072
+#: src/backend/bacon-video-widget.c:5064
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5342
+#: src/backend/bacon-video-widget.c:5334
 msgid "Media contains no supported video streams."
 msgstr "Médium neobsahuje žádný podporované video."
 
-#: src/backend/bacon-video-widget.c:5531
+#: src/backend/bacon-video-widget.c:5523
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -759,18 +791,36 @@ msgstr[2] ""
 msgid "_Find in %s"
 msgstr "_Najít v aplikaci %s"
 
+#. translators: Unknown time
+#: src/gst/totem-time-helpers.c:45
+msgid "--:--"
+msgstr "--∶--"
+
 # TEST
 #. hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
+#. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d∶%02d∶%02d"
+
+# TEST
+#. hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:89
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d.%03d"
+msgstr "%d∶%02d∶%02d.%03d"
 
 # TEST
 #. -hour:minutes:seconds
@@ -779,11 +829,24 @@ msgstr "%d∶%02d∶%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:78
+#: src/gst/totem-time-helpers.c:99
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d∶%02d∶%02d"
+
+# TEST
+#. -hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "-9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
+#. * change ":" to the separator that your locale uses or use
+#. * "%Id" instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:107
+#, c-format
+msgctxt "long time format"
+msgid "-%d:%02d:%02d.%03d"
+msgstr "-%d∶%02d∶%02d.%03d"
 
 # TEST
 #. -minutes:seconds
@@ -792,11 +855,37 @@ msgstr "-%d∶%02d∶%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:89
+#: src/gst/totem-time-helpers.c:120
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d∶%02d"
+
+# TEST
+#. -minutes:seconds.msec
+#. Translators: This is a time format, like "-5:02.050" for 5
+#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
+#. * ":" to the separator that your locale uses or use "%Id"
+#. * instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:128
+#, c-format
+msgctxt "short time format"
+msgid "-%d:%02d.%03d"
+msgstr "-%d∶%02d.%03d"
+
+# TEST
+#. minutes:seconds.msec
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:139
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d.%03d"
+msgstr "%d∶%02d.%03d"
 
 # TEST
 #. minutes:seconds
@@ -805,7 +894,7 @@ msgstr "-%d∶%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:98
+#: src/gst/totem-time-helpers.c:148
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -937,45 +1026,45 @@ msgstr "Zrušit"
 msgid "Search"
 msgstr "Hledat"
 
-#: src/totem-menu.c:410
+#: src/totem-menu.c:435
 msgid "Audio Track"
 msgstr "Zvuková stopa"
 
 # TEST
-#: src/totem-menu.c:413
+#: src/totem-menu.c:438
 msgid "Subtitle"
 msgstr "Titulky"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:439
+#: src/totem-menu.c:474
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automaticky"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:442
+#: src/totem-menu.c:477
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem-object.c:1441 src/totem-options.c:51
+#: src/totem-object.c:1440 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Přehrát"
 
-#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
+#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem nemohl přehrát „%s“."
 
-#: src/totem-object.c:2309
+#: src/totem-object.c:2308
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: src/totem-object.c:2570
+#: src/totem-object.c:2569
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
@@ -991,12 +1080,12 @@ msgstr "Přehrát / pozastavit"
 msgid "Next Chapter/Movie"
 msgstr "Následující kapitola/film"
 
-#: src/totem-object.c:4235
+#: src/totem-object.c:4238
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
 # :-)
-#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
 msgid "No reason."
 msgstr "Žádný důvod."
 
@@ -1574,7 +1663,7 @@ msgid "N/A"
 msgstr "–"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:250
+#: src/plugins/properties/bacon-video-widget-properties.c:258
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "–"
@@ -1664,7 +1753,15 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 sekund"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:247
+#: src/plugins/properties/bacon-video-widget-properties.c:251
+#, c-format
+msgid "%0.3f frame per second"
+msgid_plural "%0.3f frames per second"
+msgstr[0] "%0.3f snímek za sekundu"
+msgstr[1] "%0.3f snímky za sekundu"
+msgstr[2] "%0.3f snímků za sekundu"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
