@@ -39,10 +39,12 @@
 #define TOTEM_RECENT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_RECENT_PLUGIN, TotemRecentPlugin))
 
 typedef struct {
+	PeasExtensionBase parent;
+
 	guint signal_id;
 	TotemObject *totem;
 	GtkRecentManager *recent_manager;
-} TotemRecentPluginPrivate;
+} TotemRecentPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_RECENT_PLUGIN, TotemRecentPlugin, totem_recent_plugin)
 
@@ -80,7 +82,7 @@ recent_info_cb (GFile *file,
 	data.app_name = g_strdup (g_get_application_name ());
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 	data.groups = groups;
-	if (gtk_recent_manager_add_full (pi->priv->recent_manager,
+	if (gtk_recent_manager_add_full (pi->recent_manager,
 					 uri, &data) == FALSE) {
 		g_warning ("Couldn't add recent file for '%s'", uri);
 	}
@@ -120,7 +122,7 @@ add_recent (TotemRecentPlugin *pi,
 		data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 		data.groups = groups;
 
-		if (gtk_recent_manager_add_full (pi->priv->recent_manager,
+		if (gtk_recent_manager_add_full (pi->recent_manager,
 						 uri, &data) == FALSE) {
 			g_warning ("Couldn't add recent file for '%s'", uri);
 		}
@@ -161,9 +163,9 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemRecentPlugin *pi = TOTEM_RECENT_PLUGIN (plugin);
 
-	pi->priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	pi->priv->recent_manager = gtk_recent_manager_get_default ();
-	pi->priv->signal_id = g_signal_connect (G_OBJECT (pi->priv->totem), "file-has-played",
+	pi->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	pi->recent_manager = gtk_recent_manager_get_default ();
+	pi->signal_id = g_signal_connect (G_OBJECT (pi->totem), "file-has-played",
 						G_CALLBACK (file_has_played_cb), pi);
 }
 
@@ -172,13 +174,13 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemRecentPlugin *pi = TOTEM_RECENT_PLUGIN (plugin);
 
-	if (pi->priv->signal_id) {
-		g_signal_handler_disconnect (pi->priv->totem, pi->priv->signal_id);
-		pi->priv->signal_id = 0;
+	if (pi->signal_id) {
+		g_signal_handler_disconnect (pi->totem, pi->signal_id);
+		pi->signal_id = 0;
 	}
 
-	if (pi->priv->totem) {
-		g_object_unref (pi->priv->totem);
-		pi->priv->totem = NULL;
+	if (pi->totem) {
+		g_object_unref (pi->totem);
+		pi->totem = NULL;
 	}
 }
