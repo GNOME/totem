@@ -8,9 +8,7 @@ project(
 
 totem_version = meson.project_version()
 version_array = totem_version.split('.')
-totem_major_version = version_array[0].to_int()
 totem_minor_version = version_array[1]
-totem_micro_version = version_array[2].to_int()
 
 totem_api_version = '1.0'
 
