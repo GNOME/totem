@@ -34,10 +34,7 @@ private_headers = [
 ]
 
 version_conf = configuration_data()
-version_conf.set('TOTEM_VERSION_MAJOR', totem_major_version)
-version_conf.set('TOTEM_VERSION_MINOR', totem_minor_version)
-version_conf.set('TOTEM_VERSION_MICRO', totem_micro_version)
-
+version_conf.set('VERSION', totem_version)
 version_xml = 'version.xml'
 
 configure_file(
