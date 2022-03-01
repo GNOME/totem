@@ -5,18 +5,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-11 17:58+0000\n"
-"PO-Revision-Date: 2022-02-16 13:27+0100\n"
+"POT-Creation-Date: 2022-02-21 18:49+0000\n"
+"PO-Revision-Date: 2022-03-01 13:34+0100\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2017-03-15 15:32+0000\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
 #: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
@@ -174,7 +174,19 @@ msgstr "Direktoriji za prikaz"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Direktoriji za prikaz u sučelju pregleda, nije zadano"
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5074
+#: data/org.gnome.totem.gschema.xml.in:87
+msgid "Disable hardware decoders"
+msgstr "Onemogući hardversko dekôdiranje"
+
+#: data/org.gnome.totem.gschema.xml.in:88
+msgid ""
+"Disable hardware decoders and use only software decoders. For debugging "
+"purposes only."
+msgstr ""
+"Onemogući hardversko dekôdiranje i koristi samo softversko dekôdiranje. Samo "
+"u svrhe otklanjanja grešaka."
+
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5073
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -292,170 +304,195 @@ msgstr "Općenito"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
+msgid "Show help"
+msgstr "Prikaži priručnik"
+
+#: data/shortcuts.ui:28
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Prečaci tipkovnice"
+
+#: data/shortcuts.ui:35
+msgctxt "shortcut window"
+msgid "Add local video"
+msgstr "Dodaj lokalnu video snimku"
+
+#: data/shortcuts.ui:42
+msgctxt "shortcut window"
+msgid "Add web video"
+msgstr "Dodaj mrežnu video snimku"
+
+#: data/shortcuts.ui:49
+msgctxt "shortcut window"
 msgid "Properties"
 msgstr "Svojstva"
 
-#: data/shortcuts.ui:28
+#: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
 msgstr "Učini dostupno izvanmrežno"
 
-#: data/shortcuts.ui:35
+#: data/shortcuts.ui:63
 msgctxt "shortcut window"
 msgid "Take Screenshot"
 msgstr "Uslikaj video snimku"
 
-#: data/shortcuts.ui:42
+#: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zatvori"
 
-#: data/shortcuts.ui:50
+#: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Glasnoća zvuka"
 
-#: data/shortcuts.ui:55
+#: data/shortcuts.ui:83
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Pojačaj glasnoću zvuka"
 
-#: data/shortcuts.ui:62
+#: data/shortcuts.ui:90
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Smanji glasnoću zvuka"
 
-#: data/shortcuts.ui:70
+#: data/shortcuts.ui:97
+msgctxt "shortcut window"
+msgid "Mute/unmute"
+msgstr "Utišaj/Uključi zvuk"
+
+#: data/shortcuts.ui:105
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Pogled"
 
-#: data/shortcuts.ui:75
+#: data/shortcuts.ui:110
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Cjelozaslonski prikaz"
 
-#: data/shortcuts.ui:82
+#: data/shortcuts.ui:117
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Napusti cjelozaslonski prikaz"
 
-#: data/shortcuts.ui:89
+#: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
 msgstr "Zakreni ↷"
 
-#: data/shortcuts.ui:96
+#: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
 msgstr "Zakreni ↶"
 
-#: data/shortcuts.ui:105
+#: data/shortcuts.ui:140
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Reprodukcija"
 
-#: data/shortcuts.ui:110
+#: data/shortcuts.ui:145
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Reproduciraj/Pauziraj"
 
-#: data/shortcuts.ui:118 data/shortcuts.ui:134
+#: data/shortcuts.ui:153 data/shortcuts.ui:169
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Prijašnja video snimka ili poglavlje"
 
-#: data/shortcuts.ui:126 data/shortcuts.ui:142
+#: data/shortcuts.ui:161 data/shortcuts.ui:177
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Sljedeća video snimka ili poglavlje"
 
-#: data/shortcuts.ui:150
+#: data/shortcuts.ui:185
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Premotavanje"
 
-#: data/shortcuts.ui:156 data/shortcuts.ui:218
+#: data/shortcuts.ui:191 data/shortcuts.ui:253
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Premotaj unatrag 15 sekundi"
 
-#: data/shortcuts.ui:164 data/shortcuts.ui:226
+#: data/shortcuts.ui:199 data/shortcuts.ui:261
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Premotaj unaprijed 15 sekundi"
 
-#: data/shortcuts.ui:171
+#: data/shortcuts.ui:206
 msgctxt "shortcut window"
 msgid "Step back one frame"
 msgstr "Premotaj unatrag jednu sličicu"
 
-#: data/shortcuts.ui:178
+#: data/shortcuts.ui:213
 msgctxt "shortcut window"
 msgid "Step forward one frame"
 msgstr "Premotaj unaprijed jednu sličicu"
 
-#: data/shortcuts.ui:186 data/shortcuts.ui:234
+#: data/shortcuts.ui:221 data/shortcuts.ui:269
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Premotaj unatrag 5 sekundi"
 
-#: data/shortcuts.ui:194 data/shortcuts.ui:242
+#: data/shortcuts.ui:229 data/shortcuts.ui:277
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Premotaj unaprijed 5 sekundi"
 
-#: data/shortcuts.ui:202 data/shortcuts.ui:250
+#: data/shortcuts.ui:237 data/shortcuts.ui:285
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Premotaj unatrag 3 minute"
 
-#: data/shortcuts.ui:210 data/shortcuts.ui:258
+#: data/shortcuts.ui:245 data/shortcuts.ui:293
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Premotaj unaprijed 10 minuta"
 
-#: data/shortcuts.ui:265
+#: data/shortcuts.ui:300
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Premotaj na…"
 
-#: data/shortcuts.ui:273
+#: data/shortcuts.ui:308
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "DVD izbornik upravljanja"
 
-#: data/shortcuts.ui:278
+#: data/shortcuts.ui:313
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Idi gore"
 
-#: data/shortcuts.ui:285
+#: data/shortcuts.ui:320
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Idi dolje"
 
-#: data/shortcuts.ui:292
+#: data/shortcuts.ui:327
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Idi lijevo"
 
-#: data/shortcuts.ui:299
+#: data/shortcuts.ui:334
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Idi desno"
 
-#: data/shortcuts.ui:307
+#: data/shortcuts.ui:342
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Podnaslovi"
 
-#: data/shortcuts.ui:312
+#: data/shortcuts.ui:347
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Odaberite sljedeći podnaslov"
 
-#: data/shortcuts.ui:319
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Uklj/Isklj podnaslove"
@@ -581,16 +618,11 @@ msgstr "_Odustani"
 msgid "_Add"
 msgstr "_Dodaj"
 
-#. translators: Unknown remaining time
-#: src/backend/bacon-time-label.c:118
-msgid "--:--"
-msgstr "--:--"
-
-#: src/backend/bacon-video-widget.c:1435
+#: src/backend/bacon-video-widget.c:1460
 msgid "Password requested for RTSP server"
 msgstr "Zatražena je lozinka za RTSP poslužitelj"
 
-#: src/backend/bacon-video-widget.c:3353
+#: src/backend/bacon-video-widget.c:3362
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -598,52 +630,52 @@ msgstr ""
 "Izgleda da je izvor šifriran i ne može se očitati. Pokušavate li "
 "reproducirati šifrirani DVD bez libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3367
+#: src/backend/bacon-video-widget.c:3376
 msgid "The server you are trying to connect to is not known."
 msgstr "Poslužitelj s kojim se pokušavate povezati nije poznat."
 
-#: src/backend/bacon-video-widget.c:3370
+#: src/backend/bacon-video-widget.c:3379
 msgid "The connection to this server was refused."
 msgstr "Povezivanje s ovim poslužiteljem je odbijeno."
 
-#: src/backend/bacon-video-widget.c:3373
+#: src/backend/bacon-video-widget.c:3382
 msgid "The specified movie could not be found."
 msgstr "Navedeni film nije pronađen."
 
-#: src/backend/bacon-video-widget.c:3380
+#: src/backend/bacon-video-widget.c:3389
 msgid "The server refused access to this file or stream."
 msgstr "Poslužitelj je odbio zahtjev za pristup ovoj datoteci ili strujanju."
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3395
 msgid "Authentication is required to access this file or stream."
 msgstr "Potrebna je ovjera za pristup ovoj datoteci ili strujanju."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3401
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "SSL/TLS podrška nedostaje. Provjerite svoju instalaciju."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3408
 msgid "You are not allowed to open this file."
 msgstr "Nemate dopuštenje za otvaranje ove datoteke."
 
-#: src/backend/bacon-video-widget.c:3404
+#: src/backend/bacon-video-widget.c:3413
 msgid "This location is not a valid one."
 msgstr "Ova lokacija nije valjana."
 
-#: src/backend/bacon-video-widget.c:3412
+#: src/backend/bacon-video-widget.c:3421
 msgid "The movie could not be read."
 msgstr "Film se ne može učitati."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3427
 msgid "This file is encrypted and cannot be played back."
 msgstr "Ova datoteka je šifrirana i ne može se reproducirati."
 
-#: src/backend/bacon-video-widget.c:3424
+#: src/backend/bacon-video-widget.c:3433
 msgid "The file you tried to play is an empty file."
 msgstr "Datoteka koju pokušavate reproducirati je prazna datoteka."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3448 src/backend/bacon-video-widget.c:3456
+#: src/backend/bacon-video-widget.c:3457 src/backend/bacon-video-widget.c:3465
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -664,12 +696,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3468
+#: src/backend/bacon-video-widget.c:3477
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Strujanje se ne može reproducirati. Možda ga blokira vatrozid."
 
-#: src/backend/bacon-video-widget.c:3471
+#: src/backend/bacon-video-widget.c:3480
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -678,7 +710,7 @@ msgstr ""
 "Možda trebate instalirati dodatne priključke kako bi mogli gledati neke "
 "vrste filmova"
 
-#: src/backend/bacon-video-widget.c:3482
+#: src/backend/bacon-video-widget.c:3491
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -686,19 +718,19 @@ msgstr ""
 "Ova datoteka se ne može reproducirati putem mreže. Prvo ju pokušajte "
 "preuzeti na vaše računalo."
 
-#: src/backend/bacon-video-widget.c:5070
+#: src/backend/bacon-video-widget.c:5069
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5072
+#: src/backend/bacon-video-widget.c:5071
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5342
+#: src/backend/bacon-video-widget.c:5341
 msgid "Media contains no supported video streams."
 msgstr "Medij ne sadrži podržana video strujanja."
 
-#: src/backend/bacon-video-widget.c:5531
+#: src/backend/bacon-video-widget.c:5530
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -726,17 +758,34 @@ msgstr[2] "%s je potrebno za reprodukciju datoteke, ali nisu instalirani."
 msgid "_Find in %s"
 msgstr "_Pretraži u %s"
 
+#. translators: Unknown time
+#: src/gst/totem-time-helpers.c:45
+msgid "--:--"
+msgstr "--:--"
+
 #. hour:minutes:seconds
-#. Translators: This is a time format, like "-9:05:02" for 9
+#. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:70 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
+
+#. hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:89
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d.%03d"
+msgstr "%d:%02d:%02d.%03d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -744,11 +793,23 @@ msgstr "%d:%02d:%02d"
 #. * change ":" to the separator that your locale uses or use
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:78
+#: src/gst/totem-time-helpers.c:99
 #, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
+
+#. -hour:minutes:seconds.msecs
+#. Translators: This is a time format, like "-9:05:02.050" for 9
+#. * hours, 5 minutes, 2 seconds and 50 milliseconds playback remaining. You may
+#. * change ":" to the separator that your locale uses or use
+#. * "%Id" instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:107
+#, c-format
+msgctxt "long time format"
+msgid "-%d:%02d:%02d.%03d"
+msgstr "-%d:%02d:%02d.%03d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -756,11 +817,35 @@ msgstr "-%d:%02d:%02d"
 #. * ":" to the separator that your locale uses or use "%Id"
 #. * instead of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:89
+#: src/gst/totem-time-helpers.c:120
 #, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
+
+#. -minutes:seconds.msec
+#. Translators: This is a time format, like "-5:02.050" for 5
+#. * minutes 2 seconds and 50 milliseconds playback remaining. You may change
+#. * ":" to the separator that your locale uses or use "%Id"
+#. * instead of "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:128
+#, c-format
+msgctxt "short time format"
+msgid "-%d:%02d.%03d"
+msgstr "-%d:%02d.%03d"
+
+#. minutes:seconds.msec
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes 2 seconds and 50 milliseconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: src/gst/totem-time-helpers.c:139
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d.%03d"
+msgstr "%d:%02d.%03d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -768,7 +853,7 @@ msgstr "-%d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:98
+#: src/gst/totem-time-helpers.c:148
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
@@ -895,44 +980,44 @@ msgstr "Odustani"
 msgid "Search"
 msgstr "Pretraži"
 
-#: src/totem-menu.c:410
+#: src/totem-menu.c:435
 msgid "Audio Track"
 msgstr "Zvučni zapis"
 
-#: src/totem-menu.c:413
+#: src/totem-menu.c:438
 msgid "Subtitle"
 msgstr "Podnaslovi"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:439
+#: src/totem-menu.c:474
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatski"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:442
+#: src/totem-menu.c:477
 msgid "None"
 msgstr "Nijedan"
 
-#: src/totem-object.c:1441 src/totem-options.c:51
+#: src/totem-object.c:1440 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pauziraj"
 
-#: src/totem-object.c:1446 src/totem-object.c:1456 src/totem-options.c:50
+#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Reproduciraj"
 
-#: src/totem-object.c:1523 src/totem-object.c:1551 src/totem-object.c:2137
+#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
 #, c-format
 msgid "Totem could not play “%s”."
 msgstr "Totem ne može reproducirati “%s”."
 
-#: src/totem-object.c:2309
+#: src/totem-object.c:2308
 msgid "Totem could not display the help contents."
 msgstr "Totem ne može prikazati sadržaj pomoći."
 
-#: src/totem-object.c:2570
+#: src/totem-object.c:2569
 msgid "An error occurred"
 msgstr "Došlo je do greške"
 
@@ -948,11 +1033,11 @@ msgstr "Reproduciraj / Pauza"
 msgid "Next Chapter/Movie"
 msgstr "Sljedeće poglavlje/Film"
 
-#: src/totem-object.c:4235
+#: src/totem-object.c:4238
 msgid "Totem could not startup."
 msgstr "Totem se ne može pokrenuti."
 
-#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Bez razloga."
 
@@ -1239,34 +1324,6 @@ msgstr "Automatski učitaj podnaslov"
 msgid "Autoloads text subtitles"
 msgstr "Automatski učitaj datoteku podnaslova"
 
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
-msgid "MPRIS D-Bus Interface"
-msgstr "MPRIS D-Bus sučelje"
-
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:7
-msgid ""
-"Send notifications of currently-playing videos and allow remote control "
-"using MPRIS."
-msgstr ""
-"Pošalji obavijesti trenutno reproducirane video snimke i dopusti udaljeno "
-"upravljanje putem MPRIS-a."
-
-#: src/plugins/dbusservice/dbusservice.py:210
-#: src/plugins/dbusservice/dbusservice.py:239
-#, python-format
-msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "MediaPlayer2 objekt ne implementira ‘%s’ sučelje"
-
-#: src/plugins/dbusservice/dbusservice.py:220
-#, python-format
-msgid "The property ‘%s’ is not writeable."
-msgstr "Svojstvo ‘%s’ nije zapisivo."
-
-#: src/plugins/dbusservice/dbusservice.py:234
-#, python-format
-msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr "Nepoznato svojstvo ‘%s’ zahtijevano od MediaPlayer 2 objekta"
-
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
 msgstr "Status klijenta za slanje trenutnih poruka"
@@ -1277,6 +1334,18 @@ msgstr ""
 "Postavite status vašeg klijenta za slanje trenutnih poruka na nedostupan kad "
 "se prikazuje film"
 
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
+msgid "MPRIS D-Bus Interface"
+msgstr "MPRIS D-Bus sučelje"
+
+#: src/plugins/mpris/mpris.plugin.desktop.in:6
+msgid ""
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
+msgstr ""
+"Pošalji obavijesti trenutno reproducirane video snimke i dopusti udaljeno "
+"upravljanje putem MPRIS-a."
+
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open directory"
 msgstr "Otvori mapu"
@@ -1285,7 +1354,7 @@ msgstr "Otvori mapu"
 msgid "Open the directory of the currently playing movie"
 msgstr "Otvori mapu trenutno gledanog filma"
 
-#: src/plugins/open-directory/totem-open-directory.c:184
+#: src/plugins/open-directory/totem-open-directory.c:185
 msgid "Open Containing Folder"
 msgstr "Otvori sadržajnu mapu"
 
@@ -1373,38 +1442,38 @@ msgstr "Svojstva filma"
 msgid "Adds movie properties menu item"
 msgstr "Dodaje svojstva filma u stavku izbornika"
 
-#: src/plugins/properties/totem-movie-properties.c:148
+#: src/plugins/properties/totem-movie-properties.c:150
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Nedostupno"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Nedostupno"
 
-#: src/plugins/properties/totem-movie-properties.c:276
+#: src/plugins/properties/totem-movie-properties.c:278
 msgid "Properties"
 msgstr "Svojstva"
 
-#: src/plugins/properties/totem-movie-properties.c:301
+#: src/plugins/properties/totem-movie-properties.c:303
 msgid "_Properties"
 msgstr "_Svojstva"
 
@@ -1510,7 +1579,7 @@ msgid "N/A"
 msgstr "Nedostupno"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:250
+#: src/plugins/properties/bacon-video-widget-properties.c:258
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Nedostupno"
@@ -1600,7 +1669,15 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 sekundi"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:247
+#: src/plugins/properties/bacon-video-widget-properties.c:251
+#, c-format
+msgid "%0.3f frame per second"
+msgid_plural "%0.3f frames per second"
+msgstr[0] "%0.3f sličica u sekundi"
+msgstr[1] "%0.3f sličice u sekundi"
+msgstr[2] "%0.3f sličica u sekundi"
+
+#: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1677,11 +1754,11 @@ msgstr "Priključak zakretanja"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Dopušta zakretanje video snimka ako su pogrešno zakrenute"
 
-#: src/plugins/rotation/totem-rotation.c:260
+#: src/plugins/rotation/totem-rotation.c:255
 msgid "_Rotate ↷"
 msgstr "_Zakreni ↷"
 
-#: src/plugins/rotation/totem-rotation.c:264
+#: src/plugins/rotation/totem-rotation.c:259
 msgid "Rotate ↶"
 msgstr "Zakreni ↶"
 
@@ -1693,22 +1770,22 @@ msgstr "Spremi kopiju"
 msgid "Save a copy of the currently playing movie"
 msgstr "Spremi kopiju trenutno gledanog filma"
 
-#: src/plugins/save-file/totem-save-file.c:85
+#: src/plugins/save-file/totem-save-file.c:87
 msgid "The video could not be made available offline."
 msgstr "Video snimka nije dostupna izvanmrežno."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:87
+#: src/plugins/save-file/totem-save-file.c:89
 msgid "“Files” is not available."
 msgstr "“Datoteke” su nedostupne."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:168
+#: src/plugins/save-file/totem-save-file.c:170
 msgid "Movie"
 msgstr "Film"
 
-#: src/plugins/save-file/totem-save-file.c:452
+#: src/plugins/save-file/totem-save-file.c:453
 msgid "Make Available Offline"
 msgstr "Učini dostupno izvanmrežno"
 
@@ -1720,7 +1797,7 @@ msgstr "Čuvar zaslona"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Isključuje čuvara zaslona kada gledate film"
 
-#: src/plugins/screensaver/totem-screensaver.c:75
+#: src/plugins/screensaver/totem-screensaver.c:77
 msgid "Playing a movie"
 msgstr "Reproduciram film"
 
@@ -1787,20 +1864,20 @@ msgstr "Stvaranje galerije…"
 msgid "Saving gallery as “%s”"
 msgstr "Spremanje galerije kao “%s”"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem nije uspio napraviti sliku video snimke."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Ovo se nije trebalo dogoditi; prijavite izvještaj greške."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:323
+#: src/plugins/screenshot/totem-screenshot-plugin.c:321
 msgid "Take _Screenshot"
 msgstr "_Uslikaj video snimku"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:329
+#: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
 msgstr "Stvori _galeriju…"
 
@@ -1839,41 +1916,41 @@ msgstr "7"
 msgid "_Skip To"
 msgstr "_Premotaj"
 
-#: src/plugins/skipto/totem-skipto-plugin.c:202
+#: src/plugins/skipto/totem-skipto-plugin.c:198
 msgid "_Skip To…"
 msgstr "_Premotaj na…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Normalna"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
 #, c-format
 msgid "Speed: %s"
 msgstr "Brzina: %s"
@@ -1893,6 +1970,15 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Postavlja korsiničkog agenta za Vimeo stranicu"
+
+#~ msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
+#~ msgstr "MediaPlayer2 objekt ne implementira ‘%s’ sučelje"
+
+#~ msgid "The property ‘%s’ is not writeable."
+#~ msgstr "Svojstvo ‘%s’ nije zapisivo."
+
+#~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
+#~ msgstr "Nepoznato svojstvo ‘%s’ zahtijevano od MediaPlayer 2 objekta"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
