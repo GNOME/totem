@@ -5368,7 +5368,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     return NULL;
   }
 
-  return totem_gst_playbin_get_frame (bvw->play);
+  return totem_gst_playbin_get_frame (bvw->play, NULL);
 }
 
 /* =========================================== */

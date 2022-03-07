@@ -536,7 +536,7 @@ capture_frame_at_time (ThumbApp   *app,
 	if (milliseconds != 0)
 		thumb_app_seek (app, milliseconds);
 
-	return totem_gst_playbin_get_frame (app->play);
+	return totem_gst_playbin_get_frame (app->play, NULL);
 }
 
 static GdkPixbuf *
@@ -566,7 +566,7 @@ capture_interesting_frame (ThumbApp *app)
 
 		/* Pull the frame, if it's interesting we bail early */
 		PROGRESS_DEBUG("About to get frame for iter %d", current);
-		pixbuf = totem_gst_playbin_get_frame (app->play);
+		pixbuf = totem_gst_playbin_get_frame (app->play, NULL);
 		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
 			PROGRESS_DEBUG("Frame for iter %d is interesting", current);
 			break;

@@ -42,7 +42,7 @@ destroy_pixbuf (guchar *pix, gpointer data)
 }
 
 GdkPixbuf *
-totem_gst_playbin_get_frame (GstElement *play)
+totem_gst_playbin_get_frame (GstElement *play, GError **error)
 {
   GstStructure *s;
   GstSample *sample = NULL;
@@ -74,17 +74,15 @@ totem_gst_playbin_get_frame (GstElement *play)
   gst_caps_unref (to_caps);
 
   if (!sample) {
-    GST_DEBUG ("Could not take screenshot: %s",
-        "failed to retrieve or convert video frame");
-    g_warning ("Could not take screenshot: %s",
-        "failed to retrieve or convert video frame");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to retrieve or convert video frame");
     return NULL;
   }
 
   sample_caps = gst_sample_get_caps (sample);
   if (!sample_caps) {
-    GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
-    g_warning ("Could not take screenshot: %s", "no caps on output buffer");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "No caps on output buffer");
     return NULL;
   }
 
@@ -93,8 +91,11 @@ totem_gst_playbin_get_frame (GstElement *play)
   s = gst_caps_get_structure (sample_caps, 0);
   gst_structure_get_int (s, "width", &outwidth);
   gst_structure_get_int (s, "height", &outheight);
-  if (outwidth <= 0 || outheight <= 0)
+  if (outwidth <= 0 || outheight <= 0) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Could not prepare buffer memory for image dimensions %dx%d", outwidth, outheight);
     goto done;
+  }
 
   memory = gst_buffer_get_memory (gst_sample_get_buffer (sample), 0);
   gst_memory_map (memory, &info, GST_MAP_READ);
@@ -109,8 +110,8 @@ totem_gst_playbin_get_frame (GstElement *play)
 
 done:
   if (!pixbuf) {
-    GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
-    g_warning ("Could not take screenshot: %s", "could not create pixbuf");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Could not create pixbuf");
     gst_sample_unref (sample);
   }
 
