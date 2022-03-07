@@ -25,8 +25,7 @@
  *
  */
 
-#ifndef _TOTEM_TIME_HELPERS_H_
-#define _TOTEM_TIME_HELPERS_H_
+#pragma once
 
 #include <glib.h>
 
@@ -39,5 +38,3 @@ typedef enum {
 
 char *totem_time_to_string (gint64        msecs,
 			    TotemTimeFlag flags);
-
-#endif /* _TOTEM_TIME_HELPERS_H_ */

@@ -25,20 +25,10 @@
  *
  */
 
-#ifndef HAVE_TOTEM_GST_PIXBUF_HELPERS_H
-#define HAVE_TOTEM_GST_PIXBUF_HELPERS_H
-
-#define GST_USE_UNSTABLE_API 1
+#pragma once
 
 #include <gst/gst.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-G_BEGIN_DECLS
-
 GdkPixbuf * totem_gst_playbin_get_frame (GstElement *play);
-
 GdkPixbuf * totem_gst_tag_list_get_cover (GstTagList *tag_list);
-
-G_END_DECLS
-
-#endif				/* HAVE_TOTEM_GST_PIXBUF_HELPERS_H */

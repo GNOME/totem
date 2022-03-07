@@ -25,14 +25,9 @@
  *
  */
 
-#ifndef HAVE_TOTEM_GST_HELPERS_H
-#define HAVE_TOTEM_GST_HELPERS_H
-
-#define GST_USE_UNSTABLE_API 1
+#pragma once
 
 #include <gst/gst.h>
-
-G_BEGIN_DECLS
 
 /* GstPlayFlags flags from playbin */
 typedef enum {
@@ -55,7 +50,3 @@ void totem_gst_message_print (GstMessage *msg,
 			      const char *filename);
 
 void totem_gst_disable_hardware_decoders (void);
-
-G_END_DECLS
-
-#endif				/* HAVE_TOTEM_GST_HELPERS_H */
