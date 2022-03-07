@@ -5358,6 +5358,9 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
+  GdkPixbuf *ret = NULL;
+  g_autoptr(GError) error = NULL;
+
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->play), NULL);
 
@@ -5368,7 +5371,12 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     return NULL;
   }
 
-  return totem_gst_playbin_get_frame (bvw->play, NULL);
+  ret = totem_gst_playbin_get_frame (bvw->play, &error);
+  if (!ret) {
+    GST_DEBUG ("Could not take screenshot: %s", error->message);
+    g_warning ("Could not take screenshot: %s", error->message);
+  }
+  return ret;
 }
 
 /* =========================================== */
