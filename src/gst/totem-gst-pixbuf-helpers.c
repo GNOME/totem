@@ -77,66 +77,17 @@ create_element (const gchar * factory_name, GstElement ** element,
 }
 
 static GstElement *
-get_encoder (const GstCaps * caps, GError ** err)
-{
-  GList *encoders = NULL;
-  GList *filtered = NULL;
-  GstElementFactory *factory = NULL;
-  GstElement *encoder = NULL;
-
-  encoders =
-      gst_element_factory_list_get_elements (GST_ELEMENT_FACTORY_TYPE_ENCODER |
-      GST_ELEMENT_FACTORY_TYPE_MEDIA_IMAGE, GST_RANK_NONE);
-
-  if (encoders == NULL) {
-    *err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN,
-        "Cannot find any image encoder");
-    goto fail;
-  }
-
-  GST_INFO ("got factory list %p", encoders);
-  gst_plugin_feature_list_debug (encoders);
-
-  filtered =
-      gst_element_factory_list_filter (encoders, caps, GST_PAD_SRC, FALSE);
-  GST_INFO ("got filtered list %p", filtered);
-
-  if (filtered == NULL) {
-    gchar *tmp = gst_caps_to_string (caps);
-    *err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN,
-        "Cannot find any image encoder for caps %s", tmp);
-    g_free (tmp);
-    goto fail;
-  }
-
-  gst_plugin_feature_list_debug (filtered);
-
-  factory = (GstElementFactory *) filtered->data;
-
-  GST_INFO ("got factory %p", factory);
-  encoder = gst_element_factory_create (factory, NULL);
-
-  GST_INFO ("created encoder element %p, %s", encoder,
-      GST_ELEMENT_NAME (encoder));
-
-fail:
-  if (encoders)
-    gst_plugin_feature_list_free (encoders);
-  if (filtered)
-    gst_plugin_feature_list_free (filtered);
-
-  return encoder;
-}
-
-static GstElement *
 build_convert_frame_pipeline (GstElement ** src_element,
     GstElement ** sink_element, const GstCaps * from_caps,
     GstVideoCropMeta * cmeta, const GstCaps * to_caps, GError ** err)
 {
   GstElement *vcrop = NULL, *csp = NULL, *csp2 = NULL, *vscale = NULL;
-  GstElement *src = NULL, *sink = NULL, *encoder = NULL, *pipeline;
+  GstElement *src = NULL, *sink = NULL, *pipeline;
   GstVideoInfo info;
   GError *error = NULL;
+
+  if (!caps_are_raw (to_caps))
+    goto no_pipeline;
 
   if (cmeta) {
     if (!create_element ("videocrop", &vcrop, &error)) {
@@ -208,26 +159,10 @@ build_convert_frame_pipeline (GstElement ** src_element,
           GST_PAD_LINK_CHECK_NOTHING))
     goto link_failed;
 
-  if (caps_are_raw (to_caps)) {
-    GST_DEBUG ("linking vscale->sink");
-
-    if (!gst_element_link_pads_full (vscale, "src", sink, "sink",
-            GST_PAD_LINK_CHECK_NOTHING))
-      goto link_failed;
-  } else {
-    encoder = get_encoder (to_caps, &error);
-    if (!encoder)
-      goto no_encoder;
-    gst_bin_add (GST_BIN (pipeline), encoder);
-
-    GST_DEBUG ("linking vscale->encoder");
-    if (!gst_element_link (vscale, encoder))
-      goto link_failed;
-
-    GST_DEBUG ("linking encoder->sink");
-    if (!gst_element_link_pads (encoder, "src", sink, "sink"))
-      goto link_failed;
-  }
+  GST_DEBUG ("linking vscale->sink");
+  if (!gst_element_link_pads_full (vscale, "src", sink, "sink",
+          GST_PAD_LINK_CHECK_NOTHING))
+    goto link_failed;
 
   g_object_set (src, "emit-signals", TRUE, NULL);
   g_object_set (sink, "emit-signals", TRUE, NULL);
@@ -237,18 +172,6 @@ build_convert_frame_pipeline (GstElement ** src_element,
 
   return pipeline;
   /* ERRORS */
-no_encoder:
-  {
-    gst_object_unref (pipeline);
-
-    GST_ERROR ("could not find an encoder for provided caps");
-    if (err)
-      *err = error;
-    else
-      g_error_free (error);
-
-    return NULL;
-  }
 no_elements:
   {
     if (src)
