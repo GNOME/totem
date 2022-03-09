@@ -36,6 +36,11 @@
 #include <gst/tag/tag.h>
 #include <gst/video/video-format.h>
 
+typedef enum {
+  FRAME_CAPTURE_TYPE_RAW,
+  FRAME_CAPTURE_TYPE_GL
+} FrameCaptureType;
+
 static void
 destroy_pixbuf (guchar *pix, gpointer data)
 {
@@ -76,13 +81,15 @@ create_element (const gchar * factory_name, GstElement ** element,
 }
 
 static GstElement *
-build_convert_frame_pipeline (GstElement ** src_element,
+build_convert_frame_pipeline (FrameCaptureType capture_type,
+    GstElement ** src_element,
     GstElement ** sink_element, const GstCaps * from_caps,
     const GstCaps * to_caps, GError ** err)
 {
   GstElement *csp = NULL, *vscale = NULL;
-  GstElement *src = NULL, *sink = NULL, *pipeline;
+  GstElement *src = NULL, *sink = NULL, *dl = NULL, *pipeline;
   GError *error = NULL;
+  gboolean ret;
 
   if (!caps_are_raw (to_caps))
     goto no_pipeline;
@@ -90,37 +97,39 @@ build_convert_frame_pipeline (GstElement ** src_element,
   /* videoscale is here to correct for the pixel-aspect-ratio for us */
   GST_DEBUG ("creating elements");
   if (!create_element ("appsrc", &src, &error) ||
-      !create_element ("videoconvert", &csp, &error) ||
-      !create_element ("videoscale", &vscale, &error) ||
       !create_element ("appsink", &sink, &error))
     goto no_elements;
+  if (capture_type == FRAME_CAPTURE_TYPE_RAW) {
+      if (!create_element ("videoconvert", &csp, &error) ||
+          !create_element ("videoscale", &vscale, &error))
+        goto no_elements;
+   } else {
+     if (!create_element ("glcolorconvert", &csp, &error) ||
+         !create_element ("glcolorscale", &vscale, &error) ||
+         !create_element ("gldownload", &dl, &error))
+       goto no_elements;
+   }
 
   pipeline = gst_pipeline_new ("videoconvert-pipeline");
   if (pipeline == NULL)
     goto no_pipeline;
 
   /* Add black borders if necessary to keep the DAR */
-  g_object_set (vscale, "add-borders", TRUE, NULL);
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (vscale), "add-borders"))
+    g_object_set (vscale, "add-borders", TRUE, NULL);
 
   GST_DEBUG ("adding elements");
-  gst_bin_add_many (GST_BIN (pipeline), src, csp, vscale, sink, NULL);
+  gst_bin_add_many (GST_BIN (pipeline), src, csp, vscale, sink, dl, NULL);
 
   /* set caps */
   g_object_set (src, "caps", from_caps, NULL);
   g_object_set (sink, "caps", to_caps, NULL);
 
-  GST_DEBUG ("linking src->csp");
-  if (!gst_element_link_pads (src, "src", csp, "sink"))
-    goto link_failed;
-
-  GST_DEBUG ("linking csp->vscale");
-  if (!gst_element_link_pads_full (csp, "src", vscale, "sink",
-          GST_PAD_LINK_CHECK_NOTHING))
-    goto link_failed;
-
-  GST_DEBUG ("linking vscale->sink");
-  if (!gst_element_link_pads_full (vscale, "src", sink, "sink",
-          GST_PAD_LINK_CHECK_NOTHING))
+  if (dl)
+    ret = gst_element_link_many (src, csp, vscale, dl, sink, NULL);
+  else
+    ret = gst_element_link_many (src, csp, vscale, sink, NULL);
+  if (!ret)
     goto link_failed;
 
   g_object_set (src, "emit-signals", TRUE, NULL);
@@ -139,6 +148,8 @@ no_elements:
       gst_object_unref (csp);
     if (vscale)
       gst_object_unref (vscale);
+    if (dl)
+      gst_object_unref (dl);
     if (sink)
       gst_object_unref (sink);
     GST_ERROR ("Could not convert video frame: %s", error->message);
@@ -153,6 +164,7 @@ no_pipeline:
     gst_object_unref (src);
     gst_object_unref (csp);
     gst_object_unref (vscale);
+    g_clear_pointer (&dl, gst_object_unref);
     gst_object_unref (sink);
 
     GST_ERROR ("Could not convert video frame: no pipeline (unknown error)");
@@ -175,6 +187,7 @@ link_failed:
 
 /**
  * totem_gst_video_convert_sample:
+ * @capture_type: capture type
  * @sample: a #GstSample
  * @to_caps: the #GstCaps to convert to
  * @timeout: the maximum amount of time allowed for the processing.
@@ -190,8 +203,9 @@ link_failed:
  * will point to the #GError).
  */
 static GstSample *
-totem_gst_video_convert_sample (GstSample * sample, const GstCaps * to_caps,
-    GstClockTime timeout, GError ** error)
+totem_gst_video_convert_sample (FrameCaptureType capture_type,
+				GstSample * sample, const GstCaps * to_caps,
+				GstClockTime timeout, GError ** error)
 {
   GstMessage *msg;
   GstBuffer *buf;
@@ -223,7 +237,7 @@ totem_gst_video_convert_sample (GstSample * sample, const GstCaps * to_caps,
   }
 
   pipeline =
-      build_convert_frame_pipeline (&src, &sink, from_caps,
+      build_convert_frame_pipeline (capture_type, &src, &sink, from_caps,
       to_caps_copy, &err);
   if (!pipeline)
     goto no_pipeline;
@@ -313,9 +327,11 @@ state_change_failed:
 GdkPixbuf *
 totem_gst_playbin_get_frame (GstElement *play, GError **error)
 {
+  FrameCaptureType capture_type;
   GstStructure *s;
   GstSample *sample = NULL;
   GstSample *last_sample = NULL;
+  guint bpp;
   GdkPixbuf *pixbuf = NULL;
   GstCaps *to_caps, *sample_caps;
   gint outwidth = 0;
@@ -327,9 +343,12 @@ totem_gst_playbin_get_frame (GstElement *play, GError **error)
   g_return_val_if_fail (play != NULL, NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (play), NULL);
 
+  capture_type = gst_bin_get_by_name (GST_BIN (play), "glcolorbalance0") ?
+    FRAME_CAPTURE_TYPE_GL : FRAME_CAPTURE_TYPE_RAW;
+
   /* our desired output format (RGB24) */
   to_caps = gst_caps_new_simple ("video/x-raw",
-      "format", G_TYPE_STRING, "RGB",
+      "format", G_TYPE_STRING, capture_type == FRAME_CAPTURE_TYPE_RAW ? "RGB" : "RGBA",
       /* Note: we don't ask for a specific width/height here, so that
        * videoscale can adjust dimensions from a non-1/1 pixel aspect
        * ratio to a 1/1 pixel-aspect-ratio. We also don't ask for a
@@ -346,7 +365,7 @@ totem_gst_playbin_get_frame (GstElement *play, GError **error)
                          "Failed to retrieve video frame");
     return NULL;
   }
-  sample = totem_gst_video_convert_sample (last_sample, to_caps, 25 * GST_SECOND, error);
+  sample = totem_gst_video_convert_sample (capture_type, last_sample, to_caps, 25 * GST_SECOND, error);
   gst_sample_unref (last_sample);
   gst_caps_unref (to_caps);
 
@@ -378,9 +397,10 @@ totem_gst_playbin_get_frame (GstElement *play, GError **error)
   gst_memory_map (memory, &info, GST_MAP_READ);
 
   /* create pixbuf from that - use our own destroy function */
+  bpp = capture_type == FRAME_CAPTURE_TYPE_GL ? 4 : 3;
   pixbuf = gdk_pixbuf_new_from_data (info.data,
-      GDK_COLORSPACE_RGB, FALSE, 8, outwidth, outheight,
-      GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, sample);
+      GDK_COLORSPACE_RGB, capture_type == FRAME_CAPTURE_TYPE_GL, 8, outwidth, outheight,
+      GST_ROUND_UP_4 (outwidth * bpp), destroy_pixbuf, sample);
 
   gst_memory_unmap (memory, &info);
   gst_memory_unref (memory);
