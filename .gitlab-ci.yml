@@ -43,6 +43,7 @@ build-fedora:
   tags:
     - crun
   before_script:
+    - dnf update -y
     - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
     # See https://bugzilla.redhat.com/show_bug.cgi?id=1896438
     - dnf remove -y pylint
