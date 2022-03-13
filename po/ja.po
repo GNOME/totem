@@ -1,6 +1,6 @@
 # totem ja.po.
 # This file is distributed under the same license as the totem package.
-# Copyright (C) 2002-2020 Free Software Foundation, Inc.
+# Copyright (C) 2002-2010, 2012-2013, 2015, 2018, 2019-2020, 2022 Free Software Foundation, Inc.
 # James Hashida <khashida@redhat.com>, 2002.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2003-2009.
@@ -12,14 +12,14 @@
 # Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012-2013, 2015.
 # Hajime Taira <htaira@redhat.com>, 2015.
 # Aefgh39622 <aefgh39622@gmail.com>, 2018.
-# sicklylife <translation@sicklylife.jp>, 2019-2020.
+# sicklylife <translation@sicklylife.jp>, 2019-2020, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
 "POT-Creation-Date: 2022-02-21 18:49+0000\n"
-"PO-Revision-Date: 2020-08-17 09:00+0900\n"
+"PO-Revision-Date: 2022-03-13 21:10+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -319,28 +319,22 @@ msgstr "全般"
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Show help"
-msgstr ""
+msgstr "ヘルプを表示する"
 
 #: data/shortcuts.ui:28
-#, fuzzy
-#| msgid "_Keyboard Shortcuts"
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
-msgstr "キーボードショートカット(_K)"
+msgstr "キーボードショートカット"
 
 #: data/shortcuts.ui:35
-#, fuzzy
-#| msgid "Add _Local Video…"
 msgctxt "shortcut window"
 msgid "Add local video"
-msgstr "ローカルのビデオを追加(_L)…"
+msgstr "ローカルのビデオを追加する"
 
 #: data/shortcuts.ui:42
-#, fuzzy
-#| msgid "Add Web Video"
 msgctxt "shortcut window"
 msgid "Add web video"
-msgstr "ウェブ上のビデオを追加"
+msgstr "ウェブ上のビデオを追加する"
 
 #: data/shortcuts.ui:49
 msgctxt "shortcut window"
@@ -380,7 +374,7 @@ msgstr "音量を下げる"
 #: data/shortcuts.ui:97
 msgctxt "shortcut window"
 msgid "Mute/unmute"
-msgstr ""
+msgstr "ミュート/ミュート解除"
 
 #: data/shortcuts.ui:105
 msgctxt "shortcut window"
@@ -503,25 +497,19 @@ msgid "Navigate right"
 msgstr ""
 
 #: data/shortcuts.ui:342
-#, fuzzy
-#| msgid "Subtitles"
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "字幕"
 
 #: data/shortcuts.ui:347
-#, fuzzy
-#| msgid "Select Text Subtitles"
 msgctxt "shortcut window"
 msgid "Select next subtitle"
-msgstr "字幕を選択"
+msgstr "次の字幕を選択する"
 
 #: data/shortcuts.ui:354
-#, fuzzy
-#| msgid "Autoloads text subtitles"
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
-msgstr "テキスト字幕を自動的に読み込みます"
+msgstr "字幕を切り替える"
 
 #: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
@@ -586,10 +574,8 @@ msgid "_Eject"
 msgstr "取り出す(_E)"
 
 #: data/totem.ui:114
-#, fuzzy
-#| msgid "_Languages"
 msgid "Languages"
-msgstr "言語(_L)"
+msgstr "言語"
 
 #: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
 msgid "Subtitles"
@@ -803,12 +789,10 @@ msgstr "%d:%02d:%02d"
 #. * of "%d" if your locale uses localized digits.
 #.
 #: src/gst/totem-time-helpers.c:89
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
+#, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
-msgstr "%d:%02d:%02d"
+msgstr "%d:%02d:%02d.%03d"
 
 #. -hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -829,12 +813,10 @@ msgstr "-%d:%02d:%02d"
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
 #: src/gst/totem-time-helpers.c:107
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
+#, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
-msgstr "-%d:%02d:%02d"
+msgstr "-%d:%02d:%02d.%03d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -855,12 +837,10 @@ msgstr "-%d:%02d"
 #. * instead of "%d" if your locale uses localized digits.
 #.
 #: src/gst/totem-time-helpers.c:128
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
+#, c-format
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
-msgstr "-%d:%02d:%02d"
+msgstr "-%d:%02d.%03d"
 
 #. minutes:seconds.msec
 #. Translators: This is a time format, like "5:02" for 5
@@ -869,12 +849,10 @@ msgstr "-%d:%02d:%02d"
 #. * "%d" if your locale uses localized digits.
 #.
 #: src/gst/totem-time-helpers.c:139
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
+#, c-format
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
-msgstr "%d:%02d:%02d"
+msgstr "%d:%02d.%03d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -904,11 +882,10 @@ msgstr "スレッドセーフなライブラリを初期化できませんでし
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認してください。Totem を終了します。"
 
+# 開発版のアプリケーション名
 #: src/totem.c:74
-#, fuzzy
-#| msgid "Video files"
 msgid "Videos Preview"
-msgstr "動画ファイル"
+msgstr "ビデオ (プレビュー)"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -1692,12 +1669,10 @@ msgid "0 seconds"
 msgstr "0 秒"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:251
-#, fuzzy, c-format
-#| msgid "%0.2f frame per second"
-#| msgid_plural "%0.2f frames per second"
+#, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
-msgstr[0] "%0.2f フレーム/秒"
+msgstr[0] "%0.3f フレーム/秒"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:254
 #, c-format
