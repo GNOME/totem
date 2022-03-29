@@ -2450,6 +2450,8 @@ bacon_video_widget_finalize (GObject * object)
   g_clear_pointer (&bvw->referrer, g_free);
   g_clear_pointer (&bvw->mrl, g_free);
   g_clear_pointer (&bvw->subtitle_uri, g_free);
+  g_clear_pointer (&bvw->user_id, g_free);
+  g_clear_pointer (&bvw->user_pw, g_free);
 
   g_clear_object (&bvw->clock);
 
@@ -2466,6 +2468,14 @@ bacon_video_widget_finalize (GObject * object)
   if (bvw->chapters) {
     g_list_free_full (bvw->chapters, (GDestroyNotify) gst_mini_object_unref);
     bvw->chapters = NULL;
+  }
+  if (bvw->subtitles) {
+    g_list_free_full (bvw->subtitles, (GDestroyNotify) bacon_video_widget_lang_info_free);
+    bvw->subtitles = NULL;
+  }
+  if (bvw->languages) {
+    g_list_free_full (bvw->languages, (GDestroyNotify) bacon_video_widget_lang_info_free);
+    bvw->languages = NULL;
   }
 
   g_clear_pointer (&bvw->tagcache, gst_tag_list_unref);
