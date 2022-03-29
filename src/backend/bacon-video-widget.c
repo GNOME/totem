@@ -3849,7 +3849,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   /* and now drop all following messages until we start again. The
    * bus is set to flush=false again in bacon_video_widget_open()
    */
-  gst_bus_set_flushing (bvw->bus, TRUE);
+  if (bvw->bus)
+    gst_bus_set_flushing (bvw->bus, TRUE);
 
   /* Now in READY or lower */
   bvw->target_state = GST_STATE_READY;
