@@ -1401,9 +1401,6 @@ totem_object_exit (TotemObject *totem)
 	setup_save_timeout_cb (totem, FALSE);
 	totem_session_cleanup (totem);
 
-	if (totem->bvw)
-		bacon_video_widget_close (totem->bvw);
-
 	totem_object_save_state (totem);
 
 	totem_destroy_file_filters ();
