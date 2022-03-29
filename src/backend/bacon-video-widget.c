@@ -5529,11 +5529,14 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
   if (!bvw->play ||
       !bvw->audio_pitchcontrol ||
       !bvw->video_sink ||
-      !audio_sink) {
+      !audio_sink ||
+      !glsinkbin) {
     if (bvw->video_sink)
       g_object_ref_sink (bvw->video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
+    if (glsinkbin)
+      g_object_ref_sink (glsinkbin);
     bvw->init_error = g_error_new_literal (BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
 					   _("Some necessary plug-ins are missing. "
 					     "Make sure that the program is correctly installed."));
