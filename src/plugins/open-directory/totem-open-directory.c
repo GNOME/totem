@@ -25,7 +25,6 @@
 #include <libpeas/peas-activatable.h>
 
 #include "totem-plugin.h"
-#include "totem-interface.h"
 
 #define TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN		(totem_open_directory_plugin_get_type ())
 #define TOTEM_OPEN_DIRECTORY_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN, TotemOpenDirectoryPlugin))

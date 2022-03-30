@@ -36,7 +36,6 @@
 #include <libpeas/peas-activatable.h>
 
 #include "totem.h"
-#include "totem-interface.h"
 #include "totem-plugin.h"
 
 #define TOTEM_TYPE_IM_STATUS_PLUGIN		(totem_im_status_plugin_get_type ())

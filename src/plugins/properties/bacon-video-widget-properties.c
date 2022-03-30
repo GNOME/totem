@@ -27,8 +27,6 @@
 #include <math.h>
 #include <string.h>
 
-#include "totem-interface.h"
-
 #include "bacon-video-widget-properties.h"
 
 static void bacon_video_widget_properties_dispose (GObject *object);

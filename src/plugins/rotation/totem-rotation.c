@@ -33,7 +33,6 @@
 #include <libpeas/peas-activatable.h>
 
 #include "totem-plugin.h"
-#include "totem-interface.h"
 #include "backend/bacon-video-widget.h"
 
 #define TOTEM_TYPE_ROTATION_PLUGIN		(totem_rotation_plugin_get_type ())

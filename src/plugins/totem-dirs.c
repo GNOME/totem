@@ -46,7 +46,6 @@
 #include "totem-dirs.h"
 #include "totem-plugins-engine.h"
 #include "totem-uri.h"
-#include "totem-interface.h"
 
 #define UNINSTALLED_PLUGINS_LOCATION "plugins"
 
