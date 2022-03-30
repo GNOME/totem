@@ -2317,7 +2317,7 @@ totem_object_show_keyboard_shortcuts (TotemObject *totem)
 		return;
 	}
 
-	builder = totem_interface_load ("shortcuts.ui", FALSE, NULL, NULL);
+	builder = gtk_builder_new_from_resource ("/org/gnome/totem/ui/shortcuts.ui");
 	totem->shortcuts_win = GTK_WINDOW (gtk_builder_get_object (builder, "shortcuts-totem"));
 	gtk_window_set_transient_for (totem->shortcuts_win, GTK_WINDOW (totem->win));
 
