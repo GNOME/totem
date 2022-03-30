@@ -46,11 +46,6 @@
 
 #include "totem-interface.h"
 
-static GtkBuilder *
-totem_interface_load_with_full_path (const char *filename, gboolean fatal,
-				     GtkWindow *parent, gpointer user_data);
-static char *totem_interface_get_full_path (const char *name);
-
 static GtkWidget *
 totem_interface_error_dialog (const char *title, const char *reason,
 		GtkWindow *parent)
@@ -121,98 +116,6 @@ totem_interface_error_blocking (const char *title, const char *reason,
 
 	gtk_dialog_run (GTK_DIALOG (error_dialog));
 	gtk_widget_destroy (error_dialog);
-}
-
-/**
- * totem_interface_load:
- * @name: the #GtkBuilder UI file to load
- * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise
- * @parent: (allow-none): the parent window to use when displaying error dialogues, or %NULL
- * @user_data: (allow-none): the user data to pass to gtk_builder_connect_signals(), or %NULL
- *
- * Load a #GtkBuilder UI file with the given name and return the #GtkBuilder instance for it. If loading the file fails, an error dialogue is shown.
- *
- * Return value: (transfer full): the loaded #GtkBuilder object, or %NULL
- */
-GtkBuilder *
-totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpointer user_data)
-{
-	GtkBuilder *builder = NULL;
-	char *filename;
-
-	filename = totem_interface_get_full_path (name);
-	if (filename == NULL) {
-		char *msg;
-
-		msg = g_strdup_printf (_("Couldn’t load the “%s” interface. %s"), name, _("The file does not exist."));
-		if (fatal == FALSE)
-			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
-		else
-			totem_interface_error_blocking (msg, _("Make sure that Totem is properly installed."), parent);
-
-		g_free (msg);
-		return NULL;
-	}
-
-	builder = totem_interface_load_with_full_path (filename, fatal, parent,
-						       user_data);
-	g_free (filename);
-
-	return builder;
-}
-
-/*
- * totem_interface_load_with_full_path:
- * @filename: the #GtkBuilder UI file path to load
- * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise
- * @parent: (allow-none): the parent window to use when displaying error dialogues, or %NULL
- * @user_data: (allow-none): the user data to pass to gtk_builder_connect_signals(), or %NULL
- *
- * Load a #GtkBuilder UI file from the given path and return the #GtkBuilder instance for it. If loading the file fails, an error dialogue is shown.
- *
- * Return value: (transfer full): the loaded #GtkBuilder object, or %NULL
- */
-static GtkBuilder *
-totem_interface_load_with_full_path (const char *filename, gboolean fatal, 
-				     GtkWindow *parent, gpointer user_data)
-{
-	GtkBuilder *builder = NULL;
-	GError *error = NULL;
-
-	if (filename != NULL) {
-		builder = gtk_builder_new ();
-		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-	}
-
-	if (builder == NULL || gtk_builder_add_from_file (builder, filename, &error) == FALSE) {
-		char *msg;
-
-		msg = g_strdup_printf (_("Couldn’t load the “%s” interface. %s"), filename, error->message);
-		if (fatal == FALSE)
-			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
-		else
-			totem_interface_error_blocking (msg, _("Make sure that Totem is properly installed."), parent);
-
-		g_free (msg);
-		g_error_free (error);
-
-		return NULL;
-	}
-
-	gtk_builder_connect_signals (builder, user_data);
-
-	return builder;
-}
-
-static char *
-totem_interface_get_full_path (const char *name)
-{
-	char *filename;
-
-	filename = g_build_filename (DATADIR,
-	                                "totem", name, NULL);
-
-	return filename;
 }
 
 /**

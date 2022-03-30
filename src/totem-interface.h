@@ -28,10 +28,6 @@
 
 G_BEGIN_DECLS
 
-GtkBuilder	*totem_interface_load		(const char *name,
-						 gboolean fatal,
-						 GtkWindow *parent,
-						 gpointer user_data);
 void		 totem_interface_error		(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);
