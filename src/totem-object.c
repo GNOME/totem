@@ -179,10 +179,7 @@ totem_object_app_activate (GApplication *app)
 		return;
 
 	/* Main window */
-	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
-	if (totem->xml == NULL)
-		totem_object_exit (NULL);
-
+	totem->xml = gtk_builder_new_from_resource ("/org/gnome/totem/ui/totem.ui");
 	totem->bvw = BACON_VIDEO_WIDGET (gtk_builder_get_object (totem->xml, "bvw"));
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 #if DEVELOPMENT_VERSION

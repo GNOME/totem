@@ -36,15 +36,6 @@ else
   message('Man page generation disabled')
 endif
 
-ui_files = files(
-  'totem.ui',
-)
-
-install_data(
-  ui_files,
-  install_dir: totem_pkgdatadir
-)
-
 ui_resources = gnome.compile_resources(
   'totemresources',
   'totem.gresource.xml',
