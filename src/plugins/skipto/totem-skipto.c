@@ -45,7 +45,8 @@
 
 static void totem_skipto_dispose	(GObject *object);
 
-struct TotemSkiptoPrivate {
+struct _TotemSkipto {
+	GtkDialog parent;
 	GtkBuilder *xml;
 	GtkWidget *time_entry;
 	GtkLabel *seconds_label;
@@ -55,9 +56,9 @@ struct TotemSkiptoPrivate {
 	gpointer class_ref;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
 
-#define WID(x) (gtk_builder_get_object (skipto->priv->xml, x))
+#define WID(x) (gtk_builder_get_object (skipto->xml, x))
 
 static void
 totem_skipto_class_init (TotemSkiptoClass *klass)
@@ -73,14 +74,12 @@ totem_skipto_response_cb (GtkDialog *dialog, gint response_id, gpointer data)
 	TotemSkipto *skipto;
 
 	skipto = TOTEM_SKIPTO (dialog);
-	gtk_spin_button_update (GTK_SPIN_BUTTON (skipto->priv->time_entry));
+	gtk_spin_button_update (GTK_SPIN_BUTTON (skipto->time_entry));
 }
 
 static void
 totem_skipto_init (TotemSkipto *skipto)
 {
-	skipto->priv = totem_skipto_get_instance_private (skipto);
-
 	gtk_dialog_set_default_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 	g_signal_connect (skipto, "response",
 				G_CALLBACK (totem_skipto_response_cb), NULL);
@@ -92,16 +91,14 @@ totem_skipto_dispose (GObject *object)
 	TotemSkipto *skipto;
 
 	skipto = TOTEM_SKIPTO (object);
-	if (skipto->priv) {
-		g_clear_object (&skipto->priv->xml);
-		skipto->priv->adj = NULL;
-		skipto->priv->time_entry = NULL;
-		skipto->priv->seconds_label = NULL;
+	g_clear_object (&skipto->xml);
+	skipto->adj = NULL;
+	skipto->time_entry = NULL;
+	skipto->seconds_label = NULL;
 
-		if (skipto->priv->class_ref != NULL) {
-			g_type_class_unref (skipto->priv->class_ref);
-			skipto->priv->class_ref = NULL;
-		}
+	if (skipto->class_ref != NULL) {
+		g_type_class_unref (skipto->class_ref);
+		skipto->class_ref = NULL;
 	}
 
 	G_OBJECT_CLASS (totem_skipto_parent_class)->dispose (object);
@@ -112,12 +109,12 @@ totem_skipto_update_range (TotemSkipto *skipto, gint64 _time)
 {
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
-	if (_time == skipto->priv->time)
+	if (_time == skipto->time)
 		return;
 
-	gtk_spin_button_set_range (GTK_SPIN_BUTTON (skipto->priv->time_entry),
+	gtk_spin_button_set_range (GTK_SPIN_BUTTON (skipto->time_entry),
 			0, (gdouble) _time / 1000);
-	skipto->priv->time = _time;
+	skipto->time = _time;
 }
 
 gint64
@@ -127,7 +124,7 @@ totem_skipto_get_range (TotemSkipto *skipto)
 
 	g_return_val_if_fail (TOTEM_IS_SKIPTO (skipto), 0);
 
-	_time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->priv->time_entry)) * 1000;
+	_time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->time_entry)) * 1000;
 
 	return _time;
 }
@@ -146,7 +143,7 @@ totem_skipto_set_current (TotemSkipto *skipto, gint64 _time)
 {
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->priv->time_entry),
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->time_entry),
 			(gdouble) (_time / 1000));
 }
 
@@ -163,14 +160,14 @@ tstw_adjustment_value_changed_cb (GtkAdjustment *adjustment, TotemSkipto *skipto
 
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
-	if (skipto->priv->seconds_label == NULL)
+	if (skipto->seconds_label == NULL)
 		return;
 
 	value = (int) gtk_adjustment_get_value (adjustment);
 
 	/* Update the "seconds" label so that it always has the correct singular/plural form */
 	/* Translators: label for the seconds selector in the "Skip to" dialogue */
-	gtk_label_set_label (skipto->priv->seconds_label, ngettext ("second", "seconds", value));
+	gtk_label_set_label (skipto->seconds_label, ngettext ("second", "seconds", value));
 }
 
 GtkWidget *
@@ -181,30 +178,30 @@ totem_skipto_new (TotemObject *totem)
 	guint label_length;
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
-	skipto->priv->class_ref = g_type_class_ref (TOTEM_TYPE_TIME_ENTRY);
+	skipto->class_ref = g_type_class_ref (TOTEM_TYPE_TIME_ENTRY);
 
-	skipto->priv->totem = totem;
-	skipto->priv->xml = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/skipto/skipto.ui");
+	skipto->totem = totem;
+	skipto->xml = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/skipto/skipto.ui");
 
-	skipto->priv->adj = GTK_ADJUSTMENT (WID("tstw_skip_adjustment"));
-	g_signal_connect (skipto->priv->adj, "value-changed",
+	skipto->adj = GTK_ADJUSTMENT (WID("tstw_skip_adjustment"));
+	g_signal_connect (skipto->adj, "value-changed",
 			  G_CALLBACK (tstw_adjustment_value_changed_cb), skipto);
 
-	skipto->priv->time_entry = GTK_WIDGET (WID ("tstw_skip_time_entry"));
-	g_signal_connect (G_OBJECT (skipto->priv->time_entry), "activate",
+	skipto->time_entry = GTK_WIDGET (WID ("tstw_skip_time_entry"));
+	g_signal_connect (G_OBJECT (skipto->time_entry), "activate",
 			  G_CALLBACK (time_entry_activate_cb), skipto);
 
-	skipto->priv->seconds_label = GTK_LABEL (WID ("tstw_seconds_label"));
+	skipto->seconds_label = GTK_LABEL (WID ("tstw_seconds_label"));
 
 	/* Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value */
 	/* Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 	 * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 	 * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398 */
 	label_length = strtoul (C_("Skip To label length", "7"), NULL, 10);
-	gtk_label_set_width_chars (skipto->priv->seconds_label, label_length);
+	gtk_label_set_width_chars (skipto->seconds_label, label_length);
 
 	/* Set the initial "seconds" label */
-	tstw_adjustment_value_changed_cb (skipto->priv->adj, skipto);
+	tstw_adjustment_value_changed_cb (skipto->adj, skipto);
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip To"));
 	gtk_dialog_add_buttons (GTK_DIALOG (skipto),
@@ -216,7 +213,7 @@ totem_skipto_new (TotemObject *totem)
 	g_signal_connect (G_OBJECT (skipto), "delete-event",
 			  G_CALLBACK (gtk_widget_destroy), skipto);
 
-	container = GTK_WIDGET (gtk_builder_get_object (skipto->priv->xml,
+	container = GTK_WIDGET (gtk_builder_get_object (skipto->xml,
 				"tstw_skip_vbox"));
 	gtk_container_set_border_width (GTK_CONTAINER (skipto), 5);
 	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (skipto))),

@@ -34,25 +34,7 @@
 #include "totem.h"
 
 #define TOTEM_TYPE_SKIPTO		(totem_skipto_get_type ())
-#define TOTEM_SKIPTO(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SKIPTO, TotemSkipto))
-#define TOTEM_SKIPTO_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SKIPTO, TotemSkiptoClass))
-#define TOTEM_IS_SKIPTO(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_SKIPTO))
-#define TOTEM_IS_SKIPTO_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SKIPTO))
-
-GType totem_skipto_register_type	(GTypeModule *module);
-
-typedef struct TotemSkipto		TotemSkipto;
-typedef struct TotemSkiptoClass		TotemSkiptoClass;
-typedef struct TotemSkiptoPrivate	TotemSkiptoPrivate;
-
-struct TotemSkipto {
-	GtkDialog parent;
-	TotemSkiptoPrivate *priv;
-};
-
-struct TotemSkiptoClass {
-	GtkDialogClass parent_class;
-};
+G_DECLARE_FINAL_TYPE(TotemSkipto, totem_skipto, TOTEM, SKIPTO, GtkDialog)
 
 GType totem_skipto_get_type	(void);
 GtkWidget *totem_skipto_new	(TotemObject *totem);
