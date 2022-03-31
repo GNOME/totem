@@ -31,12 +31,13 @@
 
 static void bacon_video_widget_properties_dispose (GObject *object);
 
-struct BaconVideoWidgetPropertiesPrivate {
+struct _BaconVideoWidgetProperties {
+	GtkBox parent;
 	GtkBuilder *xml;
 	int time;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_BOX)
+G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_BOX)
 
 static void
 bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
@@ -49,19 +50,15 @@ bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass
 static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
-	props->priv = bacon_video_widget_properties_get_instance_private (props);
-
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (props), GTK_ORIENTATION_VERTICAL);
 }
 
 static void
 bacon_video_widget_properties_dispose (GObject *object)
 {
-	BaconVideoWidgetPropertiesPrivate *priv = BACON_VIDEO_WIDGET_PROPERTIES (object)->priv;
+	BaconVideoWidgetProperties *props = BACON_VIDEO_WIDGET_PROPERTIES (object);
 
-	if (priv->xml != NULL)
-		g_object_unref (priv->xml);
-	priv->xml = NULL;
+	g_clear_object (&props->xml);
 
 	G_OBJECT_CLASS (bacon_video_widget_properties_parent_class)->dispose (object);
 }
@@ -77,7 +74,7 @@ bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 	g_return_if_fail (name != NULL);
 
-	item = GTK_LABEL (gtk_builder_get_object (props->priv->xml, name));
+	item = GTK_LABEL (gtk_builder_get_object (props->xml, name));
 	g_return_if_fail (item != NULL);
 	gtk_label_set_text (item, text);
 }
@@ -90,11 +87,11 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video_vbox"));
 	gtk_widget_show (item);
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video"));
 	gtk_widget_set_sensitive (item, FALSE);
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "audio"));
 	gtk_widget_set_sensitive (item, FALSE);
 
 	/* Title */
@@ -201,14 +198,14 @@ bacon_video_widget_properties_set_duration (BaconVideoWidgetProperties *props,
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	if (_time == props->priv->time)
+	if (_time == props->time)
 		return;
 
 	string = time_to_string_text (_time);
 	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 
-	props->priv->time = _time;
+	props->time = _time;
 }
 
 void
@@ -222,13 +219,13 @@ bacon_video_widget_properties_set_has_type (BaconVideoWidgetProperties *props,
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
 	/* Video */
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video"));
 	gtk_widget_set_sensitive (item, has_video);
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video_vbox"));
 	gtk_widget_set_visible (item, has_video);
 
 	/* Audio */
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
+	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "audio"));
 	gtk_widget_set_sensitive (item, has_audio);
 }
 
@@ -283,8 +280,8 @@ bacon_video_widget_properties_new (void)
 	props = BACON_VIDEO_WIDGET_PROPERTIES (g_object_new
 			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));
 
-	props->priv->xml = xml;
-	vbox = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "vbox1"));
+	props->xml = xml;
+	vbox = GTK_WIDGET (gtk_builder_get_object (props->xml, "vbox1"));
 	gtk_box_pack_start (GTK_BOX (props), vbox, FALSE, FALSE, 0);
 
 	bacon_video_widget_properties_reset (props);
