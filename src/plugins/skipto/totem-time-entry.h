@@ -34,22 +34,7 @@
 #include <gtk/gtk.h>
 
 #define TOTEM_TYPE_TIME_ENTRY		(totem_time_entry_get_type ())
-#define TOTEM_TIME_ENTRY(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_TIME_ENTRY, TotemTimeEntry))
-#define TOTEM_TIME_ENTRY_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_TIME_ENTRY, TotemTimeEntryClass))
-#define TOTEM_IS_TIME_ENTRY(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_TIME_ENTRY))
-#define TOTEM_IS_TIME_ENTRY_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_TIME_ENTRY))
-#define TOTEM_TIME_ENTRY_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_TIME_ENTRY, TotemTimeEntryClass))
-
-typedef struct TotemTimeEntryPrivate	TotemTimeEntryPrivate;
-
-typedef struct {
-	GtkSpinButton parent;
-	TotemTimeEntryPrivate *priv;
-} TotemTimeEntry;
-
-typedef struct {
-	GtkSpinButtonClass parent;
-} TotemTimeEntryClass;
+G_DECLARE_FINAL_TYPE(TotemTimeEntry, totem_time_entry, TOTEM, TIME_ENTRY, GtkSpinButton)
 
 GType totem_time_entry_get_type (void);
 GtkWidget *totem_time_entry_new (GtkAdjustment *adjustment, gdouble climb_rate);

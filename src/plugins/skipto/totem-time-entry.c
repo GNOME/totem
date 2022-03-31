@@ -42,12 +42,13 @@ static gint input_cb (GtkSpinButton *self, gdouble *new_value, gpointer user_dat
 static void notify_adjustment_cb (TotemTimeEntry *self, GParamSpec *pspec, gpointer user_data);
 static void changed_cb (GtkAdjustment *adjustment, TotemTimeEntry *self);
 
-struct TotemTimeEntryPrivate {
+struct _TotemTimeEntry {
+	GtkSpinButton parent;
 	GtkAdjustment *adjustment;
 	gulong adjustment_changed_signal;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemTimeEntry, totem_time_entry, GTK_TYPE_SPIN_BUTTON)
+G_DEFINE_TYPE (TotemTimeEntry, totem_time_entry, GTK_TYPE_SPIN_BUTTON)
 
 static gint64
 totem_string_to_time (const char *time_string)
@@ -82,8 +83,6 @@ totem_time_entry_class_init (TotemTimeEntryClass *klass)
 static void
 totem_time_entry_init (TotemTimeEntry *self)
 {
-	self->priv = totem_time_entry_get_instance_private (self);
-
 	/* Connect to signals */
 	g_signal_connect (self, "output", G_CALLBACK (output_cb), NULL);
 	g_signal_connect (self, "input", G_CALLBACK (input_cb), NULL);
@@ -93,13 +92,13 @@ totem_time_entry_init (TotemTimeEntry *self)
 static void
 dispose (GObject *object)
 {
-	TotemTimeEntryPrivate *priv = TOTEM_TIME_ENTRY (object)->priv;
+	TotemTimeEntry *entry = TOTEM_TIME_ENTRY (object);
 
-	if (priv->adjustment != NULL) {
-		g_signal_handler_disconnect (priv->adjustment, priv->adjustment_changed_signal);
-		g_object_unref (priv->adjustment);
+	if (entry->adjustment != NULL) {
+		g_signal_handler_disconnect (entry->adjustment, entry->adjustment_changed_signal);
+		g_object_unref (entry->adjustment);
 	}
-	priv->adjustment = NULL;
+	entry->adjustment = NULL;
 
 	G_OBJECT_CLASS (totem_time_entry_parent_class)->dispose (object);
 }
@@ -143,19 +142,17 @@ input_cb (GtkSpinButton *self, gdouble *new_value, gpointer user_data)
 static void
 notify_adjustment_cb (TotemTimeEntry *self, GParamSpec *pspec, gpointer user_data)
 {
-	TotemTimeEntryPrivate *priv = self->priv;
-
-	if (priv->adjustment != NULL) {
-		g_signal_handler_disconnect (priv->adjustment, priv->adjustment_changed_signal);
-		g_object_unref (priv->adjustment);
+	if (self->adjustment != NULL) {
+		g_signal_handler_disconnect (self->adjustment, self->adjustment_changed_signal);
+		g_object_unref (self->adjustment);
 	}
 
-	priv->adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (self));
-	priv->adjustment_changed_signal = 0;
+	self->adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (self));
+	self->adjustment_changed_signal = 0;
 
-	if (priv->adjustment != NULL) {
-		g_object_ref (priv->adjustment);
-		priv->adjustment_changed_signal = g_signal_connect (priv->adjustment, "changed", G_CALLBACK (changed_cb), self);
+	if (self->adjustment != NULL) {
+		g_object_ref (self->adjustment);
+		self->adjustment_changed_signal = g_signal_connect (self->adjustment, "changed", G_CALLBACK (changed_cb), self);
 	}
 }
 
