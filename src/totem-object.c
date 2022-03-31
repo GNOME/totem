@@ -1308,16 +1308,6 @@ totem_object_show_error (TotemObject *totem, const char *title, const char *reas
 			GTK_WINDOW (totem->win));
 }
 
-G_GNUC_NORETURN static void
-totem_object_show_error_and_exit (const char *title,
-		const char *reason, TotemObject *totem)
-{
-	reset_seek_status (totem);
-	totem_interface_error_blocking (title, reason,
-			GTK_WINDOW (totem->win));
-	totem_object_exit (totem);
-}
-
 static void
 totem_object_save_size (TotemObject *totem)
 {
@@ -4223,15 +4213,16 @@ add_fullscreen_toolbar (TotemObject *totem,
 void
 video_widget_create (TotemObject *totem)
 {
-	GError *err = NULL;
+	g_autoptr(GError) err = NULL;
 
 	if (g_settings_get_boolean (totem->settings, "force-software-decoders"))
 		totem_gst_disable_hardware_decoders ();
 
 	if (!bacon_video_widget_check_init (totem->bvw, &err)) {
-		totem_object_show_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
-		if (err != NULL)
-			g_error_free (err);
+		totem_interface_error_blocking (_("Videos could not startup."),
+						err != NULL ? err->message : _("No reason."),
+						GTK_WINDOW (totem->win));
+		totem_object_exit (totem);
 	}
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
