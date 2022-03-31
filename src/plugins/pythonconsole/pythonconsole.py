@@ -98,7 +98,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
                 "the Totem.Object through “totem_object” :\\n%s"), False)
 
             self.window = Gtk.Window ()
-            self.window.set_title (_('Totem Python Console'))
+            self.window.set_title (_('Videos Python Console'))
             self.window.add (console)
             self.window.connect ('destroy', self._destroy_console)
             self.window.show_all ()
@@ -108,7 +108,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
 
     @classmethod
     def _enable_debugging (cls, param, _action): # pylint: disable=W0613
-        msg = _("After you press OK, Totem will wait until you connect to it "\
+        msg = _("After you press OK, Videos will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
                  "(“totem”).")

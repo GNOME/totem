@@ -1503,7 +1503,7 @@ totem_object_play (TotemObject *totem)
 	}
 
 	disp = totem_uri_escape_for_display (totem->mrl);
-	msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
+	msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
 	g_free (disp);
 
 	totem_object_show_error (totem, msg, err->message);
@@ -1531,7 +1531,7 @@ totem_object_seek (TotemObject *totem, double pos)
 		char *msg, *disp;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
+		msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
 		g_free (disp);
 
 		reset_seek_status (totem);
@@ -2117,7 +2117,7 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 		char *msg, *disp;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play “%s”."), disp);
+		msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
 		g_free (disp);
 
 		bacon_video_widget_stop (totem->bvw);
@@ -2289,7 +2289,7 @@ totem_object_show_help (TotemObject *totem)
 	GError *error = NULL;
 
 	if (gtk_show_uri_on_window (GTK_WINDOW (totem->win), "help:totem", gtk_get_current_event_time (), &error) == FALSE) {
-		totem_object_show_error (totem, _("Totem could not display the help contents."), error->message);
+		totem_object_show_error (totem, _("Videos could not display the help contents."), error->message);
 		g_error_free (error);
 	}
 }
