@@ -26,32 +26,10 @@
 #include <gtk/gtk.h>
 
 #define TOTEM_TYPE_SEARCH_ENTRY totem_search_entry_get_type()
-#define TOTEM_SEARCH_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntry))
-#define TOTEM_SEARCH_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntryClass))
-#define TOTEM_IS_SEARCH_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_SEARCH_ENTRY))
-#define TOTEM_IS_SEARCH_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SEARCH_ENTRY))
-#define TOTEM_SEARCH_ENTRY_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntryClass))
-
-typedef struct _TotemSearchEntry TotemSearchEntry;
-typedef struct _TotemSearchEntryClass TotemSearchEntryClass;
-typedef struct _TotemSearchEntryPrivate TotemSearchEntryPrivate;
-
-struct _TotemSearchEntry
-{
-	GtkBox parent;
-
-	TotemSearchEntryPrivate *priv;
-};
-
-struct _TotemSearchEntryClass
-{
-	GtkBoxClass parent_class;
-};
+G_DECLARE_FINAL_TYPE(TotemSearchEntry, totem_search_entry, TOTEM, SEARCH_ENTRY, GtkBox)
 
 GType totem_search_entry_get_type              (void) G_GNUC_CONST;
-
 TotemSearchEntry *totem_search_entry_new       (void);
-
 void totem_search_entry_add_source             (TotemSearchEntry *entry,
 						const gchar      *id,
 						const gchar      *label,
