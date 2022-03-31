@@ -25,14 +25,11 @@
  * See license_change file for details.
  */
 
-#ifndef TOTEM_GALLERY_PROGRESS_H
-#define TOTEM_GALLERY_PROGRESS_H
+#pragma once
 
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_GALLERY_PROGRESS		(totem_gallery_progress_get_type ())
 #define TOTEM_GALLERY_PROGRESS(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgress))
@@ -55,7 +52,3 @@ typedef struct {
 GType totem_gallery_progress_get_type (void);
 TotemGalleryProgress *totem_gallery_progress_new (GPid child_pid, const gchar *output_filename);
 void totem_gallery_progress_run (TotemGalleryProgress *self, gint stdout_fd);
-
-G_END_DECLS
-
-#endif /* !TOTEM_GALLERY_PROGRESS_H */

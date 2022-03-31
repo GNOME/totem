@@ -27,14 +27,11 @@
  *
  */
 
-#ifndef __TOTEM_PLUGINS_ENGINE_H__
-#define __TOTEM_PLUGINS_ENGINE_H__
+#pragma once
 
 #include <glib.h>
 #include <libpeas/peas-engine.h>
 #include <totem.h>
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_PLUGINS_ENGINE              (totem_plugins_engine_get_type ())
 #define TOTEM_PLUGINS_ENGINE(obj)              (G_TYPE_CHECK_INSTANCE_CAST((obj), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngine))
@@ -61,8 +58,3 @@ struct _TotemPluginsEngineClass
 GType			totem_plugins_engine_get_type			(void) G_GNUC_CONST;
 TotemPluginsEngine	*totem_plugins_engine_get_default		(TotemObject *totem);
 void			totem_plugins_engine_shut_down			(TotemPluginsEngine *self);
-
-G_END_DECLS
-
-#endif  /* __TOTEM_PLUGINS_ENGINE_H__ */
-

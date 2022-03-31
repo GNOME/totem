@@ -20,17 +20,10 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_SESSION_H
-#define TOTEM_SESSION_H
+#pragma once
 
 #include "totem.h"
-
-G_BEGIN_DECLS
 
 gboolean totem_session_try_restore (Totem *totem);
 void totem_session_save (Totem *totem);
 void totem_session_cleanup (Totem *totem);
-
-G_END_DECLS
-
-#endif /* TOTEM_SESSION_H */

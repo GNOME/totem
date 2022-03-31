@@ -27,16 +27,13 @@
  *
  */
 
-#ifndef __TOTEM_PLUGIN_H__
-#define __TOTEM_PLUGIN_H__
+#pragma once
 
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
 #include <libpeas-gtk/peas-gtk-configurable.h>
 #include <totem.h>
-
-G_BEGIN_DECLS
 
 /**
  * _TOTEM_PLUGIN_REGISTER:
@@ -167,8 +164,3 @@ G_BEGIN_DECLS
 	{									\
 		iface->create_configure_widget = impl_create_configure_widget;	\
 	}
-
-G_END_DECLS
-
-#endif  /* __TOTEM_PLUGIN_H__ */
-

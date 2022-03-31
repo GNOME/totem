@@ -20,13 +20,10 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_MENU_H
-#define TOTEM_MENU_H
+#pragma once
 
 #include "totem.h"
 #include "bacon-video-widget.h"
-
-G_BEGIN_DECLS
 
 void totem_app_menu_setup (Totem *totem);
 void totem_app_actions_setup (Totem *totem);
@@ -43,7 +40,3 @@ typedef struct {
 GList *bvw_lang_info_to_menu_labels (GList        *langs,
 				     BvwTrackType  track_type);
 void free_menu_item (MenuItem *item);
-
-G_END_DECLS
-
-#endif /* TOTEM_MENU_H */

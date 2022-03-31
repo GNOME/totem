@@ -25,8 +25,7 @@
  *
  */
 
-#ifndef __TOTEM_PRIVATE_H__
-#define __TOTEM_PRIVATE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include <gio/gio.h>
@@ -203,5 +202,3 @@ void	totem_object_add_items_to_playlist	(TotemObject *totem,
 /* Signal emission */
 void	totem_file_has_played			(TotemObject *totem,
 						 const char *mrl);
-
-#endif /* __TOTEM_PRIVATE_H__ */

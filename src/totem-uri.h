@@ -20,14 +20,11 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_URI_H
-#define TOTEM_URI_H
+#pragma once
 
 #include "totem.h"
 #include <gtk/gtk.h>
 #include <gio/gio.h>
-
-G_BEGIN_DECLS
 
 const char *	totem_dot_dir			(void);
 const char *	totem_data_dot_dir		(void);
@@ -44,9 +41,5 @@ void		totem_destroy_file_filters	(void);
 char *		totem_uri_escape_for_display	(const char *uri);
 GSList *	totem_add_files			(GtkWindow *parent,
 						 const char *path);
-char *		totem_add_subtitle		(GtkWindow *parent, 
+char *		totem_add_subtitle		(GtkWindow *parent,
 						 const char *uri);
-
-G_END_DECLS
-
-#endif /* TOTEM_URI_H */

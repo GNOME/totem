@@ -26,18 +26,11 @@
  *
  */
 
-#ifndef TOTEM_PREFERENCES_H
-#define TOTEM_PREFERENCES_H
+#pragma once
 
 #include <gtk/gtk.h>
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_PREFERENCES_DIALOG (totem_preferences_dialog_get_type())
 G_DECLARE_FINAL_TYPE (TotemPreferencesDialog, totem_preferences_dialog, TOTEM, PREFERENCES_DIALOG, GtkDialog)
 
 GtkWidget *totem_preferences_dialog_new (Totem *totem);
-
-G_END_DECLS
-
-#endif /* TOTEM_PREFERENCES_H */

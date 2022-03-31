@@ -20,16 +20,9 @@
    Author: Tim-Philipp Müller <tim centricular net>
  */
 
-#ifndef BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H
-#define BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H
+#pragma once
 
 #include "bacon-video-widget.h"
 
-G_BEGIN_DECLS
-
 void bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw);
 void bacon_video_widget_gst_missing_plugins_block (void);
-
-G_END_DECLS
-
-#endif /* BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H */

@@ -20,13 +20,10 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_INTERFACE_H
-#define TOTEM_INTERFACE_H
+#pragma once
 
 #include <gtk/gtk.h>
 #include "totem.h"
-
-G_BEGIN_DECLS
 
 void		 totem_interface_error		(const char *title,
 						 const char *reason,
@@ -38,7 +35,3 @@ GtkWidget *	 totem_interface_create_header_button (GtkWidget  *header,
 						       GtkWidget  *button,
 						       const char *icon_name,
 						       GtkPackType pack_type);
-
-G_END_DECLS
-
-#endif /* TOTEM_INTERFACE_H */

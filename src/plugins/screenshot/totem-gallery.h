@@ -25,16 +25,13 @@
  * See license_change file for details.
  */
 
-#ifndef TOTEM_GALLERY_H
-#define TOTEM_GALLERY_H
+#pragma once
 
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
 #include "totem.h"
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_GALLERY		(totem_gallery_get_type ())
 #define TOTEM_GALLERY(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_GALLERY, TotemGallery))
@@ -56,7 +53,3 @@ typedef struct {
 
 GType totem_gallery_get_type (void);
 TotemGallery *totem_gallery_new (Totem *totem);
-
-G_END_DECLS
-
-#endif /* !TOTEM_GALLERY_H */

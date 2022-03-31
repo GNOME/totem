@@ -27,8 +27,7 @@
  *
  */
 
-#ifndef __TOTEM_PROFILE_H__
-#define __TOTEM_PROFILE_H__ 1
+#pragma once
 
 #ifdef GNOME_ENABLE_DEBUG
 
@@ -53,5 +52,3 @@
 #define TOTEM_PROFILE(function) function
 
 #endif /* GNOME_ENABLE_DEBUG */
-
-#endif /* __TOTEM_PROFILE_H__ */

@@ -19,14 +19,11 @@
  *
  */
 
-#ifndef __TOTEM_SEARCH_ENTRY_H__
-#define __TOTEM_SEARCH_ENTRY_H__
+#pragma once
 
 #include <glib-object.h>
 
 #include <gtk/gtk.h>
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SEARCH_ENTRY totem_search_entry_get_type()
 #define TOTEM_SEARCH_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntry))
@@ -68,7 +65,3 @@ gboolean    totem_search_entry_set_selected_id (TotemSearchEntry *self,
 
 const char *totem_search_entry_get_text        (TotemSearchEntry *self);
 GtkEntry   *totem_search_entry_get_entry       (TotemSearchEntry *self);
-
-G_END_DECLS
-
-#endif /* __TOTEM_SEARCH_ENTRY_H__ */

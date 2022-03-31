@@ -25,8 +25,7 @@
  *
  */
 
-#ifndef __TOTEM_H__
-#define __TOTEM_H__
+#pragma once
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -37,8 +36,6 @@
  * The GSettings schema under which all Totem settings are stored.
  **/
 #define TOTEM_GSETTINGS_SCHEMA "org.gnome.totem"
-
-G_BEGIN_DECLS
 
 /**
  * TotemRemoteCommand:
@@ -232,5 +229,3 @@ gboolean totem_object_remote_get_setting	(TotemObject *totem,
 
 const gchar * const *totem_object_get_supported_content_types (void);
 const gchar * const *totem_object_get_supported_uri_schemes (void);
-
-#endif /* __TOTEM_H__ */

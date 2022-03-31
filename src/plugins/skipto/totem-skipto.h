@@ -27,14 +27,11 @@
  * Author: Bastien Nocera <hadess@hadess.net>, Philip Withnall <philip@tecnocode.co.uk>
  */
 
-#ifndef TOTEM_SKIPTO_H
-#define TOTEM_SKIPTO_H
+#pragma once
 
 #include <gtk/gtk.h>
 
 #include "totem.h"
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SKIPTO		(totem_skipto_get_type ())
 #define TOTEM_SKIPTO(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SKIPTO, TotemSkipto))
@@ -63,7 +60,3 @@ gint64 totem_skipto_get_range	(TotemSkipto *skipto);
 void totem_skipto_update_range	(TotemSkipto *skipto, gint64 _time);
 void totem_skipto_set_seekable	(TotemSkipto *skipto, gboolean seekable);
 void totem_skipto_set_current	(TotemSkipto *skipto, gint64 _time);
-
-G_END_DECLS
-
-#endif /* TOTEM_SKIPTO_H */

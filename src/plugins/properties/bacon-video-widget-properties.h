@@ -20,8 +20,7 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef BACON_VIDEO_WIDGET_PROPERTIES_H
-#define BACON_VIDEO_WIDGET_PROPERTIES_H
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -58,5 +57,3 @@ void bacon_video_widget_properties_set_has_type		(BaconVideoWidgetProperties *pr
 							 gboolean                    has_audio);
 void bacon_video_widget_properties_set_framerate	(BaconVideoWidgetProperties *props,
 							 float                       framerate);
-
-#endif /* BACON_VIDEO_WIDGET_PROPERTIES_H */

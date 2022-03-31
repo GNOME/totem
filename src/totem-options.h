@@ -20,14 +20,11 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_OPTIONS_H
-#define TOTEM_OPTIONS_H
+#pragma once
 
 #include <gtk/gtk.h>
 
 #include "totem.h"
-
-G_BEGIN_DECLS
 
 /* Stores the state of the command line options */
 typedef struct {
@@ -57,7 +54,3 @@ extern TotemCmdLineOptions optionstate;
 void totem_options_register_remote_commands (Totem *totem);
 void totem_options_process_for_server (Totem *totem,
 				       TotemCmdLineOptions* options);
-
-G_END_DECLS
-
-#endif /* TOTEM_OPTIONS_H */

@@ -27,14 +27,11 @@
  * Author: Philip Withnall <philip@tecnocode.co.uk>
  */
 
-#ifndef TOTEM_TIME_ENTRY_H
-#define TOTEM_TIME_ENTRY_H
+#pragma once
 
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
-G_BEGIN_DECLS
 
 #define TOTEM_TYPE_TIME_ENTRY		(totem_time_entry_get_type ())
 #define TOTEM_TIME_ENTRY(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_TIME_ENTRY, TotemTimeEntry))
@@ -56,7 +53,3 @@ typedef struct {
 
 GType totem_time_entry_get_type (void);
 GtkWidget *totem_time_entry_new (GtkAdjustment *adjustment, gdouble climb_rate);
-
-G_END_DECLS
-
-#endif /* !TOTEM_TIME_ENTRY_H */
