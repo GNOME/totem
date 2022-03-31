@@ -40,14 +40,15 @@ static void dialog_response_callback (GtkDialog *dialog, gint response_id, Totem
 
 static void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
 
-struct _TotemGalleryPrivate {
+struct _TotemGallery {
+	GtkFileChooserDialog parent;
 	Totem *totem;
 	GtkCheckButton *default_screenshot_count;
 	GtkSpinButton *screenshot_count;
 	GtkSpinButton *screenshot_width;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemGallery, totem_gallery, GTK_TYPE_FILE_CHOOSER_DIALOG)
+G_DEFINE_TYPE (TotemGallery, totem_gallery, GTK_TYPE_FILE_CHOOSER_DIALOG)
 
 static void
 totem_gallery_class_init (TotemGalleryClass *klass)
@@ -57,7 +58,6 @@ totem_gallery_class_init (TotemGalleryClass *klass)
 static void
 totem_gallery_init (TotemGallery *self)
 {
-	self->priv = totem_gallery_get_instance_private (self);
 }
 
 TotemGallery *
@@ -75,13 +75,13 @@ totem_gallery_new (Totem *totem)
 	builder = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/screenshot/gallery.ui");
 
 	/* Grab the widgets */
-	gallery->priv->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));
-	gallery->priv->screenshot_count = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_count"));
-	gallery->priv->screenshot_width = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_width"));
+	gallery->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));
+	gallery->screenshot_count = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_count"));
+	gallery->screenshot_width = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_width"));
 	g_signal_connect (gtk_builder_get_object (builder, "default_screenshot_count"), "toggled",
 			  G_CALLBACK (default_screenshot_count_toggled_callback), gallery);
 
-	gallery->priv->totem = totem;
+	gallery->totem = totem;
 
 	gtk_window_set_title (GTK_WINDOW (gallery), _("Save Gallery"));
 	gtk_file_chooser_set_action (GTK_FILE_CHOOSER (gallery), GTK_FILE_CHOOSER_ACTION_SAVE);
@@ -133,7 +133,7 @@ default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, Totem
 {
 	/* Only have the screenshot count spin button sensitive when the default screenshot count
 	 * check button is unchecked. */
-	gtk_widget_set_sensitive (GTK_WIDGET (self->priv->screenshot_count), !gtk_toggle_button_get_active (toggle_button));
+	gtk_widget_set_sensitive (GTK_WIDGET (self->screenshot_count), !gtk_toggle_button_get_active (toggle_button));
 }
 
 static void
@@ -154,19 +154,19 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	/* Don't call in here again */
 	g_signal_handlers_disconnect_by_func (G_OBJECT (self), dialog_response_callback, self);
 
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->priv->default_screenshot_count)) == TRUE)
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->default_screenshot_count)) == TRUE)
 		screenshot_count = 0;
 	else
-		screenshot_count = gtk_spin_button_get_value_as_int (self->priv->screenshot_count);
+		screenshot_count = gtk_spin_button_get_value_as_int (self->screenshot_count);
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self));
-	video_mrl = totem_object_get_current_mrl (self->priv->totem);
+	video_mrl = totem_object_get_current_mrl (self->totem);
 	totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (self)));
 
 	/* Build the command and arguments to pass it */
 	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
 	argv[1] = g_strdup_printf ("--gallery=%u", screenshot_count); /* number of screenshots to output */
-	argv[2] = g_strdup_printf ("--size=%u", gtk_spin_button_get_value_as_int (self->priv->screenshot_width)); /* screenshot width */
+	argv[2] = g_strdup_printf ("--size=%u", gtk_spin_button_get_value_as_int (self->screenshot_width)); /* screenshot width */
 	argv[3] = video_mrl; /* video to thumbnail */
 	argv[4] = filename; /* output filename */
 	argv[5] = NULL;

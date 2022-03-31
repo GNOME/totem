@@ -34,22 +34,7 @@
 #include "totem.h"
 
 #define TOTEM_TYPE_GALLERY		(totem_gallery_get_type ())
-#define TOTEM_GALLERY(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_GALLERY, TotemGallery))
-#define TOTEM_GALLERY_CLASS(k)		(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_GALLERY, TotemGalleryClass))
-#define TOTEM_IS_GALLERY(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_GALLERY))
-#define TOTEM_IS_GALLERY_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_GALLERY))
-#define TOTEM_GALLERY_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GALLERY, TotemGalleryClass))
-
-typedef struct _TotemGalleryPrivate	TotemGalleryPrivate;
-
-typedef struct {
-	GtkFileChooserDialog parent;
-	TotemGalleryPrivate *priv;
-} TotemGallery;
-
-typedef struct {
-	GtkFileChooserDialogClass parent;
-} TotemGalleryClass;
+G_DECLARE_FINAL_TYPE(TotemGallery, totem_gallery, TOTEM, GALLERY, GtkFileChooserDialog)
 
 GType totem_gallery_get_type (void);
 TotemGallery *totem_gallery_new (Totem *totem);
