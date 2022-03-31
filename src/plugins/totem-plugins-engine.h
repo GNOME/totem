@@ -31,29 +31,11 @@
 
 #include <glib.h>
 #include <libpeas/peas-engine.h>
+#include <libpeas/peas-autocleanups.h>
 #include <totem.h>
 
 #define TOTEM_TYPE_PLUGINS_ENGINE              (totem_plugins_engine_get_type ())
-#define TOTEM_PLUGINS_ENGINE(obj)              (G_TYPE_CHECK_INSTANCE_CAST((obj), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngine))
-#define TOTEM_PLUGINS_ENGINE_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST((klass), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngineClass))
-#define TOTEM_IS_PLUGINS_ENGINE(obj)           (G_TYPE_CHECK_INSTANCE_TYPE((obj), TOTEM_TYPE_PLUGINS_ENGINE))
-#define TOTEM_IS_PLUGINS_ENGINE_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLUGINS_ENGINE))
-#define TOTEM_PLUGINS_ENGINE_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS((obj), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngineClass))
-
-typedef struct _TotemPluginsEngine		TotemPluginsEngine;
-typedef struct _TotemPluginsEnginePrivate	TotemPluginsEnginePrivate;
-typedef struct _TotemPluginsEngineClass		TotemPluginsEngineClass;
-
-struct _TotemPluginsEngine
-{
-	PeasEngine parent;
-	TotemPluginsEnginePrivate *priv;
-};
-
-struct _TotemPluginsEngineClass
-{
-	PeasEngineClass parent_class;
-};
+G_DECLARE_FINAL_TYPE(TotemPluginsEngine, totem_plugins_engine, TOTEM, PLUGINS_ENGINE, PeasEngine)
 
 GType			totem_plugins_engine_get_type			(void) G_GNUC_CONST;
 TotemPluginsEngine	*totem_plugins_engine_get_default		(TotemObject *totem);

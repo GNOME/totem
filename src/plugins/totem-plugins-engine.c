@@ -42,14 +42,15 @@
 #include "totem-dirs.h"
 #include "totem-plugins-engine.h"
 
-typedef struct _TotemPluginsEnginePrivate{
+struct _TotemPluginsEngine {
+	PeasEngine parent;
 	PeasExtensionSet *activatable_extensions;
 	TotemObject *totem;
 	GSettings *settings;
 	guint garbage_collect_id;
-} _TotemPluginsEnginePrivate;
+};
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
+G_DEFINE_TYPE (TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
 
 static void totem_plugins_engine_dispose (GObject *object);
 
@@ -120,19 +121,19 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_object_add_weak_pointer (G_OBJECT (engine),
 				   (gpointer) &engine);
 
-	engine->priv->totem = g_object_ref (totem);
+	engine->totem = g_object_ref (totem);
 
-	engine->priv->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
+	engine->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
 								       PEAS_TYPE_ACTIVATABLE,
 								       "object", totem,
 								       NULL);
 
-	g_signal_connect (engine->priv->activatable_extensions, "extension-added",
+	g_signal_connect (engine->activatable_extensions, "extension-added",
 			  G_CALLBACK (on_activatable_extension_added), engine);
-	g_signal_connect (engine->priv->activatable_extensions, "extension-removed",
+	g_signal_connect (engine->activatable_extensions, "extension-removed",
 			  G_CALLBACK (on_activatable_extension_removed), engine);
 
-	g_settings_bind (engine->priv->settings, "active-plugins",
+	g_settings_bind (engine->settings, "active-plugins",
 			 engine, "loaded-plugins",
 			 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
@@ -157,32 +158,27 @@ totem_plugins_engine_get_default (TotemObject *totem)
 void
 totem_plugins_engine_shut_down (TotemPluginsEngine *self)
 {
-	TotemPluginsEnginePrivate *priv = self->priv;
-
 	g_return_if_fail (TOTEM_IS_PLUGINS_ENGINE (self));
-	g_return_if_fail (priv->activatable_extensions != NULL);
+	g_return_if_fail (self->activatable_extensions != NULL);
 
 	/* Disconnect from the signal handlers in case unreffing activatable_extensions doesn't finalise the PeasExtensionSet. */
-	g_signal_handlers_disconnect_by_func (priv->activatable_extensions, (GCallback) on_activatable_extension_added, self);
-	g_signal_handlers_disconnect_by_func (priv->activatable_extensions, (GCallback) on_activatable_extension_removed, self);
+	g_signal_handlers_disconnect_by_func (self->activatable_extensions, (GCallback) on_activatable_extension_added, self);
+	g_signal_handlers_disconnect_by_func (self->activatable_extensions, (GCallback) on_activatable_extension_removed, self);
 
 	/* We then explicitly deactivate all the extensions. Normally, this would be done extension-by-extension as they're unreffed when the
 	 * PeasExtensionSet is finalised, but we've just removed the signal handler which would do that (extension-removed). */
-	peas_extension_set_call (priv->activatable_extensions, "deactivate");
+	peas_extension_set_call (self->activatable_extensions, "deactivate");
 
-	g_object_unref (priv->activatable_extensions);
-	priv->activatable_extensions = NULL;
+	g_clear_object (&self->activatable_extensions);
 }
 
 static void
 totem_plugins_engine_init (TotemPluginsEngine *engine)
 {
-	engine->priv = totem_plugins_engine_get_instance_private (engine);
+	engine->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
-	engine->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-
-	engine->priv->garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, engine, NULL);
-	g_source_set_name_by_id (engine->priv->garbage_collect_id, "[totem] garbage_collect_cb");
+	engine->garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, engine, NULL);
+	g_source_set_name_by_id (engine->garbage_collect_id, "[totem] garbage_collect_cb");
 }
 
 static void
@@ -190,21 +186,14 @@ totem_plugins_engine_dispose (GObject *object)
 {
 	TotemPluginsEngine *engine = TOTEM_PLUGINS_ENGINE (object);
 
-	if (engine->priv->activatable_extensions != NULL)
+	if (engine->activatable_extensions != NULL)
 		totem_plugins_engine_shut_down (engine);
 
-	if (engine->priv->garbage_collect_id > 0)
-		g_source_remove (engine->priv->garbage_collect_id);
-	engine->priv->garbage_collect_id = 0;
+	g_clear_handle_id (&engine->garbage_collect_id, g_source_remove);
 	peas_engine_garbage_collect (PEAS_ENGINE (engine));
 
-	if (engine->priv->totem)
-		g_object_unref (engine->priv->totem);
-	engine->priv->totem = NULL;
-
-	if (engine->priv->settings != NULL)
-		g_object_unref (engine->priv->settings);
-	engine->priv->settings = NULL;
+	g_clear_object (&engine->totem);
+	g_clear_object (&engine->settings);
 
 	G_OBJECT_CLASS (totem_plugins_engine_parent_class)->dispose (object);
 }
