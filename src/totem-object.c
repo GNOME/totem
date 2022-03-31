@@ -1308,7 +1308,7 @@ totem_object_show_error (TotemObject *totem, const char *title, const char *reas
 			GTK_WINDOW (totem->win));
 }
 
-G_GNUC_NORETURN void
+G_GNUC_NORETURN static void
 totem_object_show_error_and_exit (const char *title,
 		const char *reason, TotemObject *totem)
 {

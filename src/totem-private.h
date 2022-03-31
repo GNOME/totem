@@ -181,7 +181,6 @@ void    totem_object_set_mrl			(TotemObject *totem,
 						 const char *mrl,
 						 const char *subtitle);
 gboolean totem_object_open_files		(Totem *totem, char **list);
-G_GNUC_NORETURN void totem_object_show_error_and_exit (const char *title, const char *reason, Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 
