@@ -43,11 +43,6 @@
 
 #include "totem.h"
 #include "totem-private.h"
-#include "totem-interface.h"
-#include "totem-options.h"
-#include "totem-menu.h"
-#include "totem-uri.h"
-#include "totem-session.h"
 
 int
 main (int argc, char **argv)
