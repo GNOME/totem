@@ -10,20 +10,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-18 00:10+0000\n"
-"PO-Revision-Date: 2022-02-18 09:06+0200\n"
+"POT-Creation-Date: 2022-03-31 12:51+0000\n"
+"PO-Revision-Date: 2022-03-31 16:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
+#: src/totem-grilo.c:1923 src/totem-object.c:3876
 msgid "Videos"
 msgstr "Відео"
 
@@ -189,7 +190,7 @@ msgstr ""
 "Вимкнути апаратні декодери і використовувати лише програмні декодери. "
 "Призначено лише для діагностики."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -621,11 +622,11 @@ msgstr "_Скасувати"
 msgid "_Add"
 msgstr "_Додати"
 
-#: src/backend/bacon-video-widget.c:1435
+#: src/backend/bacon-video-widget.c:1460
 msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
-#: src/backend/bacon-video-widget.c:3339
+#: src/backend/bacon-video-widget.c:3372
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -633,53 +634,53 @@ msgstr ""
 "Здається, джерело даних зашифровано — його не можна прочитати. Намагаєтеся "
 "відтворити зашифрований DVD без libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3353
+#: src/backend/bacon-video-widget.c:3386
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, до якого ви намагаєтесь під'єднатись, невідомий."
 
-#: src/backend/bacon-video-widget.c:3356
+#: src/backend/bacon-video-widget.c:3389
 msgid "The connection to this server was refused."
 msgstr "У зв'язку з цим сервером відмовлено."
 
-#: src/backend/bacon-video-widget.c:3359
+#: src/backend/bacon-video-widget.c:3392
 msgid "The specified movie could not be found."
 msgstr "Вказаний фільм неможливо знайти."
 
-#: src/backend/bacon-video-widget.c:3366
+#: src/backend/bacon-video-widget.c:3399
 msgid "The server refused access to this file or stream."
 msgstr "Сервер відмовив у доступі до цього файла або потоку."
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3405
 msgid "Authentication is required to access this file or stream."
 msgstr "Щоб доступитись до цього файла або потоку, потрібно засвідчити право."
 
-#: src/backend/bacon-video-widget.c:3378
+#: src/backend/bacon-video-widget.c:3411
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr ""
 "Не вистачає підтримки SSL/TLS. Перевірте, чи встановлено належні компоненти."
 
-#: src/backend/bacon-video-widget.c:3385
+#: src/backend/bacon-video-widget.c:3418
 msgid "You are not allowed to open this file."
 msgstr "Ви не можете відкрити цей файл."
 
-#: src/backend/bacon-video-widget.c:3390
+#: src/backend/bacon-video-widget.c:3423
 msgid "This location is not a valid one."
 msgstr "Ця адреса не є правильною."
 
-#: src/backend/bacon-video-widget.c:3398
+#: src/backend/bacon-video-widget.c:3431
 msgid "The movie could not be read."
 msgstr "Фільм неможливо прочитати."
 
-#: src/backend/bacon-video-widget.c:3404
+#: src/backend/bacon-video-widget.c:3437
 msgid "This file is encrypted and cannot be played back."
 msgstr "Цей файл зашифровано — його неможливо відтворити."
 
-#: src/backend/bacon-video-widget.c:3410
+#: src/backend/bacon-video-widget.c:3443
 msgid "The file you tried to play is an empty file."
 msgstr "Файл, який ви намагаєтеся відтворити, є порожнім файлом."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
+#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -700,12 +701,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3454
+#: src/backend/bacon-video-widget.c:3487
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Цей потік неможливо програти. Можливо, брандмауер його забороняє."
 
-#: src/backend/bacon-video-widget.c:3457
+#: src/backend/bacon-video-widget.c:3490
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -714,7 +715,7 @@ msgstr ""
 "варто встановити додатки, які надають можливість програвати певні типи "
 "відеозаписів"
 
-#: src/backend/bacon-video-widget.c:3468
+#: src/backend/bacon-video-widget.c:3501
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -722,19 +723,19 @@ msgstr ""
 "Неможливо відтворити цей файл через мережу. Спробуйте спочатку звантажити "
 "його на локальний диск."
 
-#: src/backend/bacon-video-widget.c:5062
+#: src/backend/bacon-video-widget.c:5079
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: src/backend/bacon-video-widget.c:5064
+#: src/backend/bacon-video-widget.c:5081
 msgid "Mono"
 msgstr "Моно"
 
-#: src/backend/bacon-video-widget.c:5334
+#: src/backend/bacon-video-widget.c:5351
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: src/backend/bacon-video-widget.c:5523
+#: src/backend/bacon-video-widget.c:5553
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -787,8 +788,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:89
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
 msgstr "%d:%02d:%02d.%03d"
@@ -813,8 +812,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:107
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
 msgstr "-%d:%02d:%02d.%03d"
@@ -839,8 +836,6 @@ msgstr "-%d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:128
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
 msgstr "-%d:%02d.%03d"
@@ -853,8 +848,6 @@ msgstr "-%d:%02d.%03d"
 #.
 #: src/gst/totem-time-helpers.c:139
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
 msgstr "%d:%02d.%03d"
@@ -879,15 +872,7 @@ msgstr "Вибрати все"
 msgid "Select None"
 msgstr "Скасувати вибір"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Неможливо ініціалізувати безпечну бібліотеку потоків виконання."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Перевірте систему. Totem завершується."
-
-#: src/totem.c:74
+#: src/totem.c:62
 msgid "Videos Preview"
 msgstr "Попередній перегляд відео"
 
@@ -945,20 +930,6 @@ msgstr "Локальне"
 msgid "Channels"
 msgstr "Канали"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Неможливо завантажити інтерфейс «%s». %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Файл не існує."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Переконайтесь, що Totem встановлено коректно."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Натисніть на об'єкти, щоб їх вибрати"
@@ -1011,46 +982,49 @@ msgstr "Автоматично"
 msgid "None"
 msgstr "Немає"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
+#: src/totem-object.c:1424 src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
+#: src/totem-object.c:1430 src/totem-object.c:1438 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Відтворення"
 
 # c-format
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
+#: src/totem-object.c:1506 src/totem-object.c:1534 src/totem-object.c:2120
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Неможливо програти «%s»."
+#| msgid "Totem could not play “%s”."
+msgid "Videos could not play “%s”."
+msgstr "«Відео» не вдалося відтворити «%s»."
 
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "Неможливо показати вміст довідки."
+#: src/totem-object.c:2292
+#| msgid "Totem could not display the help contents."
+msgid "Videos could not display the help contents."
+msgstr "«Відео» не вдалося показати вміст довідки."
 
-#: src/totem-object.c:2569
+#: src/totem-object.c:2553
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: src/totem-object.c:3990
+#: src/totem-object.c:3974
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: src/totem-object.c:3996
+#: src/totem-object.c:3980
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: src/totem-object.c:4002
+#: src/totem-object.c:3986
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "Не вдалось запустити Totem."
+#: src/totem-object.c:4222
+#| msgid "Totem could not startup."
+msgid "Videos could not startup."
+msgstr "Не вдалося запустити «Відео»."
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4223 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Причина невідома."
 
@@ -1337,34 +1311,6 @@ msgstr "Автоматичне довантаження субтитрів"
 msgid "Autoloads text subtitles"
 msgstr "Автоматичне довантаження текстових субтитрів"
 
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
-msgid "MPRIS D-Bus Interface"
-msgstr "Інтерфейс MPRIS D-Bus"
-
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:7
-msgid ""
-"Send notifications of currently-playing videos and allow remote control "
-"using MPRIS."
-msgstr ""
-"Надсилати сповіщень про поточні відтворювані відеозаписи і дозволити "
-"віддалене керування через MPRIS."
-
-#: src/plugins/dbusservice/dbusservice.py:210
-#: src/plugins/dbusservice/dbusservice.py:239
-#, python-format
-msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "В об'єкті MediaPlayer2 не реалізовано інтерфейс «%s»"
-
-#: src/plugins/dbusservice/dbusservice.py:220
-#, python-format
-msgid "The property ‘%s’ is not writeable."
-msgstr "Властивість «%s» неможливо записати."
-
-#: src/plugins/dbusservice/dbusservice.py:234
-#, python-format
-msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr "Невідома властивість «%s» потрібна для об'єкта MediaPlayer"
-
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Instant Messenger Status"
 msgstr "Стан у клієнті обміну миттєвими повідомленнями"
@@ -1374,6 +1320,18 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "Встановлює статус у клієнті обміну миттєвими повідомленнями під час "
 "перегляду фільму"
+
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
+msgid "MPRIS D-Bus Interface"
+msgstr "Інтерфейс MPRIS D-Bus"
+
+#: src/plugins/mpris/mpris.plugin.desktop.in:6
+msgid ""
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
+msgstr ""
+"Надсилати сповіщень про поточні відтворювані відеозаписи і дозволити "
+"віддалене керування через MPRIS."
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open directory"
@@ -1471,38 +1429,38 @@ msgstr "Властивості фільму"
 msgid "Adds movie properties menu item"
 msgstr "Додає об'єкт у меню про властивості відеозапису"
 
-#: src/plugins/properties/totem-movie-properties.c:148
+#: src/plugins/properties/totem-movie-properties.c:150
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 #, c-format
 msgid "%d kbps"
 msgstr "%d кбіт/с"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 #, c-format
 msgid "%d Hz"
 msgstr "%d Гц"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/totem-movie-properties.c:276
+#: src/plugins/properties/totem-movie-properties.c:278
 msgid "Properties"
 msgstr "Властивості"
 
-#: src/plugins/properties/totem-movie-properties.c:301
+#: src/plugins/properties/totem-movie-properties.c:303
 msgid "_Properties"
 msgstr "В_ластивості"
 
@@ -1561,80 +1519,80 @@ msgid "Channels:"
 msgstr "Канали:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:101
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:103
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:105
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:107
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Невідомий"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:116
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:121
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:124
+#: src/plugins/properties/bacon-video-widget-properties.c:256
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:128
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:130
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:132
 msgid "0 Hz"
 msgstr "0 Гц"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:134
 msgid "0 Channels"
 msgstr "0 каналів"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:150
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1642,7 +1600,7 @@ msgstr[0] "%d година"
 msgstr[1] "%d години"
 msgstr[2] "%d годин"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1650,7 +1608,7 @@ msgstr[0] "%d хвилина"
 msgstr[1] "%d хвилини"
 msgstr[2] "%d хвилин"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:155
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1659,46 +1617,46 @@ msgstr[1] "%d секунди"
 msgstr[2] "%d секунд"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:169
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:178
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:185
 msgid "0 seconds"
 msgstr "0 секунд"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
@@ -1706,7 +1664,7 @@ msgstr[0] "%0.3f кадр за секунду"
 msgstr[1] "%0.3f кадри за секунду"
 msgstr[2] "%0.3f кадрів за секунду"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:252
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1752,17 +1710,22 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Можна отримати доступ до Totem.Object через «totem_object» :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Консоль Python програвача Totem"
+#| msgid "Python Console"
+msgid "Videos Python Console"
+msgstr "Консоль Python «Відео»"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password (“totem”)."
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Після того, як ви натиснете «Гаразд», програма чекатиме на з'єднання від "
+"Після того, як ви натиснете «Гаразд», «Відео» чекатиме на з'єднання від "
 "winpdb або rpdb2. Якщо пароль налагоджувача у GConf не вказано, буде "
 "використано типовий пароль («totem»)."
 
@@ -1782,11 +1745,11 @@ msgstr "Додаток обертання"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Дозволяє відеозаписам обертатись, якщо воно у неправильній орієнтації."
 
-#: src/plugins/rotation/totem-rotation.c:260
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "_Обернути ↷"
 
-#: src/plugins/rotation/totem-rotation.c:264
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "Обернути ↶"
 
@@ -1798,22 +1761,22 @@ msgstr "Зберегти копію"
 msgid "Save a copy of the currently playing movie"
 msgstr "Зберегти копію зараз відтворюваного фільму"
 
-#: src/plugins/save-file/totem-save-file.c:85
+#: src/plugins/save-file/totem-save-file.c:87
 msgid "The video could not be made available offline."
 msgstr "Відео не вдалося зробити доступним поза інтернетом."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:87
+#: src/plugins/save-file/totem-save-file.c:89
 msgid "“Files” is not available."
 msgstr "«Файли» недоступні."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:168
+#: src/plugins/save-file/totem-save-file.c:170
 msgid "Movie"
 msgstr "В_ідео"
 
-#: src/plugins/save-file/totem-save-file.c:452
+#: src/plugins/save-file/totem-save-file.c:453
 msgid "Make Available Offline"
 msgstr "Звантажити"
 
@@ -1825,7 +1788,7 @@ msgstr "Зберігач екрана"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Вимкнути зберігання екрана, коли програється відеозапис"
 
-#: src/plugins/screensaver/totem-screensaver.c:75
+#: src/plugins/screensaver/totem-screensaver.c:77
 msgid "Playing a movie"
 msgstr "Відтворення відео"
 
@@ -1892,20 +1855,21 @@ msgstr "Створення галереї…"
 msgid "Saving gallery as “%s”"
 msgstr "Збереження галереї як «%s»"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
-msgid "Totem could not get a screenshot of the video."
-msgstr "Не вдалось отримати кадр цього фільму."
+#: src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
+#| msgid "Totem could not get a screenshot of the video."
+msgid "Videos could not get a screenshot of the video."
+msgstr "«Відео» не вдалося отримати знімок з цього відео."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Цього не повинно було трапитись, надішліть звіт про помилку."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:323
+#: src/plugins/screenshot/totem-screenshot-plugin.c:321
 msgid "Take _Screenshot"
 msgstr "Зробити з_німок"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:329
+#: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
 msgstr "Створити знімки _галереї…"
 
@@ -1944,41 +1908,41 @@ msgstr "6"
 msgid "_Skip To"
 msgstr "Пере_стрибнути до"
 
-#: src/plugins/skipto/totem-skipto-plugin.c:202
+#: src/plugins/skipto/totem-skipto-plugin.c:198
 msgid "_Skip To…"
 msgstr "Пере_стрибнути до…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Звичайна"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
 #, c-format
 msgid "Speed: %s"
 msgstr "Швидкість: %s"
@@ -1998,6 +1962,33 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Встановлює користувацького агента для сайту Vimeo"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Неможливо ініціалізувати безпечну бібліотеку потоків виконання."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr "Перевірте систему. Totem завершується."
+
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Неможливо завантажити інтерфейс «%s». %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Файл не існує."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Переконайтесь, що Totem встановлено коректно."
+
+#~ msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
+#~ msgstr "В об'єкті MediaPlayer2 не реалізовано інтерфейс «%s»"
+
+#~ msgid "The property ‘%s’ is not writeable."
+#~ msgstr "Властивість «%s» неможливо записати."
+
+#~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
+#~ msgstr "Невідома властивість «%s» потрібна для об'єкта MediaPlayer"
+
+#~ msgid "Totem Python Console"
+#~ msgstr "Консоль Python програвача Totem"
 
 #~ msgid "S_ubtitles"
 #~ msgstr "С_убтитри"
