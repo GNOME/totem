@@ -1,5 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
+/*
+ * Copyright (C) 2006 William Jon McCann <mccann@jhu.edu>
  * Copyright (C) 2008 Philip Withnall <philip@tecnocode.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,7 +41,8 @@
 static void totem_gallery_progress_finalize (GObject *object);
 static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgress *self);
 
-struct _TotemGalleryProgressPrivate {
+struct _TotemGalleryProgress {
+	GtkDialog parent;
 	GPid child_pid;
 	GString *line;
 	gchar *output_filename;
@@ -48,7 +50,7 @@ struct _TotemGalleryProgressPrivate {
 	GtkProgressBar *progress_bar;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (TotemGalleryProgress, totem_gallery_progress, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (TotemGalleryProgress, totem_gallery_progress, GTK_TYPE_DIALOG)
 
 static void
 totem_gallery_progress_class_init (TotemGalleryProgressClass *klass)
@@ -61,19 +63,18 @@ totem_gallery_progress_class_init (TotemGalleryProgressClass *klass)
 static void
 totem_gallery_progress_init (TotemGalleryProgress *self)
 {
-	self->priv = totem_gallery_progress_get_instance_private (self);
 }
 
 static void
 totem_gallery_progress_finalize (GObject *object)
 {
-	TotemGalleryProgressPrivate *priv = TOTEM_GALLERY_PROGRESS (object)->priv;
+	TotemGalleryProgress *progress = TOTEM_GALLERY_PROGRESS (object);
 
-	g_spawn_close_pid (priv->child_pid);
-	g_free (priv->output_filename);
+	g_spawn_close_pid (progress->child_pid);
+	g_free (progress->output_filename);
 
-	if (priv->line != NULL)
-		g_string_free (priv->line, TRUE);
+	if (progress->line != NULL)
+		g_string_free (progress->line, TRUE);
 
 	/* Chain up to the parent class */
 	G_OBJECT_CLASS (totem_gallery_progress_parent_class)->finalize (object);
@@ -90,9 +91,9 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	self = g_object_new (TOTEM_TYPE_GALLERY_PROGRESS, NULL);
 
 	/* Create the widget and initialise class variables */
-	self->priv->progress_bar = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
-	self->priv->child_pid = child_pid;
-	self->priv->output_filename = g_strdup (output_filename);
+	self->progress_bar = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
+	self->child_pid = child_pid;
+	self->output_filename = g_strdup (output_filename);
 
 	/* Set up the window */
 	gtk_window_set_title (GTK_WINDOW (self), _("Creating Gallery…"));
@@ -102,8 +103,8 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 
 	/* Set the progress label */
 	label_text = g_strdup_printf (_("Saving gallery as “%s”"), output_filename);
-	gtk_progress_bar_set_show_text (self->priv->progress_bar, TRUE);
-	gtk_progress_bar_set_text (self->priv->progress_bar, label_text);
+	gtk_progress_bar_set_show_text (self->progress_bar, TRUE);
+	gtk_progress_bar_set_text (self->progress_bar, label_text);
 	g_free (label_text);
 
 	g_signal_connect (G_OBJECT (self), "response",
@@ -111,7 +112,7 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 
 	/* Assemble the window */
 	container = gtk_dialog_get_content_area (GTK_DIALOG (self));
-	gtk_box_pack_start (GTK_BOX (container), GTK_WIDGET (self->priv->progress_bar), TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (container), GTK_WIDGET (self->progress_bar), TRUE, TRUE, 5);
 
 	gtk_widget_show_all (container);
 
@@ -123,10 +124,10 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgr
 {
 	if (response_id != GTK_RESPONSE_OK) {
 		/* Cancel the operation by killing the process */
-		kill (self->priv->child_pid, SIGINT);
+		kill (self->child_pid, SIGINT);
 
 		/* Unlink the output file, just in case (race condition) it's already been created */
-		g_unlink (self->priv->output_filename);
+		g_unlink (self->output_filename);
 	}
 }
 
@@ -136,7 +137,7 @@ process_line (TotemGalleryProgress *self, const gchar *line)
 	gfloat percent_complete;
 
 	if (sscanf (line, "%f%% complete", &percent_complete) == 1) {
-		gtk_progress_bar_set_fraction (self->priv->progress_bar, percent_complete / 100.0);
+		gtk_progress_bar_set_fraction (self->progress_bar, percent_complete / 100.0);
 		return TRUE;
 	}
 
@@ -147,9 +148,6 @@ process_line (TotemGalleryProgress *self, const gchar *line)
 static gboolean
 stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgress *self)
 {
-	/* Code pilfered from nautilus-burn-process.c (nautilus-cd-burner) under GPLv2+
-	 * Copyright (C) 2006 William Jon McCann <mccann@jhu.edu> */
-	TotemGalleryProgressPrivate *priv = self->priv;
 	gboolean retval = TRUE;
 
 	if (condition & G_IO_IN) {
@@ -160,11 +158,11 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 		status = g_io_channel_read_line (source, &line, NULL, NULL, NULL);
 
 		if (status == G_IO_STATUS_NORMAL) {
-			if (priv->line != NULL) {
-				g_string_append (priv->line, line);
+			if (self->line != NULL) {
+				g_string_append (self->line, line);
 				g_free (line);
-				line = g_string_free (priv->line, FALSE);
-				priv->line = NULL;
+				line = g_string_free (self->line, FALSE);
+				self->line = NULL;
 			}
 
 			retval = process_line (self, line);
@@ -176,17 +174,17 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 			if (status == G_IO_STATUS_NORMAL) {
 				gchar *line2;
 
-				if (priv->line == NULL)
-					priv->line = g_string_new (NULL);
-				g_string_append_c (priv->line, buf[0]);
+				if (self->line == NULL)
+					self->line = g_string_new (NULL);
+				g_string_append_c (self->line, buf[0]);
 
 				switch (buf[0]) {
 				case '\n':
 				case '\r':
 				case '\xe2':
 				case '\0':
-					line2 = g_string_free (priv->line, FALSE);
-					priv->line = NULL;
+					line2 = g_string_free (self->line, FALSE);
+					self->line = NULL;
 
 					retval = process_line (self, line2);
 					g_free (line2);
@@ -197,7 +195,7 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 			}
 		} else if (status == G_IO_STATUS_EOF) {
 			/* Show as complete and stop processing */
-			gtk_progress_bar_set_fraction (self->priv->progress_bar, 1.0);
+			gtk_progress_bar_set_fraction (self->progress_bar, 1.0);
 			retval = FALSE;
 		}
 	} else if (condition & G_IO_HUP) {

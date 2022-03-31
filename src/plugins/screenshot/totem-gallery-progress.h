@@ -32,22 +32,7 @@
 #include <gtk/gtk.h>
 
 #define TOTEM_TYPE_GALLERY_PROGRESS		(totem_gallery_progress_get_type ())
-#define TOTEM_GALLERY_PROGRESS(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgress))
-#define TOTEM_GALLERY_PROGRESS_CLASS(k)		(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgressClass))
-#define TOTEM_IS_GALLERY_PROGRESS(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_GALLERY_PROGRESS))
-#define TOTEM_IS_GALLERY_PROGRESS_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_GALLERY_PROGRESS))
-#define TOTEM_GALLERY_PROGRESS_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GALLERY_PROGRESS, TotemGalleryProgressClass))
-
-typedef struct _TotemGalleryProgressPrivate	TotemGalleryProgressPrivate;
-
-typedef struct {
-	GtkDialog parent;
-	TotemGalleryProgressPrivate *priv;
-} TotemGalleryProgress;
-
-typedef struct {
-	GtkDialogClass parent;
-} TotemGalleryProgressClass;
+G_DECLARE_FINAL_TYPE(TotemGalleryProgress, totem_gallery_progress, TOTEM, GALLERY_PROGRESS, GtkDialog)
 
 GType totem_gallery_progress_get_type (void);
 TotemGalleryProgress *totem_gallery_progress_new (GPid child_pid, const gchar *output_filename);
