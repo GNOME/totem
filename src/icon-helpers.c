@@ -519,7 +519,7 @@ void
 totem_grilo_setup_icons (void)
 {
 	icons[ICON_BOX] = load_named_icon ("folder-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
-	icons[ICON_CHANNEL] = load_named_icon ("tv-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
+	icons[ICON_CHANNEL] = load_named_icon ("totem-tv-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
 	icons[ICON_VIDEO] = load_named_icon ("folder-videos-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
 	icons[ICON_VIDEO_THUMBNAILING] = load_named_icon ("content-loading-symbolic", VIDEO_ICON_SIZE, FILL_TRANSPARENT);
 	icons[ICON_OPTICAL] = load_named_icon ("media-optical-dvd-symbolic", VIDEO_ICON_SIZE, FILL_DEFAULT);
