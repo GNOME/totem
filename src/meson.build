@@ -256,7 +256,8 @@ executable(
   test_icons_sources,
   dependencies: [
     libtotem_player_dep,
-    libbacon_video_widget_dep
+    libbacon_video_widget_dep,
+    hdy_dep,
   ],
   c_args: totem_common_cflags
 )

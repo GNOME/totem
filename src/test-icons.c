@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <grilo.h>
+#include <libhandy-1/handy.h>
 #include <icon-helpers.h>
 
 typedef struct {
@@ -95,18 +96,20 @@ static const char *labels[] = {
 
 int main (int argc, char **argv)
 {
+	HdyStyleManager *style_manager;
 	GtkWidget *window, *box, *scroll;
 	GtkStyleContext *context;
 	GtkWidget *images[NUM_IMAGES];
 	GObject *object;
-	GtkSettings *gtk_settings;
 	guint i;
 	gboolean tmp;
 
 	gtk_init (&argc, &argv);
 	grl_init (&argc, &argv);
-	gtk_settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+
+	hdy_init ();
+	style_manager = hdy_style_manager_get_default ();
+	hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	totem_grilo_setup_icons ();
