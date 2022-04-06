@@ -1157,7 +1157,7 @@ emit_file_closed (TotemObject *totem)
  *
  * Emits the #TotemObject::file-played signal on @totem.
  **/
-void
+static void
 totem_file_has_played (TotemObject *totem,
 		       const char  *mrl)
 {
