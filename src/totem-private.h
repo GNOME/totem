@@ -155,8 +155,6 @@ struct _TotemObject {
 	gboolean has_played_emitted;
 };
 
-GtkWidget *totem_volume_create (void);
-
 #define SEEK_FORWARD_OFFSET 60
 #define SEEK_BACKWARD_OFFSET -15
 
