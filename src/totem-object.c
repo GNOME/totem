@@ -533,6 +533,7 @@ totem_object_finalize (GObject *object)
 {
 	TotemObject *totem = TOTEM_OBJECT (object);
 
+	g_clear_object (&totem->playlist_signals);
 	g_clear_pointer (&totem->busy_popup_ht, g_hash_table_destroy);
 	g_clear_pointer (&totem->title, g_free);
 	g_clear_pointer (&totem->subtitle, g_free);
@@ -737,7 +738,7 @@ add_items_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_
 	/* totem_playlist_add_mrls_finish() never returns an error */
 	totem_playlist_add_mrls_finish (playlist, async_result, NULL);
 
-	totem_signal_unblock_by_data (playlist, totem);
+	g_signal_group_unblock (totem->playlist_signals);
 
 	/* And start playback */
 	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
@@ -771,7 +772,7 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 	if (data->play)
 		end = totem_playlist_get_last (playlist);
 
-	totem_signal_unblock_by_data (playlist, data->totem);
+	g_signal_group_unblock (data->totem->playlist_signals);
 
 	if (data->play && playlist_changed && end != -1) {
 		char *mrl, *subtitle;
@@ -833,7 +834,7 @@ totem_object_add_to_playlist (TotemObject *totem,
 	/* Block all signals from the playlist until we're finished. They're unblocked in the callback, add_to_playlist_and_play_cb.
 	 * There are no concurrency issues here, since blocking the signals multiple times should require them to be unblocked the
 	 * same number of times before they fire again. */
-	totem_signal_block_by_data (totem->playlist, totem);
+	g_signal_group_block (totem->playlist_signals);
 
 	data = g_slice_new (AddToPlaylistData);
 	data->totem = g_object_ref (totem);
@@ -862,7 +863,7 @@ totem_object_add_items_to_playlist (TotemObject *totem,
 	/* Block all signals from the playlist until we're finished. They're unblocked in the callback, add_to_playlist_and_play_cb.
 	 * There are no concurrency issues here, since blocking the signals multiple times should require them to be unblocked the
 	 * same number of times before they fire again. */
-	totem_signal_block_by_data (totem->playlist, totem);
+	g_signal_group_block (totem->playlist_signals);
 
 	totem_playlist_add_mrls (totem->playlist, items, TRUE, NULL,
 				 (GAsyncReadyCallback) add_items_to_playlist_and_play_cb, totem);
@@ -2321,8 +2322,8 @@ totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result,
 {
 	char *mrl, *subtitle;
 
-	/* Reconnect the playlist's changed signal (which was disconnected below in totem_object_drop_files(). */
-	g_signal_connect (G_OBJECT (playlist), "changed", G_CALLBACK (playlist_changed_cb), totem);
+	/* Unblock the playlist's signals (which was blocked below in totem_object_drop_files(). */
+	g_signal_group_unblock (totem->playlist_signals);
 	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
 	totem_object_set_mrl_and_play (totem, mrl, subtitle);
 	g_free (mrl);
@@ -2373,7 +2374,7 @@ totem_object_drop_files (TotemObject      *totem,
 	}
 
 	/* The function that calls us knows better if we should be doing something with the changed playlist... */
-	g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
+	g_signal_group_block (totem->playlist_signals);
 	totem_playlist_clear (totem->playlist);
 
 	/* Add each MRL to the playlist asynchronously */
@@ -2398,7 +2399,7 @@ totem_object_drop_files (TotemObject      *totem,
 		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, title));
 	}
 
-	/* Add the MRLs to the playlist asynchronously and in order. We need to reconnect playlist's "changed" signal once all of the add-MRL
+	/* Add the MRLs to the playlist asynchronously and in order. We need to unblock playlist's "changed" signal once all of the add-MRL
 	 * operations have completed. */
 	if (mrl_list != NULL) {
 		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL,
@@ -2925,13 +2926,9 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 
 	g_application_unmark_busy (G_APPLICATION (totem));
 
-	/* ... and reconnect because we're nice people */
+	/* ... and unblock because we're nice people */
 	if (cleared != FALSE)
-	{
-		g_signal_connect (G_OBJECT (totem->playlist),
-				"changed", G_CALLBACK (playlist_changed_cb),
-				totem);
-	}
+		g_signal_group_unblock (totem->playlist_signals);
 
 	return changed;
 }
@@ -4093,6 +4090,7 @@ void
 playlist_widget_setup (TotemObject *totem)
 {
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
+	totem->playlist_signals = g_signal_group_new (TOTEM_TYPE_PLAYLIST);
 
 #if 0
 	{
@@ -4104,24 +4102,19 @@ playlist_widget_setup (TotemObject *totem)
 		gtk_widget_show_all (window);
 	}
 #endif
-	g_signal_connect (G_OBJECT (totem->playlist), "active-name-changed",
-			  G_CALLBACK (on_playlist_change_name), totem);
-	g_signal_connect (G_OBJECT (totem->playlist), "item-activated",
-			  G_CALLBACK (item_activated_cb), totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			  "changed", G_CALLBACK (playlist_changed_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			  "current-removed", G_CALLBACK (current_removed_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			  "notify::repeat",
-			  G_CALLBACK (playlist_repeat_toggle_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			  "subtitle-changed",
-			  G_CALLBACK (subtitle_changed_cb),
-			  totem);
+	g_signal_group_connect (totem->playlist_signals, "active-name-changed",
+				G_CALLBACK (on_playlist_change_name), totem);
+	g_signal_group_connect (totem->playlist_signals, "item-activated",
+				G_CALLBACK (item_activated_cb), totem);
+	g_signal_group_connect (totem->playlist_signals, "changed",
+				G_CALLBACK (playlist_changed_cb), totem);
+	g_signal_group_connect (totem->playlist_signals, "current-removed",
+				G_CALLBACK (current_removed_cb), totem);
+	g_signal_group_connect (totem->playlist_signals, "notify::repeat",
+				G_CALLBACK (playlist_repeat_toggle_cb), totem);
+	g_signal_group_connect (totem->playlist_signals, "subtitle-changed",
+				G_CALLBACK (subtitle_changed_cb), totem);
+	g_signal_group_set_target (totem->playlist_signals, totem->playlist);
 }
 
 static void

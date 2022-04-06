@@ -36,9 +36,6 @@
 #include "totem-open-location.h"
 #include "totem-plugins-engine.h"
 
-#define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
-#define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
-
 #define totem_set_sensitivity(xml, name, state)					\
 	{									\
 		GtkWidget *widget;						\
@@ -144,10 +141,13 @@ struct _TotemObject {
 
 	char *player_title;
 
+	/* Playlist */
+	TotemPlaylist *playlist;
+	GSignalGroup *playlist_signals;
+
 	/* other */
 	char *mrl;
 	char *next_subtitle;
-	TotemPlaylist *playlist;
 	GSettings *settings;
 	TotemStates state;
 	TotemOpenLocation *open_location;

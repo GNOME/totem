@@ -123,7 +123,7 @@ endif
 
 add_project_arguments(common_flags, language: 'c')
 
-glib_req_version = '>= 2.56.0'
+glib_req_version = '>= 2.72.0'
 gtk_req_version = '>= 3.22.0'
 hdy_req_version = '>= 1.5.0'
 gst_req_version = '>= 1.6.0'

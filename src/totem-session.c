@@ -56,7 +56,7 @@ totem_session_try_restore (Totem *totem)
 	char *uri;
 	char *mrl, *subtitle;
 
-	totem_signal_block_by_data (totem->playlist, totem);
+	g_signal_group_block (totem->playlist_signals);
 	totem->pause_start = TRUE;
 
 	/* Possibly the only place in Totem where it makes sense to add an MRL to the playlist synchronously, since we haven't yet entered
@@ -64,14 +64,14 @@ totem_session_try_restore (Totem *totem)
 	uri = get_session_filename ();
 	if (totem_playlist_add_mrl_sync (totem->playlist, uri) == FALSE) {
 		totem->pause_start = FALSE;
-		totem_signal_unblock_by_data (totem->playlist, totem);
+		g_signal_group_unblock (totem->playlist_signals);
 		totem_object_set_mrl (totem, NULL, NULL);
 		g_free (uri);
 		return FALSE;
 	}
 	g_free (uri);
 
-	totem_signal_unblock_by_data (totem->playlist, totem);
+	g_signal_group_unblock (totem->playlist_signals);
 
 	subtitle = NULL;
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
