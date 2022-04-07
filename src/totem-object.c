@@ -2229,6 +2229,25 @@ totem_object_set_rate (TotemObject *totem, float rate)
 }
 
 /**
+ * totem_object_volume_toggle_mute:
+ * @totem: a #TotemObject
+ *
+ * Toggles the mute status.
+ **/
+static void
+totem_object_volume_toggle_mute (TotemObject *totem)
+{
+	if (totem->muted == FALSE) {
+		totem->muted = TRUE;
+		totem->prev_volume = bacon_video_widget_get_volume (totem->bvw);
+		bacon_video_widget_set_volume (totem->bvw, 0.0);
+	} else {
+		totem->muted = FALSE;
+		bacon_video_widget_set_volume (totem->bvw, totem->prev_volume);
+	}
+}
+
+/**
  * totem_object_set_volume_relative:
  * @totem: a #TotemObject
  * @off_pct: the value by which to increase or decrease the volume
@@ -2248,25 +2267,6 @@ totem_object_set_volume_relative (TotemObject *totem, double off_pct)
 
 	vol = bacon_video_widget_get_volume (totem->bvw);
 	bacon_video_widget_set_volume (totem->bvw, vol + off_pct);
-}
-
-/**
- * totem_object_volume_toggle_mute:
- * @totem: a #TotemObject
- *
- * Toggles the mute status.
- **/
-void
-totem_object_volume_toggle_mute (TotemObject *totem)
-{
-	if (totem->muted == FALSE) {
-		totem->muted = TRUE;
-		totem->prev_volume = bacon_video_widget_get_volume (totem->bvw);
-		bacon_video_widget_set_volume (totem->bvw, 0.0);
-	} else {
-		totem->muted = FALSE;
-		bacon_video_widget_set_volume (totem->bvw, totem->prev_volume);
-	}
 }
 
 static void
