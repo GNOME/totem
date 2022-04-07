@@ -2255,7 +2255,7 @@ totem_object_volume_toggle_mute (TotemObject *totem)
  * Sets the volume relative to its current level, with <code class="literal">1.0</code> being the
  * maximum, and <code class="literal">0.0</code> being the minimum level.
  **/
-void
+static void
 totem_object_set_volume_relative (TotemObject *totem, double off_pct)
 {
 	double vol;
