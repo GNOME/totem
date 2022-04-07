@@ -98,6 +98,8 @@ static void play_pause_set_label (TotemObject *totem, TotemStates state);
 static void totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle);
 static void mark_popup_busy (TotemObject *totem, const char *reason);
 static void unmark_popup_busy (TotemObject *totem, const char *reason);
+static gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
+static gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 static void video_widget_create (TotemObject *totem);
 static void grilo_widget_setup (TotemObject *totem);
 static void playlist_widget_setup (TotemObject *totem);
@@ -114,9 +116,7 @@ static void totem_setup_window (TotemObject *totem);
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_state_event_cb (GtkWidget *window, GdkEventWindowState *event, TotemObject *totem);
-G_MODULE_EXPORT gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem);
-G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
 
 enum {
