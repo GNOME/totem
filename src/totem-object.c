@@ -100,6 +100,7 @@ static void mark_popup_busy (TotemObject *totem, const char *reason);
 static void unmark_popup_busy (TotemObject *totem, const char *reason);
 static void video_widget_create (TotemObject *totem);
 static void grilo_widget_setup (TotemObject *totem);
+static void playlist_widget_setup (TotemObject *totem);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
@@ -4088,7 +4089,7 @@ totem_callback_connect (TotemObject *totem)
 	update_volume_sliders (totem);
 }
 
-void
+static void
 playlist_widget_setup (TotemObject *totem)
 {
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
