@@ -461,8 +461,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("file-opened",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemObjectClass, file_opened),
-				NULL, NULL,
+				0, NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
 
@@ -477,8 +476,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("file-has-played",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemObjectClass, file_has_played),
-				NULL, NULL,
+				0, NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
 
@@ -492,8 +490,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("file-closed",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemObjectClass, file_closed),
-				NULL, NULL,
+				0, NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0, G_TYPE_NONE);
 
@@ -512,8 +509,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("metadata-updated",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemObjectClass, metadata_updated),
-				NULL, NULL,
+				0, NULL, NULL,
 	                        g_cclosure_marshal_generic,
 				G_TYPE_NONE, 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UINT);
 
@@ -531,8 +527,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("get-user-agent",
 			      G_TYPE_FROM_CLASS (object_class),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemObjectClass, get_user_agent),
-			      accumulator_first_non_null_wins, NULL,
+			      0, accumulator_first_non_null_wins, NULL,
 	                      g_cclosure_marshal_generic,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
 
@@ -550,8 +545,7 @@ totem_object_class_init (TotemObjectClass *klass)
 		g_signal_new ("get-text-subtitle",
 			      G_TYPE_FROM_CLASS (object_class),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemObjectClass, get_text_subtitle),
-			      accumulator_first_non_null_wins, NULL,
+			      0, accumulator_first_non_null_wins, NULL,
 	                      g_cclosure_marshal_generic,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
 

@@ -121,44 +121,20 @@ GQuark totem_remote_setting_quark	(void);
 #define TOTEM_TYPE_REMOTE_SETTING	(totem_remote_setting_get_type())
 #define TOTEM_REMOTE_SETTING		totem_remote_setting_quark ()
 
-#define TOTEM_TYPE_OBJECT              (totem_object_get_type ())
-#define TOTEM_OBJECT(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), totem_object_get_type (), TotemObject))
-#define TOTEM_OBJECT_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), totem_object_get_type (), TotemObjectClass))
-#define TOTEM_IS_OBJECT(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, totem_object_get_type ()))
-#define TOTEM_IS_OBJECT_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), totem_object_get_type ()))
-
 /**
  * Totem:
  *
  * The #Totem object is a handy synonym for #TotemObject, and the two can be used interchangably.
  **/
+typedef struct _TotemObject Totem;
 
 /**
  * TotemObject:
  *
  * All the fields in the #TotemObject structure are private and should never be accessed directly.
  **/
-typedef struct _TotemObject Totem;
-typedef struct _TotemObject TotemObject;
-
-typedef struct {
-	GtkApplicationClass parent_class;
-
-	void (*file_opened)			(TotemObject *totem, const char *mrl);
-	void (*file_closed)			(TotemObject *totem);
-	void (*file_has_played)			(TotemObject *totem, const char *mrl);
-	void (*metadata_updated)		(TotemObject *totem,
-						 const char *artist,
-						 const char *title,
-						 const char *album,
-						 guint track_num);
-	char * (*get_user_agent)		(TotemObject *totem,
-						 const char  *mrl);
-	char * (*get_text_subtitle)		(TotemObject *totem,
-						 const char  *mrl);
-} TotemObjectClass;
-
-GType	totem_object_get_type			(void);
+#define TOTEM_TYPE_OBJECT              (totem_object_get_type ())
+G_DECLARE_FINAL_TYPE(TotemObject, totem_object, TOTEM, OBJECT, GtkApplication)
 
 void	totem_object_exit			(TotemObject *totem) G_GNUC_NORETURN;
 void	totem_object_play			(TotemObject *totem);
