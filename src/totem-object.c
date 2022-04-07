@@ -140,6 +140,35 @@ static int totem_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(TotemObject, totem_object, GTK_TYPE_APPLICATION)
 
+/**
+ * totem_object_plugins_init:
+ * @totem: a #TotemObject
+ *
+ * Initialises the plugin engine and activates all the
+ * enabled plugins.
+ **/
+static void
+totem_object_plugins_init (TotemObject *totem)
+{
+	if (totem->engine == NULL)
+		totem->engine = totem_plugins_engine_get_default (totem);
+}
+
+/**
+ * totem_object_plugins_shutdown:
+ * @totem: a #TotemObject
+ *
+ * Shuts down the plugin engine and deactivates all the
+ * plugins.
+ **/
+static void
+totem_object_plugins_shutdown (TotemObject *totem)
+{
+	if (totem->engine)
+		totem_plugins_engine_shut_down (totem->engine);
+	g_clear_object (&totem->engine);
+}
+
 static void
 totem_object_app_open (GApplication  *application,
 		       GFile        **files,
@@ -586,35 +615,6 @@ totem_object_get_property (GObject *object,
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
-}
-
-/**
- * totem_object_plugins_init:
- * @totem: a #TotemObject
- *
- * Initialises the plugin engine and activates all the
- * enabled plugins.
- **/
-void
-totem_object_plugins_init (TotemObject *totem)
-{
-	if (totem->engine == NULL)
-		totem->engine = totem_plugins_engine_get_default (totem);
-}
-
-/**
- * totem_object_plugins_shutdown:
- * @totem: a #TotemObject
- *
- * Shuts down the plugin engine and deactivates all the
- * plugins.
- **/
-void
-totem_object_plugins_shutdown (TotemObject *totem)
-{
-	if (totem->engine)
-		totem_plugins_engine_shut_down (totem->engine);
-	g_clear_object (&totem->engine);
 }
 
 /**
