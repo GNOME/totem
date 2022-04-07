@@ -36,13 +36,6 @@
 #include "totem-open-location.h"
 #include "totem-plugins-engine.h"
 
-#define totem_object_set_sensitivity2(name, state)					\
-	{										\
-		GAction *__action;							\
-		__action = g_action_map_lookup_action (G_ACTION_MAP (totem), name);	\
-		g_simple_action_set_enabled (G_SIMPLE_ACTION (__action), state);	\
-	}
-
 typedef enum {
 	TOTEM_CONTROLS_UNDEFINED,
 	TOTEM_CONTROLS_VISIBLE,

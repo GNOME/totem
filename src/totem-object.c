@@ -104,6 +104,13 @@ static void playlist_widget_setup (TotemObject *totem);
 static void totem_callback_connect (TotemObject *totem);
 static void totem_setup_window (TotemObject *totem);
 
+#define action_set_sensitive(name, state)					\
+	{										\
+		GAction *__action;							\
+		__action = g_action_map_lookup_action (G_ACTION_MAP (totem), name);	\
+		g_simple_action_set_enabled (G_SIMPLE_ACTION (__action), state);	\
+	}
+
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_state_event_cb (GtkWidget *window, GdkEventWindowState *event, TotemObject *totem);
@@ -1928,18 +1935,18 @@ totem_object_set_mrl (TotemObject *totem,
 		play_pause_set_label (totem, STATE_STOPPED);
 
 		/* Play/Pause */
-		totem_object_set_sensitivity2 ("play", FALSE);
+		action_set_sensitive ("play", FALSE);
 
 		/* Volume */
 		gtk_widget_set_sensitive (totem->volume, FALSE);
 		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
-		totem_object_set_sensitivity2 ("next-chapter", FALSE);
-		totem_object_set_sensitivity2 ("previous-chapter", FALSE);
+		action_set_sensitive ("next-chapter", FALSE);
+		action_set_sensitive ("previous-chapter", FALSE);
 
 		/* Subtitle selection */
-		totem_object_set_sensitivity2 ("select-subtitle", FALSE);
+		action_set_sensitive ("select-subtitle", FALSE);
 
 		/* Set the label */
 		update_mrl_label (totem, NULL);
@@ -1975,7 +1982,7 @@ totem_object_set_mrl (TotemObject *totem,
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
-		totem_object_set_sensitivity2 ("play", TRUE);
+		action_set_sensitive ("play", TRUE);
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
@@ -1983,7 +1990,7 @@ totem_object_set_mrl (TotemObject *totem,
 		totem->volume_sensitive = caps;
 
 		/* Subtitle selection */
-		totem_object_set_sensitivity2 ("select-subtitle", !totem_is_special_mrl (mrl));
+		action_set_sensitive ("select-subtitle", !totem_is_special_mrl (mrl));
 
 		/* Set the playlist */
 		play_pause_set_label (totem, STATE_PAUSED);
@@ -3780,17 +3787,17 @@ update_media_menu_items (TotemObject *totem)
 
 	playing = totem_playing_dvd (totem->mrl);
 
-	totem_object_set_sensitivity2 ("dvd-root-menu", playing);
-	totem_object_set_sensitivity2 ("dvd-title-menu", playing);
-	totem_object_set_sensitivity2 ("dvd-audio-menu", playing);
-	totem_object_set_sensitivity2 ("dvd-angle-menu", playing);
-	totem_object_set_sensitivity2 ("dvd-chapter-menu", playing);
+	action_set_sensitive ("dvd-root-menu", playing);
+	action_set_sensitive ("dvd-title-menu", playing);
+	action_set_sensitive ("dvd-audio-menu", playing);
+	action_set_sensitive ("dvd-angle-menu", playing);
+	action_set_sensitive ("dvd-chapter-menu", playing);
 
-	totem_object_set_sensitivity2 ("next-angle",
+	action_set_sensitive ("next-angle",
 				       bacon_video_widget_has_angles (totem->bvw));
 
 	mount = totem_get_mount_for_media (totem->mrl);
-	totem_object_set_sensitivity2 ("eject", mount != NULL);
+	action_set_sensitive ("eject", mount != NULL);
 	if (mount != NULL)
 		g_object_unref (mount);
 }
@@ -3798,9 +3805,9 @@ update_media_menu_items (TotemObject *totem)
 static void
 update_buttons (TotemObject *totem)
 {
-	totem_object_set_sensitivity2 ("previous-chapter",
+	action_set_sensitive ("previous-chapter",
 				       totem_object_can_seek_previous (totem));
-	totem_object_set_sensitivity2 ("next-chapter",
+	action_set_sensitive ("next-chapter",
 				       totem_object_can_seek_next (totem));
 }
 
@@ -4063,9 +4070,9 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
 	/* Set sensitivity of the toolbar buttons */
-	totem_object_set_sensitivity2 ("play", FALSE);
-	totem_object_set_sensitivity2 ("next-chapter", FALSE);
-	totem_object_set_sensitivity2 ("previous-chapter", FALSE);
+	action_set_sensitive ("play", FALSE);
+	action_set_sensitive ("next-chapter", FALSE);
+	action_set_sensitive ("previous-chapter", FALSE);
 
 	/* Volume */
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
