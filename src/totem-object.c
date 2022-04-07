@@ -102,6 +102,7 @@ static void video_widget_create (TotemObject *totem);
 static void grilo_widget_setup (TotemObject *totem);
 static void playlist_widget_setup (TotemObject *totem);
 static void totem_callback_connect (TotemObject *totem);
+static void totem_setup_window (TotemObject *totem);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
@@ -3819,7 +3820,7 @@ update_buttons (TotemObject *totem)
 				       totem_object_can_seek_next (totem));
 }
 
-void
+static void
 totem_setup_window (TotemObject *totem)
 {
 	GKeyFile *keyfile;
