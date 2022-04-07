@@ -99,6 +99,7 @@ static void totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, 
 static void mark_popup_busy (TotemObject *totem, const char *reason);
 static void unmark_popup_busy (TotemObject *totem, const char *reason);
 static void video_widget_create (TotemObject *totem);
+static void grilo_widget_setup (TotemObject *totem);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
@@ -4144,7 +4145,7 @@ grilo_current_page_changed (TotemGrilo  *grilo,
 	}
 }
 
-void
+static void
 grilo_widget_setup (TotemObject *totem)
 {
 	totem->grilo = totem_grilo_new (totem, totem->header);
