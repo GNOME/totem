@@ -1931,7 +1931,7 @@ totem_object_set_mrl (TotemObject *totem,
 		totem_object_set_sensitivity2 ("play", FALSE);
 
 		/* Volume */
-		totem_controls_set_sensitivity ("volume_button", FALSE);
+		gtk_widget_set_sensitive (totem->volume, FALSE);
 		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
@@ -1979,7 +1979,7 @@ totem_object_set_mrl (TotemObject *totem,
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
-		totem_controls_set_sensitivity ("volume_button", caps);
+		gtk_widget_set_sensitive (totem->volume, caps);
 		totem->volume_sensitive = caps;
 
 		/* Subtitle selection */
