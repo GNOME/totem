@@ -176,8 +176,6 @@ void    totem_object_set_mrl			(TotemObject *totem,
 						 const char *subtitle);
 gboolean totem_object_open_files		(Totem *totem, char **list);
 
-void	show_controls				(Totem *totem, gboolean was_fullscreen);
-
 void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
 void	totem_object_set_main_page		(TotemObject *totem,
 						 const char  *page_id);
