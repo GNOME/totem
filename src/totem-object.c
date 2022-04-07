@@ -2842,22 +2842,6 @@ seek_slider_scroll_event_cb (GtkWidget      *widget,
 	return GDK_EVENT_STOP;
 }
 
-gboolean
-totem_object_open_files (TotemObject *totem, char **list)
-{
-	GSList *slist = NULL;
-	int i, retval;
-
-	for (i = 0 ; list[i] != NULL; i++)
-		slist = g_slist_prepend (slist, list[i]);
-
-	slist = g_slist_reverse (slist);
-	retval = totem_object_open_files_list (totem, slist);
-	g_slist_free (slist);
-
-	return retval;
-}
-
 static gboolean
 totem_object_open_files_list (TotemObject *totem, GSList *list)
 {
