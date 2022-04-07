@@ -182,7 +182,6 @@ void	totem_setup_window			(Totem *totem);
 void	totem_callback_connect			(Totem *totem);
 void	playlist_widget_setup			(Totem *totem);
 void	grilo_widget_setup			(Totem *totem);
-void	video_widget_create			(Totem *totem);
 void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
 void	totem_object_set_main_page		(TotemObject *totem,
 						 const char  *page_id);
