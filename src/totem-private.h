@@ -36,12 +36,6 @@
 #include "totem-open-location.h"
 #include "totem-plugins-engine.h"
 
-#define totem_set_sensitivity(xml, name, state)					\
-	{									\
-		GtkWidget *widget;						\
-		widget = GTK_WIDGET (gtk_builder_get_object (xml, name));	\
-		gtk_widget_set_sensitive (widget, state);			\
-	}
 #define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (totem->xml, name)), state)
 
 #define totem_object_set_sensitivity2(name, state)					\
