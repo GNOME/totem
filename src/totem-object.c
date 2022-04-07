@@ -2164,7 +2164,7 @@ totem_object_seek_time (TotemObject *totem, gint64 msec, gboolean accurate)
 	totem_seek_time_rel (totem, msec, FALSE, accurate);
 }
 
-void
+static void
 totem_object_set_zoom (TotemObject *totem,
 		       gboolean     zoom)
 {

@@ -167,7 +167,6 @@ struct _TotemObject {
 void	totem_object_open			(Totem *totem);
 void	totem_object_open_location		(Totem *totem);
 void	totem_object_eject			(Totem *totem);
-void	totem_object_set_zoom			(Totem *totem, gboolean zoom);
 void	totem_object_show_help			(Totem *totem);
 void	totem_object_show_keyboard_shortcuts	(Totem *totem);
 void    totem_object_set_mrl			(TotemObject *totem,
