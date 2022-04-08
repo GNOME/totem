@@ -4088,16 +4088,6 @@ playlist_widget_setup (TotemObject *totem)
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
 	totem->playlist_signals = g_signal_group_new (TOTEM_TYPE_PLAYLIST);
 
-#if 0
-	{
-		GtkWidget *window;
-
-		window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-		gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);
-		gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (totem->playlist));
-		gtk_widget_show_all (window);
-	}
-#endif
 	g_signal_group_connect (totem->playlist_signals, "active-name-changed",
 				G_CALLBACK (on_playlist_change_name), totem);
 	g_signal_group_connect (totem->playlist_signals, "item-activated",

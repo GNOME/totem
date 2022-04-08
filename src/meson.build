@@ -118,6 +118,7 @@ libtotem_sources = files(
   'totem-open-location.c',
   'totem-options.c',
   'totem-playlist.c',
+  'totem-playlist-inspector-page.c',
   'totem-preferences-dialog.c',
   'totem-search-entry.c',
   'totem-selection-toolbar.c',
@@ -261,6 +262,22 @@ executable(
   ],
   c_args: totem_common_cflags
 )
+
+if get_option('inspector-page')
+  module_libdir = totem_libdir / 'gtk-3.0' / 'inspector'
+
+  totem_inspector_sources = [
+    'totem-inspector-module.c',
+  ]
+
+  shared_module(
+    'totem-inspector-module',
+    totem_inspector_sources,
+    dependencies: libtotem_player_dep,
+    install: true,
+    install_dir: module_libdir,
+  )
+endif
 
 gir_sources = libtotem_sources + libtotem_player_sources + headers
 
