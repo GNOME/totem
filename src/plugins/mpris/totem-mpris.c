@@ -269,7 +269,7 @@ calculate_metadata (TotemMprisPlugin *pi,
 	g_variant_builder_add (builder,
 			       "{sv}",
 			       "mpris:length",
-			       g_variant_new_int64 (stream_length));
+			       g_variant_new_int64 (stream_length * 1000));
 	g_variant_builder_add (builder,
 			       "{sv}",
 			       "xesam:trackNumber",
