@@ -1966,6 +1966,8 @@ search_mode_changed (GObject          *gobject,
 			g_assert_not_reached ();
 		}
 		g_clear_pointer (&self->last_page, g_free);
+
+		self->in_search = search_mode;
 	} else {
 		GtkTreeModel *model;
 		const char *id = NULL;
@@ -2001,7 +2003,6 @@ search_mode_changed (GObject          *gobject,
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->search_hidden_button), TRUE);
 	}
 
-	self->in_search = search_mode;
 }
 
 typedef struct {
