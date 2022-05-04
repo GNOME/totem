@@ -4,9 +4,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include "bacon-video-widget.h"
-#ifdef GDK_WINDOWING_X11
-#include <X11/Xlib.h>
-#endif
 
 static char **filenames;
 static const char *argument;
@@ -77,10 +74,6 @@ int main
 	g_autoptr(GError) error = NULL;
 	GtkWidget *win, *bvw;
 	GtkSettings *gtk_settings;
-
-#ifdef GDK_WINDOWING_X11
-	XInitThreads ();
-#endif
 
 	context = g_option_context_new ("- Play audio and video inside a web browser");
 	baconoptiongroup = bacon_video_widget_get_option_group();

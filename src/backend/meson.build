@@ -100,7 +100,7 @@ executable(
   backend_test,
   backend_test + '.c',
   include_directories: libbacon_video_widget_incs,
-  dependencies: [libbacon_video_widget_dep, x11_dep],
+  dependencies: [libbacon_video_widget_dep],
   c_args: libbacon_video_widget_cflags + [
     '-DG_LOG_DOMAIN="@0@"'.format(backend_test)
   ]
