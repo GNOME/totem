@@ -186,7 +186,7 @@ totem = executable(
   meson.project_name(),
   'totem.c',
   include_directories: totem_common_incs,
-  dependencies: [ libtotem_dep, x11_dep ],
+  dependencies: [ libtotem_dep ],
   c_args: totem_common_cflags + [
     '-DG_LOG_DOMAIN="Totem"'
   ],

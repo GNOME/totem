@@ -35,11 +35,6 @@
 #include <locale.h>
 #include <string.h>
 
-#ifdef GDK_WINDOWING_X11
-/* X11 headers */
-#include <X11/Xlib.h>
-#endif
-
 #include "totem.h"
 
 int
@@ -51,11 +46,6 @@ main (int argc, char **argv)
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
-#ifdef GDK_WINDOWING_X11
-	if (XInitThreads () == 0)
-		g_error ("XInitThreads() failed, OS is broken. Contact your provider for support.");
-#endif
 
 	g_set_prgname ("totem");
 #if DEVELOPMENT_VERSION
