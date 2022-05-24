@@ -41,7 +41,6 @@ if plugins_option != 'none'
     'autoload-subtitles',
     'im-status',
     'mpris',
-    'open-directory',
     'properties',
     'recent',
     'rotation',
@@ -60,6 +59,12 @@ if plugins_option != 'none'
       'opensubtitles',
       'pythonconsole',
       'samplepython'
+    ]
+  endif
+
+  if have_libportal
+    plugins += [
+      'open-directory'
     ]
   endif
 endif

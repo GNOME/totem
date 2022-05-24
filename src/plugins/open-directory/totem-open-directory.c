@@ -23,6 +23,7 @@
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
+#include <libportal-gtk3/portal-gtk3.h>
 
 #include "totem-plugin.h"
 
@@ -32,67 +33,45 @@
 typedef struct {
 	PeasExtensionBase parent;
 
-	TotemObject *totem;
-	char        *mrl;
+	TotemObject   *totem;
+	XdpPortal     *portal;
+	GCancellable  *cancellable;
+	char          *mrl;
 	GSimpleAction *action;
 } TotemOpenDirectoryPlugin;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN, TotemOpenDirectoryPlugin, totem_open_directory_plugin)
 
-static char *
-get_notification_id (void)
+static void
+open_directory_cb (GObject *object,
+		   GAsyncResult *result,
+		   gpointer data)
 {
-	return g_strdup_printf ("%s_TIME%ld",
-				"totem",
-				g_get_monotonic_time () / G_TIME_SPAN_SECOND);
+	XdpPortal *portal = XDP_PORTAL (object);
+	g_autoptr(GError) error = NULL;
+	gboolean res;
+
+	res = xdp_portal_open_directory_finish (portal, result, &error);
+	if (!res) {
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+			g_warning ("Failed to show directory: %s", error->message);
+	}
 }
 
 static void
 totem_open_directory_plugin_open (GSimpleAction       *action,
-			     GVariant            *parameter,
-			     TotemOpenDirectoryPlugin *pi)
+				  GVariant            *parameter,
+				  TotemOpenDirectoryPlugin *pi)
 {
-
-
-	GError *error = NULL;
-	GDBusProxy *proxy;
-	gchar* notification_id;
-	GVariantBuilder *builder;
-	GVariant *dbus_arguments;
+	XdpParent *parent;
 
 	g_assert (pi->mrl != NULL);
 
-	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
-					       NULL, /* GDBusInterfaceInfo */
-					       "org.freedesktop.FileManager1",
-					       "/org/freedesktop/FileManager1",
-					       "org.freedesktop.FileManager1",
-					       NULL, /* GCancellable */
-					       &error);
-	if (proxy == NULL) {
-		g_warning ("Could not contact file manager: %s", error->message);
-		g_error_free (error);
-		return;
-	}
-
-	notification_id = get_notification_id();
-
-	builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
-	g_variant_builder_add (builder, "s", pi->mrl);
-	dbus_arguments = g_variant_new ("(ass)", builder, notification_id);
-	g_variant_builder_unref (builder);
-	g_free(notification_id);
-
-	if (g_dbus_proxy_call_sync (proxy,
-				"ShowItems", dbus_arguments,
-				G_DBUS_CALL_FLAGS_NONE,
-				-1, NULL, &error) == FALSE) {
-		g_warning ("Could not get file manager to display file: %s", error->message);
-		g_error_free (error);
-	}
-
-	g_object_unref (proxy);
+	parent = xdp_parent_new_gtk (totem_object_get_main_window (pi->totem));
+	xdp_portal_open_directory (pi->portal, parent, pi->mrl,
+				   XDP_OPEN_URI_FLAG_NONE, pi->cancellable,
+				   open_directory_cb, NULL);
+	xdp_parent_free (parent);
 }
 
 static void
@@ -157,12 +136,9 @@ impl_activate (PeasActivatable *plugin)
 	GMenuItem *item;
 	char *mrl;
 
-	/* FIXME: This plugin will stop working if the file is outside
-	 * what the Flatpak has access to
-	if (g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
-		return; */
-
 	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->portal = xdp_portal_new ();
+	pi->cancellable = g_cancellable_new ();
 
 	g_signal_connect (pi->totem,
 			  "file-opened",
@@ -193,6 +169,11 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemOpenDirectoryPlugin *pi = TOTEM_OPEN_DIRECTORY_PLUGIN (plugin);
+
+	if (pi->cancellable != NULL) {
+		g_cancellable_cancel (pi->cancellable);
+		g_clear_object (&pi->cancellable);
+	}
 
 	g_signal_handlers_disconnect_by_func (pi->totem, totem_open_directory_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (pi->totem, totem_open_directory_file_closed, plugin);

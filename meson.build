@@ -207,6 +207,10 @@ if python_option != 'no'
   endif
 endif
 
+# libportal support
+libportal_dep = dependency('libportal-gtk3', required: get_option('libportal'))
+have_libportal = libportal_dep.found()
+
 configure_file(
   output: 'config.h',
   configuration: config_h
