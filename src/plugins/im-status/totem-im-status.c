@@ -176,8 +176,7 @@ impl_deactivate (PeasActivatable *plugin)
 	/* In flight? */
 	if (pi->cancellable != NULL) {
 		g_cancellable_cancel (pi->cancellable);
-		g_object_unref (pi->cancellable);
-		pi->cancellable = NULL;
+		g_clear_object (&pi->cancellable);
 	}
 
 	if (pi->proxy != NULL) {
