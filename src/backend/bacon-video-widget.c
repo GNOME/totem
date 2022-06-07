@@ -3347,8 +3347,10 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   if (src_typename &&
       g_str_equal (src_typename, "GstGtkGLSink") &&
       is_error (e, RESOURCE, NOT_FOUND)) {
+    bvw->media_has_unsupported_video = TRUE;
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
 			       _("Could not initialise OpenGL support"));
+    set_current_actor (bvw);
     goto done;
   }
 
