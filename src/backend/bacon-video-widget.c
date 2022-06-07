@@ -3359,11 +3359,11 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       is_error (e, RESOURCE, OPEN_READ)) {
     if (g_str_has_prefix (bvw->mrl, "dvd:")) {
       ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-				 "The DVD device you specified seems to be invalid.");
+				 _("The DVD device you specified seems to be invalid."));
       goto done;
     } else if (g_str_has_prefix (bvw->mrl, "vcd:")) {
       ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-				 "The VCD device you specified seems to be invalid.");
+				 _("The VCD device you specified seems to be invalid."));
       goto done;
     }
   }
