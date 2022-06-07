@@ -3344,6 +3344,14 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
    * BVW_ERROR_BROKEN_FILE
    */
 
+  if (src_typename &&
+      g_str_equal (src_typename, "GstGtkGLSink") &&
+      is_error (e, RESOURCE, NOT_FOUND)) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
+			       _("Could not initialise OpenGL support"));
+    goto done;
+  }
+
   /* Can't open optical disc? */
   if (is_error (e, RESOURCE, NOT_FOUND) ||
       is_error (e, RESOURCE, OPEN_READ)) {
