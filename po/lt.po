@@ -13,21 +13,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-21 18:49+0000\n"
-"PO-Revision-Date: 2022-03-07 18:27+0200\n"
+"POT-Creation-Date: 2022-05-10 18:07+0000\n"
+"PO-Revision-Date: 2022-06-20 22:14+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Generator: Gtranslator 40.0\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
+#: src/totem-grilo.c:1923 src/totem-object.c:3869
 msgid "Videos"
 msgstr "Vaizdo įrašai"
 
@@ -192,7 +192,7 @@ msgid ""
 msgstr ""
 "Išjungti aparatinius dekoduotojus ir naudoti tik programinios. Tik derinimui."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5073
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -314,19 +314,16 @@ msgid "Show help"
 msgstr "Rodyti žynyną"
 
 #: data/shortcuts.ui:28
-#| msgid "_Keyboard Shortcuts"
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Klaviatūros trumpiniai"
 
 #: data/shortcuts.ui:35
-#| msgid "Add _Local Video…"
 msgctxt "shortcut window"
 msgid "Add local video"
 msgstr "Pridėti vietinį vaizdo įrašą"
 
 #: data/shortcuts.ui:42
-#| msgid "Add Web Video"
 msgctxt "shortcut window"
 msgid "Add web video"
 msgstr "Pridėti internetinį vaizdo įrašą"
@@ -494,19 +491,16 @@ msgid "Navigate right"
 msgstr "Naršyti dešinėn"
 
 #: data/shortcuts.ui:342
-#| msgid "Subtitles"
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Titrai"
 
 #: data/shortcuts.ui:347
-#| msgid "Select Text Subtitles"
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Pasirinkite kitus titrus"
 
 #: data/shortcuts.ui:354
-#| msgid "Autoloads text subtitles"
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Perjungti titrus"
@@ -574,7 +568,6 @@ msgid "_Eject"
 msgstr "_Išstumti"
 
 #: data/totem.ui:114
-#| msgid "_Languages"
 msgid "Languages"
 msgstr "Kalbos"
 
@@ -624,8 +617,8 @@ msgstr "Įveskite norimo atverti failo _adresą:"
 
 #: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
@@ -637,7 +630,7 @@ msgstr "_Pridėti"
 msgid "Password requested for RTSP server"
 msgstr "RTSP serverio slaptažodis"
 
-#: src/backend/bacon-video-widget.c:3362
+#: src/backend/bacon-video-widget.c:3372
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -645,52 +638,52 @@ msgstr ""
 "Atrodo šaltinis yra šifruotas ir negali būti perskaitytas. Ar bandote groti "
 "šifruotą DVD be libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3376
+#: src/backend/bacon-video-widget.c:3386
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio mėginate jungtis, nežinomas."
 
-#: src/backend/bacon-video-widget.c:3379
+#: src/backend/bacon-video-widget.c:3389
 msgid "The connection to this server was refused."
 msgstr "Neleista prisijungti prie šio serverio."
 
-#: src/backend/bacon-video-widget.c:3382
+#: src/backend/bacon-video-widget.c:3392
 msgid "The specified movie could not be found."
 msgstr "Nepavyko rasti nurodyto filmo."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The server refused access to this file or stream."
 msgstr "Serveris neleido prieiti prie šio failo ar srauto."
 
-#: src/backend/bacon-video-widget.c:3395
+#: src/backend/bacon-video-widget.c:3405
 msgid "Authentication is required to access this file or stream."
 msgstr "Šiam failui ar srautui priteiti reikia patvirtinti tapatybę."
 
-#: src/backend/bacon-video-widget.c:3401
+#: src/backend/bacon-video-widget.c:3411
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Trūksta SSL/TLS palaikymo. Patikrinkite savo įdiegtį."
 
-#: src/backend/bacon-video-widget.c:3408
+#: src/backend/bacon-video-widget.c:3418
 msgid "You are not allowed to open this file."
 msgstr "Jums neleista atverti šio failo."
 
-#: src/backend/bacon-video-widget.c:3413
+#: src/backend/bacon-video-widget.c:3423
 msgid "This location is not a valid one."
 msgstr "Ši vieta nėra tinkama."
 
-#: src/backend/bacon-video-widget.c:3421
+#: src/backend/bacon-video-widget.c:3431
 msgid "The movie could not be read."
 msgstr "Filmo nepavyko perskaityti."
 
-#: src/backend/bacon-video-widget.c:3427
+#: src/backend/bacon-video-widget.c:3437
 msgid "This file is encrypted and cannot be played back."
 msgstr "Šis failas yra šifruotas ir jo negalima groti."
 
-#: src/backend/bacon-video-widget.c:3433
+#: src/backend/bacon-video-widget.c:3443
 msgid "The file you tried to play is an empty file."
 msgstr "Failas, kurį bandote groti, yra tuščias."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3457 src/backend/bacon-video-widget.c:3465
+#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -708,12 +701,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3477
+#: src/backend/bacon-video-widget.c:3487
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Šio srauto negalima groti. Gali būti, kad jį blokuoja ugniasienė."
 
-#: src/backend/bacon-video-widget.c:3480
+#: src/backend/bacon-video-widget.c:3490
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -721,7 +714,7 @@ msgstr ""
 "Garso ar vaizdo srautas nėra apdorojamas dėl trūkstamų kodekų. Gali reikėti "
 "įdiegti papildomus įskiepius, kad galėtumėt groti tam tikro tipo filmus"
 
-#: src/backend/bacon-video-widget.c:3491
+#: src/backend/bacon-video-widget.c:3501
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -729,19 +722,19 @@ msgstr ""
 "Nepavyko groti šio failo per tinklą. Pabandykite pirma jį parsisiųsti į "
 "diską."
 
-#: src/backend/bacon-video-widget.c:5069
+#: src/backend/bacon-video-widget.c:5079
 msgid "Surround"
 msgstr "Apsupimas"
 
-#: src/backend/bacon-video-widget.c:5071
+#: src/backend/bacon-video-widget.c:5081
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5341
+#: src/backend/bacon-video-widget.c:5351
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų vaizdo įrašų srautų."
 
-#: src/backend/bacon-video-widget.c:5530
+#: src/backend/bacon-video-widget.c:5553
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -780,7 +773,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -794,8 +787,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:89
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
 msgstr "%d:%02d:%02d.%03d"
@@ -820,8 +811,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:107
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
 msgstr "-%d:%02d:%02d.%03d"
@@ -846,8 +835,6 @@ msgstr "-%d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:128
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
 msgstr "-%d:%02d.%03d"
@@ -860,8 +847,6 @@ msgstr "-%d:%02d.%03d"
 #.
 #: src/gst/totem-time-helpers.c:139
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
 msgstr "%d:%02d.%03d"
@@ -886,16 +871,7 @@ msgstr "Pasirinkti viską"
 msgid "Select None"
 msgstr "Nepasirinkti nieko"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Nepavyko inicializuoti saugių gijų bibliotekų."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Patikrinkite savo sistemos įdiegimą. Programa „Totem“ dabar užsidarys."
-
-#: src/totem.c:74
-#| msgid "Audio Preview"
+#: src/totem.c:62
 msgid "Videos Preview"
 msgstr "Vaizdo įrašų peržiūra"
 
@@ -953,20 +929,6 @@ msgstr "Vietinis"
 msgid "Channels"
 msgstr "Kanalai"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Nepavyko įkelti „%s“ sąsajos. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Failas neegzistuoja."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Įsitikinkite, jog programa „Totem“ įdiegta tinkamai."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Spauskite ant elementų jiems pažymėti"
@@ -1020,45 +982,48 @@ msgstr "Automatinis"
 msgid "None"
 msgstr "Nėra"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
+#: src/totem-object.c:1437 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pristabdyti"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
+#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Groti"
 
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
+#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Programai „Totem“ nepavyko paleisti „%s“."
+#| msgid "Totem could not play “%s”."
+msgid "Videos could not play “%s”."
+msgstr "Videoįrašams nepavyko paleisti „%s“."
 
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "Programai „Totem“ nepavyko parodyti žinyno."
+#: src/totem-object.c:2305
+#| msgid "Totem could not display the help contents."
+msgid "Videos could not display the help contents."
+msgstr "Videoįrašams nepavyko parodyti žinyno."
 
-#: src/totem-object.c:2569
+#: src/totem-object.c:2566
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
-#: src/totem-object.c:3990
+#: src/totem-object.c:3967
 msgid "Previous Chapter/Movie"
 msgstr "Ankstesnis takelis arba filmas"
 
-#: src/totem-object.c:3996
+#: src/totem-object.c:3973
 msgid "Play / Pause"
 msgstr "Groti arba pristabdyti"
 
-#: src/totem-object.c:4002
+#: src/totem-object.c:3979
 msgid "Next Chapter/Movie"
 msgstr "Kitas takelis arba filmas"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "Programos „Totem“ nepavyko paleisti."
+#: src/totem-object.c:4211
+#| msgid "Totem could not startup."
+msgid "Videos could not startup."
+msgstr "Videoįrašų nepavyko paleisti."
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4212 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Jokios priežasties."
 
@@ -1375,7 +1340,7 @@ msgstr "Atverti aplanką"
 msgid "Open the directory of the currently playing movie"
 msgstr "Atverti šiuo metu grojamo filmo aplanką"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:184
 msgid "Open Containing Folder"
 msgstr "Atverti aplanką"
 
@@ -1561,7 +1526,7 @@ msgstr "Kanalai:"
 #  Artist
 #  Year
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Nežinoma"
@@ -1570,7 +1535,7 @@ msgstr "Nežinoma"
 #  Artist
 #  Year
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Nežinoma"
@@ -1579,7 +1544,7 @@ msgstr "Nežinoma"
 #  Artist
 #  Year
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Nežinoma"
@@ -1588,7 +1553,7 @@ msgstr "Nežinoma"
 #  Artist
 #  Year
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Nežinoma"
@@ -1597,7 +1562,7 @@ msgstr "Nežinoma"
 #  Artist
 #  Year
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Nežinoma"
@@ -1605,7 +1570,7 @@ msgstr "Nežinoma"
 #  Video Codec
 #  Audio Codec
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "N/A"
@@ -1613,29 +1578,29 @@ msgstr "N/A"
 #  Video Codec
 #  Audio Codec
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/A"
 
 #  Video Codec
 #  Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "N/A"
 
 #  Video Codec
 #  Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/A"
 
 #  Video Codec
 #  Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/A"
@@ -1643,22 +1608,22 @@ msgstr "N/A"
 #  Video Codec
 #  Audio Codec
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/A"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 kanalų"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1666,7 +1631,7 @@ msgstr[0] "%d valanda"
 msgstr[1] "%d valandos"
 msgstr[2] "%d valandų"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1675,7 +1640,7 @@ msgstr[1] "%d minutės"
 msgstr[2] "%d minučių"
 
 #  Duration
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1685,7 +1650,7 @@ msgstr[2] "%d sekundžių"
 
 #  hour:minutes:seconds
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
@@ -1693,14 +1658,14 @@ msgstr "%s %s %s"
 
 #  minutes:seconds
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
@@ -1708,14 +1673,14 @@ msgstr "%s"
 
 #  minutes:seconds
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
@@ -1723,21 +1688,19 @@ msgstr "%s"
 
 #  0 seconds
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0 sekundžių"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
-#| msgid "%0.2f frame per second"
-#| msgid_plural "%0.2f frames per second"
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f kadras per sekundę"
 msgstr[1] "%0.3f kadrai per sekundę"
 msgstr[2] "%0.3f kadrų per sekundę"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1783,20 +1746,24 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Galite pasiekti Totem.Objektą per „totem_object“ :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Programos „Totem“ „Python“ kalbos konsolė"
+#| msgid "Python Console"
+msgid "Videos Python Console"
+msgstr "Videoįrašų Python konsolė"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password (“totem”)."
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Spustelėjus mygtuką „Gerai“, programa „Totem“ lauks, kol prisijungsite prie "
-"jos naudodamiesi „winpdb“ arba „rpdb2“. Jei nenustatėte derintuvės "
-"slaptažodžio „DConf“ konfigūracijoje, bus naudojamas numatytasis slaptažodis "
-"(„totem“)."
+"Spustelėjus mygtuką „Gerai“, Videoįrašai lauks, kol prisijungsite prie jos "
+"naudodamiesi winpdb arba rpdb2. Jei nenustatėte derintuvės slaptažodžio "
+"DConf, bus naudojamas numatytasis slaptažodis („totem“)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1814,11 +1781,11 @@ msgstr "Pasukimo įskiepis"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Visi vaizdai turi būti pasukti, jei jų padėtis yra neteisinga"
 
-#: src/plugins/rotation/totem-rotation.c:255
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "Pa_sukti ↷"
 
-#: src/plugins/rotation/totem-rotation.c:259
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "Pasukti ↶"
 
@@ -1914,20 +1881,21 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "Galerija-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "Kuriama galerija…"
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "Įrašoma galerija kaip „%s“"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-msgid "Totem could not get a screenshot of the video."
-msgstr "„Totem“ nepavyko padaryti vaizdo įrašo ekranvaizdžio."
+#| msgid "Totem could not get a screenshot of the video."
+msgid "Videos could not get a screenshot of the video."
+msgstr "Videoįrašams padaryti vaizdo įrašo ekranvaizdžio."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1942,7 +1910,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Sukurti ekrano nuotraukų _galeriją…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "Peršokti iki"
 
@@ -1956,7 +1924,7 @@ msgstr "Per_sukti iki:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekundė"
@@ -1967,12 +1935,12 @@ msgstr[2] "sekundžių"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "_Peršokti iki"
 
@@ -2030,6 +1998,26 @@ msgstr "„Vimeo“ svetainė"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nustato naudotojo agentą „Vimeo“ tinklalapiui"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Nepavyko inicializuoti saugių gijų bibliotekų."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr ""
+#~ "Patikrinkite savo sistemos įdiegimą. Programa „Totem“ dabar užsidarys."
+
+#, c-format
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Nepavyko įkelti „%s“ sąsajos. %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Failas neegzistuoja."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Įsitikinkite, jog programa „Totem“ įdiegta tinkamai."
+
+#~ msgid "Totem Python Console"
+#~ msgstr "Programos „Totem“ „Python“ kalbos konsolė"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
