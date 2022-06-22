@@ -190,6 +190,7 @@ if python_option != 'no'
 
     pygobject_dep = dependency('pygobject-3.0', version: '>= 2.90.3', required: false)
     pylint = find_program('pylint-3', 'pylint3', 'pylint', required: false)
+    nomalloc = environment({'MALLOC_PERTURB_': '0'})
 
     if python_version.version_compare(python_req_version) and pygobject_dep.found()
       have_python = true

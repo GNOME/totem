@@ -42,5 +42,6 @@ if pylint.found()
   test('pylint-' + plugin_name,
        pylint,
        args: pylint_flags + files([ plugin_name + '.py', 'console.py' ]),
+       env: nomalloc,
        timeout: 120)
 endif

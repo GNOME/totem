@@ -43,5 +43,6 @@ if pylint.found()
   test('pylint-' + plugin_name,
        pylint,
        args: pylint_flags + ['-d', 'bad-continuation' ] + files([ plugin_name + '.py', 'hash.py' ]),
+       env: nomalloc,
        timeout: 120)
 endif
