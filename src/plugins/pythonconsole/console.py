@@ -170,23 +170,21 @@ class PythonConsole(Gtk.ScrolledWindow): # pylint: disable=R0902
             GLib.idle_add(self.scroll_to_end)
             return True
 
-        elif event.keyval == Gdk.KEY_KP_Down or event.keyval == Gdk.KEY_Down:
+        elif event.keyval in (Gdk.KEY_KP_Down, Gdk.KEY_Down):
             # Next entry from history
             view.emit_stop_by_name("key_press_event")
             self.history_down()
             GLib.idle_add(self.scroll_to_end)
             return True
 
-        elif event.keyval == Gdk.KEY_KP_Up or event.keyval == Gdk.KEY_Up:
+        elif event.keyval in (Gdk.KEY_KP_Up, Gdk.KEY_Up):
             # Previous entry from history
             view.emit_stop_by_name("key_press_event")
             self.history_up()
             GLib.idle_add(self.scroll_to_end)
             return True
 
-        elif event.keyval == Gdk.KEY_KP_Left or \
-             event.keyval == Gdk.KEY_Left or \
-             event.keyval == Gdk.KEY_BackSpace:
+        elif event.keyval in (Gdk.KEY_KP_Left, Gdk.KEY_Left, Gdk.KEY_BackSpace):
             buf = view.get_buffer()
             inp = buf.get_iter_at_mark(buf.get_mark("input"))
             cur = buf.get_iter_at_mark(buf.get_insert())
