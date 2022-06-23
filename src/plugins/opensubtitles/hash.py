@@ -21,26 +21,24 @@ def hash_file (name):
     if filesize < 65536 * 2:
         return SIZE_ERROR, 0
 
-    file_handle = open (file_to_hash.get_path (), "rb")
+    with open (file_to_hash.get_path (), "rb") as file_handle:
+        for _ in range(int(65536 / bytesize)):
+            buf = file_handle.read (bytesize)
+            (l_value,) = struct.unpack (longlongformat, buf)
+            file_hash += l_value
+            file_hash = file_hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
 
-    for _ in range(int(65536 / bytesize)):
-        buf = file_handle.read (bytesize)
-        (l_value,) = struct.unpack (longlongformat, buf)
-        file_hash += l_value
-        file_hash = file_hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
+        file_handle.seek (max (0, filesize - 65536), os.SEEK_SET)
 
-    file_handle.seek (max (0, filesize - 65536), os.SEEK_SET)
+        if file_handle.tell() != max (0, filesize - 65536):
+            return SEEK_ERROR, 0
 
-    if file_handle.tell() != max (0, filesize - 65536):
-        return SEEK_ERROR, 0
+        for _ in range(int(65536/bytesize)):
+            buf = file_handle.read (bytesize)
+            (l_value,) = struct.unpack (longlongformat, buf)
+            file_hash += l_value
+            file_hash = file_hash & 0xFFFFFFFFFFFFFFFF
 
-    for _ in range(int(65536/bytesize)):
-        buf = file_handle.read (bytesize)
-        (l_value,) = struct.unpack (longlongformat, buf)
-        file_hash += l_value
-        file_hash = file_hash & 0xFFFFFFFFFFFFFFFF
-
-    file_handle.close ()
-    returnedhash = "%016x" % file_hash
+    returnedhash = f"{file_hash:%016x}"
 
     return returnedhash, filesize
