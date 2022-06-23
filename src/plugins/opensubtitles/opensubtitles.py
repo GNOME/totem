@@ -189,7 +189,7 @@ class SearchThread (threading.Thread):
         return results
 
     def get_message (self):
-        message = _(u'Searching for subtitles…')
+        message = _('Searching for subtitles…')
 
         self._lock.acquire (True)
         if self._done:
@@ -237,7 +237,7 @@ class DownloadThread (threading.Thread):
         return subtitles
 
     def get_message (self):
-        message = _(u'Downloading the subtitles…')
+        message = _('Downloading the subtitles…')
 
         self._lock.acquire (True)
         if self._done:
@@ -302,7 +302,7 @@ class OpenSubtitlesModel:
             if self._token:
                 return (True, '')
 
-        return (False, _(u'Could not contact the OpenSubtitles website'))
+        return (False, _('Could not contact the OpenSubtitles website'))
 
     def log_in (self, username='', password=''):
         """
@@ -335,7 +335,7 @@ class OpenSubtitlesModel:
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
             except xmlrpc.client.ProtocolError:
-                message = _(u'Could not contact the OpenSubtitles website.')
+                message = _('Could not contact the OpenSubtitles website.')
 
             if result.get ('data'):
                 self._lock.release ()
@@ -348,13 +348,13 @@ class OpenSubtitlesModel:
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
             except xmlrpc.client.ProtocolError:
-                message = _(u'Could not contact the OpenSubtitles website.')
+                message = _('Could not contact the OpenSubtitles website.')
 
             if result.get ('data'):
                 self._lock.release ()
                 return (result['data'], message)
 
-            message = _(u'No results found.')
+            message = _('No results found.')
         else:
             message = log_in_message
 
@@ -366,7 +366,7 @@ class OpenSubtitlesModel:
         self._lock.acquire (True)
 
         message = ''
-        error_message = _(u'Could not contact the OpenSubtitles website.')
+        error_message = _('Could not contact the OpenSubtitles website.')
 
         (log_in_success, log_in_message) = self._log_in ()
 
@@ -499,18 +499,18 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         renderer = Gtk.CellRendererText ()
         self._tree_view.set_model (self._list_store)
         renderer.set_property ('ellipsize', Pango.EllipsizeMode.END)
-        column = Gtk.TreeViewColumn (_(u"Subtitles"), renderer, text=0)
+        column = Gtk.TreeViewColumn (_("Subtitles"), renderer, text=0)
         column.set_resizable (True)
         column.set_expand (True)
         self._tree_view.append_column (column)
         # translators comment:
         # This is the file-type of the subtitle file detected
-        column = Gtk.TreeViewColumn (_(u"Format"), renderer, text=1)
+        column = Gtk.TreeViewColumn (_("Format"), renderer, text=1)
         column.set_resizable (False)
         self._tree_view.append_column (column)
         # translators comment:
         # This is a rating of the quality of the subtitle
-        column = Gtk.TreeViewColumn (_(u"Rating"), renderer, text=2)
+        column = Gtk.TreeViewColumn (_("Rating"), renderer, text=2)
         column.set_resizable (False)
         self._tree_view.append_column (column)
 
@@ -550,7 +550,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
                                            ["<Primary><Shift>s"])
 
         menu = self._totem.get_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
-        menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
+        menu.append (_('_Download Movie Subtitles…'), "app.opensubtitles")
 
         self._action.set_enabled (self._totem.is_playing () and # pylint: disable=no-member
                   self._check_allowed_scheme () and
@@ -589,7 +589,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         thread.start ()
         GLib.idle_add (self._populate_treeview, thread)
 
-        self._progress.set_text (_(u'Searching subtitles…'))
+        self._progress.set_text (_('Searching subtitles…'))
         GLib.timeout_add (350, self._progress_bar_increment, thread)
 
     def _populate_treeview (self, search_thread):
@@ -632,7 +632,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
             thread.start ()
             GLib.idle_add (self._save_subtitles, thread, subtitle_format)
 
-            self._progress.set_text (_(u'Downloading the subtitles…'))
+            self._progress.set_text (_('Downloading the subtitles…'))
             GLib.timeout_add (350, self._progress_bar_increment, thread)
         else:
             #warn user!
