@@ -170,40 +170,36 @@ class SearchThread (threading.Thread):
         threading.Thread.__init__ (self)
 
     def run (self):
-        self._lock.acquire (True)
-        (self._results,
-         self._message) = self._model.search_subtitles (self._movie_hash,
-                                                        self._movie_size,
-                                                        self._movie_title)
-        self._done = True
-        self._lock.release ()
+        with self._lock:
+            (self._results,
+            self._message) = self._model.search_subtitles (self._movie_hash,
+                                                           self._movie_size,
+                                                           self._movie_title)
+            self._done = True
 
     def get_results (self):
         results = []
 
-        self._lock.acquire (True)
-        if self._done:
-            results = self._results
-        self._lock.release ()
+        with self._lock:
+            if self._done:
+                results = self._results
 
         return results
 
     def get_message (self):
         message = _('Searching for subtitles…')
 
-        self._lock.acquire (True)
-        if self._done:
-            message = self._message
-        self._lock.release ()
+        with self._lock:
+            if self._done:
+                message = self._message
 
         return message
 
     @property
     def done (self):
         """ Thread-safe property to know whether the query is done or not """
-        self._lock.acquire (True)
-        res = self._done
-        self._lock.release ()
+        with self._lock:
+            res = self._done
         return res
 
 class DownloadThread (threading.Thread):
@@ -220,38 +216,34 @@ class DownloadThread (threading.Thread):
         threading.Thread.__init__ (self)
 
     def run (self):
-        self._lock.acquire (True)
-        (self._subtitles,
-         self._message) = self._model.download_subtitles (self._subtitle_id)
-        self._done = True
-        self._lock.release ()
+        with self._lock:
+            (self._subtitles,
+             self._message) = self._model.download_subtitles (self._subtitle_id)
+            self._done = True
 
     def get_subtitles (self):
         subtitles = ''
 
-        self._lock.acquire (True)
-        if self._done:
-            subtitles = self._subtitles
-        self._lock.release ()
+        with self._lock:
+            if self._done:
+                subtitles = self._subtitles
 
         return subtitles
 
     def get_message (self):
         message = _('Downloading the subtitles…')
 
-        self._lock.acquire (True)
-        if self._done:
-            message = self._message
-        self._lock.release ()
+        with self._lock:
+            if self._done:
+                message = self._message
 
         return message
 
     @property
     def done (self):
         """ Thread-safe property to know whether the query is done or not """
-        self._lock.acquire (True)
-        res = self._done
-        self._lock.release ()
+        with self._lock:
+            res = self._done
         return res
 
 # OpenSubtitles.org API abstraction
@@ -314,14 +306,13 @@ class OpenSubtitlesModel:
         @rtype : (bool, string)
         """
 
-        self._lock.acquire (True)
-        result = self._log_in (username, password)
-        self._lock.release ()
+        with self._lock:
+            result = self._log_in (username, password)
 
         return result
 
     def search_subtitles (self, movie_hash, movie_size, movie_title):
-        self._lock.acquire (True)
+        self._lock.acquire (True) # pylint: disable=R1732
 
         message = ''
 
@@ -363,7 +354,7 @@ class OpenSubtitlesModel:
         return (None, message)
 
     def download_subtitles (self, subtitle_id):
-        self._lock.acquire (True)
+        self._lock.acquire (True) # pylint: disable=R1732
 
         message = ''
         error_message = _('Could not contact the OpenSubtitles website.')
