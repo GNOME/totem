@@ -154,6 +154,7 @@ def _cache_subtitles_dir ():
     bpath += 'totem' + sep + 'subtitles' + sep
     return bpath
 
+# pylint: disable=R0902
 class SearchThread (threading.Thread):
     """
     This is the thread started when the dialog is searching for subtitles
