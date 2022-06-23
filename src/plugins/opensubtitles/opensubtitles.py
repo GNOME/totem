@@ -341,7 +341,7 @@ class OpenSubtitlesModel:
                 self._lock.release ()
                 return (result['data'], message)
 
-            """Not found by movie_hash and moviebytesize, fallback to title"""
+            # Not found by movie_hash and moviebytesize, fallback to title
             searchdata = {'sublanguageid': self.lang,
                           'query'   : movie_title}
             try:
