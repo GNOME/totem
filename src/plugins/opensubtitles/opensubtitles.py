@@ -13,7 +13,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Totem', '1.0')
 from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
 from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position,
-from gi.repository import Gio, Pango, Totem # pylint: disable=wrong-import-position,no-name-in-module
+from gi.repository import Gio, Pango # pylint: disable=wrong-import-position,no-name-in-module
 
 from hash import hash_file # pylint: disable=wrong-import-position
 
@@ -447,9 +447,9 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         server = xmlrpc.client.Server ('http://api.opensubtitles.org/xml-rpc')
         self._model = OpenSubtitlesModel (server)
 
-        mrl = self._totem.get_current_mrl ()
+        mrl = self._totem.get_current_mrl () # pylint: disable=E1101
         if mrl:
-            self.__on_totem__file_opened(self._totem, self._totem.get_current_mrl ())
+            self.__on_totem__file_opened(self._totem, self._totem.get_current_mrl ()) # pylint: disable=E1101
 
     def do_deactivate (self):
         if self._dialog:
@@ -791,6 +791,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._find_button.set_sensitive (False)
         self._filename = self._totem.get_current_mrl () # pylint: disable=no-member
         (movie_hash, movie_size) = hash_file (self._filename)
-        movie_title = self._totem.get_title_at_playlist_pos(self._totem.get_playlist_pos())
+        movie_title = self._totem.get_title_at_playlist_pos(self._totem.get_playlist_pos()) # pylint: disable=E1101
 
         self._get_results (movie_hash, movie_size, movie_title)
