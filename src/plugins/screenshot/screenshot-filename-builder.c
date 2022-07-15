@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include "screenshot-filename-builder.h"
+#include "totem-uri.h"
 
 typedef enum
 {
@@ -84,7 +85,7 @@ get_fallback_screenshot_dir (void)
 static gchar *
 get_default_screenshot_dir (void)
 {
-  return g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_PICTURES));
+  return totem_screenshots_dir ();
 }
 
 static gchar *

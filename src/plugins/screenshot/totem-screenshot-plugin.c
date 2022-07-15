@@ -398,11 +398,11 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const c
 	path = g_settings_get_string (settings, "screenshot-save-uri");
 	g_object_unref (settings);
 
-	/* Default to the Pictures directory */
+	/* Default to the Screenshots directory */
 	if (*path == '\0') {
 		g_free (path);
-		path = totem_pictures_dir ();
-		/* No pictures dir, then it's the home dir */
+		path = totem_screenshots_dir ();
+		/* No Screenshots dir, then it's the home dir */
 		if (path == NULL)
 			path = g_strdup (g_get_home_dir ());
 	}

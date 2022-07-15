@@ -28,7 +28,7 @@
 
 const char *	totem_dot_dir			(void);
 const char *	totem_data_dot_dir		(void);
-char *		totem_pictures_dir		(void);
+char *		totem_screenshots_dir		(void);
 char *		totem_create_full_path		(const char *path);
 GMount *	totem_get_mount_for_media	(const char *uri);
 gboolean	totem_playing_dvd		(const char *uri);
