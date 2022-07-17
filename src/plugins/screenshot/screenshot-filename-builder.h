@@ -25,6 +25,8 @@
 
 #include <gio/gio.h>
 
+gchar *get_fallback_screenshot_dir (void);
+gchar *get_default_screenshot_dir (void);
 void screenshot_build_filename_async (const char *save_dir,
                                       const char *screenshot_origin,
                                       GAsyncReadyCallback callback,

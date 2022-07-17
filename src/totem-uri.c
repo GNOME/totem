@@ -97,33 +97,6 @@ totem_data_dot_dir (void)
 	return (const char *)totem_dir;
 }
 
-char *
-totem_screenshots_dir (void)
-{
-	const char *special_dir = NULL;
-	char *screenshots_dir = NULL;
-	g_autoptr(GFile) file = NULL;
-	gboolean ret;
-	g_autoptr(GError) error = NULL;
-
-	special_dir = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
-	if (special_dir == NULL)
-		return NULL;
-
-	/* Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-	 * same as used in GNOME Shell:
-	 * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072 */
-	screenshots_dir = g_build_filename (special_dir, _("Screenshots"), NULL);
-
-	/* ensure that the "Screenshots" folder exists */
-	file = g_file_new_for_path (screenshots_dir);
-	ret = g_file_make_directory_with_parents (file, NULL, &error);
-	if (!ret && !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_EXISTS))
-		g_clear_pointer (&screenshots_dir, g_free);
-
-	return screenshots_dir;
-}
-
 static GMount *
 totem_get_mount_for_uri (const char *path)
 {

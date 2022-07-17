@@ -401,10 +401,10 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const c
 	/* Default to the Screenshots directory */
 	if (*path == '\0') {
 		g_free (path);
-		path = totem_screenshots_dir ();
+		path = get_default_screenshot_dir ();
 		/* No Screenshots dir, then it's the home dir */
 		if (path == NULL)
-			path = g_strdup (g_get_home_dir ());
+			path = get_fallback_screenshot_dir ();
 	}
 
 	filename = make_filename_for_dir (path, filename_format, movie_title);
