@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-05-10 18:07+0000\n"
-"PO-Revision-Date: 2022-07-12 17:36+0700\n"
+"POT-Creation-Date: 2022-07-18 08:24+0000\n"
+"PO-Revision-Date: 2022-07-24 11:31+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -193,7 +193,7 @@ msgstr ""
 "Nonaktifkan dekoder perangkat keras dan gunakan hanya dekoder perangkat "
 "lunak. Untuk tujuan awakutu saja."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -570,7 +570,7 @@ msgstr "K_eluarkan"
 msgid "Languages"
 msgstr "Bahasa"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Subtitel"
 
@@ -629,7 +629,19 @@ msgstr "T_ambah"
 msgid "Password requested for RTSP server"
 msgstr "Diperlukan sandi untuk server RTSP"
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3352
+msgid "Could not initialise OpenGL support"
+msgstr "Tidak dapat menginisialisasi dukungan OpenGL"
+
+#: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Perangkat DVD yang Anda tentukan tampaknya tidak valid."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Perangkat VCD yang Anda tentukan tampaknya tidak valid."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -637,52 +649,52 @@ msgstr ""
 "Sumber tampaknya dienkripsi dan tidak dapat dibaca. Apakah Anda mencoba "
 "memutar DVD terenkripsi tanpa libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Server yang Anda coba hubungi tak diketahui."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Koneksi ke server ini ditolak."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Tak menemukan film yang dicari."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Server menolak akses ke berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3405
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr "Otentikasi diperlukan untuk mengakses berkas atau stream ini."
 
-#: src/backend/bacon-video-widget.c:3411
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Dukungan SSL/TLS tidak ada. Periksa pemasangan Anda."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Anda tak diizinkan untuk membuka berkas ini."
 
-#: src/backend/bacon-video-widget.c:3423
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Lokasi ini tidak sah."
 
-#: src/backend/bacon-video-widget.c:3431
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Film tidak dapat dibaca."
 
-#: src/backend/bacon-video-widget.c:3437
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Berkas ini dienkripsi dan tidak dapat diputar."
 
-#: src/backend/bacon-video-widget.c:3443
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Berkas yang Anda coba putar adalah berkas kosong."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -693,12 +705,12 @@ msgid_plural ""
 msgstr[0] ""
 "Untuk memutar film ini, memerlukan pengaya %s yang saat ini belum terpasang."
 
-#: src/backend/bacon-video-widget.c:3487
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Stream ini tak dapat diputar. Mungkin ada firewall yang memblokirnya."
 
-#: src/backend/bacon-video-widget.c:3490
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -706,7 +718,7 @@ msgstr ""
 "Stream audio atau video tak dapat diputar karena kurangnya kodek. Anda "
 "mungkin harus memasang pengaya tambahan untuk dapat memutarnya"
 
-#: src/backend/bacon-video-widget.c:3501
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -714,19 +726,19 @@ msgstr ""
 "Berkas ini tak bisa diputar melalui jaringan. Cobalah untuk mengunduhnya "
 "lebih dulu."
 
-#: src/backend/bacon-video-widget.c:5079
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Stereo"
 
-#: src/backend/bacon-video-widget.c:5081
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5351
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Media mengandung siaran video yang tidak didukung."
 
-#: src/backend/bacon-video-widget.c:5553
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1323,7 +1335,7 @@ msgstr "Buka direktori"
 msgid "Open the directory of the currently playing movie"
 msgstr "Buka direktori film yang sedang diputar"
 
-#: src/plugins/open-directory/totem-open-directory.c:184
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Buka Folder Pemuat"
 
@@ -1339,47 +1351,47 @@ msgstr "Mencari teks subtitel untuk film yang sedang diputar"
 msgid "Brazilian Portuguese"
 msgstr "Portugis Brasil"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Mencari subtitel…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Mengunduh subtitel…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Tak dapat menghubungi situs web OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Tak dapat menghubungi situs web OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Tak memperoleh hasil."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Rating"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "Un_duh Subtitel Film…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Mencari subtitel…"
 
@@ -2004,9 +2016,6 @@ msgstr "Atur user agent bagi situs Vimeo"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Dukungan pengendali jarak jauh inframerah"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "Tak dapat menginisiasi lirc."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "Tak dapat membaca konfigurasi lirc."
