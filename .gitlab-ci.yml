@@ -61,7 +61,6 @@ build-fedora:
 
 flatpak:master:
     extends: .flatpak
-    image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
     stage: test
     variables:
         # Replace with your manifest path
