@@ -45,16 +45,6 @@ struct _TotemSearchEntry {
 G_DEFINE_TYPE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
 
 static void
-totem_search_entry_finalize (GObject *obj)
-{
-	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
-
-	/* The popover will be destroyed with its parent (us) */
-
-	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
-}
-
-static void
 entry_activate_cb (GtkEntry *entry,
 		   TotemSearchEntry *self)
 {
@@ -215,7 +205,6 @@ totem_search_entry_class_init (TotemSearchEntryClass *klass)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-	gobject_class->finalize = totem_search_entry_finalize;
 	gobject_class->set_property = totem_search_entry_set_property;
 	gobject_class->get_property = totem_search_entry_get_property;
 
