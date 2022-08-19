@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-07-18 08:24+0000\n"
-"PO-Revision-Date: 2022-07-18 18:54+0300\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-08-19 22:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -23,8 +23,8 @@ msgstr ""
 "X-Generator: Lokalize 20.12.0\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
-#: src/totem-grilo.c:1923 src/totem-object.c:3869
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Відео"
 
@@ -142,10 +142,13 @@ msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Типова адреса для діалогу «Зробити знімок…»"
 
 #: data/org.gnome.totem.gschema.xml.in:61
+#| msgid ""
+#| "Default location for the “Take Screenshot” dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
-msgstr "Типова адреса для «Зробити знімок…». Типово — каталог малюнків."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
+msgstr "Типова адреса для «Зробити знімок…». Типово — каталог знімків вікон."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -611,14 +614,14 @@ msgstr "Додати інтернетний відеозапис"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Введіть _адресу файла, який треба відкрити:"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
 #: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Додати"
 
@@ -885,7 +888,7 @@ msgstr "Вибрати все"
 msgid "Select None"
 msgstr "Скасувати вибір"
 
-#: src/totem.c:62
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Попередній перегляд відео"
 
@@ -995,46 +998,46 @@ msgstr "Автоматично"
 msgid "None"
 msgstr "Немає"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Відтворення"
 
 # c-format
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "«Відео» не вдалося відтворити «%s»."
 
-#: src/totem-object.c:2305
+#: src/totem-object.c:2306
 msgid "Videos could not display the help contents."
 msgstr "«Відео» не вдалося показати вміст довідки."
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: src/totem-object.c:3967
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: src/totem-object.c:3973
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: src/totem-object.c:3979
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: src/totem-object.c:4211
+#: src/totem-object.c:4202
 msgid "Videos could not startup."
 msgstr "Не вдалося запустити «Відео»."
 
-#: src/totem-object.c:4212 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Причина невідома."
 
@@ -1281,27 +1284,27 @@ msgstr "Західне"
 msgid "Vietnamese"
 msgstr "В'єтнамське"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Усі файли"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Відеофайли"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Файли субтитрів"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Вибір текстових субтитрів"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Додати відеозаписи"
 
@@ -1810,9 +1813,17 @@ msgstr "Розрахувати кількість знімків екрана"
 msgid "Number of screenshots:"
 msgstr "Кількість знімків екрана:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+#| msgid "Screenshot"
+msgid "Screenshots"
+msgstr "Знімки екрана"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Знімок%s.png"
@@ -1820,7 +1831,7 @@ msgstr "Знімок%s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Знімок-%s-%d.png"
