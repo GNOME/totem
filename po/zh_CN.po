@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-07-18 08:24+0000\n"
-"PO-Revision-Date: 2022-07-29 19:19+0800\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-08-21 14:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -33,8 +33,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 42.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
-#: src/totem-grilo.c:1923 src/totem-object.c:3869
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "视频"
 
@@ -151,9 +151,9 @@ msgstr "“抓取屏幕截图”对话框的默认位置"
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
-msgstr "“抓取屏幕截图”对话框的默认位置，默认为图片目录。"
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
+msgstr "“抓取屏幕截图”对话框的默认位置。默认为截图目录。"
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -616,14 +616,14 @@ msgstr "添加网络视频"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "输入您想要打开的文件的地址(_A)："
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
 #: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "添加(_A)"
 
@@ -873,7 +873,7 @@ msgstr "选择全部"
 msgid "Select None"
 msgstr "全部不选"
 
-#: src/totem.c:62
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "视频预览"
 
@@ -981,45 +981,45 @@ msgstr "自动"
 msgid "None"
 msgstr "无"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "暂停"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "播放"
 
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "视频播放器无法播放“%s”。"
 
-#: src/totem-object.c:2305
+#: src/totem-object.c:2306
 msgid "Videos could not display the help contents."
 msgstr "视频播放器无法显示帮助内容。"
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "发生了一个错误"
 
-#: src/totem-object.c:3967
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "上一章/影片"
 
-#: src/totem-object.c:3973
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "播放/暂停"
 
-#: src/totem-object.c:3979
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "下一章/影片"
 
-#: src/totem-object.c:4211
+#: src/totem-object.c:4202
 msgid "Videos could not startup."
 msgstr "视频播放器无法启动。"
 
-#: src/totem-object.c:4212 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "无原因。"
 
@@ -1266,27 +1266,27 @@ msgstr "西方"
 msgid "Vietnamese"
 msgstr "越南语"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "全部文件"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "视频文件"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "字幕文件"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "选择文本字幕"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "添加视频"
 
@@ -1779,9 +1779,16 @@ msgstr "计算屏幕截图的数量"
 msgid "Number of screenshots:"
 msgstr "屏幕截图数量："
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+msgid "Screenshots"
+msgstr "截图"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "屏幕截图-%s.png"
@@ -1789,7 +1796,7 @@ msgstr "屏幕截图-%s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "屏幕截图-%s-%d.png"
