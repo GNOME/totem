@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-05-10 18:07+0000\n"
-"PO-Revision-Date: 2022-06-20 22:14+0300\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-08-22 23:12+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -26,8 +26,8 @@ msgstr ""
 "X-Generator: Gtranslator 40.0\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
-#: src/totem-grilo.c:1923 src/totem-object.c:3869
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Vaizdo įrašai"
 
@@ -144,9 +144,12 @@ msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Numatytoji dialogų „Padaryti nuotrauką“ vieta"
 
 #: data/org.gnome.totem.gschema.xml.in:61
+#| msgid ""
+#| "Default location for the “Take Screenshot” dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
 "Numatytoji dialogų „Padaryti nuotrauką“ vieta. Standartinė – aplankas "
 "„Paveikslėliai“."
@@ -192,7 +195,7 @@ msgid ""
 msgstr ""
 "Išjungti aparatinius dekoduotojus ir naudoti tik programinios. Tik derinimui."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -571,7 +574,7 @@ msgstr "_Išstumti"
 msgid "Languages"
 msgstr "Kalbos"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Titrai"
 
@@ -615,14 +618,14 @@ msgstr "Pridėti internetinį vaizdo įrašą"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Įveskite norimo atverti failo _adresą:"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
 #: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Pridėti"
 
@@ -630,7 +633,20 @@ msgstr "_Pridėti"
 msgid "Password requested for RTSP server"
 msgstr "RTSP serverio slaptažodis"
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3352
+#| msgid "Couldn’t initialize lirc."
+msgid "Could not initialise OpenGL support"
+msgstr "Nepavyko inicijuoti OpenGL palaikymo"
+
+#: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Atrodo nurodytas DVD įrenginys yra netinkamas."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Atrodo nurodytas VCD įrenginys yra netinkamas."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -638,52 +654,52 @@ msgstr ""
 "Atrodo šaltinis yra šifruotas ir negali būti perskaitytas. Ar bandote groti "
 "šifruotą DVD be libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio mėginate jungtis, nežinomas."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Neleista prisijungti prie šio serverio."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Nepavyko rasti nurodyto filmo."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Serveris neleido prieiti prie šio failo ar srauto."
 
-#: src/backend/bacon-video-widget.c:3405
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr "Šiam failui ar srautui priteiti reikia patvirtinti tapatybę."
 
-#: src/backend/bacon-video-widget.c:3411
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Trūksta SSL/TLS palaikymo. Patikrinkite savo įdiegtį."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Jums neleista atverti šio failo."
 
-#: src/backend/bacon-video-widget.c:3423
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Ši vieta nėra tinkama."
 
-#: src/backend/bacon-video-widget.c:3431
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Filmo nepavyko perskaityti."
 
-#: src/backend/bacon-video-widget.c:3437
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Šis failas yra šifruotas ir jo negalima groti."
 
-#: src/backend/bacon-video-widget.c:3443
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Failas, kurį bandote groti, yra tuščias."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -701,12 +717,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3487
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Šio srauto negalima groti. Gali būti, kad jį blokuoja ugniasienė."
 
-#: src/backend/bacon-video-widget.c:3490
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -714,7 +730,7 @@ msgstr ""
 "Garso ar vaizdo srautas nėra apdorojamas dėl trūkstamų kodekų. Gali reikėti "
 "įdiegti papildomus įskiepius, kad galėtumėt groti tam tikro tipo filmus"
 
-#: src/backend/bacon-video-widget.c:3501
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -722,19 +738,19 @@ msgstr ""
 "Nepavyko groti šio failo per tinklą. Pabandykite pirma jį parsisiųsti į "
 "diską."
 
-#: src/backend/bacon-video-widget.c:5079
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Apsupimas"
 
-#: src/backend/bacon-video-widget.c:5081
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5351
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų vaizdo įrašų srautų."
 
-#: src/backend/bacon-video-widget.c:5553
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -871,7 +887,7 @@ msgstr "Pasirinkti viską"
 msgid "Select None"
 msgstr "Nepasirinkti nieko"
 
-#: src/totem.c:62
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Vaizdo įrašų peržiūra"
 
@@ -982,48 +998,45 @@ msgstr "Automatinis"
 msgid "None"
 msgstr "Nėra"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pristabdyti"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Groti"
 
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
-#| msgid "Totem could not play “%s”."
 msgid "Videos could not play “%s”."
 msgstr "Videoįrašams nepavyko paleisti „%s“."
 
-#: src/totem-object.c:2305
-#| msgid "Totem could not display the help contents."
+#: src/totem-object.c:2306
 msgid "Videos could not display the help contents."
 msgstr "Videoįrašams nepavyko parodyti žinyno."
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
-#: src/totem-object.c:3967
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Ankstesnis takelis arba filmas"
 
-#: src/totem-object.c:3973
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Groti arba pristabdyti"
 
-#: src/totem-object.c:3979
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Kitas takelis arba filmas"
 
-#: src/totem-object.c:4211
-#| msgid "Totem could not startup."
+#: src/totem-object.c:4202
 msgid "Videos could not startup."
 msgstr "Videoįrašų nepavyko paleisti."
 
-#: src/totem-object.c:4212 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Jokios priežasties."
 
@@ -1270,27 +1283,27 @@ msgstr "Vakariečių"
 msgid "Vietnamese"
 msgstr "Vietnamiečių"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Visi failai"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Vaizdo įrašų failai"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Titrų failai"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Pasirinkite titrus"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Atverti"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Pridėti vaizdo įrašus"
 
@@ -1340,7 +1353,7 @@ msgstr "Atverti aplanką"
 msgid "Open the directory of the currently playing movie"
 msgstr "Atverti šiuo metu grojamo filmo aplanką"
 
-#: src/plugins/open-directory/totem-open-directory.c:184
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Atverti aplanką"
 
@@ -1356,47 +1369,47 @@ msgstr "Ieškoti subtitrų šiuo metu grojamam filmui"
 msgid "Brazilian Portuguese"
 msgstr "Portugalų (Brazilija)"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Ieškoma titrų..."
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Parsiunčiami titrai..."
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nepavyko prisijungti prie OpenSubtitles svetainės"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nepavyko prisijungti prie OpenSubtitles svetainės."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Rezultatų nerasta."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Formatas"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Įvertinimas"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "_Atsiųsti filmo titrus…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Ieškoma titrų…"
 
@@ -1746,16 +1759,11 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Galite pasiekti Totem.Objektą per „totem_object“ :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-#| msgid "Python Console"
 msgid "Videos Python Console"
 msgstr "Videoįrašų Python konsolė"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
-#| msgid ""
-#| "After you press OK, Totem will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
-#| "the default password (“totem”)."
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1840,9 +1848,17 @@ msgstr "Suskaičiuoti ekrano nuotraukas"
 msgid "Number of screenshots:"
 msgstr "Ekrano nuotraukų skaičius:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+#| msgid "Screenshot"
+msgid "Screenshots"
+msgstr "Paveikslėliai"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Nuotrauka iš %s.png"
@@ -1850,7 +1866,7 @@ msgstr "Nuotrauka iš %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Nuotrauka iš %s - %d.png"
@@ -1893,7 +1909,6 @@ msgstr "Įrašoma galerija kaip „%s“"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-#| msgid "Totem could not get a screenshot of the video."
 msgid "Videos could not get a screenshot of the video."
 msgstr "Videoįrašams padaryti vaizdo įrašo ekranvaizdžio."
 
@@ -2078,9 +2093,6 @@ msgstr "Nustato naudotojo agentą „Vimeo“ tinklalapiui"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Infraraudonųjų spindulių nuotolinio valdymo pulto palaikymas"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "Nepavyko inicijuoti lirc."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "Nepavyko perskaityti lirc konfigūracijos."
