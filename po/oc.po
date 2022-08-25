@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-21 18:49+0000\n"
-"PO-Revision-Date: 2022-03-15 11:01+0100\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-08-25 17:02+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Launchpad-Export-Date: 2015-05-20 17:08+0000\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Vidèos"
 
@@ -108,7 +108,7 @@ msgstr ""
 
 #: data/org.gnome.totem.gschema.xml.in:39
 msgid "Subtitle font"
-msgstr "Poliça dels sostítols"
+msgstr "Polissa dels sostítols"
 
 #: data/org.gnome.totem.gschema.xml.in:40
 msgid "Pango font description for subtitle rendering."
@@ -144,11 +144,11 @@ msgstr "Emplaçament per defaut de la fenèstra « Prendre una captura d’ecra
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
-"Emplaçament per defaut de la fenèstra « Prendre una captura d’ecran ». Per "
-"defaut, lo repertòri d’imatges."
+"Emplaçament per defaut per la fenèstra « Prendre una captura d’ecran ». Per "
+"defaut es lo repertòri de capturas d’ecran."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -197,7 +197,7 @@ msgstr ""
 "Desactivar los desencodadors materials e utilizar sonque los desencodadors "
 "logicials. Per una mira de desbugatge sonque."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5073
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Esterèo"
 
@@ -235,7 +235,7 @@ msgstr "_Cargar los fichièrs de sostitolatge al cargament del filme"
 
 #: data/totem-preferences-dialog.ui:175
 msgid "_Font:"
-msgstr "_Poliça :"
+msgstr "_Polissa :"
 
 #: data/totem-preferences-dialog.ui:200
 msgid "_Encoding:"
@@ -285,7 +285,7 @@ msgstr "Sat_uracion :"
 
 #: data/totem-preferences-dialog.ui:579
 msgid "_Hue:"
-msgstr "_Blau :"
+msgstr "_Tinta :"
 
 #: data/totem-preferences-dialog.ui:646
 msgid "Reset to _Defaults"
@@ -356,7 +356,7 @@ msgstr "Quitar"
 #: data/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Volume"
-msgstr "Volum +"
+msgstr "Volum"
 
 #: data/shortcuts.ui:83
 msgctxt "shortcut window"
@@ -574,7 +574,7 @@ msgstr "_Ejectar"
 msgid "Languages"
 msgstr "Lengas"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Sostítols"
 
@@ -618,14 +618,14 @@ msgstr "Apondre una vidèo internet"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Picatz l'_emplaçament del fichièr que volètz dobrir :"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "A_nullar"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Apondre"
 
@@ -633,7 +633,19 @@ msgstr "_Apondre"
 msgid "Password requested for RTSP server"
 msgstr "Senhal demandat pel servidor RTSP"
 
+#: src/backend/bacon-video-widget.c:3352
+msgid "Could not initialise OpenGL support"
+msgstr "Inicializacion de presa en carga d’OpenGL impossibla"
+
 #: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Lo periferic DVD qu’avètz especificat sembla pas valid."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Lo periferic VCD qu’avètz especificat sembla pas valid."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -641,53 +653,53 @@ msgstr ""
 "La font sembla chifrada e pòt pas èsser legida. Ensajatz de legir un DVD "
 "chifrat sens libdvdcss ?"
 
-#: src/backend/bacon-video-widget.c:3376
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Lo servidor al qual temptatz de vos connectar es desconegut."
 
-#: src/backend/bacon-video-widget.c:3379
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "La connexion a aqueste servidor es estada refusada."
 
-#: src/backend/bacon-video-widget.c:3382
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Lo filme especificat a pas pogut èsser trobat."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Lo servidor a refusat l'accès a aqueste fichièr o aqueste flux."
 
-#: src/backend/bacon-video-widget.c:3395
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Es necessari de s'autentificar per accedir a aqueste fichièr o aqueste flux."
 
-#: src/backend/bacon-video-widget.c:3401
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Presa en carga SSL/TLS absenta. Verificatz vòstra installacion."
 
-#: src/backend/bacon-video-widget.c:3408
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "La dobertura d'aqueste fichièr es pas permesa."
 
-#: src/backend/bacon-video-widget.c:3413
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "L'emplaçament es pas valid."
 
-#: src/backend/bacon-video-widget.c:3421
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Lo filme a pas pogut èsser legit."
 
-#: src/backend/bacon-video-widget.c:3427
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Aqueste fichièr es chifrat e pòt pas èsser legit."
 
-#: src/backend/bacon-video-widget.c:3433
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Lo fichièr que volètz dobrir es un fichièr void."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3457 src/backend/bacon-video-widget.c:3465
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -702,12 +714,12 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3477
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Lo flux pòt pas èsser legit. Poiriá arribar qu’un parafuòc lo bloque."
 
-#: src/backend/bacon-video-widget.c:3480
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -716,7 +728,7 @@ msgstr ""
 "vos calga installar d'empeutons suplementaris per èsser capable de "
 "visualizar d'unes tipes de filmes"
 
-#: src/backend/bacon-video-widget.c:3491
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -724,19 +736,19 @@ msgstr ""
 "Impossible de legir aqueste fichièr via la ret. Ensajatz de lo telecargar "
 "sus disc de per abans."
 
-#: src/backend/bacon-video-widget.c:5069
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5071
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5341
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Lo mèdia conten pas de flux vidèo pres en carga."
 
-#: src/backend/bacon-video-widget.c:5530
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -774,7 +786,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -872,15 +884,7 @@ msgstr "Seleccionar tot"
 msgid "Select None"
 msgstr "Seleccionar pas res"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Impossible d'inicializar lo supòrt de las bibliotècas thread-safe."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Verificatz l'installacion de vòstre sistèma. Totem se va arrestar ara."
-
-#: src/totem.c:74
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Apercebut vidèos"
 
@@ -938,20 +942,6 @@ msgstr "Local"
 msgid "Channels"
 msgstr "Canals"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Cargament impossible de l’interfàcia « %s ». %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Lo fichièr existís pas."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Verificatz que Totem es installat corrèctament."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Clicar sus un element per lo seleccionar"
@@ -966,7 +956,7 @@ msgstr[1] "%d seleccionats"
 #: src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
-msgstr "Resultats per “%s”"
+msgstr "Resultats per « %s »"
 
 #: src/totemmaintoolbar.ui:18
 msgid "Back"
@@ -1003,45 +993,45 @@ msgstr "Automatic"
 msgid "None"
 msgstr "Pas cap"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Legir"
 
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Totem a pas pogut legir « %s »."
+msgid "Videos could not play “%s”."
+msgstr "Vidèos a pas pogut legir « %s »."
 
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "Totem pòt pas afichar lo contengut de l'ajuda."
+#: src/totem-object.c:2306
+msgid "Videos could not display the help contents."
+msgstr "Vidèos a pas pogut afichar lo contengut de l'ajuda."
 
-#: src/totem-object.c:2569
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "I a agut una error"
 
-#: src/totem-object.c:3990
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Capítol/Filme precedent"
 
-#: src/totem-object.c:3996
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Lectura / pausa"
 
-#: src/totem-object.c:4002
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Capítol/Filme seguent"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "Totem a pas pogut aviar."
+#: src/totem-object.c:4202
+msgid "Videos could not startup."
+msgstr "Vidèos a pas pogut aviar."
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Pas de rason."
 
@@ -1149,7 +1139,7 @@ msgstr "Suprimir"
 
 #: src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
-msgstr "Locala actuala"
+msgstr "Lenga actuala"
 
 #: src/totem-subtitle-encoding.c:159 src/totem-subtitle-encoding.c:161
 #: src/totem-subtitle-encoding.c:163 src/totem-subtitle-encoding.c:165
@@ -1288,27 +1278,27 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamian"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Totes los fichièrs"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Fichièrs vidèo"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Fichièrs de sostítols"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Seleccion dels sostítols"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Dobrir"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Apondre de vidèos"
 
@@ -1358,7 +1348,7 @@ msgstr "Dobrir repertòri"
 msgid "Open the directory of the currently playing movie"
 msgstr "Dobrir lo repertòri del film en cors de lectura"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Dobrir lo dorsièr parent"
 
@@ -1374,47 +1364,47 @@ msgstr "Recèrca de sostítols pel filme en cors de lectura"
 msgid "Brazilian Portuguese"
 msgstr "Portugués brasilièr"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Recerca de sostítols en cors…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Telecargament dels sostítols en cors…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Impossible de contactar lo site Web OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Impossible de contactar lo site Web OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Cap de resultat pas trobat."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Formatar"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Vòte"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "_Telecargar los sostítols del filme…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Recèrca dels sostítols en cors…"
 
@@ -1536,94 +1526,94 @@ msgid "Channels:"
 msgstr "Canals :"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Desconegut"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Desconegut"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Desconegut"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Desconeguda"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Desconegut"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "N/D"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/D"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/D"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 canal"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ora"
 msgstr[1] "%d oras"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuta"
 msgstr[1] "%d minutas"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1631,53 +1621,53 @@ msgstr[0] "%d segonda"
 msgstr[1] "%d segondas"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0 segonda"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f imatge per segonda"
 msgstr[1] "%0.3f imatges per segonda"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1722,19 +1712,19 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Podètz accedir a Totem.Object via « totem_object » :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Consòla Python de Totem"
+msgid "Videos Python Console"
+msgstr "Consòla Python de Vidèos"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Aprèp aver validat, Totem espèra que vos connecetz a el amb winpdb o rpdb2. "
-"S'avètz pas definit cap de senhal de desbugatge dins GConf, utilizatz lo "
-"senhal per defaut (« totem »)."
+"Aprèp aver validat, Vidèos espèra que vos connectetz a el amb winpdb o "
+"rpdb2. S'avètz pas definit cap de senhal de desbugatge dins GConf, utilizatz "
+"lo senhal per defaut (« totem »)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1752,13 +1742,13 @@ msgstr "Empeuton de rotacion"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Permet la rotacion de las vidèos mal orientadas"
 
-#: src/plugins/rotation/totem-rotation.c:255
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "_Rotacion ↷"
 
-#: src/plugins/rotation/totem-rotation.c:259
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
-msgstr "_Rotacion ↶"
+msgstr "Rotacion ↶"
 
 #: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save Copy"
@@ -1775,7 +1765,7 @@ msgstr "Impossible de far venir disponibla fòra linha aquesta vidèo."
 #. translators: “Files” refers to nautilus' name
 #: src/plugins/save-file/totem-save-file.c:89
 msgid "“Files” is not available."
-msgstr "« Files » es pas disponible."
+msgstr "« Fichièrs » es pas disponible."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
@@ -1811,9 +1801,16 @@ msgstr "Calcula lo nombre de capturas d'ecran"
 msgid "Number of screenshots:"
 msgstr "Nombre de capturas d'ecran :"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+msgid "Screenshots"
+msgstr "Capturas d'ecran"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Captura de %s.png"
@@ -1821,7 +1818,7 @@ msgstr "Captura de %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Captura de %s - %d.png"
@@ -1837,7 +1834,7 @@ msgstr ""
 
 #: src/plugins/screenshot/totem-gallery.c:86
 msgid "Save Gallery"
-msgstr "Enregistrament de la galariá"
+msgstr "Enregistrar la galariá"
 
 #: src/plugins/screenshot/totem-gallery.c:93
 msgid "_Save"
@@ -1853,20 +1850,20 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "Galariá-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "Creacion de la galariá…"
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "Enregistrament de la galariá jos « %s »"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-msgid "Totem could not get a screenshot of the video."
-msgstr "Totem a pas pogut prene una captura d'ecran d'aquesta vidèo."
+msgid "Videos could not get a screenshot of the video."
+msgstr "Vidèos a pas pogut prendre una captura d'ecran d'aquesta vidèo."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1875,14 +1872,14 @@ msgstr ""
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:321
 msgid "Take _Screenshot"
-msgstr "Far una _captura d'ecran"
+msgstr "Prendre una _captura d'ecran"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
 msgstr "Crear una _galariá de capturas d'ecran…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "Sautar a"
 
@@ -1896,7 +1893,7 @@ msgstr "_Sautar cap a :"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segonda"
@@ -1906,12 +1903,12 @@ msgstr[1] "segondas"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "_Sautar cap a"
 
@@ -1969,6 +1966,25 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Definís l'agent utilizaire pel site Vimeo"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Impossible d'inicializar lo supòrt de las bibliotècas thread-safe."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr ""
+#~ "Verificatz l'installacion de vòstre sistèma. Totem se va arrestar ara."
+
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Cargament impossible de l’interfàcia « %s ». %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Lo fichièr existís pas."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Verificatz que Totem es installat corrèctament."
+
+#~ msgid "Totem Python Console"
+#~ msgstr "Consòla Python de Totem"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2078,9 +2094,6 @@ msgstr "Definís l'agent utilizaire pel site Vimeo"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Prisa en carga de la telecomanda a infraroges"
-
-#~ msgid "Couldn't initialize lirc."
-#~ msgstr "Impossible d'inicializar lirc"
 
 #~ msgid "Couldn't read lirc configuration."
 #~ msgstr "Impossible de legir la configuracion lirc"
