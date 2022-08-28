@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-05-10 18:07+0000\n"
-"PO-Revision-Date: 2022-05-29 10:04+0200\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-08-21 20:51+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -29,11 +29,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:64
-#: src/totem-grilo.c:1923 src/totem-object.c:3869
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Videos"
 
@@ -129,7 +129,6 @@ msgstr "Pango-Schriftbeschreibung für die Untertiteldarstellung."
 
 # Typografische Anführungszeichen, oder gar keine?
 #: data/org.gnome.totem.gschema.xml.in:43
-#, fuzzy
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
@@ -159,11 +158,11 @@ msgstr "Voreingestellter Ort des »Bildschirmfoto aufnehmen …«-Dialogs"
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
 "Voreingestellter Ort des »Bildschirmfoto aufnehmen …«-Dialogs. Vorgabe ist "
-"der Bilder-Ordner."
+"der Bildschirmfotos-Ordner."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -215,7 +214,7 @@ msgstr ""
 "Hardware-Decoder abschalten und nur Software-Decoder verwenden. Dient "
 "ausschließlich der Fehlerdiagnose."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -593,7 +592,7 @@ msgstr "_Auswerfen"
 msgid "Languages"
 msgstr "Sprachen"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Untertitel"
 
@@ -637,14 +636,14 @@ msgstr "Ein Internet-Video hinzufügen"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Bitte geben Sie die _Adresse der zu öffnenden Datei ein:"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
 #: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Hinzufügen"
 
@@ -652,7 +651,19 @@ msgstr "_Hinzufügen"
 msgid "Password requested for RTSP server"
 msgstr "Für den RTSP-Server wird ein Passwort angefordert"
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3352
+msgid "Could not initialise OpenGL support"
+msgstr "»OpenGL«-Unterstützung konnte nicht initialisiert werden."
+
+#: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Das von Ihnen angegebene DVD-Gerät scheint ungültig zu sein."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Das von Ihnen angegebene VCD-Gerät scheint ungültig zu sein."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -660,57 +671,57 @@ msgstr ""
 "Die Quelle scheint verschlüsselt zu sein und kann nicht gelesen werden. "
 "Versuchen Sie, eine verschlüsselte DVD ohne libdvdcss wiederzugeben?"
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr ""
 "Der Server, zu dem eine Verbindung aufgebaut werden soll, ist unbekannt."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Die Verbindung zu diesem Server wurde abgewiesen."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Der angegebene Film konnte nicht gefunden werden."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr ""
 "Der Server hat den Zugriff auf die Datei oder den Datenstrom verweigert."
 
-#: src/backend/bacon-video-widget.c:3405
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Sie müssen sich legitimieren, um auf die Datei oder den Datenstrom zugreifen "
 "zu können."
 
-#: src/backend/bacon-video-widget.c:3411
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr ""
 "Unterstützung für SSL/TLS fehlt. Bitte überprüfen Sie Ihre Installation."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Es ist Ihnen nicht gestattet, diese Datei zu öffnen."
 
-#: src/backend/bacon-video-widget.c:3423
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Dieser Ort ist ungültig."
 
-#: src/backend/bacon-video-widget.c:3431
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Der Film konnte nicht gelesen werden."
 
-#: src/backend/bacon-video-widget.c:3437
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Die Datei ist verschlüsselt und kann nicht wiedergegeben werden."
 
-#: src/backend/bacon-video-widget.c:3443
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Die Datei, die Sie wiedergeben wollten, ist leer."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -727,14 +738,14 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3487
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Dieser Datenstrom kann nicht abgespielt werden. Möglicherweise wird er von "
 "einer Firewall blockiert."
 
-#: src/backend/bacon-video-widget.c:3490
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -743,7 +754,7 @@ msgstr ""
 "verarbeitet werden. Sie müssen zusätzliche Erweiterungen installieren, um "
 "bestimmte Filmtypen abspielen zu können"
 
-#: src/backend/bacon-video-widget.c:3501
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -751,19 +762,19 @@ msgstr ""
 "Diese Datei kann nicht über das Netzwerk abgespielt werden. Versuchen Sie "
 "die Datei vorher herunterzuladen."
 
-#: src/backend/bacon-video-widget.c:5079
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5081
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5351
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Das Medium enthält nicht unterstützte Video-Formate."
 
-#: src/backend/bacon-video-widget.c:5553
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -902,7 +913,7 @@ msgstr "Alle auswählen"
 msgid "Select None"
 msgstr "Nichts auswählen"
 
-#: src/totem.c:62
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Video-Vorschau"
 
@@ -1011,45 +1022,45 @@ msgstr "Automatisch"
 msgid "None"
 msgstr "Keine"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pause"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Wiedergabe"
 
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videos konnte »%s« nicht wiedergeben."
 
-#: src/totem-object.c:2305
+#: src/totem-object.c:2306
 msgid "Videos could not display the help contents."
 msgstr "Videos konnte den Hilfeindex nicht anzeigen."
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: src/totem-object.c:3967
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Vorheriges Kapitel/Film"
 
-#: src/totem-object.c:3973
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Wiedergabe / Pause"
 
-#: src/totem-object.c:3979
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Nächstes Kapitel/Film"
 
-#: src/totem-object.c:4211
+#: src/totem-object.c:4202
 msgid "Videos could not startup."
 msgstr "Videos konnte nicht gestartet werden."
 
-#: src/totem-object.c:4212 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Ursache unbekannt."
 
@@ -1300,27 +1311,27 @@ msgstr "Westlich"
 msgid "Vietnamese"
 msgstr "Vietnamesisch"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Videodateien"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Untertitel-Dateien"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Untertitel auswählen"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Videos hinzufügen"
 
@@ -1370,7 +1381,7 @@ msgstr "Ordner öffnen"
 msgid "Open the directory of the currently playing movie"
 msgstr "Den Ordner des gegenwärtig abgespielten Films öffnen"
 
-#: src/plugins/open-directory/totem-open-directory.c:184
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Enthaltenden Ordner öffnen"
 
@@ -1386,47 +1397,47 @@ msgstr "Nach Untertiteln für den gegenwärtig abgespielten Film suchen"
 msgid "Brazilian Portuguese"
 msgstr "Brasilianisches Portugiesisch"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Untertitel werden gesucht …"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Untertitel werden heruntergeladen …"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Es konnte keine Verbindung zur OpenSubtitles-Website aufgebaut werden"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Es konnte keine Verbindung zur OpenSubtitles-Website aufgebaut werden."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Keine Suchergebnisse."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Bewertung"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "Film-Untertitel herunterla_den …"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Untertitel werden gesucht …"
 
@@ -1827,9 +1838,16 @@ msgstr "Anzahl der Bildschirmfotos berechnen"
 msgid "Number of screenshots:"
 msgstr "Anzahl der Bildschirmfotos:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+msgid "Screenshots"
+msgstr "Bildschirmfotos"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Bildschirmfoto von %s.png"
@@ -1837,7 +1855,7 @@ msgstr "Bildschirmfoto von %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Bildschirmfoto von %s - %d.png"
@@ -2068,9 +2086,6 @@ msgstr "Richtet den Benutzeragenten für die Vimeo-Seite ein"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Unterstützung für Infrarot-Fernbedienungen"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "»lirc« konnte nicht initialisiert werden."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "»lirc«-Konfiguration konnte nicht gelesen werden."
