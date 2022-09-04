@@ -10,8 +10,8 @@
 #
 # 주의:
 # - 이 프로그램의 이름인 Totem는 "토템"으로 음역.
-# - 프로그램의 이름으로 사용하는 "Videos"는 "동영상"으로 번역. 단
-#   오디오/비디오를 구분할때 "Video"는 "비디오"로.
+# - 프로그램의 이름으로 사용하는 "Videos"는 "동영상"으로 번역, 문맥상 분명하지
+#   않으면 "동영상 앱"으로. 단 오디오/비디오를 구분할때 "Video"는 "비디오"로.
 # - "Jamendo" -> "자멘도"
 # - "Creative Commons" -> "크리에이티브 커먼즈"
 # - "Grilo" -> "그릴로"
@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-21 18:49+0000\n"
-"PO-Revision-Date: 2022-03-02 20:47+0900\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-09-03 23:19+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -31,8 +31,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "동영상"
 
@@ -151,9 +151,9 @@ msgstr "“스크린샷 찍기” 창의 기본 위치"
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
-msgstr "“스크린샷 찍기” 창의 기본 위치, 기본값은 사진 디렉터리입니다."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
+msgstr "“스크린샷 찍기” 창의 기본 위치, 기본값은 스크린샷 디렉터리입니다."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -193,9 +193,11 @@ msgstr "하드웨어 디코더 사용 않기"
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
-msgstr "하드웨어 디코더를 사용하지 않고 소프트웨어 디코더만 사용합니다. 디버깅 목적 전용."
+msgstr ""
+"하드웨어 디코더를 사용하지 않고 소프트웨어 디코더만 사용합니다. 디버깅 목적 "
+"전용."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5073
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "스테레오"
 
@@ -572,7 +574,7 @@ msgstr "꺼내기(_E)"
 msgid "Languages"
 msgstr "언어"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "자막"
 
@@ -616,14 +618,14 @@ msgstr "웹 비디오 추가"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "열려는 파일의 주소를 입력하십시오(_A):"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "추가(_A)"
 
@@ -631,7 +633,19 @@ msgstr "추가(_A)"
 msgid "Password requested for RTSP server"
 msgstr "RTSP 서버에서 암호를 요청했습니다"
 
+#: src/backend/bacon-video-widget.c:3352
+msgid "Could not initialise OpenGL support"
+msgstr "OpenGL 지원 기능을 초기화할 수 없습니다"
+
 #: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "지정한 DVD 장치가 잘못된 것으로 보입니다."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "지정한 VCD 장치가 잘못된 것으로 보입니다."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -639,52 +653,52 @@ msgstr ""
 "미디어 원본이 암호화되어서 읽을 수 없습니다. libdvdcss 없이 암호화된 DVD를 재"
 "생하려고 하는 것 아닙니까?"
 
-#: src/backend/bacon-video-widget.c:3376
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "연결하려는 서버를 알 수 없습니다."
 
-#: src/backend/bacon-video-widget.c:3379
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "이 서버에 대한 연결이 거부되었습니다."
 
-#: src/backend/bacon-video-widget.c:3382
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "지정한 동영상을 찾을 수 없습니다."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "서버에서 이 파일이나 스트림에 대한 접근을 거부햇습니다."
 
-#: src/backend/bacon-video-widget.c:3395
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr "이 파일이나 스트림에 접근하려면 인증이 필요합니다."
 
-#: src/backend/bacon-video-widget.c:3401
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "SSL/TLS를 지원하지 않습니다. 설치가 제대로 되었는지 확인하십시오."
 
-#: src/backend/bacon-video-widget.c:3408
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "이 파일을 열 권한이 없습니다."
 
-#: src/backend/bacon-video-widget.c:3413
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "올바른 위치가 아닙니다."
 
-#: src/backend/bacon-video-widget.c:3421
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "동영상을 읽을 수 없습니다."
 
-#: src/backend/bacon-video-widget.c:3427
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "이 파일은 암호화되어서 재생할 수 없습니다."
 
-#: src/backend/bacon-video-widget.c:3433
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "재생하려는 파일이 빈 파일입니다."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3457 src/backend/bacon-video-widget.c:3465
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -697,12 +711,12 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3477
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "이 스트림을 재생할 수 없습니다. 방화벽에 막혀서 그럴 수도 있습니다."
 
-#: src/backend/bacon-video-widget.c:3480
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -710,7 +724,7 @@ msgstr ""
 "코덱이 없어서 오디오 또는 비디오 스트림을 처리할 수 없습니다. 동영상 파일의 "
 "종류에 따라 추가 플러그인을 설치해야 할 수도 있습니다."
 
-#: src/backend/bacon-video-widget.c:3491
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -718,19 +732,19 @@ msgstr ""
 "이 파일은 네트워크를 통해 재생할 수 없습니다. 먼저 로컬 위치에 다운로드하십시"
 "오."
 
-#: src/backend/bacon-video-widget.c:5069
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "서라운드"
 
-#: src/backend/bacon-video-widget.c:5071
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "모노"
 
-#: src/backend/bacon-video-widget.c:5341
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "지원하지 않는 비디오 스트림이 미디어에 포함되어 있습니다."
 
-#: src/backend/bacon-video-widget.c:5530
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -766,7 +780,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -864,15 +878,7 @@ msgstr "모두 선택"
 msgid "Select None"
 msgstr "모두 선택 해제"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "스레드에 안전한 라이브러리를 초기화할 수 없습니다."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "시스템 설치가 올바른지 확인하십시오. 토템을 끝냅니다."
-
-#: src/totem.c:74
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "비디오 미리 보기"
 
@@ -930,20 +936,6 @@ msgstr "로컬"
 msgid "Channels"
 msgstr "채널"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "“%s” 인터페이스를 읽어들일 수 없습니다. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "파일이 없습니다."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "토템을 올바르게 설치했는지 확인하십시오."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "항목을 누르면 선택합니다"
@@ -994,45 +986,45 @@ msgstr "자동"
 msgid "None"
 msgstr "없음"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "일시 정지"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "재생"
 
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "토템이 “%s”을(를) 재생할 수 없습니다."
+msgid "Videos could not play “%s”."
+msgstr "동영상 앱이 “%s”을(를) 재생할 수 없습니다."
 
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "토템 도움말 차례를 표시할 수 없습니다."
+#: src/totem-object.c:2306
+msgid "Videos could not display the help contents."
+msgstr "동영상 앱이 도움말 차례를 표시할 수 없습니다."
 
-#: src/totem-object.c:2569
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
-#: src/totem-object.c:3990
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "이전 장으로/동영상으로"
 
-#: src/totem-object.c:3996
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "재생 / 일시 정지"
 
-#: src/totem-object.c:4002
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "다음 장으로/동영상으로"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "토템이 시작할 수 없습니다."
+#: src/totem-object.c:4202
+msgid "Videos could not startup."
+msgstr "동영상 앱이 시작할 수 없습니다."
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "이유 없음."
 
@@ -1279,27 +1271,27 @@ msgstr "서양어"
 msgid "Vietnamese"
 msgstr "베트남어"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "모든 파일"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "비디오 파일"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "자막 파일"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "자막 선택"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "열기(_O)"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "동영상 추가"
 
@@ -1347,7 +1339,7 @@ msgstr "디렉터리 열기"
 msgid "Open the directory of the currently playing movie"
 msgstr "현재 재생 중인 동영상의 디렉터리를 엽니다"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "들어있는 폴더 열기"
 
@@ -1363,47 +1355,47 @@ msgstr "현재 재생 중인 동영상의 자막을 찾습니다"
 msgid "Brazilian Portuguese"
 msgstr "브라질 포르투갈어"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "자막을 다운로드하는 중입니다…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles 웹사이트에 연결할 수 없습니다"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles 웹사이트에 연결할 수 없습니다."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "결과 없음."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "형식"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "평가"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "동영상 자막 다운로드(_D)…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
@@ -1525,144 +1517,144 @@ msgid "Channels:"
 msgstr "채널:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 채널"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d시간"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d분"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d초"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0초"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "초당 %0.3f 프레임"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1706,18 +1698,16 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Totem.Object는 “totem_object”를 통해 접근할 수 있습니다 :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "토템 파이썬 콘솔"
+msgid "Videos Python Console"
+msgstr "동영상 파이썬 콘솔"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
-msgstr ""
-"확인을 누르면 WINPDB나 RPDB2를 이용해 연결할 때까지 토템이 대기합니다. DConf"
-"에서 디버거 암호를 설정하지 않았다면 기본 암호를 (“totem”) 사용합니다."
+msgstr "확인을 누르면 WINPDB나 RPDB2를 이용해 연결할 때까지 동영상 앱이 대기합니다. DConf에서 디버거 암호를 설정하지 않았다면 기본 암호를 (“totem”) 사용합니다."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1735,11 +1725,11 @@ msgstr "회전 플러그인"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "영상 방향이 잘못되었을 때 회전합니다"
 
-#: src/plugins/rotation/totem-rotation.c:255
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "회전 ↷(_R)"
 
-#: src/plugins/rotation/totem-rotation.c:259
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "회전 ↶(_R)"
 
@@ -1794,9 +1784,16 @@ msgstr "스크린샷 수를 계산합니다"
 msgid "Number of screenshots:"
 msgstr "스크린샷 수:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+msgid "Screenshots"
+msgstr "스크린샷"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "스크린샷, %s.png"
@@ -1804,7 +1801,7 @@ msgstr "스크린샷, %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "스크린샷, %s - %d.png"
@@ -1835,20 +1832,20 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "갤러리-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "갤러리를 만드는 중…"
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "갤러리를 “%s” 파일로 저장하는 중"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-msgid "Totem could not get a screenshot of the video."
-msgstr "토템이 이 비디오의 스크린샷을 찍을 수 없습니다."
+msgid "Videos could not get a screenshot of the video."
+msgstr "동영상 앱이 이 비디오의 스크린샷을 찍을 수 없습니다."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1863,7 +1860,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "스크린샷 갤러리 만들기(_G)…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "건너뛰기"
 
@@ -1877,7 +1874,7 @@ msgstr "건너뛰기(_S):"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "초"
@@ -1886,12 +1883,12 @@ msgstr[0] "초"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "건너뛰기(_S)"
 
@@ -1949,6 +1946,25 @@ msgstr "비미오"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "비미오 사이트에 대해 사용자 에이전트 값을 설정합니다"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "스레드에 안전한 라이브러리를 초기화할 수 없습니다."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr "시스템 설치가 올바른지 확인하십시오. 토템을 끝냅니다."
+
+#, c-format
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "“%s” 인터페이스를 읽어들일 수 없습니다. %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "파일이 없습니다."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "토템을 올바르게 설치했는지 확인하십시오."
+
+#~ msgid "Totem Python Console"
+#~ msgstr "토템 파이썬 콘솔"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2011,9 +2027,6 @@ msgstr "비미오 사이트에 대해 사용자 에이전트 값을 설정합니
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "적외선 리모콘 지원"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "LIRC를 초기화할 수 없습니다."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "LIRC 설정을 읽을 수 없습니다."
