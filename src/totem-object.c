@@ -2882,16 +2882,12 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 				|| strstr (filename, "://") != NULL
 				|| g_str_has_prefix (filename, "dvd:") != FALSE
 				|| g_str_has_prefix (filename, "vcd:") != FALSE
-				|| g_str_has_prefix (filename, "dvb:") != FALSE)
-		{
-			if (cleared == FALSE)
-			{
+				|| g_str_has_prefix (filename, "dvb:") != FALSE) {
+			if (cleared == FALSE) {
 				/* The function that calls us knows better
-				 * if we should be doing something with the 
+				 * if we should be doing something with the
 				 * changed playlist ... */
-				g_signal_handlers_disconnect_by_func
-					(G_OBJECT (totem->playlist),
-					 playlist_changed_cb, totem);
+				g_signal_group_block (totem->playlist_signals);
 				changed = totem_playlist_clear (totem->playlist);
 				bacon_video_widget_close (totem->bvw);
 				emit_file_closed (totem);
