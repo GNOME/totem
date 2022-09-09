@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
 "POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-09-09 03:39+0300\n"
+"PO-Revision-Date: 2022-09-09 12:25+0300\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@fedoraproject.org>\n"
 "Language-Team: Greek, Modern (1453-) <gnome-el-list@gnome.org>\n"
 "Language: el\n"
@@ -64,7 +64,7 @@ msgstr "Οι προγραμματιστές του GNOME"
 
 #: data/org.gnome.Totem.desktop.in.in:3
 msgid "@APPLICATION_NAME@"
-msgstr ""
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -150,16 +150,12 @@ msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Προεπιλεγμένη τοποθεσία για τους διαλόγους «Λήψη στιγμιότυπου οθόνης»"
 
 #: data/org.gnome.totem.gschema.xml.in:61
-#, fuzzy
-#| msgid ""
-#| "Default location for the “Take Screenshot” dialogs. Default is the "
-#| "Pictures directory."
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
 msgstr ""
 "Προεπιλεγμένη τοποθεσία για τους διαλόγους «Λήψη στιγμιότυπου οθόνης». Η "
-"προεπιλογή είναι ο κατάλογος «Εικόνες»."
+"προεπιλογή είναι ο κατάλογος «Στιγμιότυπα οθόνης»."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -198,13 +194,15 @@ msgstr ""
 
 #: data/org.gnome.totem.gschema.xml.in:87
 msgid "Disable hardware decoders"
-msgstr ""
+msgstr "Απενεργοποίηση αποκωδικοποιητών υλικού"
 
 #: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
 msgstr ""
+"Απενεργοποιήστε τους αποκωδικοποιητές υλικού και χρησιμοποιήστε μόνο "
+"αποκωδικοποιητές λογισμικού. Μόνο για σκοπούς εντοπισμού σφαλμάτων."
 
 #: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
@@ -338,8 +336,6 @@ msgid "Add local video"
 msgstr "Προσθήκη τοπικού βίντεο"
 
 #: data/shortcuts.ui:42
-#, fuzzy
-#| msgid "Add Web Video"
 msgctxt "shortcut window"
 msgid "Add web video"
 msgstr "Προσθήκη διαδικτυακού βίντεο"
@@ -515,11 +511,9 @@ msgid "Select next subtitle"
 msgstr "Επιλογή επόμενου υποτίτλου"
 
 #: data/shortcuts.ui:354
-#, fuzzy
-#| msgid "Autoloads text subtitles"
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
-msgstr "Φορτώνει αυτόματα τους υπότιτλους"
+msgstr "Εναλλαγή υποτίτλων"
 
 #: data/totem.ui:11 data/totem.ui:90
 msgid "Prefere_nces"
@@ -647,18 +641,16 @@ msgid "Password requested for RTSP server"
 msgstr "Αίτηση κωδικού πρόσβασης για τον διακομιστή RTSP"
 
 #: src/backend/bacon-video-widget.c:3352
-#, fuzzy
-#| msgid "Couldn’t initialize lirc."
 msgid "Could not initialise OpenGL support"
-msgstr "Αδυναμία αρχικοποίησης του lirc."
+msgstr "Αδυναμία αρχικοποίησης υποστήριξης OpenGL"
 
 #: src/backend/bacon-video-widget.c:3362
 msgid "The DVD device you specified seems to be invalid."
-msgstr ""
+msgstr "Η συσκευή DVD που καθορίσατε φαίνεται να μην είναι έγκυρη."
 
 #: src/backend/bacon-video-widget.c:3366
 msgid "The VCD device you specified seems to be invalid."
-msgstr ""
+msgstr "Η συσκευή VCD που καθορίσατε φαίνεται να μην είναι έγκυρη."
 
 #: src/backend/bacon-video-widget.c:3382
 msgid ""
@@ -913,10 +905,8 @@ msgid "Select None"
 msgstr "Καμία επιλογή"
 
 #: src/totem.c:52
-#, fuzzy
-#| msgid "Audio Preview"
 msgid "Videos Preview"
-msgstr "Προεπισκόπηση ήχου"
+msgstr "Προεπισκόπηση βίντεο"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -1033,16 +1023,13 @@ msgid "Play"
 msgstr "Αναπαραγωγή"
 
 #: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
-#, fuzzy, c-format
-#| msgid "Totem could not play “%s”."
+#, c-format
 msgid "Videos could not play “%s”."
-msgstr "Το Totem δε μπορεί να αναπαράγει το «%s»."
+msgstr "Το Βίντεο δε μπορεί να αναπαράγει το «%s»."
 
 #: src/totem-object.c:2306
-#, fuzzy
-#| msgid "Totem could not display the help contents."
 msgid "Videos could not display the help contents."
-msgstr "Το Totem δε μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
+msgstr "Το Βίντεο δε μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
 
 #: src/totem-object.c:2567
 msgid "An error occurred"
@@ -1061,10 +1048,8 @@ msgid "Next Chapter/Movie"
 msgstr "Επόμενο κεφάλαιο/ταινία"
 
 #: src/totem-object.c:4202
-#, fuzzy
-#| msgid "Totem could not startup."
 msgid "Videos could not startup."
-msgstr "Το Totem δε μπορεί να ξεκινήσει."
+msgstr "Το Βίντεο δε μπορεί να ξεκινήσει."
 
 #: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
@@ -1697,13 +1682,11 @@ msgid "0 seconds"
 msgstr "0 δευτερόλεπτα"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:246
-#, fuzzy, c-format
-#| msgid "%0.2f frame per second"
-#| msgid_plural "%0.2f frames per second"
+#, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
-msgstr[0] "%0.2f καρέ ανά δευτερόλεπτο"
-msgstr[1] "%0.2f καρέ ανά δευτερόλεπτο"
+msgstr[0] "%0.3f καρέ ανά δευτερόλεπτο"
+msgstr[1] "%0.3f καρέ ανά δευτερόλεπτο"
 
 #: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
@@ -1752,27 +1735,19 @@ msgstr ""
 "Μπορείτε να έχετε πρόσβαση στο Totem.Object μέσω του «totem_object» :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-#, fuzzy
-#| msgid "Python Console"
 msgid "Videos Python Console"
-msgstr "Κονσόλα Python"
+msgstr "Κονσόλα Python Βίντεο"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
-#, fuzzy
-#| msgid ""
-#| "After you press OK, Totem will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
-#| "the default password (“totem”)."
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Όταν πατήσετε Εντάξει, το Totem θα περιμένει μέχρι να συνδεθείτε μαζί του "
-"μέσω winpdb ή rpdb2. Αν δεν έχετε καθορίσει ένα κωδικό πρόσβασης για την "
-"εφαρμογή αποσφαλμάτωσης στο DConf, θα χρησιμοποιηθεί ο προεπιλεγμένος "
-"(«totem»)."
+"Όταν πατήσετε Εντάξει, το Βίντεο θα περιμένει μέχρι να συνδεθείτε μαζί του "
+"μέσω winpdb ή rpdb2. Αν δεν έχετε καθορίσει ένα συνθηματικό για την εφαρμογή "
+"αποσφαλμάτωσης στο DConf, θα χρησιμοποιηθεί ο προεπιλεγμένος («totem»)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1909,10 +1884,9 @@ msgstr "Αποθήκευση συλλογής ως «%s»"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-#, fuzzy
-#| msgid "Totem could not get a screenshot of the video."
 msgid "Videos could not get a screenshot of the video."
-msgstr "Το Totem δε μπορεί να λάβει στιγμιότυπο οθόνης από αυτό το βίντεο."
+msgstr ""
+"Η εφαρμογή Βίντεο δε μπορεί να λάβει στιγμιότυπο οθόνης από αυτό το βίντεο."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
