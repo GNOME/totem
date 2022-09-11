@@ -47,7 +47,6 @@ ui_resources = gnome.compile_resources(
 r = run_command(desktop_sh, mime_type_list, uri_schemes_list, check: true)
 
 desktop_conf = configuration_data()
-desktop_conf.set('VERSION', totem_version)
 desktop_conf.set('APPLICATION_ID', application_id)
 desktop_conf.set('APPLICATION_NAME', application_name)
 desktop_conf.set('MIME_TYPE', r.stdout().strip())
