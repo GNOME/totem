@@ -3,25 +3,26 @@
 # This file is distributed under the same license as the totem package.
 # Ivan Noris <vix@vazka.sk>, 2004, 2005.
 # Pavol Klačanský <pavol@klacansky.com>, 2008-2013.
+# Dušan Kazik <prescott66@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-02-18 12:14+0000\n"
-"PO-Revision-Date: 2022-02-20 22:45+0100\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-09-27 13:01+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3892
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Videá"
 
@@ -170,12 +171,15 @@ msgstr "Predvolené umiestenie pre dialógové okná „Zachytiť snímku obrazo
 
 # desc
 #: data/org.gnome.totem.gschema.xml.in:61
+#| msgid ""
+#| "Default location for the “Take Screenshot” dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
 "Predvolené umiestnenie pre dialógové okná „Zachytiť snímku obrazovky“. "
-"Predvolený je adresár Obrázky."
+"Predvolený je adresár Snímky obrazoviek."
 
 # summary
 #: data/org.gnome.totem.gschema.xml.in:65
@@ -232,7 +236,7 @@ msgstr ""
 "ladiace účely."
 
 # list store item - Typ zvukového výstupu
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5066
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -658,7 +662,7 @@ msgstr "Vy_sunúť"
 msgid "Languages"
 msgstr "Jazyky"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Titulky"
 
@@ -711,22 +715,37 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Zadajte _adresu súboru, ktorý chcete otvoriť:"
 
 # action
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "P_ridať"
 
-#: src/backend/bacon-video-widget.c:1435
+#: src/backend/bacon-video-widget.c:1460
 msgid "Password requested for RTSP server"
 msgstr "Pre server RTSP je požadované heslo"
 
-#: src/backend/bacon-video-widget.c:3339
+# slovo "inicializovať" som nenašiel v žiadnom slovníku. Je slovenské?
+# PK: asi nie, napada ta lepsie?
+#: src/backend/bacon-video-widget.c:3352
+#| msgid "Couldn’t initialize lirc."
+msgid "Could not initialise OpenGL support"
+msgstr "Nepodarilo sa inicializovať podporu OpenGL"
+
+#: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Zdá sa, že zariadenie DVD, ktoré ste určili, nie je platné."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Zdá sa, že zariadenie VCD, ktoré ste určili, nie je platné."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -734,55 +753,55 @@ msgstr ""
 "Zdá sa, že zdroj je zašifrovaný a nedá sa čítať. Pokúšate sa prehrať "
 "zašifrovaný disk DVD bez knižnice libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3353
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ku ktorému sa snažíte pripojiť, je neznámy."
 
-#: src/backend/bacon-video-widget.c:3356
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Spojenie s týmto serverom bolo odmietnuté."
 
-#: src/backend/bacon-video-widget.c:3359
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Zadaný film sa nepodarilo nájsť."
 
-#: src/backend/bacon-video-widget.c:3366
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Server zamietol prístup k tomuto súboru alebo streamu."
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Pre prístup k tomuto súboru alebo streamu je vyžadované overenie totožnosti."
 
-#: src/backend/bacon-video-widget.c:3378
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Chýba podpora protokolu SSL/TLS. Skontrolujte vašu inštaláciu."
 
-#: src/backend/bacon-video-widget.c:3385
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Nemáte povolenie na otvorenie tohto súboru."
 
-#: src/backend/bacon-video-widget.c:3390
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Toto umiestnenie je neplatné."
 
 # DK: načítaný?
 # PK: necham precitany, kedze cita sa len cast ale nacitava sa zvecsa celok
-#: src/backend/bacon-video-widget.c:3398
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Film nemohol byť prečítaný."
 
-#: src/backend/bacon-video-widget.c:3404
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tento súbor je zašifrovaný a nedá sa spätne prehrať."
 
-#: src/backend/bacon-video-widget.c:3410
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Súbor, ktorý ste sa pokúsili prehrať, je prázdny."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3434 src/backend/bacon-video-widget.c:3442
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -804,12 +823,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3454
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr "Tento prúd sa nedá prehrať. Je možné, že ho blokuje brána firewall."
 
-#: src/backend/bacon-video-widget.c:3457
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -817,25 +836,25 @@ msgstr ""
 "Zvukový alebo video stream sa nedá spracovať kvôli chýbajúcim kodekom. "
 "Musíte nainštalovať dodatočné kodeky na prehranie niektorých typov filmov"
 
-#: src/backend/bacon-video-widget.c:3468
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Tento súbor sa nedá prehrať cez sieť. Skúste ho najprv prebrať."
 
-#: src/backend/bacon-video-widget.c:5062
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5064
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5334
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Nosič neobsahuje žiadne podporované video streamy."
 
-#: src/backend/bacon-video-widget.c:5523
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -877,7 +896,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -975,15 +994,7 @@ msgstr "Vybrať všetko"
 msgid "Select None"
 msgstr "Zrušiť výber"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Nepodarilo sa inicializovať knižnice na bezpečný beh vo vláknach."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Skontrolujte inštaláciu svojho systému. Totem teraz skončí."
-
-#: src/totem.c:74
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Ukážky videí"
 
@@ -1042,20 +1053,6 @@ msgstr "Miestne"
 msgid "Channels"
 msgstr "Kanály"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Nepodarilo sa načítať rozhranie „%s“. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Súbor neexistuje."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Uistite sa, či je program Totem správne nainštalovaný."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Kliknutím na položky ich vyberiete"
@@ -1109,47 +1106,50 @@ msgstr "Automatický"
 msgid "None"
 msgstr "Žiadny"
 
-#: src/totem-object.c:1440 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pozastaviť"
 
-#: src/totem-object.c:1446 src/totem-object.c:1454 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Prehrať"
 
-#: src/totem-object.c:1522 src/totem-object.c:1550 src/totem-object.c:2136
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Prehrávač Totem nemohol prehrať „%s“."
+#| msgid "Totem could not play “%s”."
+msgid "Videos could not play “%s”."
+msgstr "Aplikácia Videá nemohla prehrať „%s“."
 
 # PM: dal by som Programu Totem (viackrát); mimochodom neskúsený používateľ musí z toho byť zmetený keď sa program vlastne volá "Prehrávač filmov"
 # PK: snad to ujednotia, je to domotane, ale zas balik je totem
-#: src/totem-object.c:2308
-msgid "Totem could not display the help contents."
-msgstr "Programu Totem sa nepodarilo zobraziť obsah pomocníka."
+#: src/totem-object.c:2306
+#| msgid "Totem could not display the help contents."
+msgid "Videos could not display the help contents."
+msgstr "Aplikácii Videá sa nepodarilo zobraziť obsah pomocníka."
 
-#: src/totem-object.c:2569
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "Vyskytla sa chyba"
 
-#: src/totem-object.c:3990
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Predchádzajúca kapitola/film"
 
-#: src/totem-object.c:3996
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Prehrať / Pozastaviť"
 
-#: src/totem-object.c:4002
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Ďalšia kapitola/film"
 
-#: src/totem-object.c:4238
-msgid "Totem could not startup."
-msgstr "Programu Totem sa nepodarilo naštartovať."
+#: src/totem-object.c:4202
+#| msgid "Totem could not startup."
+msgid "Videos could not startup."
+msgstr "Aplikácii Videá sa nepodarilo naštartovať."
 
-#: src/totem-object.c:4238 src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Žiaden dôvod."
 
@@ -1421,32 +1421,32 @@ msgid "Vietnamese"
 msgstr "Vietnamské"
 
 # file filter
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Všetky súbory"
 
 # file filter
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Video súbory"
 
 # file filter
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Súbory s titulkami"
 
 # filechooser dialog title
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Výber textových titulkov"
 
 # menu item
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Otvoriť"
 
 # dialog title
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Pridanie videí"
 
@@ -1470,36 +1470,6 @@ msgstr "Automatické načítanie titulkov"
 msgid "Autoloads text subtitles"
 msgstr "Automaticky preberá titulky k filmom"
 
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:6
-msgid "MPRIS D-Bus Interface"
-msgstr "Rozhranie MPRIS zbernice D-Bus"
-
-# plugin desc
-#: src/plugins/dbusservice/dbusservice.plugin.desktop.in:7
-msgid ""
-"Send notifications of currently-playing videos and allow remote control "
-"using MPRIS."
-msgstr ""
-"Odošle oznámenia o práve prehrávaných filmoch a umožní vzdialené ovládanie "
-"pomocou služby MPRIS."
-
-# PŠ: keby si to chcel mať preložené, správny preklad by bol "nerealizuje"
-#: src/plugins/dbusservice/dbusservice.py:210
-#: src/plugins/dbusservice/dbusservice.py:239
-#, python-format
-msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr "Objekt triedy MediaPlayer2 neimplementuje rozhranie „%s“"
-
-#: src/plugins/dbusservice/dbusservice.py:220
-#, python-format
-msgid "The property ‘%s’ is not writeable."
-msgstr "Vlastnosť „%s“ nie je zapisovateľná."
-
-#: src/plugins/dbusservice/dbusservice.py:234
-#, python-format
-msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
-msgstr "Neznáma vlastnosť „%s“ požadovaná objektom MediaPlayer 2"
-
 # PM: Tak tu fakt neviem ci v komunikátore alebo ri alebo rovi - vhodná otázka pre JULS
 # PK: poslal som im email, "komunikatorovi" mi evokuje osobu
 #: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
@@ -1511,6 +1481,19 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "Nastaví stav vo vašom internetovom komunikátore na preč, keď sa prehráva film"
 
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
+msgid "MPRIS D-Bus Interface"
+msgstr "Rozhranie MPRIS zbernice D-Bus"
+
+# plugin desc
+#: src/plugins/mpris/mpris.plugin.desktop.in:6
+msgid ""
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
+msgstr ""
+"Odošle oznámenia o práve prehrávaných filmoch a umožní vzdialené ovládanie "
+"pomocou služby MPRIS."
+
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open directory"
 msgstr "Otvorenie adresára"
@@ -1520,7 +1503,7 @@ msgstr "Otvorenie adresára"
 msgid "Open the directory of the currently playing movie"
 msgstr "Otvorí adresár s aktuálne prehrávaným filmom"
 
-#: src/plugins/open-directory/totem-open-directory.c:184
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Otvoriť obsahujúci priečinok"
 
@@ -1551,32 +1534,32 @@ msgstr "Nájde titulky pre práve prehrávaný film"
 msgid "Brazilian Portuguese"
 msgstr "Brazílska portugalčina"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Hľadajú sa titulky…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Preberajú sa titulky…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nepodarilo sa kontaktovať webovú stránku OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nepodarilo sa kontaktovať webovú stránku OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Nenájdené žiadne výsledky."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Formát"
 
@@ -1584,17 +1567,17 @@ msgstr "Formát"
 # PK: nie, toto sa mi paci
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Hodnotenie"
 
 # action
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "_Prevziať titulky k filmu…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Hľadajú sa titulky…"
 
@@ -1633,39 +1616,39 @@ msgstr "Vlastnosti filmu"
 msgid "Adds movie properties menu item"
 msgstr "Pridá vlastnosti filmu do položiek ponuky"
 
-#: src/plugins/properties/totem-movie-properties.c:148
+#: src/plugins/properties/totem-movie-properties.c:150
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: src/plugins/properties/totem-movie-properties.c:151
-#: src/plugins/properties/totem-movie-properties.c:162
+#: src/plugins/properties/totem-movie-properties.c:153
+#: src/plugins/properties/totem-movie-properties.c:164
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Neznámy"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:165
+#: src/plugins/properties/totem-movie-properties.c:167
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Neznáma"
 
-#: src/plugins/properties/totem-movie-properties.c:276
+#: src/plugins/properties/totem-movie-properties.c:278
 msgid "Properties"
 msgstr "Vlastnosti"
 
 # action
-#: src/plugins/properties/totem-movie-properties.c:301
+#: src/plugins/properties/totem-movie-properties.c:303
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1737,81 +1720,81 @@ msgid "Channels:"
 msgstr "Kanály:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Neznámy"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Neznámy"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Neznámy"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Neznámy"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Neznámy"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Neznáme"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Neznámy"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Neznámy"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Neznáma"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Neznámy"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Neznámy"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 # PŠ: Label k tomuto je "Channels:", takže "0 kanálov". Po načítaní súboru sa aj tak nahradí aktuálnou hodnotou.
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 kanálov"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1819,7 +1802,7 @@ msgstr[0] "%d hodín"
 msgstr[1] "%d hodina"
 msgstr[2] "%d hodiny"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1827,7 +1810,7 @@ msgstr[0] "%d minút"
 msgstr[1] "%d minúta"
 msgstr[2] "%d minúty"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1839,7 +1822,7 @@ msgstr[2] "%d sekundy"
 # PM: preco si to "a" dal preč?
 # PK: pride mi to lepsie
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
@@ -1849,14 +1832,14 @@ msgstr "%s %s %s"
 # PM: preco si to "a" dal preč?
 # PK: pride mi to lepsie
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
@@ -1866,26 +1849,26 @@ msgstr "%s"
 # PM: preco si to "a" dal preč?
 # PK: pride mi to lepsie
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0 sekúnd"
 
 # http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
@@ -1894,7 +1877,7 @@ msgstr[1] "%0.3f snímka za sekundu"
 msgstr[2] "%0.3f snímky za sekundu"
 
 # http://slovnik.juls.savba.sk/?w=snímka&c=ze5e
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1944,19 +1927,24 @@ msgstr "Odlaďovač pre Python"
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "K objektu Totem.Object môžete pristupovať cez „totem_object“ :\\n%s"
 
-# window title
+# plugin name
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Konzola pre Python"
+#| msgid "Python Console"
+msgid "Videos Python Console"
+msgstr "Konzola pre Python aplikácie Videá"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password (“totem”)."
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Po stlačení tlačidla OK, aplikácia Totem počká, kým sa k nej pripojíte "
+"Po stlačení tlačidla OK, aplikácia Videá počká, kým sa k nej pripojíte "
 "pomocou winpdb alebo rpdb2. Ak nemáte nastavené heslo pre ladiaci program v "
 "DConf, tak sa použije predvolené heslo („totem“)."
 
@@ -1981,12 +1969,12 @@ msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Umožňuje otočiť videá, ak majú nesprávnu orientáciu"
 
 # menu item
-#: src/plugins/rotation/totem-rotation.c:260
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "O_točiť ↷"
 
 # menu item
-#: src/plugins/rotation/totem-rotation.c:264
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "Otočiť ↶"
 
@@ -2000,23 +1988,23 @@ msgstr "Uloženie kópie"
 msgid "Save a copy of the currently playing movie"
 msgstr "Uloží kópiu práve prehrávaného filmu"
 
-#: src/plugins/save-file/totem-save-file.c:85
+#: src/plugins/save-file/totem-save-file.c:87
 msgid "The video could not be made available offline."
 msgstr "Video nemôže byť sprístupnené bez pripojenia."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:87
+#: src/plugins/save-file/totem-save-file.c:89
 msgid "“Files” is not available."
 msgstr "Aplikácia „Súbory“ nie je dostupná."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:168
+#: src/plugins/save-file/totem-save-file.c:170
 msgid "Movie"
 msgstr "Film"
 
 # menu item
-#: src/plugins/save-file/totem-save-file.c:452
+#: src/plugins/save-file/totem-save-file.c:453
 msgid "Make Available Offline"
 msgstr "Sprístupniť bez pripojenia"
 
@@ -2030,7 +2018,7 @@ msgstr "Šetrič obrazovky"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Vypne šetrič obrazovky počas prehrávania filmu"
 
-#: src/plugins/screensaver/totem-screensaver.c:75
+#: src/plugins/screensaver/totem-screensaver.c:77
 msgid "Playing a movie"
 msgstr "Prehráva sa film"
 
@@ -2049,9 +2037,18 @@ msgstr "Vypočítať počet snímok obrazovky"
 msgid "Number of screenshots:"
 msgstr "Počet snímok obrazovky:"
 
+# plugin title
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+#| msgid "Screenshot"
+msgid "Screenshots"
+msgstr "Snímky obrazoviek"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Snímka obrazovky z %s.png"
@@ -2059,7 +2056,7 @@ msgstr "Snímka obrazovky z %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Snímka obrazovky z %s - %d.png"
@@ -2094,38 +2091,39 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "Galéria-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "Vytváranie galérie…"
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "Ukladá sa galéria ako „%s“"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:221
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
-msgid "Totem could not get a screenshot of the video."
-msgstr "Totem nemohol zachytiť snímku tohto videa."
+#: src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
+#| msgid "Totem could not get a screenshot of the video."
+msgid "Videos could not get a screenshot of the video."
+msgstr "Totem nemohol zachytiť snímku tohto videa.l"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:230
+#: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Toto by sa nemalo stať; prosím, ohláste chybu."
 
 # action entry
-#: src/plugins/screenshot/totem-screenshot-plugin.c:323
+#: src/plugins/screenshot/totem-screenshot-plugin.c:321
 msgid "Take _Screenshot"
 msgstr "Zachytiť _snímku obrazovky"
 
 # menu item
-#: src/plugins/screenshot/totem-screenshot-plugin.c:329
+#: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
 msgstr "Vytvoriť _galériu zo snímok obrazovky…"
 
 # plugin name
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "Preskočiť na"
 
@@ -2143,7 +2141,7 @@ msgstr "_Preskočiť na:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekundu"
@@ -2154,52 +2152,52 @@ msgstr[2] "sekundu"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
 # plugin name
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "P_reskočiť na"
 
 # plugin name
-#: src/plugins/skipto/totem-skipto-plugin.c:202
+#: src/plugins/skipto/totem-skipto-plugin.c:198
 msgid "_Skip To…"
 msgstr "P_reskočiť na…"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:61
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
 msgstr "× 0.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:62
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
 msgctxt "playback rate"
 msgid "Normal"
 msgstr "Normálna"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:67
 msgctxt "playback rate"
 msgid "× 1.1"
 msgstr "× 1.1"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:68
 msgctxt "playback rate"
 msgid "× 1.25"
 msgstr "× 1.25"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:69
 msgctxt "playback rate"
 msgid "× 1.5"
 msgstr "× 1.5"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:70
 msgctxt "playback rate"
 msgid "× 1.75"
 msgstr "× 1.75"
 
-#: src/plugins/variable-rate/totem-variable-rate-plugin.c:74
+#: src/plugins/variable-rate/totem-variable-rate-plugin.c:78
 #, c-format
 msgid "Speed: %s"
 msgstr "Rýchlosť: %s"
@@ -2220,6 +2218,39 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nastaví používateľského agenta pre stránku služby Vimeo"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Nepodarilo sa inicializovať knižnice na bezpečný beh vo vláknach."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr "Skontrolujte inštaláciu svojho systému. Totem teraz skončí."
+
+#, c-format
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Nepodarilo sa načítať rozhranie „%s“. %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Súbor neexistuje."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Uistite sa, či je program Totem správne nainštalovaný."
+
+# PŠ: keby si to chcel mať preložené, správny preklad by bol "nerealizuje"
+#, python-format
+#~ msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
+#~ msgstr "Objekt triedy MediaPlayer2 neimplementuje rozhranie „%s“"
+
+#, python-format
+#~ msgid "The property ‘%s’ is not writeable."
+#~ msgstr "Vlastnosť „%s“ nie je zapisovateľná."
+
+#, python-format
+#~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
+#~ msgstr "Neznáma vlastnosť „%s“ požadovaná objektom MediaPlayer 2"
+
+# window title
+#~ msgid "Totem Python Console"
+#~ msgstr "Konzola pre Python"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2326,11 +2357,6 @@ msgstr "Nastaví používateľského agenta pre stránku služby Vimeo"
 # plugin desc
 #~ msgid "Support infrared remote control"
 #~ msgstr "Podporuje infračervené diaľkové ovládanie"
-
-# slovo "inicializovať" som nenašiel v žiadnom slovníku. Je slovenské?
-# PK: asi nie, napada ta lepsie?
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "Nepodarilo sa inicializovať lirc."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "Nepodarilo sa prečítať nastavenia lirc."
