@@ -2766,6 +2766,10 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *t
 	 */
 	event->button = GDK_BUTTON_PRIMARY;
 
+	g_object_set (gtk_widget_get_settings (widget),
+		      "gtk-primary-button-warps-slider", GINT_TO_POINTER(TRUE),
+		      NULL);
+
 	totem->seek_lock = TRUE;
 	mark_popup_busy (totem, "seek started");
 
