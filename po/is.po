@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.99\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-03-31 13:06+0000\n"
-"PO-Revision-Date: 2022-04-06 11:42+0000\n"
+"POT-Creation-Date: 2022-08-18 09:00+0000\n"
+"PO-Revision-Date: 2022-10-17 13:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -19,10 +19,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 21.12.3\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3889
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3870
 msgid "Videos"
 msgstr "Myndskeið"
 
@@ -142,11 +142,15 @@ msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Sjálfgefin staðsetning 'Taka skjámynd'-glugga"
 
 #: data/org.gnome.totem.gschema.xml.in:61
+#| msgid ""
+#| "Default location for the “Take Screenshot” dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
-"Sjálfgefin staðsetning 'Taka skjámynd'-glugga. Sjálfgefið er núverandi mappa."
+"Sjálfgefin staðsetning fyrir 'Taka skjámynd'-glugga. Sjálfgefið er"
+" skjámyndamappan."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -187,10 +191,10 @@ msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
 msgstr ""
-"Gera vélbúnaðarafkóðun óvirka og nota einungis hugbúnaðarafkóðun. Þetta er"
-" einungis til að leita uppi vandamál."
+"Gera vélbúnaðarafkóðun óvirka og nota einungis hugbúnaðarafkóðun. Þetta er "
+"einungis til að leita uppi vandamál."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Víðóma"
 
@@ -312,19 +316,16 @@ msgid "Show help"
 msgstr "Birta hjálp"
 
 #: data/shortcuts.ui:28
-#| msgid "_Keyboard Shortcuts"
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Flýtilyklar"
 
 #: data/shortcuts.ui:35
-#| msgid "Add _Local Video…"
 msgctxt "shortcut window"
 msgid "Add local video"
 msgstr "Bæta við myndskeiði á tölvunni"
 
 #: data/shortcuts.ui:42
-#| msgid "Add Web Video"
 msgctxt "shortcut window"
 msgid "Add web video"
 msgstr "Bæta við vefmyndskeiði"
@@ -490,19 +491,16 @@ msgid "Navigate right"
 msgstr "Fara til hægri"
 
 #: data/shortcuts.ui:342
-#| msgid "Subtitles"
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Skjátextar"
 
 #: data/shortcuts.ui:347
-#| msgid "Select Text Subtitles"
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Velja næsta skjátexta"
 
 #: data/shortcuts.ui:354
-#| msgid "Autoloads text subtitles"
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Víxla skjátextum af/á"
@@ -573,7 +571,7 @@ msgstr "_Spýta út"
 msgid "Languages"
 msgstr "Tungumál"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Textar"
 
@@ -617,14 +615,14 @@ msgstr "Bæta við vefmyndskeiði"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Sláðu inn s_lóð (URI) skrárinnar sem þú vilt opna:"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Hætta við"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Bæta við"
 
@@ -632,7 +630,22 @@ msgstr "_Bæta við"
 msgid "Password requested for RTSP server"
 msgstr "Beðið er um aðgangsorð fyrir RTSP miðlara"
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3352
+#| msgid "Couldn’t initialize lirc."
+msgid "Could not initialise OpenGL support"
+msgstr "Tókst ekki að frumstilla stuðning við OpenGL."
+
+#: src/backend/bacon-video-widget.c:3362
+#| msgid "The device name you specified (%s) seems to be invalid."
+msgid "The DVD device you specified seems to be invalid."
+msgstr "DVD- tækið sem þú tilgreindir virðist vera ógilt."
+
+#: src/backend/bacon-video-widget.c:3366
+#| msgid "The device name you specified (%s) seems to be invalid."
+msgid "The VCD device you specified seems to be invalid."
+msgstr "VCD- tækið sem þú tilgreindir virðist vera ógilt."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -640,52 +653,52 @@ msgstr ""
 "Skráin virðist dulkóðuð og ekki er hægt að lesa hana. Ertu að reyna að spila "
 "læstan DVD-disk án libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Þjónninn sem þú ert að reyna að tengjast er óþekktur."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Þjónninn neitaði tengingu."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Tiltekna myndskeiðið fannst ekki."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Miðlarinn hafnaði aðgangi að þessari skrá eða streymi."
 
-#: src/backend/bacon-video-widget.c:3405
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr "Þú þarft að auðkenna þig til að fá aðgang að þessari skrá eða straumi."
 
-#: src/backend/bacon-video-widget.c:3411
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Stuðning við SSL/TLS vantar. Athugaðu uppsetninguna þína."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Þú hefur ekki heimild til að opna þessa skrá."
 
-#: src/backend/bacon-video-widget.c:3423
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Þetta er ekki gild staðsetning."
 
-#: src/backend/bacon-video-widget.c:3431
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Ekki hægt að lesa myndskeiðið."
 
-#: src/backend/bacon-video-widget.c:3437
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Þessi kvikmynd er dulkóðuð og óspilanleg."
 
-#: src/backend/bacon-video-widget.c:3443
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Skráin sem þú reyndir að spilaer tóm."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -701,13 +714,13 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: src/backend/bacon-video-widget.c:3487
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Ekki er hægt að spila þennan straum. Hugsanlega er eldveggur að hindra hann."
 
-#: src/backend/bacon-video-widget.c:3490
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -716,7 +729,7 @@ msgstr ""
 "vantar. Þú gætir þurft að setja upp nýjar viðbætur til að hægt sé að spila "
 "sumar tegundir kvikmynda"
 
-#: src/backend/bacon-video-widget.c:3501
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -724,19 +737,19 @@ msgstr ""
 "Þessi kvikmynd er ekki spilanleg yfir netið. Prófaðu að vista hana á tölvuna "
 "fyrst og spila hana þaðan."
 
-#: src/backend/bacon-video-widget.c:5079
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Umlykjandi hljóð"
 
-#: src/backend/bacon-video-widget.c:5081
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Einóma"
 
-#: src/backend/bacon-video-widget.c:5351
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Þessi miðill inniheldur ekki neina studda myndstrauma."
 
-#: src/backend/bacon-video-widget.c:5553
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -774,7 +787,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -788,8 +801,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:89
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
 msgstr "%d:%02d:%02d.%03d"
@@ -814,8 +825,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:107
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
 msgstr "-%d:%02d:%02d.%03d"
@@ -840,8 +849,6 @@ msgstr "-%d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:128
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
 msgstr "-%d:%02d.%03d"
@@ -854,8 +861,6 @@ msgstr "-%d:%02d.%03d"
 #.
 #: src/gst/totem-time-helpers.c:139
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
 msgstr "%d:%02d.%03d"
@@ -880,16 +885,7 @@ msgstr "Velja allt"
 msgid "Select None"
 msgstr "Velja ekkert"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
-
-#: src/totem.c:74
-#| msgid "Audio Preview"
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Forskoða myndskeið"
 
@@ -947,20 +943,6 @@ msgstr "Staðvært"
 msgid "Channels"
 msgstr "Rásir"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Tókst ekki að hlaða inn „%s“ viðmótinu. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Skráin er ekki til."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Athugaðu hvort Totem er rétt uppsett."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Smelltu á hluti til að velja þá"
@@ -1012,45 +994,48 @@ msgstr "Sjálfvirkt"
 msgid "None"
 msgstr "Ekkert"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1438 src/totem-options.c:51
 msgid "Pause"
 msgstr "Í bið"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Afspilun"
 
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Totem tókst ekki að spila „%s“."
+#| msgid "Totem could not play “%s”."
+msgid "Videos could not play “%s”."
+msgstr "Myndskeiðaforritinu tókst ekki að spila „%s“."
 
-#: src/totem-object.c:2305
-msgid "Totem could not display the help contents."
-msgstr "Totem tókst ekki að sýna hjálpina."
+#: src/totem-object.c:2306
+#| msgid "Totem could not display the help contents."
+msgid "Videos could not display the help contents."
+msgstr "Myndskeiðaforritinu tókst ekki að birta hjálpina."
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2567
 msgid "An error occurred"
 msgstr "Villa kom upp"
 
-#: src/totem-object.c:3987
+#: src/totem-object.c:3968
 msgid "Previous Chapter/Movie"
 msgstr "Fyrri kafli/kvikmynd"
 
-#: src/totem-object.c:3993
+#: src/totem-object.c:3974
 msgid "Play / Pause"
 msgstr "Spila / Bíða"
 
-#: src/totem-object.c:3999
+#: src/totem-object.c:3980
 msgid "Next Chapter/Movie"
 msgstr "Næsti kafli/kvikmynd"
 
-#: src/totem-object.c:4235
-msgid "Totem could not startup."
-msgstr "Totem tókst ekki að ræsa sig."
+#: src/totem-object.c:4202
+#| msgid "Totem could not startup."
+msgid "Videos could not startup."
+msgstr "Myndskeiðaforritinu tókst ekki að ræsa."
 
-#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Engin ástæða gefin."
 
@@ -1297,27 +1282,27 @@ msgstr "Vestræn"
 msgid "Vietnamese"
 msgstr "Víetnömsk"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Allar skrár"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Myndskeiðasskrár"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Skjátextaskrár"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Veldu skjátextaskrá"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Opna"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Bæta við myndskeiðum"
 
@@ -1364,7 +1349,7 @@ msgstr "Opna möppu"
 msgid "Open the directory of the currently playing movie"
 msgstr "Opna möppuna með myndskeiðinu sem er í afspilun"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Opna umlykjandi möppu"
 
@@ -1380,47 +1365,47 @@ msgstr "Leita að skjátextum fyrir myndskeiðið sem er í afspilun"
 msgid "Brazilian Portuguese"
 msgstr "Brasilísk portúgalska"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Leita að skjátextum…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:627
 msgid "Downloading the subtitles…"
 msgstr "Hleð inn skjátextum..."
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Náði ekki sambandi við OpenSubtitles vefsvæðið"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Náði ekki sambandi við OpenSubtitles vefsvæðið."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Engar niðurstöður fundust."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:500
 msgid "Format"
 msgstr "Skráarsnið"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:505
 msgid "Rating"
 msgstr "Einkunn"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:545
 msgid "_Download Movie Subtitles…"
 msgstr "Ná í skjátexta fyrir myndskeið…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:584
 msgid "Searching subtitles…"
 msgstr "Leita…"
 
@@ -1542,94 +1527,94 @@ msgid "Channels:"
 msgstr "Rásir:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 rásir"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d klukkutími"
 msgstr[1] "%d klukkutímar"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d mínúta"
 msgstr[1] "%d mínútur"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1637,55 +1622,53 @@ msgstr[0] "%d sekúnda"
 msgstr[1] "%d sekúndur"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0 sekúndur"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
-#| msgid "%0.2f frame per second"
-#| msgid_plural "%0.2f frames per second"
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f rammi á sekúndu"
 msgstr[1] "%0.3f rammar á sekúndu"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1730,17 +1713,23 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Þú getur komist í Totem.Object í gegnum 'totem_object' :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Totem Python stjórnskjár"
+#| msgid "Python Console"
+msgid "Videos Python Console"
+msgstr "Python stjórnskjár myndskeiðaforritsins"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password (“totem”)."
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Eftir að þú ýtir á „Í lagi“, bíður Totem eftir tengingu við winpdb eða "
+"Eftir að þú ýtir á „Í lagi“ bíður myndskeiðaforritið eftir tengingu við"
+" winpdb eða "
 "rpdb2. Ef þú hefur ekki lykilorð fyrir aflúsun í DConf, þá verður lykilorðið "
 "þitt ('totem')."
 
@@ -1760,11 +1749,11 @@ msgstr "Snúningsviðbót"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Gerir kleift að snúa myndskeiðum ef stefna þeirra er röng"
 
-#: src/plugins/rotation/totem-rotation.c:255
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "_Snúa ↷"
 
-#: src/plugins/rotation/totem-rotation.c:259
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "Snúa ↶"
 
@@ -1819,9 +1808,17 @@ msgstr "Reikna fjölda skjámynda"
 msgid "Number of screenshots:"
 msgstr "Fjöldi skjámynda:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+#| msgid "Screenshot"
+msgid "Screenshots"
+msgstr "Skjámyndir"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Skjámynd frá %s.png"
@@ -1829,7 +1826,7 @@ msgstr "Skjámynd frá %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Skjámynd frá %s - %d.png"
@@ -1860,20 +1857,21 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "Myndasafn-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "Bý til myndasafn..."
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "Vista myndasafn sem „%s“"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-msgid "Totem could not get a screenshot of the video."
-msgstr "Totem náði ekki skjámynd af myndskeiðinu."
+#| msgid "Totem could not get a screenshot of the video."
+msgid "Videos could not get a screenshot of the video."
+msgstr "Myndskeiðaforritið náði ekki skjámynd af myndskeiðinu."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1888,7 +1886,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "_Búa til myndasafn með skjámyndum..."
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "Stökkva á"
 
@@ -1902,7 +1900,7 @@ msgstr "_Stökkva á:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekúnda"
@@ -1912,12 +1910,12 @@ msgstr[1] "sekúndur"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
 
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "_Stökkva á:"
 
@@ -1975,6 +1973,25 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Setur kennistreng vafra fyrir Vimeo vefsvæðið"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
+
+#, c-format
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Tókst ekki að hlaða inn „%s“ viðmótinu. %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Skráin er ekki til."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Athugaðu hvort Totem er rétt uppsett."
+
+#~ msgid "Totem Python Console"
+#~ msgstr "Totem Python stjórnskjár"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2037,9 +2054,6 @@ msgstr "Setur kennistreng vafra fyrir Vimeo vefsvæðið"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Stuðningur við innrauða fjarstýringu"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "Tókst ekki að frumstilla LIRC."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "Tókst ekki að lesa lirc-stillingaskrá."
@@ -2593,9 +2607,6 @@ msgstr "Setur kennistreng vafra fyrir Vimeo vefsvæðið"
 #~ msgstr ""
 #~ "Tókst ekki að hlaða inn '%s' hljóðrekil\n"
 #~ "Vertu viss um að vélin sé ekki í notkun."
-
-#~ msgid "The device name you specified (%s) seems to be invalid."
-#~ msgstr "Nafn tækisins sem þú tilgreindir (%s) virðist vera ógilt."
 
 #~ msgid "The server you are trying to connect to (%s) is unreachable."
 #~ msgstr "Ekki næst í þjóninn sem þú ert að reyna að tengjast (%s)."
