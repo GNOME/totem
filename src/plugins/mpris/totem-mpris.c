@@ -251,10 +251,13 @@ static const GDBusInterfaceVTable root_vtable =
 
 /* MPRIS player interface */
 
-const char *str_metadata[] = {
-	"xesam:title",
-	"xesam:artist",
-	"xesam:album",
+struct {
+	const char *property;
+	gboolean is_strv;
+} str_metadata[] = {
+	{ "xesam:title", FALSE },
+	{ "xesam:artist", TRUE },
+	{ "xesam:album", FALSE }
 };
 
 static void
@@ -277,13 +280,23 @@ calculate_metadata (TotemMprisPlugin *pi,
 	for (i = 0; i < G_N_ELEMENTS (str_metadata); i++) {
 		const char *str;
 
-		str = g_hash_table_lookup (pi->metadata, str_metadata[i]);
+		str = g_hash_table_lookup (pi->metadata, str_metadata[i].property);
 		if (!str)
 			continue;
-		g_variant_builder_add (builder,
-				       "{sv}",
-				       str_metadata[i],
-				       g_variant_new_string (str));
+		if (!str_metadata[i].is_strv) {
+			g_variant_builder_add (builder,
+					       "{sv}",
+					       str_metadata[i].property,
+					       g_variant_new_string (str));
+		} else {
+			const char *strv[] = { NULL };
+
+			strv[0] = str;
+			g_variant_builder_add (builder,
+					       "{sv}",
+					       str_metadata[i].property,
+					       g_variant_new_strv (strv, 1));
+		}
 	}
 }
 
