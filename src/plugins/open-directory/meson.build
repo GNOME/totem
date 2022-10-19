@@ -17,11 +17,11 @@ shared_module(
 
 plugin_data = plugin_name + '.plugin'
 
-custom_target(
-  plugin_data,
+i18n.merge_file(
   input: plugin_data + '.desktop.in',
   output: plugin_data,
-  command: msgfmt_plugin_cmd,
-  install: true,
-  install_dir: plugin_dir
+  type: 'desktop',
+  po_dir: po_dir,
+  install_dir: plugin_dir,
+  install: true
 )
