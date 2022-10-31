@@ -28,9 +28,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <handy.h>
 
 #define TOTEM_TYPE_PREFERENCES_DIALOG (totem_preferences_dialog_get_type())
-G_DECLARE_FINAL_TYPE (TotemPreferencesDialog, totem_preferences_dialog, TOTEM, PREFERENCES_DIALOG, GtkDialog)
+G_DECLARE_FINAL_TYPE (TotemPreferencesDialog, totem_preferences_dialog, TOTEM, PREFERENCES_DIALOG, HdyPreferencesWindow)
 
 GtkWidget *totem_preferences_dialog_new (Totem *totem);

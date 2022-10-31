@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
+/*
  * Copyright (C) 2001,2002,2003 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@
 #include "totem-plugins-engine.h"
 
 struct _TotemPreferencesDialog {
-	GtkDialog parent_instance;
+	HdyPreferencesWindow parent_instance;
 
 	Totem *totem;
 
@@ -67,7 +67,7 @@ struct _TotemPreferencesDialog {
 	GtkComboBox *subtitle_encoding_combo;
 };
 
-G_DEFINE_TYPE (TotemPreferencesDialog, totem_preferences_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (TotemPreferencesDialog, totem_preferences_dialog, HDY_TYPE_PREFERENCES_WINDOW)
 
 static void
 disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
@@ -292,7 +292,7 @@ totem_preferences_dialog_constructed (GObject *object)
 			 prefs->tpw_auto_subtitles_checkbutton, "active", G_SETTINGS_BIND_DEFAULT);
 
 	/* Plugins button */
-	g_signal_connect (prefs->tpw_plugins_button, "clicked",
+	g_signal_connect (prefs->tpw_plugins_button, "activated",
 			  G_CALLBACK (plugin_button_clicked_cb), totem);
 
 	/* Brightness and all */
@@ -418,6 +418,5 @@ totem_preferences_dialog_new (Totem *totem)
 {
 	return  g_object_new (TOTEM_TYPE_PREFERENCES_DIALOG,
 			      "totem", totem,
-			      "use-header-bar", 1,
 			      NULL);
 }
