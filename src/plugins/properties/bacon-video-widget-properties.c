@@ -77,6 +77,9 @@ bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 	item = GTK_LABEL (gtk_builder_get_object (props->xml, name));
 	g_return_if_fail (item != NULL);
 	gtk_label_set_text (item, text);
+
+  if (text == NULL || *text == '\0')
+    gtk_widget_hide(GTK_WIDGET (item));
 }
 
 void
@@ -95,19 +98,19 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	gtk_widget_set_sensitive (item, FALSE);
 
 	/* Title */
-	bacon_video_widget_properties_set_label (props, "title", C_("Title", "Unknown"));
+	bacon_video_widget_properties_set_label (props, "title", NULL);
 	/* Artist */
-	bacon_video_widget_properties_set_label (props, "artist", C_("Artist", "Unknown"));
+	bacon_video_widget_properties_set_label (props, "artist", NULL);
 	/* Album */
-	bacon_video_widget_properties_set_label (props, "album", C_("Album", "Unknown"));
+	bacon_video_widget_properties_set_label (props, "album", NULL);
 	/* Year */
-	bacon_video_widget_properties_set_label (props, "year", C_("Year", "Unknown"));
+	bacon_video_widget_properties_set_label (props, "year", NULL);
 	/* Duration */
 	bacon_video_widget_properties_set_duration (props, 0);
 	/* Comment */
 	bacon_video_widget_properties_set_label (props, "comment", "");
 	/* Container */
-	bacon_video_widget_properties_set_label (props, "container", C_("Media container", "Unknown"));
+	bacon_video_widget_properties_set_label (props, "container", NULL);
 
 	/* Dimensions */
 	bacon_video_widget_properties_set_label (props, "dimensions", C_("Dimensions", "N/A"));
@@ -281,8 +284,8 @@ bacon_video_widget_properties_new (void)
 			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));
 
 	props->xml = xml;
-	vbox = GTK_WIDGET (gtk_builder_get_object (props->xml, "vbox1"));
-	gtk_box_pack_start (GTK_BOX (props), vbox, FALSE, FALSE, 0);
+	vbox = GTK_WIDGET (gtk_builder_get_object (props->xml, "sw_properties"));
+	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
 
 	bacon_video_widget_properties_reset (props);
 
@@ -293,7 +296,7 @@ bacon_video_widget_properties_new (void)
 
 	g_object_unref (group);
 
-	gtk_widget_show_all (GTK_WIDGET (props));
+	gtk_widget_show (GTK_WIDGET (vbox));
 
 	return GTK_WIDGET (props);
 }
