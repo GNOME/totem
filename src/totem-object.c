@@ -3961,9 +3961,6 @@ totem_callback_connect (TotemObject *totem)
 	/* Fullscreen button */
 	totem->fullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_button"));
 
-	/* Connect the keys */
-	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
-
 	/* Set sensitivity of the toolbar buttons */
 	action_set_sensitive ("play", FALSE);
 	action_set_sensitive ("next-chapter", FALSE);
