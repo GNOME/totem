@@ -265,13 +265,6 @@ bacon_video_widget_properties_new (void)
 	BaconVideoWidgetProperties *props;
 	GtkBuilder *xml;
 	GtkWidget *vbox;
-	GtkSizeGroup *group;
-	const char *labels[] = { "title_label", "artist_label", "album_label",
-			"year_label", "duration_label", "comment_label", "container_label",
-			"dimensions_label", "vcodec_label", "framerate_label",
-			"vbitrate_label", "abitrate_label", "acodec_label",
-			"samplerate_label", "channels_label" };
-	guint i;
 
 	xml = gtk_builder_new ();
 	gtk_builder_set_translation_domain (xml, GETTEXT_PACKAGE);
@@ -288,13 +281,6 @@ bacon_video_widget_properties_new (void)
 	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
 
 	bacon_video_widget_properties_reset (props);
-
-	group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-	for (i = 0; i < G_N_ELEMENTS (labels); i++)
-		gtk_size_group_add_widget (group, GTK_WIDGET (gtk_builder_get_object (xml, labels[i])));
-
-	g_object_unref (group);
 
 	gtk_widget_show (GTK_WIDGET (vbox));
 
