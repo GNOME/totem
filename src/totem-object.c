@@ -98,8 +98,6 @@ static void play_pause_set_label (TotemObject *totem, TotemStates state);
 static void totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle);
 static void mark_popup_busy (TotemObject *totem, const char *reason);
 static void unmark_popup_busy (TotemObject *totem, const char *reason);
-static gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
-static gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 static void video_widget_create (TotemObject *totem);
 static void grilo_widget_setup (TotemObject *totem);
 static void playlist_widget_setup (TotemObject *totem);
@@ -121,6 +119,11 @@ G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey 
 
 /* Menu */
 G_MODULE_EXPORT void popup_menu_shown_cb                (GtkToggleButton *button, TotemObject *totem);
+
+/* Seekbar */
+G_MODULE_EXPORT gboolean seek_slider_pressed_cb         (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
+G_MODULE_EXPORT gboolean seek_slider_released_cb        (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
+G_MODULE_EXPORT gboolean seek_slider_scroll_event_cb    (GtkWidget *widget, GdkEventScroll *event, gpointer data);
 
 enum {
 	PROP_0,
@@ -2824,7 +2827,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	return FALSE;
 }
 
-static gboolean
+gboolean
 seek_slider_scroll_event_cb (GtkWidget      *widget,
 			     GdkEventScroll *event,
 			     gpointer        user_data)
@@ -3932,12 +3935,6 @@ totem_callback_connect (TotemObject *totem)
 	totem->play_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "play_button"));
 
 	/* Seekbar */
-	g_signal_connect (totem->seek, "button-press-event",
-			  G_CALLBACK (seek_slider_pressed_cb), totem);
-	g_signal_connect (totem->seek, "button-release-event",
-			  G_CALLBACK (seek_slider_released_cb), totem);
-	g_signal_connect (totem->seek, "scroll-event",
-			  G_CALLBACK (seek_slider_scroll_event_cb), totem);
 	g_signal_connect (totem->seekadj, "value-changed",
 			  G_CALLBACK (seek_slider_changed_cb), totem);
 

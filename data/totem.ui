@@ -361,6 +361,9 @@
                                 <property name="can_focus">True</property>
                                 <property name="draw_value">False</property>
                                 <property name="restrict-to-fill-level">False</property>
+                                <signal name="button-press-event" handler="seek_slider_pressed_cb"/>
+                                <signal name="button-release-event" handler="seek_slider_released_cb"/>
+                                <signal name="scroll-event" handler="seek_slider_scroll_event_cb"/>
                                 </object>
                               <packing>
                                 <property name="expand">True</property>
