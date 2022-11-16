@@ -277,6 +277,11 @@ calculate_metadata (TotemMprisPlugin *pi,
 			       "{sv}",
 			       "xesam:trackNumber",
 			       g_variant_new_uint32 (pi->track_number));
+	/* See https://gitlab.freedesktop.org/mpris/mpris-spec/-/issues/19 */
+	g_variant_builder_add (builder,
+			       "{sv}",
+			       "mpris:trackid",
+			       g_variant_new_object_path ("/org/mpris/MediaPlayer2/TrackList/NoTrack"));
 	for (i = 0; i < G_N_ELEMENTS (str_metadata); i++) {
 		const char *str;
 
