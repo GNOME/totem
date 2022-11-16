@@ -125,6 +125,10 @@ G_MODULE_EXPORT gboolean seek_slider_pressed_cb         (GtkWidget *widget, GdkE
 G_MODULE_EXPORT gboolean seek_slider_released_cb        (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean seek_slider_scroll_event_cb    (GtkWidget *widget, GdkEventScroll *event, gpointer data);
 
+/* Volume */
+G_MODULE_EXPORT void     volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, TotemObject *totem);
+G_MODULE_EXPORT gboolean volume_button_scroll_event_cb  (GtkWidget *widget, GdkEventScroll *event, gpointer data);
+
 enum {
 	PROP_0,
 	PROP_FULLSCREEN,
@@ -2703,14 +2707,14 @@ update_current_time (BaconVideoWidget *bvw,
 	}
 }
 
-static void
+void
 volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, TotemObject *totem)
 {
 	totem->muted = FALSE;
 	bacon_video_widget_set_volume (totem->bvw, value);
 }
 
-static gboolean
+gboolean
 volume_button_scroll_event_cb (GtkWidget      *widget,
 			       GdkEventScroll *event,
 			       gpointer        user_data)
@@ -3939,10 +3943,6 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (seek_slider_changed_cb), totem);
 
 	/* Volume */
-	g_signal_connect (totem->volume, "value-changed",
-			  G_CALLBACK (volume_button_value_changed_cb), totem);
-	g_signal_connect (totem->volume, "scroll-event",
-			  G_CALLBACK (volume_button_scroll_event_cb), totem);
 	item = gtk_scale_button_get_popup (GTK_SCALE_BUTTON (totem->volume));
 	g_signal_connect (G_OBJECT (item), "notify::visible",
 			  G_CALLBACK (volume_button_menu_shown_cb), totem);

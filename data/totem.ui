@@ -461,6 +461,8 @@ audio-volume-high-symbolic
 audio-volume-low-symbolic
 audio-volume-medium-symbolic</property>
                                 <property name="use_symbolic">True</property>
+                                <signal name="value-changed" handler="volume_button_value_changed_cb"/>
+                                <signal name="scroll-event" handler="volume_button_scroll_event_cb"/>
                                 <style>
                                   <class name="image-button"/>
                                   </style>
