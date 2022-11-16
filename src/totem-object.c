@@ -119,6 +119,9 @@ G_MODULE_EXPORT gboolean window_state_event_cb (GtkWidget *window, GdkEventWindo
 G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
 
+/* Menu */
+G_MODULE_EXPORT void popup_menu_shown_cb                (GtkToggleButton *button, TotemObject *totem);
+
 enum {
 	PROP_0,
 	PROP_FULLSCREEN,
@@ -3870,7 +3873,7 @@ totem_setup_window (TotemObject *totem)
 	return;
 }
 
-static void
+void
 popup_menu_shown_cb (GtkToggleButton *button,
 		     TotemObject     *totem)
 {
@@ -3951,8 +3954,6 @@ totem_callback_connect (TotemObject *totem)
 	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "go_button"));
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
-	g_signal_connect (G_OBJECT (item), "toggled",
-			  G_CALLBACK (popup_menu_shown_cb), totem);
 
 	/* Main menu */
 	item = totem->main_menu_button = totem_interface_create_header_button (totem->header,

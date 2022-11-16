@@ -407,6 +407,7 @@
                                 <property name="valign">center</property>
                                 <property name="use-popover">True</property>
                                 <property name="menu-model">gomenu</property>
+                                <signal name="toggled" handler="popup_menu_shown_cb"/>
                                 <style>
                                   <class name="image-button"/>
                                   </style>
