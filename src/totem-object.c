@@ -3907,37 +3907,6 @@ update_add_button_visibility (GObject     *gobject,
 	}
 }
 
-static GtkWidget *
-create_control_button (TotemObject *totem,
-		       const gchar *action_name,
-		       const gchar *icon_name,
-		       const gchar *tooltip_text)
-{
-	GtkWidget *button, *image;
-
-	button = gtk_button_new ();
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), action_name);
-	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-	gtk_button_set_image (GTK_BUTTON (button), image);
-	gtk_widget_set_valign (GTK_WIDGET (button), GTK_ALIGN_CENTER);
-	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
-	if (g_str_equal (action_name, "app.play")) {
-		g_object_set (G_OBJECT (image),
-			      "margin-start", 16,
-			      "margin-end", 16,
-			      NULL);
-		totem->play_button = button;
-	}
-
-	gtk_button_set_label (GTK_BUTTON (button), NULL);
-	gtk_widget_set_tooltip_text (button, tooltip_text);
-	atk_object_set_name (gtk_widget_get_accessible (button), tooltip_text);
-
-	gtk_widget_show_all (button);
-
-	return button;
-}
-
 static void
 totem_callback_connect (TotemObject *totem)
 {
@@ -3956,23 +3925,8 @@ totem_callback_connect (TotemObject *totem)
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "controls_box"));
 	gtk_widget_insert_action_group (GTK_WIDGET (box), "app", G_ACTION_GROUP (totem));
 
-	/* Previous */
-	item = create_control_button (totem, "app.previous-chapter",
-				      "media-skip-backward-symbolic",
-				      _("Previous Chapter/Movie"));
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
-
 	/* Play/Pause */
-	item = create_control_button (totem, "app.play",
-				      "media-playback-start-symbolic",
-				      _("Play / Pause"));
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
-
-	/* Next */
-	item = create_control_button (totem, "app.next-chapter",
-				      "media-skip-forward-symbolic",
-				      _("Next Chapter/Movie"));
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+	totem->play_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "play_button"));
 
 	/* Seekbar */
 	g_signal_connect (totem->seek, "button-press-event",
@@ -3995,8 +3949,6 @@ totem_callback_connect (TotemObject *totem)
 
 	/* Go button */
 	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "go_button"));
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
 	g_signal_connect (G_OBJECT (item), "toggled",

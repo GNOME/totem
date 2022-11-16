@@ -4,6 +4,14 @@
 <interface>
 <requires lib="gtk+" version="3.11"/>
 
+<object class="GtkImage" id="icon_play">
+  <property name="visible">True</property>
+  <property name="margin-start">16</property>
+  <property name="margin-end">16</property>
+  <property name="icon-name">media-playback-start-symbolic</property>
+  <property name="icon-size">1</property>
+</object>
+
 <menu id="appmenu">
 	<section id="python-console-placeholder"/>
 	<section>
@@ -252,18 +260,78 @@
                             <property name="can_focus">False</property>
                             <style>
                               <class name="linked"/>
-                              </style>
+                            </style>
                             <child>
-                              <placeholder/>
-                              </child>
-                            </object>
-                          </child>
-                        </object>
+                              <object class="GtkButton">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="action-name">app.previous-chapter</property>
+                                <property name="tooltip-text" translatable="yes">Previous Chapter/Movie</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Previous Chapter/Movie</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="icon-name">media-skip-backward-symbolic</property>
+                                    <property name="icon-size">1</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="play_button">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="image">icon_play</property>
+                                <property name="action-name">app.play</property>
+                                <property name="tooltip-text" translatable="yes">Play / Pause</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Play / Pause</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="action-name">app.next-chapter</property>
+                                <property name="tooltip-text" translatable="yes">Next Chapter/Movie</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Next Chapter/Movie</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="icon-name">media-skip-forward-symbolic</property>
+                                    <property name="icon-size">1</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="homogeneous">False</property>
                         </packing>
-                      </child>
+                    </child>
                     <child>
                       <object class="GtkToolItem" id="slider_toolbutton">
                         <property name="visible">True</property>
@@ -338,6 +406,7 @@
                                 <property name="relief">normal</property>
                                 <property name="valign">center</property>
                                 <property name="use-popover">True</property>
+                                <property name="menu-model">gomenu</property>
                                 <style>
                                   <class name="image-button"/>
                                   </style>
