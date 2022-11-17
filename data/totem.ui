@@ -338,6 +338,8 @@
                     <property name="opacity">0.86</property>
                     <property name="halign">fill</property>
                     <property name="hexpand">True</property>
+                    <property name="title" bind-source="header" bind-property="title"/>
+                    <property name="subtitle" bind-source="header" bind-property="subtitle"/>
                     <child>
                       <object class="GtkButton">
                         <property name="visible">True</property>
