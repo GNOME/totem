@@ -149,6 +149,9 @@ struct _TotemObject {
 #define VOLUME_DOWN_SHORT_OFFSET (-0.02)
 #define VOLUME_UP_SHORT_OFFSET (0.02)
 
+/* Header */
+G_MODULE_EXPORT void back_button_clicked_cb             (GtkButton *button, TotemObject *totem);
+
 void	totem_object_open			(Totem *totem);
 void	totem_object_open_location		(Totem *totem);
 void	totem_object_eject			(Totem *totem);

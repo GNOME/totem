@@ -117,6 +117,9 @@ G_MODULE_EXPORT gboolean window_state_event_cb (GtkWidget *window, GdkEventWindo
 G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
 
+/* Header */
+G_MODULE_EXPORT void update_add_button_visibility       (GObject *gobject, GParamSpec *pspec, TotemObject *totem);
+
 /* Menu */
 G_MODULE_EXPORT void popup_menu_shown_cb                (GtkToggleButton *button, TotemObject *totem);
 
@@ -2455,7 +2458,7 @@ drop_video_cb (GtkWidget          *widget,
 	return;
 }
 
-static void
+void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
@@ -3868,8 +3871,6 @@ totem_setup_window (TotemObject *totem)
 
 	/* Headerbar */
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
-	g_signal_connect (G_OBJECT (totem->header), "back-clicked",
-			  G_CALLBACK (back_button_clicked_cb), totem);
 
 	return;
 }
@@ -3895,7 +3896,7 @@ volume_button_menu_shown_cb (GObject     *popover,
 		unmark_popup_busy (totem, "volume menu visible");
 }
 
-static void
+void
 update_add_button_visibility (GObject     *gobject,
 			      GParamSpec  *pspec,
 			      TotemObject *totem)
@@ -3955,11 +3956,6 @@ totem_callback_connect (TotemObject *totem)
 	totem->subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "subtitles_button"));
 
 	/* Add button */
-	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
-			  G_CALLBACK (update_add_button_visibility), totem);
-	g_signal_connect (G_OBJECT (totem->header), "notify::select-mode",
-			  G_CALLBACK (update_add_button_visibility), totem);
-
 	totem->add_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "add_button"));
 
 	/* Fullscreen button */
