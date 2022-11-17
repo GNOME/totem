@@ -213,6 +213,26 @@ Disable deinterlacing if you encounter graphical artifacts such as combing.</pro
             </object>
           </child>
 
+          <child>
+            <object class="HdyActionRow">
+              <property name="visible">True</property>
+              <property name="use_underline">True</property>
+              <property name="title" translatable="yes">Disable hardware acceleration</property>
+              <property name="subtitle" translatable="yes">Hardware acceleration is used automatically when available.
+Disable it if you encounter video playback problems.</property>
+              <property name="activatable-widget">tpw_no_hardware_acceleration</property>
+
+              <child>
+                <object class="GtkSwitch" id="tpw_no_hardware_acceleration">
+                  <property name="visible">True</property>
+                  <property name="valign">center</property>
+                  <property name="focus_on_click">False</property>
+                </object>
+              </child>
+
+            </object>
+          </child>
+
         </object>
       </child>
 

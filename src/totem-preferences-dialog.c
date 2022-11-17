@@ -62,6 +62,7 @@ struct _TotemPreferencesDialog {
 	GtkCheckButton *tpw_auto_subtitles_checkbutton;
 	GtkWidget *tpw_bright_contr_vbox;
 	GtkCheckButton *tpw_no_deinterlace_checkbutton;
+	GtkCheckButton *tpw_no_hardware_acceleration;
 	GtkButton *tpw_plugins_button;
 	GtkComboBox *tpw_sound_output_combobox;
 	GtkComboBox *subtitle_encoding_combo;
@@ -287,6 +288,10 @@ totem_preferences_dialog_constructed (GObject *object)
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
+	/* Disable hardware acceleration */
+	g_settings_bind (totem->settings, "force-software-decoders",
+			 prefs->tpw_no_hardware_acceleration, "active", G_SETTINGS_BIND_DEFAULT);
+
 	/* Auto-load subtitles */
 	g_settings_bind (totem->settings, "autoload-subtitles",
 			 prefs->tpw_auto_subtitles_checkbutton, "active", G_SETTINGS_BIND_DEFAULT);
@@ -396,6 +401,7 @@ totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_adjustment);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_scale);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_deinterlace_checkbutton);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_hardware_acceleration);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_button);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_adjustment);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_scale);
