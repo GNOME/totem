@@ -367,6 +367,7 @@
                         <property name="valign">center</property>
                         <property name="use-popover">True</property>
                         <property name="menu-model">playermenu</property>
+                        <signal name="toggled" handler="popup_menu_shown_cb"/>
                         <style>
                           <class name="image-button"/>
                         </style>
@@ -388,6 +389,7 @@
                         <property name="valign">center</property>
                         <property name="use-popover">True</property>
                         <property name="menu-model">subtitlesmenu</property>
+                        <signal name="toggled" handler="popup_menu_shown_cb"/>
                         <style>
                           <class name="image-button"/>
                         </style>

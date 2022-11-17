@@ -4044,12 +4044,8 @@ add_fullscreen_toolbar (TotemObject *totem,
 			  G_CALLBACK (back_button_clicked_cb), totem);
 
 	totem->fullscreen_gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_gear_button"));
-	g_signal_connect (G_OBJECT (totem->fullscreen_gear_button), "toggled",
-			  G_CALLBACK (popup_menu_shown_cb), totem);
 
 	totem->fullscreen_subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_subtitles_button"));
-	g_signal_connect (G_OBJECT (totem->fullscreen_subtitles_button), "toggled",
-			  G_CALLBACK (popup_menu_shown_cb), totem);
 }
 
 void
