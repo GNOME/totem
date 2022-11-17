@@ -3950,13 +3950,9 @@ totem_callback_connect (TotemObject *totem)
 
 	/* Player menu */
 	totem->gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "gear_button"));
-	g_signal_connect (G_OBJECT (item), "toggled",
-			  G_CALLBACK (popup_menu_shown_cb), totem);
 
 	/* Subtitles menu */
 	totem->subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "subtitles_button"));
-	g_signal_connect (G_OBJECT (item), "toggled",
-			  G_CALLBACK (popup_menu_shown_cb), totem);
 
 	/* Add button */
 	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
