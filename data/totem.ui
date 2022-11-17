@@ -338,6 +338,69 @@
                     <property name="opacity">0.86</property>
                     <property name="halign">fill</property>
                     <property name="hexpand">True</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="no-show-all">True</property>
+                        <property name="valign">center</property>
+                        <property name="action-name">app.fullscreen</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">view-restore-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="pack-type">end</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkMenuButton" id="fullscreen_gear_button">
+                        <property name="visible">True</property>
+                        <property name="valign">center</property>
+                        <property name="use-popover">True</property>
+                        <property name="menu-model">playermenu</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">view-more-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="pack-type">end</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkMenuButton" id="fullscreen_subtitles_button">
+                        <property name="visible">True</property>
+                        <property name="valign">center</property>
+                        <property name="use-popover">True</property>
+                        <property name="menu-model">subtitlesmenu</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">media-view-subtitles-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="pack-type">end</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>

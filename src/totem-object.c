@@ -4039,9 +4039,6 @@ static void
 add_fullscreen_toolbar (TotemObject *totem,
 			GtkWidget   *container)
 {
-	GtkWidget *item;
-	GMenuModel *menu;
-
 	totem->fullscreen_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_header"));
 	g_object_bind_property (totem->header, "title",
 				totem->fullscreen_header, "title", 0);
@@ -4050,35 +4047,13 @@ add_fullscreen_toolbar (TotemObject *totem,
 	g_signal_connect (G_OBJECT (totem->fullscreen_header), "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), totem);
 
-	item = totem_interface_create_header_button (totem->fullscreen_header,
-						     gtk_button_new (),
-						     "view-restore-symbolic",
-						     GTK_PACK_END);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
-
-	item = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->fullscreen_header), item);
-	gtk_style_context_add_class (gtk_widget_get_style_context (item), "header-bar-separator");
-
-	item = totem_interface_create_header_button (totem->fullscreen_header,
-						     gtk_menu_button_new (),
-						     "view-more-symbolic",
-						     GTK_PACK_END);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	g_signal_connect (G_OBJECT (item), "toggled",
+	totem->fullscreen_gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_gear_button"));
+	g_signal_connect (G_OBJECT (totem->fullscreen_gear_button), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
-	totem->fullscreen_gear_button = item;
 
-	item = totem_interface_create_header_button (totem->fullscreen_header,
-						     gtk_menu_button_new (),
-						     "media-view-subtitles-symbolic",
-						     GTK_PACK_END);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "subtitlesmenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	g_signal_connect (G_OBJECT (item), "toggled",
+	totem->fullscreen_subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_subtitles_button"));
+	g_signal_connect (G_OBJECT (totem->fullscreen_subtitles_button), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
-	totem->fullscreen_subtitles_button = item;
 }
 
 void
