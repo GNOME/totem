@@ -3867,15 +3867,9 @@ totem_setup_window (TotemObject *totem)
 	}
 
 	/* Headerbar */
-	totem->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
-				      "show-search-button", TRUE,
-				      "show-select-button", TRUE,
-				      "show-close-button", TRUE,
-				      "title", _("Videos"),
-				      NULL);
+	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
 	g_signal_connect (G_OBJECT (totem->header), "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), totem);
-	gtk_window_set_titlebar (GTK_WINDOW (totem->win), totem->header);
 
 	return;
 }
@@ -3923,7 +3917,6 @@ totem_callback_connect (TotemObject *totem)
 	GtkWidget *item;
 	GtkBox *box;
 	GAction *gaction;
-	GMenuModel *menu;
 	GtkPopover *popover;
 
 	/* Menu items */
@@ -3953,63 +3946,28 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
 
 	/* Main menu */
-	item = totem->main_menu_button = totem_interface_create_header_button (totem->header,
-									       gtk_menu_button_new (),
-									       "open-menu-symbolic",
-									       GTK_PACK_END);
-	gtk_container_child_set (GTK_CONTAINER (totem->header), totem->main_menu_button,
-				 "position", 0,
-				 NULL);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "appmenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	totem->main_menu_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "main_menu_button"));
 
 	/* Player menu */
-	item = totem->gear_button = totem_interface_create_header_button (totem->header,
-									  gtk_menu_button_new (),
-									  "view-more-symbolic",
-									  GTK_PACK_END);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	totem->gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "gear_button"));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
-	gtk_widget_hide (item);
-	gtk_widget_set_no_show_all (item, TRUE);
 
 	/* Subtitles menu */
-	item = totem->subtitles_button = totem_interface_create_header_button (totem->header,
-									       gtk_menu_button_new (),
-									       "media-view-subtitles-symbolic",
-									       GTK_PACK_END);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "subtitlesmenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	totem->subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "subtitles_button"));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
-	gtk_widget_hide (item);
-	gtk_widget_set_no_show_all (item, TRUE);
 
 	/* Add button */
-	item = totem->add_button = totem_interface_create_header_button (totem->header,
-									 gtk_menu_button_new (),
-									 "list-add-symbolic",
-									 GTK_PACK_START);
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-
 	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
 			  G_CALLBACK (update_add_button_visibility), totem);
 	g_signal_connect (G_OBJECT (totem->header), "notify::select-mode",
 			  G_CALLBACK (update_add_button_visibility), totem);
 
+	totem->add_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "add_button"));
+
 	/* Fullscreen button */
-	item = totem->fullscreen_button = totem_interface_create_header_button (totem->header,
-										gtk_button_new (),
-										"view-fullscreen-symbolic",
-										GTK_PACK_END);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
-	gtk_widget_hide (item);
-	gtk_widget_set_no_show_all (item, TRUE);
+	totem->fullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_button"));
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
