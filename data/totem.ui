@@ -340,6 +340,7 @@
                     <property name="hexpand">True</property>
                     <property name="title" bind-source="header" bind-property="title"/>
                     <property name="subtitle" bind-source="header" bind-property="subtitle"/>
+                    <signal name="back-clicked" handler="back_button_clicked_cb"/>
                     <child>
                       <object class="GtkButton">
                         <property name="visible">True</property>

@@ -4040,8 +4040,6 @@ add_fullscreen_toolbar (TotemObject *totem,
 			GtkWidget   *container)
 {
 	totem->fullscreen_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_header"));
-	g_signal_connect (G_OBJECT (totem->fullscreen_header), "back-clicked",
-			  G_CALLBACK (back_button_clicked_cb), totem);
 
 	totem->fullscreen_gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_gear_button"));
 
