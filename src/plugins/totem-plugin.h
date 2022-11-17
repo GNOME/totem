@@ -143,24 +143,3 @@
  **/
 #define TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name)			\
 	_TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name,,)
-
-/**
- * TOTEM_PLUGIN_REGISTER_CONFIGURABLE:
- * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
- * @TypeName: the name of the plugin type, in CamelCase
- * @type_name: the name of the plugin type, in lower_case
- *
- * Registers a configurable plugin with the Totem plugin system, including registering the type specified in the parameters and declaring its activate
- * and deactivate and widget creation functions.
- **/
-#define TOTEM_PLUGIN_REGISTER_CONFIGURABLE(TYPE_NAME, TypeName, type_name)	\
-	static GtkWidget *impl_create_configure_widget (PeasGtkConfigurable *configurable); \
-	static void peas_gtk_configurable_iface_init (PeasGtkConfigurableInterface *iface); \
-	_TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name,			\
-		(G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_GTK_TYPE_CONFIGURABLE, peas_gtk_configurable_iface_init)), \
-		peas_object_module_register_extension_type (module, PEAS_GTK_TYPE_CONFIGURABLE, TYPE_NAME);) \
-	static void								\
-	peas_gtk_configurable_iface_init (PeasGtkConfigurableInterface *iface)	\
-	{									\
-		iface->create_configure_widget = impl_create_configure_widget;	\
-	}
