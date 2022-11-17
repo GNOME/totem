@@ -36,17 +36,16 @@
 #include <totem.h>
 
 /**
- * _TOTEM_PLUGIN_REGISTER:
+ * TOTEM_PLUGIN_REGISTER:
  * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
  * @TypeName: the name of the plugin type, in CamelCase
  * @type_name: the name of the plugin type, in lower_case
- * @TYPE_CODE: code to go in the fifth parameter to %G_DEFINE_DYNAMIC_TYPE_EXTENDED
- * @REGISTER_CODE: code to go in the peas_register_types() exported function
  *
- * Registers a plugin with the Totem plugin system, including registering the type specified in the parameters and declaring its activate and
+ * Registers a plugin with the Totem plugin system, including registering the
+ * type specified in the parameters and declaring its activate and
  * deactivate functions.
  **/
-#define _TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name, TYPE_CODE, REGISTER_CODE)	\
+#define TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name)			\
 	typedef struct {							\
 		PeasExtensionBaseClass parent_class;				\
 	} TypeName##Class;							\
@@ -65,7 +64,7 @@
 					0,					\
 					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
 								       peas_activatable_iface_init) \
-					TYPE_CODE)				\
+					)					\
 	static void								\
 	peas_activatable_iface_init (PeasActivatableInterface *iface)		\
 	{									\
@@ -129,17 +128,4 @@
 		peas_object_module_register_extension_type (module,		\
 							    PEAS_TYPE_ACTIVATABLE, \
 							    TYPE_NAME);		\
-		REGISTER_CODE							\
 	}
-
-/**
- * TOTEM_PLUGIN_REGISTER:
- * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
- * @TypeName: the name of the plugin type, in CamelCase
- * @type_name: the name of the plugin type, in lower_case
- *
- * Registers a plugin with the Totem plugin system, including registering the type specified in the parameters and declaring its activate and
- * deactivate functions.
- **/
-#define TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name)			\
-	_TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name,,)
