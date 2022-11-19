@@ -157,6 +157,8 @@ G_MODULE_EXPORT void     drop_video_cb                  (GtkWidget          *wid
                                                          guint               info,
                                                          guint               _time,
                                                          Totem              *totem);
+G_MODULE_EXPORT void     property_notify_cb_volume      (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem);
+G_MODULE_EXPORT void     property_notify_cb_seekable    (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem);
 
 enum {
 	PROP_0,
@@ -2783,13 +2785,13 @@ update_volume_sliders (TotemObject *totem)
 	g_signal_handlers_unblock_by_func (totem->volume, volume_button_value_changed_cb, totem);
 }
 
-static void
+void
 property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
 	update_volume_sliders (totem);
 }
 
-static void
+void
 property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
 	update_seekable (totem);
@@ -3993,10 +3995,6 @@ totem_callback_connect (TotemObject *totem)
 	action_set_sensitive ("previous-chapter", FALSE);
 
 	/* Volume */
-	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
-			G_CALLBACK (property_notify_cb_volume), totem);
-	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
-			G_CALLBACK (property_notify_cb_seekable), totem);
 	update_volume_sliders (totem);
 }
 
