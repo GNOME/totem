@@ -324,6 +324,23 @@
         <child>
           <object class="BaconVideoWidget" id="bvw">
             <property name="visible">True</property>
+            <signal name="subtitles-changed" handler="totem_subtitles_menu_update" swapped="yes"/>
+            <signal name="languages-changed" handler="totem_languages_menu_update" swapped="yes"/>
+            <signal name="button-press-event" handler="on_video_button_press_event" after="yes"/>
+            <signal name="download-buffering" handler="on_download_buffering_event"/>
+            <signal name="motion-notify-event" handler="on_bvw_motion_notify_cb"/>
+            <signal name="key-release-event" handler="window_key_press_event_cb"/>
+            <signal name="key-press-event" handler="window_key_press_event_cb"/>
+            <signal name="scroll-event" handler="seek_slider_scroll_event_cb"/>
+            <signal name="channels-change" handler="on_channels_change_event"/>
+            <signal name="got-metadata" handler="on_got_metadata_event"/>
+            <signal name="drag-data-received" handler="drop_video_cb"/>
+            <signal name="play-starting" handler="play_starting_cb"/>
+            <signal name="got-redirect" handler="on_got_redirect"/>
+            <signal name="buffering" handler="on_buffering_event"/>
+            <signal name="tick" handler="update_current_time"/>
+            <signal name="error" handler="on_error_event"/>
+            <signal name="eos" handler="on_eos_event"/>
             <child type="overlay">
               <object class="GtkGrid" id="bvw_grid">
                 <property name="visible">True</property>

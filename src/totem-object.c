@@ -132,6 +132,32 @@ G_MODULE_EXPORT gboolean seek_slider_scroll_event_cb    (GtkWidget *widget, GdkE
 G_MODULE_EXPORT void     volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, TotemObject *totem);
 G_MODULE_EXPORT gboolean volume_button_scroll_event_cb  (GtkWidget *widget, GdkEventScroll *event, gpointer data);
 
+/* Bacon Video Widget */
+G_MODULE_EXPORT gboolean on_video_button_press_event    (BaconVideoWidget *bvw, GdkEventButton *event, TotemObject *totem);
+G_MODULE_EXPORT gboolean on_eos_event                   (GtkWidget *widget, TotemObject *totem);
+G_MODULE_EXPORT void     on_got_redirect                (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem);
+G_MODULE_EXPORT void     on_channels_change_event       (BaconVideoWidget *bvw, TotemObject *totem);
+G_MODULE_EXPORT void     update_current_time            (BaconVideoWidget *bvw,
+                                                         gint64            current_time,
+                                                         gint64            stream_length,
+                                                         double            current_position,
+                                                         gboolean          seekable,
+                                                         TotemObject      *totem);
+G_MODULE_EXPORT void     on_got_metadata_event          (BaconVideoWidget *bvw, TotemObject *totem);
+G_MODULE_EXPORT void     on_buffering_event             (BaconVideoWidget *bvw, gdouble percent, TotemObject *totem);
+G_MODULE_EXPORT void     on_download_buffering_event    (BaconVideoWidget *bvw, gdouble level, TotemObject *totem);
+G_MODULE_EXPORT void     on_error_event                 (BaconVideoWidget *bvw, char *message, gboolean playback_stopped, TotemObject *totem);
+G_MODULE_EXPORT void     play_starting_cb               (BaconVideoWidget *bvw, TotemObject *totem);
+G_MODULE_EXPORT gboolean on_bvw_motion_notify_cb        (BaconVideoWidget *bvw, GdkEventMotion *event, TotemObject *totem);
+G_MODULE_EXPORT void     drop_video_cb                  (GtkWidget          *widget,
+                                                         GdkDragContext     *context,
+                                                         gint                x,
+                                                         gint                y,
+                                                         GtkSelectionData   *data,
+                                                         guint               info,
+                                                         guint               _time,
+                                                         Totem              *totem);
+
 enum {
 	PROP_0,
 	PROP_FULLSCREEN,
@@ -2432,7 +2458,7 @@ bail:
 	return TRUE;
 }
 
-static void
+void
 drop_video_cb (GtkWidget          *widget,
 	       GdkDragContext     *context,
 	       gint                x,
@@ -2472,7 +2498,7 @@ back_button_clicked_cb (GtkButton   *button,
 	}
 }
 
-static void
+void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 {
 	char *new_mrl;
@@ -2512,7 +2538,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	g_free (new_mrl);
 }
 
-static void
+void
 on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
 	gchar *name;
@@ -2542,7 +2568,7 @@ on_playlist_change_name (TotemPlaylist *playlist, TotemObject *totem)
 	}
 }
 
-static void
+void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
         char *name;
@@ -2559,7 +2585,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
 
-static void
+void
 on_error_event (BaconVideoWidget *bvw, char *message,
                 gboolean playback_stopped, TotemObject *totem)
 {
@@ -2574,7 +2600,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 	totem_object_show_error (totem, _("An error occurred"), message);
 }
 
-static void
+void
 on_buffering_event (BaconVideoWidget *bvw, gdouble percent, TotemObject *totem)
 {
 	if (percent >= 1.0) {
@@ -2590,20 +2616,20 @@ on_buffering_event (BaconVideoWidget *bvw, gdouble percent, TotemObject *totem)
 	}
 }
 
-static void
+void
 on_download_buffering_event (BaconVideoWidget *bvw, gdouble level, TotemObject *totem)
 {
 	update_fill (totem, level);
 }
 
-static void
+void
 play_starting_cb (BaconVideoWidget *bvw,
 		  TotemObject      *totem)
 {
 	unmark_popup_busy (totem, "opening file");
 }
 
-static gboolean
+gboolean
 on_bvw_motion_notify_cb (BaconVideoWidget *bvw,
 			 GdkEventMotion   *event,
 			 TotemObject      *totem)
@@ -2675,7 +2701,7 @@ update_slider_visibility (TotemObject *totem,
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 0.);
 }
 
-static void
+void
 update_current_time (BaconVideoWidget *bvw,
 		     gint64            current_time,
 		     gint64            stream_length,
@@ -3316,7 +3342,7 @@ event_is_touch (GdkEventButton *event)
 	return (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN);
 }
 
-static gboolean
+gboolean
 on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		TotemObject *totem)
 {
@@ -3336,7 +3362,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 	return FALSE;
 }
 
-static gboolean
+gboolean
 on_eos_event (GtkWidget *widget, TotemObject *totem)
 {
 	reset_seek_status (totem);
@@ -4061,76 +4087,12 @@ video_widget_create (TotemObject *totem)
 		totem_object_exit (totem);
 	}
 
-	g_signal_connect_after (G_OBJECT (totem->bvw),
-			"button-press-event",
-			G_CALLBACK (on_video_button_press_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"eos",
-			G_CALLBACK (on_eos_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"got-redirect",
-			G_CALLBACK (on_got_redirect),
-			totem);
-	g_signal_connect (G_OBJECT(totem->bvw),
-			"channels-change",
-			G_CALLBACK (on_channels_change_event),
-			totem);
-	g_signal_connect_swapped (G_OBJECT (totem->bvw),
-				  "subtitles-changed",
-				  G_CALLBACK (totem_subtitles_menu_update),
-				  totem);
-	g_signal_connect_swapped (G_OBJECT (totem->bvw),
-				  "languages-changed",
-				  G_CALLBACK (totem_languages_menu_update),
-				  totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"tick",
-			G_CALLBACK (update_current_time),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"got-metadata",
-			G_CALLBACK (on_got_metadata_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"buffering",
-			G_CALLBACK (on_buffering_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"download-buffering",
-			G_CALLBACK (on_download_buffering_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"error",
-			G_CALLBACK (on_error_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			  "play-starting",
-			  G_CALLBACK (play_starting_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			  "scroll-event",
-			  G_CALLBACK (seek_slider_scroll_event_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			  "motion-notify-event",
-			  G_CALLBACK (on_bvw_motion_notify_cb),
-			  totem);
-
 	totem->bvw_grid = GTK_WIDGET (gtk_builder_get_object (totem->xml, "bvw_grid"));
 	add_fullscreen_toolbar (totem, totem->bvw_grid);
 
 	/* Events for the widget video window as well */
 	gtk_widget_add_events (GTK_WIDGET (totem->bvw),
 			GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
-	g_signal_connect (G_OBJECT(totem->bvw), "key_press_event",
-			G_CALLBACK (window_key_press_event_cb), totem);
-	g_signal_connect (G_OBJECT(totem->bvw), "key_release_event",
-			G_CALLBACK (window_key_press_event_cb), totem);
-
-	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
-			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			   target_table, G_N_ELEMENTS (target_table),
 			   GDK_ACTION_MOVE);
