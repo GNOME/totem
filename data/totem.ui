@@ -324,6 +324,7 @@
         <child>
           <object class="BaconVideoWidget" id="bvw">
             <property name="visible">True</property>
+            <property name="events">GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK</property>
             <signal name="subtitles-changed" handler="totem_subtitles_menu_update" swapped="yes"/>
             <signal name="languages-changed" handler="totem_languages_menu_update" swapped="yes"/>
             <signal name="button-press-event" handler="on_video_button_press_event" after="yes"/>

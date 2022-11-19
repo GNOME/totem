@@ -4090,9 +4090,6 @@ video_widget_create (TotemObject *totem)
 	totem->bvw_grid = GTK_WIDGET (gtk_builder_get_object (totem->xml, "bvw_grid"));
 	add_fullscreen_toolbar (totem, totem->bvw_grid);
 
-	/* Events for the widget video window as well */
-	gtk_widget_add_events (GTK_WIDGET (totem->bvw),
-			GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			   target_table, G_N_ELEMENTS (target_table),
 			   GDK_ACTION_MOVE);
