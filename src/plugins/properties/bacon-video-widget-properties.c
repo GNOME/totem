@@ -78,8 +78,7 @@ bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 	g_return_if_fail (item != NULL);
 	gtk_label_set_text (item, text);
 
-  if (text == NULL || *text == '\0')
-    gtk_widget_hide(GTK_WIDGET (item));
+	gtk_widget_set_visible (GTK_WIDGET (item), text !=  NULL && *text != '\0');
 }
 
 void
