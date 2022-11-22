@@ -148,7 +148,6 @@ gst_tag_dep = dependency('gstreamer-tag-1.0', version: '>= 0.11.93')
 gst_video_dep = dependency('gstreamer-video-1.0')
 gst_pbutils_dep = dependency('gstreamer-pbutils-1.0')
 peas_dep = dependency('libpeas-1.0', version: peas_req_version)
-peas_gtk_dep = dependency('libpeas-gtk-1.0', version: peas_req_version)
 totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_version)
 m_dep = cc.find_library('m', required: true)
 

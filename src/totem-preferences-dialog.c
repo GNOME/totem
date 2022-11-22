@@ -34,7 +34,6 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <libpeas-gtk/peas-gtk-plugin-manager.h>
 
 #include "bacon-video-widget-enums.h"
 #include "totem.h"
@@ -43,6 +42,7 @@
 #include "totem-interface.h"
 #include "totem-subtitle-encoding.h"
 #include "totem-plugins-engine.h"
+#include "totem-preferences-plugin-row.h"
 
 struct _TotemPreferencesDialog {
 	HdyPreferencesWindow parent_instance;
@@ -63,9 +63,10 @@ struct _TotemPreferencesDialog {
 	GtkWidget *tpw_bright_contr_vbox;
 	GtkCheckButton *tpw_no_deinterlace_checkbutton;
 	GtkCheckButton *tpw_no_hardware_acceleration;
-	GtkButton *tpw_plugins_button;
 	GtkComboBox *tpw_sound_output_combobox;
 	GtkComboBox *subtitle_encoding_combo;
+
+	GtkListBox *tpw_plugins_list;
 };
 
 G_DEFINE_TYPE (TotemPreferencesDialog, totem_preferences_dialog, HDY_TYPE_PREFERENCES_WINDOW)
@@ -165,58 +166,15 @@ int_enum_set_mapping (const GValue *value, const GVariantType *expected_type, GE
 	return g_variant_new_string (enum_value->value_nick);
 }
 
-static gboolean
-totem_plugins_window_delete_cb (GtkWidget *window,
-				   GdkEventAny *event,
-				   gpointer data)
+static int
+totems_plugins_sort_cb (GtkListBoxRow *row_a,
+                        GtkListBoxRow *row_b,
+                        gpointer       data)
 {
-	gtk_widget_hide (window);
+	const char *name_a = hdy_preferences_row_get_title (HDY_PREFERENCES_ROW (row_a));
+	const char *name_b = hdy_preferences_row_get_title (HDY_PREFERENCES_ROW (row_b));
 
-	return TRUE;
-}
-
-static void
-totem_plugins_response_cb (GtkDialog *dialog,
-			      int response_id,
-			      gpointer data)
-{
-	gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-static void
-plugin_button_clicked_cb (GtkButton *button,
-			  Totem     *totem)
-{
-	if (totem->plugins == NULL) {
-		GtkWidget *manager;
-
-		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
-							      GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (button))),
-							      GTK_DIALOG_DESTROY_WITH_PARENT,
-							      _("_Close"),
-							      GTK_RESPONSE_CLOSE,
-							      NULL);
-		gtk_window_set_modal (GTK_WINDOW (totem->plugins), TRUE);
-		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
-		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
-
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "delete_event",
-					 G_CALLBACK (totem_plugins_window_delete_cb),
-					 NULL, 0);
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "response",
-					 G_CALLBACK (totem_plugins_response_cb),
-					 NULL, 0);
-
-		manager = peas_gtk_plugin_manager_new (NULL);
-		gtk_widget_show_all (GTK_WIDGET (manager));
-		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
-				    manager, TRUE, TRUE, 0);
-		gtk_window_set_default_size (GTK_WINDOW (totem->plugins), 600, 400);
-	}
-
-	gtk_window_present (GTK_WINDOW (totem->plugins));
+	return g_utf8_collate (name_a, name_b);
 }
 
 enum {
@@ -268,10 +226,12 @@ static void
 totem_preferences_dialog_constructed (GObject *object)
 {
 	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (object);
+	g_autoptr(TotemPluginsEngine) engine = NULL;
 	TotemObject *totem;
 	GtkWidget *bvw;
 	guint i, hidden;
 	char *font, *encoding;
+	const GList *plugin_infos, *l;
 
 	G_OBJECT_CLASS (totem_preferences_dialog_parent_class)->constructed (object);
 
@@ -295,10 +255,6 @@ totem_preferences_dialog_constructed (GObject *object)
 	/* Auto-load subtitles */
 	g_settings_bind (totem->settings, "autoload-subtitles",
 			 prefs->tpw_auto_subtitles_checkbutton, "active", G_SETTINGS_BIND_DEFAULT);
-
-	/* Plugins button */
-	g_signal_connect (prefs->tpw_plugins_button, "activated",
-			  G_CALLBACK (plugin_button_clicked_cb), totem);
 
 	/* Brightness and all */
 	struct {
@@ -368,6 +324,38 @@ totem_preferences_dialog_constructed (GObject *object)
 	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
 	g_signal_connect (totem->settings, "changed::disable-keyboard-shortcuts", (GCallback) disable_kbd_shortcuts_changed_cb, totem);
 
+	/* Plugins */
+	gtk_list_box_set_sort_func (prefs->tpw_plugins_list, totems_plugins_sort_cb, NULL, NULL);
+
+	engine = totem_plugins_engine_get_default (totem);
+	plugin_infos = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
+
+	for (l = plugin_infos; l != NULL; l = l->next) {
+		g_autoptr(GError) error = NULL;
+		PeasPluginInfo *plugin_info;
+		const char *plugin_name;
+		GtkWidget *plugin_row;
+
+		plugin_info = PEAS_PLUGIN_INFO (l->data);
+		plugin_name = peas_plugin_info_get_name (plugin_info);
+
+		if (!peas_plugin_info_is_available (plugin_info, &error)) {
+			g_warning ("The plugin %s is not available : %s", plugin_name, error ? error->message : "no message error");
+			continue;
+		}
+
+		if (peas_plugin_info_is_hidden (plugin_info) ||
+		    peas_plugin_info_is_builtin (plugin_info))
+			continue;
+
+		plugin_row = totem_preferences_plugin_row_new (plugin_info);
+
+		hdy_preferences_row_set_title (HDY_PREFERENCES_ROW (plugin_row), plugin_name);
+		hdy_expander_row_set_subtitle (HDY_EXPANDER_ROW (plugin_row), peas_plugin_info_get_description (plugin_info));
+
+		gtk_container_add (GTK_CONTAINER (prefs->tpw_plugins_list), plugin_row);
+	}
+
 	g_object_unref (bvw);
 }
 
@@ -402,11 +390,11 @@ totem_preferences_dialog_class_init (TotemPreferencesDialogClass *klass)
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_hue_scale);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_deinterlace_checkbutton);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_no_hardware_acceleration);
-	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_button);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_adjustment);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_saturation_scale);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_sound_output_combobox);
 	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, subtitle_encoding_combo);
+	gtk_widget_class_bind_template_child (widget_class, TotemPreferencesDialog, tpw_plugins_list);
 
 	gtk_widget_class_bind_template_callback (widget_class, encoding_set_cb);
 	gtk_widget_class_bind_template_callback (widget_class, font_set_cb);

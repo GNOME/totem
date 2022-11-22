@@ -55,7 +55,6 @@ totem_common_deps = libbacon_video_widget_deps + python_deps + [
   totem_plparser_dep,
   gir_dep,
   peas_dep,
-  peas_gtk_dep,
   dependency('grilo-0.3', version: grilo_req_version),
   dependency('grilo-pls-0.3', version: grilo_req_version),
   dependency('gnome-desktop-3.0')
@@ -120,6 +119,7 @@ libtotem_sources = files(
   'totem-playlist.c',
   'totem-playlist-inspector-page.c',
   'totem-preferences-dialog.c',
+  'totem-preferences-plugin-row.c',
   'totem-search-entry.c',
   'totem-selection-toolbar.c',
   'totem-session.c',

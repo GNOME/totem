@@ -155,30 +155,6 @@
         </object>
       </child>
 
-      <child>
-        <object class="HdyPreferencesGroup">
-          <property name="visible">True</property>
-          <property name="title" translatable="yes">Plugins</property>
-
-          <child>
-            <object class="HdyActionRow" id="tpw_plugins_button">
-              <property name="visible">True</property>
-              <property name="title" translatable="yes">Plugins</property>
-              <property name="activatable">True</property>
-
-              <child>
-                <object class="GtkImage">
-                  <property name="icon-name">go-next-symbolic</property>
-                  <property name="visible">True</property>
-                </object>
-              </child>
-
-            </object>
-          </child>
-
-        </object>
-      </child>
-
     </object>
   </child>
 
@@ -501,6 +477,29 @@ Disable it if you encounter video playback problems.</property>
 
     </object>
   </child>
+
+  <child>
+    <object class="HdyPreferencesPage">
+      <property name="visible">True</property>
+      <property name="can_focus">True</property>
+      <property name="title" translatable="yes">Plugins</property>
+
+      <child>
+        <object class="HdyPreferencesGroup">
+          <property name="visible">True</property>
+
+          <child>
+            <object class="GtkListBox" id="tpw_plugins_list">
+              <property name="visible">True</property>
+            </object>
+          </child>
+
+        </object>
+      </child>
+
+    </object>
+  </child>
+
 </template>
 <object class="GtkSizeGroup">
   <property name="mode">horizontal</property>
