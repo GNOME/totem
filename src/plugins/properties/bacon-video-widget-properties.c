@@ -29,108 +29,324 @@
 
 #include "bacon-video-widget-properties.h"
 
-static void bacon_video_widget_properties_dispose (GObject *object);
+static void bacon_video_widget_properties_set_property (GObject      *object,
+                                                        guint         prop_id,
+                                                        const GValue *value,
+                                                        GParamSpec   *pspec);
+static void bacon_video_widget_properties_set_label    (GtkLabel *label, const char *text);
 
 struct _BaconVideoWidgetProperties {
-	GtkBox parent;
-	GtkBuilder *xml;
+	GtkDialog parent;
+
+	/* General */
+	GtkLabel *title;
+	GtkLabel *artist;
+	GtkLabel *album;
+	GtkLabel *year;
+	GtkLabel *duration;
+	GtkLabel *comment;
+	GtkLabel *container;
+
+	/* Video */
+	GtkWidget *video_vbox;
+	GtkWidget *video;
+
+	GtkLabel *dimensions;
+	GtkLabel *vcodec;
+	GtkLabel *framerate;
+	GtkLabel *video_bitrate;
+
+	/* Audio */
+	GtkWidget *audio;
+
+	GtkLabel *acodec;
+	GtkLabel *channels;
+	GtkLabel *samplerate;
+	GtkLabel *audio_bitrate;
+
 	int time;
 };
 
-G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_BOX)
+G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_DIALOG)
+
+enum {
+	PROP_0,
+	PROP_TITLE,
+	PROP_ARITST,
+	PROP_ALBUM,
+	PROP_YEAR,
+	PROP_DURATION,
+	PROP_COMMENT,
+	PROP_CONTAINER,
+	PROP_DIMENSIONS,
+	PROP_VIDEO_CODEC,
+	PROP_VIDEO_FRAMERATE,
+	PROP_VIDEO_BITRATE,
+	PROP_AUDIO_CODEC,
+	PROP_AUDIO_CHANNELS,
+	PROP_AUDIO_SAMPLERATE,
+	PROP_AUDIO_BITRATE,
+	N_PROPS
+};
+
+static GParamSpec *properties [N_PROPS];
 
 static void
 bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-	object_class->dispose = bacon_video_widget_properties_dispose;
+	object_class->set_property = bacon_video_widget_properties_set_property;
+
+	/* General */
+	properties[PROP_TITLE] = g_param_spec_string ("media-title",
+	                                              "Title",
+	                                              "",
+	                                              NULL,
+	                                              G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_ARITST] = g_param_spec_string ("artist",
+	                                               "Artist",
+	                                               "",
+	                                               NULL,
+	                                               G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_ALBUM] = g_param_spec_string ("album",
+	                                              "Album",
+	                                              "",
+	                                              NULL,
+	                                              G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_YEAR] = g_param_spec_string ("year",
+	                                             "Year",
+	                                             "",
+	                                             NULL,
+	                                             G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_DURATION] = g_param_spec_int ("duration",
+	                                              "Duration",
+	                                              "",
+	                                              0,
+	                                              G_MAXINT,
+	                                              0,
+	                                              G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_COMMENT] = g_param_spec_string ("comment",
+	                                                "Comment",
+	                                                "",
+	                                                NULL,
+	                                                G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_CONTAINER] = g_param_spec_string ("container",
+	                                                  "Container",
+	                                                  "",
+	                                                  NULL,
+	                                                  G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	/* Video */
+	properties[PROP_DIMENSIONS] = g_param_spec_string ("dimensions",
+	                                                   "Dimensions",
+	                                                   "",
+	                                                   NULL,
+	                                                   G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_VIDEO_CODEC] = g_param_spec_string ("video-codec",
+	                                                    "Video codec",
+	                                                    "",
+	                                                    NULL,
+	                                                    G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_VIDEO_FRAMERATE] = g_param_spec_float ("framerate",
+	                                                       "Video frame rate",
+	                                                       "",
+	                                                       0.f,
+	                                                       G_MAXFLOAT,
+	                                                       0.f,
+	                                                       G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_VIDEO_BITRATE] = g_param_spec_string ("video-bitrate",
+	                                                      "Video bit rate",
+	                                                      "",
+	                                                      NULL,
+	                                                      G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	/* Audio */
+	properties[PROP_AUDIO_CODEC] = g_param_spec_string ("audio-codec",
+	                                                    "Audio bit rate",
+	                                                    "",
+	                                                    NULL,
+	                                                    G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_AUDIO_CHANNELS] = g_param_spec_string ("channels",
+	                                                       "Audio channels",
+	                                                       "",
+	                                                       NULL,
+	                                                       G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_AUDIO_SAMPLERATE] = g_param_spec_string ("samplerate",
+	                                                         "Audio sample rate",
+	                                                         "",
+	                                                         NULL,
+	                                                         G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	properties[PROP_AUDIO_BITRATE] = g_param_spec_string ("audio-bitrate",
+	                                                      "Audio bit rate",
+	                                                      "",
+	                                                      NULL,
+	                                                      G_PARAM_WRITABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+	g_object_class_install_properties (object_class, N_PROPS, properties);
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/properties/properties.ui");
+
+	/* General */
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, title);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, artist);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, album);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, year);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, duration);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, comment);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, container);
+
+	/* Video */
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, video_vbox);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, video);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, dimensions);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, vcodec);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, framerate);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, video_bitrate);
+
+	/* Audio */
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, audio);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, acodec);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, channels);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, samplerate);
+	gtk_widget_class_bind_template_child (widget_class, BaconVideoWidgetProperties, audio_bitrate);
+}
+
+static void
+bacon_video_widget_properties_set_property (GObject      *object,
+                                            guint         prop_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec)
+{
+	BaconVideoWidgetProperties *props = BACON_VIDEO_WIDGET_PROPERTIES (object);
+
+	switch (prop_id)
+	{
+		case PROP_TITLE:
+			bacon_video_widget_properties_set_label (props->title, g_value_get_string (value));
+			break;
+		case PROP_ARITST:
+			bacon_video_widget_properties_set_label (props->artist, g_value_get_string (value));
+			break;
+		case PROP_ALBUM:
+			bacon_video_widget_properties_set_label (props->album, g_value_get_string (value));
+			break;
+		case PROP_YEAR:
+			bacon_video_widget_properties_set_label (props->year, g_value_get_string (value));
+			break;
+		case PROP_DURATION:
+			bacon_video_widget_properties_set_duration (props, g_value_get_int (value));
+			break;
+		case PROP_COMMENT:
+			bacon_video_widget_properties_set_label (props->comment, g_value_get_string (value));
+			break;
+		case PROP_CONTAINER:
+			bacon_video_widget_properties_set_label (props->container, g_value_get_string (value));
+			break;
+		case PROP_DIMENSIONS:
+			bacon_video_widget_properties_set_label (props->dimensions, g_value_get_string (value));
+			break;
+		case PROP_VIDEO_CODEC:
+			bacon_video_widget_properties_set_label (props->vcodec, g_value_get_string (value));
+			break;
+		case PROP_VIDEO_FRAMERATE:
+			bacon_video_widget_properties_set_framerate (props, g_value_get_float (value));
+			break;
+		case PROP_VIDEO_BITRATE:
+			bacon_video_widget_properties_set_label (props->video_bitrate, g_value_get_string (value));
+			break;
+		case PROP_AUDIO_CODEC:
+			bacon_video_widget_properties_set_label (props->acodec, g_value_get_string (value));
+			break;
+		case PROP_AUDIO_CHANNELS:
+			bacon_video_widget_properties_set_label (props->channels, g_value_get_string (value));
+			break;
+		case PROP_AUDIO_SAMPLERATE:
+			bacon_video_widget_properties_set_label (props->samplerate, g_value_get_string (value));
+			break;
+		case PROP_AUDIO_BITRATE:
+			bacon_video_widget_properties_set_label (props->audio_bitrate, g_value_get_string (value));
+			break;
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+	}
+}
+
+static void
+bacon_video_widget_properties_set_label (GtkLabel   *label,
+                                         const char *text)
+{
+	gtk_label_set_text (label, text);
+
+	gtk_widget_set_visible (GTK_WIDGET (label), text != NULL && *text != '\0');
 }
 
 static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
-	gtk_orientable_set_orientation (GTK_ORIENTABLE (props), GTK_ORIENTATION_VERTICAL);
-}
+	gtk_widget_init_template (GTK_WIDGET (props));
 
-static void
-bacon_video_widget_properties_dispose (GObject *object)
-{
-	BaconVideoWidgetProperties *props = BACON_VIDEO_WIDGET_PROPERTIES (object);
-
-	g_clear_object (&props->xml);
-
-	G_OBJECT_CLASS (bacon_video_widget_properties_parent_class)->dispose (object);
-}
-
-void
-bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
-					 const char                 *name,
-					 const char                 *text)
-{
-	GtkLabel *item;
-
-	g_return_if_fail (props != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
-	g_return_if_fail (name != NULL);
-
-	item = GTK_LABEL (gtk_builder_get_object (props->xml, name));
-	g_return_if_fail (item != NULL);
-	gtk_label_set_text (item, text);
-
-	gtk_widget_set_visible (GTK_WIDGET (item), text !=  NULL && *text != '\0');
+	bacon_video_widget_properties_reset (props);
 }
 
 void
 bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 {
-	GtkWidget *item;
-
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video_vbox"));
-	gtk_widget_show (item);
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video"));
-	gtk_widget_set_sensitive (item, FALSE);
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "audio"));
-	gtk_widget_set_sensitive (item, FALSE);
+	gtk_widget_show (props->video_vbox);
+	gtk_widget_set_sensitive (props->video, FALSE);
+	gtk_widget_set_sensitive (props->audio, FALSE);
 
 	/* Title */
-	bacon_video_widget_properties_set_label (props, "title", NULL);
+	bacon_video_widget_properties_set_label (props->title, NULL);
 	/* Artist */
-	bacon_video_widget_properties_set_label (props, "artist", NULL);
+	bacon_video_widget_properties_set_label (props->artist, NULL);
 	/* Album */
-	bacon_video_widget_properties_set_label (props, "album", NULL);
+	bacon_video_widget_properties_set_label (props->album, NULL);
 	/* Year */
-	bacon_video_widget_properties_set_label (props, "year", NULL);
+	bacon_video_widget_properties_set_label (props->year, NULL);
 	/* Duration */
 	bacon_video_widget_properties_set_duration (props, 0);
 	/* Comment */
-	bacon_video_widget_properties_set_label (props, "comment", "");
+	bacon_video_widget_properties_set_label (props->comment, "");
 	/* Container */
-	bacon_video_widget_properties_set_label (props, "container", NULL);
+	bacon_video_widget_properties_set_label (props->container, NULL);
 
 	/* Dimensions */
-	bacon_video_widget_properties_set_label (props, "dimensions", C_("Dimensions", "N/A"));
+	bacon_video_widget_properties_set_label (props->dimensions, C_("Dimensions", "N/A"));
 	/* Video Codec */
-	bacon_video_widget_properties_set_label (props, "vcodec", C_("Video codec", "N/A"));
+	bacon_video_widget_properties_set_label (props->vcodec, C_("Video codec", "N/A"));
 	/* Video Bitrate */
-	bacon_video_widget_properties_set_label (props, "video_bitrate",
+	bacon_video_widget_properties_set_label (props->video_bitrate,
 			C_("Video bit rate", "N/A"));
 	/* Framerate */
-	bacon_video_widget_properties_set_label (props, "framerate",
+	bacon_video_widget_properties_set_label (props->framerate,
 			C_("Frame rate", "N/A"));
 
 	/* Audio Bitrate */
-	bacon_video_widget_properties_set_label (props, "audio_bitrate",
+	bacon_video_widget_properties_set_label (props->audio_bitrate,
 			C_("Audio bit rate", "N/A"));
 	/* Audio Codec */
-	bacon_video_widget_properties_set_label (props, "acodec", C_("Audio codec", "N/A"));
+	bacon_video_widget_properties_set_label (props->acodec, C_("Audio codec", "N/A"));
 	/* Sample rate */
-	bacon_video_widget_properties_set_label (props, "samplerate", _("0 Hz"));
+	bacon_video_widget_properties_set_label (props->samplerate, _("0 Hz"));
 	/* Channels */
-	bacon_video_widget_properties_set_label (props, "channels", _("0 Channels"));
+	bacon_video_widget_properties_set_label (props->channels, _("0 Channels"));
 }
 
 static char *
@@ -204,7 +420,7 @@ bacon_video_widget_properties_set_duration (BaconVideoWidgetProperties *props,
 		return;
 
 	string = time_to_string_text (_time);
-	bacon_video_widget_properties_set_label (props, "duration", string);
+	bacon_video_widget_properties_set_label (props->duration, string);
 	g_free (string);
 
 	props->time = _time;
@@ -215,20 +431,15 @@ bacon_video_widget_properties_set_has_type (BaconVideoWidgetProperties *props,
 					    gboolean                    has_video,
 					    gboolean                    has_audio)
 {
-	GtkWidget *item;
-
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
 	/* Video */
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video"));
-	gtk_widget_set_sensitive (item, has_video);
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "video_vbox"));
-	gtk_widget_set_visible (item, has_video);
+	gtk_widget_set_sensitive (props->video, has_video);
+	gtk_widget_set_visible (props->video_vbox, has_video);
 
 	/* Audio */
-	item = GTK_WIDGET (gtk_builder_get_object (props->xml, "audio"));
-	gtk_widget_set_sensitive (item, has_audio);
+	gtk_widget_set_sensitive (props->audio, has_audio);
 }
 
 void
@@ -254,35 +465,15 @@ bacon_video_widget_properties_set_framerate (BaconVideoWidgetProperties *props,
 	} else {
 		temp = g_strdup (C_("Frame rate", "N/A"));
 	}
-	bacon_video_widget_properties_set_label (props, "framerate", temp);
+	bacon_video_widget_properties_set_label (props->framerate, temp);
 	g_free (temp);
 }
 
 GtkWidget*
-bacon_video_widget_properties_new (void)
+bacon_video_widget_properties_new (GtkWindow *transient_for)
 {
-	BaconVideoWidgetProperties *props;
-	GtkBuilder *xml;
-	GtkWidget *vbox;
-
-	xml = gtk_builder_new ();
-	gtk_builder_set_translation_domain (xml, GETTEXT_PACKAGE);
-	if (gtk_builder_add_from_resource (xml, "/org/gnome/totem/properties/properties.ui", NULL) == 0) {
-		g_object_unref (xml);
-		return NULL;
-	}
-
-	props = BACON_VIDEO_WIDGET_PROPERTIES (g_object_new
-			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));
-
-	props->xml = xml;
-	vbox = GTK_WIDGET (gtk_builder_get_object (props->xml, "sw_properties"));
-	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
-
-	bacon_video_widget_properties_reset (props);
-
-	gtk_widget_show (GTK_WIDGET (vbox));
-
-	return GTK_WIDGET (props);
+	return g_object_new (BACON_TYPE_VIDEO_WIDGET_PROPERTIES,
+	                     "transient-for", transient_for,
+	                     NULL);
 }
 

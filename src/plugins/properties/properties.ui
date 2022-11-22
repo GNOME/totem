@@ -2,852 +2,860 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.11"/>
-  <object class="GtkScrolledWindow" id="sw_properties">
-    <property name="visible">true</property>
-    <property name="vexpand">true</property>
-    <property name="min-content-height">480</property>
-    <property name="hscrollbar-policy">never</property>
-    <child>
-      <object class="HdyClamp">
+  <template class="BaconVideoWidgetProperties" parent="GtkDialog">
+    <property name="visible">False</property>
+    <property name="title" translatable="yes">Properties</property>
+    <property name="destroy-with-parent">True</property>
+    <property name="modal">True</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="margin-bottom">18</property>
-        <property name="margin-start">18</property>
-        <property name="margin-end">18</property>
-        <property name="margin-top">18</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox" id="vbox1">
-            <property name="visible">True</property>
-            <property name="width_request">375</property>
-            <property name="can_focus">False</property>
-            <property name="spacing">18</property>
-            <property name="orientation">vertical</property>
+          <object class="GtkScrolledWindow" id="sw_properties">
+            <property name="visible">true</property>
+            <property name="vexpand">true</property>
+            <property name="min-content-height">480</property>
+            <property name="hscrollbar-policy">never</property>
             <child>
-              <object class="GtkBox" id="general_vbox">
+              <object class="HdyClamp">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="margin-bottom">18</property>
+                <property name="margin-start">18</property>
+                <property name="margin-end">18</property>
+                <property name="margin-top">18</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkBox" id="vbox1">
                     <property name="visible">True</property>
+                    <property name="width_request">375</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">General</property>
-                    <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <style>
-                      <class name="heading"/>
-                    </style>
+                    <property name="spacing">18</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkBox" id="general_vbox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">General</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="heading" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkListBox">
+                            <property name="visible">True</property>
+                            <property name="selection-mode">none</property>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="title" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="title_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Title</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="title" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="title">
+                                        <property name="visible">True</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="title_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="artist" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="artist_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Artist</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="artist" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="artist">
+                                        <property name="visible">True</property>
+                                        <property name="label">Unknown</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="artist_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="album" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="album_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Album</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="album" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="album">
+                                        <property name="visible">True</property>
+                                        <property name="label">Unknown</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="album_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="year" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="year_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Year</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="year" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="year">
+                                        <property name="visible">True</property>
+                                        <property name="label">Unknown</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="year_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="duration_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Duration</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="duration" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="duration">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 seconds</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="duration_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="comment" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="comment_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Comment</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="comment" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="comment">
+                                        <property name="visible">True</property>
+                                        <property name="label">Unknown</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="comment_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <property name="visible" bind-source="container" bind-property="visible"
+                                  bind-flags="default|sync-create" />
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="container_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Container</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="container" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="container">
+                                        <property name="visible">True</property>
+                                        <property name="label">Unknown</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="container_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="content" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="video_vbox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Video</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="heading" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="video">
+                            <property name="visible">True</property>
+                            <property name="selection-mode">none</property>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="dimensions_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Dimensions</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="dimensions" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="dimensions">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 x 0</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="dimensions_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="vcodec_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Codec</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="vcodec" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="vcodec">
+                                        <property name="visible">True</property>
+                                        <property name="label">N/A</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="vcodec_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="framerate_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Framerate</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="framerate" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="framerate">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 frames per second</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="framerate_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="vbitrate_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Bitrate</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="video_bitrate" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="video_bitrate">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 kbps</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="vbitrate_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="content" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="audio_vbox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Audio</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="heading" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="audio">
+                            <property name="visible">True</property>
+                            <property name="selection-mode">none</property>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="acodec_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Codec</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="acodec" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="acodec">
+                                        <property name="visible">True</property>
+                                        <property name="label">N/A</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="acodec_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="channels_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Channels</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="channels" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="channels">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 Channels</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="channels_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="samplerate_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Sample rate</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="samplerate" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="samplerate">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 Hz</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="samplerate_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="HdyActionRow">
+                                <property name="visible">True</property>
+                                <property name="activatable">False</property>
+                                <property name="selectable">False</property>
+                                <child type="prefix">
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">3</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <child>
+                                      <object class="GtkLabel" id="abitrate_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Bitrate</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="audio_bitrate" />
+                                        </accessibility>
+                                        <style>
+                                          <class name="caption" /><class name="dim-label" />
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="audio_bitrate">
+                                        <property name="visible">True</property>
+                                        <property name="label">0 kbps</property>
+                                        <property name="selectable">True</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                        <property name="lines">3</property>
+                                        <property name="halign">start</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="abitrate_label" />
+                                        </accessibility>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="content" />
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkListBox">
-                    <property name="visible">True</property>
-                    <property name="selection-mode">none</property>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="title" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="title_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Title</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="title"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="title">
-                                <property name="visible">True</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="title_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="artist" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="artist_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Artist</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="artist"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="artist">
-                                <property name="visible">True</property>
-                                <property name="label">Unknown</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="artist_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="album" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="album_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Album</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="album"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="album">
-                                <property name="visible">True</property>
-                                <property name="label">Unknown</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="album_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="year" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="year_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Year</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="year"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="year">
-                                <property name="visible">True</property>
-                                <property name="label">Unknown</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="year_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="duration_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Duration</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="duration"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="duration">
-                                <property name="visible">True</property>
-                                <property name="label">0 seconds</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="duration_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="comment" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="comment_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Comment</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="comment"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="comment">
-                                <property name="visible">True</property>
-                                <property name="label">Unknown</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="comment_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <property name="visible" bind-source="container" bind-property="visible" bind-flags="default|sync-create"/>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="container_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Container</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="container"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="container">
-                                <property name="visible">True</property>
-                                <property name="label">Unknown</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="container_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="content"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="video_vbox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Video</property>
-                    <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <style>
-                      <class name="heading"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkListBox" id="video">
-                    <property name="visible">True</property>
-                    <property name="selection-mode">none</property>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="dimensions_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Dimensions</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="dimensions"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="dimensions">
-                                <property name="visible">True</property>
-                                <property name="label">0 x 0</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="dimensions_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="vcodec_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Codec</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="vcodec"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="vcodec">
-                                <property name="visible">True</property>
-                                <property name="label">N/A</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="vcodec_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="framerate_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Framerate</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="framerate"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="framerate">
-                                <property name="visible">True</property>
-                                <property name="label">0 frames per second</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="framerate_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="vbitrate_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Bitrate</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="video_bitrate"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="video_bitrate">
-                                <property name="visible">True</property>
-                                <property name="label">0 kbps</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="vbitrate_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="content"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="audio_vbox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Audio</property>
-                    <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <style>
-                      <class name="heading"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkListBox" id="audio">
-                    <property name="visible">True</property>
-                    <property name="selection-mode">none</property>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="acodec_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Codec</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="acodec"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/><class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="acodec">
-                                <property name="visible">True</property>
-                                <property name="label">N/A</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="acodec_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="channels_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Channels</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="channels"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="channels">
-                                <property name="visible">True</property>
-                                <property name="label">0 Channels</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="channels_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="samplerate_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Sample rate</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="samplerate"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/><class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="samplerate">
-                                <property name="visible">True</property>
-                                <property name="label">0 Hz</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="samplerate_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="HdyActionRow">
-                        <property name="visible">True</property>
-                        <property name="activatable">False</property>
-                        <property name="selectable">False</property>
-                        <child type="prefix">
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
-                            <property name="halign">start</property>
-                            <property name="valign">center</property>
-                            <child>
-                              <object class="GtkLabel" id="abitrate_label">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Bitrate</property>
-                                <property name="halign">start</property>
-                                <property name="xalign">0</property>
-                                <accessibility>
-                                  <relation type="label-for" target="audio_bitrate"/>
-                                </accessibility>
-                                <style>
-                                  <class name="caption"/>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="audio_bitrate">
-                                <property name="visible">True</property>
-                                <property name="label">0 kbps</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="lines">3</property>
-                                <property name="halign">start</property>
-                                <accessibility>
-                                  <relation type="labelled-by" target="abitrate_label"/>
-                                </accessibility>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="content"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

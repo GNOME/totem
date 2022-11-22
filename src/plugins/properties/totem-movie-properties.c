@@ -48,7 +48,6 @@ typedef struct {
 	PeasExtensionBase parent;
 
 	GtkWidget     *props;
-	GtkWidget     *dialog;
 	guint          handler_id_stream_length;
 	guint          handler_id_main_page;
 	GSimpleAction *props_action;
@@ -65,8 +64,8 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
 						 type, &value); \
 		if ((temp = g_value_get_string (&value)) != NULL) { \
-			bacon_video_widget_properties_set_label (props, name, \
-								 temp); \
+			g_object_set (G_OBJECT (props), name, \
+								 temp, NULL); \
 		} \
 		g_value_unset (&value); \
 	} while (0)
@@ -81,7 +80,7 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 					g_value_get_int (&value)); \
 		else \
 			temp = g_strdup (empty); \
-		bacon_video_widget_properties_set_label (props, name, temp); \
+		g_object_set (G_OBJECT (props), name, temp, NULL); \
 		g_free (temp); \
 		g_value_unset (&value); \
 	} while (0)
@@ -99,7 +98,7 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		y = g_value_get_int (&value); \
 		g_value_unset (&value); \
 		temp = g_strdup_printf (gettext (format), x, y); \
-		bacon_video_widget_properties_set_label (props, name, temp); \
+		g_object_set (G_OBJECT (props), name, temp, NULL); \
 		g_free (temp); \
 	} while (0)
 
@@ -117,7 +116,7 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* General */
-	UPDATE_FROM_STRING (BVW_INFO_TITLE, "title");
+	UPDATE_FROM_STRING (BVW_INFO_TITLE, "media-title");
 	UPDATE_FROM_STRING (BVW_INFO_ARTIST, "artist");
 	UPDATE_FROM_STRING (BVW_INFO_ALBUM, "album");
 	UPDATE_FROM_STRING (BVW_INFO_YEAR, "year");
@@ -148,7 +147,7 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 	{
 		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
 				  "dimensions", N_("%d × %d"));
-		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
+		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "video-codec");
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 N_("%d kbps"), C_("Stream bit rate", "N/A"));
 
@@ -160,9 +159,9 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 	/* Audio */
 	if (has_audio != FALSE)
 	{
-		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
+		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio-bitrate",
 				 N_("%d kbps"), C_("Stream bit rate", "N/A"));
-		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
+		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "audio-codec");
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate",
 				N_("%d Hz"), C_("Sample rate", "N/A"));
 		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CHANNELS, "channels");
@@ -182,7 +181,7 @@ main_page_notify_cb (TotemObject                *totem,
 
 	g_object_get (G_OBJECT (totem), "main-page", &main_page, NULL);
 	if (g_strcmp0 (main_page, "player") == 0)
-		gtk_widget_hide (pi->dialog);
+		gtk_widget_hide (pi->props);
 	g_free (main_page);
 }
 
@@ -253,7 +252,7 @@ properties_action_cb (GSimpleAction              *simple,
 	totem = g_object_get_data (G_OBJECT (pi), "object");
 	g_object_get (G_OBJECT (totem), "main-page", &main_page, NULL);
 	if (g_strcmp0 (main_page, "player") == 0)
-		gtk_widget_show (pi->dialog);
+		gtk_widget_show (pi->props);
 	g_free (main_page);
 }
 
@@ -270,24 +269,15 @@ impl_activate (PeasActivatable *plugin)
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	pi->props = bacon_video_widget_properties_new ();
-	gtk_widget_show (pi->props);
+	parent = totem_object_get_main_window (totem);
+
+	pi->props = bacon_video_widget_properties_new (parent);
 	gtk_widget_set_sensitive (pi->props, FALSE);
 
-	parent = totem_object_get_main_window (totem);
-	pi->dialog = gtk_dialog_new_with_buttons (_("Properties"),
-							parent,
-							GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_USE_HEADER_BAR,
-							NULL,
-							GTK_RESPONSE_CLOSE,
-							NULL);
 	g_object_unref (parent);
-	g_signal_connect (pi->dialog, "delete-event",
+
+	g_signal_connect (pi->props, "delete-event",
 			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
-	g_signal_connect (pi->dialog, "response",
-			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (pi->dialog))),
-			   pi->props);
 
 	/* Properties action */
 	pi->props_action = g_simple_action_new ("properties", NULL);
