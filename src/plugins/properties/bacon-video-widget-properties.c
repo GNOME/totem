@@ -36,7 +36,7 @@ static void bacon_video_widget_properties_set_property (GObject      *object,
 static void bacon_video_widget_properties_set_label    (GtkLabel *label, const char *text);
 
 struct _BaconVideoWidgetProperties {
-	GtkDialog parent;
+	HdyWindow parent;
 
 	/* General */
 	GtkLabel *title;
@@ -67,7 +67,7 @@ struct _BaconVideoWidgetProperties {
 	int time;
 };
 
-G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, HDY_TYPE_WINDOW)
 
 enum {
 	PROP_0,
