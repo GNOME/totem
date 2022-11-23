@@ -227,8 +227,8 @@ totem_preferences_dialog_constructed (GObject *object)
 {
 	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (object);
 	g_autoptr(TotemPluginsEngine) engine = NULL;
+	g_autoptr(GtkWidget) bvw = NULL;
 	TotemObject *totem;
-	GtkWidget *bvw;
 	guint i, hidden;
 	char *font, *encoding;
 	const GList *plugin_infos, *l;
@@ -355,8 +355,6 @@ totem_preferences_dialog_constructed (GObject *object)
 
 		gtk_container_add (GTK_CONTAINER (prefs->tpw_plugins_list), plugin_row);
 	}
-
-	g_object_unref (bvw);
 }
 
 static void
