@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkPopover" id="popover">
+    <property name="visible">True</property>
+    <property name="modal">True</property>
+    <property name="position">bottom</property>
+    <signal name="closed" handler="popover_closed_cb"/>
+    <child>
+      <object class="GtkListBox" id="listbox">
+        <property name="visible">True</property>
+        <property name="activate-on-single-click">True</property>
+        <signal name="row-activated" handler="listbox_row_activated"/>
+      </object>
+    </child>
+  </object>
+
+  <template class="TotemSearchEntry" parent="GtkBox">
+    <property name="visible">True</property>
+    <property name="orientation">horizontal</property>
+    <style>
+      <class name="linked"/>
+    </style>
+    <child>
+      <object class="GtkSearchEntry" id="entry">
+        <property name="visible">True</property>
+        <property name="hexpand">True</property>
+        <signal name="activate" handler="entry_activate_cb"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="dropdown_button">
+        <property name="visible">True</property>
+        <property name="popover">popover</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="label">
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">pan-down-symbolic</property>
+                <property name="icon-size">4</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

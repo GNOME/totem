@@ -117,55 +117,9 @@ popover_closed_cb (GtkPopover       *popover,
 static void
 totem_search_entry_init (TotemSearchEntry *self)
 {
-	GtkStyleContext *context;
-	GtkWidget *entry, *child, *box;
+	gtk_widget_init_template (GTK_WIDGET (self));
 
-	/* Entry */
-	entry = GTK_WIDGET (gtk_entry_new ());
-	gtk_box_pack_start (GTK_BOX (self),
-			    entry,
-			    TRUE, TRUE, 0);
-
-	self->entry = entry;
-
-	/* Dropdown button */
-	self->dropdown_button = gtk_menu_button_new ();
-	self->label = gtk_label_new (NULL);
-	child = gtk_bin_get_child (GTK_BIN (self->dropdown_button));
-	g_object_ref (child);
-	gtk_container_remove (GTK_CONTAINER (self->dropdown_button), child);
-	box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-	gtk_box_pack_start (GTK_BOX (box), self->label, FALSE, FALSE, 0);
-	gtk_box_pack_end (GTK_BOX (box), child, FALSE, FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (self->dropdown_button), box);
-	gtk_box_pack_end (GTK_BOX (self),
-			  self->dropdown_button,
-			  FALSE, FALSE, 0);
-
-	context = gtk_widget_get_style_context (GTK_WIDGET (self));
-	gtk_style_context_add_class (context, "linked");
-	gtk_widget_show_all (GTK_WIDGET (self));
-
-	/* Popover */
-	self->popover = gtk_popover_new (GTK_WIDGET (self));
-	gtk_popover_set_modal (GTK_POPOVER (self->popover), TRUE);
-	gtk_popover_set_position (GTK_POPOVER (self->popover), GTK_POS_BOTTOM);
-	g_signal_connect (G_OBJECT (self->popover), "closed",
-			  G_CALLBACK (popover_closed_cb), self);
-	gtk_menu_button_set_popover (GTK_MENU_BUTTON (self->dropdown_button), self->popover);
-
-	self->listbox = gtk_list_box_new ();
-	gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (self->listbox), TRUE);
 	gtk_list_box_set_sort_func (GTK_LIST_BOX (self->listbox), sort_sources, self, NULL);
-	gtk_widget_show (self->listbox);
-	gtk_container_add (GTK_CONTAINER (self->popover), self->listbox);
-
-	g_signal_connect (self->listbox, "row-activated",
-			  G_CALLBACK (listbox_row_activated), self);
-
-	/* Connect signals */
-	g_signal_connect (self->entry, "activate",
-			  G_CALLBACK (entry_activate_cb), self);
 }
 
 static void
@@ -204,6 +158,7 @@ static void
 totem_search_entry_class_init (TotemSearchEntryClass *klass)
 {
 	GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
 	gobject_class->set_property = totem_search_entry_set_property;
 	gobject_class->get_property = totem_search_entry_get_property;
@@ -221,6 +176,18 @@ totem_search_entry_class_init (TotemSearchEntryClass *klass)
 							      NULL,
 							      G_PARAM_READWRITE |
 							      G_PARAM_STATIC_STRINGS));
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/ui/totem-search-entry.ui");
+
+	gtk_widget_class_bind_template_child (widget_class, TotemSearchEntry, entry);
+	gtk_widget_class_bind_template_child (widget_class, TotemSearchEntry, dropdown_button);
+	gtk_widget_class_bind_template_child (widget_class, TotemSearchEntry, label);
+	gtk_widget_class_bind_template_child (widget_class, TotemSearchEntry, popover);
+	gtk_widget_class_bind_template_child (widget_class, TotemSearchEntry, listbox);
+
+	gtk_widget_class_bind_template_callback (widget_class, entry_activate_cb);
+	gtk_widget_class_bind_template_callback (widget_class, listbox_row_activated);
+	gtk_widget_class_bind_template_callback (widget_class, popover_closed_cb);
 }
 
 TotemSearchEntry *
