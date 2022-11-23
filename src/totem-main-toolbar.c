@@ -45,7 +45,7 @@
  */
 
 struct _TotemMainToolbar {
-  GtkHeaderBar parent;
+  HdyHeaderBar parent;
 
   /* Template widgets */
   GtkWidget   *search_button;
@@ -78,7 +78,7 @@ struct _TotemMainToolbar {
   GtkWidget   *selection_menu_button;
 };
 
-G_DEFINE_TYPE(TotemMainToolbar, totem_main_toolbar, GTK_TYPE_HEADER_BAR)
+G_DEFINE_TYPE(TotemMainToolbar, totem_main_toolbar, HDY_TYPE_HEADER_BAR)
 
 enum {
   PROP_0,
@@ -269,11 +269,11 @@ totem_main_toolbar_get_property (GObject         *object,
   switch (prop_id)
     {
     case PROP_TITLE:
-      g_value_set_string (value, gtk_header_bar_get_title (GTK_HEADER_BAR (object)));
+      g_value_set_string (value, hdy_header_bar_get_title (HDY_HEADER_BAR (object)));
       break;
 
     case PROP_SUBTITLE:
-      g_value_set_string (value, gtk_header_bar_get_subtitle (GTK_HEADER_BAR (object)));
+      g_value_set_string (value, hdy_header_bar_get_subtitle (HDY_HEADER_BAR (object)));
       break;
 
     case PROP_SEARCH_STRING:
@@ -603,7 +603,7 @@ totem_main_toolbar_set_title (TotemMainToolbar *bar,
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
   gtk_label_set_text (GTK_LABEL (bar->title_label), title);
-  gtk_header_bar_set_title (GTK_HEADER_BAR (bar), title);
+  hdy_header_bar_set_title (HDY_HEADER_BAR (bar), title);
 }
 
 const char *
@@ -611,7 +611,7 @@ totem_main_toolbar_get_title (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return gtk_header_bar_get_title (GTK_HEADER_BAR (bar));
+  return hdy_header_bar_get_title (HDY_HEADER_BAR (bar));
 }
 
 void
@@ -621,7 +621,7 @@ totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
   gtk_label_set_text (GTK_LABEL (bar->subtitle_label), subtitle);
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (bar), subtitle);
+  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (bar), subtitle);
 }
 
 const char *
@@ -629,7 +629,7 @@ totem_main_toolbar_get_subtitle (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return gtk_header_bar_get_subtitle (GTK_HEADER_BAR (bar));
+  return hdy_header_bar_get_subtitle (HDY_HEADER_BAR (bar));
 }
 
 void
@@ -685,7 +685,7 @@ totem_main_toolbar_pack_start (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_header_bar_pack_start (GTK_HEADER_BAR (bar), child);
+  hdy_header_bar_pack_start (HDY_HEADER_BAR (bar), child);
 }
 
 void
@@ -694,7 +694,7 @@ totem_main_toolbar_pack_end (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (bar), child);
+  hdy_header_bar_pack_end (HDY_HEADER_BAR (bar), child);
 }
 
 void

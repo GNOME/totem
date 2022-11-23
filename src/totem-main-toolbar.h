@@ -27,10 +27,10 @@
 
 #pragma once
 
-#include <gtk/gtkbox.h>
+#include <handy.h>
 
 #define TOTEM_TYPE_MAIN_TOOLBAR                 (totem_main_toolbar_get_type ())
-G_DECLARE_FINAL_TYPE (TotemMainToolbar, totem_main_toolbar, TOTEM, MAIN_TOOLBAR, GtkHeaderBar)
+G_DECLARE_FINAL_TYPE (TotemMainToolbar, totem_main_toolbar, TOTEM, MAIN_TOOLBAR, HdyHeaderBar)
 
 GType           totem_main_toolbar_get_type              (void) G_GNUC_CONST;
 GtkWidget*      totem_main_toolbar_new                   (void);

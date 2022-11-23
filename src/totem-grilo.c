@@ -2796,7 +2796,7 @@ totem_grilo_class_init (TotemGriloClass *klass)
 					 g_param_spec_object ("header",
 							      "Headerbar",
 							      "Headerbar.",
-							      GTK_TYPE_HEADER_BAR,
+							      HDY_TYPE_HEADER_BAR,
 							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (object_class,
