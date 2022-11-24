@@ -340,7 +340,7 @@ totem_object_app_handle_local_options (GApplication *application,
 
 		hdy_init ();
 		style_manager = hdy_style_manager_get_default ();
-		hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_FORCE_DARK);
+		hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_PREFER_DARK);
 	}
 
 	totem_options_process_for_server (TOTEM_OBJECT (application), &optionstate);
