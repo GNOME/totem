@@ -455,6 +455,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
     def _build_dialog (self):
         ui_file_path = os.path.dirname (os.path.abspath (__file__)) + sep + 'opensubtitles.ui'
         builder = Gtk.Builder.new_from_file (ui_file_path)
+        builder.connect_signals(None)
 
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
