@@ -3899,6 +3899,7 @@ totem_setup_window (TotemObject *totem)
 
 	/* Headerbar */
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
+	g_object_bind_property (totem, "fullscreen", totem->header, "visible", G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
 	return;
 }
