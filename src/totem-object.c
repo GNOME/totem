@@ -1019,14 +1019,13 @@ totem_object_add_to_view (TotemObject *totem,
 			  GFile       *file,
 			  const char  *title)
 {
-	char *uri;
+	g_autofree char *uri = NULL;
 
 	uri = g_file_get_uri (file);
 	if (!totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo),
 					     uri, title, FALSE)) {
 		g_warning ("Failed to add '%s' to view", uri);
 	}
-	g_free (uri);
 }
 
 /**
@@ -1372,7 +1371,8 @@ static void
 totem_object_save_state (TotemObject *totem)
 {
 	GKeyFile *keyfile;
-	char *contents, *filename;
+	g_autofree char *contents = NULL;
+	g_autofree char *filename = NULL;
 
 	if (totem->win == NULL)
 		return;
@@ -1392,9 +1392,6 @@ totem_object_save_state (TotemObject *totem)
 	g_key_file_free (keyfile);
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	g_file_set_contents (filename, contents, -1, NULL);
-
-	g_free (filename);
-	g_free (contents);
 }
 
 /**
@@ -1529,7 +1526,8 @@ totem_object_play (TotemObject *totem)
 {
 	g_autoptr(GError) err = NULL;
 	int retval;
-	char *msg, *disp;
+	g_autofree char *msg = NULL;
+	g_autofree char *disp = NULL;
 
 	if (totem->mrl == NULL)
 		return;
@@ -1551,12 +1549,10 @@ totem_object_play (TotemObject *totem)
 
 	disp = totem_uri_escape_for_display (totem->mrl);
 	msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
-	g_free (disp);
 
 	totem_object_show_error (totem, msg, err->message);
 	bacon_video_widget_stop (totem->bvw);
 	play_pause_set_label (totem, STATE_STOPPED);
-	g_free (msg);
 }
 
 static void
@@ -1574,16 +1570,15 @@ totem_object_seek (TotemObject *totem, double pos)
 
 	if (retval == FALSE)
 	{
-		char *msg, *disp;
+		g_autofree char *msg = NULL;
+		g_autofree char *disp = NULL;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
-		g_free (disp);
 
 		reset_seek_status (totem);
 
 		totem_object_show_error (totem, msg, err->message);
-		g_free (msg);
 	}
 }
 
@@ -1663,7 +1658,8 @@ totem_object_play_pause (TotemObject *totem)
 void
 totem_object_stop (TotemObject *totem)
 {
-	char *mrl, *subtitle;
+	g_autofree char *mrl = NULL;
+	g_autofree char *subtitle = NULL;
 
 	totem_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
@@ -1674,8 +1670,6 @@ totem_object_stop (TotemObject *totem)
 	if (mrl != NULL) {
 		totem_object_set_mrl (totem, mrl, subtitle);
 		bacon_video_widget_pause (totem->bvw);
-		g_free (mrl);
-		g_free (subtitle);
 	}
 }
 
@@ -1767,7 +1761,7 @@ totem_object_open (TotemObject *totem)
 static void
 totem_open_location_response_cb (GtkDialog *dialog, gint response, TotemObject *totem)
 {
-	char *uri;
+	g_autofree char *uri = NULL;
 
 	if (response != GTK_RESPONSE_OK) {
 		gtk_widget_destroy (GTK_WIDGET (totem->open_location));
@@ -1779,10 +1773,8 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, TotemObject *
 	/* Open the specified URI */
 	uri = totem_open_location_get_uri (totem->open_location);
 
-	if (uri != NULL) {
+	if (uri != NULL)
 		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, TRUE);
-		g_free (uri);
-	}
 
 	gtk_widget_destroy (GTK_WIDGET (totem->open_location));
 }
@@ -1986,8 +1978,8 @@ totem_object_set_mrl (TotemObject *totem,
 		g_object_notify (G_OBJECT (totem), "playing");
 	} else {
 		gboolean caps;
-		char *user_agent;
-		char *autoload_sub;
+		g_autofree char *user_agent = NULL;
+		g_autofree char *autoload_sub = NULL;
 
 		autoload_sub = NULL;
 		if (subtitle == NULL)
@@ -1996,7 +1988,6 @@ totem_object_set_mrl (TotemObject *totem,
 		user_agent = NULL;
 		g_signal_emit (G_OBJECT (totem), totem_table_signals[GET_USER_AGENT], 0, mrl, &user_agent);
 		bacon_video_widget_set_user_agent (totem->bvw, user_agent);
-		g_free (user_agent);
 
 		g_application_mark_busy (G_APPLICATION (totem));
 		bacon_video_widget_open (totem->bvw, mrl);
@@ -2005,7 +1996,6 @@ totem_object_set_mrl (TotemObject *totem,
 			bacon_video_widget_set_text_subtitle (totem->bvw, subtitle);
 		} else if (autoload_sub) {
 			bacon_video_widget_set_text_subtitle (totem->bvw, autoload_sub);
-			g_free (autoload_sub);
 		} else {
 			totem_playlist_set_current_subtitle (totem->playlist, totem->next_subtitle);
 			totem_object_set_next_subtitle (totem, NULL);
@@ -2159,16 +2149,15 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 
 	if (err != NULL)
 	{
-		char *msg, *disp;
+		g_autofree char *msg = NULL;
+		g_autofree char *disp = NULL;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Videos could not play “%s”."), disp);
-		g_free (disp);
 
 		bacon_video_widget_stop (totem->bvw);
 		play_pause_set_label (totem, STATE_STOPPED);
 		totem_object_show_error (totem, msg, err->message);
-		g_free (msg);
 	}
 }
 
@@ -2339,7 +2328,7 @@ totem_object_show_help (TotemObject *totem)
 void
 totem_object_show_keyboard_shortcuts (TotemObject *totem)
 {
-	GtkBuilder *builder;
+	g_autoptr(GtkBuilder) builder = NULL;
 
 	if (totem->shortcuts_win) {
 		gtk_window_present (totem->shortcuts_win);
@@ -2354,7 +2343,6 @@ totem_object_show_keyboard_shortcuts (TotemObject *totem)
 			  G_CALLBACK (gtk_widget_destroyed), &totem->shortcuts_win);
 
 	gtk_widget_show (GTK_WIDGET (totem->shortcuts_win));
-	g_object_unref (builder);
 }
 
 /* This is called in the main thread */
@@ -2496,18 +2484,17 @@ back_button_clicked_cb (GtkButton   *button,
 void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 {
-	char *new_mrl;
+	g_autofree char *new_mrl = NULL;
 
 	if (strstr (mrl, "://") != NULL) {
 		new_mrl = NULL;
 	} else {
 		GFile *old_file, *parent, *new_file;
-		char *old_mrl;
+		g_autofree char *old_mrl = NULL;
 
 		/* Get the parent for the current MRL, that's our base */
 		old_mrl = totem_playlist_get_current_mrl (TOTEM_PLAYLIST (totem->playlist), NULL);
 		old_file = g_file_new_for_uri (old_mrl);
-		g_free (old_mrl);
 		parent = g_file_get_parent (old_file);
 		g_object_unref (old_file);
 
@@ -2530,13 +2517,12 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 		totem_file_has_played (totem, totem->mrl);
 		totem->has_played_emitted = TRUE;
 	}
-	g_free (new_mrl);
 }
 
 void
 on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
-	gchar *name;
+	g_autofree char *name = NULL;
 
 	update_media_menu_items (totem);
 
@@ -2547,33 +2533,29 @@ on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 		update_mrl_label (totem, name);
 		totem_playlist_set_title
 			(TOTEM_PLAYLIST (totem->playlist), name);
-		g_free (name);
 	}
 }
 
 static void
 on_playlist_change_name (TotemPlaylist *playlist, TotemObject *totem)
 {
-	char *name;
+	g_autofree char *name = NULL;
 
 	name = totem_playlist_get_current_title (playlist);
-	if (name != NULL) {
+	if (name != NULL)
 		update_mrl_label (totem, name);
-		g_free (name);
-	}
 }
 
 void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
-        char *name;
+        g_autofree char *name = NULL;
 
 	name = totem_get_nice_name_for_stream (totem);
 
 	if (name != NULL) {
 		totem_playlist_set_title
 			(TOTEM_PLAYLIST (totem->playlist), name);
-		g_free (name);
 	}
 
 	update_buttons (totem);
@@ -2900,7 +2882,7 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 
 	for (l = list ; l != NULL; l = l->next)
 	{
-		char *filename;
+		g_autofree char *filename = NULL;
 		char *data = l->data;
 
 		if (data == NULL)
@@ -2941,8 +2923,6 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 				changed = TRUE;
 			}
 		}
-
-		g_free (filename);
 	}
 
 	/* Add the MRLs to the playlist asynchronously and in order */
@@ -3183,7 +3163,8 @@ totem_object_remote_get_setting (TotemObject        *totem,
 static void
 playlist_changed_cb (GtkWidget *playlist, TotemObject *totem)
 {
-	char *mrl, *subtitle;
+	g_autofree char *mrl = NULL;
+	g_autofree char *subtitle = NULL;
 
 	update_buttons (totem);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
@@ -3199,9 +3180,6 @@ playlist_changed_cb (GtkWidget *playlist, TotemObject *totem)
 	}
 
 	totem->pause_start = FALSE;
-
-	g_free (mrl);
-	g_free (subtitle);
 }
 
 static void
@@ -3213,15 +3191,15 @@ item_activated_cb (GtkWidget *playlist, TotemObject *totem)
 static void
 current_removed_cb (GtkWidget *playlist, TotemObject *totem)
 {
-	char *mrl, *subtitle;
+	g_autofree char *mrl = NULL;
+	g_autofree char *subtitle = NULL;
 
 	/* Set play button status */
 	play_pause_set_label (totem, STATE_STOPPED);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
 	if (mrl == NULL) {
-		g_free (subtitle);
-		subtitle = NULL;
+		g_clear_pointer (&subtitle, g_free);
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
@@ -3230,20 +3208,16 @@ current_removed_cb (GtkWidget *playlist, TotemObject *totem)
 	}
 
 	totem_object_set_mrl_and_play (totem, mrl, subtitle);
-	g_free (mrl);
-	g_free (subtitle);
 }
 
 static void
 subtitle_changed_cb (GtkWidget *playlist, TotemObject *totem)
 {
-	char *mrl, *subtitle;
+	g_autofree char *mrl = NULL;
+	g_autofree char *subtitle = NULL;
 
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 	bacon_video_widget_set_text_subtitle (totem->bvw, subtitle);
-
-	g_free (mrl);
-	g_free (subtitle);
 }
 
 static void
@@ -3366,7 +3340,8 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 	    totem_playlist_get_repeat (totem->playlist) == FALSE &&
 	    (totem_playlist_get_last (totem->playlist) != 0 ||
 	     totem_object_is_seekable (totem) == FALSE)) {
-		char *mrl, *subtitle;
+		g_autofree char *mrl = NULL;
+		g_autofree char *subtitle = NULL;
 
 		/* Set play button status */
 		totem_playlist_set_at_start (totem->playlist);
@@ -3376,8 +3351,6 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_object_set_mrl (totem, mrl, subtitle);
 		bacon_video_widget_pause (totem->bvw);
-		g_free (mrl);
-		g_free (subtitle);
 	} else {
 		if (totem_playlist_get_last (totem->playlist) == 0 &&
 		    totem_object_is_seekable (totem)) {
