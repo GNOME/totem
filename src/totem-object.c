@@ -350,11 +350,10 @@ static int
 totem_object_app_handle_local_options (GApplication *application,
 				       GVariantDict *options)
 {
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	if (!g_application_register (application, NULL, &error)) {
 		g_warning ("Failed to register application: %s", error->message);
-		g_error_free (error);
 		return 1;
 	}
 
@@ -807,14 +806,13 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 {
 	int end = -1;
 	gboolean playlist_changed;
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result, &error);
 
 	if (playlist_changed == FALSE && error != NULL) {
 		/* FIXME: Crappy dialogue */
 		totem_object_show_error (data->totem, "", error->message);
-		g_error_free (error);
 	}
 
 	if (data->play)
@@ -1529,7 +1527,7 @@ totem_object_eject (TotemObject *totem)
 void
 totem_object_play (TotemObject *totem)
 {
-	GError *err = NULL;
+	g_autoptr(GError) err = NULL;
 	int retval;
 	char *msg, *disp;
 
@@ -1559,13 +1557,12 @@ totem_object_play (TotemObject *totem)
 	bacon_video_widget_stop (totem->bvw);
 	play_pause_set_label (totem, STATE_STOPPED);
 	g_free (msg);
-	g_error_free (err);
 }
 
 static void
 totem_object_seek (TotemObject *totem, double pos)
 {
-	GError *err = NULL;
+	g_autoptr(GError) err = NULL;
 	int retval;
 
 	if (totem->mrl == NULL)
@@ -1587,7 +1584,6 @@ totem_object_seek (TotemObject *totem, double pos)
 
 		totem_object_show_error (totem, msg, err->message);
 		g_free (msg);
-		g_error_free (err);
 	}
 }
 
@@ -2143,7 +2139,7 @@ totem_object_seek_next (TotemObject *totem)
 static void
 totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboolean accurate)
 {
-	GError *err = NULL;
+	g_autoptr(GError) err = NULL;
 	gint64 sec;
 
 	if (totem->mrl == NULL)
@@ -2173,7 +2169,6 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 		play_pause_set_label (totem, STATE_STOPPED);
 		totem_object_show_error (totem, msg, err->message);
 		g_free (msg);
-		g_error_free (err);
 	}
 }
 
@@ -2335,12 +2330,10 @@ totem_object_toggle_aspect_ratio (TotemObject *totem)
 void
 totem_object_show_help (TotemObject *totem)
 {
-	GError *error = NULL;
+	g_autoptr(GError) error = NULL;
 
-	if (gtk_show_uri_on_window (GTK_WINDOW (totem->win), "help:totem", gtk_get_current_event_time (), &error) == FALSE) {
+	if (gtk_show_uri_on_window (GTK_WINDOW (totem->win), "help:totem", gtk_get_current_event_time (), &error) == FALSE)
 		totem_object_show_error (totem, _("Videos could not display the help contents."), error->message);
-		g_error_free (error);
-	}
 }
 
 void
@@ -3853,7 +3846,6 @@ totem_setup_window (TotemObject *totem)
 	GKeyFile *keyfile;
 	int w, h;
 	char *filename;
-	GError *err = NULL;
 
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
@@ -3864,28 +3856,24 @@ totem_setup_window (TotemObject *totem)
 		totem->maximised = TRUE;
 		g_free (filename);
 	} else {
+		GError *err = NULL;
+
 		g_free (filename);
 
 		w = g_key_file_get_integer (keyfile, "State", "window_w", &err);
 		if (err != NULL) {
 			w = 0;
-			g_error_free (err);
-			err = NULL;
+			g_clear_error (&err);
 		}
 
 		h = g_key_file_get_integer (keyfile, "State", "window_h", &err);
 		if (err != NULL) {
 			h = 0;
-			g_error_free (err);
-			err = NULL;
+			g_clear_error (&err);
 		}
 
 		totem->maximised = g_key_file_get_boolean (keyfile, "State",
-				"maximised", &err);
-		if (err != NULL) {
-			g_error_free (err);
-			err = NULL;
-		}
+				"maximised", NULL);
 	}
 
 	if (w > 0 && h > 0 && totem->maximised == FALSE) {
