@@ -3845,7 +3845,7 @@ totem_setup_window (TotemObject *totem)
 {
 	GKeyFile *keyfile;
 	int w, h;
-	char *filename;
+	g_autofree char *filename = NULL;
 
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
@@ -3854,11 +3854,8 @@ totem_setup_window (TotemObject *totem)
 		w = DEFAULT_WINDOW_W;
 		h = DEFAULT_WINDOW_H;
 		totem->maximised = TRUE;
-		g_free (filename);
 	} else {
 		GError *err = NULL;
-
-		g_free (filename);
 
 		w = g_key_file_get_integer (keyfile, "State", "window_w", &err);
 		if (err != NULL) {
