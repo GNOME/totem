@@ -777,10 +777,21 @@ totem_object_get_current_time (TotemObject *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
+static gboolean
+totem_object_set_current_mrl_and_play (TotemObject *totem)
+{
+	g_autofree char *mrl = NULL;
+	g_autofree char *subtitle = NULL;
+
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+	if (mrl != NULL)
+		totem_object_set_mrl_and_play (totem, mrl, subtitle);
+	return mrl != NULL;
+}
+
 static void
 add_items_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result, TotemObject *totem)
 {
-	char *mrl, *subtitle;
 
 	/* totem_playlist_add_mrls_finish() never returns an error */
 	totem_playlist_add_mrls_finish (playlist, async_result, NULL);
@@ -788,10 +799,7 @@ add_items_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_
 	g_signal_group_unblock (totem->playlist_signals);
 
 	/* And start playback */
-	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-	totem_object_set_mrl_and_play (totem, mrl, subtitle);
-	g_free (mrl);
-	g_free (subtitle);
+	totem_object_set_current_mrl_and_play (totem);
 }
 
 typedef struct {
@@ -821,14 +829,8 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 	g_signal_group_unblock (data->totem->playlist_signals);
 
 	if (data->play && playlist_changed && end != -1) {
-		char *mrl, *subtitle;
-
-		subtitle = NULL;
 		totem_playlist_set_current (playlist, end);
-		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-		totem_object_set_mrl_and_play (data->totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
+		totem_object_set_current_mrl_and_play (data->totem);
 	}
 
 	/* Free the closure data */
@@ -1621,19 +1623,10 @@ void
 totem_object_play_pause (TotemObject *totem)
 {
 	if (totem->mrl == NULL) {
-		char *mrl, *subtitle;
-
 		/* Try to pull an mrl from the playlist */
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		if (mrl == NULL) {
+		if (!totem_object_set_current_mrl_and_play (totem))
 			play_pause_set_label (totem, STATE_STOPPED);
-			return;
-		} else {
-			totem_object_set_mrl_and_play (totem, mrl, subtitle);
-			g_free (mrl);
-			g_free (subtitle);
-			return;
-		}
+		return;
 	}
 
 	if (bacon_video_widget_is_playing (totem->bvw) == FALSE) {
@@ -2058,14 +2051,8 @@ totem_object_direction (TotemObject *totem, TotemPlaylistDirection dir)
 	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ||
 	    bacon_video_widget_is_seekable (totem->bvw) == FALSE ||
 	    totem_time_within_seconds (totem) != FALSE) {
-		char *mrl, *subtitle;
-
 		totem_playlist_set_direction (totem->playlist, dir);
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_object_set_mrl_and_play (totem, mrl, subtitle);
-
-		g_free (subtitle);
-		g_free (mrl);
+		totem_object_set_current_mrl_and_play (totem);
 	} else {
 		totem_object_seek (totem, 0);
 	}
@@ -2349,14 +2336,9 @@ totem_object_show_keyboard_shortcuts (TotemObject *totem)
 static void
 totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, TotemObject *totem)
 {
-	char *mrl, *subtitle;
-
 	/* Unblock the playlist's signals (which was blocked below in totem_object_drop_files(). */
 	g_signal_group_unblock (totem->playlist_signals);
-	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-	totem_object_set_mrl_and_play (totem, mrl, subtitle);
-	g_free (mrl);
-	g_free (subtitle);
+	totem_object_set_current_mrl_and_play (totem);
 
 	g_object_unref (totem);
 }
