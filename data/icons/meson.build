@@ -14,3 +14,9 @@ install_data(
   rename : ['totem-tv-symbolic.svg'],
   install_dir: join_paths(totem_datadir, 'icons', 'hicolor', 'symbolic', 'apps')
 )
+
+install_data(
+  join_paths('symbolic', 'playback-options-symbolic.svg'),
+  rename: ['totem-playback-options-symbolic.svg'],
+  install_dir: join_paths(totem_datadir, 'icons', 'hicolor', 'symbolic', 'apps')
+)
