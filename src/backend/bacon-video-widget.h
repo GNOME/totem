@@ -138,6 +138,20 @@ void bacon_video_widget_set_user_agent           (BaconVideoWidget *bvw,
 void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
                                                   const char *referrer);
 
+/**
+ * BVW_MIN_RATE:
+ *
+ * The minimum playback rate as a float.
+ */
+#define BVW_MIN_RATE 0.5
+
+/**
+ * BVW_MAX_RATE:
+ *
+ * The maximum playback rate as a float.
+ */
+#define BVW_MAX_RATE 2.0
+
 gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
 						  gfloat new_rate);
 gfloat bacon_video_widget_get_rate		 (BaconVideoWidget *bvw);

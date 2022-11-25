@@ -5735,9 +5735,9 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
     return TRUE;
 
   /* set upper and lower limit for rate */
-  if (new_rate < 0.5)
+  if (new_rate < BVW_MIN_RATE)
     return retval;
-  if (new_rate > 2.0)
+  if (new_rate > BVW_MAX_RATE)
     return retval;
 
   if (gst_element_query_position (bvw->play, GST_FORMAT_TIME, &cur)) {
