@@ -150,7 +150,7 @@ void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
  *
  * The maximum playback rate as a float.
  */
-#define BVW_MAX_RATE 2.0
+#define BVW_MAX_RATE 3.0
 
 gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
 						  gfloat new_rate);
