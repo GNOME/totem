@@ -39,6 +39,6 @@ def hash_file (name):
             file_hash += l_value
             file_hash = file_hash & 0xFFFFFFFFFFFFFFFF
 
-    returnedhash = f"{file_hash:%016x}"
+    returnedhash = f"{file_hash:016x}"
 
     return returnedhash, filesize
