@@ -1689,6 +1689,8 @@ window_state_event_cb (GtkWidget           *window,
 		       TotemObject         *totem)
 {
 	GAction *action;
+	gboolean is_fullscreen;
+	const char *main_page;
 
 	totem->maximised = !!(event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED);
 
@@ -1705,9 +1707,19 @@ window_state_event_cb (GtkWidget           *window,
 		totem_object_save_size (totem);
 	}
 
+	is_fullscreen = (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
+	hdy_flap_set_fold_policy (HDY_FLAP (totem->flap), is_fullscreen ?
+				  HDY_FLAP_FOLD_POLICY_ALWAYS : HDY_FLAP_FOLD_POLICY_NEVER);
+	gtk_widget_set_opacity (totem->header, is_fullscreen ? 0.86 : 1);
+	gtk_widget_set_visible (totem->unfullscreen_button, is_fullscreen);
+
+	/* Particular case when we are in fullscreen mode and we go back directly on grilo page */
+	main_page = totem_object_get_main_page (totem);
+	gtk_widget_set_visible (totem->fullscreen_button, !is_fullscreen && g_str_equal(main_page, "player"));
+
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
-				   g_variant_new_boolean (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN));
+				   g_variant_new_boolean (is_fullscreen));
 
 	if (totem->transition_timeout_id > 0)
 		set_controls_visibility (totem, TRUE, FALSE);
@@ -1882,8 +1894,8 @@ set_controls_visibility (TotemObject      *totem,
 			 gboolean          animate)
 {
 	gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar")), visible);
-	gtk_widget_set_visible (totem->fullscreen_header, visible &&
-				totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
+	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
+		hdy_flap_set_reveal_flap (HDY_FLAP (totem->flap), visible);
 	bacon_video_widget_set_show_cursor (totem->bvw, visible);
 	if (visible && animate)
 		schedule_hiding_popup (totem);
@@ -3577,13 +3589,8 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Menu:
 	case GDK_KEY_F10:
 		show_popup (totem);
-		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
-						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
-		} else {
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button),
-						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button)));
-		}
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
+					      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
 		break;
 	case GDK_KEY_Time:
 		show_popup (totem);
@@ -3837,9 +3844,11 @@ totem_setup_window (TotemObject *totem)
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
 
+	totem->flap = GTK_WIDGET (gtk_builder_get_object (totem->xml, "flap"));
+
 	/* Headerbar */
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
-	g_object_bind_property (totem, "fullscreen", totem->header, "visible", G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+	g_object_bind_property (totem, "fullscreen", totem->header, "show-close-button", G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
 	return;
 }
@@ -3930,6 +3939,9 @@ totem_callback_connect (TotemObject *totem)
 	/* Fullscreen button */
 	totem->fullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_button"));
 
+	/* Unfullscreen button */
+	totem->unfullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "unfullscreen_button"));
+
 	/* Set sensitivity of the toolbar buttons */
 	action_set_sensitive ("play", FALSE);
 	action_set_sensitive ("next-chapter", FALSE);
@@ -4000,17 +4012,6 @@ grilo_widget_setup (TotemObject *totem)
 	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), "grilo");
 }
 
-static void
-add_fullscreen_toolbar (TotemObject *totem,
-			GtkWidget   *container)
-{
-	totem->fullscreen_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_header"));
-
-	totem->fullscreen_gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_gear_button"));
-
-	totem->fullscreen_subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_subtitles_button"));
-}
-
 void
 video_widget_create (TotemObject *totem)
 {
@@ -4025,9 +4026,6 @@ video_widget_create (TotemObject *totem)
 						GTK_WINDOW (totem->win));
 		totem_object_exit (totem);
 	}
-
-	totem->bvw_grid = GTK_WIDGET (gtk_builder_get_object (totem->xml, "bvw_grid"));
-	add_fullscreen_toolbar (totem, totem->bvw_grid);
 
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			   target_table, G_N_ELEMENTS (target_table),

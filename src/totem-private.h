@@ -54,9 +54,9 @@ struct _TotemObject {
 	/* Control window */
 	GtkBuilder *xml;
 	GtkWidget *win;
+	GtkWidget *flap;
 	GtkWidget *stack;
 	BaconVideoWidget *bvw;
-	GtkWidget *bvw_grid;
 	GtkWidget *prefs;
 	GtkWindow *shortcuts_win;
 	GtkWidget *spinner;
@@ -67,10 +67,6 @@ struct _TotemObject {
 	BaconTimeLabel *time_label;
 	BaconTimeLabel *time_rem_label;
 	GtkWidget *header;
-
-	GtkWidget *fullscreen_header;
-	GtkWidget *fullscreen_gear_button;
-	GtkWidget *fullscreen_subtitles_button;
 
 	/* Plugins */
 	GtkWidget *plugins;
@@ -118,6 +114,7 @@ struct _TotemObject {
 	char *search_string;
 	gboolean select_mode;
 	GObject *custom_title;
+	GtkWidget *unfullscreen_button;
 	GtkWidget *fullscreen_button;
 	GtkWidget *gear_button;
 	GtkWidget *add_button;

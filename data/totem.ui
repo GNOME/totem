@@ -194,10 +194,11 @@
     <signal name="key-press-event" handler="window_key_press_event_cb" swapped="no"/>
     <signal name="delete-event" handler="main_window_destroy_cb" swapped="no"/>
     <child>
-      <object class="GtkBox">
+      <object class="HdyFlap" id="flap">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
-        <child>
+        <property name="fold-policy">never</property>
+        <child type="flap">
           <object class="TotemMainToolbar" id="header">
             <property name="visible">True</property>
             <property name="show-search-button">True</property>
@@ -207,6 +208,27 @@
             <signal name="back-clicked" handler="back_button_clicked_cb"/>
             <signal name="notify::search-mode" handler="update_add_button_visibility"/>
             <signal name="notify::select-mode" handler="update_add_button_visibility"/>
+            <child>
+              <object class="GtkButton" id="unfullscreen_button">
+                <property name="visible">False</property>
+                <property name="no-show-all">True</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.fullscreen</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-restore-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkMenuButton" id="add_button">
                 <property name="visible">True</property>
@@ -353,91 +375,6 @@
                     <property name="visible">True</property>
                     <property name="halign">fill</property>
                     <property name="valign">fill</property>
-                    <child>
-                      <object class="TotemMainToolbar" id="fullscreen_header">
-                        <property name="visible">False</property>
-                        <property name="show-search-button">False</property>
-                        <property name="show-select-button">False</property>
-                        <property name="show-back-button">True</property>
-                        <property name="opacity">0.86</property>
-                        <property name="halign">fill</property>
-                        <property name="hexpand">True</property>
-                        <property name="title" bind-source="header" bind-property="title"/>
-                        <property name="subtitle" bind-source="header" bind-property="subtitle"/>
-                        <signal name="back-clicked" handler="back_button_clicked_cb"/>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="no-show-all">True</property>
-                            <property name="valign">center</property>
-                            <property name="action-name">app.fullscreen</property>
-                            <style>
-                              <class name="image-button"/>
-                            </style>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="icon-name">view-restore-symbolic</property>
-                                <property name="icon-size">1</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="pack-type">end</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkMenuButton" id="fullscreen_gear_button">
-                            <property name="visible">True</property>
-                            <property name="valign">center</property>
-                            <property name="use-popover">True</property>
-                            <property name="menu-model">playermenu</property>
-                            <signal name="toggled" handler="popup_menu_shown_cb"/>
-                            <style>
-                              <class name="image-button"/>
-                            </style>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="icon-name">view-more-symbolic</property>
-                                <property name="icon-size">1</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="pack-type">end</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkMenuButton" id="fullscreen_subtitles_button">
-                            <property name="visible">True</property>
-                            <property name="valign">center</property>
-                            <property name="use-popover">True</property>
-                            <property name="menu-model">subtitlesmenu</property>
-                            <signal name="toggled" handler="popup_menu_shown_cb"/>
-                            <style>
-                              <class name="image-button"/>
-                            </style>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="icon-name">media-view-subtitles-symbolic</property>
-                                <property name="icon-size">1</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="pack-type">end</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                        <property name="width">3</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
                     <child>
                       <object class="GtkSpinner" id="spinner">
                         <property name="visible">False</property>
