@@ -25,9 +25,7 @@ private_headers = [
   'totem-search-entry.h',
   'totem-selection-toolbar.h',
   'totem-session.h',
-  'totem-skipto.h',
   'totem-subtitle-encoding.h',
-  'totem-time-entry.h',
   'totem-time-helpers.h',
   'totem-uri.h',
 ]

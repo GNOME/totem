@@ -27,7 +27,6 @@ allowed_plugins = [
   'save-file',
   'screensaver',
   'screenshot',
-  'skipto',
   'variable-rate',
   'vimeo',
 ]
@@ -47,7 +46,6 @@ if plugins_option != 'none'
     'save-file',
     'screensaver',
     'screenshot',
-    'skipto',
     'variable-rate',
     'vimeo'
   ]
