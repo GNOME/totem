@@ -692,6 +692,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         if suburi:
             self._totem.set_current_subtitle (suburi) # pylint: disable=no-member
 
+        self._action.set_enabled (True)
+
         return False
 
     def _progress_bar_increment (self, thread):
