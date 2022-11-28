@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-08-18 16:33+0300\n"
+"POT-Creation-Date: 2022-11-23 20:33+0000\n"
+"PO-Revision-Date: 2022-11-24 14:13+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -28,10 +28,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.2.1\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:202
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Видео"
 
@@ -50,7 +50,7 @@ msgstr ""
 "Приложение Видео является официальным видеопроигрывателем для среды рабочего "
 "стола GNOME. Видеопроигрыватель поддерживает список локальных видеофайлов и "
 "DVD с возможностью поиска, доступ к видео по сети (с помощью UPnP/DLNA), а "
-"также видео с веб-сайтов."
+"также видео с сайтов."
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
 msgid ""
@@ -68,7 +68,7 @@ msgstr "Разработчики среды GNOME"
 
 #: data/org.gnome.Totem.desktop.in.in:3
 msgid "@APPLICATION_NAME@"
-msgstr "@ИМЯ_ПРИЛОЖЕНИЯ@"
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -235,88 +235,114 @@ msgstr "Пропускать AC3"
 msgid "Preferences"
 msgstr "Параметры"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "Внешние субтитры"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "Загружать файлы _субтитров после загрузки фильма"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_Шрифт:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_Кодировка:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "Выбрать шрифт субтитров"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "Модули"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "Модули…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "Общие"
 
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "Внешние субтитры"
+
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "Загружать файлы _субтитров после загрузки фильма"
+
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_Шрифт"
+
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_Кодировка"
+
+#: data/totem-preferences-dialog.ui:165
+msgid "Display"
+msgstr "Дисплей"
+
 #. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:420
 msgid "Video"
 msgstr "Видео"
 
-#: data/totem-preferences-dialog.ui:383
+#: data/totem-preferences-dialog.ui:176
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Отключить маскировку _чересстрочности"
+msgstr "Отключить _деинтерлейсинг чересстрочного видео"
 
-#: data/totem-preferences-dialog.ui:423
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+"При необходимости видео автоматически деинтерлейсируется.\n"
+"Отключите деинтерлейсинг, если вы столкнулись с графическими артефактами, "
+"такими как гребенка."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "Отключить аппаратное ускорение"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+"Аппаратное ускорение используется автоматически, если оно доступно.\n"
+"Отключите его, если возникают проблемы с воспроизведением видео."
+
+#: data/totem-preferences-dialog.ui:218
 msgid "Color Balance"
 msgstr "Баланс цвета"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_Яркость:"
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "_Яркость"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "_Контрастность:"
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "Ко_нтрастность"
 
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "Нас_ыщенность:"
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "Нас_ыщенность"
 
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_Оттенок:"
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "_Оттенок"
 
-#: data/totem-preferences-dialog.ui:646
+#: data/totem-preferences-dialog.ui:425
 msgid "Reset to _Defaults"
 msgstr "_Восстановить параметры по умолчанию"
 
-#: data/totem-preferences-dialog.ui:683
-msgid "Display"
-msgstr "Видео"
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:644
+msgid "Audio"
+msgstr "Аудио"
 
-#: data/totem-preferences-dialog.ui:724
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "Аудиовыход"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "_Тип аудиовыхода:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "_Тип аудиовыхода"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "Аудио"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "Модули"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "Авторы"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "Версия"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "Сайт"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -518,107 +544,119 @@ msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Включить субтитры"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "_Параметры"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "_Комбинации клавиш"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "_Справка"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "Добавить _локальное видео…"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "Добавить _веб-видео…"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "_Пропорции"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Авто"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Квадрат"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (ТВ)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (широкий экран)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "Сменить рак_урс"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "_Извлечь"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "Языки"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.py:494
 msgid "Subtitles"
 msgstr "Субтитры"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "_Выбрать текстовые субтитры…"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "_Режим повтора"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "Меню _DVD"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "Меню _эпизода"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "Меню а_удио"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "Меню рак_урсов"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "Меню _фрагментов"
 
-#: data/totem.ui:168
+#: data/totem.ui:176
 msgid "Speed"
 msgstr "Скорость"
+
+#: data/totem.ui:482 data/totem.ui:485
+msgid "Previous Chapter/Movie"
+msgstr "Предыдущий фрагмент/фильм"
+
+#: data/totem.ui:506 data/totem.ui:509
+msgid "Play / Pause"
+msgstr "Воспроизведение / Пауза"
+
+#: data/totem.ui:522 data/totem.ui:525
+msgid "Next Chapter/Movie"
+msgstr "Следующий фрагмент/фильм"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -926,7 +964,7 @@ msgstr "Файл"
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "Продолжительность"
 
@@ -955,7 +993,7 @@ msgstr "Ошибка поиска"
 msgid "Local"
 msgstr "Локальный"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:721
 msgid "Channels"
 msgstr "Каналы"
 
@@ -1011,45 +1049,33 @@ msgstr "Авто"
 msgid "None"
 msgstr "Нет"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1473 src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
+#: src/totem-object.c:1479 src/totem-object.c:1487 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1555 src/totem-object.c:1583 src/totem-object.c:2169
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Не удалось воспроизвести \"%s\"."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2341
 msgid "Videos could not display the help contents."
 msgstr "Не удалось отобразить содержимое справки."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2602
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "Предыдущий фрагмент/фильм"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "Воспроизведение / Пауза"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "Следующий фрагмент/фильм"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4082
 msgid "Videos could not startup."
 msgstr "Не удалось запустить Видео."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4083 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Нет причины."
 
@@ -1129,15 +1155,6 @@ msgstr "Заголовок %d"
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "Не удалось разобрать список воспроизведения «%s». Возможно, список повреждён."
-
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "Настройка модулей"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "_Закрыть"
 
 #: src/totemselectiontoolbar.ui:15
 msgid "Add to Favourites"
@@ -1400,7 +1417,7 @@ msgstr "Не удалось соединиться с сервером OpenSubti
 #: src/plugins/opensubtitles/opensubtitles.py:343
 #: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
-msgstr "Не удалось соединиться с веб-сайтом OpenSubtitles."
+msgstr "Не удалось соединиться с сайтом OpenSubtitles."
 
 #: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
@@ -1439,6 +1456,10 @@ msgstr "_Язык субтитров:"
 msgid "_Play with Subtitle"
 msgstr "_Воспроизвести с субтитрами"
 
+#: src/plugins/opensubtitles/opensubtitles.ui:138
+msgid "_Close"
+msgstr "_Закрыть"
+
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
 msgstr "Язык субтитров"
@@ -1455,170 +1476,132 @@ msgstr "Свойства фильма"
 msgid "Adds movie properties menu item"
 msgstr "Добавляет элемент меню для свойств фильма"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d кбит/сек"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Гц"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "Свойства"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "_Свойства"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "Название:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "Свойства"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "Исполнитель:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "Название"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "Продолжительность:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "Исполнитель"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "Год:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "Альбом"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "Альбом:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "Год"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "Комментарий:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "Комментарий"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "Контейнер:"
+#: src/plugins/properties/properties.ui:363
+msgid "Container"
+msgstr "Контейнер"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "Размер:"
+#: src/plugins/properties/properties.ui:452
+msgid "Dimensions"
+msgstr "Размер"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "Кодек:"
+#: src/plugins/properties/properties.ui:497
+#: src/plugins/properties/properties.ui:676
+msgid "Codec"
+msgstr "Кодек"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "Частота кадров:"
+#: src/plugins/properties/properties.ui:542
+msgid "Framerate"
+msgstr "Частота кадров"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "Скорость потока:"
+#: src/plugins/properties/properties.ui:587
+#: src/plugins/properties/properties.ui:811
+msgid "Bitrate"
+msgstr "Битрейт"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "Частота дискретизации:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "Каналы:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "Неизвестно"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "Неизвестно"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "Неизвестно"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "Неизвестно"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "Неизвестно"
+#: src/plugins/properties/properties.ui:766
+msgid "Sample rate"
+msgstr "Частота дискретизации"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 Гц"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 каналов"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1626,7 +1609,7 @@ msgstr[0] "%d час"
 msgstr[1] "%d часа"
 msgstr[2] "%d часов"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1634,7 +1617,7 @@ msgstr[0] "%d минута"
 msgstr[1] "%d минуты"
 msgstr[2] "%d минут"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1643,46 +1626,46 @@ msgstr[1] "%d секунды"
 msgstr[2] "%d секунд"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 секунд"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
@@ -1690,7 +1673,7 @@ msgstr[0] "%0.3f кадр в секунду"
 msgstr[1] "%0.3f кадра в секунду"
 msgstr[2] "%0.3f кадров в секунду"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1991,3 +1974,38 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Устанавливает user agent для сайта Vimeo"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "Настройка модулей"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "Выбрать шрифт субтитров"
+
+#~ msgid "Plugins…"
+#~ msgstr "Модули…"
+
+#~ msgid "Duration:"
+#~ msgstr "Продолжительность:"
+
+#~ msgid "Channels:"
+#~ msgstr "Каналы:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно"
