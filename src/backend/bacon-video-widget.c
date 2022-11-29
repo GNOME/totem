@@ -3668,6 +3668,8 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   /* Set direction to forward */
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE) {
     GST_DEBUG ("Failed to reset direction back to forward to play");
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
+        _("This file could not be played. Try restarting playback."));
     return FALSE;
   }
 
