@@ -24,10 +24,11 @@
 #include <gtk/gtk.h>
 
 #define BACON_TYPE_TIME_LABEL            (bacon_time_label_get_type ())
-G_DECLARE_FINAL_TYPE(BaconTimeLabel, bacon_time_label, BACON, TIME_LABEL, GtkLabel)
+G_DECLARE_FINAL_TYPE(BaconTimeLabel, bacon_time_label, BACON, TIME_LABEL, GtkBin)
 
 G_MODULE_EXPORT GType bacon_time_label_get_type (void);
 GtkWidget *bacon_time_label_new                 (void);
+const char *bacon_time_label_get_label          (BaconTimeLabel *label);
 void       bacon_time_label_set_time            (BaconTimeLabel *label,
                                                  gint64          time_msecs,
                                                  gint64          length_msecs);

@@ -105,10 +105,10 @@ set_labels (GtkWidget  *label,
 	bacon_time_label_set_time (BACON_TIME_LABEL (label), _time, length);
 	bacon_time_label_set_time (BACON_TIME_LABEL (label_remaining), _time, length);
 
-	str = gtk_label_get_text (GTK_LABEL (label));
+	str = bacon_time_label_get_label (BACON_TIME_LABEL (label));
 	g_assert_cmpstr (str, ==, expected);
 
-	str = gtk_label_get_text (GTK_LABEL (label_remaining));
+	str = bacon_time_label_get_label (BACON_TIME_LABEL (label_remaining));
 	g_assert_cmpstr (str, ==, expected_remaining);
 }
 
