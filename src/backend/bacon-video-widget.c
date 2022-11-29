@@ -158,7 +158,7 @@ static const gchar *video_props_str[4] = {
 
 struct _BaconVideoWidget
 {
-  GtkOverlay                   parent;
+  GtkBin                       parent;
 
   /* widgets */
   GtkWidget                   *stack;
@@ -269,7 +269,7 @@ struct _BaconVideoWidget
   float                        rate;
 };
 
-G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_OVERLAY)
+G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_BIN)
 
 static void bacon_video_widget_set_property (GObject * object,
                                              guint property_id,

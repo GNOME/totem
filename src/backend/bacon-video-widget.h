@@ -30,7 +30,7 @@
 #include <gtk/gtk.h>
 
 #define BACON_TYPE_VIDEO_WIDGET		     (bacon_video_widget_get_type ())
-G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkOverlay)
+G_DECLARE_FINAL_TYPE(BaconVideoWidget, bacon_video_widget, BACON, VIDEO_WIDGET, GtkBin)
 #define BVW_ERROR bacon_video_widget_error_quark ()
 
 /**
