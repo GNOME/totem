@@ -265,8 +265,9 @@ struct _BaconVideoWidget
   GMountOperationResult        auth_last_result;
   char                        *user_id, *user_pw;
 
-  /* for stepping */
+  /* for target rate and direction */
   float                        rate;
+  gboolean                     forward_dir;
 };
 
 G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_OVERLAY)
@@ -285,6 +286,7 @@ static void bacon_video_widget_finalize (GObject * object);
 static void bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
+static gboolean bvw_set_rate (BaconVideoWidget *bvw, gboolean forward, gdouble rate);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
 static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      gint64 _time,
@@ -1944,6 +1946,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
           /* show a non-fatal warning message if we can't decode the video */
           bvw_show_error_if_video_decoder_is_missing (bvw);
         }
+	/* restore rate and direction */
+	bvw_set_rate (bvw, bvw->forward_dir, bvw->rate);
 	/* Now that we have the length, check whether we wanted
 	 * to pause or to stop the pipeline */
         if (bvw->target_state == GST_STATE_PAUSED)
@@ -3933,7 +3937,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->is_live = FALSE;
   bvw->is_menu = FALSE;
   bvw->has_angles = FALSE;
-  bvw->rate = FORWARD_RATE;
+  bvw->forward_dir = TRUE;
 
   bvw->current_time = 0;
   bvw->seek_req_time = GST_CLOCK_TIME_NONE;
@@ -5434,40 +5438,60 @@ bacon_video_widget_error_quark (void)
   return q;
 }
 
-static gboolean
-bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
+static gdouble
+bvw_get_rate_or_fallback (BaconVideoWidget * bvw)
 {
-  gboolean is_forward;
-  gboolean retval;
-  float target_rate;
+  GstQuery *query;
+  gdouble rate = FORWARD_RATE;
+
+  query = gst_query_new_segment (GST_FORMAT_TIME);
+  if (gst_element_query (bvw->play, query)) {
+    gst_query_parse_segment (query, &rate, NULL, NULL, NULL);
+    g_warning ("got rate %lf", rate);
+  } else
+    g_warning ("could get current rate");
+  gst_query_unref (query);
+  return rate;
+}
+
+static gboolean
+bvw_set_rate (BaconVideoWidget *bvw, gboolean forward, gdouble rate)
+{
+  gdouble target_rate, current_rate;
   GstEvent *event;
   gint64 cur = 0;
 
-  is_forward = (bvw->rate > 0.0);
-  if (forward == is_forward)
+  target_rate = (forward ? ABS(rate) : -ABS(rate));
+  current_rate = bvw_get_rate_or_fallback (bvw);
+  if (current_rate == target_rate)
     return TRUE;
 
-  retval = FALSE;
-  target_rate = (forward ? FORWARD_RATE : REVERSE_RATE);
-
   if (gst_element_query_position (bvw->play, GST_FORMAT_TIME, &cur)) {
-    GST_DEBUG ("Setting playback direction to %s at %"G_GINT64_FORMAT"", DIRECTION_STR, cur);
+    GST_DEBUG ("Setting playback rate to %lf at %"G_GINT64_FORMAT"", target_rate, cur);
     event = gst_event_new_seek (target_rate,
 				GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
 				GST_SEEK_TYPE_SET, forward ? cur : G_GINT64_CONSTANT (0),
 				GST_SEEK_TYPE_SET, forward ? G_GINT64_CONSTANT (0) : cur);
     if (gst_element_send_event (bvw->play, event) == FALSE) {
-      GST_WARNING ("Failed to set playback direction to %s", DIRECTION_STR);
+      GST_WARNING ("Failed to set playback rate to %lf", target_rate);
     } else {
       gst_element_get_state (bvw->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-      bvw->rate = target_rate;
-      retval = TRUE;
+      bvw->forward_dir = forward;
+      bvw->rate = rate;
+      return TRUE;
     }
   } else {
-    GST_LOG ("Failed to query position to set playback to %s", DIRECTION_STR);
+    GST_LOG ("Failed to query position to set playback rate to %lf", target_rate);
   }
 
-  return retval;
+  return FALSE;
+
+}
+
+static gboolean
+bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
+{
+  return bvw_set_rate (bvw, forward, bvw->rate);
 }
 
 static GstElement *
@@ -5509,6 +5533,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 
   bvw->volume = -1.0;
   bvw->rate = FORWARD_RATE;
+  bvw->forward_dir = TRUE;
   bvw->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
   g_mutex_init (&bvw->seek_mutex);
   bvw->clock = gst_system_clock_obtain ();
@@ -5724,40 +5749,12 @@ gboolean
 bacon_video_widget_set_rate (BaconVideoWidget *bvw,
 			     gfloat            new_rate)
 {
-  GstEvent *event;
-  gboolean retval = FALSE;
-  gint64 cur;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->play), FALSE);
+  g_return_val_if_fail (new_rate >= BVW_MIN_RATE, FALSE);
+  g_return_val_if_fail (new_rate <= BVW_MAX_RATE, FALSE);
 
-  if (new_rate == bvw->rate)
-    return TRUE;
-
-  /* set upper and lower limit for rate */
-  if (new_rate < BVW_MIN_RATE)
-    return retval;
-  if (new_rate > BVW_MAX_RATE)
-    return retval;
-
-  if (gst_element_query_position (bvw->play, GST_FORMAT_TIME, &cur)) {
-    GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
-    event = gst_event_new_seek (new_rate,
-				GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-				GST_SEEK_TYPE_SET, cur,
-				GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
-    if (gst_element_send_event (bvw->play, event) == FALSE) {
-      GST_DEBUG ("Failed to change rate");
-    } else {
-      gst_element_get_state (bvw->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-      bvw->rate = new_rate;
-      retval = TRUE;
-    }
-  } else {
-    GST_DEBUG ("failed to query position");
-  }
-
-  return retval;
+  return bvw_set_rate (bvw, bvw->forward_dir, new_rate);
 }
 
 /*
