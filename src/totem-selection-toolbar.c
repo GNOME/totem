@@ -43,7 +43,7 @@
  */
 
 struct _TotemSelectionToolbar {
-  GtkActionBar parent;
+  GtkBin       parent;
 
   /* Template widgets */
   GtkWidget   *add_to_fav;
@@ -59,7 +59,7 @@ struct _TotemSelectionToolbar {
   guint        n_selected;
 };
 
-G_DEFINE_TYPE (TotemSelectionToolbar, totem_selection_toolbar, GTK_TYPE_ACTION_BAR)
+G_DEFINE_TYPE (TotemSelectionToolbar, totem_selection_toolbar, GTK_TYPE_BIN)
 
 enum {
   PROP_0,

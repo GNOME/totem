@@ -27,12 +27,12 @@
 
 #pragma once
 
-#include <gtk/gtkactionbar.h>
+#include <gtk/gtkbin.h>
 
 G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SELECTION_TOOLBAR                 (totem_selection_toolbar_get_type ())
-G_DECLARE_FINAL_TYPE (TotemSelectionToolbar, totem_selection_toolbar, TOTEM, SELECTION_TOOLBAR, GtkActionBar)
+G_DECLARE_FINAL_TYPE (TotemSelectionToolbar, totem_selection_toolbar, TOTEM, SELECTION_TOOLBAR, GtkBin)
 
 GType           totem_selection_toolbar_get_type               (void) G_GNUC_CONST;
 GtkWidget*      totem_selection_toolbar_new                    (void);

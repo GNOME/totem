@@ -1,95 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="totem">
   <!-- interface-requires gtk+ 3.11 -->
-  <template class="TotemSelectionToolbar" parent="GtkActionBar">
+  <template class="TotemSelectionToolbar" parent="GtkBin">
     <property name="app_paintable">True</property>
     <property name="can_focus">False</property>
-      <child>
-        <object class="GtkButton" id="add_to_fav">
-          <property name="visible">True</property>
-          <property name="can_focus">True</property>
-          <property name="receives_default">True</property>
-          <property name="no-show-all">True</property>
-          <child internal-child="accessible">
-            <object class="AtkObject" id="add-to-fav-atkobject">
-              <property name="AtkObject::accessible-name" translatable="yes">Add to Favourites</property>
-            </object>
-         </child>
-          <style>
-            <class name="image-button"/>
-          </style>
-          <child>
-            <object class="GtkImage" id="add_to_fav_image">
-              <property name="visible">True</property>
-              <property name="can_focus">False</property>
-              <property name="icon_name">emblem-favorite-symbolic</property>
-              <property name="icon_size">1</property>
-            </object>
-          </child>
-        </object>
-        <packing>
-          <property name="pack_type">start</property>
-        </packing>
-      </child>
-      <child>
-        <object class="GtkButton" id="play">
-          <property name="visible">True</property>
-          <property name="can_focus">True</property>
-          <property name="receives_default">True</property>
-          <property name="no-show-all">True</property>
-          <property name="label" translatable="yes" context="button">Play</property>
-          <child internal-child="accessible">
-            <object class="AtkObject" id="play-atkobject">
-              <property name="AtkObject::accessible-name" translatable="yes">Play</property>
-            </object>
-         </child>
-          <style>
-            <class name="image-button"/>
-          </style>
-        </object>
-        <packing>
-          <property name="pack_type">start</property>
-        </packing>
-      </child>
-      <child>
-        <object class="GtkButton" id="shuffle">
-          <property name="visible">True</property>
-          <property name="can_focus">True</property>
-          <property name="receives_default">True</property>
-          <property name="no-show-all">True</property>
-          <property name="label" translatable="yes">Shuffle</property>
-          <child internal-child="accessible">
-            <object class="AtkObject" id="shuffle-atkobject">
-              <property name="AtkObject::accessible-name" translatable="yes">Shuffle</property>
-            </object>
-         </child>
-          <style>
-            <class name="image-button"/>
-          </style>
-        </object>
-        <packing>
-          <property name="pack_type">start</property>
-        </packing>
-      </child>
-      <child>
-        <object class="GtkButton" id="delete">
-          <property name="visible">True</property>
-          <property name="can_focus">True</property>
-          <property name="receives_default">True</property>
-	  <property name="no-show-all">True</property>
-	  <property name="label" translatable="yes">Delete</property>
-          <child internal-child="accessible">
-            <object class="AtkObject" id="delete-atkobject">
-              <property name="AtkObject::accessible-name" translatable="yes">Delete</property>
-            </object>
-         </child>
-          <style>
-            <class name="image-button"/>
-          </style>
-        </object>
-        <packing>
-          <property name="pack_type">end</property>
-        </packing>
-      </child>
+    <child>
+      <object class="GtkActionBar">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkButton" id="add_to_fav">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="no-show-all">True</property>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="add-to-fav-atkobject">
+                <property name="AtkObject::accessible-name" translatable="yes">Add to Favourites</property>
+              </object>
+            </child>
+            <style>
+              <class name="image-button" />
+            </style>
+            <child>
+              <object class="GtkImage" id="add_to_fav_image">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">emblem-favorite-symbolic</property>
+                <property name="icon_size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">start</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="play">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="no-show-all">True</property>
+            <property name="label" translatable="yes" context="button">Play</property>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="play-atkobject">
+                <property name="AtkObject::accessible-name" translatable="yes">Play</property>
+              </object>
+            </child>
+            <style>
+              <class name="image-button" />
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">start</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="shuffle">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="no-show-all">True</property>
+            <property name="label" translatable="yes">Shuffle</property>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="shuffle-atkobject">
+                <property name="AtkObject::accessible-name" translatable="yes">Shuffle</property>
+              </object>
+            </child>
+            <style>
+              <class name="image-button" />
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">start</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="delete">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="no-show-all">True</property>
+            <property name="label" translatable="yes">Delete</property>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="delete-atkobject">
+                <property name="AtkObject::accessible-name" translatable="yes">Delete</property>
+              </object>
+            </child>
+            <style>
+              <class name="image-button" />
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </template>
 </interface>
