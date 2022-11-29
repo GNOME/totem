@@ -97,7 +97,6 @@
 #define SEEK_TIMEOUT NANOSECS_IN_SEC / 10
 #define FORWARD_RATE 1.0
 #define REVERSE_RATE -1.0
-#define DIRECTION_STR (forward == FALSE ? "reverse" : "forward")
 
 #define BVW_TRACK_NONE -2
 #define BVW_TRACK_AUTO -1
@@ -3846,7 +3845,7 @@ bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error
   if (retval != FALSE)
     bvw_query_timeout (bvw);
   else
-    GST_WARNING ("Failed to step %s", DIRECTION_STR);
+    GST_WARNING ("Failed to step %s", forward ? "forward" : "reverse");
 
   return retval;
 }
