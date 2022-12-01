@@ -394,8 +394,9 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToolbar" id="toolbar">
+                      <object class="GtkBox" id="toolbar">
                         <property name="visible">True</property>
+                        <property name="orientation">horizontal</property>
                         <property name="can_focus">False</property>
                         <property name="border_width">0</property>
                         <property name="opacity">0.86</property>
@@ -405,11 +406,16 @@
                         <style>
                           <class name="osd"/>
                           <class name="bottom"/>
-                          </style>
+                          <class name="inline-toolbar"/>
+                        </style>
                         <child>
-                          <object class="GtkToolItem" id="controls_toolbutton">
+                          <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
                             <child>
                               <object class="GtkBox" id="controls_box">
                                 <property name="visible">True</property>
@@ -482,16 +488,6 @@
                                 </child>
                               </object>
                             </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="homogeneous">False</property>
-                            </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToolItem" id="slider_toolbutton">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
                             <child>
                               <object class="GtkBox" id="bottom_row">
                                 <property name="visible">True</property>
@@ -503,16 +499,17 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_start">16</property>
-                                    </object>
+                                  </object>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">0</property>
-                                    </packing>
-                                  </child>
+                                  </packing>
+                                </child>
                                 <child>
                                   <object class="GtkScale" id="seek_scale">
                                     <property name="visible">True</property>
+                                    <property name="hexpand">True</property>
                                     <property name="sensitive">False</property>
                                     <property name="can_focus">True</property>
                                     <property name="draw_value">False</property>
@@ -520,38 +517,28 @@
                                     <signal name="button-press-event" handler="seek_slider_pressed_cb"/>
                                     <signal name="button-release-event" handler="seek_slider_released_cb"/>
                                     <signal name="scroll-event" handler="seek_slider_scroll_event_cb"/>
-                                    </object>
+                                  </object>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
-                                    </packing>
-                                  </child>
+                                  </packing>
+                                </child>
                                 <child>
                                   <object class="BaconTimeLabel" id="time_rem_label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="remaining">True</property>
                                     <property name="margin_end">16</property>
-                                    </object>
+                                  </object>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">2</property>
-                                    </packing>
-                                  </child>
-                                </object>
-                              </child>
-                            </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="homogeneous">False</property>
-                            </packing>
-                          </child>
-                        <child>
-                          <object class="GtkToolItem" id="box_toolbutton">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
                             <child>
                               <object class="GtkBox" id="box2">
                                 <property name="visible">True</property>
@@ -569,33 +556,23 @@
                                     <signal name="toggled" handler="popup_menu_shown_cb"/>
                                     <style>
                                       <class name="image-button"/>
-                                      </style>
+                                    </style>
                                     <child>
                                       <object class="GtkImage" id="go_button_image">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="icon_name">totem-playback-options-symbolic</property>
-                                        </object>
-                                      </child>
-                                    </object>
+                                      </object>
+                                    </child>
+                                  </object>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
                                     <property name="position">0</property>
-                                    </packing>
-                                  </child>
-                                </object>
-                              </child>
-                            </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="homogeneous">True</property>
-                            </packing>
-                          </child>
-                        <child>
-                          <object class="GtkToolItem" id="volume_toolbutton">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
                             <child>
                               <object class="GtkBox" id="box1">
                                 <property name="visible">True</property>
@@ -621,23 +598,19 @@ audio-volume-medium-symbolic</property>
                                     <signal name="scroll-event" handler="volume_button_scroll_event_cb"/>
                                     <style>
                                       <class name="image-button"/>
-                                      </style>
-                                    </object>
+                                    </style>
+                                  </object>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
                                     <property name="position">0</property>
-                                    </packing>
-                                  </child>
-                                </object>
-                              </child>
-                            </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="homogeneous">True</property>
-                            </packing>
-                          </child>
-                        </object>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
                         <packing>
                           <property name="left-attach">0</property>
                           <property name="top-attach">2</property>
