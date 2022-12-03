@@ -54,87 +54,105 @@
       </packing>
     </child>
     <child>
-      <object class="GtkToolbar" id="toolbar">
+      <object class="GtkBox" id="toolbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="icon_size">1</property>
-        <property name="toolbar-style">icons</property>
         <style>
           <class name="inline-toolbar"/>
         </style>
         <child>
-          <object class="GtkToolButton" id="add_button">
+          <object class="GtkButton" id="add_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
             <property name="use_underline">True</property>
-	    <property name="icon_name">list-add-symbolic</property>
 	    <signal name="clicked" handler="totem_playlist_add_files"/>
 	    <property name="tooltip-text" translatable="no">Add...</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">list-add-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="remove_button">
+          <object class="GtkButton" id="remove_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
             <property name="use_underline">True</property>
-	    <property name="icon_name">list-remove-symbolic</property>
 	    <signal name="clicked" handler="playlist_remove_button_clicked"/>
 	    <property name="tooltip-text" translatable="no">Remove</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">list-remove-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="copy_location_button">
+          <object class="GtkButton" id="copy_location_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
             <property name="use_underline">True</property>
-	    <property name="icon_name">edit-copy-symbolic</property>
 	    <signal name="clicked" handler="playlist_copy_location_action_callback"/>
 	    <property name="tooltip-text" translatable="no">Copy Location</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">edit-copy-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="print_metadata_button">
+          <object class="GtkButton" id="print_metadata_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
             <property name="use_underline">True</property>
-	    <property name="icon_name">document-print-symbolic</property>
 	    <signal name="clicked" handler="print_metadata_action_callback"/>
 	    <property name="tooltip-text" translatable="no">Print Metadata</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">document-print-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="select_subtitle_button">
+          <object class="GtkButton" id="select_subtitle_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
             <property name="use_underline">True</property>
-	    <property name="icon_name">media-view-subtitles-symbolic</property>
 	    <signal name="clicked" handler="playlist_select_subtitle_action_callback"/>
 	    <property name="tooltip-text" translatable="no">Select Text Subtitles...</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon_name">media-view-subtitles-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="homogeneous">True</property>
           </packing>
         </child>
       </object>
