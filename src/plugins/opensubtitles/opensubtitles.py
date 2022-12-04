@@ -467,6 +467,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
         languages = builder.get_object ('language_model')
+        sorted_languages = builder.get_object ('sorted_languages')
         self._progress = builder.get_object ('progress_bar')
         self._tree_view = builder.get_object ('subtitle_treeview')
         self._list_store = builder.get_object ('subtitle_model')
@@ -476,9 +477,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._close_button = builder.get_object ('close_button')
 
         # Set up and populate the languages combobox
-        sorted_languages = Gtk.TreeModelSort (model = languages)
         sorted_languages.set_sort_column_id (0, Gtk.SortType.ASCENDING)
-        combobox.set_model (sorted_languages)
 
         lang = self._settings.get_string ('language')
         if lang is not None:
