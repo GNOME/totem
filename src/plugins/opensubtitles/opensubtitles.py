@@ -476,12 +476,9 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._close_button = builder.get_object ('close_button')
 
         # Set up and populate the languages combobox
-        renderer = Gtk.CellRendererText ()
         sorted_languages = Gtk.TreeModelSort (model = languages)
         sorted_languages.set_sort_column_id (0, Gtk.SortType.ASCENDING)
         combobox.set_model (sorted_languages)
-        combobox.pack_start (renderer, True)
-        combobox.add_attribute (renderer, 'text', 0)
 
         lang = self._settings.get_string ('language')
         if lang is not None:
