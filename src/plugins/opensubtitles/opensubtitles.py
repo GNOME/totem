@@ -13,7 +13,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Totem', '1.0')
 from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
 from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position,
-from gi.repository import Gio, Pango # pylint: disable=wrong-import-position,no-name-in-module
+from gi.repository import Gio # pylint: disable=wrong-import-position,no-name-in-module
 
 from hash import hash_file # pylint: disable=wrong-import-position
 
@@ -494,25 +494,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
                  parentit) = sorted_languages.convert_child_iter_to_iter (itera)
                 if success:
                     combobox.set_active_iter (parentit)
-
-        # Set up the results treeview
-        renderer = Gtk.CellRendererText ()
-        self._tree_view.set_model (self._list_store)
-        renderer.set_property ('ellipsize', Pango.EllipsizeMode.END)
-        column = Gtk.TreeViewColumn (_("Subtitles"), renderer, text=0)
-        column.set_resizable (True)
-        column.set_expand (True)
-        self._tree_view.append_column (column)
-        # translators comment:
-        # This is the file-type of the subtitle file detected
-        column = Gtk.TreeViewColumn (_("Format"), renderer, text=1)
-        column.set_resizable (False)
-        self._tree_view.append_column (column)
-        # translators comment:
-        # This is a rating of the quality of the subtitle
-        column = Gtk.TreeViewColumn (_("Rating"), renderer, text=2)
-        column.set_resizable (False)
-        self._tree_view.append_column (column)
 
         self._apply_button.set_sensitive (False)
 

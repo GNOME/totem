@@ -92,6 +92,53 @@
               <object class="GtkTreeView" id="subtitle_treeview">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="model">subtitle_model</property>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="visible">True</property>
+                    <property name="title" translatable="yes">Subtitles</property>
+                    <property name="resizable">True</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="ellipsize">end</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="visible">True</property>
+                    <property name="title" translatable="yes" comments="This is the file-type of the subtitle file detected">Format</property>
+                    <property name="resizable">False</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="ellipsize">end</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="visible">True</property>
+                    <property name="title" translatable="yes" comments="This is a rating of the quality of the subtitle">Rating</property>
+                    <property name="resizable">False</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="ellipsize">end</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
