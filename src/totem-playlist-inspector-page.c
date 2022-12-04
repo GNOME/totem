@@ -45,6 +45,7 @@ insert_playlist_widget (TotemPlaylistInspectorPage *self)
 		return G_SOURCE_CONTINUE;
 	gtk_container_add (GTK_CONTAINER (self),
 			   GTK_WIDGET (totem->playlist));
+	gtk_widget_set_hexpand (GTK_WIDGET (totem->playlist), TRUE);
 	gtk_widget_show_all (GTK_WIDGET (self));
 	self->totem = totem;
 	return G_SOURCE_REMOVE;
