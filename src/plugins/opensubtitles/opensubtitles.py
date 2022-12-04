@@ -403,6 +403,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         schema = 'org.gnome.totem.plugins.opensubtitles'
         self._settings = Gio.Settings.new (schema)
 
+        self._resource = None
+
         self._action = None
 
         self._find_button = None
@@ -426,6 +428,10 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         """
         self._totem = self.object
 
+        base_path = os.path.dirname (os.path.abspath (__file__))
+        self._resource = Gio.Resource.load(os.path.join(base_path, 'opensubtitles.gresource'))
+        Gio.Resource._register(self._resource) # pylint: disable=W0212
+
         # Name of the movie file which the most-recently-downloaded subtitles
         # are related to.
         self._filename = None
@@ -448,13 +454,14 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
             self._dialog.destroy ()
         self._dialog = None
 
+        Gio.Resource._unregister(self._resource) # pylint: disable=W0212
+
         self._delete_menu ()
 
     # UI related code
 
     def _build_dialog (self):
-        ui_file_path = os.path.dirname (os.path.abspath (__file__)) + sep + 'opensubtitles.ui'
-        builder = Gtk.Builder.new_from_file (ui_file_path)
+        builder = Gtk.Builder.new_from_resource("/org/gnome/totem/opensubtitles/opensubtitles.ui")
         builder.connect_signals(self)
 
         # Obtain all the widgets we need to initialize

@@ -2,10 +2,18 @@ plugin_name = 'opensubtitles'
 
 plugin_dir = join_paths(totem_pluginsdir, plugin_name)
 
+gnome.compile_resources(
+  'opensubtitles',
+  'opensubtitles.gresource.xml',
+  c_name: 'totem_opensubtitles',
+  install_dir: plugin_dir,
+  gresource_bundle: true,
+  install: true,
+)
+
 plugin_files = files(
   plugin_name + '.py',
   'hash.py',
-  plugin_name + '.ui'
 )
 
 install_data(
