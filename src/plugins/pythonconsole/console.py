@@ -316,20 +316,20 @@ class OutFile:
         pass
     def fileno(self):
         return self.file_no
-    def isatty(self): # pylint: disable=R0201
+    def isatty(self):
         return 0
-    def read(self, _): # pylint: disable=R0201
+    def read(self, _):
         return ''
-    def readline(self): # pylint: disable=R0201
+    def readline(self):
         return ''
-    def readlines(self): # pylint: disable=R0201
+    def readlines(self):
         return []
     def write(self, seg):
         self.console.write(seg, self.tag)
     def writelines(self, lines):
         self.console.write(lines, self.tag)
-    def seek(self, _): # pylint: disable=R0201
+    def seek(self, _):
         raise IOError((29, 'Illegal seek'))
-    def tell(self): # pylint: disable=R0201
+    def tell(self):
         raise IOError((29, 'Illegal seek'))
     truncate = tell
