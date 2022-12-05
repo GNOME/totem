@@ -45,8 +45,6 @@ build-fedora:
   before_script:
     - dnf update -y
     - dnf install --setopt=install_weak_deps=False -y $FEDORA_DEPS
-    # https://github.com/PyCQA/pylint/issues/6352
-    - dnf remove -y pylint
   script:
     - meson _build -Dhelp=true -Denable-gtk-doc=true -Denable-easy-codec-installation=yes -Denable-python=yes -Dprofile=default
     - G_MESSAGES_DEBUG=all xvfb-run -a -s "-screen 0 1024x768x24" ninja -C _build test
