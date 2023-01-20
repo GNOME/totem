@@ -1,25 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-25 15:03+0000\n"
-"PO-Revision-Date: 2022-08-26 10:47+0200\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"POT-Creation-Date: 2022-12-09 18:51+0000\n"
+"PO-Revision-Date: 2023-01-20 16:57+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3864
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:204
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "ვიდეო"
 
@@ -174,7 +174,7 @@ msgid ""
 "purposes only."
 msgstr ""
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "სტერეო"
 
@@ -202,88 +202,109 @@ msgstr "გამჭოლი AC3"
 msgid "Preferences"
 msgstr "პარამეტრები"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "გარე სუბტიტრები"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr ""
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_ფონტი:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_კოდირება:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "სუბტიტრების ფონტის ჩატვირთვა"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "დამატებები"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "დამატებები…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "ზოგადი"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "ვიდეო"
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "გარე სუბტიტრები"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
 msgstr ""
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "ფერების ბალანსი"
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_ფონტი"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "სიკა_შკაშე:"
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_კოდირება"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "კონტრასტი:"
-
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "_გაჯერებულობა:"
-
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_ტონი:"
-
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "ნა_გულისხმევზე გადართვა"
-
-#: data/totem-preferences-dialog.ui:683
+#: data/totem-preferences-dialog.ui:165
 msgid "Display"
 msgstr "ჩვენება"
 
-#: data/totem-preferences-dialog.ui:724
+#. Tab label in the Preferences dialogue
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
+msgid "Video"
+msgstr "ვიდეო"
+
+#: data/totem-preferences-dialog.ui:176
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr ""
+
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "აპარატურული აჩქარების გათიშვა"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+
+#: data/totem-preferences-dialog.ui:218
+msgid "Color Balance"
+msgstr "ფერების ბალანსი"
+
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "სიკა_შკაშე"
+
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "_კონტრასტი"
+
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "_გაჯერებულობა"
+
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "_ტონი"
+
+#: data/totem-preferences-dialog.ui:425
+msgid "Reset to _Defaults"
+msgstr "ნა_გულისხმევზე გადართვა"
+
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "აუდიო"
+
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "აუდიო გამოტანა"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "_აუდტიოს გამოტანის ტიპი:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "_აუდიოს გამოტანის ტიპი"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "აუდიო"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "დამატებები"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "ავტორები"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "ვერსია"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "ვებსაიტი"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -442,7 +463,7 @@ msgstr "10 წუთით წინ გადახვევა"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
+msgid "Go to 10%, 20%, 30%…"
 msgstr ""
 
 #: data/shortcuts.ui:308
@@ -485,107 +506,119 @@ msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr ""
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "პა_რამეტრები"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "_კლავიატურის მალსახმობები"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr ""
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr ""
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "_თანაფარდობა"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "ავტომატური"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "კვადრატი"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (ფართოეკრანიანი)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr ""
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "_გამოღება"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "ენები"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "სუბტიტრები"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr ""
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "_გამეორება"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "_DVD მენიუ"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr ""
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr ""
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr ""
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr ""
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "სიჩქარე"
+
+#: data/totem.ui:431 data/totem.ui:434
+msgid "Previous Chapter/Movie"
+msgstr ""
+
+#: data/totem.ui:455 data/totem.ui:458
+msgid "Play / Pause"
+msgstr "დაკვრა/პაუზა"
+
+#: data/totem.ui:471 data/totem.ui:474
+msgid "Next Chapter/Movie"
+msgstr ""
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -598,7 +631,6 @@ msgstr ""
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
@@ -611,7 +643,7 @@ msgid "Password requested for RTSP server"
 msgstr ""
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
+msgid "Could not initialise OpenGL support."
 msgstr ""
 
 #: src/backend/bacon-video-widget.c:3362
@@ -700,19 +732,23 @@ msgid ""
 "first."
 msgstr ""
 
-#: src/backend/bacon-video-widget.c:5089
-msgid "Surround"
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
 msgstr ""
 
 #: src/backend/bacon-video-widget.c:5091
+msgid "Surround"
+msgstr "სივრცული ხმა"
+
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "მონო"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr ""
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -747,7 +783,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -871,7 +907,7 @@ msgstr "ფაილის სახელი"
 msgid "Resolution"
 msgstr "გარჩევადობა"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "ხანგრძლივობა"
 
@@ -899,7 +935,7 @@ msgstr "ძებნის შეცდომა"
 msgid "Local"
 msgstr "ლოკალური"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "არხები"
 
@@ -953,45 +989,33 @@ msgstr "ავტომატური"
 msgid "None"
 msgstr "არაფერი"
 
-#: src/totem-object.c:1432 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "შეჩერება"
 
-#: src/totem-object.c:1438 src/totem-object.c:1446 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "დაკვრა"
 
-#: src/totem-object.c:1514 src/totem-object.c:1542 src/totem-object.c:2128
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr ""
 
-#: src/totem-object.c:2300
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr ""
 
-#: src/totem-object.c:2561
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: src/totem-object.c:3962
-msgid "Previous Chapter/Movie"
-msgstr ""
-
-#: src/totem-object.c:3968
-msgid "Play / Pause"
-msgstr "დაკვრა/პაუზა"
-
-#: src/totem-object.c:3974
-msgid "Next Chapter/Movie"
-msgstr ""
-
-#: src/totem-object.c:4196
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr ""
 
-#: src/totem-object.c:4197 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "მიზეზის გარეშე."
 
@@ -1071,29 +1095,20 @@ msgstr ""
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "დამატებების მორგება"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "_დახურვა"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
-msgstr ""
+msgstr "რჩეულებში ჩამატება"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "დაკვრა"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "შემთხვევით"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "წაშლა"
 
@@ -1325,7 +1340,7 @@ msgid "Searching for subtitles…"
 msgstr ""
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr ""
 
@@ -1341,40 +1356,42 @@ msgstr ""
 
 #: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
-msgstr ""
-
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "ფორმატი"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "შეფასება"
+msgstr "შედეგების გარეშე."
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr ""
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr ""
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "ფილმის სუბტიტრების გადმოწერა"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "სუბტიტრების _ენა:"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "ფორმატი"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "შეფასება"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "_სუბტიტრებით დაკვრა"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "_დახურვა"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1392,234 +1409,196 @@ msgstr "ფილმის თვისებები"
 msgid "Adds movie properties menu item"
 msgstr ""
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d კბ/წმ"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d ჰც"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "თვისებები"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "_პარამეტრები"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "სათაური:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "თვისებები"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "შემსრულებელი:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "სათაური"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "ხანგრძლივობა:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "შემსრულებელი"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "წელი:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "ალბომი"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "ალბომი:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "წელი"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "კომენტარი:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "კომენტარი"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "შემადგენლობა:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "კონტეინერი"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "ზომები:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "ზომები"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "კოდეკი:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "კოდეკი"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "კადრების სიჩქარე:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "კადრების სიჩქარე"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "სიჩქარე:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "ბიტური სიჩქარე"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "სემპლის სიხშირე:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "არხები:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "უცნობი"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "უცნობი"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "უცნობი"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "უცნობი"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "უცნობი"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "სემპლების სიჩქარე"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "N/A"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/A"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/A"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 ჰც"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 არხი"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d საათი"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d წუთი"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d წამი"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 წამი"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] ""
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1779,7 +1758,7 @@ msgstr ""
 
 #: src/plugins/screenshot/totem-gallery.c:86
 msgid "Save Gallery"
-msgstr ""
+msgstr "გალერეის შენახვა"
 
 #: src/plugins/screenshot/totem-gallery.c:93
 msgid "_Save"
@@ -1820,43 +1799,6 @@ msgstr "ეკრანის ანაბეჭდის გადაღებ�
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
-msgstr ""
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr ""
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr ""
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr ""
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "წამი"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "7"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr ""
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
 msgstr ""
 
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
@@ -1909,3 +1851,46 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr ""
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "სუბტიტრების ფონტის ჩატვირთვა"
+
+#~ msgid "Plugins…"
+#~ msgstr "დამატებები…"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "დამატებების მორგება"
+
+#~ msgid "Duration:"
+#~ msgstr "ხანგრძლივობა:"
+
+#~ msgid "Channels:"
+#~ msgstr "არხები:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "უცნობი"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "უცნობი"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "უცნობი"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "უცნობი"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "უცნობი"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "წამი"
+
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "7"
