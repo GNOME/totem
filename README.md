@@ -35,7 +35,6 @@ are listed in the table below.
 
 | Function | Shortcut |
 | :---      | :---      |
-| `M` (when playing a DVD)      | menu      |
 | `Ctrl+Q` | Quit |
 | `Ctrl+W` | Press back button/Quit |
 | `Mouse button 1 double-click` | Toggle full screen |
