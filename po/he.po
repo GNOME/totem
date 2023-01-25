@@ -3,14 +3,14 @@
 # Copyright (C) 2005 THE PACKAGE'S COPYRIGHT HOLDER.
 # Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2003.
 # Gil Osher <dolfin@rpg.org.il>, 2004.
-# Yosef Or Boczko <yoseforb@gmail.com>, 2014-2022.
+# Yosef Or Boczko <yoseforb@gmail.com>, 2014-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-08-18 13:44+0300\n"
+"POT-Creation-Date: 2022-12-09 18:51+0000\n"
+"PO-Revision-Date: 2023-01-25 10:11+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Gtranslator 42.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:204
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "סרטים"
 
@@ -141,9 +141,6 @@ msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Default location for the “Take Screenshot” dialogs"
 
 #: data/org.gnome.totem.gschema.xml.in:61
-#| msgid ""
-#| "Default location for the “Take Screenshot” dialogs. Default is the "
-#| "Pictures directory."
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -195,7 +192,7 @@ msgstr ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "דו־קולי (סטריאו)"
 
@@ -223,88 +220,113 @@ msgstr "מעבר AC3"
 msgid "Preferences"
 msgstr "העדפות"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "‏‏כתוביות חיצוניות"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "_טעינת קובצי כתוביות אוטומטית עם טעינת הסרט"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_גופן:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_קידוד:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "בחירת גופן כתוביות"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "תוספים"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "תוספים…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "כללי"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "סרט"
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "‏‏כתוביות חיצוניות"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "ביטול _פעולת ה־deinterlace על סרטונים שהם interlaced"
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "_טעינת קובצי כתוביות אוטומטית עם טעינת הסרט"
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "‏איזון צבע"
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_גופן"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_בהירות:"
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_קידוד"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "ני_גודיות:"
-
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "_רוויה:"
-
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_גוון:"
-
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "_איפוס לברירות המחדל"
-
-#: data/totem-preferences-dialog.ui:683
+#: data/totem-preferences-dialog.ui:165
 msgid "Display"
 msgstr "תצוגה"
 
-#: data/totem-preferences-dialog.ui:724
+#. Tab label in the Preferences dialogue
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
+msgid "Video"
+msgstr "סרט"
+
+#: data/totem-preferences-dialog.ui:176
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "ביטול _פעולת ה־deinterlace על סרטונים שהם interlaced"
+
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+"סרטים עוברים פעולת deinterlaced באופן אוטומטי במקרה הצורך.\n"
+"יש להשבת אפשרות זו עם התרחשות של בעיות גרפיות כמו סירוק."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "השבתת האצת חָמְרה"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+"כאשר האצת חָמְרה זמינה, נעשה בה שימוש באופן אוטומטי.\n"
+"יש להשבית אפשרות זאת אם מתרחשות בעיות בניגון סרטים."
+
+#: data/totem-preferences-dialog.ui:218
+msgid "Color Balance"
+msgstr "‏איזון צבע"
+
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "_בהירות"
+
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "ני_גודיות"
+
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "_רוויה"
+
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "_גוון"
+
+#: data/totem-preferences-dialog.ui:425
+msgid "Reset to _Defaults"
+msgstr "_איפוס לברירות המחדל"
+
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "שמע"
+
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "‏פלט שמע"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "סוג פלט _שמע:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "סוג פלט _שמע"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "שמע"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "תוספים"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "יוצר"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "גרסה"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "אתר אינטרנט"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -463,8 +485,8 @@ msgstr "לעבור 10 דקות קדימה"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "דילוג אל…"
+msgid "Go to 10%, 20%, 30%…"
+msgstr "לעבור אל 10%, 20%, 30%…"
 
 #: data/shortcuts.ui:308
 msgctxt "shortcut window"
@@ -506,107 +528,119 @@ msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "הצגת כתוביות"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "ה_עדפות"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "צירופי מ_קשים"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "ע_זרה"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "הוספת סרטון _מקומי…"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "הוספת סרטון מה_רשת…"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "יחס _ממדים"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "אוטומטי"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "ריבוע"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (טלוויזיה)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (מסך רחב)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "‏2.11:1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "ה_חלפת זוויות"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "_שליפה"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "שפות"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "כתוביות"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "בחירת _כתוביות…"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "מצב _חזרה"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "תפריט _DVD"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "תפריט _כותרת"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "תפריט _שמע"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "תפריט _זווית"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "תפריט _פרקים"
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "מהירות"
+
+#: data/totem.ui:431 data/totem.ui:434
+msgid "Previous Chapter/Movie"
+msgstr "הפרק/סרט הקודם"
+
+#: data/totem.ui:455 data/totem.ui:458
+msgid "Play / Pause"
+msgstr "ניגון / השהיה"
+
+#: data/totem.ui:471 data/totem.ui:474
+msgid "Next Chapter/Movie"
+msgstr "הפרק/סרט הבא"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -619,7 +653,6 @@ msgstr "נא להזין את _מיקום הקובץ שברצונך לפתוח:"
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_ביטול"
 
@@ -632,7 +665,7 @@ msgid "Password requested for RTSP server"
 msgstr "נדרשת סיסמה עבור שרת ה־RTSP"
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
+msgid "Could not initialise OpenGL support."
 msgstr "לא ניתן לאתחל תמיכת OpenGL."
 
 #: src/backend/bacon-video-widget.c:3362
@@ -728,19 +761,23 @@ msgid ""
 "first."
 msgstr "לא ניתן לנגן קובץ זה דרך הרשת. כדאי לנסות לשמור אותו על הכונן קודם."
 
-#: src/backend/bacon-video-widget.c:5089
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
+msgstr "לא ניתן לנגן קובץ זה. יש לנסות להפעיל מחדש את הנגינה."
+
+#: src/backend/bacon-video-widget.c:5091
 msgid "Surround"
 msgstr "צליל היקפי"
 
-#: src/backend/bacon-video-widget.c:5091
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "מונו"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr "המדיה איננה כוללת זרמי וידאו נתמכים"
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -776,7 +813,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -900,7 +937,7 @@ msgstr "שם קובץ"
 msgid "Resolution"
 msgstr "הפרדה"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "משך"
 
@@ -928,7 +965,7 @@ msgstr "שגיאה בחיפוש"
 msgid "Local"
 msgstr "מקומי"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "ערוצים"
 
@@ -983,45 +1020,33 @@ msgstr "אוטומטי"
 msgid "None"
 msgstr "ללא"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "השהיה"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "ניגון"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "‏סרטים לא יכול לנגן את „%s”."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr "סרטים אינו יכול להציג את תוכן העזרה."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "הפרק/סרט הקודם"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "ניגון / השהיה"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "הפרק/סרט הבא"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr "סרטים לא יכול לעלות."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "אין סיבה."
 
@@ -1101,29 +1126,20 @@ msgstr "שם %d"
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "The playlist “%s” could not be parsed. It might be damaged."
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "הגדרות תוספים"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "ס_גירה"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
 msgstr "הוספה למועדפים"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "ניגון"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "ערבוב"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "מחיקה"
 
@@ -1356,7 +1372,7 @@ msgid "Searching for subtitles…"
 msgstr "מתבצע חיפוש אחר כתוביות…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "הכתוביות בהורדה…"
 
@@ -1374,38 +1390,40 @@ msgstr "לא ניתן לגשת לאתר OpenSubtitles."
 msgid "No results found."
 msgstr "אין תוצאות."
 
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "תצורה"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "ניקוד"
-
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr "הורדת _כתוביות עבור הסרט…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "מתבצע חיפוש אחר כתוביות…"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "הורדת כתוביות עבור הסרט"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "שפת ה_כתוביות:"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "תצורה"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "ניקוד"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "נגינה עם כ_תוביות"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "ס_גירה"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1423,184 +1441,146 @@ msgstr "מאפייני הסרט"
 msgid "Adds movie properties menu item"
 msgstr "הוספת פריט מאפייני הסרט לתפריט"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "‏‎%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "‏%d ק״ב לשנייה"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d הרץ"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "מאפיינים"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "מ_אפיינים"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "כותרת:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "מאפיינים"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "אמן:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "כותרת"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "משך:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "אמן"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "שנה:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "אלבום"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "אלבום:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "שנה"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "הערה:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "הערה"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "מכל:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "מכל"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "ממדים:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "ממדים"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "מקודד:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "מקודד"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "קצב שקופיות:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "קצב שקופיות"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "קצב סיביות:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "קצב סיביות"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "קצב דגימה:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "ערוצים:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "לא ידוע"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "לא ידוע"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "לא ידוע"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "לא ידוע"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "לא ידוע"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "קצב דגימה"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "לא זמין"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "לא זמין"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "לא זמין"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 הרץ"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 ערוצים"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "שעה אחת"
 msgstr[1] "%d שעות"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "דקה אחת"
 msgstr[1] "%d דקות"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1608,53 +1588,53 @@ msgstr[0] "שנייה אחת"
 msgstr[1] "%d שניות"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "‏%s, ‏%s ו־%s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "‏%s ו־%s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "‏%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "‏%s ו־%s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "‏%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 שניות"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "תְּמוּנִית אחת לשנייה"
 msgstr[1] "‏%0.3f  תְּמוּנִיוֹת אחת לשנייה"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1791,7 +1771,6 @@ msgstr "מספר צילומי המסך:"
 #. * same as used in GNOME Shell:
 #. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
 #: src/plugins/screenshot/screenshot-filename-builder.c:101
-#| msgid "Screenshot"
 msgid "Screenshots"
 msgstr "צילומי מסך"
 
@@ -1863,44 +1842,6 @@ msgstr "צילום המ_סך"
 msgid "Create Screenshot _Gallery…"
 msgstr "יצירת _גלריית צילומי מסך…"
 
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr "דילוג אל"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "טוען מנשק ה„דילוג אל“"
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "_דילוג אל:"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "שנייה"
-msgstr[1] "שניות"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "5"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr "_דילוג אל"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
-msgstr "_דילוג אל…"
-
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
@@ -1951,6 +1892,69 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "הגדרת סוכן המשתמש ל־Vimeo"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "בחירת גופן כתוביות"
+
+#~ msgid "Plugins…"
+#~ msgstr "תוספים…"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Skip to…"
+#~ msgstr "דילוג אל…"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "הגדרות תוספים"
+
+#~ msgid "Duration:"
+#~ msgstr "משך:"
+
+#~ msgid "Channels:"
+#~ msgstr "ערוצים:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "לא ידוע"
+
+#~ msgid "Skip To"
+#~ msgstr "דילוג אל"
+
+#~ msgid "Provides the “Skip to” dialog"
+#~ msgstr "טוען מנשק ה„דילוג אל“"
+
+#~ msgid "_Skip to:"
+#~ msgstr "_דילוג אל:"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "שנייה"
+#~ msgstr[1] "שניות"
+
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "5"
+
+#~ msgid "_Skip To"
+#~ msgstr "_דילוג אל"
+
+#~ msgid "_Skip To…"
+#~ msgstr "_דילוג אל…"
 
 #~ msgid "Could not initialize the thread-safe libraries."
 #~ msgstr "לא ניתן לאתחל את ספריות ה־thread-safe."
@@ -2748,9 +2752,6 @@ msgstr "הגדרת סוכן המשתמש ל־Vimeo"
 #~ "פרוייקט תרגום GNOME לעברית:\n"
 #~ "‏http://gnome-il.berlios.de"
 
-#~ msgid "Totem Website"
-#~ msgstr "אתר הבית של Totem"
-
 #~ msgid "No error message"
 #~ msgstr "אין הודעת שגיאה"
 
@@ -3355,9 +3356,6 @@ msgstr "הגדרת סוכן המשתמש ל־Vimeo"
 #~ "נראה שאתה מפעיל את Totem מרחוק.\n"
 #~ "אתה בטוח שברצונך להפעיל את האפקטים החזותיים?"
 
-#~ msgid "Media file could not be played."
-#~ msgstr "לא ניתן לקרוא את קובץ המדיה."
-
 #~ msgid "Too old version of GStreamer installed."
 #~ msgstr "מותקנת גרסה ישנה מדי של GStreamer."
 
@@ -3477,9 +3475,6 @@ msgstr "הגדרת סוכן המשתמש ל־Vimeo"
 #~ "The change of audio output type will only take effect when Totem is "
 #~ "restarted."
 #~ msgstr "שינוי סוג פלט השמע יכנס לתוקף רק כאשר Totem יופעל מחדש."
-
-#~ msgid "Author:"
-#~ msgstr "יוצר:"
 
 #~ msgid "C_onfigure..."
 #~ msgstr "ה_גדרות..."
