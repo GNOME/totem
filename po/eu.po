@@ -6,12 +6,12 @@
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015, 2016, 2017.
 # Julen Ruiz Aizpuru <julenx@gmail.com>, 2011.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2022.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2019, 2020, 2022, 2023.
 msgid ""
 msgstr "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-08-31 10:00+0100\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-01-26 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -21,8 +21,8 @@ msgstr "Project-Id-Version: totem master\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Bideoak"
 
@@ -177,7 +177,7 @@ msgid ""
 "purposes only."
 msgstr "Desgaitu hardware bidezko deskodetzaileak eta erabili software bidezkoak soilik. Arazketarako soilik."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "Estereoa"
 
@@ -205,88 +205,111 @@ msgstr "AC3"
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "Kanpoko azpitituluak"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "Kargatu _azpitituluen fitxategiak filma kargatzean"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_Letra-tipoa:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_Kodeketa:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "Hautatu azpitituluen letra-tipoa"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "Pluginak"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "Pluginak…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "Orokorra"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "Bideoa"
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "Kanpoko azpitituluak"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Desgaitu bideo gurutzelarkatuen gurutzelarkatuak _bereiztea"
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "Kargatu _azpitituluen fitxategiak filma kargatzean"
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "Kolore-balantzea"
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_Letra-tipoa"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_Distira:"
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_Kodeketa"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "_Kontrastea:"
-
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "Sat_urazioa:"
-
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_Ñabardura:"
-
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "Berrezarri _lehenetsietara"
-
-#: data/totem-preferences-dialog.ui:683
+#: data/totem-preferences-dialog.ui:165
 msgid "Display"
 msgstr "Pantaila"
 
-#: data/totem-preferences-dialog.ui:724
+#. Tab label in the Preferences dialogue
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
+msgid "Video"
+msgstr "Bideoa"
+
+#: data/totem-preferences-dialog.ui:176
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "Desgaitu bideo gurutzelarkatuen gurutzelarkatuak _bereiztea"
+
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr "Bideoak automatikoki gurutzelarkatzen dira beharrezkoa denean.\n"
+"Desgaitu gurutzelarkatzea artefaktu grafikoak sortzen badira, adibidez orrazi formakoak."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "Desgaitu hardware bidezko azelerazioa"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr "Hardware bidezko azelerazioa automatikoki erabiltzen da erabilgarri dagoenean.\n"
+"Desgaitu hura bideoa erreproduzitzean arazoak agertzen badira."
+
+#: data/totem-preferences-dialog.ui:218
+msgid "Color Balance"
+msgstr "Kolore-balantzea"
+
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "_Distira"
+
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "_Kontrastea"
+
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "Sat_urazioa"
+
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "_Ñabardura"
+
+#: data/totem-preferences-dialog.ui:425
+msgid "Reset to _Defaults"
+msgstr "Berrezarri _lehenetsietara"
+
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "Audioa"
+
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "Audioaren irteera"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "_Audioaren irteera mota:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "_Audioaren irteera mota"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "Audioa"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "Pluginak"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "Egileak"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "Bertsioa"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "Webgunea"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -445,8 +468,8 @@ msgstr "Joan 10 minutu aurrera"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "Saltatu hona…"
+msgid "Go to 10%, 20%, 30%…"
+msgstr "Joan %10, %20, %30era…"
 
 #: data/shortcuts.ui:308
 msgctxt "shortcut window"
@@ -473,122 +496,139 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Nabigatu eskuinera"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "Joan menu nagusira"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Azpitituluak"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Hautatu hurrengo azpititulua"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Txandakatu azpitituluak"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "_Hobespenak"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "Las_ter-teklak"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "Gehitu _lokaleko bideoa…"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "Gehitu _webeko bideoa…"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "Aspektu-e_rlazioa"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Auto"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Karratua"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TB)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (panoramikoa)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "Aldatu an_geluak"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "E_gotzi"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "Hizkuntzak"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "Azpitituluak"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "_Hautatu testuaren azpitituluak…"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "E_rrepikatze-modua"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "_DVD menua"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "_Tituluaren menua"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "A_udioaren menua"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "_Angeluaren menua"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "A_talen menua"
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "Abiadura"
+
+#: data/totem.ui:432 data/totem.ui:435
+msgid "Previous Chapter/Movie"
+msgstr "Aurreko kapitulua/filma"
+
+#: data/totem.ui:456 data/totem.ui:459
+msgid "Play / Pause"
+msgstr "Erreproduzitu / pausarazi"
+
+#: data/totem.ui:472 data/totem.ui:475
+msgid "Next Chapter/Movie"
+msgstr "Hurrengo kapitulua/filma"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -601,7 +641,6 @@ msgstr "Idatzi fitxategiaren _helbidea irekitzeko:"
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -614,8 +653,8 @@ msgid "Password requested for RTSP server"
 msgstr "RTSP zerbitzariak pasahitza eskatzen du"
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
-msgstr "Ezin izan da OpenGL euskarria hasieratu"
+msgid "Could not initialise OpenGL support."
+msgstr "Ezin izan da OpenGL euskarria hasieratu."
 
 #: src/backend/bacon-video-widget.c:3362
 msgid "The DVD device you specified seems to be invalid."
@@ -706,19 +745,23 @@ msgid ""
 "first."
 msgstr "Ezin da fitxategia erreproduzitu sarearen bitartez. Saiatu aurrenik lokalera deskargatzen."
 
-#: src/backend/bacon-video-widget.c:5089
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
+msgstr "Fitxategia ezin da erreproduzitu. Saiatu erreprodukzioa berrabiarazten."
+
+#: src/backend/bacon-video-widget.c:5091
 msgid "Surround"
 msgstr "Ingurakaria"
 
-#: src/backend/bacon-video-widget.c:5091
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "Monoa"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr "Euskarriak onartzen ez den bideo-korrontea dauka."
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -754,7 +797,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -877,7 +920,7 @@ msgstr "Fitxategia"
 msgid "Resolution"
 msgstr "Bereizmena"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "Iraupena"
 
@@ -905,7 +948,7 @@ msgstr "Bilaketa-errorea"
 msgid "Local"
 msgstr "Lokala"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Kanalak"
 
@@ -960,45 +1003,33 @@ msgstr "Auto"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausatu"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Bideoak aplikazioak ezin du “%s” erreproduzitu."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr "Bideoak aplikazioak ezin ditu laguntza-edukiak bistaratu."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "Aurreko kapitulua/filma"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "Erreproduzitu / pausarazi"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "Hurrengo kapitulua/filma"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr "Bideoak aplikazioa ezin da abiarazi."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Ez dago arrazoirik."
 
@@ -1078,29 +1109,20 @@ msgstr "%d. titulua"
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "“%s” erreprodukzio-zerrenda ezin izan da analizatu, hondatuta egongo da."
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "Konfiguratu pluginak"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "It_xi"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
 msgstr "Gehitu gogokoei"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "Ausaz"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "Ezabatu"
 
@@ -1332,7 +1354,7 @@ msgid "Searching for subtitles…"
 msgstr "Azpitituluak bilatzen…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "Azpitituluak deskargatzen…"
 
@@ -1350,38 +1372,40 @@ msgstr "Ezin izan da OpenSubtitles webgunearekin kontaktatu."
 msgid "No results found."
 msgstr "Ez da emaitzarik aurkitu."
 
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "Formatua"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "Balorazioa"
-
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr "_Deskargatu filmaren azpitituluak…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "Azpitituluak bilatzen…"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "Deskargatu filmaren azpititulua"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "Azpitituluen _hizkuntza:"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "Formatua"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "Balorazioa"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "_Erreproduzitu azpitituluekin"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "It_xi"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1399,184 +1423,146 @@ msgstr "Filmaren propietateak"
 msgid "Adds movie properties menu item"
 msgstr "Filmaren propietateak menuko elementuari gehitzen dizkio"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "Propietateak"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "_Propietateak"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "Titulua:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "Propietateak"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "Artista:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "Titulua"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "Iraupena:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "Artista"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "Urtea:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "Albuma"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "Albuma:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "Urtea"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "Iruzkina:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "Iruzkina"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "Edukiontzia:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "Edukiontzia"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "Dimentsioak:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "Dimentsioak"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "Kodeka:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "Kodeka"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "Fotograma-emaria:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "Fotograma-emaria"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "Bit-emaria:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "Bit-emaria"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "Lagin-maiztasuna:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "Kanalak:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "Ezezaguna"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "Lagin-emaria"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "E/E"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "E/E"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "E/E"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "E/E"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 kanal"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "ordu %d"
 msgstr[1] "%d ordu"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "minutu %d"
 msgstr[1] "%d minutu"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1584,53 +1570,53 @@ msgstr[0] "segundo %d"
 msgstr[1] "%d segundo"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 segundo"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "Fotograma %0.3f segundoko"
 msgstr[1] "%0.3f fotograma segundoko"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1834,44 +1820,6 @@ msgstr "Egin _pantaila-argazkia"
 msgid "Create Screenshot _Gallery…"
 msgstr "Sortu pantaila-argazkien _galeria…"
 
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr "Saltatu hona"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "“Saltatu hona” elkarrizketa-koadroa eskaintzen du"
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "_Saltatu hona:"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "segundo"
-msgstr[1] "segundo"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "7"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr "_Saltatu hona"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
-msgstr "_Saltatu hona…"
-
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
@@ -1922,6 +1870,69 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Erabiltzailearen agentea ezartzen du Vimeo gunearentzako"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "Hautatu azpitituluen letra-tipoa"
+
+#~ msgid "Plugins…"
+#~ msgstr "Pluginak…"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Skip to…"
+#~ msgstr "Saltatu hona…"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "Konfiguratu pluginak"
+
+#~ msgid "Duration:"
+#~ msgstr "Iraupena:"
+
+#~ msgid "Channels:"
+#~ msgstr "Kanalak:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgid "Skip To"
+#~ msgstr "Saltatu hona"
+
+#~ msgid "Provides the “Skip to” dialog"
+#~ msgstr "“Saltatu hona” elkarrizketa-koadroa eskaintzen du"
+
+#~ msgid "_Skip to:"
+#~ msgstr "_Saltatu hona:"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "segundo"
+#~ msgstr[1] "segundo"
+
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "_Skip To"
+#~ msgstr "_Saltatu hona"
+
+#~ msgid "_Skip To…"
+#~ msgstr "_Saltatu hona…"
 
 #~ msgid "Could not initialize the thread-safe libraries."
 #~ msgstr "Ezin izan dira hari seguruko liburutegiak abiarazi."
