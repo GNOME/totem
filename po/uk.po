@@ -5,13 +5,13 @@
 # Maxim Dzumanenko <dziumanenko@gmail.com>, 2003-2009.
 # Yury Bulka <yurkobb@gmail.com>, 2011.
 # Daniel Korostil <ted.korostiled@gmail.com>, 2013, 2014, 2015, 2016, 2017.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-12-09 18:51+0000\n"
-"PO-Revision-Date: 2022-12-23 16:12+0200\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-01-27 20:19+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Generator: Lokalize 20.12.0\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:204
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
 #: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Відео"
@@ -231,12 +231,10 @@ msgid "_Load subtitle files when movie is loaded"
 msgstr "_Завантажувати файли субтитрів при завантаженому відео"
 
 #: data/totem-preferences-dialog.ui:117
-#| msgid "_Font:"
 msgid "_Font"
 msgstr "_Шрифт"
 
 #: data/totem-preferences-dialog.ui:140
-#| msgid "_Encoding:"
 msgid "_Encoding"
 msgstr "_Кодування"
 
@@ -261,11 +259,10 @@ msgid ""
 "Disable deinterlacing if you encounter graphical artifacts such as combing."
 msgstr ""
 "З відео буде автоматично усунено черезрядковість, якщо це потрібно.\n"
-"Вимкніть усування черезрядковості, якщо ви спостерігаєте графічні дефекти,"
-" зокрема гребінку."
+"Вимкніть усування черезрядковості, якщо ви спостерігаєте графічні дефекти, "
+"зокрема гребінку."
 
 #: data/totem-preferences-dialog.ui:196
-#| msgid "Disable hardware decoders"
 msgid "Disable hardware acceleration"
 msgstr "Вимкнути апаратне прискорення"
 
@@ -282,22 +279,18 @@ msgid "Color Balance"
 msgstr "Баланс кольорів"
 
 #: data/totem-preferences-dialog.ui:239
-#| msgid "_Brightness:"
 msgid "_Brightness"
 msgstr "_Яскравість"
 
 #: data/totem-preferences-dialog.ui:287
-#| msgid "Co_ntrast:"
 msgid "Co_ntrast"
 msgstr "_Контраст"
 
 #: data/totem-preferences-dialog.ui:335
-#| msgid "Sat_uration:"
 msgid "Sat_uration"
 msgstr "_Насиченість"
 
 #: data/totem-preferences-dialog.ui:383
-#| msgid "_Hue:"
 msgid "_Hue"
 msgstr "_Відтінок"
 
@@ -315,7 +308,6 @@ msgid "Audio Output"
 msgstr "Вивід звуку"
 
 #: data/totem-preferences-dialog.ui:453
-#| msgid "_Audio output type:"
 msgid "_Audio output type"
 msgstr "Тип з_вукового виходу"
 
@@ -328,7 +320,6 @@ msgid "Authors"
 msgstr "Автори"
 
 #: data/totem-preferences-plugin-row.ui:71
-#| msgid "Persian"
 msgid "Version"
 msgstr "Версія"
 
@@ -521,17 +512,22 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Праворуч"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "Перейти до головного меню"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Субтитри"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Вибір наступних субтитрів"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Увімкнути/Вимкнути субтитри"
@@ -638,15 +634,15 @@ msgstr "Меню _фрагментів"
 msgid "Speed"
 msgstr "Швидкість"
 
-#: data/totem.ui:431 data/totem.ui:434
+#: data/totem.ui:432 data/totem.ui:435
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: data/totem.ui:455 data/totem.ui:458
+#: data/totem.ui:456 data/totem.ui:459
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: data/totem.ui:471 data/totem.ui:474
+#: data/totem.ui:472 data/totem.ui:475
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
@@ -673,7 +669,6 @@ msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
 #: src/backend/bacon-video-widget.c:3352
-#| msgid "Could not initialise OpenGL support"
 msgid "Could not initialise OpenGL support."
 msgstr "Не вдалося ініціалізувати підтримку OpenGL."
 
@@ -784,7 +779,6 @@ msgstr ""
 "його на локальний диск."
 
 #: src/backend/bacon-video-widget.c:3672
-#| msgid "This file is encrypted and cannot be played back."
 msgid "This file could not be played. Try restarting playback."
 msgstr "Не вдалося відтворити цей файл. Спробуйте перезапустити відтворення."
 
@@ -1508,59 +1502,48 @@ msgid "Properties"
 msgstr "Властивості"
 
 #: src/plugins/properties/properties.ui:84
-#| msgid "Title:"
 msgid "Title"
 msgstr "Назва"
 
 #: src/plugins/properties/properties.ui:130
-#| msgid "Artist:"
 msgid "Artist"
 msgstr "Виконавець"
 
 #: src/plugins/properties/properties.ui:177
-#| msgid "Album:"
 msgid "Album"
 msgstr "Альбом"
 
 #: src/plugins/properties/properties.ui:224
-#| msgid "Year:"
 msgid "Year"
 msgstr "Рік"
 
 #: src/plugins/properties/properties.ui:316
-#| msgid "Comment:"
 msgid "Comment"
 msgstr "Коментар"
 
 #: src/plugins/properties/properties.ui:364
-#| msgid "Container:"
 msgid "Container"
 msgstr "Контейнер"
 
 #: src/plugins/properties/properties.ui:453
-#| msgid "Dimensions:"
 msgid "Dimensions"
 msgstr "Розміри"
 
 #: src/plugins/properties/properties.ui:498
 #: src/plugins/properties/properties.ui:677
-#| msgid "Codec:"
 msgid "Codec"
 msgstr "Кодек"
 
 #: src/plugins/properties/properties.ui:543
-#| msgid "Framerate:"
 msgid "Framerate"
 msgstr "Частота кадрів"
 
 #: src/plugins/properties/properties.ui:588
 #: src/plugins/properties/properties.ui:812
-#| msgid "Bitrate:"
 msgid "Bitrate"
 msgstr "Швидкість потоку"
 
 #: src/plugins/properties/properties.ui:767
-#| msgid "Sample rate:"
 msgid "Sample rate"
 msgstr "Частота дискретизації"
 
