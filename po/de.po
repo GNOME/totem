@@ -15,13 +15,13 @@
 # Benjamin Steinwender <b@stbe.at>, 2014.
 # Florian Heiser <postfuerflo@gmail.com>, 2016.
 # Tim Sabsch <tim@sabsch.com>, 2019-2020.
-# Jürgen Benvenuti <gastornis@posteo.org>, 2022.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-08-21 20:51+0200\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-01-26 16:44+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -32,8 +32,8 @@ msgstr ""
 "X-Generator: Poedit 3.1.1\n"
 "X-Project-Style: gnome\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Videos"
 
@@ -214,7 +214,7 @@ msgstr ""
 "Hardware-Decoder abschalten und nur Software-Decoder verwenden. Dient "
 "ausschließlich der Fehlerdiagnose."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -242,89 +242,115 @@ msgstr "AC3-Durchschleifen"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "Externe Untertitel"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "_Untertitel laden, sobald ein Video geladen wird"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_Schrift:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_Kodierung:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "Untertitelschrift auswählen"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "Erweiterungen"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "Erweiterungen …"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "Allgemein"
 
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "Externe Untertitel"
+
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "_Untertitel laden, sobald ein Video geladen wird"
+
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_Schrift"
+
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_Kodierung"
+
+#: data/totem-preferences-dialog.ui:165
+msgid "Display"
+msgstr "Anzeige"
+
 #. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
 msgid "Video"
 msgstr "Video"
 
 # Hab ich absichtlich kurz gehalten, es gibt noch eine Minihilfe dazu.
-#: data/totem-preferences-dialog.ui:383
+#: data/totem-preferences-dialog.ui:176
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "_Deinterlacing deaktivieren"
 
-#: data/totem-preferences-dialog.ui:423
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+"Videos werden bei Bedarf automatisch im Deinterlacing-Modus wiedergegeben.\n"
+"Deaktivieren Sie das Deinterlacing, wenn grafische Artefakte wie etwa "
+"Kammeffekte auftreten."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "Hardware-Beschleunigung abschalten"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+"Hardware-Beschleunigung wird automatisch verwendet, wenn verfügbar.\n"
+"Deaktivieren Sie sie, wenn Sie Probleme mit der Video-Wiedergabe bekommen."
+
+#: data/totem-preferences-dialog.ui:218
 msgid "Color Balance"
 msgstr "Farbabgleich"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_Helligkeit:"
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "_Helligkeit"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "_Kontrast:"
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "_Kontrast"
 
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "_Sättigung:"
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "_Sättigung"
 
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "F_arbton:"
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "F_arbton"
 
-#: data/totem-preferences-dialog.ui:646
+#: data/totem-preferences-dialog.ui:425
 msgid "Reset to _Defaults"
 msgstr "Auf V_orgaben zurücksetzen"
 
-#: data/totem-preferences-dialog.ui:683
-msgid "Display"
-msgstr "Anzeige"
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "Audio"
 
-#: data/totem-preferences-dialog.ui:724
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "Audio-Ausgabe"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "Audio-_Ausgabetyp:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "Audio-_Ausgabetyp"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "Audio"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "Erweiterungen"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "Autoren"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "Version"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "Internet-Seite"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -483,8 +509,8 @@ msgstr "10 Minuten vorwärts gehen"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "Springen zu …"
+msgid "Go to 10%, 20%, 30%…"
+msgstr "Zu 10%, 20%, 30% usw. gehen"
 
 #: data/shortcuts.ui:308
 msgctxt "shortcut window"
@@ -511,122 +537,139 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Nach rechts"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "Zum Hauptmenü gehen"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Untertitel"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Nächsten Untertitel auswählen"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Untertitel ein-/ausschalten"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "_Einstellungen"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "Tasten_kürzel"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "_Lokales Video hinzufügen …"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "Internet-Video hinzufügen …"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "_Ansichtsverhältnis"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Automatisch"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Quadratisch"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (klassisches TV-Format)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Breitbild)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "Blick_winkel wechseln"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "_Auswerfen"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "Sprachen"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "Untertitel"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "Text-Untertitel _auswählen …"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "_Endlosschleife"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "_DVD-Menü"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "_Titelmenü"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "_Audio-Menü"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "_Kameramenü"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "Ka_pitelmenü"
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "Abspielgeschwindigkeit"
+
+#: data/totem.ui:432 data/totem.ui:435
+msgid "Previous Chapter/Movie"
+msgstr "Vorheriges Kapitel/Film"
+
+#: data/totem.ui:456 data/totem.ui:459
+msgid "Play / Pause"
+msgstr "Wiedergabe / Pause"
+
+#: data/totem.ui:472 data/totem.ui:475
+msgid "Next Chapter/Movie"
+msgstr "Nächstes Kapitel/Film"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -639,7 +682,6 @@ msgstr "Bitte geben Sie die _Adresse der zu öffnenden Datei ein:"
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
@@ -652,7 +694,7 @@ msgid "Password requested for RTSP server"
 msgstr "Für den RTSP-Server wird ein Passwort angefordert"
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
+msgid "Could not initialise OpenGL support."
 msgstr "»OpenGL«-Unterstützung konnte nicht initialisiert werden."
 
 #: src/backend/bacon-video-widget.c:3362
@@ -762,19 +804,25 @@ msgstr ""
 "Diese Datei kann nicht über das Netzwerk abgespielt werden. Versuchen Sie "
 "die Datei vorher herunterzuladen."
 
-#: src/backend/bacon-video-widget.c:5089
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
+msgstr ""
+"Diese Datei konnte nicht wiedergegeben werden. Versuchen Sie, die Wiedergabe "
+"neu zu starten."
+
+#: src/backend/bacon-video-widget.c:5091
 msgid "Surround"
 msgstr "Surround"
 
-#: src/backend/bacon-video-widget.c:5091
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr "Das Medium enthält nicht unterstützte Video-Formate."
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -815,7 +863,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -939,7 +987,7 @@ msgstr "Dateiname"
 msgid "Resolution"
 msgstr "Auflösung"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "Dauer"
 
@@ -967,7 +1015,7 @@ msgstr "Fehler beim Suchen"
 msgid "Local"
 msgstr "Lokal"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Kanäle"
 
@@ -1022,45 +1070,33 @@ msgstr "Automatisch"
 msgid "None"
 msgstr "Keine"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "Pause"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "Wiedergabe"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videos konnte »%s« nicht wiedergeben."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr "Videos konnte den Hilfeindex nicht anzeigen."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "Vorheriges Kapitel/Film"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "Wiedergabe / Pause"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "Nächstes Kapitel/Film"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr "Videos konnte nicht gestartet werden."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Ursache unbekannt."
 
@@ -1144,29 +1180,20 @@ msgstr ""
 "Die Wiedergabeliste »%s« konnte nicht verarbeitet werden, möglicherweise ist "
 "sie fehlerhaft."
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "Erweiterungen einrichten"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "S_chließen"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
 msgstr "Zu Favoriten hinzufügen"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "Wiedergabe"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "Zufallsmodus"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "Löschen"
 
@@ -1402,7 +1429,7 @@ msgid "Searching for subtitles…"
 msgstr "Untertitel werden gesucht …"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "Untertitel werden heruntergeladen …"
 
@@ -1420,38 +1447,40 @@ msgstr "Es konnte keine Verbindung zur OpenSubtitles-Website aufgebaut werden."
 msgid "No results found."
 msgstr "Keine Suchergebnisse."
 
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "Format"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "Bewertung"
-
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr "Film-Untertitel herunterla_den …"
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "Untertitel werden gesucht …"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "Film-Untertitel herunterladen"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "Untertitel-_Sprache:"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "Format"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "Bewertung"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "_Untertitel anzeigen"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "S_chließen"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1469,184 +1498,146 @@ msgstr "Film-Eigenschaften"
 msgid "Adds movie properties menu item"
 msgstr "Menüeintrag für Filmeigenschaften hinzufügen"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbit/s"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "k.A."
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "k.A."
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "Eigenschaften"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "_Eigenschaften"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "Titel:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "Eigenschaften"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "Künstler:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "Titel"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "Dauer:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "Künstler"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "Jahr:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "Album"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "Album:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "Jahr"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "Kommentar:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "Kommentar"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "Container:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "Container"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "Abmessungen:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "Abmessungen"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "Codec:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "Codec"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "Bildfrequenz:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "Bildfrequenz"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "Bitrate:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "Bitrate"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "Abtastrate:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "Kanäle:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "Unbekannt"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "Abtastrate"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "k.A."
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "k.A."
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "k.A."
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "k.A."
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "k.A."
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "k.A."
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 Kanäle"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d Stunde"
 msgstr[1] "%d Stunden"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d Minute"
 msgstr[1] "%d Minuten"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1655,7 +1646,7 @@ msgstr[1] "%d Sekunden"
 
 # CHECK
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
@@ -1663,14 +1654,14 @@ msgstr "%s %s %s"
 
 # CHECK
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
@@ -1678,32 +1669,32 @@ msgstr "%s"
 
 # CHECK
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 Sekunden"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f Einzelbild pro Sekunde"
 msgstr[1] "%0.3f Einzelbilder pro Sekunde"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1915,45 +1906,6 @@ msgstr "Bild_schirmfoto aufnehmen"
 msgid "Create Screenshot _Gallery…"
 msgstr "Bildschirmfoto-_Galerie erstellen …"
 
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr "Springen zu"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "Stellt den »Springen zu«-Dialog bereit"
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "_Springen zu:"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "Sekunde"
-msgstr[1] "Sekunden"
-
-# »Sekunden« -> 8
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "8"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr "_Springen zu"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
-msgstr "_Springen zu …"
-
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
@@ -2004,6 +1956,70 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Richtet den Benutzeragenten für die Vimeo-Seite ein"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "Untertitelschrift auswählen"
+
+#~ msgid "Plugins…"
+#~ msgstr "Erweiterungen …"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Skip to…"
+#~ msgstr "Springen zu …"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "Erweiterungen einrichten"
+
+#~ msgid "Duration:"
+#~ msgstr "Dauer:"
+
+#~ msgid "Channels:"
+#~ msgstr "Kanäle:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgid "Skip To"
+#~ msgstr "Springen zu"
+
+#~ msgid "Provides the “Skip to” dialog"
+#~ msgstr "Stellt den »Springen zu«-Dialog bereit"
+
+#~ msgid "_Skip to:"
+#~ msgstr "_Springen zu:"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "Sekunde"
+#~ msgstr[1] "Sekunden"
+
+# »Sekunden« -> 8
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "8"
+
+#~ msgid "_Skip To"
+#~ msgstr "_Springen zu"
+
+#~ msgid "_Skip To…"
+#~ msgstr "_Springen zu …"
 
 #~ msgid "Could not initialize the thread-safe libraries."
 #~ msgstr ""
