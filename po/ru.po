@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-12-09 18:51+0000\n"
-"PO-Revision-Date: 2022-12-16 22:40+0300\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-01-26 11:20+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -30,7 +30,7 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:204
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
 #: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Видео"
@@ -347,7 +347,7 @@ msgstr "Сайт"
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Основное"
+msgstr "Общие"
 
 #: data/shortcuts.ui:21
 msgctxt "shortcut window"
@@ -387,7 +387,7 @@ msgstr "Сохранить кадр"
 #: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Завершить"
+msgstr "Закрыть"
 
 #: data/shortcuts.ui:78
 msgctxt "shortcut window"
@@ -529,17 +529,22 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Перейти вправо"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "Перейти в главное меню"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Субтитры"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Выбрать следующие субтитры"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Включить субтитры"
@@ -646,15 +651,15 @@ msgstr "Меню _фрагментов"
 msgid "Speed"
 msgstr "Скорость"
 
-#: data/totem.ui:431 data/totem.ui:434
+#: data/totem.ui:432 data/totem.ui:435
 msgid "Previous Chapter/Movie"
 msgstr "Предыдущий фрагмент/фильм"
 
-#: data/totem.ui:455 data/totem.ui:458
+#: data/totem.ui:456 data/totem.ui:459
 msgid "Play / Pause"
 msgstr "Воспроизведение / Пауза"
 
-#: data/totem.ui:471 data/totem.ui:474
+#: data/totem.ui:472 data/totem.ui:475
 msgid "Next Chapter/Movie"
 msgstr "Следующий фрагмент/фильм"
 
@@ -1121,7 +1126,7 @@ msgstr "Переключить полноэкранный режим"
 
 #: src/totem-options.c:60
 msgid "Quit"
-msgstr "Выйти"
+msgstr "Закрыть"
 
 #: src/totem-options.c:61
 msgid "Enqueue"
@@ -1802,15 +1807,15 @@ msgstr "Воспроизведение фильма"
 
 #: src/plugins/screenshot/gallery.ui:41
 msgid "Screenshot width (in pixels):"
-msgstr "Ширина кадра (в точках растра):"
+msgstr "Ширина снимка экрана (в пикселях):"
 
 #: src/plugins/screenshot/gallery.ui:50
 msgid "Calculate the number of screenshots"
-msgstr "Рассчитать количество кадров"
+msgstr "Рассчитать количество снимков экрана"
 
 #: src/plugins/screenshot/gallery.ui:73
 msgid "Number of screenshots:"
-msgstr "Количество кадров:"
+msgstr "Количество снимков экрана:"
 
 #. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
 #. * same as used in GNOME Shell:
@@ -1824,7 +1829,7 @@ msgstr "Снимки экрана"
 #: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
-msgstr "Кадр от %s.png"
+msgstr "Снимок экрана от %s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
@@ -1832,7 +1837,7 @@ msgstr "Кадр от %s.png"
 #: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "Кадр от %s-%d.png"
+msgstr "Снимок экрана от %s-%d.png"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1840,11 +1845,11 @@ msgstr "Снимок экрана"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:7
 msgid "Allows screenshots and galleries to be taken of videos"
-msgstr "Позволяет делать снимки экранов"
+msgstr "Позволяет делать снимки экрана и галереи из видео"
 
 #: src/plugins/screenshot/totem-gallery.c:86
 msgid "Save Gallery"
-msgstr "Сохранить серию кадров"
+msgstr "Сохранить галерею"
 
 #: src/plugins/screenshot/totem-gallery.c:93
 msgid "_Save"
@@ -1857,23 +1862,23 @@ msgstr "_Сохранить"
 #: src/plugins/screenshot/totem-gallery.c:110
 #, c-format
 msgid "Gallery-%s-%d.jpg"
-msgstr "Серия-кадров-%s-%d.jpg"
+msgstr "Галерея-%s-%d.jpg"
 
 #. Set up the window
 #: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
-msgstr "Создание серии кадров…"
+msgstr "Создание галереи…"
 
 #. Set the progress label
 #: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
-msgstr "Сохранение серии кадров в «%s»"
+msgstr "Сохранение галереи в «%s»"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "Videos could not get a screenshot of the video."
-msgstr "Не удалось получить кадр этого фильма."
+msgstr "Не удалось получить снимок экрана этого видео."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1881,11 +1886,11 @@ msgstr "Этого не должно было случиться. Пожалуй
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:321
 msgid "Take _Screenshot"
-msgstr "Сохранить _кадр"
+msgstr "Сделать _снимок экрана"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:327
 msgid "Create Screenshot _Gallery…"
-msgstr "Создать галерею из _кадров…"
+msgstr "Создать галерею снимков экрана…"
 
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
