@@ -7,13 +7,13 @@
 # Andy Apdhani <imtheface@gmail.com>, 2007.
 # Dirgita <dirgitadevina@yahoo.co.id>, 2010, 2011, 2012, 2014.
 # Andika Triwidada <andika@gmail.com>, 2011, 2012, 2013, 2014.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017, 2019, 2020, 2021, 2022.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-08-22 17:08+0700\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-01-31 10:50+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -21,10 +21,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "Video"
 
@@ -193,7 +193,7 @@ msgstr ""
 "Nonaktifkan dekoder perangkat keras dan gunakan hanya dekoder perangkat "
 "lunak. Untuk tujuan awakutu saja."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -221,88 +221,114 @@ msgstr "Lewatan AC3"
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "Subtitel Eksternal"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "Memuat berkas subtite_l saat film dibuka"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "_Fonta:"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "_Enkoding:"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "Pilih Fonta Subtitel"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "Pengaya"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "Pengaya…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "Umum"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "Video"
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "Subtitel Eksternal"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Nonaktifkan _deinterlasi video yang berinterlasi"
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "Memuat berkas subtite_l saat film dibuka"
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "Keseimbangan Warna"
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "_Fonta"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "_Kecerahan:"
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "_Enkoding"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "Ko_ntras:"
-
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "Sat_urasi:"
-
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "_Corak:"
-
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "Kembali ke _Pengaturan Awal"
-
-#: data/totem-preferences-dialog.ui:683
+#: data/totem-preferences-dialog.ui:165
 msgid "Display"
 msgstr "Tampilan"
 
-#: data/totem-preferences-dialog.ui:724
+#. Tab label in the Preferences dialogue
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
+msgid "Video"
+msgstr "Video"
+
+#: data/totem-preferences-dialog.ui:176
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "Nonaktifkan _deinterlasi video yang berinterlasi"
+
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+"Video dideinterlaced secara otomatis saat diperlukan.\n"
+"Nonaktifkan deinterlacing jika Anda menemukan artefak grafis seperti "
+"menyisir."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "Nonaktifkan akselerasi perangkat keras"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+"Akselerasi perangkat keras digunakan secara otomatis jika tersedia.\n"
+"Nonaktifkan jika Anda mengalami masalah pemutaran video."
+
+#: data/totem-preferences-dialog.ui:218
+msgid "Color Balance"
+msgstr "Keseimbangan Warna"
+
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "_Kecerahan"
+
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "Ko_ntras"
+
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "Sat_urasi"
+
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "_Corak"
+
+#: data/totem-preferences-dialog.ui:425
+msgid "Reset to _Defaults"
+msgstr "Kembali ke _Pengaturan Awal"
+
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "Audio"
+
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "Keluaran Audio"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "Jenis keluaran _audio:"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "Jenis keluaran _audio"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "Audio"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "Pengaya"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "Penulis"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "Versi"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "Situs Web"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -461,8 +487,8 @@ msgstr "Maju 10 menit"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "Lompat Ke…"
+msgid "Go to 10%, 20%, 30%…"
+msgstr "Pergi ke 10%, 20%, 30% ..."
 
 #: data/shortcuts.ui:308
 msgctxt "shortcut window"
@@ -489,122 +515,139 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Navigasi kanan"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "Buka menu utama"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "Subtitel"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "Pilih subtitel berikutnya"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Jungkitkan subtitel"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "Prefere_nsi"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "Pintasan Papan Ti_k"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "Ba_ntuan"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "Tambah Video _Lokal…"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "Tambah Video _Web…"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "Perbandingan _Aspek"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Otomatis"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Bujur Sangkar"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Layar Lebar)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "Pindah Su_dut"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "K_eluarkan"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "Bahasa"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "Subtitel"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "Pilih Teks _Subtitel…"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "Be_rulang"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "Menu _DVD"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "Menu _Judul"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "Menu A_udio"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "Menu S_udut Kamera"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "Menu _Bab"
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "Kecepatan"
+
+#: data/totem.ui:432 data/totem.ui:435
+msgid "Previous Chapter/Movie"
+msgstr "Bab/Film Sebelumnya"
+
+#: data/totem.ui:456 data/totem.ui:459
+msgid "Play / Pause"
+msgstr "Putar / Tahan"
+
+#: data/totem.ui:472 data/totem.ui:475
+msgid "Next Chapter/Movie"
+msgstr "Bab/Film Selanjutnya"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -617,7 +660,6 @@ msgstr "Masukkan alamat berkas yang ingin Anda buka:"
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -630,8 +672,8 @@ msgid "Password requested for RTSP server"
 msgstr "Diperlukan sandi untuk server RTSP"
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
-msgstr "Tidak dapat menginisialisasi dukungan OpenGL"
+msgid "Could not initialise OpenGL support."
+msgstr "Tidak dapat menginisialisasi dukungan OpenGL."
 
 #: src/backend/bacon-video-widget.c:3362
 msgid "The DVD device you specified seems to be invalid."
@@ -726,19 +768,23 @@ msgstr ""
 "Berkas ini tak bisa diputar melalui jaringan. Cobalah untuk mengunduhnya "
 "lebih dulu."
 
-#: src/backend/bacon-video-widget.c:5089
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
+msgstr "Berkas ini tidak dapat diputar. Coba mulai ulang pemutaran."
+
+#: src/backend/bacon-video-widget.c:5091
 msgid "Surround"
 msgstr "Stereo"
 
-#: src/backend/bacon-video-widget.c:5091
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "Mono"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr "Media mengandung siaran video yang tidak didukung."
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -775,7 +821,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -899,7 +945,7 @@ msgstr "Nama berkas"
 msgid "Resolution"
 msgstr "Resolusi"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "Durasi"
 
@@ -927,7 +973,7 @@ msgstr "Galat Mencari"
 msgid "Local"
 msgstr "Lokal"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Kanal"
 
@@ -981,45 +1027,33 @@ msgstr "Otomatis"
 msgid "None"
 msgstr "Nihil"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "Tahan"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "Putar"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Video tidak dapat memutar \"%s\"."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr "Video tidak dapat menampilkan bantuan."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "Terjadi galat"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "Bab/Film Sebelumnya"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "Putar / Tahan"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "Bab/Film Selanjutnya"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr "Video tidak dapat dijalankan."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Tanpa alasan."
 
@@ -1099,29 +1133,20 @@ msgstr "Judul %d"
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Daftar main \"%s\" tidak dapat dibaca. Sepertinya rusak."
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "Konfigurasi Pengaya"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "_Tutup"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
 msgstr "Tambah ke Favorit"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "Putar"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "Acak"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "Hapus"
 
@@ -1356,7 +1381,7 @@ msgid "Searching for subtitles…"
 msgstr "Mencari subtitel…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "Mengunduh subtitel…"
 
@@ -1374,38 +1399,40 @@ msgstr "Tak dapat menghubungi situs web OpenSubtitles."
 msgid "No results found."
 msgstr "Tak memperoleh hasil."
 
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "Format"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "Rating"
-
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr "Un_duh Subtitel Film…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "Mencari subtitel…"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "Unduh Subtitel Film"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "Bahasa subtite_l:"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "Format"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "Rating"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "_Putar dengan Subtitel"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "_Tutup"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1423,234 +1450,196 @@ msgstr "Properti Film"
 msgid "Adds movie properties menu item"
 msgstr "Tambahkan butir menu properti film"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "T/A"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "T/A"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "Properti"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "_Properti"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "Judul:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "Properti"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "Artis:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "Judul"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "Durasi:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "Artis"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "Tahun:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "Album"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "Album:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "Tahun"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "Komentar:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "Komentar"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "Wadah:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "Kontainer"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "Dimensi:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "Dimensi"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "Kodek:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "Kodek"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "Laju Gambar:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "Laju Gambar"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "Laju bit:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "Laju bit"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "Laju sampel:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "Kanal:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "Tak Diketahui"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "Tak Diketahui"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "Tak Diketahui"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "Tak Diketahui"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "Tak Diketahui"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "Laju sampel"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "T/A"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "T/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "T/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "T/A"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "T/A"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "T/A"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 Kanal"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d jam"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d menit"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d detik"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0 detik"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f gambar per detik"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1859,43 +1848,6 @@ msgstr "Ambil _Cuplikan"
 msgid "Create Screenshot _Gallery…"
 msgstr "Buat _Galeri Cuplikan Layar…"
 
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr "Lompat ke"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "Menyediakan dialog \"Lompat ke\""
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "_Melompat ke:"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "detik"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "7"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr "_Lompat ke"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
-msgstr "_Lompat Ke…"
-
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
@@ -1946,6 +1898,68 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Atur user agent bagi situs Vimeo"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "Pilih Fonta Subtitel"
+
+#~ msgid "Plugins…"
+#~ msgstr "Pengaya…"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Skip to…"
+#~ msgstr "Lompat Ke…"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "Konfigurasi Pengaya"
+
+#~ msgid "Duration:"
+#~ msgstr "Durasi:"
+
+#~ msgid "Channels:"
+#~ msgstr "Kanal:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "Tak Diketahui"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "Tak Diketahui"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "Tak Diketahui"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "Tak Diketahui"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "Tak Diketahui"
+
+#~ msgid "Skip To"
+#~ msgstr "Lompat ke"
+
+#~ msgid "Provides the “Skip to” dialog"
+#~ msgstr "Menyediakan dialog \"Lompat ke\""
+
+#~ msgid "_Skip to:"
+#~ msgstr "_Melompat ke:"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "detik"
+
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "_Skip To"
+#~ msgstr "_Lompat ke"
+
+#~ msgid "_Skip To…"
+#~ msgstr "_Lompat Ke…"
 
 #~ msgid "Could not initialize the thread-safe libraries."
 #~ msgstr "Tak dapat menjalankan pustaka thread-safe."
