@@ -2293,7 +2293,7 @@ setup_browse (TotemGrilo *self)
 				self->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
 	g_object_bind_property (self->header, "select-mode",
-				self->header, "show-close-button",
+				gtk_bin_get_child (GTK_BIN (self->header)), "show-close-button",
 				G_BINDING_INVERT_BOOLEAN);
 
 	g_signal_connect (self->browser, "view-selection-changed",
@@ -2780,7 +2780,7 @@ totem_grilo_class_init (TotemGriloClass *klass)
 					 g_param_spec_object ("header",
 							      "Headerbar",
 							      "Headerbar.",
-							      HDY_TYPE_HEADER_BAR,
+							      TOTEM_TYPE_MAIN_TOOLBAR,
 							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (object_class,

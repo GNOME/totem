@@ -19,7 +19,7 @@
 #include <handy.h>
 
 #define TOTEM_TYPE_MAIN_TOOLBAR                 (totem_main_toolbar_get_type ())
-G_DECLARE_FINAL_TYPE (TotemMainToolbar, totem_main_toolbar, TOTEM, MAIN_TOOLBAR, HdyHeaderBar)
+G_DECLARE_FINAL_TYPE (TotemMainToolbar, totem_main_toolbar, TOTEM, MAIN_TOOLBAR, GtkBin)
 
 GType           totem_main_toolbar_get_type              (void) G_GNUC_CONST;
 GtkWidget*      totem_main_toolbar_new                   (void);
@@ -51,3 +51,5 @@ void            totem_main_toolbar_pack_start            (TotemMainToolbar *bar,
 							  GtkWidget        *child);
 void            totem_main_toolbar_pack_end              (TotemMainToolbar *bar,
 							  GtkWidget        *child);
+GtkWidget *     totem_main_toolbar_get_add_button        (TotemMainToolbar *bar);
+GtkWidget *     totem_main_button_get_main_menu_button   (TotemMainToolbar *bar);

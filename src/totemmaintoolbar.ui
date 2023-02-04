@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="totem">
+
+  <menu id="addmenu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Add _Local Video…</attribute>
+        <attribute name="action">app.open</attribute>
+        <attribute name="accel">&lt;Ctrl&gt;O</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Add _Web Video…</attribute>
+        <attribute name="action">app.open-location</attribute>
+        <attribute name="accel">&lt;Ctrl&gt;L</attribute>
+      </item>
+    </section>
+  </menu>
+
   <!-- interface-requires gtk+ 3.11 -->
-  <template class="TotemMainToolbar" parent="HdyHeaderBar">
+  <template class="TotemMainToolbar" parent="GtkBin">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="HdyHeaderBar" id="header_bar">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="show-close-button">True</property>
         <child>
-          <placeholder/>
+          <object class="GtkMenuButton" id="add_button">
+            <property name="visible">True</property>
+            <property name="valign">center</property>
+            <property name="use-popover">True</property>
+            <property name="menu-model">addmenu</property>
+            <signal name="toggled" handler="popup_menu_shown_cb"/>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">list-add-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack-type">start</property>
+          </packing>
         </child>
         <child>
           <object class="GtkButton" id="back_button">
@@ -32,6 +71,27 @@
           </object>
           <packing>
             <property name="pack_type">start</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuButton" id="main_menu_button">
+            <property name="visible">True</property>
+            <property name="valign">center</property>
+            <property name="use-popover">True</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -131,5 +191,7 @@
             </child>
           </object>
         </child>
+      </object>
+    </child>
   </template>
 </interface>

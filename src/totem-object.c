@@ -3788,6 +3788,13 @@ totem_setup_window (TotemObject *totem)
 	/* Grilo Headerbar */
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
 
+	/* Main menu */
+	totem->main_menu_button = totem_main_button_get_main_menu_button (TOTEM_MAIN_TOOLBAR (totem->header));
+	g_signal_connect (totem->main_menu_button, "toggled", G_CALLBACK (popup_menu_shown_cb), totem);
+
+	/* Add button */
+	totem->add_button = totem_main_toolbar_get_add_button (TOTEM_MAIN_TOOLBAR (totem->header));
+
 	/* player Headerbar */
 	totem->player_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "player_header"));
 
@@ -3873,12 +3880,6 @@ totem_callback_connect (TotemObject *totem)
 	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "go_button"));
 	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
 	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
-
-	/* Main menu */
-	totem->main_menu_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "main_menu_button"));
-
-	/* Add button */
-	totem->add_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "add_button"));
 
 	/* Set sensitivity of the toolbar buttons */
 	action_set_sensitive ("play", FALSE);

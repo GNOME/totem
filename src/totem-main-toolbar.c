@@ -34,12 +34,15 @@
  */
 
 struct _TotemMainToolbar {
-  HdyHeaderBar parent;
+  GtkBin       parent;
+
+  GtkWidget   *header_bar;
 
   /* Template widgets */
   GtkWidget   *search_button;
   GtkWidget   *select_button;
   GtkWidget   *done_button;
+  GtkWidget   *add_button;
   GtkWidget   *back_button;
   GtkWidget   *stack;
 
@@ -65,9 +68,12 @@ struct _TotemMainToolbar {
   /* Selection mode */
   guint        n_selected;
   GtkWidget   *selection_menu_button;
+
+  /* Menu */
+  GtkWidget   *main_menu_button;
 };
 
-G_DEFINE_TYPE(TotemMainToolbar, totem_main_toolbar, HDY_TYPE_HEADER_BAR)
+G_DEFINE_TYPE(TotemMainToolbar, totem_main_toolbar, GTK_TYPE_BIN)
 
 enum {
   PROP_0,
@@ -82,7 +88,8 @@ enum {
   PROP_SHOW_SELECT_BUTTON,
   PROP_SHOW_BACK_BUTTON,
   PROP_CUSTOM_TITLE,
-  PROP_SELECT_MENU_MODEL
+  PROP_SELECT_MENU_MODEL,
+  PROP_APP_MENU_MODEL,
 };
 
 #define DEFAULT_PAGE                   "title"
@@ -241,6 +248,10 @@ totem_main_toolbar_set_property (GObject         *object,
       totem_main_toolbar_set_select_menu_model (bar, g_value_get_object (value));
       break;
 
+    case PROP_APP_MENU_MODEL:
+      gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (bar->main_menu_button), g_value_get_object (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -299,6 +310,10 @@ totem_main_toolbar_get_property (GObject         *object,
 
     case PROP_SELECT_MENU_MODEL:
       g_value_set_object (value, totem_main_toolbar_get_select_menu_model (bar));
+      break;
+
+    case PROP_APP_MENU_MODEL:
+      g_value_set_object (value, gtk_menu_button_get_menu_model (GTK_MENU_BUTTON (bar->main_menu_button)));
       break;
 
     default:
@@ -417,6 +432,13 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                                                         G_TYPE_MENU_MODEL,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class,
+                                   PROP_APP_MENU_MODEL,
+                                   g_param_spec_object ("app-menu-model",
+                                                        "app-menu-model",
+                                                        "The app dropdown menu's model.",
+                                                        G_TYPE_MENU_MODEL,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
   g_signal_new ("back-clicked",
                 G_OBJECT_CLASS_TYPE (klass),
                 0,
@@ -426,12 +448,15 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/grilo/totemmaintoolbar.ui");
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, header_bar);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, search_button);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, select_button);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, selection_menu_button);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, done_button);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, add_button);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, back_button);
   gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, stack);
+  gtk_widget_class_bind_template_child (widget_class, TotemMainToolbar, main_menu_button);
 }
 
 static GtkWidget *
@@ -592,7 +617,7 @@ totem_main_toolbar_set_title (TotemMainToolbar *bar,
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
   gtk_label_set_text (GTK_LABEL (bar->title_label), title);
-  hdy_header_bar_set_title (HDY_HEADER_BAR (bar), title);
+  hdy_header_bar_set_title (HDY_HEADER_BAR (bar->header_bar), title);
 }
 
 const char *
@@ -600,7 +625,7 @@ totem_main_toolbar_get_title (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return hdy_header_bar_get_title (HDY_HEADER_BAR (bar));
+  return hdy_header_bar_get_title (HDY_HEADER_BAR (bar->header_bar));
 }
 
 void
@@ -610,7 +635,7 @@ totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
   gtk_label_set_text (GTK_LABEL (bar->subtitle_label), subtitle);
-  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (bar), subtitle);
+  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (bar->header_bar), subtitle);
 }
 
 const char *
@@ -618,7 +643,7 @@ totem_main_toolbar_get_subtitle (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return hdy_header_bar_get_subtitle (HDY_HEADER_BAR (bar));
+  return hdy_header_bar_get_subtitle (HDY_HEADER_BAR (bar->header_bar));
 }
 
 void
@@ -674,7 +699,7 @@ totem_main_toolbar_pack_start (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  hdy_header_bar_pack_start (HDY_HEADER_BAR (bar), child);
+  hdy_header_bar_pack_start (HDY_HEADER_BAR (bar->header_bar), child);
 }
 
 void
@@ -683,7 +708,7 @@ totem_main_toolbar_pack_end (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  hdy_header_bar_pack_end (HDY_HEADER_BAR (bar), child);
+  hdy_header_bar_pack_end (HDY_HEADER_BAR (bar->header_bar), child);
 }
 
 void
@@ -746,4 +771,20 @@ totem_main_toolbar_get_custom_title (TotemMainToolbar *bar)
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
   return bar->custom_title;
+}
+
+GtkWidget *
+totem_main_toolbar_get_add_button (TotemMainToolbar *bar)
+{
+  g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
+
+  return bar->add_button;
+}
+
+GtkWidget *
+totem_main_button_get_main_menu_button (TotemMainToolbar *bar)
+{
+  g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
+
+  return bar->main_menu_button;
 }
