@@ -43,6 +43,24 @@
     "modules": [
         "shared-modules/lua5.4/lua-5.4.json",
         {
+            "name": "libsoup-2.4",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dvapi=disabled",
+                "-Dtests=false",
+                "-Dtls_check=false",
+                "-Dntlm=disabled",
+                "-Dsysprof=enabled"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/libsoup.git",
+                    "branch": "libsoup-2-74"
+                }
+            ]
+        },
+        {
             "name": "gnome-common",
             "sources": [
                 {
