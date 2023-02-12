@@ -6,7 +6,6 @@ Videos is movie player for the GNOME desktop based on [GStreamer](https://gstrea
 [![Download on Flathub](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Flathub-badge-en.svg/240px-Flathub-badge-en.svg.png)](https://flathub.org/apps/details/org.gnome.Totem)
 
 ## Support
-==========
 
 The only version of totem that's supported is the one shipped on Flathub.
 **Do not file bugs that don't happen with the Flathub version**.
@@ -21,13 +20,11 @@ flatpak install --user https://flathub.org/beta-repo/appstream/org.gnome.Totem.D
 See below for details about how to file bugs.
 
 ## Dependencies
-===============
 
 - [GStreamer 1.6](http://gstreamer.freedesktop.org)
 - [GNOME 3.x development platform](http://www.gnome.org)
 
 ## Controls
-===========
 
 Almost all the controls are documented in the keyboard shortcuts dialogue,
 accessible through `Ctrl+H`, or the *Keyboard Shortcuts* menu item. Some others
