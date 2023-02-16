@@ -42,6 +42,7 @@
 #include "totem-preferences-dialog.h"
 #include "totem-session.h"
 #include "totem-main-toolbar.h"
+#include "totem-player-toolbar.h"
 
 #define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
@@ -1075,50 +1076,11 @@ totem_object_set_main_page (TotemObject *totem,
 
 	if (g_strcmp0 (page_id, "player") == 0) {
 		totem_grilo_pause (TOTEM_GRILO (totem->grilo));
-		g_object_get (totem->header,
-			      "title", &totem->title,
-			      "subtitle", &totem->subtitle,
-			      "search-string", &totem->search_string,
-			      "select-mode", &totem->select_mode,
-			      "custom-title", &totem->custom_title,
-			      NULL);
-		g_object_set (totem->header,
-			      "show-back-button", TRUE,
-			      "show-select-button", FALSE,
-			      "show-search-button", FALSE,
-			      "title", totem->player_title,
-			      "subtitle", NULL,
-			      "search-string", NULL,
-			      "select-mode", FALSE,
-			      "custom-title", NULL,
-			      NULL);
-		gtk_widget_show (totem->fullscreen_button);
-		gtk_widget_show (totem->gear_button);
-		gtk_widget_show (totem->subtitles_button);
-		gtk_widget_hide (totem->add_button);
-		gtk_widget_hide (totem->main_menu_button);
+
 		show_popup (totem);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
-		g_object_set (totem->header,
-			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
-			      "show-select-button", TRUE,
-			      "show-search-button", TRUE,
-			      "title", totem->title,
-			      "subtitle", totem->subtitle,
-			      "search-string", totem->search_string,
-			      "select-mode", totem->select_mode,
-			      "custom-title", totem->custom_title,
-			      NULL);
-		g_clear_pointer (&totem->title, g_free);
-		g_clear_pointer (&totem->subtitle, g_free);
-		g_clear_pointer (&totem->search_string, g_free);
-		g_clear_pointer (&totem->player_title, g_free);
-		g_clear_object (&totem->custom_title);
-		gtk_widget_show (totem->main_menu_button);
-		gtk_widget_hide (totem->fullscreen_button);
-		gtk_widget_hide (totem->gear_button);
-		gtk_widget_hide (totem->subtitles_button);
+
 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
 			gtk_widget_show (totem->add_button);
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
@@ -1670,7 +1632,6 @@ window_state_event_cb (GtkWidget           *window,
 {
 	GAction *action;
 	gboolean is_fullscreen;
-	const char *main_page;
 
 	totem->maximised = !!(event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED);
 
@@ -1691,11 +1652,7 @@ window_state_event_cb (GtkWidget           *window,
 	hdy_flap_set_fold_policy (HDY_FLAP (totem->flap), is_fullscreen ?
 				  HDY_FLAP_FOLD_POLICY_ALWAYS : HDY_FLAP_FOLD_POLICY_NEVER);
 	gtk_widget_set_opacity (totem->header, is_fullscreen ? 0.86 : 1);
-	gtk_widget_set_visible (totem->unfullscreen_button, is_fullscreen);
-
-	/* Particular case when we are in fullscreen mode and we go back directly on grilo page */
-	main_page = totem_object_get_main_page (totem);
-	gtk_widget_set_visible (totem->fullscreen_button, !is_fullscreen && g_str_equal(main_page, "player"));
+	totem_player_toolbar_set_fullscreen_mode (TOTEM_PLAYER_TOOLBAR (totem->player_header), is_fullscreen);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
@@ -1857,7 +1814,7 @@ update_mrl_label (TotemObject *totem, const char *name)
 	}
 
 	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
-		g_object_set (totem->header, "title", totem->player_title, NULL);
+		totem_player_toolbar_set_title (TOTEM_PLAYER_TOOLBAR (totem->player_header), totem->player_title);
 }
 
 static void
@@ -3569,8 +3526,9 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Menu:
 	case GDK_KEY_F10:
 		show_popup (totem);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
-					      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
+		GtkWidget *player_menu = totem_player_toolbar_get_player_button (TOTEM_PLAYER_TOOLBAR (totem->player_header));
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (player_menu),
+					      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (player_menu)));
 		break;
 	case GDK_KEY_Time:
 		show_popup (totem);
@@ -3785,6 +3743,7 @@ update_buttons (TotemObject *totem)
 static void
 totem_setup_window (TotemObject *totem)
 {
+	GtkWidget *menu_button;
 	GKeyFile *keyfile;
 	int w, h;
 	g_autofree char *filename = NULL;
@@ -3826,9 +3785,20 @@ totem_setup_window (TotemObject *totem)
 
 	totem->flap = GTK_WIDGET (gtk_builder_get_object (totem->xml, "flap"));
 
-	/* Headerbar */
+	/* Grilo Headerbar */
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
-	g_object_bind_property (totem, "fullscreen", totem->header, "show-close-button", G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
+	/* player Headerbar */
+	totem->player_header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "player_header"));
+
+	menu_button = totem_player_toolbar_get_subtitles_button (TOTEM_PLAYER_TOOLBAR (totem->player_header));
+	g_signal_connect (menu_button, "toggled", G_CALLBACK (popup_menu_shown_cb), totem);
+
+	menu_button = totem_player_toolbar_get_player_button (TOTEM_PLAYER_TOOLBAR (totem->player_header));
+	g_signal_connect (menu_button, "toggled", G_CALLBACK (popup_menu_shown_cb), totem);
+
+	/* Grilo view */
+	totem->grilo_view = GTK_WIDGET (gtk_builder_get_object (totem->xml, "grilo_view"));
 
 	return;
 }
@@ -3907,20 +3877,8 @@ totem_callback_connect (TotemObject *totem)
 	/* Main menu */
 	totem->main_menu_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "main_menu_button"));
 
-	/* Player menu */
-	totem->gear_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "gear_button"));
-
-	/* Subtitles menu */
-	totem->subtitles_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "subtitles_button"));
-
 	/* Add button */
 	totem->add_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "add_button"));
-
-	/* Fullscreen button */
-	totem->fullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "fullscreen_button"));
-
-	/* Unfullscreen button */
-	totem->unfullscreen_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "unfullscreen_button"));
 
 	/* Set sensitivity of the toolbar buttons */
 	action_set_sensitive ("play", FALSE);
@@ -3982,13 +3940,13 @@ static void
 grilo_widget_setup (TotemObject *totem)
 {
 	totem->grilo = totem_grilo_new (totem, totem->header);
+
+	gtk_box_pack_start(GTK_BOX (totem->grilo_view), totem->grilo, TRUE, TRUE, 0);
+
 	g_signal_connect (G_OBJECT (totem->grilo), "notify::show-back-button",
 			  G_CALLBACK (grilo_show_back_button_changed), totem);
 	g_signal_connect (G_OBJECT (totem->grilo), "notify::current-page",
 			  G_CALLBACK (grilo_current_page_changed), totem);
-	gtk_stack_add_named (GTK_STACK (totem->stack),
-			     totem->grilo,
-			     "grilo");
 	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), "grilo");
 }
 

@@ -36,11 +36,13 @@ struct _TotemObject {
 	GtkWidget *win;
 	GtkWidget *flap;
 	GtkWidget *stack;
+	GtkWidget *player_header;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkWindow *shortcuts_win;
 	GtkWidget *spinner;
 
+	GtkWidget *grilo_view;
 	GtkWidget *grilo;
 
 	GtkWidget *play_button;
@@ -94,12 +96,8 @@ struct _TotemObject {
 	char *search_string;
 	gboolean select_mode;
 	GObject *custom_title;
-	GtkWidget *unfullscreen_button;
-	GtkWidget *fullscreen_button;
-	GtkWidget *gear_button;
 	GtkWidget *add_button;
 	GtkWidget *main_menu_button;
-	GtkWidget *subtitles_button;
 
 	char *player_title;
 

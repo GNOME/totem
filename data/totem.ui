@@ -191,160 +191,23 @@
     <signal name="key-press-event" handler="window_key_press_event_cb" swapped="no"/>
     <signal name="delete-event" handler="main_window_destroy_cb" swapped="no"/>
     <child>
-      <object class="HdyFlap" id="flap">
+      <object class="GtkStack" id="tmw_main_stack">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="fold-policy">never</property>
-        <property name="modal">False</property>
-        <child type="flap">
-          <object class="TotemMainToolbar" id="header">
-            <property name="visible">True</property>
-            <property name="show-search-button">True</property>
-            <property name="show-select-button">True</property>
-            <property name="show-close-button">True</property>
-            <property name="title" translatable="yes">Videos</property>
-            <signal name="back-clicked" handler="back_button_clicked_cb"/>
-            <signal name="notify::search-mode" handler="update_add_button_visibility"/>
-            <signal name="notify::select-mode" handler="update_add_button_visibility"/>
-            <child>
-              <object class="GtkButton" id="unfullscreen_button">
-                <property name="visible">False</property>
-                <property name="no-show-all">True</property>
-                <property name="valign">center</property>
-                <property name="action-name">app.fullscreen</property>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">view-restore-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="add_button">
-                <property name="visible">True</property>
-                <property name="valign">center</property>
-                <property name="use-popover">True</property>
-                <property name="menu-model">addmenu</property>
-                <signal name="toggled" handler="popup_menu_shown_cb"/>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">list-add-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">start</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="main_menu_button">
-                <property name="visible">True</property>
-                <property name="valign">center</property>
-                <property name="use-popover">True</property>
-                <property name="menu-model">appmenu</property>
-                <signal name="toggled" handler="popup_menu_shown_cb"/>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">open-menu-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="gear_button">
-                <property name="visible">False</property>
-                <property name="no-show-all">True</property>
-                <property name="valign">center</property>
-                <property name="use-popover">True</property>
-                <property name="menu-model">playermenu</property>
-                <signal name="toggled" handler="popup_menu_shown_cb"/>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">view-more-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkMenuButton" id="subtitles_button">
-                <property name="visible">False</property>
-                <property name="no-show-all">True</property>
-                <property name="valign">center</property>
-                <property name="use-popover">True</property>
-                <property name="menu-model">subtitlesmenu</property>
-                <signal name="toggled" handler="popup_menu_shown_cb"/>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">media-view-subtitles-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="fullscreen_button">
-                <property name="visible">False</property>
-                <property name="no-show-all">True</property>
-                <property name="valign">center</property>
-                <property name="action-name">app.fullscreen</property>
-                <style>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="icon-name">view-fullscreen-symbolic</property>
-                    <property name="icon-size">1</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
-            </child>
-          </object>
-        </child>
+        <property name="homogeneous">True</property>
         <child>
-          <object class="GtkStack" id="tmw_main_stack">
+          <object class="HdyFlap" id="flap">
             <property name="visible">True</property>
-            <property name="homogeneous">True</property>
+            <property name="orientation">vertical</property>
+            <property name="fold-policy">never</property>
+            <property name="modal">False</property>
+            <child type="flap">
+              <object class="TotemPlayerToolbar" id="player_header">
+                <property name="visible">True</property>
+                <property name="subtitles-menu-model">subtitlesmenu</property>
+                <property name="player-menu-model">playermenu</property>
+                <signal name="back-clicked" handler="back_button_clicked_cb"/>
+              </object>
+            </child>
             <child>
               <object class="GtkOverlay">
                 <property name="visible">True</property>
@@ -625,11 +488,165 @@ audio-volume-medium-symbolic</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="name">player</property>
-              </packing>
             </child>
           </object>
+          <packing>
+            <property name="name">player</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="grilo_view">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="TotemMainToolbar" id="header">
+                <property name="visible">True</property>
+                <property name="show-search-button">True</property>
+                <property name="show-select-button">True</property>
+                <property name="show-close-button">True</property>
+                <property name="title" translatable="yes">Videos</property>
+                <signal name="back-clicked" handler="back_button_clicked_cb"/>
+                <signal name="notify::search-mode" handler="update_add_button_visibility"/>
+                <signal name="notify::select-mode" handler="update_add_button_visibility"/>
+                <child>
+                  <object class="GtkButton" id="unfullscreen_button">
+                    <property name="visible">False</property>
+                    <property name="no-show-all">True</property>
+                    <property name="valign">center</property>
+                    <property name="action-name">app.fullscreen</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">view-restore-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="add_button">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <property name="use-popover">True</property>
+                    <property name="menu-model">addmenu</property>
+                    <signal name="toggled" handler="popup_menu_shown_cb"/>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">list-add-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">start</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="main_menu_button">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <property name="use-popover">True</property>
+                    <property name="menu-model">appmenu</property>
+                    <signal name="toggled" handler="popup_menu_shown_cb"/>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="gear_button">
+                    <property name="visible">False</property>
+                    <property name="no-show-all">True</property>
+                    <property name="valign">center</property>
+                    <property name="use-popover">True</property>
+                    <property name="menu-model">playermenu</property>
+                    <signal name="toggled" handler="popup_menu_shown_cb"/>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">view-more-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="subtitles_button">
+                    <property name="visible">False</property>
+                    <property name="no-show-all">True</property>
+                    <property name="valign">center</property>
+                    <property name="use-popover">True</property>
+                    <property name="menu-model">subtitlesmenu</property>
+                    <signal name="toggled" handler="popup_menu_shown_cb"/>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">media-view-subtitles-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="fullscreen_button">
+                    <property name="visible">False</property>
+                    <property name="no-show-all">True</property>
+                    <property name="valign">center</property>
+                    <property name="action-name">app.fullscreen</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">view-fullscreen-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="name">grilo</property>
+          </packing>
         </child>
       </object>
     </child>
