@@ -142,16 +142,14 @@ totem_player_toolbar_class_init (TotemPlayerToolbarClass *klass)
   gtk_widget_class_bind_template_child (widget_class, TotemPlayerToolbar, subtitles_menu_button);
   gtk_widget_class_bind_template_child (widget_class, TotemPlayerToolbar, player_menu_button);
   gtk_widget_class_bind_template_child (widget_class, TotemPlayerToolbar, back_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, back_button_clicked_cb);
 }
 
 static void
 totem_player_toolbar_init (TotemPlayerToolbar *bar)
 {
   gtk_widget_init_template (GTK_WIDGET (bar));
-
-  /* Back button */
-  g_signal_connect (G_OBJECT (bar->back_button), "clicked",
-                    G_CALLBACK (back_button_clicked_cb), bar);
 };
 
 /**

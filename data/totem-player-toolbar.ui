@@ -14,6 +14,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="no-show-all">True</property>
+                <signal name="clicked" handler="back_button_clicked_cb"/>
                 <child internal-child="accessible">
                   <object class="AtkObject" id="back-button-atkobject">
                     <property name="AtkObject::accessible-name" translatable="yes">Back</property>
