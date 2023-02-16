@@ -1,38 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="totem">
   <!-- interface-requires gtk+ 3.11 -->
-  <template class="TotemPlayerToolbar" parent="HdyHeaderBar">
+  <template class="TotemPlayerToolbar" parent="GtkBin">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <object class="GtkButton" id="back_button">
+          <object class="HdyHeaderBar" id="header_bar">
+            <property name="show-close-button">True</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="no-show-all">True</property>
-            <child internal-child="accessible">
-              <object class="AtkObject" id="back-button-atkobject">
-                <property name="AtkObject::accessible-name" translatable="yes">Back</property>
-              </object>
-           </child>
-            <style>
-              <class name="image-button"/>
-            </style>
             <child>
-              <object class="GtkImage" id="back_button_image">
+              <object class="GtkButton" id="back_button">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">go-previous-symbolic</property>
-                <property name="icon_size">1</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="no-show-all">True</property>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="back-button-atkobject">
+                    <property name="AtkObject::accessible-name" translatable="yes">Back</property>
+                  </object>
+               </child>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage" id="back_button_image">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">go-previous-symbolic</property>
+                    <property name="icon_size">1</property>
+                  </object>
+                </child>
               </object>
+              <packing>
+                <property name="pack_type">start</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="unfullscreen_button">
+                <property name="visible">False</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.fullscreen</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-restore-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkMenuButton" id="player_menu_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="use-popover">True</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-more-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkMenuButton" id="subtitles_menu_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="use-popover">True</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">media-view-subtitles-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="fullscreen_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.fullscreen</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-fullscreen-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
             </child>
           </object>
-          <packing>
-            <property name="pack_type">start</property>
-          </packing>
         </child>
   </template>
 </interface>
