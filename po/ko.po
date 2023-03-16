@@ -3,7 +3,7 @@
 #
 # Jang,Jae-Man <jacojang@korea.com>, 2003.
 # Young-Ho Cha <ganadist@gmail.com>, 2006
-# Changwoo Ryu <cwryu@debian.org>, 2004-2017, 2019-2020, 2022.
+# Changwoo Ryu <cwryu@debian.org>, 2004-2017, 2019-2020, 2022-2023.
 #
 #
 # 새로 번역하신 분은 아래 "translator-credits"에 추가해 주세요.
@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-08-18 09:00+0000\n"
-"PO-Revision-Date: 2022-09-03 23:19+0900\n"
+"POT-Creation-Date: 2023-01-25 22:20+0000\n"
+"PO-Revision-Date: 2023-03-06 22:30+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -31,8 +31,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
-#: src/totem-grilo.c:1923 src/totem-object.c:3870
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
+#: src/totem.c:54 src/totem-grilo.c:1923
 msgid "Videos"
 msgstr "동영상"
 
@@ -197,7 +197,7 @@ msgstr ""
 "하드웨어 디코더를 사용하지 않고 소프트웨어 디코더만 사용합니다. 디버깅 목적 "
 "전용."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5095
 msgid "Stereo"
 msgstr "스테레오"
 
@@ -225,88 +225,113 @@ msgstr "AC3 Passthrough"
 msgid "Preferences"
 msgstr "기본 설정"
 
-#: data/totem-preferences-dialog.ui:122
-msgid "External Subtitles"
-msgstr "외부 자막"
-
-#: data/totem-preferences-dialog.ui:156
-msgid "_Load subtitle files when movie is loaded"
-msgstr "동영상을 읽어들일 때 자막 파일도 읽어들이기(_L)"
-
-#: data/totem-preferences-dialog.ui:175
-msgid "_Font:"
-msgstr "글꼴(_F):"
-
-#: data/totem-preferences-dialog.ui:200
-msgid "_Encoding:"
-msgstr "인코딩(_E):"
-
-#: data/totem-preferences-dialog.ui:239
-msgid "Select Subtitle Font"
-msgstr "자막 글꼴 선택"
-
-#: data/totem-preferences-dialog.ui:281
-msgid "Plugins"
-msgstr "플러그인"
-
-#: data/totem-preferences-dialog.ui:295
-msgid "Plugins…"
-msgstr "플러그인…"
-
-#: data/totem-preferences-dialog.ui:324 src/plugins/properties/properties.ui:23
+#: data/totem-preferences-dialog.ui:89 src/plugins/properties/properties.ui:51
 msgid "General"
 msgstr "일반"
 
-#. Tab label in the Preferences dialogue
-#: data/totem-preferences-dialog.ui:358
-#: src/plugins/properties/properties.ui:321
-msgid "Video"
-msgstr "비디오"
+#: data/totem-preferences-dialog.ui:94
+msgid "External Subtitles"
+msgstr "외부 자막"
 
-#: data/totem-preferences-dialog.ui:383
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "비디오의 인터레이스 없애기 사용하지 않기(_D)"
+#: data/totem-preferences-dialog.ui:100
+msgid "_Load subtitle files when movie is loaded"
+msgstr "동영상을 읽어들일 때 자막 파일도 읽어들이기(_L)"
 
-#: data/totem-preferences-dialog.ui:423
-msgid "Color Balance"
-msgstr "색 밸런스"
+#: data/totem-preferences-dialog.ui:117
+msgid "_Font"
+msgstr "글꼴(_F)"
 
-#: data/totem-preferences-dialog.ui:463
-msgid "_Brightness:"
-msgstr "밝기(_B):"
+#: data/totem-preferences-dialog.ui:140
+msgid "_Encoding"
+msgstr "인코딩(_E)"
 
-#: data/totem-preferences-dialog.ui:489
-msgid "Co_ntrast:"
-msgstr "대비(_N):"
-
-#: data/totem-preferences-dialog.ui:553
-msgid "Sat_uration:"
-msgstr "채도(_U):"
-
-#: data/totem-preferences-dialog.ui:579
-msgid "_Hue:"
-msgstr "색상(_H):"
-
-#: data/totem-preferences-dialog.ui:646
-msgid "Reset to _Defaults"
-msgstr "기본값으로 초기화(_D)"
-
-#: data/totem-preferences-dialog.ui:683
+#: data/totem-preferences-dialog.ui:165
 msgid "Display"
 msgstr "표시"
 
-#: data/totem-preferences-dialog.ui:724
+#. Tab label in the Preferences dialogue
+#: data/totem-preferences-dialog.ui:170
+#: src/plugins/properties/properties.ui:421
+msgid "Video"
+msgstr "비디오"
+
+#: data/totem-preferences-dialog.ui:176
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "비디오의 인터레이스 없애기 사용하지 않기(_D)"
+
+#. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
+#: data/totem-preferences-dialog.ui:177
+msgid ""
+"Videos are deinterlaced automatically when needed.\n"
+"Disable deinterlacing if you encounter graphical artifacts such as combing."
+msgstr ""
+"영상에서 인터레이싱은 필요할 때 자동으로 제거합니다.\n"
+"빗금 무늬 등 그래픽 아티팩트를 발견하면 인터레이싱 제거 기능을 끄십시오."
+
+#: data/totem-preferences-dialog.ui:196
+msgid "Disable hardware acceleration"
+msgstr "하드웨어 가속 사용 않기"
+
+#: data/totem-preferences-dialog.ui:197
+msgid ""
+"Hardware acceleration is used automatically when available.\n"
+"Disable it if you encounter video playback problems."
+msgstr ""
+"사용할 수 있으면 하드웨어 가속 기능을 자동으로 사용합니다.\n"
+"영상 재생에 문제가 있으면 이 기능을 끄십시오."
+
+#: data/totem-preferences-dialog.ui:218
+msgid "Color Balance"
+msgstr "색 밸런스"
+
+#: data/totem-preferences-dialog.ui:239
+msgid "_Brightness"
+msgstr "밝기(_B)"
+
+#: data/totem-preferences-dialog.ui:287
+msgid "Co_ntrast"
+msgstr "대비(_N)"
+
+#: data/totem-preferences-dialog.ui:335
+msgid "Sat_uration"
+msgstr "채도(_U)"
+
+#: data/totem-preferences-dialog.ui:383
+msgid "_Hue"
+msgstr "색상(_H)"
+
+#: data/totem-preferences-dialog.ui:425
+msgid "Reset to _Defaults"
+msgstr "기본값으로 초기화(_D)"
+
+#: data/totem-preferences-dialog.ui:443
+#: src/plugins/properties/properties.ui:645
+msgid "Audio"
+msgstr "오디오"
+
+#: data/totem-preferences-dialog.ui:448
 msgid "Audio Output"
 msgstr "오디오 출력"
 
-#: data/totem-preferences-dialog.ui:757
-msgid "_Audio output type:"
-msgstr "오디오 출력 형식(_A):"
+#: data/totem-preferences-dialog.ui:453
+msgid "_Audio output type"
+msgstr "오디오 출력 형식(_A)"
 
-#: data/totem-preferences-dialog.ui:829
-#: src/plugins/properties/properties.ui:512
-msgid "Audio"
-msgstr "오디오"
+#: data/totem-preferences-dialog.ui:485
+msgid "Plugins"
+msgstr "플러그인"
+
+#: data/totem-preferences-plugin-row.ui:39
+msgid "Authors"
+msgstr "개발자"
+
+#: data/totem-preferences-plugin-row.ui:71
+msgid "Version"
+msgstr "버전"
+
+#: data/totem-preferences-plugin-row.ui:103
+msgid "Website"
+msgstr "웹사이트"
 
 #: data/shortcuts.ui:16
 msgctxt "shortcut window"
@@ -465,8 +490,8 @@ msgstr "10분 앞으로 이동"
 
 #: data/shortcuts.ui:300
 msgctxt "shortcut window"
-msgid "Skip to…"
-msgstr "건너뛰기…"
+msgid "Go to 10%, 20%, 30%…"
+msgstr "10%, 20%, 30%… 위치로 이동"
 
 #: data/shortcuts.ui:308
 msgctxt "shortcut window"
@@ -493,122 +518,139 @@ msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "오른쪽으로 이동"
 
-#: data/shortcuts.ui:342
+#: data/shortcuts.ui:341
+msgctxt "shortcut window"
+msgid "Go to main menu"
+msgstr "주 메뉴로 이동"
+
+#: data/shortcuts.ui:349
 msgctxt "shortcut window"
 msgid "Subtitles"
 msgstr "자막"
 
-#: data/shortcuts.ui:347
+#: data/shortcuts.ui:354
 msgctxt "shortcut window"
 msgid "Select next subtitle"
 msgstr "다음 자막 선택"
 
-#: data/shortcuts.ui:354
+#: data/shortcuts.ui:361
 msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "자막 토글"
 
-#: data/totem.ui:11 data/totem.ui:90
+#: data/totem.ui:19 data/totem.ui:98
 msgid "Prefere_nces"
 msgstr "기본 설정(_N)"
 
-#: data/totem.ui:15 data/totem.ui:94
+#: data/totem.ui:23 data/totem.ui:102
 msgid "_Keyboard Shortcuts"
 msgstr "키보드 바로 가기(_K)"
 
-#: data/totem.ui:19
+#: data/totem.ui:27
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: data/totem.ui:29
+#: data/totem.ui:37
 msgid "Add _Local Video…"
 msgstr "로컬 비디오 추가(_L)…"
 
-#: data/totem.ui:34
+#: data/totem.ui:42
 msgid "Add _Web Video…"
 msgstr "웹 비디오 추가(_W)…"
 
-#: data/totem.ui:51
+#: data/totem.ui:59
 msgid "_Aspect Ratio"
 msgstr "화면 비율(_A)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:54
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "자동"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:59
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "정사각형"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:64
+#: data/totem.ui:72
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:69
+#: data/totem.ui:77
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (와이드스크린)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:74
+#: data/totem.ui:82
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: data/totem.ui:82
+#: data/totem.ui:90
 msgid "Switch An_gles"
 msgstr "각도 바꾸기(_G)"
 
-#: data/totem.ui:103
+#: data/totem.ui:111
 msgid "_Eject"
 msgstr "꺼내기(_E)"
 
-#: data/totem.ui:114
+#: data/totem.ui:122
 msgid "Languages"
 msgstr "언어"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:494
+#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "자막"
 
-#: data/totem.ui:121
+#: data/totem.ui:129
 msgid "_Select Text Subtitles…"
 msgstr "자막 선택(_S)…"
 
-#: data/totem.ui:132
+#: data/totem.ui:140
 msgid "_Repeat"
 msgstr "반복(_R)"
 
-#: data/totem.ui:138
+#: data/totem.ui:146
 msgid "_DVD Menu"
 msgstr "DVD 메뉴(_D)"
 
-#: data/totem.ui:144
+#: data/totem.ui:152
 msgid "_Title Menu"
 msgstr "제목 메뉴(_T)"
 
-#: data/totem.ui:149
+#: data/totem.ui:157
 msgid "A_udio Menu"
 msgstr "오디오 메뉴(_U)"
 
-#: data/totem.ui:154
+#: data/totem.ui:162
 msgid "_Angle Menu"
 msgstr "각도 메뉴(_A)"
 
-#: data/totem.ui:159
+#: data/totem.ui:167
 msgid "_Chapter Menu"
 msgstr "챕터 메뉴(_C)"
 
-#: data/totem.ui:168
+#: data/totem.ui:173
 msgid "Speed"
 msgstr "속도"
+
+#: data/totem.ui:432 data/totem.ui:435
+msgid "Previous Chapter/Movie"
+msgstr "이전 장으로/동영상으로"
+
+#: data/totem.ui:456 data/totem.ui:459
+msgid "Play / Pause"
+msgstr "재생 / 일시 정지"
+
+#: data/totem.ui:472 data/totem.ui:475
+msgid "Next Chapter/Movie"
+msgstr "다음 장으로/동영상으로"
 
 #: data/uri.ui:5
 msgid "Add Web Video"
@@ -621,7 +663,6 @@ msgstr "열려는 파일의 주소를 입력하십시오(_A):"
 #: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
 #: src/plugins/screenshot/totem-gallery-progress.c:101
-#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -634,8 +675,8 @@ msgid "Password requested for RTSP server"
 msgstr "RTSP 서버에서 암호를 요청했습니다"
 
 #: src/backend/bacon-video-widget.c:3352
-msgid "Could not initialise OpenGL support"
-msgstr "OpenGL 지원 기능을 초기화할 수 없습니다"
+msgid "Could not initialise OpenGL support."
+msgstr "OpenGL 지원 기능을 초기화할 수 없습니다."
 
 #: src/backend/bacon-video-widget.c:3362
 msgid "The DVD device you specified seems to be invalid."
@@ -732,19 +773,23 @@ msgstr ""
 "이 파일은 네트워크를 통해 재생할 수 없습니다. 먼저 로컬 위치에 다운로드하십시"
 "오."
 
-#: src/backend/bacon-video-widget.c:5089
+#: src/backend/bacon-video-widget.c:3672
+msgid "This file could not be played. Try restarting playback."
+msgstr "이 파일을 재생할 수 없습니다. 재생을 다시 시작해 보십시오."
+
+#: src/backend/bacon-video-widget.c:5091
 msgid "Surround"
 msgstr "서라운드"
 
-#: src/backend/bacon-video-widget.c:5091
+#: src/backend/bacon-video-widget.c:5093
 msgid "Mono"
 msgstr "모노"
 
-#: src/backend/bacon-video-widget.c:5361
+#: src/backend/bacon-video-widget.c:5363
 msgid "Media contains no supported video streams."
 msgstr "지원하지 않는 비디오 스트림이 미디어에 포함되어 있습니다."
 
-#: src/backend/bacon-video-widget.c:5563
+#: src/backend/bacon-video-widget.c:5565
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -780,7 +825,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
+#: src/gst/totem-time-helpers.c:81
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -904,7 +949,7 @@ msgstr "파일 이름"
 msgid "Resolution"
 msgstr "해상도"
 
-#: src/totem-gallery-thumbnailer.c:637
+#: src/totem-gallery-thumbnailer.c:637 src/plugins/properties/properties.ui:269
 msgid "Duration"
 msgstr "재생 시간"
 
@@ -932,7 +977,7 @@ msgstr "검색 오류"
 msgid "Local"
 msgstr "로컬"
 
-#: src/totem-grilo.c:1932
+#: src/totem-grilo.c:1932 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "채널"
 
@@ -986,45 +1031,33 @@ msgstr "자동"
 msgid "None"
 msgstr "없음"
 
-#: src/totem-object.c:1438 src/totem-options.c:51
+#: src/totem-object.c:1470 src/totem-options.c:51
 msgid "Pause"
 msgstr "일시 정지"
 
-#: src/totem-object.c:1444 src/totem-object.c:1452 src/totem-options.c:50
-#: src/totemselectiontoolbar.ui:43
+#: src/totem-object.c:1476 src/totem-object.c:1484 src/totem-options.c:50
+#: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "재생"
 
-#: src/totem-object.c:1520 src/totem-object.c:1548 src/totem-object.c:2134
+#: src/totem-object.c:1553 src/totem-object.c:1579 src/totem-object.c:2155
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "동영상 앱이 “%s”을(를) 재생할 수 없습니다."
 
-#: src/totem-object.c:2306
+#: src/totem-object.c:2324
 msgid "Videos could not display the help contents."
 msgstr "동영상 앱이 도움말 차례를 표시할 수 없습니다."
 
-#: src/totem-object.c:2567
+#: src/totem-object.c:2571
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
-#: src/totem-object.c:3968
-msgid "Previous Chapter/Movie"
-msgstr "이전 장으로/동영상으로"
-
-#: src/totem-object.c:3974
-msgid "Play / Pause"
-msgstr "재생 / 일시 정지"
-
-#: src/totem-object.c:3980
-msgid "Next Chapter/Movie"
-msgstr "다음 장으로/동영상으로"
-
-#: src/totem-object.c:4202
+#: src/totem-object.c:4024
 msgid "Videos could not startup."
 msgstr "동영상 앱이 시작할 수 없습니다."
 
-#: src/totem-object.c:4203 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4025 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "이유 없음."
 
@@ -1104,29 +1137,20 @@ msgstr "타이틀 %d"
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "“%s” 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
 
-#: src/totem-preferences-dialog.c:192
-msgid "Configure Plugins"
-msgstr "플러그인 설정"
-
-#: src/totem-preferences-dialog.c:195
-#: src/plugins/opensubtitles/opensubtitles.ui:138
-msgid "_Close"
-msgstr "닫기(_C)"
-
-#: src/totemselectiontoolbar.ui:15
+#: src/totemselectiontoolbar.ui:18
 msgid "Add to Favourites"
 msgstr "즐겨찾기에 추가"
 
-#: src/totemselectiontoolbar.ui:40
+#: src/totemselectiontoolbar.ui:43
 msgctxt "button"
 msgid "Play"
 msgstr "재생"
 
-#: src/totemselectiontoolbar.ui:60 src/totemselectiontoolbar.ui:63
+#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
 msgid "Shuffle"
 msgstr "임의 재생"
 
-#: src/totemselectiontoolbar.ui:80 src/totemselectiontoolbar.ui:83
+#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
 msgid "Delete"
 msgstr "삭제"
 
@@ -1360,7 +1384,7 @@ msgid "Searching for subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:627
+#: src/plugins/opensubtitles/opensubtitles.py:616
 msgid "Downloading the subtitles…"
 msgstr "자막을 다운로드하는 중입니다…"
 
@@ -1378,38 +1402,40 @@ msgstr "OpenSubtitles 웹사이트에 연결할 수 없습니다."
 msgid "No results found."
 msgstr "결과 없음."
 
-#. translators comment:
-#. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:500
-msgid "Format"
-msgstr "형식"
-
-#. translators comment:
-#. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:505
-msgid "Rating"
-msgstr "평가"
-
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:545
+#: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
 msgstr "동영상 자막 다운로드(_D)…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:584
+#: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
 msgstr "자막을 검색하는 중입니다…"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:27
+#: src/plugins/opensubtitles/opensubtitles.ui:30
 msgid "Download Movie Subtitles"
 msgstr "동영상 자막 다운로드"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:43
+#: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
 msgstr "자막 언어(_L):"
 
-#: src/plugins/opensubtitles/opensubtitles.ui:124
+#. This is the file-type of the subtitle file detected
+#: src/plugins/opensubtitles/opensubtitles.ui:119
+msgid "Format"
+msgstr "형식"
+
+#. This is a rating of the quality of the subtitle
+#: src/plugins/opensubtitles/opensubtitles.ui:134
+msgid "Rating"
+msgstr "평가"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
 msgstr "자막과 같이 재생(_P)"
+
+#: src/plugins/opensubtitles/opensubtitles.ui:189
+msgid "_Close"
+msgstr "닫기(_C)"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1427,234 +1453,196 @@ msgstr "동영상 속성"
 msgid "Adds movie properties menu item"
 msgstr "동영상 속성 메뉴 항목을 추가합니다"
 
-#: src/plugins/properties/totem-movie-properties.c:150
+#: src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:153
-#: src/plugins/properties/totem-movie-properties.c:164
+#: src/plugins/properties/totem-movie-properties.c:152
+#: src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:167
+#: src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/totem-movie-properties.c:278
-msgid "Properties"
-msgstr "속성"
-
-#: src/plugins/properties/totem-movie-properties.c:303
+#: src/plugins/properties/totem-movie-properties.c:293
 msgid "_Properties"
 msgstr "속성(_P)"
 
-#: src/plugins/properties/properties.ui:47
-msgid "Title:"
-msgstr "제목:"
+#: src/plugins/properties/properties.ui:17
+msgid "Properties"
+msgstr "속성"
 
-#: src/plugins/properties/properties.ui:67
-msgid "Artist:"
-msgstr "음악가:"
+#: src/plugins/properties/properties.ui:84
+msgid "Title"
+msgstr "제목"
 
-#: src/plugins/properties/properties.ui:87
-msgid "Duration:"
-msgstr "재생 시간:"
+#: src/plugins/properties/properties.ui:130
+msgid "Artist"
+msgstr "음악가"
 
-#: src/plugins/properties/properties.ui:107
-msgid "Year:"
-msgstr "제작년도:"
+#: src/plugins/properties/properties.ui:177
+msgid "Album"
+msgstr "앨범"
 
-#: src/plugins/properties/properties.ui:127
-msgid "Album:"
-msgstr "앨범:"
+#: src/plugins/properties/properties.ui:224
+msgid "Year"
+msgstr "제작년도"
 
-#: src/plugins/properties/properties.ui:235
-msgid "Comment:"
-msgstr "커멘트:"
+#: src/plugins/properties/properties.ui:316
+msgid "Comment"
+msgstr "커멘트"
 
-#: src/plugins/properties/properties.ui:273
-msgid "Container:"
-msgstr "컨테이너:"
+#: src/plugins/properties/properties.ui:364
+msgid "Container"
+msgstr "컨테이너"
 
-#: src/plugins/properties/properties.ui:345
-msgid "Dimensions:"
-msgstr "크기:"
+#: src/plugins/properties/properties.ui:453
+msgid "Dimensions"
+msgstr "크기"
 
-#: src/plugins/properties/properties.ui:365
-#: src/plugins/properties/properties.ui:609
-msgid "Codec:"
-msgstr "코덱:"
+#: src/plugins/properties/properties.ui:498
+#: src/plugins/properties/properties.ui:677
+msgid "Codec"
+msgstr "코덱"
 
-#: src/plugins/properties/properties.ui:385
-msgid "Framerate:"
-msgstr "프레임 속도:"
+#: src/plugins/properties/properties.ui:543
+msgid "Framerate"
+msgstr "프레임 속도"
 
-#: src/plugins/properties/properties.ui:405
-#: src/plugins/properties/properties.ui:572
-msgid "Bitrate:"
-msgstr "비트 전송률:"
+#: src/plugins/properties/properties.ui:588
+#: src/plugins/properties/properties.ui:812
+msgid "Bitrate"
+msgstr "비트 전송률"
 
-#: src/plugins/properties/properties.ui:536
-msgid "Sample rate:"
-msgstr "샘플 레이트:"
-
-#: src/plugins/properties/properties.ui:646
-msgid "Channels:"
-msgstr "채널:"
-
-#. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:98
-msgctxt "Title"
-msgid "Unknown"
-msgstr "알 수 없음"
-
-#. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:100
-msgctxt "Artist"
-msgid "Unknown"
-msgstr "알 수 없음"
-
-#. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:102
-msgctxt "Album"
-msgid "Unknown"
-msgstr "알 수 없음"
-
-#. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:104
-msgctxt "Year"
-msgid "Unknown"
-msgstr "알 수 없음"
-
-#. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:110
-msgctxt "Media container"
-msgid "Unknown"
-msgstr "알 수 없음"
+#: src/plugins/properties/properties.ui:767
+msgid "Sample rate"
+msgstr "샘플 레이트"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:113
+#: src/plugins/properties/bacon-video-widget-properties.c:331
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:333
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:336
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:121
-#: src/plugins/properties/bacon-video-widget-properties.c:253
+#: src/plugins/properties/bacon-video-widget-properties.c:339
+#: src/plugins/properties/bacon-video-widget-properties.c:466
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:125
+#: src/plugins/properties/bacon-video-widget-properties.c:343
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:127
+#: src/plugins/properties/bacon-video-widget-properties.c:345
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "해당 없음"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:129
+#: src/plugins/properties/bacon-video-widget-properties.c:347
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:131
+#: src/plugins/properties/bacon-video-widget-properties.c:349
 msgid "0 Channels"
 msgstr "0 채널"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:147
+#: src/plugins/properties/bacon-video-widget-properties.c:365
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d시간"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:149
+#: src/plugins/properties/bacon-video-widget-properties.c:367
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d분"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:370
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d초"
 
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:160
+#: src/plugins/properties/bacon-video-widget-properties.c:378
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:163
+#: src/plugins/properties/bacon-video-widget-properties.c:381
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:166
+#: src/plugins/properties/bacon-video-widget-properties.c:384
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:172
+#: src/plugins/properties/bacon-video-widget-properties.c:390
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:175
+#: src/plugins/properties/bacon-video-widget-properties.c:393
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:182
+#: src/plugins/properties/bacon-video-widget-properties.c:400
 msgid "0 seconds"
 msgstr "0초"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:246
+#: src/plugins/properties/bacon-video-widget-properties.c:459
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "초당 %0.3f 프레임"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:249
+#: src/plugins/properties/bacon-video-widget-properties.c:462
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1707,7 +1695,9 @@ msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
-msgstr "확인을 누르면 WINPDB나 RPDB2를 이용해 연결할 때까지 동영상 앱이 대기합니다. DConf에서 디버거 암호를 설정하지 않았다면 기본 암호를 (“totem”) 사용합니다."
+msgstr ""
+"확인을 누르면 WINPDB나 RPDB2를 이용해 연결할 때까지 동영상 앱이 대기합니다. "
+"DConf에서 디버거 암호를 설정하지 않았다면 기본 암호를 (“totem”) 사용합니다."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1859,43 +1849,6 @@ msgstr "스크린샷 찍기(_S)"
 msgid "Create Screenshot _Gallery…"
 msgstr "스크린샷 갤러리 만들기(_G)…"
 
-#: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:206
-msgid "Skip To"
-msgstr "건너뛰기"
-
-#: src/plugins/skipto/skipto.plugin.desktop.in:7
-msgid "Provides the “Skip to” dialog"
-msgstr "“건너뛰기” 대화상자 기능을 제공합니다"
-
-#: src/plugins/skipto/skipto.ui:22
-msgid "_Skip to:"
-msgstr "건너뛰기(_S):"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:170
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "초"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:200
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "7"
-
-#: src/plugins/skipto/totem-skipto.c:209
-msgid "_Skip To"
-msgstr "건너뛰기(_S)"
-
-#: src/plugins/skipto/totem-skipto-plugin.c:198
-msgid "_Skip To…"
-msgstr "건너뛰기(_S)…"
-
 #: src/plugins/variable-rate/totem-variable-rate-plugin.c:65
 msgctxt "playback rate"
 msgid "× 0.75"
@@ -1946,6 +1899,68 @@ msgstr "비미오"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "비미오 사이트에 대해 사용자 에이전트 값을 설정합니다"
+
+#~ msgid "Select Subtitle Font"
+#~ msgstr "자막 글꼴 선택"
+
+#~ msgid "Plugins…"
+#~ msgstr "플러그인…"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Skip to…"
+#~ msgstr "건너뛰기…"
+
+#~ msgid "Configure Plugins"
+#~ msgstr "플러그인 설정"
+
+#~ msgid "Duration:"
+#~ msgstr "재생 시간:"
+
+#~ msgid "Channels:"
+#~ msgstr "채널:"
+
+#~ msgctxt "Title"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Artist"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Album"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Year"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgctxt "Media container"
+#~ msgid "Unknown"
+#~ msgstr "알 수 없음"
+
+#~ msgid "Skip To"
+#~ msgstr "건너뛰기"
+
+#~ msgid "Provides the “Skip to” dialog"
+#~ msgstr "“건너뛰기” 대화상자 기능을 제공합니다"
+
+#~ msgid "_Skip to:"
+#~ msgstr "건너뛰기(_S):"
+
+#~ msgid "second"
+#~ msgid_plural "seconds"
+#~ msgstr[0] "초"
+
+#~ msgctxt "Skip To label length"
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "_Skip To"
+#~ msgstr "건너뛰기(_S)"
+
+#~ msgid "_Skip To…"
+#~ msgstr "건너뛰기(_S)…"
 
 #~ msgid "Could not initialize the thread-safe libraries."
 #~ msgstr "스레드에 안전한 라이브러리를 초기화할 수 없습니다."
