@@ -6,14 +6,14 @@
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007-2008,2011-2013.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2009.
 # Lê Kiến Trúc <afterlastangel@gmail.com>, 2009.
-# Trần Ngọc Quân <vnwildman@gmail.com>, 2014-2017, 2019, 2021, 2022.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2014-2017, 2019, 2021-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2022-03-31 13:06+0000\n"
-"PO-Revision-Date: 2022-04-02 14:28+0700\n"
+"POT-Creation-Date: 2023-03-23 11:50+0000\n"
+"PO-Revision-Date: 2023-04-01 08:55+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -23,8 +23,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 3.38.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:67
-#: src/totem.c:76 src/totem-grilo.c:1923 src/totem-object.c:3889
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 src/totem.c:54
+#: src/totem-grilo.c:1923 src/totem-object.c:3864
 msgid "Videos"
 msgstr "Xem phim"
 
@@ -54,13 +54,13 @@ msgstr ""
 "Xem phim còn đưa ra các tính năng bổ sung thêm như là: tải phụ đề, phát với "
 "tốc độ nhanh hoặc chậm, tạo bộ sưu tập ảnh chụp màn hình và hỗ trợ ghi DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:33
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:37
 msgid "The GNOME developers"
 msgstr "Các nhà phát triển GNOME"
 
 #: data/org.gnome.Totem.desktop.in.in:3
 msgid "@APPLICATION_NAME@"
-msgstr ""
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -145,11 +145,11 @@ msgstr "Vị trí mặc định cho hộp thoại “Chụp ảnh màn hình”"
 
 #: data/org.gnome.totem.gschema.xml.in:61
 msgid ""
-"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
-"directory."
+"Default location for the “Take Screenshot” dialogs. Default is the "
+"Screenshots directory."
 msgstr ""
 "Vị trí mặc định cho hộp thoại “Chụp ảnh màn hình”. Mặc định là thư mục Ảnh "
-"(Pictures)."
+"chụp màn hình (Screenshots)."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -194,7 +194,7 @@ msgstr ""
 "Tắt giải mã bằng phần cứng và chỉ giải mã bằng phần mềm. Chỉ dành cho mục "
 "đích gỡ lỗi."
 
-#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5083
+#: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5093
 msgid "Stereo"
 msgstr "Âm lập thể"
 
@@ -571,7 +571,7 @@ msgstr "Đẩy _ra"
 msgid "Languages"
 msgstr "Ngôn ngữ"
 
-#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:502
+#: data/totem.ui:118 src/plugins/opensubtitles/opensubtitles.py:495
 msgid "Subtitles"
 msgstr "Phụ đề"
 
@@ -615,14 +615,14 @@ msgstr "Thêm phim Web"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Hãy nhập đị_a chỉ của tập tin bạn muốn mở:"
 
-#: data/uri.ui:45 src/totem-uri.c:403 src/totem-uri.c:464
+#: data/uri.ui:45 src/totem-uri.c:397 src/totem-uri.c:458
 #: src/plugins/screenshot/totem-gallery.c:92
-#: src/plugins/screenshot/totem-gallery-progress.c:100
-#: src/plugins/skipto/totem-skipto.c:211
+#: src/plugins/screenshot/totem-gallery-progress.c:101
+#: src/plugins/skipto/totem-skipto.c:208
 msgid "_Cancel"
 msgstr "Thô_i"
 
-#: data/uri.ui:54 src/totem-uri.c:465
+#: data/uri.ui:54 src/totem-uri.c:459
 msgid "_Add"
 msgstr "_Thêm"
 
@@ -630,7 +630,19 @@ msgstr "_Thêm"
 msgid "Password requested for RTSP server"
 msgstr "Máy chủ RTSP yêu cầu mật khẩu"
 
-#: src/backend/bacon-video-widget.c:3372
+#: src/backend/bacon-video-widget.c:3352
+msgid "Could not initialise OpenGL support"
+msgstr "Không thể khởi tạo hỗ trợ OpenGL"
+
+#: src/backend/bacon-video-widget.c:3362
+msgid "The DVD device you specified seems to be invalid."
+msgstr "Thiết bị DVD bạn đã cho dường như không hợp lệ."
+
+#: src/backend/bacon-video-widget.c:3366
+msgid "The VCD device you specified seems to be invalid."
+msgstr "Thiết bị VCD bạn đã cho dường như không hợp lệ."
+
+#: src/backend/bacon-video-widget.c:3382
 msgid ""
 "The source seems encrypted and can’t be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -638,52 +650,52 @@ msgstr ""
 "Nguồn hình như đã được mã hóa và không thể đọc được. Có phải bạn đang cố "
 "phát một DVD bị mã hóa mà không có libdvdcss?"
 
-#: src/backend/bacon-video-widget.c:3386
+#: src/backend/bacon-video-widget.c:3396
 msgid "The server you are trying to connect to is not known."
 msgstr "Bạn đang cố kết nối đến một máy phục vụ lạ."
 
-#: src/backend/bacon-video-widget.c:3389
+#: src/backend/bacon-video-widget.c:3399
 msgid "The connection to this server was refused."
 msgstr "Kết nối đến máy phục vụ này bị từ chối."
 
-#: src/backend/bacon-video-widget.c:3392
+#: src/backend/bacon-video-widget.c:3402
 msgid "The specified movie could not be found."
 msgstr "Không tìm thấy phim đã ghi rõ."
 
-#: src/backend/bacon-video-widget.c:3399
+#: src/backend/bacon-video-widget.c:3409
 msgid "The server refused access to this file or stream."
 msgstr "Máy phục vụ đã từ chối truy cập vào tập tin hay dòng này."
 
-#: src/backend/bacon-video-widget.c:3405
+#: src/backend/bacon-video-widget.c:3415
 msgid "Authentication is required to access this file or stream."
 msgstr "Cần phải xác thực để truy cập đến tập tin hay luồng này."
 
-#: src/backend/bacon-video-widget.c:3411
+#: src/backend/bacon-video-widget.c:3421
 msgid "SSL/TLS support is missing. Check your installation."
 msgstr "Thiếu hỗ trợ SSL/TLS. Kiểm tra phần cài đặt của bạn."
 
-#: src/backend/bacon-video-widget.c:3418
+#: src/backend/bacon-video-widget.c:3428
 msgid "You are not allowed to open this file."
 msgstr "Bạn không có quyền mở tập tin này."
 
-#: src/backend/bacon-video-widget.c:3423
+#: src/backend/bacon-video-widget.c:3433
 msgid "This location is not a valid one."
 msgstr "Địa điểm này không hợp lệ."
 
-#: src/backend/bacon-video-widget.c:3431
+#: src/backend/bacon-video-widget.c:3441
 msgid "The movie could not be read."
 msgstr "Không đọc được phim này."
 
-#: src/backend/bacon-video-widget.c:3437
+#: src/backend/bacon-video-widget.c:3447
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tập tin này bị mã hóa và không thể phát được."
 
-#: src/backend/bacon-video-widget.c:3443
+#: src/backend/bacon-video-widget.c:3453
 msgid "The file you tried to play is an empty file."
 msgstr "Tập tin bạn đang thử phát là một tập tin trống rỗng."
 
 #. should be exactly one missing thing (source or converter)
-#: src/backend/bacon-video-widget.c:3467 src/backend/bacon-video-widget.c:3475
+#: src/backend/bacon-video-widget.c:3477 src/backend/bacon-video-widget.c:3485
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -697,14 +709,14 @@ msgstr[0] ""
 "%s\n"
 "nhưng chưa được cài đặt."
 
-#: src/backend/bacon-video-widget.c:3487
+#: src/backend/bacon-video-widget.c:3497
 msgid ""
 "This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Luồng dữ liệu này không thể phát được. Gần như chắc chắn là tường lửa đã "
 "khóa nó."
 
-#: src/backend/bacon-video-widget.c:3490
+#: src/backend/bacon-video-widget.c:3500
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -712,25 +724,25 @@ msgstr ""
 "Luồng âm thanh hoặc hình ảnh không được xử lý vì thiếu codec. Bạn cần cài "
 "đặt thêm phần bổ sung để có thể phát một số loại phim"
 
-#: src/backend/bacon-video-widget.c:3501
+#: src/backend/bacon-video-widget.c:3511
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Không thể phát tập tin này qua mạng. Hãy thử tải về trước."
 
-#: src/backend/bacon-video-widget.c:5079
+#: src/backend/bacon-video-widget.c:5089
 msgid "Surround"
 msgstr "Âm thanh vòm"
 
-#: src/backend/bacon-video-widget.c:5081
+#: src/backend/bacon-video-widget.c:5091
 msgid "Mono"
 msgstr "Âm đơn"
 
-#: src/backend/bacon-video-widget.c:5351
+#: src/backend/bacon-video-widget.c:5361
 msgid "Media contains no supported video streams."
 msgstr "Thiết bị lưu trữ không hỗ trợ phát phim."
 
-#: src/backend/bacon-video-widget.c:5553
+#: src/backend/bacon-video-widget.c:5563
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -768,7 +780,7 @@ msgstr "--:--"
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:57
+#: src/gst/totem-time-helpers.c:81 src/plugins/skipto/totem-time-entry.c:58
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -782,8 +794,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:89
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "%d:%02d:%02d.%03d"
 msgstr "%d:%02d:%02d.%03d"
@@ -808,8 +818,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:107
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d.%03d"
 msgstr "-%d:%02d:%02d.%03d"
@@ -834,8 +842,6 @@ msgstr "-%d:%02d"
 #.
 #: src/gst/totem-time-helpers.c:128
 #, c-format
-#| msgctxt "long time format"
-#| msgid "-%d:%02d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d.%03d"
 msgstr "-%d:%02d.%03d"
@@ -848,8 +854,6 @@ msgstr "-%d:%02d.%03d"
 #.
 #: src/gst/totem-time-helpers.c:139
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d.%03d"
 msgstr "%d:%02d.%03d"
@@ -874,15 +878,7 @@ msgstr "Chọn tất cả"
 msgid "Select None"
 msgstr "Không chọn gì"
 
-#: src/totem.c:68
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Không thể khởi động thư viện “thread-safe” (tuyến trình an toàn)."
-
-#: src/totem.c:68
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Hãy kiểm tra lại bản cài đặt hệ thống. Totem sẽ thoát ra ngay bây giờ."
-
-#: src/totem.c:74
+#: src/totem.c:52
 msgid "Videos Preview"
 msgstr "Xem trước phim"
 
@@ -940,20 +936,6 @@ msgstr "Nội bộ"
 msgid "Channels"
 msgstr "Kênh"
 
-#: src/totem-interface.c:147 src/totem-interface.c:190
-#, c-format
-msgid "Couldn’t load the “%s” interface. %s"
-msgstr "Không thể nạp giao diện “%s”. %s"
-
-#: src/totem-interface.c:147
-msgid "The file does not exist."
-msgstr "Tập tin này không tồn tại."
-
-#: src/totem-interface.c:149 src/totem-interface.c:151
-#: src/totem-interface.c:192 src/totem-interface.c:194
-msgid "Make sure that Totem is properly installed."
-msgstr "Hãy bảo đảm là Totem đã được cài đặt đúng cách."
-
 #: src/totem-main-toolbar.c:129 src/totemmaintoolbar.ui:121
 msgid "Click on items to select them"
 msgstr "Bấm vào từng mục để chọn chúng"
@@ -1004,45 +986,45 @@ msgstr "Tự động"
 msgid "None"
 msgstr "Không"
 
-#: src/totem-object.c:1437 src/totem-options.c:51
+#: src/totem-object.c:1432 src/totem-options.c:51
 msgid "Pause"
 msgstr "Tạm dừng"
 
-#: src/totem-object.c:1443 src/totem-object.c:1451 src/totem-options.c:50
+#: src/totem-object.c:1438 src/totem-object.c:1446 src/totem-options.c:50
 #: src/totemselectiontoolbar.ui:43
 msgid "Play"
 msgstr "Phát"
 
-#: src/totem-object.c:1519 src/totem-object.c:1547 src/totem-object.c:2133
+#: src/totem-object.c:1514 src/totem-object.c:1542 src/totem-object.c:2128
 #, c-format
-msgid "Totem could not play “%s”."
-msgstr "Totem không thể phát “%s”."
+msgid "Videos could not play “%s”."
+msgstr "Phim không thể phát “%s”."
 
-#: src/totem-object.c:2305
-msgid "Totem could not display the help contents."
-msgstr "Totem không thể hiển thị nội dung trợ giúp."
+#: src/totem-object.c:2300
+msgid "Videos could not display the help contents."
+msgstr "Phim không thể hiển thị nội dung trợ giúp."
 
-#: src/totem-object.c:2566
+#: src/totem-object.c:2561
 msgid "An error occurred"
 msgstr "Đã xảy ra lỗi"
 
-#: src/totem-object.c:3987
+#: src/totem-object.c:3962
 msgid "Previous Chapter/Movie"
 msgstr "Phần/Phim trước"
 
-#: src/totem-object.c:3993
+#: src/totem-object.c:3968
 msgid "Play / Pause"
 msgstr "Phát / Dừng"
 
-#: src/totem-object.c:3999
+#: src/totem-object.c:3974
 msgid "Next Chapter/Movie"
 msgstr "Phần/Phim kế"
 
-#: src/totem-object.c:4235
-msgid "Totem could not startup."
-msgstr "Totem không thể khởi động."
+#: src/totem-object.c:4196
+msgid "Videos could not startup."
+msgstr "Phim không thể khởi động."
 
-#: src/totem-object.c:4235 src/plugins/screenshot/totem-screenshot-plugin.c:222
+#: src/totem-object.c:4197 src/plugins/screenshot/totem-screenshot-plugin.c:222
 msgid "No reason."
 msgstr "Không lý do."
 
@@ -1289,27 +1271,27 @@ msgstr "Phương Tây"
 msgid "Vietnamese"
 msgstr "Tiếng Việt"
 
-#: src/totem-uri.c:331
+#: src/totem-uri.c:325
 msgid "All files"
 msgstr "Mọi tập tin"
 
-#: src/totem-uri.c:337
+#: src/totem-uri.c:331
 msgid "Video files"
 msgstr "Tập tin phim ảnh"
 
-#: src/totem-uri.c:348
+#: src/totem-uri.c:342
 msgid "Subtitle files"
 msgstr "Tập tin phụ đề"
 
-#: src/totem-uri.c:400
+#: src/totem-uri.c:394
 msgid "Select Text Subtitles"
 msgstr "Chọn phụ đề"
 
-#: src/totem-uri.c:404
+#: src/totem-uri.c:398
 msgid "_Open"
 msgstr "_Mở"
 
-#: src/totem-uri.c:461
+#: src/totem-uri.c:455
 msgid "Add Videos"
 msgstr "Thêm phim"
 
@@ -1355,7 +1337,7 @@ msgstr "Mở thư mục"
 msgid "Open the directory of the currently playing movie"
 msgstr "Mở thư mục của bộ phim đang phát"
 
-#: src/plugins/open-directory/totem-open-directory.c:185
+#: src/plugins/open-directory/totem-open-directory.c:160
 msgid "Open Containing Folder"
 msgstr "Mở thư mục chứa"
 
@@ -1371,47 +1353,47 @@ msgstr "Tìm phụ đề cho phim đang chiếu"
 msgid "Brazilian Portuguese"
 msgstr "Tiếng Bồ Đào Nha Bra-xin"
 
-#: src/plugins/opensubtitles/opensubtitles.py:192
+#: src/plugins/opensubtitles/opensubtitles.py:191
 msgid "Searching for subtitles…"
 msgstr "Đang tìm phụ đề…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:240
-#: src/plugins/opensubtitles/opensubtitles.py:635
+#: src/plugins/opensubtitles/opensubtitles.py:235
+#: src/plugins/opensubtitles/opensubtitles.py:632
 msgid "Downloading the subtitles…"
 msgstr "Đang tải phụ đề về…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:305
+#: src/plugins/opensubtitles/opensubtitles.py:298
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Không thể liên lạc với trang OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:338
-#: src/plugins/opensubtitles/opensubtitles.py:351
-#: src/plugins/opensubtitles/opensubtitles.py:369
+#: src/plugins/opensubtitles/opensubtitles.py:330
+#: src/plugins/opensubtitles/opensubtitles.py:343
+#: src/plugins/opensubtitles/opensubtitles.py:361
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Không thể liên lạc với trang OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:357
+#: src/plugins/opensubtitles/opensubtitles.py:349
 msgid "No results found."
 msgstr "Không tìm thấy."
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: src/plugins/opensubtitles/opensubtitles.py:508
+#: src/plugins/opensubtitles/opensubtitles.py:501
 msgid "Format"
 msgstr "Định dạng"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: src/plugins/opensubtitles/opensubtitles.py:513
+#: src/plugins/opensubtitles/opensubtitles.py:506
 msgid "Rating"
 msgstr "Đánh giá"
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:553
+#: src/plugins/opensubtitles/opensubtitles.py:550
 msgid "_Download Movie Subtitles…"
 msgstr "_Tải phụ đề phim về…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:592
+#: src/plugins/opensubtitles/opensubtitles.py:589
 msgid "Searching subtitles…"
 msgstr "Đang tìm phụ đề…"
 
@@ -1533,92 +1515,92 @@ msgid "Channels:"
 msgstr "Kênh:"
 
 #. Title
-#: src/plugins/properties/bacon-video-widget-properties.c:103
+#: src/plugins/properties/bacon-video-widget-properties.c:98
 msgctxt "Title"
 msgid "Unknown"
 msgstr "Chưa biết"
 
 #. Artist
-#: src/plugins/properties/bacon-video-widget-properties.c:105
+#: src/plugins/properties/bacon-video-widget-properties.c:100
 msgctxt "Artist"
 msgid "Unknown"
 msgstr "Chưa biết"
 
 #. Album
-#: src/plugins/properties/bacon-video-widget-properties.c:107
+#: src/plugins/properties/bacon-video-widget-properties.c:102
 msgctxt "Album"
 msgid "Unknown"
 msgstr "Chưa biết"
 
 #. Year
-#: src/plugins/properties/bacon-video-widget-properties.c:109
+#: src/plugins/properties/bacon-video-widget-properties.c:104
 msgctxt "Year"
 msgid "Unknown"
 msgstr "Chưa biết"
 
 #. Container
-#: src/plugins/properties/bacon-video-widget-properties.c:115
+#: src/plugins/properties/bacon-video-widget-properties.c:110
 msgctxt "Media container"
 msgid "Unknown"
 msgstr "Chưa biết"
 
 #. Dimensions
-#: src/plugins/properties/bacon-video-widget-properties.c:118
+#: src/plugins/properties/bacon-video-widget-properties.c:113
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Kh/B"
 
 #. Video Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:120
+#: src/plugins/properties/bacon-video-widget-properties.c:115
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Kh/B"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:123
+#: src/plugins/properties/bacon-video-widget-properties.c:118
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Kh/B"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:126
-#: src/plugins/properties/bacon-video-widget-properties.c:258
+#: src/plugins/properties/bacon-video-widget-properties.c:121
+#: src/plugins/properties/bacon-video-widget-properties.c:253
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Kh/B"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:130
+#: src/plugins/properties/bacon-video-widget-properties.c:125
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Kh/B"
 
 #. Audio Codec
-#: src/plugins/properties/bacon-video-widget-properties.c:132
+#: src/plugins/properties/bacon-video-widget-properties.c:127
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Kh/B"
 
 #. Sample rate
-#: src/plugins/properties/bacon-video-widget-properties.c:134
+#: src/plugins/properties/bacon-video-widget-properties.c:129
 msgid "0 Hz"
 msgstr "0 Hz"
 
 #. Channels
-#: src/plugins/properties/bacon-video-widget-properties.c:136
+#: src/plugins/properties/bacon-video-widget-properties.c:131
 msgid "0 Channels"
 msgstr "0 kênh"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:152
+#: src/plugins/properties/bacon-video-widget-properties.c:147
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d giờ"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:154
+#: src/plugins/properties/bacon-video-widget-properties.c:149
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d phút"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:157
+#: src/plugins/properties/bacon-video-widget-properties.c:152
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1626,52 +1608,52 @@ msgstr[0] "%d giây"
 
 # Variable: don't translate / Biến: đừng dịch
 #. 5 hours 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:165
+#: src/plugins/properties/bacon-video-widget-properties.c:160
 #, c-format
 msgctxt "hours minutes seconds"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. 5 hours 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:168
+#: src/plugins/properties/bacon-video-widget-properties.c:163
 #, c-format
 msgctxt "hours minutes"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 5 hours
-#: src/plugins/properties/bacon-video-widget-properties.c:171
+#: src/plugins/properties/bacon-video-widget-properties.c:166
 #, c-format
 msgctxt "hours"
 msgid "%s"
 msgstr "%s"
 
 #. 2 minutes 12 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:177
+#: src/plugins/properties/bacon-video-widget-properties.c:172
 #, c-format
 msgctxt "minutes seconds"
 msgid "%s %s"
 msgstr "%s %s"
 
 #. 2 minutes
-#: src/plugins/properties/bacon-video-widget-properties.c:180
+#: src/plugins/properties/bacon-video-widget-properties.c:175
 #, c-format
 msgctxt "minutes"
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
-#: src/plugins/properties/bacon-video-widget-properties.c:187
+#: src/plugins/properties/bacon-video-widget-properties.c:182
 msgid "0 seconds"
 msgstr "0 giây"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:251
+#: src/plugins/properties/bacon-video-widget-properties.c:246
 #, c-format
 msgid "%0.3f frame per second"
 msgid_plural "%0.3f frames per second"
 msgstr[0] "%0.3f khung hình mỗi giây"
 
-#: src/plugins/properties/bacon-video-widget-properties.c:254
+#: src/plugins/properties/bacon-video-widget-properties.c:249
 #, c-format
 msgid "%0.2f frame per second"
 msgid_plural "%0.2f frames per second"
@@ -1715,19 +1697,19 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Bạn có thể truy cập Totem.Object thông qua “totem_object” :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Totem Python Console"
-msgstr "Cửa sổ giao tiếp Python Totem"
+msgid "Videos Python Console"
+msgstr "Dòng lệnh giao tiếp Python Phim"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:111
 msgid ""
-"After you press OK, Totem will wait until you connect to it with winpdb or "
+"After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Sau khi bấm nút OK thì chương trình Totem sẽ đợi đến khi bạn kết nối bằng "
-"winpdb hay rpdb2. Nếu bạn chưa đặt một mật khẩu gỡ lỗi trong DConf thì nó sẽ "
-"dùng mật khẩu mặc định (“totem”)."
+"Sau khi bấm nút OK, Phim sẽ đợi đến khi bạn kết nối bằng winpdb hay rpdb2. "
+"Nếu bạn chưa đặt một mật khẩu gỡ lỗi trong DConf, thì nó sẽ dùng mật khẩu "
+"mặc định (“totem”)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Recent files"
@@ -1745,11 +1727,11 @@ msgstr "Phần bổ sung xoay vòng"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Cho phép phim xoay nếu chúng sai hướng"
 
-#: src/plugins/rotation/totem-rotation.c:255
+#: src/plugins/rotation/totem-rotation.c:254
 msgid "_Rotate ↷"
 msgstr "_Quay ↷"
 
-#: src/plugins/rotation/totem-rotation.c:259
+#: src/plugins/rotation/totem-rotation.c:258
 msgid "Rotate ↶"
 msgstr "Quay ↶"
 
@@ -1804,9 +1786,16 @@ msgstr "Tính số các ảnh chụp màn hình"
 msgid "Number of screenshots:"
 msgstr "Số ảnh chụp màn hình:"
 
+#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
+#. * same as used in GNOME Shell:
+#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
+#: src/plugins/screenshot/screenshot-filename-builder.c:101
+msgid "Screenshots"
+msgstr "Ảnh chụp màn hình"
+
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:132
+#: src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s.png"
 msgstr "Ảnh chụp màn hình từ %s.png"
@@ -1814,7 +1803,7 @@ msgstr "Ảnh chụp màn hình từ %s.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
+#: src/plugins/screenshot/screenshot-filename-builder.c:161
 #, c-format
 msgid "Screenshot from %s - %d.png"
 msgstr "Ảnh chụp màn hình từ %s - %d.png"
@@ -1845,20 +1834,20 @@ msgid "Gallery-%s-%d.jpg"
 msgstr "BộSưuTập-%s-%d.jpg"
 
 #. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:98
+#: src/plugins/screenshot/totem-gallery-progress.c:99
 msgid "Creating Gallery…"
 msgstr "Đang tạo bộ sưu tập ảnh…"
 
 #. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:104
+#: src/plugins/screenshot/totem-gallery-progress.c:105
 #, c-format
 msgid "Saving gallery as “%s”"
 msgstr "Đang lưu thư viện ảnh “%s”"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:222
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
-msgid "Totem could not get a screenshot of the video."
-msgstr "Totem đã không chụp được ảnh màn hình của phim đó."
+msgid "Videos could not get a screenshot of the video."
+msgstr "Phim đã không chụp được ảnh màn hình của phim đó."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:231
 msgid "This is not supposed to happen; please file a bug report."
@@ -1873,7 +1862,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Tạo _Bộ sưu tập ảnh chụp…"
 
 #: src/plugins/skipto/skipto.plugin.desktop.in:6
-#: src/plugins/skipto/totem-skipto.c:209
+#: src/plugins/skipto/totem-skipto.c:206
 msgid "Skip To"
 msgstr "Nhảy tới"
 
@@ -1887,7 +1876,7 @@ msgstr "Nhảy _tới:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: src/plugins/skipto/totem-skipto.c:173
+#: src/plugins/skipto/totem-skipto.c:170
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "giây"
@@ -1896,12 +1885,12 @@ msgstr[0] "giây"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: src/plugins/skipto/totem-skipto.c:203
+#: src/plugins/skipto/totem-skipto.c:200
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: src/plugins/skipto/totem-skipto.c:212
+#: src/plugins/skipto/totem-skipto.c:209
 msgid "_Skip To"
 msgstr "_Nhảy tới"
 
@@ -1959,6 +1948,26 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Đặt chương trình đại diện cho trang Vimeo"
+
+#~ msgid "Could not initialize the thread-safe libraries."
+#~ msgstr "Không thể khởi động thư viện “thread-safe” (tuyến trình an toàn)."
+
+#~ msgid "Verify your system installation. Totem will now exit."
+#~ msgstr ""
+#~ "Hãy kiểm tra lại bản cài đặt hệ thống. Totem sẽ thoát ra ngay bây giờ."
+
+#, c-format
+#~ msgid "Couldn’t load the “%s” interface. %s"
+#~ msgstr "Không thể nạp giao diện “%s”. %s"
+
+#~ msgid "The file does not exist."
+#~ msgstr "Tập tin này không tồn tại."
+
+#~ msgid "Make sure that Totem is properly installed."
+#~ msgstr "Hãy bảo đảm là Totem đã được cài đặt đúng cách."
+
+#~ msgid "Totem Python Console"
+#~ msgstr "Cửa sổ giao tiếp Python Totem"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2024,9 +2033,6 @@ msgstr "Đặt chương trình đại diện cho trang Vimeo"
 
 #~ msgid "Support infrared remote control"
 #~ msgstr "Hỗ trợ điều khiển từ xa bằng hồng ngoại"
-
-#~ msgid "Couldn’t initialize lirc."
-#~ msgstr "Không thể khởi động lirc."
 
 #~ msgid "Couldn’t read lirc configuration."
 #~ msgstr "Không thể đọc cấu hình lirc."
@@ -2360,8 +2366,8 @@ msgstr "Đặt chương trình đại diện cho trang Vimeo"
 #~ msgstr "Phần mở rộng"
 
 #~ msgid ""
-#~ "The program was not able to find out the file format you want to use for `"
-#~ "%s'. Please make sure to use a known extension for that file or manually "
+#~ "The program was not able to find out the file format you want to use for "
+#~ "`%s'. Please make sure to use a known extension for that file or manually "
 #~ "choose a file format from the list below."
 #~ msgstr ""
 #~ "Chương trình không thể nhận ra định dạng tập tin cho %s. Nhớ dùng phần mở "
