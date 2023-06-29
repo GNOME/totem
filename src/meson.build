@@ -6,7 +6,6 @@ subdir('backend')
 
 enum_headers = files(
   'backend/bacon-time-label.h',
-  'backend/bacon-video-widget-gst-missing-plugins.h',
   'backend/bacon-video-widget.h',
   'icon-helpers.h',
   'totem-grilo.h',

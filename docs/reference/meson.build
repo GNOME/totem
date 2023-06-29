@@ -2,7 +2,6 @@ doc_module = meson.project_name()
 
 private_headers = [
   'bacon-time-label.h',
-  'bacon-video-widget-gst-missing-plugins.h',
   'bacon-video-widget-properties.h',
   'icon-helpers.h',
   'screenshot-filename-builder.h',

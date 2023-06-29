@@ -36,7 +36,6 @@ endforeach
 
 sources = files(
   'bacon-time-label.c',
-  'bacon-video-widget-gst-missing-plugins.c',
   'bacon-video-widget.c',
 )
 

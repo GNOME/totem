@@ -1,5 +1,4 @@
 option('help', type: 'boolean', value: true, description: 'Build help')
-option('enable-easy-codec-installation', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'Whether to enable easy codec installation support for GStreamer')
 option('enable-python', type: 'combo', choices: ['yes', 'no', 'auto'], value: 'auto', description: 'Enable python support')
 option('libportal', type: 'feature', value: 'auto', description: 'Build plugins requiring libportal')
 option('with-plugins', type: 'combo', choices: ['all', 'none', 'auto'], value: 'auto', description: 'Which Totem plugins to compile (default: auto; "all", "none" and "auto" are valid)')
