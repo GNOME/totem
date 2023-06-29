@@ -59,7 +59,6 @@
 #include "totem-gst-helpers.h"
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
-#include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-widget-enums.h"
 #include "bacon-video-widget-resources.h"
 
@@ -231,10 +230,8 @@ struct _BaconVideoWidget
    * to reach 100% fill-level" */
   gint64                       buffering_left;
 
-  /* for easy codec installation */
+  /* for missing codecs handling */
   GList                       *missing_plugins;   /* GList of GstMessages */
-  gboolean                     plugin_install_in_progress;
-  GCancellable                *missing_plugins_cancellable;
 
   /* for mounting locations if necessary */
   GCancellable                *mount_cancellable;
@@ -310,13 +307,6 @@ bvw_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
   g_ptr_array_add (arr, NULL);
   g_hash_table_destroy (ht);
   return (gchar **) g_ptr_array_free (arr, FALSE);
-}
-
-static gchar **
-bvw_get_missing_plugins_details (const GList * missing_plugins)
-{
-  return bvw_get_missing_plugins_foo (missing_plugins,
-      gst_missing_plugin_message_get_installer_detail);
 }
 
 static gchar **
@@ -421,11 +411,6 @@ bacon_video_widget_realize (GtkWidget * widget)
   bvw->parent_toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (bvw)));
   g_signal_connect_swapped (G_OBJECT (bvw->parent_toplevel), "notify::is-active",
 			    G_CALLBACK (update_cursor), bvw);
-
-  bvw->missing_plugins_cancellable = g_cancellable_new ();
-  g_object_set_data_full (G_OBJECT (bvw), "missing-plugins-cancellable",
-			  bvw->missing_plugins_cancellable, g_object_unref);
-  bacon_video_widget_gst_missing_plugins_setup (bvw);
 }
 
 static void
@@ -441,10 +426,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
   }
   g_clear_object (&bvw->blank_cursor);
   g_clear_object (&bvw->hand_cursor);
-
-  g_cancellable_cancel (bvw->missing_plugins_cancellable);
-  bvw->missing_plugins_cancellable = NULL;
-  g_object_set_data (G_OBJECT (bvw), "missing-plugins-cancellable", NULL);
 }
 
 static void
@@ -1306,36 +1287,6 @@ bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs)
   }
 }
 
-/* returns TRUE if the error/signal has been handled and should be ignored */
-static gboolean
-bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
-{
-  gboolean handled = FALSE;
-  gchar **descriptions, **details;
-
-  details = bvw_get_missing_plugins_details (bvw->missing_plugins);
-  descriptions = bvw_get_missing_plugins_descriptions (bvw->missing_plugins);
-
-  GST_LOG ("emitting missing-plugins signal (prerolled=%d)", prerolled);
-
-  g_signal_emit (bvw, bvw_signals[SIGNAL_MISSING_PLUGINS], 0,
-      details, descriptions, prerolled, &handled);
-  GST_DEBUG ("missing-plugins signal was %shandled", (handled) ? "" : "not ");
-
-  g_strfreev (descriptions);
-  g_strfreev (details);
-
-  if (handled) {
-    bvw->plugin_install_in_progress = TRUE;
-    bvw_clear_missing_plugins_messages (bvw);
-  }
-
-  /* if it wasn't handled, we might need the list of missing messages again
-   * later to create a proper error message with details of what's missing */
-
-  return handled;
-}
-
 static void
 bvw_auth_reply_cb (GMountOperation      *op,
 		   GMountOperationResult result,
@@ -1449,7 +1400,6 @@ static gboolean
 bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 {
   gboolean error_src_is_playbin;
-  gboolean ret = FALSE;
   GError *err = NULL;
 
   if (bvw->missing_plugins == NULL) {
@@ -1471,18 +1421,12 @@ bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
       (is_error (err, STREAM, WRONG_TYPE) && error_src_is_playbin)) {
     bvw_check_if_video_decoder_is_missing (bvw);
     set_current_actor (bvw);
-    ret = bvw_emit_missing_plugins_signal (bvw, FALSE);
-    if (ret) {
-      /* If it was handled, stop playback to make sure we're not processing any
-       * other error messages that might also be on the bus */
-      bacon_video_widget_stop (bvw);
-    }
   } else {
     GST_DEBUG ("not an error code we are looking for, doing nothing");
   }
 
   g_error_free (err);
-  return ret;
+  return FALSE;
 }
 
 static gboolean
@@ -1512,18 +1456,6 @@ bvw_check_mpeg_eos (BaconVideoWidget *bvw, GstMessage *err_msg)
   }
 
   return ret;
-}
-
-/* returns TRUE if the error/signal has been handled and should be ignored */
-static gboolean
-bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
-{
-  if (bvw->missing_plugins == NULL) {
-    GST_DEBUG ("no missing-plugin messages");
-    return FALSE;
-  }
-
-  return bvw_emit_missing_plugins_signal (bvw, TRUE); 
 }
 
 static void
@@ -1920,10 +1852,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
             "totem-prerolled");
 	bacon_video_widget_get_stream_length (bvw);
         bvw_update_stream_info (bvw);
-        if (!bvw_check_missing_plugins_on_preroll (bvw)) {
-          /* show a non-fatal warning message if we can't decode the video */
-          bvw_show_error_if_video_decoder_is_missing (bvw);
-        }
+        /* show a non-fatal warning message if we can't decode the video */
+        bvw_show_error_if_video_decoder_is_missing (bvw);
 	/* Now that we have the length, check whether we wanted
 	 * to pause or to stop the pipeline */
         if (bvw->target_state == GST_STATE_PAUSED)
@@ -3634,10 +3564,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   }
 
   /* just lie and do nothing in this case */
-  if (bvw->plugin_install_in_progress && cur_state != GST_STATE_PAUSED) {
-    GST_DEBUG ("plugin install in progress and nothing to play, not playing");
-    return TRUE;
-  } else if (bvw->mount_in_progress) {
+  if (bvw->mount_in_progress) {
     GST_DEBUG ("Mounting in progress, not playing");
     return TRUE;
   } else if (bvw->auth_dialog != NULL) {
@@ -3858,7 +3785,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->target_state = GST_STATE_READY;
 
   bvw->buffering = FALSE;
-  bvw->plugin_install_in_progress = FALSE;
   bvw->download_buffering = FALSE;
   g_clear_pointer (&bvw->download_filename, g_free);
   bvw->buffering_left = -1;
@@ -5495,8 +5421,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
   bvw->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->seek_time = -1;
   bvw->auth_last_result = G_MOUNT_OPERATION_HANDLED;
-
-  bacon_video_widget_gst_missing_plugins_block ();
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {

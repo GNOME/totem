@@ -164,15 +164,6 @@ libgd_dep = libgd.get_variable('libgd_dep')
 
 gir_dep = dependency('gobject-introspection-1.0', version: '>= 0.6.7')
 
-# missing plugins support
-easy_codec_option = get_option('enable-easy-codec-installation')
-have_easy_codec = false
-if easy_codec_option != 'no'
-  have_easy_codec = true
-endif
-config_h.set('ENABLE_MISSING_PLUGIN_INSTALLATION', have_easy_codec,
-             description: 'Whether we can and want to do installation of missing plugins')
-
 # python support
 have_python = false
 python_deps = []
@@ -266,13 +257,6 @@ message('** Using the GStreamer-1.0 backend')
 
 str = 'Development build'
 if get_option('profile') == 'development'
-  message('** ' + str + ' enabled')
-else
-  message('   ' + str + ' disabled')
-endif
-
-str = 'Easy codec installation support'
-if have_easy_codec
   message('** ' + str + ' enabled')
 else
   message('   ' + str + ' disabled')
