@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: GPL-3-or-later
+ */
+
 #include <gtk/gtk.h>
 #include <grilo.h>
 #include <libhandy-1/handy.h>

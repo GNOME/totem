@@ -1,4 +1,6 @@
-
+/*
+ * SPDX-License-Identifier: GPL-3-or-later
+ */
 #include "config.h"
 
 #include <gtk/gtk.h>

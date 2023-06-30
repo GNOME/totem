@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: GPL-3-or-later
+ */
+
 #define MPRIS_BUS_NAME_PREFIX "org.mpris.MediaPlayer2"
 #define MPRIS_OBJECT_NAME "/org/mpris/MediaPlayer2"
 
