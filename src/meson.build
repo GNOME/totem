@@ -312,14 +312,16 @@ libtotem_gir = gnome.generate_gir(
   extra_args: gir_extra_args
 )
 
-tests = [ 'test-totem' ]
+if get_option('ui-tests')
+  tests = [ 'test-totem' ]
 
-foreach test_name : tests
-  exe = executable(test_name, '@0@.c'.format(test_name),
-                   include_directories: [src_inc, top_inc],
-                   dependencies: libtotem_dep)
+  foreach test_name : tests
+    exe = executable(test_name, '@0@.c'.format(test_name),
+                     include_directories: [src_inc, top_inc],
+                     dependencies: libtotem_dep)
 
-  test(test_name, exe)
-endforeach
+    test(test_name, exe)
+  endforeach
+endif
 
 subdir('plugins')
