@@ -83,10 +83,12 @@
         {
             "name": "libpeas",
             "buildsystem": "meson",
+            "config-opts": [ "-Dlua51=false" ],
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/libpeas.git"
+                    "url": "https://gitlab.gnome.org/GNOME/libpeas.git",
+                    "branch": "1.36"
                 }
             ]
         },
