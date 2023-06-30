@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: GPL-3-or-later
+ */
+
 #include "config.h"
 
 #include <locale.h>

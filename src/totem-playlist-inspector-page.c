@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2022 Red Hat Inc.
  *
- * SPDX-License-Identifier: GPL-2-or-later WITH gstreamer-exception
+ * SPDX-License-Identifier: GPL-3-or-later
  *
  * Author: Bastien Nocera <hadess@hadess.net>
  */

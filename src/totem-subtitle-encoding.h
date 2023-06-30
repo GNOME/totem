@@ -1,4 +1,8 @@
-/* Encoding stuff */
+/* Encoding stuff
+ *
+ * SPDX-License-Identifier: GPL-3-or-later
+ *
+ */
 
 #pragma once
 
