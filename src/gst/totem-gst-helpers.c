@@ -109,6 +109,26 @@ totem_gst_disable_hardware_decoders (void)
   }
 }
 
+void
+totem_gst_ensure_newer_hardware_decoders (void)
+{
+  GstRegistry *registry;
+  g_autolist(GstPluginFeature) hw_list = NULL;
+  GList *l;
+
+  registry = gst_registry_get ();
+  hw_list = gst_registry_feature_filter (registry, filter_hw_decoders, FALSE, NULL);
+  for (l = hw_list; l != NULL; l = l->next) {
+    const char *name;
+    name = gst_plugin_feature_get_plugin_name (l->data);
+    if (g_strcmp0 (name, "va") != 0)
+      continue;
+    g_debug ("Bumping feature %s of plugin %s to MAX",
+             gst_plugin_feature_get_name (l->data), name);
+    gst_plugin_feature_set_rank (l->data, UINT_MAX);
+  }
+}
+
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
  */

@@ -4191,6 +4191,8 @@ video_widget_create (TotemObject *totem)
 
 	if (g_settings_get_boolean (totem->settings, "force-software-decoders"))
 		totem_gst_disable_hardware_decoders ();
+	else
+		totem_gst_ensure_newer_hardware_decoders ();
 
 	if (!bacon_video_widget_check_init (totem->bvw, &err)) {
 		totem_interface_error_blocking (_("Videos could not startup."),
