@@ -50,3 +50,4 @@ void totem_gst_message_print (GstMessage *msg,
 			      const char *filename);
 
 void totem_gst_disable_hardware_decoders (void);
+void totem_gst_ensure_newer_hardware_decoders (void);
