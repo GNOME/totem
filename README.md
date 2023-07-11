@@ -49,3 +49,11 @@ Bugs should be filed in the [GNOME GitLab](https://gitlab.gnome.org/GNOME/totem/
 
 If the problem happens with a single video, please make sure to share it either
 through the issue tracker, or through a third-party service if the file is too big.
+
+## Thanks
+
+- Paul Cooper for sponsoring the Telestrator mode
+- Lyndon Drake for sponsoring the video zooming feature
+- Ryan Thiessen for sponsoring the Mozilla plugin
+- Fluendo for sponsoring Ronald Bultje and Tim-Philipp Müller's work on GStreamer backend
+- Collabora for sponsoring Tim-Philipp Müller's work on GStreamer backend
