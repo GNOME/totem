@@ -708,19 +708,20 @@ browse_cb (GrlSource    *source,
 					    -1);
 		}
 
-		if (grl_media_is_image (media) ||
-		    grl_media_is_audio (media)) {
-			/* This isn't supposed to happen as we filter for videos */
-			g_assert_not_reached ();
-		}
-
-		if (grl_media_is_container (media) && bud->ignore_boxes) {
-			/* Ignore boxes for certain sources */
+		if (!grl_media_is_image (media) &&
+		    !grl_media_is_audio (media)) {
+			if (grl_media_is_container (media) && bud->ignore_boxes) {
+				/* Ignore boxes for certain sources */
+			} else {
+				add_local_metadata (self, source, media);
+				add_media_to_model (GTK_TREE_STORE (bud->model),
+						    bud->ref_parent ? &parent : NULL,
+						    source, media);
+			}
 		} else {
-			add_local_metadata (self, source, media);
-			add_media_to_model (GTK_TREE_STORE (bud->model),
-					    bud->ref_parent ? &parent : NULL,
-					    source, media);
+			g_debug ("Ignoring %s browse result at %s",
+				 grl_media_get_media_type (media) == GRL_MEDIA_TYPE_IMAGE ? "image" : "audio",
+				 grl_media_get_url (media));
 		}
 
 		g_object_unref (media);
