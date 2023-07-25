@@ -824,15 +824,16 @@ search_cb (GrlSource    *source,
 	if (media != NULL) {
 		self->search_remaining--;
 
-		if (grl_media_is_image (media) ||
-		    grl_media_is_audio (media)) {
-			/* This isn't supposed to happen as we filter for videos */
-			g_assert_not_reached ();
+		if (!grl_media_is_image (media) &&
+		    !grl_media_is_audio (media)) {
+			add_local_metadata (self, source, media);
+			add_media_to_model (GTK_TREE_STORE (self->search_results_model),
+					    NULL, source, media);
+		} else {
+			g_debug ("Ignoring %s search result at %s",
+				 grl_media_get_media_type (media) == GRL_MEDIA_TYPE_IMAGE ? "image" : "audio",
+				 grl_media_get_url (media));
 		}
-
-		add_local_metadata (self, source, media);
-		add_media_to_model (GTK_TREE_STORE (self->search_results_model),
-				    NULL, source, media);
 
 		g_object_unref (media);
 	}
