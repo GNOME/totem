@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"POT-Creation-Date: 2022-08-18 09:01+0000\n"
-"PO-Revision-Date: 2022-08-20 20:01+0300\n"
+"POT-Creation-Date: 2023-08-07 11:43+0000\n"
+"PO-Revision-Date: 2023-07-30 00:54+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -33,8 +33,7 @@ msgstr ""
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
 #: C/troubleshooting-Audio-CD.page:19 C/troubleshooting-debug.page:15
-#: C/troubleshooting-DVD.page:20 C/troubleshooting-subtitles.page:21
-#: C/view-zoom.page:25
+#: C/troubleshooting-subtitles.page:21 C/view-zoom.page:25
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
@@ -181,15 +180,15 @@ msgstr ""
 msgid ""
 "Press the <gui style=\"button\">+</gui> button in the top-left corner of the "
 "window and select <gui style=\"menuitem\">Add Web Video…</gui>. Type or "
-"paste the address of the video that you want to open. Press <gui style="
-"\"button\">Add</gui>. The video will be added to the list in the main window "
-"and you can select it from there."
+"paste the address of the video that you want to open. Press <gui "
+"style=\"button\">Add</gui>. The video will be added to the list in the main "
+"window and you can select it from there."
 msgstr ""
 "Pencerenin sol üst köşesindeki <gui style=\"button\">+</gui> düğmesine basın "
 "ve <gui style=\"menuitem\">Web Videosu Ekle…</gui>.’yi seçin. Açmak "
-"istediğiniz videonun adresini yazın veya yapıştırın. <gui style=\"button"
-"\">Ekle</gui>’ye basın. Video, ana penceredeki listeye eklenir ve buradan "
-"seçebilirsiniz."
+"istediğiniz videonun adresini yazın veya yapıştırın. <gui "
+"style=\"button\">Ekle</gui>’ye basın. Video, ana penceredeki listeye eklenir "
+"ve buradan seçebilirsiniz."
 
 #. (itstool) path: info/title
 #: C/index.page:7
@@ -276,10 +275,10 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/navigation.page:28
 msgid ""
-"Play media or pause them: Use the keyboard shortcut <key>Space</key> or "
-"press the <gui style=\"button\">Play/Pause</gui> button."
+"Play media or pause them: Use the keyboard shortcut <key>P</key> or press "
+"the <gui style=\"button\">Play/Pause</gui> button."
 msgstr ""
-"Ortamı oynatmak ya da durdurmak: <key>Boşluk</key> kısayolunu kullanabilir "
+"Ortamı oynatmak ya da durdurmak: <key>P</key> klavye kısayolunu kullanabilir "
 "ya da <gui style=\"button\">Oynat/Beklet</gui> düğmesine basabilirsiniz."
 
 # Tam ekran vurgusu eklendi.
@@ -317,6 +316,33 @@ msgstr ""
 "DVD’nin başka bölümüne geçmek veya ana ekrana geri dönmek için bkz: <link "
 "xref=\"playing-DVD\"/>."
 
+#. (itstool) path: page/p
+#: C/navigation.page:49
+msgid ""
+"The full list of keyboard shortcuts is available by typing <key>?</key> "
+"while playing a movie, or <keyseq><key>Ctrl</key><key>?</key></keyseq> in "
+"the movies view."
+msgstr ""
+"Klavye kısayollarının tam listesi, film oynatılırken <key>?</key> tuşuna "
+"basılarak veya film görünümünde <keyseq><key>Ctrl</key><key>?</key></keyseq> "
+"kısayolu kullanılarak görüntülenebilir."
+
+#. (itstool) path: note/p
+#: C/navigation.page:52
+msgid ""
+"Seeking with the keyboard keys (<key>Left</key> and <key>Right</key> arrows) "
+"does not seek the same amount of time in either direction. This is as "
+"designed as it makes it easier to find a particular place in a film, seeking "
+"forward until we do find a part of the film we do not recognise, or know to "
+"be further than what we're looking for, and seek back more finely."
+msgstr ""
+"Klavye tuşları (<key>Sol</key> ve <key>Sağ</key> okları) ile ileri veya geri "
+"sarma, her iki yönde aynı süre boyunca sarmayı sağlamaz. Bu, tasarım gereği "
+"yapılmıştır çünkü böylece filmde belirli bir yeri bulmak daha kolay "
+"olur. İleri sarma, tanımadığımız veya aradığımızdan daha ileride olduğunu "
+"bildiğimiz bölümü bulana dek yapılırken, geri sarma daha hassas biçimde "
+"yapılır."
+
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
 msgid "Play media files from DVD or VCD."
@@ -331,10 +357,10 @@ msgstr "DVD ya da VCD izle"
 #: C/playing-DVD.page:27
 msgid ""
 "To play a DVD disc that you just inserted into your drive, move the mouse "
-"pointer over the <link xref=\"help:gnome-help/shell-notifications\" href="
-"\"https://help.gnome.org/users/gnome-help/stable/shell-notifications"
-"\">notification</link> and press <gui style=\"button\">Open with Videos</"
-"gui>."
+"pointer over the <link xref=\"help:gnome-help/shell-notifications\" "
+"href=\"https://help.gnome.org/users/gnome-help/stable/shell-"
+"notifications\">notification</link> and press <gui style=\"button\">Open "
+"with Videos</gui>."
 msgstr ""
 "Sürücünüze yeni yerleştirdiğiniz bir DVD diski oynatmak için, fare imlecini "
 "<link xref=\"help:gnome-help/shell-notifications\" href=\"https://help.gnome."
@@ -373,8 +399,8 @@ msgid ""
 "<gui>Video DVD</gui> bar."
 msgstr ""
 "Sürücünüzde DVD diski oynatmak için <app>Dosyalar</app>’ı açın, kenar "
-"çubuğundan diski seçin ve <gui>Video DVD</gui> çubuğunda <gui style=\"button"
-"\">Videolar</gui>’a basın."
+"çubuğundan diski seçin ve <gui>Video DVD</gui> çubuğunda <gui "
+"style=\"button\">Videolar</gui>’a basın."
 
 #. (itstool) path: figure/title
 #: C/playing-DVD.page:43
@@ -488,9 +514,9 @@ msgid ""
 "<gui style=\"menuitem\">Preferences</gui>."
 msgstr ""
 "<app>Videolar</app> bazı ek seçenekler sunar. Uygulamayı tercihlerinize göre "
-"yapılandırın. Pencerenin sağ üst köşesindeki menü düğmesine basıp <gui style="
-"\"menuitem\">Tercihler</gui>’i seçerek <gui>Tercihler</gui> penceresini "
-"görüntüleyin."
+"yapılandırın. Pencerenin sağ üst köşesindeki menü düğmesine basıp <gui "
+"style=\"menuitem\">Tercihler</gui>’i seçerek <gui>Tercihler</gui> "
+"penceresini görüntüleyin."
 
 #. (itstool) path: section/title
 #: C/preferences.page:34
@@ -539,10 +565,10 @@ msgid ""
 "of plugins by pressing <gui style=\"button\">Plugins…</gui>. Select the "
 "wanted one and press <gui style=\"button\">Preferences</gui> if available."
 msgstr ""
-"Eklentiler ek özellikler sunar ve işlevselliği genişletir. <gui style="
-"\"button\">Eklentiler…</gui> düğmesine basarak eklentilerin listesini "
-"görüntüleyebilirsiniz. İstediğinizi seçin ve varsa <gui style=\"button"
-"\">Tercihler</gui>’e basın."
+"Eklentiler ek özellikler sunar ve işlevselliği genişletir. <gui "
+"style=\"button\">Eklentiler…</gui> düğmesine basarak eklentilerin listesini "
+"görüntüleyebilirsiniz. İstediğinizi seçin ve varsa <gui "
+"style=\"button\">Tercihler</gui>’e basın."
 
 #. (itstool) path: section/title
 #: C/preferences.page:65
@@ -583,8 +609,8 @@ msgstr ""
 #. (itstool) path: note/p
 #: C/preferences.page:79
 msgid ""
-"You may go back to previous settings by pressing the <gui style=\"button"
-"\">Reset to Defaults</gui> button."
+"You may go back to previous settings by pressing the <gui "
+"style=\"button\">Reset to Defaults</gui> button."
 msgstr ""
 "<gui style=\"button\">Öntanımlı Değerlere Sıfırla</gui> düğmesini kullanarak "
 "öntanımlı değerlere geri dönebilirsiniz."
@@ -604,10 +630,9 @@ msgstr "<gui>Ses Çıkışı</gui>"
 msgid "Choose the type of <gui>Audio Output</gui> from the drop-down list."
 msgstr "Açılır listeden <gui>Ses Çıkışı</gui> türünü seçin."
 
-# Hata: Audio atıfı gereksiz. Videos artık sadece videoları destekliyor, ses dosyaları desteği kaldırıldı.
 #. (itstool) path: info/desc
 #: C/properties.page:9
-msgid "View the properties of a played audio or video file."
+msgid "View the properties of a played video file."
 msgstr "Oynatılan video dosyasının özelliklerini görüntüle."
 
 #. (itstool) path: page/title
@@ -623,10 +648,10 @@ msgid ""
 "gui> or <keyseq><key>Ctrl</key><key>P</key></keyseq>. It will display three "
 "sections:"
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basıp <gui style=\"menuitem"
-"\">Özellikler</gui>’i seçerek ya da <keyseq><key>Ctrl</key><key>P</key></"
-"keyseq> kısayolunu kullanarak oynatılan ortamın özelliklerini "
-"görüntüleyebilirsiniz. Üç bölüm gösterilir:"
+"Pencerenin sağ üst köşesindeki menü düğmesine basıp <gui "
+"style=\"menuitem\">Özellikler</gui>’i seçerek ya da <keyseq><key>Ctrl</"
+"key><key>P</key></keyseq> kısayolunu kullanarak oynatılan ortamın "
+"özelliklerini görüntüleyebilirsiniz. Üç bölüm gösterilir:"
 
 #. (itstool) path: item/title
 #: C/properties.page:36
@@ -677,8 +702,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Create Screenshot Gallery…</gui>."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Ekran Görüntüsü Galerisi Oluştur…</gui>’u seçin."
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+"style=\"menuitem\">Ekran Görüntüsü Galerisi Oluştur…</gui>’u seçin."
 
 #. (itstool) path: item/p
 #: C/screenshot-gallery.page:33
@@ -740,8 +765,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Take Screenshot</gui>."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Ekran Görüntüsü Al</gui>’ı seçin."
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+"style=\"menuitem\">Ekran Görüntüsü Al</gui>’ı seçin."
 
 #. (itstool) path: note/p
 #: C/screenshot.page:37
@@ -768,8 +793,8 @@ msgid ""
 "Press the menu button in the top-right corner of the window, select <gui "
 "style=\"menuitem\">Languages</gui>, and select the language."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Diller</gui>’den istediğiniz dili seçin."
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+"style=\"menuitem\">Diller</gui>’den istediğiniz dili seçin."
 
 #. (itstool) path: info/desc
 #: C/sound-volume.page:27
@@ -843,8 +868,8 @@ msgstr ""
 #: C/subtitles.page:37
 msgid ""
 "<app>Videos</app> loads external subtitles automatically if <gui>Load "
-"subtitle files when movie is loaded</gui> is enabled in the <link xref="
-"\"preferences\">Preferences</link>."
+"subtitle files when movie is loaded</gui> is enabled in the <link "
+"xref=\"preferences\">Preferences</link>."
 msgstr ""
 "<link xref=\"preferences\">Tercihler</link>’de <gui>Film yüklendiğinde alt "
 "yazı dosyalarını yükle</gui> seçeneği etkinleştirilmişse, <app>Videolar</"
@@ -862,8 +887,8 @@ msgid ""
 "<guiseq><gui style=\"menuitem\">Subtitles</gui> <gui>Select Text Subtitles…</"
 "gui></guiseq>."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <guiseq><gui style="
-"\"menuitem\">Alt yazılar</gui> <gui>Metin Alt Yazılarını Seç…</gui></"
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <guiseq><gui "
+"style=\"menuitem\">Alt yazılar</gui> <gui>Metin Alt Yazılarını Seç…</gui></"
 "guiseq>’e tıklayın."
 
 #. (itstool) path: item/p
@@ -880,8 +905,8 @@ msgstr "Onları seçin ve <gui>Aç</gui>’a tıklayın."
 #: C/subtitles.page:58
 msgid ""
 "Adjust size and font of subtitles to your needs. See <guiseq><gui>General</"
-"gui><gui>External Subtitles</gui></guiseq> section on <link xref="
-"\"preferences\"/> page."
+"gui><gui>External Subtitles</gui></guiseq> section on <link "
+"xref=\"preferences\"/> page."
 msgstr ""
 "Boyut ve yazı tipini kendinize göre ayarlayın. <link xref=\"preferences\"/> "
 "sayfasındaki <guiseq><gui>Genel</gui><gui>Dış Alt Yazılar</gui></guiseq> "
@@ -901,24 +926,30 @@ msgstr "Belirli dosya biçimi oynatılamıyor"
 #: C/supported-formats.page:25
 msgid ""
 "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys> "
-"plugins. If certain file formats are not supported, please refer to a "
-"support forum of your distribution to find out which package to install."
+"plugins. The only supported version of <app>Videos</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> available on Flathub</"
+"link>, should have support for all the more common, and some niche, video "
+"and audio formats."
 msgstr ""
-"<app>Videolar</app> tarafından görüntülenen dosya biçimleri <sys>GStreamer</"
-"sys> eklentilerine bağlıdır. Bazı dosya biçimleri desteklenmiyorsa, hangi "
-"paketin kurulacağını öğrenmek için lütfen dağıtımınızın destek forumuna "
-"sormaktan çekinmeyin."
+"<app>Videolar</app> tarafından görüntülenen dosya biçimleri, <sys>GStreamer</"
+"sys> eklentilerine bağlıdır. Yalnızca desteklenen <app>Videolar</app> "
+"sürümü <link href=\"https://flathub.org/apps/org.gnome.Totem\">Flathub’daki"
+"</link> olup; daha yaygın, bazı özel video ve ses "
+"biçimlerine destek sağlar."
 
 #. (itstool) path: note/p
-#: C/supported-formats.page:29
+#: C/supported-formats.page:30
 msgid ""
-"If you try to open a format which is not supported, on many distributions "
-"<app>Videos</app> will display a dialog which will allow you to search for "
-"missing plugins (codecs) and install them."
+"If you run into any video files that cannot be played in the supported "
+"version of <app>Videos</app> available on Flathub, then <link href=\"https://"
+"github.com/flathub/org.gnome.Totem/issues\"> file a bug against the "
+"application</link>, so support for the necessary formats can be added."
 msgstr ""
-"Desteklenmeyen biçimi açmaya çalışırsanız, birçok dağıtımda <app>Videolar</"
-"app> eksik eklentileri (çözücüleri) aramanıza ve bunları kurmanızı sağlayan "
-"iletişim kutusu görüntüler."
+"Eğer Flathub’da var olan ve desteklenen <app>Videolar</app> sürümünde "
+"oynatılamayan bir video dosyalarıyla karşılaşırsanız, lütfen <link "
+"href=\"https://github.com/flathub/org.gnome.Totem/issues\">uygulama ile "
+"ilgili hata bildirin</link>, böylece gerekli biçimler için destek "
+"eklenebilir."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -949,80 +980,32 @@ msgstr "Hata raporu için hata ayıklama bilgileri nasıl alınır."
 msgid "Track down other video problems"
 msgstr "Diğer video hatalarını takip et"
 
-# Özel not eklendi, gstreamer temelli olmadığı için vlc player tavsiye edildi.
 #. (itstool) path: page/p
 #: C/troubleshooting-debug.page:21
 msgid ""
-"If you have already followed <link xref=\"supported-formats\"/> and <link "
-"xref=\"troubleshooting-DVD\"/> and a video still cannot be played, open a "
-"terminal window and enter the command <cmd>totem --help-gst</cmd>. This will "
-"show a list of available options you can use to get debug output. Often the "
-"problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
-"not in <app>Videos</app> itself."
+"If you have already followed <link xref=\"supported-formats\"/> and a video "
+"still cannot be played, open a terminal window and enter the command "
+"<cmd>totem --help-gst</cmd>. This will show a list of available options you "
+"can use to get debug output. Often the problem is in an underlying plugin, "
+"for example in <sys>GStreamer</sys> and not in <app>Videos</app> itself."
 msgstr ""
-"<link xref=\"supported-formats\"/> ve <link xref=\"troubleshooting-DVD\"/> "
-"maddelerini uyguladığınız halde hala video oynatılamıyorsa ileri düzey hata "
-"bildirimi için şunları yapabilirsiniz. Bir terminal penceresi açın ve "
-"<cmd>totem --help-gst</cmd> komutunu girin. Bu, hata ayıklama çıktısını "
-"almak için kullanabileceğiniz var olan seçeneklerin bir listesini "
-"gösterecektir. Sorun genellikle GStreamer eklentilerinin birinden "
-"kaynaklanmaktadır, <app>Videolar</app>’ın kendisinden değil.\n"
-"\n"
-"Ç.N.: Bir özgür yazılım seçeneği olarak <app>VLC Player</"
-"app>’ıdeneyebilirsiniz."
+"<link xref=\"supported-formats\"/> maddelerini uyguladığınız halde hala "
+"video oynatılamıyorsa, bir uçbirim penceresi açın ve <cmd>totem --help-gst</"
+"cmd> komutunu girin. Bu, hata ayıklama çıktısını almak için "
+"kullanabileceğiniz var olan seçeneklerin bir listesini gösterecektir. Sorun "
+"genellikle GStreamer eklentilerinin birinden kaynaklanmaktadır, "
+"<app>Videolar</app>’ın kendisinden değil."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
 msgid ""
-"Software bugs in <sys>GStreamer</sys> can be reported in the <link href="
-"\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> issue "
+"Software bugs in <sys>GStreamer</sys> can be reported in the <link "
+"href=\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> issue "
 "tracker</link>."
 msgstr ""
 "<sys>GStreamer</sys> hata raporlamaları için <link href=\"https://gitlab."
 "freedesktop.org/gstreamer\"><sys>GStreamer</sys> hata takipçisini</link> "
 "kullanabilirsiniz."
-
-#. (itstool) path: info/desc
-#: C/troubleshooting-DVD.page:10
-msgid "I cannot play my DVD."
-msgstr "DVD’mi oynatamıyorum."
-
-#. (itstool) path: page/title
-#: C/troubleshooting-DVD.page:24
-msgid "Problem with playing movies from a DVD"
-msgstr "DVD’den film oynatırken hata"
-
-#. (itstool) path: page/p
-#: C/troubleshooting-DVD.page:26
-msgid ""
-"It may happen that after putting a DVD into your CD/DVD drive, <app>Videos</"
-"app> shows the error message <gui>An error occurred ‒ The movie could not be "
-"read.</gui> This may be because your <link xref=\"supported-formats\">a "
-"required <sys>GStreamer</sys> plugin to read the format of the movie is not "
-"installed on your system</link>, or because DVD is encrypted and a DVD "
-"decryption package is not installed on your system."
-msgstr ""
-"CD/DVD sürücünüze DVD yerleştirdikten sonra <app>Videolar</app> <gui>Bir "
-"hata oluştu - Film okunamadı.</gui> hata iletisini gösterebilir. Bunun "
-"nedeni <link xref=\"supported-formats\">filmin biçimini okumak için gerekli "
-"<sys>GStreamer</sys> eklentisi (çözücü) sisteminizde kurulu olmayabilir</"
-"link> ya da DVD şifreli ve DVD şifre çözme paketi sisteminize kurulu "
-"olmayabilir."
-
-#. (itstool) path: note/p
-#: C/troubleshooting-DVD.page:36
-msgid ""
-"To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
-"package. However, note that using this package is not legal in all "
-"countries. For further information if or where the package might be "
-"available for your distribution, please ask in a support forum of your "
-"distribution."
-msgstr ""
-"Şifrelenmiş DVD’leri açmak için <sys>libdvdcss</sys> paketini "
-"yükleyebilirsiniz. Ancak, bu paketi kullanmanın tüm ülkelerde yasal "
-"olmadığını unutmayın. Paketin dağıtımınız için var olup olmadığı veya nerede "
-"olabileceği konusunda daha çok bilgi için, lütfen dağıtımınızın destek "
-"forumlarına sormaktan çekinmeyin."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1041,8 +1024,8 @@ msgid ""
 "from <link xref=\"subtitles\"/> page or <link xref=\"preferences\"/> page, "
 "<app>Videos</app> still does not load subtitles. The reason for that may be:"
 msgstr ""
-"<link xref=\"subtitles\">Alt yazılar</link> sayfasından veya <link xref="
-"\"preferences\">Tercihler</link> sayfasından alt yazılarla ilgili "
+"<link xref=\"subtitles\">Alt yazılar</link> sayfasından veya <link "
+"xref=\"preferences\">Tercihler</link> sayfasından alt yazılarla ilgili "
 "yönergeleri izleseniz bile <app>Videolar</app> yine de alt yazıları "
 "yükleyemeyebilir. Bunun nedeni şunlar olabilir:"
 
@@ -1064,7 +1047,6 @@ msgstr ""
 "Alt yazı dosyasının olmaması. Dosya seçiciyi açın ve filmin bulunduğu "
 "dizinde alt yazıları içeren dosyanın varlığını denetleyin."
 
-# opensubtitles.org vurgusu eklendi.
 #. (itstool) path: page/p
 #: C/troubleshooting-subtitles.page:45
 msgid ""
@@ -1080,14 +1062,14 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Preferences</gui>."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Tercihler</gui>’i seçin."
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+"style=\"menuitem\">Tercihler</gui>’i seçin."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:52
 msgid ""
-"In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui style="
-"\"button\">Plugins…</gui>."
+"In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui "
+"style=\"button\">Plugins…</gui>."
 msgstr ""
 "<gui>Genel</gui> sekmesi altındaki <gui>Eklentiler</gui> bölümünden <gui "
 "style=\"button\">Eklentiler…</gui> düğmesine tıklayın."
@@ -1112,8 +1094,8 @@ msgstr "Alt yazı aramak için internete bağlı olmanız gerektiğini unutmayı
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
-msgid "Make the video bigger and make it keep the correct proportions."
-msgstr "Videoyu büyüt ve doğru oranlarda kalmasını sağla."
+msgid "Adjust the aspect ratio to correct its proportions."
+msgstr "Oranlarını düzeltmek için en boy oranını ayarlayın."
 
 #. (itstool) path: page/title
 #: C/view-zoom.page:31
@@ -1122,77 +1104,131 @@ msgstr "Video boyutunu ve en boy oranını değiştir"
 
 #. (itstool) path: page/p
 #: C/view-zoom.page:33
-msgid "You can make the video larger or correct its ratio."
-msgstr "Videoyu büyütebilir veya oranını düzeltebilirsiniz."
+msgid "You can correct its ratio."
+msgstr "En boy oranını düzeltebilirsiniz."
 
+# Arayüzde Görüntü oranı kullanıldığı için bu şekilde çevrildi.
 #. (itstool) path: item/title
 #: C/view-zoom.page:37
-msgid "Zoom in"
-msgstr "Yakınlaştır"
+msgid "Setting aspect ratio"
+msgstr "Görüntü oranı ayarı"
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:38
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
-"style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
-"<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
-msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Yakınlaş</gui>’ı seçin ya da <key>R</key> tuşuna basın. Uzaklaştırmak "
-"için <gui style=\"menuitem\">Yakınlaş</gui>’ı devre dışı bırakın ya da "
-"<key>T</key> tuşuna basın."
-
-# Arayüzde Görüntü oranı kullanıldığı için bu şekilde çevrildi.
-#. (itstool) path: item/title
-#: C/view-zoom.page:43
-msgid "Setting aspect ratio"
-msgstr "Görüntü oranı ayarı"
-
-#. (itstool) path: item/p
-#: C/view-zoom.page:44
-msgid ""
-"Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
 msgstr ""
-"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui style=\"menuitem"
-"\">Görüntü Oranı</gui>’nı seçin."
+"Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+"style=\"menuitem\">Görüntü Oranı</gui>’nı seçin."
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:46
+#: C/view-zoom.page:40
 msgid "Select among:"
 msgstr "Miktar seçin:"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:48
+#: C/view-zoom.page:42
 msgid "<gui>Auto</gui>"
 msgstr "<gui>Kendiliğinden</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:49
+#: C/view-zoom.page:43
 msgid "<gui>Square</gui>"
 msgstr "<gui>Kare</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:50
+#: C/view-zoom.page:44
 msgid "<gui>4∶3 (TV)</gui>"
 msgstr "<gui>4∶3 (TV)</gui>"
 
-# Arayüzde Genişekran şeklinde hatalı yazılmış ama hata düzeltme isteği gönderildi.
 #. (itstool) path: item/p
-#: C/view-zoom.page:51
+#: C/view-zoom.page:45
 msgid "<gui>16∶9 (Widescreen)</gui>"
 msgstr "<gui>16∶9 (Geniş ekran)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:52
+#: C/view-zoom.page:46
 msgid "<gui>2.11∶1 (DVB)</gui>"
 msgstr "<gui>2.11∶1 (DVB)</gui>"
 
 #. (itstool) path: note/p
-#: C/view-zoom.page:58
+#: C/view-zoom.page:52
 msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
-"you to force different aspect ratio to be used for displaying movie."
+"you to correct the video display if the movie appears squished or stretched. "
+"The aspect ratio of your monitor does not come into account."
 msgstr ""
-"Görüntü oranı, genişlik ve yükseklik arasındaki orandır. Bu seçenek, filmi "
-"görüntülemek için başka görüntü oranlarını kullanmaya zorlamanızı sağlar."
+"Görüntü oranı, genişlik ve yükseklik arasındaki orandır. Bu seçenek, film "
+"ezilmiş veya uzatılmış görünüyorsa video görüntüsünü düzeltmenizi sağlar. "
+"Ekranınızın en boy oranı dikkate alınmaz."
+
+#~ msgid ""
+#~ "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</"
+#~ "sys> plugins. If certain file formats are not supported, please refer to "
+#~ "a support forum of your distribution to find out which package to install."
+#~ msgstr ""
+#~ "<app>Videolar</app> tarafından görüntülenen dosya biçimleri "
+#~ "<sys>GStreamer</sys> eklentilerine bağlıdır. Bazı dosya biçimleri "
+#~ "desteklenmiyorsa, hangi paketin kurulacağını öğrenmek için lütfen "
+#~ "dağıtımınızın destek forumuna sormaktan çekinmeyin."
+
+#~ msgid ""
+#~ "If you try to open a format which is not supported, on many distributions "
+#~ "<app>Videos</app> will display a dialog which will allow you to search "
+#~ "for missing plugins (codecs) and install them."
+#~ msgstr ""
+#~ "Desteklenmeyen biçimi açmaya çalışırsanız, birçok dağıtımda "
+#~ "<app>Videolar</app> eksik eklentileri (çözücüleri) aramanıza ve bunları "
+#~ "kurmanızı sağlayan iletişim kutusu görüntüler."
+
+#~ msgid "I cannot play my DVD."
+#~ msgstr "DVD’mi oynatamıyorum."
+
+#~ msgid "Problem with playing movies from a DVD"
+#~ msgstr "DVD’den film oynatırken hata"
+
+#~ msgid ""
+#~ "It may happen that after putting a DVD into your CD/DVD drive, "
+#~ "<app>Videos</app> shows the error message <gui>An error occurred ‒ The "
+#~ "movie could not be read.</gui> This may be because your <link "
+#~ "xref=\"supported-formats\">a required <sys>GStreamer</sys> plugin to read "
+#~ "the format of the movie is not installed on your system</link>, or "
+#~ "because DVD is encrypted and a DVD decryption package is not installed on "
+#~ "your system."
+#~ msgstr ""
+#~ "CD/DVD sürücünüze DVD yerleştirdikten sonra <app>Videolar</app> <gui>Bir "
+#~ "hata oluştu - Film okunamadı.</gui> hata iletisini gösterebilir. Bunun "
+#~ "nedeni <link xref=\"supported-formats\">filmin biçimini okumak için "
+#~ "gerekli <sys>GStreamer</sys> eklentisi (çözücü) sisteminizde kurulu "
+#~ "olmayabilir</link> ya da DVD şifreli ve DVD şifre çözme paketi "
+#~ "sisteminize kurulu olmayabilir."
+
+#~ msgid ""
+#~ "To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
+#~ "package. However, note that using this package is not legal in all "
+#~ "countries. For further information if or where the package might be "
+#~ "available for your distribution, please ask in a support forum of your "
+#~ "distribution."
+#~ msgstr ""
+#~ "Şifrelenmiş DVD’leri açmak için <sys>libdvdcss</sys> paketini "
+#~ "yükleyebilirsiniz. Ancak, bu paketi kullanmanın tüm ülkelerde yasal "
+#~ "olmadığını unutmayın. Paketin dağıtımınız için var olup olmadığı veya "
+#~ "nerede olabileceği konusunda daha çok bilgi için, lütfen dağıtımınızın "
+#~ "destek forumlarına sormaktan çekinmeyin."
+
+#~ msgid "Make the video bigger and make it keep the correct proportions."
+#~ msgstr "Videoyu büyüt ve doğru oranlarda kalmasını sağla."
+
+#~ msgid "Zoom in"
+#~ msgstr "Yakınlaştır"
+
+#~ msgid ""
+#~ "Press the menu button in the top-right corner of the window and select "
+#~ "<gui style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, "
+#~ "disable <gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
+#~ msgstr ""
+#~ "Pencerenin sağ üst köşesindeki menü düğmesine basın ve <gui "
+#~ "style=\"menuitem\">Yakınlaş</gui>’ı seçin ya da <key>R</key> tuşuna "
+#~ "basın. Uzaklaştırmak için <gui style=\"menuitem\">Yakınlaş</gui>’ı devre "
+#~ "dışı bırakın ya da <key>T</key> tuşuna basın."
