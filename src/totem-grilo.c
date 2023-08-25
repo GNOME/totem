@@ -2213,7 +2213,7 @@ delete_cb (TotemSelectionToolbar *bar,
 	GtkTreeModel *model;
 	GList *list, *l;
 
-	g_signal_handlers_block_by_func (self->browser, "view-selection-changed", self);
+	g_signal_handlers_block_by_func (self->browser, view_selection_changed_cb, self);
 
 	model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
 	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->browser));
@@ -2228,7 +2228,7 @@ delete_cb (TotemSelectionToolbar *bar,
 	}
 	g_list_foreach (list, delete_foreach, model);
 
-	g_signal_handlers_unblock_by_func (self->browser, "view-selection-changed", self);
+	g_signal_handlers_unblock_by_func (self->browser, view_selection_changed_cb, self);
 
 	g_object_set (G_OBJECT (self->browser), "selection-mode", FALSE, NULL);
 }
