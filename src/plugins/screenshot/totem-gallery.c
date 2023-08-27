@@ -120,7 +120,10 @@ default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, Totem
 static void
 dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self)
 {
-	gchar *filename, *video_mrl, *argv[6];
+	g_autoptr(GFile) filename = NULL;
+	g_autoptr(GFile) tmp_file = NULL;
+	g_autofree char *tmp_filename = NULL;
+	gchar *video_mrl, *argv[6];
 	guint screenshot_count, i;
 	gint stdout_fd;
 	GPid child_pid;
@@ -140,16 +143,19 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	else
 		screenshot_count = gtk_spin_button_get_value_as_int (self->screenshot_count);
 
-	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self));
+	filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self));
 	video_mrl = totem_object_get_current_mrl (self->totem);
 	totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (self)));
+
+	tmp_filename = g_build_filename (g_get_tmp_dir (), "totem-gallery-XXXXXX.jpg", NULL);
+	tmp_file = g_file_new_for_path (tmp_filename);
 
 	/* Build the command and arguments to pass it */
 	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
 	argv[1] = g_strdup_printf ("--gallery=%u", screenshot_count); /* number of screenshots to output */
 	argv[2] = g_strdup_printf ("--size=%u", gtk_spin_button_get_value_as_int (self->screenshot_width)); /* screenshot width */
 	argv[3] = video_mrl; /* video to thumbnail */
-	argv[4] = filename; /* output filename */
+	argv[4] = tmp_filename; /* output filename */
 	argv[5] = NULL;
 
 	/* Run the command */
@@ -167,10 +173,15 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	}
 
 	/* Create the progress dialogue */
-	progress_dialog = GTK_WIDGET (totem_gallery_progress_new (child_pid, filename));
-	g_free (filename);
+	progress_dialog = GTK_WIDGET (totem_gallery_progress_new (child_pid, tmp_filename));
 	totem_gallery_progress_run (TOTEM_GALLERY_PROGRESS (progress_dialog), stdout_fd);
 	gtk_dialog_run (GTK_DIALOG (progress_dialog));
+
+	g_file_move (tmp_file,
+	             filename,
+	             G_FILE_COPY_OVERWRITE,
+	             NULL, NULL, NULL, NULL);
+
 	gtk_widget_destroy (progress_dialog);
 
 	gtk_dialog_response (GTK_DIALOG (self), 0);
