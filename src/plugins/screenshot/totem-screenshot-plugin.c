@@ -228,11 +228,11 @@ take_gallery_action_cb (GAction               *action,
 			GVariant              *parameter,
 			TotemScreenshotPlugin *pi)
 {
-	GtkDialog *dialog;
+	TotemGallery *gallery_window;
 
-	dialog = GTK_DIALOG (totem_gallery_new (pi->totem));
+	gallery_window = totem_gallery_new (pi->totem);
 
-	gtk_widget_show (GTK_WIDGET (dialog));
+	gtk_window_present (GTK_WINDOW (gallery_window));
 }
 
 static void

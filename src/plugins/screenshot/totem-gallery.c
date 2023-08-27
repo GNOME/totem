@@ -17,111 +17,115 @@
 #include "totem-gallery-progress.h"
 #include "totem-screenshot-plugin.h"
 
-static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self);
+static void filechooser_response_callback (GtkDialog *file_chooser, gint response_id, TotemGallery *self);
 
-static void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
+static void create_gallery_cb (GtkButton *button, TotemGallery *self);
 
 struct _TotemGallery {
-	GtkFileChooserDialog parent;
+	HdyWindow parent;
 	Totem *totem;
 	GtkCheckButton *default_screenshot_count;
 	GtkSpinButton *screenshot_count;
 	GtkSpinButton *screenshot_width;
+
+	GFile *saved_tmp_file;
 };
 
-G_DEFINE_TYPE (TotemGallery, totem_gallery, GTK_TYPE_FILE_CHOOSER_DIALOG)
+G_DEFINE_TYPE (TotemGallery, totem_gallery, HDY_TYPE_WINDOW)
+
+static void
+totem_gallery_finalize (GObject *object)
+{
+	TotemGallery *self = TOTEM_GALLERY (object);
+
+	g_clear_object(&self->saved_tmp_file);
+
+	/* Chain up to the parent class */
+	G_OBJECT_CLASS (totem_gallery_parent_class)->finalize (object);
+}
 
 static void
 totem_gallery_class_init (TotemGalleryClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+	object_class->finalize = totem_gallery_finalize;
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/totem/plugins/screenshot/gallery.ui");
+
+	gtk_widget_class_bind_template_child (widget_class, TotemGallery, default_screenshot_count);
+	gtk_widget_class_bind_template_child (widget_class, TotemGallery, screenshot_count);
+	gtk_widget_class_bind_template_child (widget_class, TotemGallery, screenshot_width);
+
+	gtk_widget_class_bind_template_callback (widget_class, create_gallery_cb);
 }
 
 static void
 totem_gallery_init (TotemGallery *self)
 {
+	gtk_widget_init_template (GTK_WIDGET (self));
+
+	self->saved_tmp_file = NULL;
 }
 
 TotemGallery *
 totem_gallery_new (Totem *totem)
 {
 	TotemGallery *gallery;
-	GtkWidget *container;
-	GtkBuilder *builder;
-	gchar *movie_title, *uri, *suggested_name;
-	GFile *file;
 
 	/* Create the gallery and its interface */
 	gallery = g_object_new (TOTEM_TYPE_GALLERY, NULL);
 
-	builder = gtk_builder_new_from_resource ("/org/gnome/totem/plugins/screenshot/gallery.ui");
-
-	/* Grab the widgets */
-	gallery->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));
-	gallery->screenshot_count = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_count"));
-	gallery->screenshot_width = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_width"));
-	g_signal_connect (gtk_builder_get_object (builder, "default_screenshot_count"), "toggled",
-			  G_CALLBACK (default_screenshot_count_toggled_callback), gallery);
-
 	gallery->totem = totem;
 
-	gtk_window_set_title (GTK_WINDOW (gallery), _("Save Gallery"));
-	gtk_file_chooser_set_action (GTK_FILE_CHOOSER (gallery), GTK_FILE_CHOOSER_ACTION_SAVE);
-	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (gallery), TRUE);
-	/*gtk_window_set_resizable (GTK_WINDOW (gallery), FALSE);
-	gtk_dialog_set_has_separator (GTK_DIALOG (gallery), TRUE);*/
-	gtk_dialog_add_buttons (GTK_DIALOG (gallery),
-			_("_Cancel"), GTK_RESPONSE_CANCEL,
-			_("_Save"), GTK_RESPONSE_OK,
-			NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (gallery), GTK_RESPONSE_OK);
+	return gallery;
+}
 
-	g_signal_connect (G_OBJECT (gallery), "response",
-			  G_CALLBACK (dialog_response_callback), gallery);
+static void
+save_gallery_file (TotemGallery *self)
+{
+	GtkWidget *file_chooser;
+	g_autofree gchar *suggested_name = NULL;
+	g_autofree gchar *movie_title = NULL;
+	g_autofree gchar *uri = NULL;
+	g_autoptr(GFile) file = NULL;
 
-	container = GTK_WIDGET (gtk_builder_get_object (builder,
-				"gallery_dialog_content"));
-	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
-
-	movie_title = totem_object_get_short_title (totem);
+	movie_title = totem_object_get_short_title (self->totem);
 
 	/* Translators: The first argument is the movie title. The second
 	 * argument is a number which is used to prevent overwriting files.
 	 * Just translate "Gallery", and not the ".jpg". Example:
 	 * "Galerie-%s-%d.jpg". */
 	uri = totem_screenshot_plugin_setup_file_chooser (N_("Gallery-%s-%d.jpg"), movie_title);
-	g_free (movie_title);
 
 	file = g_file_new_for_uri (uri);
+
 	/* We can use g_file_get_basename here and be sure that it's UTF-8
 	 * because we provided the name. */
 	suggested_name = g_file_get_basename (file);
-	g_object_unref (file);
 
-	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (gallery), uri);
-	g_free (uri);
-	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (gallery), suggested_name);
-	g_free (suggested_name);
+	file_chooser = gtk_file_chooser_dialog_new (_("Save Gallery"),
+	                                            GTK_WINDOW (totem_object_get_main_window(self->totem)),
+	                                            GTK_FILE_CHOOSER_ACTION_SAVE,
+	                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+	                                            _("_Save"), GTK_RESPONSE_OK,
+	                                            NULL);
+	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_chooser), suggested_name);
+	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (file_chooser), uri);
+	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_chooser), TRUE);
 
-	gtk_widget_show_all (GTK_WIDGET (gallery));
+	gtk_dialog_set_default_response (GTK_DIALOG (file_chooser), GTK_RESPONSE_OK);
 
-	g_object_unref (builder);
+	g_signal_connect (file_chooser, "response",
+			  G_CALLBACK (filechooser_response_callback), self);
 
-	return gallery;
+	gtk_widget_show (GTK_WIDGET (file_chooser));
 }
 
 static void
-default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self)
+create_gallery_cb (GtkButton *button, TotemGallery *self)
 {
-	/* Only have the screenshot count spin button sensitive when the default screenshot count
-	 * check button is unchecked. */
-	gtk_widget_set_sensitive (GTK_WIDGET (self->screenshot_count), !gtk_toggle_button_get_active (toggle_button));
-}
-
-static void
-dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self)
-{
-	g_autoptr(GFile) filename = NULL;
-	g_autoptr(GFile) tmp_file = NULL;
 	g_autofree char *tmp_filename = NULL;
 	gchar *video_mrl, *argv[6];
 	guint screenshot_count, i;
@@ -130,27 +134,27 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	GtkWidget *progress_dialog;
 	gboolean ret;
 	GError *error = NULL;
+	int response_id, fd;
 
-	if (response_id != GTK_RESPONSE_OK) {
-		gtk_widget_destroy (GTK_WIDGET (dialog));
-		return;
-	}
-	gtk_widget_hide (GTK_WIDGET (dialog));
+	gtk_widget_hide (GTK_WIDGET (self));
 
-	/* Don't call in here again */
-	g_signal_handlers_disconnect_by_func (G_OBJECT (self), dialog_response_callback, self);
-
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->default_screenshot_count)) == TRUE)
+	if (hdy_expander_row_get_expanded (HDY_EXPANDER_ROW (self->default_screenshot_count)) == FALSE)
 		screenshot_count = 0;
 	else
 		screenshot_count = gtk_spin_button_get_value_as_int (self->screenshot_count);
 
-	filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self));
 	video_mrl = totem_object_get_current_mrl (self->totem);
-	totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (self)));
 
 	tmp_filename = g_build_filename (g_get_tmp_dir (), "totem-gallery-XXXXXX.jpg", NULL);
-	tmp_file = g_file_new_for_path (tmp_filename);
+	fd = g_mkstemp(tmp_filename);
+
+	if (fd == -1) {
+		g_warning ("Could not create a temporary file");
+		gtk_window_close (GTK_WINDOW (self));
+		return;
+	}
+
+	self->saved_tmp_file = g_file_new_for_path (tmp_filename);
 
 	/* Build the command and arguments to pass it */
 	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
@@ -177,15 +181,34 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	/* Create the progress dialogue */
 	progress_dialog = GTK_WIDGET (totem_gallery_progress_new (child_pid, tmp_filename));
 	totem_gallery_progress_run (TOTEM_GALLERY_PROGRESS (progress_dialog), stdout_fd);
-	gtk_dialog_run (GTK_DIALOG (progress_dialog));
-
-	g_file_move (tmp_file,
-	             filename,
-	             G_FILE_COPY_OVERWRITE,
-	             NULL, NULL, NULL, NULL);
+	response_id = gtk_dialog_run (GTK_DIALOG (progress_dialog));
 
 	gtk_widget_destroy (progress_dialog);
 
-	gtk_dialog_response (GTK_DIALOG (self), 0);
+	if (response_id != GTK_RESPONSE_CANCEL)
+		save_gallery_file (self);
+	else
+		gtk_window_close (GTK_WINDOW (self));
+}
+
+static void
+filechooser_response_callback (GtkDialog *file_chooser, gint response_id, TotemGallery *self)
+{
+	g_autoptr(GFile) filename = NULL;
+
+	if (response_id != GTK_RESPONSE_CANCEL) {
+		filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_chooser));
+
+		totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (file_chooser)));
+
+		g_file_move (self->saved_tmp_file,
+		             filename,
+		             G_FILE_COPY_OVERWRITE,
+		             NULL, NULL, NULL, NULL);
+	}
+
+	gtk_widget_destroy (GTK_WIDGET (file_chooser));
+
+	gtk_window_close (GTK_WINDOW (self));
 }
 

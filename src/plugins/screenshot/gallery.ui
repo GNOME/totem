@@ -17,71 +17,100 @@
 		<property name="page-size">0</property>
 		<property name="value">128</property>
 	</object>
-	<object class="GtkBox" id="gallery_dialog_content">
-		<property name="orientation">vertical</property>
-		<property name="border-width">12</property>
+	<template class="TotemGallery" parent="HdyWindow">
+		<property name="visible">True</property>
+		<property name="width_request">512</property>
+		<property name="destroy-with-parent">True</property>
+		<property name="modal">True</property>
 		<child>
-			<object class="GtkGrid" id="table1">
-				<property name="row-spacing">8</property>
-				<property name="column-spacing">12</property>
+			<object class="GtkBox">
+				<property name="visible">True</property>
+				<property name="orientation">vertical</property>
 				<child>
-					<object class="GtkSpinButton" id="screenshot_count">
-						<property name="sensitive">False</property><!-- made sensitive when default_screenshot_count is unchecked -->
-						<property name="activates-default">True</property>
-						<property name="adjustment">screenshot_count_adjustment</property>
+					<object class="HdyHeaderBar">
+						<property name="visible">True</property>
+						<property name="title" translatable="yes">Create Gallery</property>
+						<child>
+							<object class="GtkButton">
+								<property name="visible">True</property>
+								<property name="use_underline">True</property>
+								<property name="label" translatable="yes">_Cancel</property>
+								<signal name="clicked" handler="gtk_window_close" swapped="yes"/>
+							</object>
+							<packing>
+								<property name="pack-type">start</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkButton">
+								<property name="visible">True</property>
+								<property name="label" translatable="yes">Create</property>
+								<signal name="clicked" handler="create_gallery_cb"/>
+								<style>
+									<class name="suggested-action"/>
+								</style>
+							</object>
+							<packing>
+								<property name="pack-type">end</property>
+							</packing>
+						</child>
 					</object>
-					<packing>
-						<property name="left-attach">1</property>
-						<property name="top-attach">3</property>
-					</packing>
 				</child>
 				<child>
-					<object class="GtkLabel" id="label2">
-						<property name="xalign">1</property>
-						<property name="label" translatable="yes">Screenshot width (in pixels):</property>
+					<object class="HdyClamp">
+						<property name="visible">True</property>
+						<property name="hexpand">True</property>
+						<property name="vexpand">True</property>
+						<property name="margin-top">18</property>
+						<property name="margin-start">18</property>
+						<property name="margin-end">18</property>
+						<property name="margin-bottom">18</property>
+						<child>
+							<object class="GtkListBox">
+								<property name="visible">True</property>
+								<property name="selection-mode">none</property>
+								<style>
+									<class name="content"/>
+								</style>
+								<child>
+									<object class="HdyActionRow">
+										<property name="visible">True</property>
+										<property name="title" translatable="yes">Screenshot width (in pixels)</property>
+										<child>
+											<object class="GtkSpinButton" id="screenshot_width">
+												<property name="visible">True</property>
+												<property name="valign">center</property>
+												<property name="adjustment">screenshot_width_adjustment</property>
+											</object>
+										</child>
+									</object>
+								</child>
+								<child>
+									<object class="HdyExpanderRow" id="default_screenshot_count">
+										<property name="visible">True</property>
+										<property name="title" translatable="yes">Add number of screenshots</property>
+										<property name="show-enable-switch">True</property>
+										<property name="enable-expansion">False</property>
+										<child>
+											<object class="HdyActionRow">
+												<property name="visible">True</property>
+												<property name="title" translatable="yes">Number of screenshots</property>
+												<child>
+													<object class="GtkSpinButton" id="screenshot_count">
+														<property name="visible">True</property>
+														<property name="valign">center</property>
+														<property name="adjustment">screenshot_count_adjustment</property>
+													</object>
+												</child>
+											</object>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
 					</object>
-					<packing>
-						<property name="left-attach">0</property>
-						<property name="top-attach">1</property>
-					</packing>
-				</child>
-				<child>
-					<object class="GtkCheckButton" id="default_screenshot_count">
-						<property name="label" translatable="yes">Calculate the number of screenshots</property>
-						<property name="active">True</property>
-						<property name="draw-indicator">True</property>
-					</object>
-					<packing>
-						<property name="left-attach">0</property>
-						<property name="width">2</property>
-						<property name="top-attach">2</property>
-					</packing>
-				</child>
-				<child>
-					<object class="GtkSpinButton" id="screenshot_width">
-						<property name="activates-default">True</property>
-						<property name="adjustment">screenshot_width_adjustment</property>
-					</object>
-					<packing>
-						<property name="left-attach">1</property>
-						<property name="top-attach">1</property>
-					</packing>
-				</child>
-				<child>
-					<object class="GtkLabel" id="label1">
-						<property name="xalign">1</property>
-						<property name="label" translatable="yes">Number of screenshots:</property>
-					</object>
-					<packing>
-						<property name="left-attach">0</property>
-						<property name="top-attach">3</property>
-					</packing>
 				</child>
 			</object>
-			<packing>
-				<property name="padding">5</property>
-				<property name="pack_type">end</property>
-			</packing>
 		</child>
-	</object>
+	</template>
 </interface>

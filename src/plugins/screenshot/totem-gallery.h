@@ -10,12 +10,12 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <gtk/gtk.h>
+#include <handy.h>
 
 #include "totem.h"
 
 #define TOTEM_TYPE_GALLERY		(totem_gallery_get_type ())
-G_DECLARE_FINAL_TYPE(TotemGallery, totem_gallery, TOTEM, GALLERY, GtkFileChooserDialog)
+G_DECLARE_FINAL_TYPE(TotemGallery, totem_gallery, TOTEM, GALLERY, HdyWindow)
 
 GType totem_gallery_get_type (void);
 TotemGallery *totem_gallery_new (Totem *totem);
