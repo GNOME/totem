@@ -65,6 +65,7 @@
 						<property name="margin-start">18</property>
 						<property name="margin-end">18</property>
 						<property name="margin-bottom">18</property>
+						<property name="sensitive" bind-source="progress_bar" bind-property="visible" bind-flags="invert-boolean"/>
 						<child>
 							<object class="GtkListBox">
 								<property name="visible">True</property>
@@ -108,6 +109,11 @@
 								</child>
 							</object>
 						</child>
+					</object>
+				</child>
+				<child>
+					<object class="GtkProgressBar" id="progress_bar">
+						<property name="visible">False</property>
 					</object>
 				</child>
 			</object>

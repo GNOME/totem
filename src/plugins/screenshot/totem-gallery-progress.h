@@ -13,7 +13,7 @@
 #include <gtk/gtk.h>
 
 #define TOTEM_TYPE_GALLERY_PROGRESS		(totem_gallery_progress_get_type ())
-G_DECLARE_FINAL_TYPE(TotemGalleryProgress, totem_gallery_progress, TOTEM, GALLERY_PROGRESS, GtkDialog)
+G_DECLARE_FINAL_TYPE(TotemGalleryProgress, totem_gallery_progress, TOTEM, GALLERY_PROGRESS, GObject)
 
 GType totem_gallery_progress_get_type (void);
 TotemGalleryProgress *totem_gallery_progress_new (GPid child_pid, const gchar *output_filename);

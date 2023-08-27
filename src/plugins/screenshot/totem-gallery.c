@@ -27,7 +27,9 @@ struct _TotemGallery {
 	GtkCheckButton *default_screenshot_count;
 	GtkSpinButton *screenshot_count;
 	GtkSpinButton *screenshot_width;
+	GtkProgressBar *progress_bar;
 
+	TotemGalleryProgress *gallery_progress;
 	GFile *saved_tmp_file;
 };
 
@@ -38,6 +40,7 @@ totem_gallery_finalize (GObject *object)
 {
 	TotemGallery *self = TOTEM_GALLERY (object);
 
+	g_clear_object (&self->progress_bar);
 	g_clear_object(&self->saved_tmp_file);
 
 	/* Chain up to the parent class */
@@ -57,6 +60,7 @@ totem_gallery_class_init (TotemGalleryClass *klass)
 	gtk_widget_class_bind_template_child (widget_class, TotemGallery, default_screenshot_count);
 	gtk_widget_class_bind_template_child (widget_class, TotemGallery, screenshot_count);
 	gtk_widget_class_bind_template_child (widget_class, TotemGallery, screenshot_width);
+	gtk_widget_class_bind_template_child (widget_class, TotemGallery, progress_bar);
 
 	gtk_widget_class_bind_template_callback (widget_class, create_gallery_cb);
 }
@@ -91,6 +95,8 @@ save_gallery_file (TotemGallery *self)
 	g_autofree gchar *uri = NULL;
 	g_autoptr(GFile) file = NULL;
 
+	gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+
 	movie_title = totem_object_get_short_title (self->totem);
 
 	/* Translators: The first argument is the movie title. The second
@@ -124,6 +130,15 @@ save_gallery_file (TotemGallery *self)
 }
 
 static void
+gallery_progress_cb (TotemGalleryProgress *gallery_progress, double progress, TotemGallery *self)
+{
+	gtk_progress_bar_set_fraction (self->progress_bar, progress);
+
+	if (1.0 == progress)
+		save_gallery_file (self);
+}
+
+static void
 create_gallery_cb (GtkButton *button, TotemGallery *self)
 {
 	g_autofree char *tmp_filename = NULL;
@@ -131,12 +146,9 @@ create_gallery_cb (GtkButton *button, TotemGallery *self)
 	guint screenshot_count, i;
 	gint stdout_fd;
 	GPid child_pid;
-	GtkWidget *progress_dialog;
 	gboolean ret;
 	GError *error = NULL;
-	int response_id, fd;
-
-	gtk_widget_hide (GTK_WIDGET (self));
+	int fd;
 
 	if (hdy_expander_row_get_expanded (HDY_EXPANDER_ROW (self->default_screenshot_count)) == FALSE)
 		screenshot_count = 0;
@@ -179,16 +191,11 @@ create_gallery_cb (GtkButton *button, TotemGallery *self)
 	}
 
 	/* Create the progress dialogue */
-	progress_dialog = GTK_WIDGET (totem_gallery_progress_new (child_pid, tmp_filename));
-	totem_gallery_progress_run (TOTEM_GALLERY_PROGRESS (progress_dialog), stdout_fd);
-	response_id = gtk_dialog_run (GTK_DIALOG (progress_dialog));
+	gtk_widget_set_visible (GTK_WIDGET (self->progress_bar), TRUE);
 
-	gtk_widget_destroy (progress_dialog);
-
-	if (response_id != GTK_RESPONSE_CANCEL)
-		save_gallery_file (self);
-	else
-		gtk_window_close (GTK_WINDOW (self));
+	self->gallery_progress = totem_gallery_progress_new (child_pid, tmp_filename);
+	g_signal_connect (self->gallery_progress, "progress", G_CALLBACK (gallery_progress_cb), self);
+	totem_gallery_progress_run (TOTEM_GALLERY_PROGRESS (self->gallery_progress), stdout_fd);
 }
 
 static void
