@@ -224,15 +224,6 @@ take_screenshot_action_cb (GSimpleAction         *action,
 }
 
 static void
-take_gallery_response_cb (GtkDialog *dialog,
-			  int response_id,
-			  TotemScreenshotPlugin *pi)
-{
-	if (response_id != GTK_RESPONSE_OK)
-		gtk_widget_destroy (GTK_WIDGET (dialog));
-}
-
-static void
 take_gallery_action_cb (GAction               *action,
 			GVariant              *parameter,
 			TotemScreenshotPlugin *pi)
@@ -241,8 +232,6 @@ take_gallery_action_cb (GAction               *action,
 
 	dialog = GTK_DIALOG (totem_gallery_new (pi->totem));
 
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (take_gallery_response_cb), pi);
 	gtk_widget_show (GTK_WIDGET (dialog));
 }
 

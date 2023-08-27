@@ -131,8 +131,10 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	gboolean ret;
 	GError *error = NULL;
 
-	if (response_id != GTK_RESPONSE_OK)
+	if (response_id != GTK_RESPONSE_OK) {
+		gtk_widget_destroy (GTK_WIDGET (dialog));
 		return;
+	}
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
 	/* Don't call in here again */
