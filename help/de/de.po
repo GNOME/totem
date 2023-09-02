@@ -5,13 +5,14 @@
 # Stefan Horning <stefan@hornings.de>, 2009.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2010, 2012, 2017, 2019, 2020.
+# Tim Sabsch <tim@sabsch.com>,  2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-25 22:20+0000\n"
-"PO-Revision-Date: 2023-09-02 00:13+0200\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2023-09-01 22:14+0000\n"
+"PO-Revision-Date: 2023-09-02 18:45+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -29,8 +30,9 @@ msgstr ""
 "Mario Blättermann <mario.blaettermann@gmail.com>, 2008-2010, 2012, "
 "2019-2020.\n"
 "Stefan Horning <stefan@hornings.de>, 2009\n"
-"Christian Kirbach <christian.kirbach@gmail.com>, 2013, "
-"2015,2019,2021,2022,2023."
+"Christian Kirbach <christian.kirbach@gmail.com>, 2013, 2015, 2019, "
+"2021-2023.\n"
+"Tim Sabsch <tim@sabsch.com>, 2023"
 
 #. (itstool) path: license/p
 #: C/adjust-speed.page:16 C/channels.page:20 C/file-open.page:25
@@ -39,8 +41,7 @@ msgstr ""
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
 #: C/troubleshooting-Audio-CD.page:19 C/troubleshooting-debug.page:15
-#: C/troubleshooting-DVD.page:20 C/troubleshooting-subtitles.page:21
-#: C/view-zoom.page:25
+#: C/troubleshooting-subtitles.page:21 C/view-zoom.page:25
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
@@ -288,11 +289,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/navigation.page:28
 msgid ""
-"Play media or pause them: Use the keyboard shortcut <key>Space</key> or "
-"press the <gui style=\"button\">Play/Pause</gui> button."
+"Play media or pause them: Use the keyboard shortcut <key>P</key> or press "
+"the <gui style=\"button\">Play/Pause</gui> button."
 msgstr ""
-"Medien wiedergeben oder pausieren: Verwenden Sie die <key>Leertaste</key> "
-"oder klicken Sie auf den Knopf <gui style=\"button\">Wiedergabe/Pause</gui>."
+"Medien wiedergeben oder pausieren: Verwenden Sie das Tastenkürzel <key>P</"
+"key> oder klicken Sie auf den Knopf <gui style=\"button\">Wiedergabe/Pause</"
+"gui>."
 
 #. (itstool) path: item/p
 #: C/navigation.page:32
@@ -328,6 +330,33 @@ msgid ""
 msgstr ""
 "Um zu einem anderen Kapitel auf einer DVD zu wechseln, gehen Sie zum "
 "Hauptbildschirm zurück. Lesen Sie bitte auch <link xref=\"playing-DVD\"/>."
+
+#. (itstool) path: page/p
+#: C/navigation.page:49
+msgid ""
+"The full list of keyboard shortcuts is available by typing <key>?</key> "
+"while playing a movie, or <keyseq><key>Ctrl</key><key>?</key></keyseq> in "
+"the movies view."
+msgstr ""
+"Die vollständige Liste der Tastenkombinationen ist durch Drücken von <key>?</"
+"key> während der Wiedergabe eines Films, oder <keyseq><key>Strg</key><key>?</"
+"key></keyseq> in der Filmansicht verfügbar."
+
+#. (itstool) path: note/p
+#: C/navigation.page:52
+msgid ""
+"Seeking with the keyboard keys (<key>Left</key> and <key>Right</key> arrows) "
+"does not seek the same amount of time in either direction. This is as "
+"designed as it makes it easier to find a particular place in a film, seeking "
+"forward until we do find a part of the film we do not recognise, or know to "
+"be further than what we're looking for, and seek back more finely."
+msgstr ""
+"Beim Spulen mit den Tastaturtasten (<key>←</key> und <key>→</key>) wird "
+"nicht die gleiche Zeitspanne in beide Richtungen gespult. Das ist so "
+"gewollt, denn es erleichtert das Auffinden einer bestimmten Stelle im Film, "
+"indem man so lange vorspult, bis man einen Teil des Films findet, den man "
+"nicht kennt oder von dem man weiß, dass er später als das Gesuchte "
+"stattfindet, und dann feiner zurückspult."
 
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
@@ -503,7 +532,7 @@ msgid ""
 "<gui style=\"menuitem\">Preferences</gui>."
 msgstr ""
 "<app>Videos</app> bietet einige zusätzliche Optionen an. Richten Sie die "
-"Anwendung nach Ihren Vorlieben ein. Öffnen Sie das <app>Einstellungen</app>-"
+"Anwendung nach Ihren Vorlieben ein. Öffnen Sie das <gui>Einstellungen</gui>-"
 "Fenster, indem Sie das Menü in der oberen rechten Ecke des Fensters öffnen "
 "und <gui style=\"menuitem\">Einstellungen</gui> auswählen."
 
@@ -625,8 +654,8 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/properties.page:9
-msgid "View the properties of a played audio or video file."
-msgstr "Die Eigenschaften einer abgespielten Audio- oder Videodatei anzeigen."
+msgid "View the properties of a played video file."
+msgstr "Die Eigenschaften einer abgespielten Videodatei anzeigen."
 
 #. (itstool) path: page/title
 #: C/properties.page:27
@@ -930,25 +959,30 @@ msgstr "Ein bestimmtes Dateiformat kann nicht abgespielt werden"
 #: C/supported-formats.page:25
 msgid ""
 "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys> "
-"plugins. If certain file formats are not supported, please refer to a "
-"support forum of your distribution to find out which package to install."
+"plugins. The only supported version of <app>Videos</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> available on Flathub</"
+"link>, should have support for all the more common, and some niche, video "
+"and audio formats."
 msgstr ""
-"Die in <app>Videos</app> angezeigten Dateiformate sind von den "
-"<sys>GStreamer</sys>-Erweiterungen abhängig. Falls bestimmte Dateiformate "
-"nicht unterstützt werden, wenden Sie sich an ein Supportforum Ihrer "
-"Distribution, um herauszufinden, welche Pakete installiert werden müssen."
+"Dateiformate, die von <app>Videos</app> angezeigt werden, hängen von "
+"<sys>GStreamer</sys>-Erweiterungen ab. Die einzige unterstützte Version von "
+"<app>Videos</app>, <link href=\"https://flathub.org/apps/org.gnome."
+"Totem\">erhältlich auf Flathub</link>, sollte Unterstützung für alle "
+"gängigen und einige Nischen-Video- und Audioformate bieten."
 
 #. (itstool) path: note/p
-#: C/supported-formats.page:29
+#: C/supported-formats.page:30
 msgid ""
-"If you try to open a format which is not supported, on many distributions "
-"<app>Videos</app> will display a dialog which will allow you to search for "
-"missing plugins (codecs) and install them."
+"If you run into any video files that cannot be played in the supported "
+"version of <app>Videos</app> available on Flathub, then <link href=\"https://"
+"github.com/flathub/org.gnome.Totem/issues\"> file a bug against the "
+"application</link>, so support for the necessary formats can be added."
 msgstr ""
-"Wenn Sie versuchen, ein nicht unterstütztes Format zu öffnen, zeigt "
-"<app>Videos</app> auf vielen Distributionen einen Dialog an, in welchem Sie "
-"nach den fehlenden Erweiterungen (Codecs) suchen und diese installieren "
-"können."
+"Wenn Sie auf Videodateien stoßen, die nicht in der Version von <app>Videos</"
+"app> abgespielt werden können, die auf Flathub verfügbar ist, <link "
+"href=\"https://github.com/flathub/org.gnome.Totem/issues\">schreiben Sie "
+"einen Fehlerbericht</link>, damit eine Unterstützung für die notwendigen "
+"Formate hinzugefügt werden kann."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -983,20 +1017,19 @@ msgstr "Andere Videoprobleme eingrenzen"
 #. (itstool) path: page/p
 #: C/troubleshooting-debug.page:21
 msgid ""
-"If you have already followed <link xref=\"supported-formats\"/> and <link "
-"xref=\"troubleshooting-DVD\"/> and a video still cannot be played, open a "
-"terminal window and enter the command <cmd>totem --help-gst</cmd>. This will "
-"show a list of available options you can use to get debug output. Often the "
-"problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
-"not in <app>Videos</app> itself."
+"If you have already followed <link xref=\"supported-formats\"/> and a video "
+"still cannot be played, open a terminal window and enter the command "
+"<cmd>totem --help-gst</cmd>. This will show a list of available options you "
+"can use to get debug output. Often the problem is in an underlying plugin, "
+"for example in <sys>GStreamer</sys> and not in <app>Videos</app> itself."
 msgstr ""
-"Wenn Sie <link xref=\"supported-formats\"/> und <link xref=\"troubleshooting-"
-"DVD\"/> bereits befolgt haben und ein Video immer noch nicht abgespielt "
-"werden kann, öffnen Sie ein Terminalfenster und geben Sie den Befehl "
-"<cmd>totem --help-gst</cmd> ein. Daraufhin wird eine Liste der verfügbaren "
-"Optionen angezeigt, die Sie verwenden können, um eine Fehlerdiagnoseausgabe "
-"zu erhalten. Oft liegt das Problem an einer zugrunde liegenden Erweiterung, "
-"zum Beispiel an <sys>GStreamer</sys> und nicht an <app>Videos</app> selbst."
+"Wenn Sie <link xref=\"supported-formats\"/> bereits befolgt haben und ein "
+"Video immer noch nicht abgespielt werden kann, öffnen Sie ein "
+"Terminalfenster und geben Sie den Befehl <cmd>totem --help-gst</cmd> ein. "
+"Daraufhin wird eine Liste der verfügbaren Optionen angezeigt, die Sie "
+"verwenden können, um eine Fehlerdiagnoseausgabe zu erhalten. Oft liegt das "
+"Problem an einer zugrunde liegenden Erweiterung, zum Beispiel an "
+"<sys>GStreamer</sys> und nicht an <app>Videos</app> selbst."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
@@ -1006,51 +1039,8 @@ msgid ""
 "tracker</link>."
 msgstr ""
 "Softwarefehler in <sys>GStreamer</sys> können Sie im <link href=\"https://"
-"gitlab.freedesktop.org/gstreamer\">GStreamer-Fehlererfassungssystem</link> "
-"melden."
-
-#. (itstool) path: info/desc
-#: C/troubleshooting-DVD.page:10
-msgid "I cannot play my DVD."
-msgstr "Eine DVD kann nicht abgespielt werden."
-
-#. (itstool) path: page/title
-#: C/troubleshooting-DVD.page:24
-msgid "Problem with playing movies from a DVD"
-msgstr "Problem beim Abspielen von Filmen auf einer DVD"
-
-#. (itstool) path: page/p
-#: C/troubleshooting-DVD.page:26
-msgid ""
-"It may happen that after putting a DVD into your CD/DVD drive, <app>Videos</"
-"app> shows the error message <gui>An error occurred ‒ The movie could not be "
-"read.</gui> This may be because your <link xref=\"supported-formats\">a "
-"required <sys>GStreamer</sys> plugin to read the format of the movie is not "
-"installed on your system</link>, or because DVD is encrypted and a DVD "
-"decryption package is not installed on your system."
-msgstr ""
-"Es kann passieren, dass <app>Videos</app> nach dem Einlegen einer DVD in Ihr "
-"DVD/CD-Laufwerk die Fehlermeldung <gui>Ein Fehler ist aufgetreten – Der Film "
-"konnte nicht gelesen werden.</gui> ausgibt. Das könnte daran liegen, dass "
-"eine <link xref=\"supported-formats\"> <sys>GStreamer</sys>-Erweiterung "
-"nicht installiert ist</link>, mit der das Format des Films gelesen werden "
-"kann. Möglich wäre auch, dass die DVD verschlüsselt ist und auf Ihrem System "
-"kein DVD-Entschlüsselungspaket installiert ist."
-
-#. (itstool) path: note/p
-#: C/troubleshooting-DVD.page:36
-msgid ""
-"To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
-"package. However, note that using this package is not legal in all "
-"countries. For further information if or where the package might be "
-"available for your distribution, please ask in a support forum of your "
-"distribution."
-msgstr ""
-"Um entschlüsselte DVDs zu öffnen, sollten Sie das Paket <sys>libdvdcss</sys> "
-"installieren. Sie sollten aber beachten, dass die Nutzung dieses Pakets "
-"nicht in allen Ländern legal ist. Für weitere Informationen dazu, ob oder wo "
-"das Paket für Ihre Distribution verfügbar sein könnte, wenden Sie sich an "
-"ein Supportforum Ihrer Distribution."
+"gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys>-"
+"Fehlererfassungssystem</link> melden."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1060,7 +1050,7 @@ msgstr "Untertitel können nicht geladen werden."
 #. (itstool) path: page/title
 #: C/troubleshooting-subtitles.page:25
 msgid "Problem with loading subtitles"
-msgstr "Problem mit dem Laden von Untertiteln."
+msgstr "Problem mit dem Laden von Untertiteln"
 
 #. (itstool) path: page/p
 #: C/troubleshooting-subtitles.page:27
@@ -1143,8 +1133,8 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
-msgid "Make the video bigger and make it keep the correct proportions."
-msgstr "Das Video vergrößern und die korrekten Proportionen erhalten."
+msgid "Adjust the aspect ratio to correct its proportions."
+msgstr "Das Ansichtsverhältnis anpassen, um die Proportionen zu korrigieren."
 
 #. (itstool) path: page/title
 #: C/view-zoom.page:31
@@ -1153,34 +1143,16 @@ msgstr "Videogröße und Ansichtsverhältnis ändern"
 
 #. (itstool) path: page/p
 #: C/view-zoom.page:33
-msgid "You can make the video larger or correct its ratio."
-msgstr ""
-"Sie können das Video vergrößern oder das Ansichtsverhältnis korrigieren."
+msgid "You can correct its ratio."
+msgstr "Sie können das Ansichtsverhältnis korrigieren."
 
 #. (itstool) path: item/title
 #: C/view-zoom.page:37
-msgid "Zoom in"
-msgstr "Vergrößern"
-
-#. (itstool) path: item/p
-#: C/view-zoom.page:38
-msgid ""
-"Press the menu button in the top-right corner of the window and select <gui "
-"style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
-"<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
-msgstr ""
-"Klicken Sie auf den Menüknopf in der oberen rechten Ecke des Fensters und "
-"wählen Sie <gui style=\"menuitem\">Vergrößern</gui> oder drücken Sie <key>R</"
-"key>. Um zu verkleinern, deaktivieren Sie <gui "
-"style=\"menuitem\">Vergrößern</gui> wieder oder drücken Sie <key>T</key>."
-
-#. (itstool) path: item/title
-#: C/view-zoom.page:43
 msgid "Setting aspect ratio"
 msgstr "Das Ansichtsverhältnis einstellen"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:44
+#: C/view-zoom.page:38
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
@@ -1189,44 +1161,118 @@ msgstr ""
 "wählen Sie <gui style=\"menuitem\">Ansichtsverhältnis</gui>."
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:46
+#: C/view-zoom.page:40
 msgid "Select among:"
 msgstr "Wählen Sie aus Folgendem:"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:48
+#: C/view-zoom.page:42
 msgid "<gui>Auto</gui>"
 msgstr "<gui>Automatisch</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:49
+#: C/view-zoom.page:43
 msgid "<gui>Square</gui>"
 msgstr "<gui>Quadratisch</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:50
+#: C/view-zoom.page:44
 msgid "<gui>4∶3 (TV)</gui>"
 msgstr "<gui>4∶3 (TV)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:51
+#: C/view-zoom.page:45
 msgid "<gui>16∶9 (Widescreen)</gui>"
 msgstr "<gui>16∶9 (Breitbild)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:52
+#: C/view-zoom.page:46
 msgid "<gui>2.11∶1 (DVB)</gui>"
 msgstr "<gui>2.11∶1 (DVB)</gui>"
 
 #. (itstool) path: note/p
-#: C/view-zoom.page:58
+#: C/view-zoom.page:52
 msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
-"you to force different aspect ratio to be used for displaying movie."
+"you to correct the video display if the movie appears squished or stretched. "
+"The aspect ratio of your monitor does not come into account."
 msgstr ""
 "Das Ansichtsverhältnis ist die Proportion zwischen Breite und Höhe. Mit "
-"dieser Option können Sie ein anderes Ansichtsverhältnis für die Anzeige des "
-"Films erzwingen."
+"dieser Einstellung können Sie die Videoanzeige korrigieren, wenn das Video "
+"gestreckt oder gestaucht erscheint. Das Seitenverhältnis Ihres Bildschirms "
+"wird dabei nicht berücksichtigt."
+
+#~ msgid ""
+#~ "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</"
+#~ "sys> plugins. If certain file formats are not supported, please refer to "
+#~ "a support forum of your distribution to find out which package to install."
+#~ msgstr ""
+#~ "Die in <app>Videos</app> angezeigten Dateiformate sind von den "
+#~ "<sys>GStreamer</sys>-Erweiterungen abhängig. Falls bestimmte Dateiformate "
+#~ "nicht unterstützt werden, wenden Sie sich an ein Supportforum Ihrer "
+#~ "Distribution, um herauszufinden, welche Pakete installiert werden müssen."
+
+#~ msgid ""
+#~ "If you try to open a format which is not supported, on many distributions "
+#~ "<app>Videos</app> will display a dialog which will allow you to search "
+#~ "for missing plugins (codecs) and install them."
+#~ msgstr ""
+#~ "Wenn Sie versuchen, ein nicht unterstütztes Format zu öffnen, zeigt "
+#~ "<app>Videos</app> auf vielen Distributionen einen Dialog an, in welchem "
+#~ "Sie nach den fehlenden Erweiterungen (Codecs) suchen und diese "
+#~ "installieren können."
+
+#~ msgid "I cannot play my DVD."
+#~ msgstr "Eine DVD kann nicht abgespielt werden."
+
+#~ msgid "Problem with playing movies from a DVD"
+#~ msgstr "Problem beim Abspielen von Filmen auf einer DVD"
+
+#~ msgid ""
+#~ "It may happen that after putting a DVD into your CD/DVD drive, "
+#~ "<app>Videos</app> shows the error message <gui>An error occurred ‒ The "
+#~ "movie could not be read.</gui> This may be because your <link "
+#~ "xref=\"supported-formats\">a required <sys>GStreamer</sys> plugin to read "
+#~ "the format of the movie is not installed on your system</link>, or "
+#~ "because DVD is encrypted and a DVD decryption package is not installed on "
+#~ "your system."
+#~ msgstr ""
+#~ "Es kann passieren, dass <app>Videos</app> nach dem Einlegen einer DVD in "
+#~ "Ihr DVD/CD-Laufwerk die Fehlermeldung <gui>Ein Fehler ist aufgetreten – "
+#~ "Der Film konnte nicht gelesen werden.</gui> ausgibt. Das könnte daran "
+#~ "liegen, dass eine <link xref=\"supported-formats\"> <sys>GStreamer</sys>-"
+#~ "Erweiterung nicht installiert ist</link>, mit der das Format des Films "
+#~ "gelesen werden kann. Möglich wäre auch, dass die DVD verschlüsselt ist "
+#~ "und auf Ihrem System kein DVD-Entschlüsselungspaket installiert ist."
+
+#~ msgid ""
+#~ "To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
+#~ "package. However, note that using this package is not legal in all "
+#~ "countries. For further information if or where the package might be "
+#~ "available for your distribution, please ask in a support forum of your "
+#~ "distribution."
+#~ msgstr ""
+#~ "Um entschlüsselte DVDs zu öffnen, sollten Sie das Paket <sys>libdvdcss</"
+#~ "sys> installieren. Sie sollten aber beachten, dass die Nutzung dieses "
+#~ "Pakets nicht in allen Ländern legal ist. Für weitere Informationen dazu, "
+#~ "ob oder wo das Paket für Ihre Distribution verfügbar sein könnte, wenden "
+#~ "Sie sich an ein Supportforum Ihrer Distribution."
+
+#~ msgid "Make the video bigger and make it keep the correct proportions."
+#~ msgstr "Das Video vergrößern und die korrekten Proportionen erhalten."
+
+#~ msgid "Zoom in"
+#~ msgstr "Vergrößern"
+
+#~ msgid ""
+#~ "Press the menu button in the top-right corner of the window and select "
+#~ "<gui style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, "
+#~ "disable <gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
+#~ msgstr ""
+#~ "Klicken Sie auf den Menüknopf in der oberen rechten Ecke des Fensters und "
+#~ "wählen Sie <gui style=\"menuitem\">Vergrößern</gui> oder drücken Sie "
+#~ "<key>R</key>. Um zu verkleinern, deaktivieren Sie <gui "
+#~ "style=\"menuitem\">Vergrößern</gui> wieder oder drücken Sie <key>T</key>."
 
 #~ msgid "<gui>External Chapters</gui>"
 #~ msgstr "<gui>Externe Kapitel</gui>"
