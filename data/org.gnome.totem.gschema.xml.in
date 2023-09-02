@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
 	<schema id="org.gnome.totem" path="/org/gnome/Totem/" gettext-domain="@GETTEXT_PACKAGE@">
+		<key name="window-maximized" type="b">
+			<default>true</default>
+			<summary>Window maximized</summary>
+			<description>Window maximized state</description>
+		</key>
+		<key name="window-size" type="(ii)">
+			<default>(650, 500)</default>
+			<summary>Window size</summary>
+			<description>Window size (width and height).</description>
+		</key>
 		<key name="brightness" type="i">
 			<default>32767</default>
 			<summary>The brightness of the video</summary>

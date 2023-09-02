@@ -56,9 +56,6 @@
 #define SEEK_FORWARD_LONG_OFFSET 10*60
 #define SEEK_BACKWARD_LONG_OFFSET -3*60
 
-#define DEFAULT_WINDOW_W 650
-#define DEFAULT_WINDOW_H 500
-
 #define POPUP_HIDING_TIMEOUT 2 /* seconds */
 #define OVERLAY_OPACITY 0.86
 
@@ -1314,28 +1311,14 @@ totem_object_save_size (TotemObject *totem)
 static void
 totem_object_save_state (TotemObject *totem)
 {
-	GKeyFile *keyfile;
-	g_autofree char *contents = NULL;
-	g_autofree char *filename = NULL;
-
 	if (totem->win == NULL)
 		return;
 	if (totem->window_w == 0
 	    || totem->window_h == 0)
 		return;
 
-	keyfile = g_key_file_new ();
-	g_key_file_set_integer (keyfile, "State",
-				"window_w", totem->window_w);
-	g_key_file_set_integer (keyfile, "State",
-			"window_h", totem->window_h);
-	g_key_file_set_boolean (keyfile, "State",
-			"maximised", totem->maximised);
-
-	contents = g_key_file_to_data (keyfile, NULL, NULL);
-	g_key_file_free (keyfile);
-	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
-	g_file_set_contents (filename, contents, -1, NULL);
+	g_settings_set (totem->settings, "window-size", "(ii)", totem->window_w, totem->window_h);
+	g_settings_set_boolean (totem->settings, "window-maximized", totem->maximised);
 }
 
 /**
@@ -3744,42 +3727,13 @@ static void
 totem_setup_window (TotemObject *totem)
 {
 	GtkWidget *menu_button;
-	GKeyFile *keyfile;
-	int w, h;
-	g_autofree char *filename = NULL;
 
-	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
-	keyfile = g_key_file_new ();
-	if (g_key_file_load_from_file (keyfile, filename,
-			G_KEY_FILE_NONE, NULL) == FALSE) {
-		w = DEFAULT_WINDOW_W;
-		h = DEFAULT_WINDOW_H;
-		totem->maximised = TRUE;
+	totem->maximised = g_settings_get_boolean (totem->settings, "window-maximized");
+	if (totem->maximised == FALSE) {
+		g_settings_get (totem->settings, "window-size", "(ii)", &totem->window_w, &totem->window_h);
+
+		gtk_window_set_default_size (GTK_WINDOW (totem->win), totem->window_w, totem->window_h);
 	} else {
-		GError *err = NULL;
-
-		w = g_key_file_get_integer (keyfile, "State", "window_w", &err);
-		if (err != NULL) {
-			w = 0;
-			g_clear_error (&err);
-		}
-
-		h = g_key_file_get_integer (keyfile, "State", "window_h", &err);
-		if (err != NULL) {
-			h = 0;
-			g_clear_error (&err);
-		}
-
-		totem->maximised = g_key_file_get_boolean (keyfile, "State",
-				"maximised", NULL);
-	}
-
-	if (w > 0 && h > 0 && totem->maximised == FALSE) {
-		gtk_window_set_default_size (GTK_WINDOW (totem->win),
-				w, h);
-		totem->window_w = w;
-		totem->window_h = h;
-	} else if (totem->maximised != FALSE) {
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
 
