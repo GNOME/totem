@@ -57,7 +57,7 @@ totem_plugins_engine_class_init (TotemPluginsEngineClass *klass)
 static void
 on_activatable_extension_added (PeasExtensionSet *set,
 				PeasPluginInfo   *info,
-				PeasExtension    *exten,
+				GObject          *exten,
 				TotemPluginsEngine *engine)
 {
 	totem_plugin_activatable_activate (TOTEM_PLUGIN_ACTIVATABLE (exten));
@@ -66,7 +66,7 @@ on_activatable_extension_added (PeasExtensionSet *set,
 static void
 on_activatable_extension_removed (PeasExtensionSet *set,
 				  PeasPluginInfo   *info,
-				  PeasExtension    *exten,
+				  GObject          *exten,
 				  TotemPluginsEngine *engine)
 {
 	totem_plugin_activatable_deactivate (TOTEM_PLUGIN_ACTIVATABLE (exten));
