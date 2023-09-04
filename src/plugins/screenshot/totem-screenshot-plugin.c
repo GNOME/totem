@@ -12,7 +12,7 @@
 #include <gmodule.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 
 #include "totem-plugin.h"
 #include "totem-screenshot-plugin.h"
@@ -271,7 +271,7 @@ disable_save_to_disk_changed_cb (GSettings *settings, const gchar *key, TotemScr
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemScreenshotPlugin *pi = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	GMenu *menu;
@@ -321,7 +321,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemScreenshotPlugin *pi = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	const char * const accels[] = { NULL };

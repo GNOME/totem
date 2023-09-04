@@ -13,7 +13,7 @@
 #include <gmodule.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 
 #include "totem-plugin.h"
 #include "totem.h"
@@ -180,7 +180,7 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemVariableR
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	GtkWindow *window;
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
@@ -225,7 +225,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 	GtkWindow *window;

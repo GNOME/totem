@@ -19,7 +19,7 @@
 #include <errno.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 
 #include "totem-plugin.h"
 #include "backend/bacon-video-widget.h"
@@ -197,7 +197,7 @@ totem_rotation_file_opened (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemRotationPlugin *pi = TOTEM_ROTATION_PLUGIN (plugin);
 	GMenu *menu;
@@ -254,7 +254,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemRotationPlugin *pi = TOTEM_ROTATION_PLUGIN (plugin);
 	const char * const accels[] = { NULL };

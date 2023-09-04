@@ -17,11 +17,10 @@ import gettext
 import gi
 
 gi.require_version('Gtk', '3.0')
-gi.require_version('Peas', '1.0')
 gi.require_version('Pango', '1.0')
 gi.require_version('Totem', '1.0')
 
-from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable=wrong-import-position,no-name-in-module
+from gi.repository import GObject, Gtk, Totem # pylint: disable=wrong-import-position,no-name-in-module
 from gi.repository import Gio # pylint: disable=wrong-import-position
 
 from console import PythonConsole, OutFile # pylint: disable=wrong-import-position
@@ -39,7 +38,7 @@ gettext.textdomain ("totem")
 D_ = gettext.dgettext
 _ = gettext.gettext
 
-class PythonConsolePlugin (GObject.Object, Peas.Activatable):
+class PythonConsolePlugin (GObject.Object, Totem.PluginActivatable):
     __gtype_name__ = 'PythonConsolePlugin'
 
     object = GObject.property (type = GObject.Object)

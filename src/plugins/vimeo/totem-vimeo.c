@@ -36,7 +36,7 @@ get_user_agent_cb (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemVimeoPlugin *pi = TOTEM_VIMEO_PLUGIN (plugin);
 
@@ -46,7 +46,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemVimeoPlugin *pi = TOTEM_VIMEO_PLUGIN (plugin);
 

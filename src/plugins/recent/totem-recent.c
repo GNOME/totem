@@ -138,7 +138,7 @@ file_has_played_cb (TotemObject       *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemRecentPlugin *pi = TOTEM_RECENT_PLUGIN (plugin);
 
@@ -149,7 +149,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemRecentPlugin *pi = TOTEM_RECENT_PLUGIN (plugin);
 

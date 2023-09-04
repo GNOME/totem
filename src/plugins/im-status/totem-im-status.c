@@ -14,7 +14,7 @@
 #include <string.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 
 #include "totem.h"
 #include "totem-plugin.h"
@@ -117,7 +117,7 @@ got_proxy_cb (GObject             *source_object,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemImStatusPlugin *pi = TOTEM_IM_STATUS_PLUGIN (plugin);
 	TotemObject *totem;
@@ -149,7 +149,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemImStatusPlugin *pi = TOTEM_IM_STATUS_PLUGIN (plugin);
 	TotemObject *totem;

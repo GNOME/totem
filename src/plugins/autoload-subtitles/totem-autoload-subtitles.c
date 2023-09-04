@@ -232,7 +232,7 @@ autoload_subs_changed (GSettings                *settings,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemAutoloadSubtitlesPlugin *pi = TOTEM_AUTOLOAD_SUBTITLES_PLUGIN (plugin);
 
@@ -246,7 +246,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemAutoloadSubtitlesPlugin *pi = TOTEM_AUTOLOAD_SUBTITLES_PLUGIN (plugin);
 

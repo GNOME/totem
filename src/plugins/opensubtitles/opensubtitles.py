@@ -8,11 +8,10 @@ import os
 import gettext
 
 import gi
-gi.require_version('Peas', '1.0')
 gi.require_version('Gtk', '3.0')
 gi.require_version('Totem', '1.0')
 from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
-from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position,
+from gi.repository import Totem, Gtk, Gdk # pylint: disable=wrong-import-position,
 from gi.repository import Gio # pylint: disable=wrong-import-position,no-name-in-module
 
 from hash import hash_file # pylint: disable=wrong-import-position
@@ -390,7 +389,7 @@ class OpenSubtitlesModel:
         return (None, message)
 
 class OpenSubtitles (GObject.Object, # pylint: disable=R0902
-                     Peas.Activatable):
+                     Totem.PluginActivatable):
     __gtype_name__ = 'OpenSubtitles'
 
     object = GObject.Property (type = GObject.Object)

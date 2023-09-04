@@ -15,7 +15,6 @@
 
 #include <glib.h>
 #include <libpeas/peas-engine.h>
-#include <libpeas/peas-autocleanups.h>
 #include <totem.h>
 
 #define TOTEM_TYPE_PLUGINS_ENGINE              (totem_plugins_engine_get_type ())

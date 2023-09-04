@@ -14,7 +14,7 @@
 #include <gmodule.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 #include <string.h>
 
 #include "totem-plugin.h"
@@ -589,7 +589,7 @@ name_lost_cb (GDBusConnection *connection, const char *name, TotemMprisPlugin *p
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemMprisPlugin *pi = TOTEM_MPRIS_PLUGIN (plugin);
 	GDBusInterfaceInfo *ifaceinfo;
@@ -673,7 +673,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemMprisPlugin *pi = TOTEM_MPRIS_PLUGIN (plugin);
 	TotemObject *totem;

@@ -71,6 +71,7 @@ totem_common_cflags = common_flags + warn_flags + [
 ]
 
 headers = files(
+  'plugins/totem-plugin-activatable.h',
   'plugins/totem-plugin.h',
   'plugins/totem-dirs.h',
   'totem-interface.h',
@@ -108,6 +109,7 @@ libtotem_player_dep = declare_dependency(
 
 libtotem_sources = files(
   'plugins/totem-dirs.c',
+  'plugins/totem-plugin-activatable.c',
   'plugins/totem-plugins-engine.c',
   'icon-helpers.c',
   'totem-grilo.c',

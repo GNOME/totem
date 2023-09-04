@@ -15,7 +15,7 @@
 #include <string.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 #include <bacon-video-widget-properties.h>
 
 #include "totem-plugin.h"
@@ -238,7 +238,7 @@ properties_action_cb (GSimpleAction              *simple,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
@@ -299,7 +299,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;

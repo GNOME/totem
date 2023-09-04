@@ -18,7 +18,7 @@
 #include <errno.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include "totem-plugin-activatable.h"
 
 #include "totem-plugin.h"
 #include "totem-interface.h"
@@ -402,7 +402,7 @@ totem_save_file_download_filename (GObject    *gobject,
 }
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	GMenu *menu;
@@ -450,7 +450,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 

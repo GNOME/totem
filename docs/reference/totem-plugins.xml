@@ -82,7 +82,7 @@ typedef struct {
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_FOOBAR_PLUGIN, TotemFoobarPlugin, totem_foobar_plugin);
 
 static void
-impl_activate (PeasActivatable *plugin)
+impl_activate (TotemPluginActivatable *plugin)
 {
 	TotemFoobarPlugin *self = TOTEM_FOOBAR_PLUGIN (plugin);
 	TotemFoobarPluginPrivate *priv = self->priv;
@@ -95,7 +95,7 @@ impl_activate (PeasActivatable *plugin)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin)
+impl_deactivate (TotemPluginActivatable *plugin)
 {
 	TotemFoobarPlugin *self = TOTEM_FOOBAR_PLUGIN (plugin);
 

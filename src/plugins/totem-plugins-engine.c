@@ -20,11 +20,11 @@
 #include <glib/gi18n.h>
 #include <glib.h>
 #include <girepository.h>
-#include <libpeas/peas-activatable.h>
 #include <libpeas/peas-extension-set.h>
 
 #include "totem-dirs.h"
 #include "totem-plugins-engine.h"
+#include "totem-plugin-activatable.h"
 
 struct _TotemPluginsEngine {
 	PeasEngine parent;
@@ -60,7 +60,7 @@ on_activatable_extension_added (PeasExtensionSet *set,
 				PeasExtension    *exten,
 				TotemPluginsEngine *engine)
 {
-	peas_activatable_activate (PEAS_ACTIVATABLE (exten));
+	totem_plugin_activatable_activate (TOTEM_PLUGIN_ACTIVATABLE (exten));
 }
 
 static void
@@ -69,7 +69,7 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 				  PeasExtension    *exten,
 				  TotemPluginsEngine *engine)
 {
-	peas_activatable_deactivate (PEAS_ACTIVATABLE (exten));
+	totem_plugin_activatable_deactivate (TOTEM_PLUGIN_ACTIVATABLE (exten));
 }
 
 TotemPluginsEngine *
@@ -108,7 +108,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	engine->totem = g_object_ref (totem);
 
 	engine->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
-								       PEAS_TYPE_ACTIVATABLE,
+								       TOTEM_TYPE_PLUGIN_ACTIVATABLE,
 								       "object", totem,
 								       NULL);
 

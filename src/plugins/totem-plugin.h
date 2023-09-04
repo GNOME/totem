@@ -15,7 +15,7 @@
 
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
-#include <libpeas/peas-activatable.h>
+#include <totem-plugin-activatable.h>
 #include <totem.h>
 
 /**
@@ -33,10 +33,10 @@
 		PeasExtensionBaseClass parent_class;				\
 	} TypeName##Class;							\
 	GType type_name##_get_type (void) G_GNUC_CONST;				\
-	static void impl_activate (PeasActivatable *plugin);			\
-	static void impl_deactivate (PeasActivatable *plugin);			\
+	static void impl_activate (TotemPluginActivatable *plugin);			\
+	static void impl_deactivate (TotemPluginActivatable *plugin);			\
 	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\
-	static void peas_activatable_iface_init (PeasActivatableInterface *iface); \
+	static void peas_activatable_iface_init (TotemPluginActivatableInterface *iface); \
 	enum {									\
 		PROP_0,								\
 		PROP_OBJECT							\
@@ -45,11 +45,11 @@
 					type_name,				\
 					PEAS_TYPE_EXTENSION_BASE,		\
 					0,					\
-					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
+					G_IMPLEMENT_INTERFACE_DYNAMIC (TOTEM_TYPE_PLUGIN_ACTIVATABLE, \
 								       peas_activatable_iface_init) \
 					)					\
 	static void								\
-	peas_activatable_iface_init (PeasActivatableInterface *iface)		\
+	peas_activatable_iface_init (TotemPluginActivatableInterface *iface)		\
 	{									\
 		iface->activate = impl_activate;				\
 		iface->deactivate = impl_deactivate;				\
@@ -109,6 +109,6 @@
 	{									\
 		type_name##_register_type (G_TYPE_MODULE (module));		\
 		peas_object_module_register_extension_type (module,		\
-							    PEAS_TYPE_ACTIVATABLE, \
+							    TOTEM_TYPE_PLUGIN_ACTIVATABLE, \
 							    TYPE_NAME);		\
 	}
