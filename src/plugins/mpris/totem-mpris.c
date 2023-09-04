@@ -12,8 +12,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
+#include <libpeas.h>
 #include "totem-plugin-activatable.h"
 #include <string.h>
 

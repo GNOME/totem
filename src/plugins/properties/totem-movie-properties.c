@@ -13,8 +13,7 @@
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <string.h>
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
+#include <libpeas.h>
 #include "totem-plugin-activatable.h"
 #include <bacon-video-widget-properties.h>
 

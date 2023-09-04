@@ -20,7 +20,6 @@
 #include <glib/gi18n.h>
 #include <glib.h>
 #include <girepository.h>
-#include <libpeas/peas-extension-set.h>
 
 #include "totem-dirs.h"
 #include "totem-plugins-engine.h"

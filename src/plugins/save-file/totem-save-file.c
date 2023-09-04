@@ -16,8 +16,7 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <errno.h>
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
+#include <libpeas.h>
 #include "totem-plugin-activatable.h"
 
 #include "totem-plugin.h"

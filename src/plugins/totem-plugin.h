@@ -13,8 +13,7 @@
 
 #pragma once
 
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
+#include <libpeas.h>
 #include <totem-plugin-activatable.h>
 #include <totem.h>
 

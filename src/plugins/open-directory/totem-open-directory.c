@@ -9,8 +9,7 @@
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
-#include <libpeas/peas-extension-base.h>
-#include <libpeas/peas-object-module.h>
+#include <libpeas.h>
 #include "totem-plugin-activatable.h"
 #include <libportal-gtk3/portal-gtk3.h>
 
