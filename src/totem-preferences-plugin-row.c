@@ -48,11 +48,12 @@ totem_preferences_plugin_row_activate_plugin_cb (GtkWidget  *object,
 						 gpointer    data)
 {
 	TotemPreferencesPluginRow *self = data;
+	PeasEngine *peas_engine = totem_plugins_engine_get_engine (TOTEM_PLUGINS_ENGINE (self->plugins_engine));
 
 	if (gtk_switch_get_active (GTK_SWITCH (object)))
-		peas_engine_load_plugin (PEAS_ENGINE (self->plugins_engine), self->plugin_info);
+		peas_engine_load_plugin (peas_engine, self->plugin_info);
 	else
-		peas_engine_unload_plugin (PEAS_ENGINE (self->plugins_engine), self->plugin_info);
+		peas_engine_unload_plugin (peas_engine, self->plugin_info);
 }
 
 static void

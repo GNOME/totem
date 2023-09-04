@@ -207,10 +207,10 @@ totem_preferences_dialog_constructed (GObject *object)
 	TotemPreferencesDialog *prefs = TOTEM_PREFERENCES_DIALOG (object);
 	g_autoptr(TotemPluginsEngine) engine = NULL;
 	g_autoptr(GtkWidget) bvw = NULL;
+	PeasEngine *peas_engine = NULL;
 	TotemObject *totem;
 	guint i, hidden;
 	char *font, *encoding;
-	const GList *plugin_infos, *l;
 
 	G_OBJECT_CLASS (totem_preferences_dialog_parent_class)->constructed (object);
 
@@ -307,15 +307,15 @@ totem_preferences_dialog_constructed (GObject *object)
 	gtk_list_box_set_sort_func (prefs->tpw_plugins_list, totems_plugins_sort_cb, NULL, NULL);
 
 	engine = totem_plugins_engine_get_default (totem);
-	plugin_infos = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
+	peas_engine = totem_plugins_engine_get_engine (engine);
 
-	for (l = plugin_infos; l != NULL; l = l->next) {
+	for (i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (peas_engine)); i++) {
 		g_autoptr(GError) error = NULL;
-		PeasPluginInfo *plugin_info;
+		g_autoptr(PeasPluginInfo) plugin_info = NULL;
 		const char *plugin_name;
 		GtkWidget *plugin_row;
 
-		plugin_info = PEAS_PLUGIN_INFO (l->data);
+		plugin_info = PEAS_PLUGIN_INFO (g_list_model_get_item (G_LIST_MODEL (peas_engine), i));
 		plugin_name = peas_plugin_info_get_name (plugin_info);
 
 		if (!peas_plugin_info_is_available (plugin_info, &error)) {

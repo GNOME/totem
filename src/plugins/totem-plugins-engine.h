@@ -18,8 +18,9 @@
 #include <totem.h>
 
 #define TOTEM_TYPE_PLUGINS_ENGINE              (totem_plugins_engine_get_type ())
-G_DECLARE_FINAL_TYPE(TotemPluginsEngine, totem_plugins_engine, TOTEM, PLUGINS_ENGINE, PeasEngine)
+G_DECLARE_FINAL_TYPE(TotemPluginsEngine, totem_plugins_engine, TOTEM, PLUGINS_ENGINE, GObject)
 
-GType			totem_plugins_engine_get_type			(void) G_GNUC_CONST;
-TotemPluginsEngine	*totem_plugins_engine_get_default		(TotemObject *totem);
-void			totem_plugins_engine_shut_down			(TotemPluginsEngine *self);
+GType			  totem_plugins_engine_get_type			(void) G_GNUC_CONST;
+TotemPluginsEngine	* totem_plugins_engine_get_default		(TotemObject *totem);
+void			  totem_plugins_engine_shut_down		(TotemPluginsEngine *self);
+PeasEngine              * totem_plugins_engine_get_engine		(TotemPluginsEngine *self);

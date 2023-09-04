@@ -26,14 +26,16 @@
 #include "totem-plugin-activatable.h"
 
 struct _TotemPluginsEngine {
-	PeasEngine parent;
+	GObject parent;
+
+	PeasEngine *peas_engine;
 	PeasExtensionSet *activatable_extensions;
 	TotemObject *totem;
 	GSettings *settings;
 	guint garbage_collect_id;
 };
 
-G_DEFINE_TYPE (TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
+G_DEFINE_TYPE (TotemPluginsEngine, totem_plugins_engine, G_TYPE_OBJECT)
 
 static void totem_plugins_engine_dispose (GObject *object);
 
@@ -41,7 +43,7 @@ static gboolean
 garbage_collect_cb (gpointer data)
 {
 	TotemPluginsEngine *engine = (TotemPluginsEngine *) data;
-	peas_engine_garbage_collect (PEAS_ENGINE (engine));
+	peas_engine_garbage_collect (engine->peas_engine);
 	return TRUE;
 }
 
@@ -77,7 +79,6 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	static TotemPluginsEngine *engine = NULL;
 	char **paths;
 	guint i;
-	const GList *plugin_infos, *l;
 
 	if (G_LIKELY (engine != NULL))
 		return g_object_ref (engine);
@@ -91,21 +92,24 @@ totem_plugins_engine_get_default (TotemObject *totem)
 
 	engine = TOTEM_PLUGINS_ENGINE (g_object_new (TOTEM_TYPE_PLUGINS_ENGINE,
 						     NULL));
+
+	engine->peas_engine = peas_engine_new ();
+
 	for (i = 0; paths[i] != NULL; i++) {
 		/* Totem uses the libdir even for noarch data */
-		peas_engine_add_search_path (PEAS_ENGINE (engine),
+		peas_engine_add_search_path (engine->peas_engine,
 					     paths[i], paths[i]);
 	}
 	g_strfreev (paths);
 
-	peas_engine_enable_loader (PEAS_ENGINE (engine), "python3");
+	peas_engine_enable_loader (engine->peas_engine, "python3");
 
 	g_object_add_weak_pointer (G_OBJECT (engine),
 				   (gpointer) &engine);
 
 	engine->totem = g_object_ref (totem);
 
-	engine->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
+	engine->activatable_extensions = peas_extension_set_new (engine->peas_engine,
 								       TOTEM_TYPE_PLUGIN_ACTIVATABLE,
 								       "object", totem,
 								       NULL);
@@ -116,21 +120,19 @@ totem_plugins_engine_get_default (TotemObject *totem)
 			  G_CALLBACK (on_activatable_extension_removed), engine);
 
 	g_settings_bind (engine->settings, "active-plugins",
-			 engine, "loaded-plugins",
+			 engine->peas_engine, "loaded-plugins",
 			 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Load builtin plugins */
-	plugin_infos = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
-
-	g_object_freeze_notify (G_OBJECT (engine));
-	for (l = plugin_infos; l != NULL; l = l->next) {
-		PeasPluginInfo *plugin_info = PEAS_PLUGIN_INFO (l->data);
+	g_object_freeze_notify (G_OBJECT (engine->peas_engine));
+	for (i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (engine->peas_engine)); i++) {
+		g_autoptr(PeasPluginInfo) plugin_info = PEAS_PLUGIN_INFO (g_list_model_get_item (G_LIST_MODEL (engine->peas_engine), i));
 
 		if (peas_plugin_info_is_builtin (plugin_info)) {
-			peas_engine_load_plugin (PEAS_ENGINE (engine), plugin_info);
+			peas_engine_load_plugin (engine->peas_engine, plugin_info);
 		}
 	}
-	g_object_thaw_notify (G_OBJECT (engine));
+	g_object_thaw_notify (G_OBJECT (engine->peas_engine));
 
 	return engine;
 }
@@ -172,10 +174,19 @@ totem_plugins_engine_dispose (GObject *object)
 		totem_plugins_engine_shut_down (engine);
 
 	g_clear_handle_id (&engine->garbage_collect_id, g_source_remove);
-	peas_engine_garbage_collect (PEAS_ENGINE (engine));
+	peas_engine_garbage_collect (engine->peas_engine);
 
 	g_clear_object (&engine->totem);
 	g_clear_object (&engine->settings);
+	g_clear_object (&engine->peas_engine);
 
 	G_OBJECT_CLASS (totem_plugins_engine_parent_class)->dispose (object);
+}
+
+PeasEngine*
+totem_plugins_engine_get_engine (TotemPluginsEngine *self)
+{
+	g_return_val_if_fail (TOTEM_IS_PLUGINS_ENGINE (self), NULL);
+
+	return self->peas_engine;
 }
