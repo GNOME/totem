@@ -98,7 +98,7 @@ totem_preferences_plugin_row_get_property (GObject    *object,
 	switch (prop_id)
 	{
 	case PROP_PLUGIN_INFO:
-		g_value_set_boxed (value, self->plugin_info);
+		g_value_set_object (value, self->plugin_info);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -116,7 +116,7 @@ totem_preferences_plugin_row_set_property (GObject      *object,
 	switch (prop_id)
 	{
 	case PROP_PLUGIN_INFO:
-		self->plugin_info = g_value_get_boxed (value);
+		self->plugin_info = g_value_get_object (value);
 		totem_preferences_plugin_display_plugin_info (self);
 		break;
 	default:
@@ -144,7 +144,7 @@ totem_preferences_plugin_row_class_init (TotemPreferencesPluginRowClass *klass)
 	object_class->set_property = totem_preferences_plugin_row_set_property;
 	object_class->dispose = totem_preferences_plugin_row_dispose;
 
-	properties[PROP_PLUGIN_INFO] = g_param_spec_boxed ("plugin-info",
+	properties[PROP_PLUGIN_INFO] = g_param_spec_object ("plugin-info",
 							   "Plugin Info",
 							   "",
 							   PEAS_TYPE_PLUGIN_INFO,
