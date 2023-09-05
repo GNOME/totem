@@ -61,7 +61,7 @@ totem_preferences_plugin_display_plugin_info (TotemPreferencesPluginRow *self)
 {
 	g_autofree char *authors = NULL;
 	const char  *plugin_copyright;
-	const char **plugin_authors;
+	const char* const* plugin_authors;
 	const char  *plugin_version;
 	const char  *plugin_website;
 
