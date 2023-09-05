@@ -137,6 +137,15 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	return engine;
 }
 
+static void
+on_plugin_shutdown (PeasExtensionSet *set,
+                    PeasPluginInfo   *info,
+                    GObject          *plugin,
+                    gpointer          data)
+{
+	totem_plugin_activatable_deactivate (TOTEM_PLUGIN_ACTIVATABLE (plugin));
+}
+
 /* Necessary to break the reference cycle between activatable_extensions and the engine itself. Also useful to allow the plugins to be shut down
  * earlier than the rest of Totem, so that (for example) they can display modal save dialogues and the like. */
 void
@@ -151,7 +160,7 @@ totem_plugins_engine_shut_down (TotemPluginsEngine *self)
 
 	/* We then explicitly deactivate all the extensions. Normally, this would be done extension-by-extension as they're unreffed when the
 	 * PeasExtensionSet is finalised, but we've just removed the signal handler which would do that (extension-removed). */
-	peas_extension_set_call (self->activatable_extensions, "deactivate");
+	peas_extension_set_foreach (self->activatable_extensions, on_plugin_shutdown, NULL);
 
 	g_clear_object (&self->activatable_extensions);
 }
