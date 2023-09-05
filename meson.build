@@ -128,7 +128,7 @@ gtk_req_version = '>= 3.22.0'
 hdy_req_version = '>= 1.5.0'
 gst_req_version = '>= 1.21.1'
 grilo_req_version = '>= 0.3.0'
-peas_req_version = '>= 1.1.0'
+peas_req_version = '>= 1.99.1'
 gnome_desktop_req_version = '>= 43'
 totem_plparser_req_version = '>= 3.26.5'
 libportal_req_version = '>= 0.7'
@@ -149,7 +149,7 @@ gst_dep = dependency('gstreamer-1.0', version: gst_req_version)
 gst_tag_dep = dependency('gstreamer-tag-1.0', version: gst_req_version)
 gst_video_dep = dependency('gstreamer-video-1.0', version: gst_req_version)
 gst_pbutils_dep = dependency('gstreamer-pbutils-1.0', version: gst_req_version)
-peas_dep = dependency('libpeas-1.0', version: peas_req_version)
+peas_dep = dependency('libpeas-2', version: peas_req_version)
 totem_plparser_dep = dependency('totem-plparser', version: totem_plparser_req_version)
 m_dep = cc.find_library('m', required: true)
 
