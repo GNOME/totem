@@ -102,7 +102,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	}
 	g_strfreev (paths);
 
-	peas_engine_enable_loader (engine->peas_engine, "python3");
+	peas_engine_enable_loader (engine->peas_engine, "python");
 
 	g_object_add_weak_pointer (G_OBJECT (engine),
 				   (gpointer) &engine);
