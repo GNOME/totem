@@ -1,23 +1,23 @@
 # Swedish translation for totem user guide
-# Copyright © 2006-2022 Free Software Foundation, Inc.
+# Copyright © 2006-2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
 #
 # Daniel Nylander <po@danielnylander.se>, 2006, 2008, 2009
 # Sebastian Rasmussen <sebras@gmail.com>, 2015.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2020, 2021, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem doc\n"
-"POT-Creation-Date: 2022-08-18 09:01+0000\n"
-"PO-Revision-Date: 2022-08-18 12:08+0200\n"
+"POT-Creation-Date: 2023-08-07 15:34+0000\n"
+"PO-Revision-Date: 2023-09-10 23:22+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -34,8 +34,7 @@ msgstr ""
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
 #: C/troubleshooting-Audio-CD.page:19 C/troubleshooting-debug.page:15
-#: C/troubleshooting-DVD.page:20 C/troubleshooting-subtitles.page:21
-#: C/view-zoom.page:25
+#: C/troubleshooting-subtitles.page:21 C/view-zoom.page:25
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons DelaLika 3.0"
 
@@ -115,7 +114,7 @@ msgid ""
 "movie trailers, news stories and other online sources."
 msgstr ""
 "Gränssnittets del för kanaler kommer visa ett antal nätverksvideoresurser, "
-"antingen från internet, eller lokala, så som UPnP/DLNA-delningar, "
+"antingen från internet, eller lokala, såsom UPnP/DLNA-delningar, "
 "filmtrailrar, nyhetsartiklar eller andra nätkällor."
 
 #. (itstool) path: page/p
@@ -277,11 +276,11 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/navigation.page:28
 msgid ""
-"Play media or pause them: Use the keyboard shortcut <key>Space</key> or "
-"press the <gui style=\"button\">Play/Pause</gui> button."
+"Play media or pause them: Use the keyboard shortcut <key>P</key> or press "
+"the <gui style=\"button\">Play/Pause</gui> button."
 msgstr ""
-"Spela upp media eller pausa dem: Använd tangentbordsgenvägen <key>Blanksteg</"
-"key> eller tryck på knappen <gui style=\"button\">Spela upp/Gör paus</gui>."
+"Spela upp media eller pausa dem: Använd tangentbordsgenvägen <key>P</key> "
+"eller tryck på knappen <gui style=\"button\">Spela upp/Gör paus</gui>."
 
 #. (itstool) path: item/p
 #: C/navigation.page:32
@@ -315,6 +314,33 @@ msgid ""
 msgstr ""
 "För att växla till ett annat kapitel på en dvd eller för att gå tillbaka "
 "till huvudskärmen, se <link xref=\"playing-DVD\"/>."
+
+#. (itstool) path: page/p
+#: C/navigation.page:49
+msgid ""
+"The full list of keyboard shortcuts is available by typing <key>?</key> "
+"while playing a movie, or <keyseq><key>Ctrl</key><key>?</key></keyseq> in "
+"the movies view."
+msgstr ""
+"Den fullständiga listan över tangentbordsgenvägar är tillgänglig genom att "
+"skriva <key>?</key> då en film spelas, eller <keyseq><key>Ctrl</key><key>?</"
+"key></keyseq> i filmvyn."
+
+#. (itstool) path: note/p
+#: C/navigation.page:52
+msgid ""
+"Seeking with the keyboard keys (<key>Left</key> and <key>Right</key> arrows) "
+"does not seek the same amount of time in either direction. This is as "
+"designed as it makes it easier to find a particular place in a film, seeking "
+"forward until we do find a part of the film we do not recognise, or know to "
+"be further than what we're looking for, and seek back more finely."
+msgstr ""
+"Att spola med tangenter (pilarna <key>Vänster</key> och <key>Höger</key>) "
+"spolar inte lika mycket tid i båda riktningarna. Detta är enligt design för "
+"att göra det lättare att hitta ett specifikt ställe i en film, genom att "
+"spola framåt tills vi hittar en del av filmen som vi inte känner igen, eller "
+"där vi vet att vi kommit längre än det vi letar, och spola bakåt mer "
+"finmaskigt."
 
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
@@ -608,8 +634,8 @@ msgstr "Välj typ av <gui>Ljudutmatning</gui> från rullgardinslistan."
 
 #. (itstool) path: info/desc
 #: C/properties.page:9
-msgid "View the properties of a played audio or video file."
-msgstr "Visa egenskaperna för en spelad ljud- eller videofil."
+msgid "View the properties of a played video file."
+msgstr "Visa egenskaperna för en spelad videofil."
 
 #. (itstool) path: page/title
 #: C/properties.page:27
@@ -899,23 +925,30 @@ msgstr "Det går inte att spela ett visst filformat"
 #: C/supported-formats.page:25
 msgid ""
 "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys> "
-"plugins. If certain file formats are not supported, please refer to a "
-"support forum of your distribution to find out which package to install."
+"plugins. The only supported version of <app>Videos</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> available on Flathub</"
+"link>, should have support for all the more common, and some niche, video "
+"and audio formats."
 msgstr ""
 "Filformat som visas av <app>Videoklipp</app> beror på <sys>GStreamer</sys>-"
-"insticksmoduler. Om vissa filformat inte stöds kan du se ett supportforum "
-"för din distribution för att komma på vilket paket som ska installeras."
+"insticksmoduler. Den enda version som stöds av <app>Videoklipp</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> som finns på Flathub</"
+"link>, bör ha stöd för alla vanliga, och några mer nischade video- och "
+"ljudformat."
 
 #. (itstool) path: note/p
-#: C/supported-formats.page:29
+#: C/supported-formats.page:30
 msgid ""
-"If you try to open a format which is not supported, on many distributions "
-"<app>Videos</app> will display a dialog which will allow you to search for "
-"missing plugins (codecs) and install them."
+"If you run into any video files that cannot be played in the supported "
+"version of <app>Videos</app> available on Flathub, then <link href=\"https://"
+"github.com/flathub/org.gnome.Totem/issues\"> file a bug against the "
+"application</link>, so support for the necessary formats can be added."
 msgstr ""
-"Om du försöker öppna ett format som inte stöds kommer <app>Videoklipp</app> "
-"i många distributioner att visa en dialogruta som låter dig söka efter "
-"saknade insticksmoduler (kodekar) och installera dem."
+"Om du stöter på några videofiler som inte kan spelas i versionen som stöds "
+"av <app>Videoklipp</app> som finns på Flathub, så kan du <link "
+"href=\"https://github.com/flathub/org.gnome.Totem/issues\"> rapportera ett "
+"fel mot programmet</link> så att stöd för de nödvändiga formaten kan läggas "
+"till."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -949,20 +982,18 @@ msgstr "Spåra andra videoproblem"
 #. (itstool) path: page/p
 #: C/troubleshooting-debug.page:21
 msgid ""
-"If you have already followed <link xref=\"supported-formats\"/> and <link "
-"xref=\"troubleshooting-DVD\"/> and a video still cannot be played, open a "
-"terminal window and enter the command <cmd>totem --help-gst</cmd>. This will "
-"show a list of available options you can use to get debug output. Often the "
-"problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
-"not in <app>Videos</app> itself."
+"If you have already followed <link xref=\"supported-formats\"/> and a video "
+"still cannot be played, open a terminal window and enter the command "
+"<cmd>totem --help-gst</cmd>. This will show a list of available options you "
+"can use to get debug output. Often the problem is in an underlying plugin, "
+"for example in <sys>GStreamer</sys> and not in <app>Videos</app> itself."
 msgstr ""
-"Om du redan har följt <link xref=\"supported-formats\"/> och <link "
-"xref=\"troubleshooting-DVD\"/>, och ett videoklipp fortfarande inte kan "
-"spelas, kan du öppna ett terminalfönster och mata in kommandot <cmd>totem --"
-"help-gst</cmd>. Detta kommer att visa en lista över tillgängliga flaggor som "
-"du kan använda för att få felsökningsutmatning. Ofta ligger felet i en "
-"underliggande insticksmodul, till exempel i <sys>GStreamer</sys>, och inte i "
-"själva <app>Videoklipp</app>."
+"Om du redan har följt <link xref=\"supported-formats\"/> och ett videoklipp "
+"fortfarande inte kan spelas, kan du öppna ett terminalfönster och mata in "
+"kommandot <cmd>totem --help-gst</cmd>. Detta kommer att visa en lista över "
+"tillgängliga flaggor som du kan använda för att få felsökningsutmatning. "
+"Ofta ligger felet i en underliggande insticksmodul, till exempel i "
+"<sys>GStreamer</sys>, och inte i själva <app>Videoklipp</app>."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
@@ -974,49 +1005,6 @@ msgstr ""
 "Programvarufel i <sys>GStreamer</sys> kan rapporteras i <link href=\"https://"
 "gitlab.freedesktop.org/gstreamer\">felrapporteringssystemet för "
 "<sys>GStreamer</sys></link>."
-
-#. (itstool) path: info/desc
-#: C/troubleshooting-DVD.page:10
-msgid "I cannot play my DVD."
-msgstr "Jag kan inte spela upp min dvd."
-
-#. (itstool) path: page/title
-#: C/troubleshooting-DVD.page:24
-msgid "Problem with playing movies from a DVD"
-msgstr "Problem med att spela filmer från en dvd"
-
-# TODO: remove second YOUR
-#. (itstool) path: page/p
-#: C/troubleshooting-DVD.page:26
-msgid ""
-"It may happen that after putting a DVD into your CD/DVD drive, <app>Videos</"
-"app> shows the error message <gui>An error occurred ‒ The movie could not be "
-"read.</gui> This may be because your <link xref=\"supported-formats\">a "
-"required <sys>GStreamer</sys> plugin to read the format of the movie is not "
-"installed on your system</link>, or because DVD is encrypted and a DVD "
-"decryption package is not installed on your system."
-msgstr ""
-"Det kan hända att <app>Videoklipp</app> efter att du satt en dvd-skiva i din "
-"cd/dvd-enhet visar felmeddelandet <gui>Ett fel inträffade ‒ Filmen kunde "
-"inte läsas.</gui> Detta kan vara för att <link xref=\"supported-formats\">en "
-"nödvändig <sys>GStreamer</sys>-insticksmodul för att läsa filmens format "
-"inte finns installerad på ditt system</link>, eller för att dvd-skivan är "
-"krypterad och inget dvd-dekrypteringspaket finns installerat på ditt system."
-
-#. (itstool) path: note/p
-#: C/troubleshooting-DVD.page:36
-msgid ""
-"To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
-"package. However, note that using this package is not legal in all "
-"countries. For further information if or where the package might be "
-"available for your distribution, please ask in a support forum of your "
-"distribution."
-msgstr ""
-"Överväg att installera paketet <sys>libdvdcss</sys> för att öppna krypterade "
-"dvd-skivor. Observera dock att användning av detta paket inte är laglig i "
-"alla länder. För vidare information kring om eller var paketet finns "
-"tillgängligt för din distribution kan du fråga i ett supportforum för din "
-"distribution."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1107,8 +1095,8 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
-msgid "Make the video bigger and make it keep the correct proportions."
-msgstr "Gör videoklippet större och få det att behålla rätt proportioner."
+msgid "Adjust the aspect ratio to correct its proportions."
+msgstr "Justera bildförhållandet för att korrigera dess proportioner."
 
 #. (itstool) path: page/title
 #: C/view-zoom.page:31
@@ -1117,33 +1105,16 @@ msgstr "Ändra videostorlek och bildförhållande"
 
 #. (itstool) path: page/p
 #: C/view-zoom.page:33
-msgid "You can make the video larger or correct its ratio."
-msgstr "Du kan göra videoklippet större eller rätta till dess bildförhållande."
+msgid "You can correct its ratio."
+msgstr "Du kan rätta till dess bildförhållande."
 
 #. (itstool) path: item/title
 #: C/view-zoom.page:37
-msgid "Zoom in"
-msgstr "Zooma in"
-
-#. (itstool) path: item/p
-#: C/view-zoom.page:38
-msgid ""
-"Press the menu button in the top-right corner of the window and select <gui "
-"style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
-"<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
-msgstr ""
-"Tryck på menyknappen i fönstrets övre högra hörn och välj <gui "
-"style=\"menuitem\">Zooma in</gui> eller tryck ned <key>R</key>. För att "
-"zooma ut, inaktivera <gui style=\"menuitem\">Zooma in</gui> igen eller tryck "
-"ned <key>T</key>."
-
-#. (itstool) path: item/title
-#: C/view-zoom.page:43
 msgid "Setting aspect ratio"
 msgstr "Ställa in bildförhållande"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:44
+#: C/view-zoom.page:38
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
@@ -1152,43 +1123,99 @@ msgstr ""
 "style=\"menuitem\">Bildförhållande</gui>."
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:46
+#: C/view-zoom.page:40
 msgid "Select among:"
 msgstr "Välj bland:"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:48
+#: C/view-zoom.page:42
 msgid "<gui>Auto</gui>"
 msgstr "<gui>Auto</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:49
+#: C/view-zoom.page:43
 msgid "<gui>Square</gui>"
 msgstr "<gui>Kvadrat</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:50
+#: C/view-zoom.page:44
 msgid "<gui>4∶3 (TV)</gui>"
 msgstr "<gui>4∶3 (TV)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:51
+#: C/view-zoom.page:45
 msgid "<gui>16∶9 (Widescreen)</gui>"
 msgstr "<gui>16∶9 (bredbild)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:52
+#: C/view-zoom.page:46
 msgid "<gui>2.11∶1 (DVB)</gui>"
 msgstr "<gui>2,11∶1 (Digital-tv)</gui>"
 
 #. (itstool) path: note/p
-#: C/view-zoom.page:58
+#: C/view-zoom.page:52
 msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
-"you to force different aspect ratio to be used for displaying movie."
+"you to correct the video display if the movie appears squished or stretched. "
+"The aspect ratio of your monitor does not come into account."
 msgstr ""
 "Bildförhållandet är proportionen mellan bredd och höjd. Detta alternativ "
-"låter dig tvinga olika bildförhållanden att användas för att visa filmen."
+"låter dig korrigera videovisningen om filmen visas hoptryckt eller "
+"utsträckt. Bildförhållandet för din skärm tas inte i beräkning."
+
+#~ msgid ""
+#~ "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</"
+#~ "sys> plugins. If certain file formats are not supported, please refer to "
+#~ "a support forum of your distribution to find out which package to install."
+#~ msgstr ""
+#~ "Filformat som visas av <app>Videoklipp</app> beror på <sys>GStreamer</"
+#~ "sys>-insticksmoduler. Om vissa filformat inte stöds kan du se ett "
+#~ "supportforum för din distribution för att komma på vilket paket som ska "
+#~ "installeras."
+
+#~ msgid ""
+#~ "If you try to open a format which is not supported, on many distributions "
+#~ "<app>Videos</app> will display a dialog which will allow you to search "
+#~ "for missing plugins (codecs) and install them."
+#~ msgstr ""
+#~ "Om du försöker öppna ett format som inte stöds kommer <app>Videoklipp</"
+#~ "app> i många distributioner att visa en dialogruta som låter dig söka "
+#~ "efter saknade insticksmoduler (kodekar) och installera dem."
+
+#~ msgid "I cannot play my DVD."
+#~ msgstr "Jag kan inte spela upp min dvd."
+
+#~ msgid "Problem with playing movies from a DVD"
+#~ msgstr "Problem med att spela filmer från en dvd"
+
+#~ msgid ""
+#~ "To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
+#~ "package. However, note that using this package is not legal in all "
+#~ "countries. For further information if or where the package might be "
+#~ "available for your distribution, please ask in a support forum of your "
+#~ "distribution."
+#~ msgstr ""
+#~ "Överväg att installera paketet <sys>libdvdcss</sys> för att öppna "
+#~ "krypterade dvd-skivor. Observera dock att användning av detta paket inte "
+#~ "är laglig i alla länder. För vidare information kring om eller var "
+#~ "paketet finns tillgängligt för din distribution kan du fråga i ett "
+#~ "supportforum för din distribution."
+
+#~ msgid "Make the video bigger and make it keep the correct proportions."
+#~ msgstr "Gör videoklippet större och få det att behålla rätt proportioner."
+
+#~ msgid "Zoom in"
+#~ msgstr "Zooma in"
+
+#~ msgid ""
+#~ "Press the menu button in the top-right corner of the window and select "
+#~ "<gui style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, "
+#~ "disable <gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
+#~ msgstr ""
+#~ "Tryck på menyknappen i fönstrets övre högra hörn och välj <gui "
+#~ "style=\"menuitem\">Zooma in</gui> eller tryck ned <key>R</key>. För att "
+#~ "zooma ut, inaktivera <gui style=\"menuitem\">Zooma in</gui> igen eller "
+#~ "tryck ned <key>T</key>."
 
 #~ msgid "<gui>External Chapters</gui>"
 #~ msgstr "<gui>Externa kapitel</gui>"
@@ -1327,7 +1354,7 @@ msgstr ""
 #~ "<email>cbhoh@gnome.org</email>"
 #~ msgstr ""
 #~ "<firstname>Chee Bin</firstname> <surname>HOH</surname> <affiliation> "
-#~ "<orgname>GNOME:s dokumentationsprojekt</orgname> </affiliation> "
+#~ "<orgname>GNOMEs dokumentationsprojekt</orgname> </affiliation> "
 #~ "<email>cbhoh@gnome.org</email>"
 
 #~ msgid ""
@@ -1337,7 +1364,7 @@ msgstr ""
 #~ "millemathias@gmail.org</email>"
 #~ msgstr ""
 #~ "<firstname>Baptiste</firstname> <surname>Mille-Mathias</surname> "
-#~ "<affiliation> <orgname>GNOME:s dokumentationsprojekt</orgname> </"
+#~ "<affiliation> <orgname>GNOMEs dokumentationsprojekt</orgname> </"
 #~ "affiliation> <contrib>Uppdatera dokumentation</contrib> <email>baptiste."
 #~ "millemathias@gmail.org</email>"
 
@@ -1384,7 +1411,7 @@ msgstr ""
 #~ "För att rapportera ett fel eller föreslå någonting angående "
 #~ "<application>Totem filmuppspelare</application> eller den här handboken, "
 #~ "följ anvisningarna på <ulink url=\"help:gnome-help/more-help\" "
-#~ "type=\"help\">GNOME:s återkopplingssida</ulink>."
+#~ "type=\"help\">GNOMEs återkopplingssida</ulink>."
 
 #~ msgid "<primary>Totem Movie Player</primary>"
 #~ msgstr "<primary>Totem filmuppspelare</primary>"
@@ -2593,7 +2620,7 @@ msgstr ""
 #~ msgstr ""
 #~ "För att utföra en sökning, mata in dina söktermer i sökrutan längst upp i "
 #~ "sidopanelen och klicka på <guibutton>Hitta</guibutton>. Dina söktermer "
-#~ "kan innehålla jokertecken så som <literal>*</literal>, som kommer att "
+#~ "kan innehålla jokertecken såsom <literal>*</literal>, som kommer att "
 #~ "matcha vilket tecken som helst. Till exempel kommer sökningen "
 #~ "<userinput>*.mpg</userinput> att hitta alla filmer med filändelsen "
 #~ "<filename class=\"extension\">.mpg</filename>."
