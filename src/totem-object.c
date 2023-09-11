@@ -3789,7 +3789,7 @@ totem_setup_window (TotemObject *totem)
 	totem->header = GTK_WIDGET (gtk_builder_get_object (totem->xml, "header"));
 
 	/* Main menu */
-	totem->main_menu_button = totem_main_button_get_main_menu_button (TOTEM_MAIN_TOOLBAR (totem->header));
+	totem->main_menu_button = totem_main_toolbar_get_main_menu_button (TOTEM_MAIN_TOOLBAR (totem->header));
 	g_signal_connect (totem->main_menu_button, "toggled", G_CALLBACK (popup_menu_shown_cb), totem);
 
 	/* Add button */

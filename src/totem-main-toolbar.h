@@ -52,4 +52,4 @@ void            totem_main_toolbar_pack_start            (TotemMainToolbar *bar,
 void            totem_main_toolbar_pack_end              (TotemMainToolbar *bar,
 							  GtkWidget        *child);
 GtkWidget *     totem_main_toolbar_get_add_button        (TotemMainToolbar *bar);
-GtkWidget *     totem_main_button_get_main_menu_button   (TotemMainToolbar *bar);
+GtkWidget *     totem_main_toolbar_get_main_menu_button  (TotemMainToolbar *bar);

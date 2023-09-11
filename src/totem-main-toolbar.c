@@ -782,7 +782,7 @@ totem_main_toolbar_get_add_button (TotemMainToolbar *bar)
 }
 
 GtkWidget *
-totem_main_button_get_main_menu_button (TotemMainToolbar *bar)
+totem_main_toolbar_get_main_menu_button (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
