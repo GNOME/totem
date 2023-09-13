@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"POT-Creation-Date: 2023-01-25 22:20+0000\n"
-"PO-Revision-Date: 2023-03-05 02:13+0900\n"
+"POT-Creation-Date: 2023-09-02 22:06+0000\n"
+"PO-Revision-Date: 2023-09-13 12:59+0900\n"
 "Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -29,8 +29,7 @@ msgstr "조성호 <shcho@gnome.org>, 2021, 2023."
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
 #: C/troubleshooting-Audio-CD.page:19 C/troubleshooting-debug.page:15
-#: C/troubleshooting-DVD.page:20 C/troubleshooting-subtitles.page:21
-#: C/view-zoom.page:25
+#: C/troubleshooting-subtitles.page:21 C/view-zoom.page:25
 msgid "Creative Commons Share Alike 3.0"
 msgstr "크리에이티브 커먼즈 동일조건변경허락 3.0"
 
@@ -269,11 +268,11 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/navigation.page:28
 msgid ""
-"Play media or pause them: Use the keyboard shortcut <key>Space</key> or "
-"press the <gui style=\"button\">Play/Pause</gui> button."
+"Play media or pause them: Use the keyboard shortcut <key>P</key> or press "
+"the <gui style=\"button\">Play/Pause</gui> button."
 msgstr ""
-"미디어를 재생하거나 잠시 멈춥니다: <key>Space</key> 키보드 바로 가기 키를 누"
-"르거나 <gui style=\"button\">재생/일시정지</gui> 단추를 누릅니다."
+"미디어를 재생하거나 잠시 멈춥니다: <key>P</key> 키보드 바로 가기 키를 누르거"
+"나 <gui style=\"button\">재생/일시정지</gui> 단추를 누릅니다."
 
 #. (itstool) path: item/p
 #: C/navigation.page:32
@@ -309,6 +308,31 @@ msgid ""
 msgstr ""
 "DVD의 다른 챕터로 바꾸거나 메인 화면으로 돌아가려면 <link xref=\"playing-"
 "DVD\"/>편을 참고하십시오."
+
+#. (itstool) path: page/p
+#: C/navigation.page:49
+msgid ""
+"The full list of keyboard shortcuts is available by typing <key>?</key> "
+"while playing a movie, or <keyseq><key>Ctrl</key><key>?</key></keyseq> in "
+"the movies view."
+msgstr ""
+"키보드 바로 가기 키 전체 목록은 영상을 재생하는 도중 <key>?</key>를 누르거"
+"나, 영상 보기 화면에서 <keyseq><key>Ctrl</key><key>?</key></keyseq>키를 눌러 "
+"볼 수 있습니다."
+
+#. (itstool) path: note/p
+#: C/navigation.page:52
+msgid ""
+"Seeking with the keyboard keys (<key>Left</key> and <key>Right</key> arrows) "
+"does not seek the same amount of time in either direction. This is as "
+"designed as it makes it easier to find a particular place in a film, seeking "
+"forward until we do find a part of the film we do not recognise, or know to "
+"be further than what we're looking for, and seek back more finely."
+msgstr ""
+"키보드 키(<key>←</key> 및 <key>→</key> 키) 탐색은 각 방향에 대해 동일한 시간 "
+"간격으로 탐색하지 않습니다. 보지 못했던 영화의 장면 부분을 찾을 때까지 빨리감"
+"기 하거나, 보고자 하는 장면을 더 자세하게 보려 되감기하여 영화별 부분 장면을 "
+"쉽게 찾을 수 있도록 설계했습니다."
 
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
@@ -592,8 +616,8 @@ msgstr "드롭 다운 목록에서 <gui>오디오 출력</gui> 형식을 선택�
 
 #. (itstool) path: info/desc
 #: C/properties.page:9
-msgid "View the properties of a played audio or video file."
-msgstr "재생한 오디오 또는 비디오 파일의 속성을 봅니다."
+msgid "View the properties of a played video file."
+msgstr "재생한 비디오 파일의 속성을 봅니다."
 
 #. (itstool) path: page/title
 #: C/properties.page:27
@@ -880,22 +904,27 @@ msgstr "일부 파일 형식을 재생할 수 없음"
 #: C/supported-formats.page:25
 msgid ""
 "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys> "
-"plugins. If certain file formats are not supported, please refer to a "
-"support forum of your distribution to find out which package to install."
+"plugins. The only supported version of <app>Videos</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> available on Flathub</"
+"link>, should have support for all the more common, and some niche, video "
+"and audio formats."
 msgstr ""
-"<sys>GStreamer</sys> 플러그인에 따라 <app>동영상</app>에 파일 형식이 나타납니"
-"다. 일부 파일 형식을 지원하지 않는다면 배포판 포럼 게시판을 찾아 어떤 패키지"
-"를 설치해야 할 지 확인합니다."
+"<app>동영상</app>에 나타나는 파일 형식은 <sys>지스트리머</sys> 플러그인 설치 "
+"상태에 달려있습니다. <link href=\"https://flathub.org/apps/org.gnome.Totem\">"
+"플랫 허브에 있는</link> <app>동영상</app>에서 지원하는 버전은 좀 더 일반적이"
+"고 편리하게 폭넓은 비디오 오디오 형식을 지원합니다."
 
 #. (itstool) path: note/p
-#: C/supported-formats.page:29
+#: C/supported-formats.page:30
 msgid ""
-"If you try to open a format which is not supported, on many distributions "
-"<app>Videos</app> will display a dialog which will allow you to search for "
-"missing plugins (codecs) and install them."
+"If you run into any video files that cannot be played in the supported "
+"version of <app>Videos</app> available on Flathub, then <link href=\"https://"
+"github.com/flathub/org.gnome.Totem/issues\"> file a bug against the "
+"application</link>, so support for the necessary formats can be added."
 msgstr ""
-"지원하지 않는 형식을 열 경우, 대부분의 배포판에서 <app>동영상</app>은 빠진 플"
-"러그인(코덱)을 검색해서 설치할 수 있게 하는 대화상자를 띄웁니다."
+"플랫허브에 있는 <app>동영상</app> 지원 버전에서 어떤 영상 파일을 재생하지 못"
+"한다면 <link href=\"https://github.com/flathub/org.gnome.Totem/issues\">앱 버"
+"그를 보고하여</link> 필요한 형식을 추가하도록 지원해주십시오."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -930,19 +959,17 @@ msgstr "다른 비디오 문제 추적하기"
 #. (itstool) path: page/p
 #: C/troubleshooting-debug.page:21
 msgid ""
-"If you have already followed <link xref=\"supported-formats\"/> and <link "
-"xref=\"troubleshooting-DVD\"/> and a video still cannot be played, open a "
-"terminal window and enter the command <cmd>totem --help-gst</cmd>. This will "
-"show a list of available options you can use to get debug output. Often the "
-"problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
-"not in <app>Videos</app> itself."
+"If you have already followed <link xref=\"supported-formats\"/> and a video "
+"still cannot be played, open a terminal window and enter the command "
+"<cmd>totem --help-gst</cmd>. This will show a list of available options you "
+"can use to get debug output. Often the problem is in an underlying plugin, "
+"for example in <sys>GStreamer</sys> and not in <app>Videos</app> itself."
 msgstr ""
-"이미 <link xref=\"supported-formats\"/>와(과) <link xref=\"troubleshooting-"
-"DVD\"/>을(를) 찾아보았음에도 불구 비디오를 여전히 재생할 수 없다면 터미널 창"
-"을 열고 <cmd>totem --help-gst</cmd> 명령을 입력합니다. 디버깅 출력을 볼 수 있"
-"는 다양한 옵션 목록을 보여줍니다. 보통 문제는 플러그인에 있는데, 예를 들면, "
-"<sys>지스트리머</sys>에 있지, <app>동영상</app> 프로그램 자체에 있지는 않습니"
-"다."
+"이미 <link xref=\"supported-formats\"/>을(를) 찾아보았음에도 불구 비디오를 여"
+"전히 재생할 수 없다면 터미널 창을 열고 <cmd>totem --help-gst</cmd> 명령을 입"
+"력합니다. 디버깅 출력을 볼 수 있는 다양한 옵션 목록을 보여줍니다. 보통 문제"
+"는 플러그인에 있는데, 예를 들면, <sys>지스트리머</sys>에 있지, <app>동영상</"
+"app> 프로그램 자체에 있지는 않습니다."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
@@ -954,47 +981,6 @@ msgstr ""
 "<sys>지스트리머</sys>의 프로그램 버그는 <link href=\"https://gitlab."
 "freedesktop.org/gstreamer\"><sys>GStreamer</sys> 문제 추적기</link>에 보고할 "
 "수 있습니다."
-
-#. (itstool) path: info/desc
-#: C/troubleshooting-DVD.page:10
-msgid "I cannot play my DVD."
-msgstr "DVD를 재생할 수 없어요."
-
-#. (itstool) path: page/title
-#: C/troubleshooting-DVD.page:24
-msgid "Problem with playing movies from a DVD"
-msgstr "DVD 영상 재생 문제"
-
-#. (itstool) path: page/p
-#: C/troubleshooting-DVD.page:26
-msgid ""
-"It may happen that after putting a DVD into your CD/DVD drive, <app>Videos</"
-"app> shows the error message <gui>An error occurred ‒ The movie could not be "
-"read.</gui> This may be because your <link xref=\"supported-formats\">a "
-"required <sys>GStreamer</sys> plugin to read the format of the movie is not "
-"installed on your system</link>, or because DVD is encrypted and a DVD "
-"decryption package is not installed on your system."
-msgstr ""
-"CD/DVD 드라이브에 DVD 디스크를 넣고 난 후 <app>동영상</app>에서 <gui>오류가 "
-"발생했습니다 ‒ 동영상을 읽을 수 없습니다.</gui> 오류 메시지가 나타날 수 있습"
-"니다. <link xref=\"supported-formats\">영상 형식을 읽을 때 필요한 <sys>지스트"
-"리머</sys> 플러그인을 시스템에 설치하지 않았기 때문</link>이거나, DVD를 암호"
-"화한 상태이며 시스템에 DVD 해독 패키지를 설치하지 않았기 때문일 수도 있습니"
-"다."
-
-#. (itstool) path: note/p
-#: C/troubleshooting-DVD.page:36
-msgid ""
-"To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
-"package. However, note that using this package is not legal in all "
-"countries. For further information if or where the package might be "
-"available for your distribution, please ask in a support forum of your "
-"distribution."
-msgstr ""
-"암호화 DVD를 열려면 <sys>libdvdcss</sys> 패키지 설치를 고려하십시오. 그러나, "
-"모든 국가에서 이 패키지를 사용하는게 합법적인건 아닙니다. 배포판에 해당하는 "
-"패키지가 있는지, 어디에 있는지 알아보려면 배포판 지원 포럼 게시판에 질문하여 "
-"답을 구하십시오."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -1080,8 +1066,8 @@ msgstr "참고로 필요한 자막을 검색하려면 인터넷에 연결해야�
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
-msgid "Make the video bigger and make it keep the correct proportions."
-msgstr "비디오를 크게, 화면 비율을 적절하게 설정합니다."
+msgid "Adjust the aspect ratio to correct its proportions."
+msgstr "비율을 조정하기 위해 영상비를 조정합니다."
 
 #. (itstool) path: page/title
 #: C/view-zoom.page:31
@@ -1090,32 +1076,16 @@ msgstr "영상 크기와 화면 비율 바꾸기"
 
 #. (itstool) path: page/p
 #: C/view-zoom.page:33
-msgid "You can make the video larger or correct its ratio."
-msgstr "비디오를 더 크게 하거나 적절한 영상 비율을 설정할 수 있습니다."
+msgid "You can correct its ratio."
+msgstr "영상비를 조정할 수 있습니다."
 
 #. (itstool) path: item/title
 #: C/view-zoom.page:37
-msgid "Zoom in"
-msgstr "확대"
-
-#. (itstool) path: item/p
-#: C/view-zoom.page:38
-msgid ""
-"Press the menu button in the top-right corner of the window and select <gui "
-"style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
-"<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
-msgstr ""
-"창 우측 상단 구석에 있는 메뉴 단추를 누른 후 <gui style=\"menuitem\">확대</"
-"gui>를 선택하거나 <key>R</key>을 누릅니다. 축소하려면 <gui "
-"style=\"menuitem\">확대</gui>를 끄거나 <key>T</key>를 누릅니다."
-
-#. (itstool) path: item/title
-#: C/view-zoom.page:43
 msgid "Setting aspect ratio"
 msgstr "화면 비율 설정"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:44
+#: C/view-zoom.page:38
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
@@ -1124,40 +1094,107 @@ msgstr ""
 "율</gui>을 선택합니다."
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:46
+#: C/view-zoom.page:40
 msgid "Select among:"
 msgstr "다음 항목 중 하나를 선택합니다:"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:48
+#: C/view-zoom.page:42
 msgid "<gui>Auto</gui>"
 msgstr "<gui>자동</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:49
+#: C/view-zoom.page:43
 msgid "<gui>Square</gui>"
 msgstr "<gui>정사각형</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:50
+#: C/view-zoom.page:44
 msgid "<gui>4∶3 (TV)</gui>"
 msgstr "<gui>4∶3 (TV)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:51
+#: C/view-zoom.page:45
 msgid "<gui>16∶9 (Widescreen)</gui>"
 msgstr "<gui>16∶9 (와이드스크린)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:52
+#: C/view-zoom.page:46
 msgid "<gui>2.11∶1 (DVB)</gui>"
 msgstr "<gui>2.11∶1 (DVB)</gui>"
 
 #. (itstool) path: note/p
-#: C/view-zoom.page:58
+#: C/view-zoom.page:52
 msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
-"you to force different aspect ratio to be used for displaying movie."
+"you to correct the video display if the movie appears squished or stretched. "
+"The aspect ratio of your monitor does not come into account."
 msgstr ""
 "화면 비율은 너비와 높이간의 비율입니다. 이 옵션은 화면에 표시하는 영상에서 사"
 "용할 별도의 화면 비율을 강제로 사용할 수 있게 합니다."
+
+#~ msgid ""
+#~ "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</"
+#~ "sys> plugins. If certain file formats are not supported, please refer to "
+#~ "a support forum of your distribution to find out which package to install."
+#~ msgstr ""
+#~ "<sys>GStreamer</sys> 플러그인에 따라 <app>동영상</app>에 파일 형식이 나타"
+#~ "납니다. 일부 파일 형식을 지원하지 않는다면 배포판 포럼 게시판을 찾아 어떤 "
+#~ "패키지를 설치해야 할 지 확인합니다."
+
+#~ msgid ""
+#~ "If you try to open a format which is not supported, on many distributions "
+#~ "<app>Videos</app> will display a dialog which will allow you to search "
+#~ "for missing plugins (codecs) and install them."
+#~ msgstr ""
+#~ "지원하지 않는 형식을 열 경우, 대부분의 배포판에서 <app>동영상</app>은 빠"
+#~ "진 플러그인(코덱)을 검색해서 설치할 수 있게 하는 대화상자를 띄웁니다."
+
+#~ msgid "I cannot play my DVD."
+#~ msgstr "DVD를 재생할 수 없어요."
+
+#~ msgid "Problem with playing movies from a DVD"
+#~ msgstr "DVD 영상 재생 문제"
+
+#~ msgid ""
+#~ "It may happen that after putting a DVD into your CD/DVD drive, "
+#~ "<app>Videos</app> shows the error message <gui>An error occurred ‒ The "
+#~ "movie could not be read.</gui> This may be because your <link "
+#~ "xref=\"supported-formats\">a required <sys>GStreamer</sys> plugin to read "
+#~ "the format of the movie is not installed on your system</link>, or "
+#~ "because DVD is encrypted and a DVD decryption package is not installed on "
+#~ "your system."
+#~ msgstr ""
+#~ "CD/DVD 드라이브에 DVD 디스크를 넣고 난 후 <app>동영상</app>에서 <gui>오류"
+#~ "가 발생했습니다 ‒ 동영상을 읽을 수 없습니다.</gui> 오류 메시지가 나타날 "
+#~ "수 있습니다. <link xref=\"supported-formats\">영상 형식을 읽을 때 필요한 "
+#~ "<sys>지스트리머</sys> 플러그인을 시스템에 설치하지 않았기 때문</link>이거"
+#~ "나, DVD를 암호화한 상태이며 시스템에 DVD 해독 패키지를 설치하지 않았기 때"
+#~ "문일 수도 있습니다."
+
+#~ msgid ""
+#~ "To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
+#~ "package. However, note that using this package is not legal in all "
+#~ "countries. For further information if or where the package might be "
+#~ "available for your distribution, please ask in a support forum of your "
+#~ "distribution."
+#~ msgstr ""
+#~ "암호화 DVD를 열려면 <sys>libdvdcss</sys> 패키지 설치를 고려하십시오. 그러"
+#~ "나, 모든 국가에서 이 패키지를 사용하는게 합법적인건 아닙니다. 배포판에 해"
+#~ "당하는 패키지가 있는지, 어디에 있는지 알아보려면 배포판 지원 포럼 게시판"
+#~ "에 질문하여 답을 구하십시오."
+
+#~ msgid "Make the video bigger and make it keep the correct proportions."
+#~ msgstr "비디오를 크게, 화면 비율을 적절하게 설정합니다."
+
+#~ msgid "Zoom in"
+#~ msgstr "확대"
+
+#~ msgid ""
+#~ "Press the menu button in the top-right corner of the window and select "
+#~ "<gui style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, "
+#~ "disable <gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
+#~ msgstr ""
+#~ "창 우측 상단 구석에 있는 메뉴 단추를 누른 후 <gui style=\"menuitem\">확대"
+#~ "</gui>를 선택하거나 <key>R</key>을 누릅니다. 축소하려면 <gui "
+#~ "style=\"menuitem\">확대</gui>를 끄거나 <key>T</key>를 누릅니다."
