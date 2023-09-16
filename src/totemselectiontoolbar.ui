@@ -13,6 +13,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="no-show-all">True</property>
+            <signal name="clicked" handler="add_to_fav_clicked_cb"/>
             <child internal-child="accessible">
               <object class="AtkObject" id="add-to-fav-atkobject">
                 <property name="AtkObject::accessible-name" translatable="yes">Add to Favourites</property>
@@ -41,6 +42,7 @@
             <property name="receives_default">True</property>
             <property name="no-show-all">True</property>
             <property name="label" translatable="yes" context="button">Play</property>
+            <signal name="clicked" handler="play_clicked_cb"/>
             <child internal-child="accessible">
               <object class="AtkObject" id="play-atkobject">
                 <property name="AtkObject::accessible-name" translatable="yes">Play</property>
@@ -61,6 +63,7 @@
             <property name="receives_default">True</property>
             <property name="no-show-all">True</property>
             <property name="label" translatable="yes">Shuffle</property>
+            <signal name="clicked" handler="shuffle_clicked_cb"/>
             <child internal-child="accessible">
               <object class="AtkObject" id="shuffle-atkobject">
                 <property name="AtkObject::accessible-name" translatable="yes">Shuffle</property>
@@ -81,6 +84,7 @@
             <property name="receives_default">True</property>
             <property name="no-show-all">True</property>
             <property name="label" translatable="yes">Delete</property>
+            <signal name="clicked" handler="delete_clicked_cb"/>
             <child internal-child="accessible">
               <object class="AtkObject" id="delete-atkobject">
                 <property name="AtkObject::accessible-name" translatable="yes">Delete</property>

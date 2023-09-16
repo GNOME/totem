@@ -249,6 +249,11 @@ totem_selection_toolbar_class_init (TotemSelectionToolbarClass *klass)
   gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, delete);
   gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, play);
   gtk_widget_class_bind_template_child (widget_class, TotemSelectionToolbar, shuffle);
+
+  gtk_widget_class_bind_template_callback (widget_class, add_to_fav_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, delete_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, play_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, shuffle_clicked_cb);
 }
 
 static void
@@ -258,15 +263,6 @@ totem_selection_toolbar_init (TotemSelectionToolbar *bar)
 
   /* So that the default FALSE actually gets applied */
   bar->delete_sensitive = TRUE;
-
-  g_signal_connect (bar->add_to_fav, "clicked",
-                    G_CALLBACK (add_to_fav_clicked_cb), bar);
-  g_signal_connect (bar->delete, "clicked",
-                    G_CALLBACK (delete_clicked_cb), bar);
-  g_signal_connect (bar->play, "clicked",
-                    G_CALLBACK (play_clicked_cb), bar);
-  g_signal_connect (bar->shuffle, "clicked",
-                    G_CALLBACK (shuffle_clicked_cb), bar);
 };
 
 /**
