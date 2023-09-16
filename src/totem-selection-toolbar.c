@@ -256,8 +256,6 @@ totem_selection_toolbar_init (TotemSelectionToolbar *bar)
 {
   gtk_widget_init_template (GTK_WIDGET (bar));
 
-  gtk_widget_hide (bar->add_to_fav);
-
   /* So that the default FALSE actually gets applied */
   bar->delete_sensitive = TRUE;
 
