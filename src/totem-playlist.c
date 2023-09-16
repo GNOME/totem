@@ -121,30 +121,84 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
 G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
-/* Helper functions */
-void
-totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSelectDialog mode)
+static gboolean
+get_valid_iter_for_mode (TotemPlaylist             *playlist,
+                         TotemPlaylistSelectDialog  mode,
+                         GtkTreeIter               *iter)
 {
-	char *subtitle, *current, *uri;
-	GFile *file, *dir;
-	TotemPlaylistStatus playing;
-	GtkTreeIter iter;
-
+	gboolean valid_iter = FALSE;
 	if (mode == TOTEM_PLAYLIST_DIALOG_PLAYING) {
 		/* Set subtitle file for the currently playing movie */
-		gtk_tree_model_get_iter (playlist->model, &iter, playlist->current);
+		gtk_tree_model_get_iter (playlist->model, iter, playlist->current);
+		valid_iter = TRUE;
 	} else if (mode == TOTEM_PLAYLIST_DIALOG_SELECTED) {
 		/* Set subtitle file in for the first selected playlist item */
 		GList *l;
 
 		l = gtk_tree_selection_get_selected_rows (playlist->selection, NULL);
 		if (l == NULL)
-			return;
-		gtk_tree_model_get_iter (playlist->model, &iter, l->data);
+			return valid_iter;
+		gtk_tree_model_get_iter (playlist->model, iter, l->data);
 		g_list_free_full (l, (GDestroyNotify) gtk_tree_path_free);
+		valid_iter = TRUE;
 	} else {
 		g_assert_not_reached ();
 	}
+
+	return valid_iter;
+}
+
+static void
+on_open_subtitle_dialog_cb (GtkDialog *dialog,
+			    int        response_id,
+			    gpointer   user_data)
+{
+	TotemPlaylist *playlist = user_data;
+	g_autofree char *subtitle = NULL;
+	TotemPlaylistStatus playing;
+	GtkTreeIter iter;
+
+	if (response_id == GTK_RESPONSE_ACCEPT) {
+		TotemPlaylistSelectDialog mode;
+
+		subtitle = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
+		if (subtitle == NULL)
+			return;
+
+		mode = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+							   "playlist-select-mode"));
+		if (!get_valid_iter_for_mode (playlist, mode, &iter))
+			return;
+
+		gtk_tree_model_get (playlist->model, &iter,
+				    PLAYING_COL, &playing,
+				    -1);
+
+		gtk_list_store_set (GTK_LIST_STORE(playlist->model), &iter,
+				    SUBTITLE_URI_COL, subtitle,
+				    -1);
+
+		if (playing != TOTEM_PLAYLIST_STATUS_NONE) {
+			g_signal_emit (G_OBJECT (playlist),
+				       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
+				       NULL);
+		}
+	}
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+/* Helper functions */
+void
+totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
+				       TotemPlaylistSelectDialog mode)
+{
+	GtkWidget *subtitle_dialog;
+	char *current, *uri;
+	GFile *file, *dir;
+	GtkTreeIter iter;
+
+	if (!get_valid_iter_for_mode (playlist, mode, &iter))
+		return;
 
 	/* Look for the directory of the current movie */
 	gtk_tree_model_get (playlist->model, &iter,
@@ -163,27 +217,12 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 		g_object_unref (dir);
 	}
 
-	subtitle = totem_add_subtitle (NULL, uri);
+	subtitle_dialog = totem_add_subtitle (NULL, uri);
+	g_object_set_data (G_OBJECT (subtitle_dialog), "playlist-select-mode", GINT_TO_POINTER (mode));
 	g_free (uri);
 
-	if (subtitle == NULL)
-		return;
-
-	gtk_tree_model_get (playlist->model, &iter,
-			    PLAYING_COL, &playing,
-			    -1);
-
-	gtk_list_store_set (GTK_LIST_STORE(playlist->model), &iter,
-			    SUBTITLE_URI_COL, subtitle,
-			    -1);
-
-	if (playing != TOTEM_PLAYLIST_STATUS_NONE) {
-		g_signal_emit (G_OBJECT (playlist),
-			       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
-			       NULL);
-	}
-
-	g_free(subtitle);
+	g_signal_connect (subtitle_dialog, "response", G_CALLBACK (on_open_subtitle_dialog_cb), playlist);
+	gtk_window_present (GTK_WINDOW (subtitle_dialog));
 }
 
 void

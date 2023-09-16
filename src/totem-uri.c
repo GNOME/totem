@@ -369,13 +369,12 @@ totem_add_default_dirs (GtkFileChooser *dialog)
 	}
 }
 
-char *
+GtkWidget *
 totem_add_subtitle (GtkWindow *parent, const char *uri)
 {
 	GtkWidget *fs;
-	GSettings *settings;
+	g_autoptr(GSettings) settings = NULL;
 	char *new_path;
-	char *subtitle = NULL;
 	gboolean folder_set;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
@@ -419,14 +418,7 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	}
 	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
 
-	if (gtk_dialog_run (GTK_DIALOG (fs)) == GTK_RESPONSE_ACCEPT) {
-		subtitle = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
-	}
-
-	gtk_widget_destroy (fs);
-	g_object_unref (settings);
-
-	return subtitle;
+	return fs;
 }
 
 GSList *
