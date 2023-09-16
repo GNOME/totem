@@ -542,26 +542,44 @@ update_current_from_playlist (TotemPlaylist *playlist)
 	return TRUE;
 }
 
-void
-totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
+static void
+on_open_dialog_cb (GtkDialog *dialog,
+                   int        response_id,
+                   gpointer   user_data)
 {
-	GSList *filenames, *l;
+	TotemPlaylist *playlist = user_data;
+	GSList *filenames = NULL;
 	GList *mrl_list = NULL;
+	GSList *l;
 
-	filenames = totem_add_files (NULL, NULL);
-	if (filenames == NULL)
-		return;
+	if (response_id == GTK_RESPONSE_ACCEPT) {
+		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (dialog));
 
-	for (l = filenames; l != NULL; l = l->next) {
-		char *mrl = l->data;
-		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (mrl, NULL));
-		g_free (mrl);
+		if (filenames != NULL) {
+			for (l = filenames; l != NULL; l = l->next) {
+				char *mrl = l->data;
+				mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (mrl, NULL));
+				g_free (mrl);
+			}
+			g_slist_free (filenames);
+		}
 	}
-
-	g_slist_free (filenames);
 
 	if (mrl_list != NULL)
 		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
+
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+void
+totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
+{
+	GtkWidget *open_dialog;
+
+	open_dialog = totem_add_files (NULL, NULL);
+	g_signal_connect (open_dialog, "response", G_CALLBACK (on_open_dialog_cb), playlist);
+
+	gtk_window_present (GTK_WINDOW (open_dialog));
 }
 
 static void

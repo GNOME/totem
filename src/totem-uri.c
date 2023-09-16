@@ -421,13 +421,30 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	return fs;
 }
 
-GSList *
+static void
+update_open_uri_settings_cb (GtkDialog *dialog,
+                             int        response_id,
+                             gpointer   user_data)
+{
+	g_autofree char *filename = NULL;
+	GSettings *settings = user_data;
+
+	if (response_id == GTK_RESPONSE_ACCEPT)
+		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
+
+	if (filename != NULL) {
+		g_autofree char *new_path = g_path_get_dirname (filename);
+		g_settings_set_string (settings, "open-uri", new_path);
+	}
+
+	g_clear_object (&settings);
+}
+
+GtkWidget *
 totem_add_files (GtkWindow *parent, const char *path)
 {
 	GtkWidget *fs;
-	int response;
-	GSList *filenames;
-	char *mrl, *new_path;
+	char *new_path;
 	GSettings *settings;
 	gboolean set_folder;
 
@@ -463,27 +480,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 	}
 	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
 
-	response = gtk_dialog_run (GTK_DIALOG (fs));
+	g_signal_connect (fs, "response", G_CALLBACK (update_open_uri_settings_cb), settings);
 
-	filenames = NULL;
-	if (response == GTK_RESPONSE_ACCEPT)
-		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
-
-	if (filenames == NULL) {
-		gtk_widget_destroy (fs);
-		g_object_unref (settings);
-		return NULL;
-	}
-	gtk_widget_destroy (fs);
-
-	mrl = filenames->data;
-	if (mrl != NULL) {
-		new_path = g_path_get_dirname (mrl);
-		g_settings_set_string (settings, "open-uri", new_path);
-		g_free (new_path);
-	}
-
-	g_object_unref (settings);
-
-	return filenames;
+	return fs;
 }

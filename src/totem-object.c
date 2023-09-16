@@ -1516,23 +1516,39 @@ totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *
 	totem_object_play (totem);
 }
 
+static void
+on_open_dialog_cb (GtkDialog *dialog,
+                   int        response_id,
+                   gpointer   user_data)
+{
+	TotemObject *totem = user_data;
+	GSList *filenames = NULL;
+	GSList *l;
+
+	if (response_id == GTK_RESPONSE_ACCEPT) {
+		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (dialog));
+
+		if (filenames != NULL) {
+			for (l = filenames; l != NULL; l = l->next) {
+				char *uri = l->data;
+				totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, FALSE);
+				g_free (uri);
+			}
+			g_slist_free (filenames);
+		}
+	}
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
 static gboolean
 totem_object_open_dialog (TotemObject *totem, const char *path)
 {
-	GSList *filenames, *l;
+	GtkWidget *open_dialog;
 
-	filenames = totem_add_files (GTK_WINDOW (totem->win), path);
+	open_dialog = totem_add_files (GTK_WINDOW (totem->win), path);
+	g_signal_connect (open_dialog, "response", G_CALLBACK (on_open_dialog_cb), totem);
 
-	if (filenames == NULL)
-		return FALSE;
-
-	for (l = filenames; l != NULL; l = l->next) {
-		char *uri = l->data;
-
-		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, FALSE);
-		g_free (uri);
-	}
-	g_slist_free (filenames);
+	gtk_window_present (GTK_WINDOW (open_dialog));
 
 	return TRUE;
 }

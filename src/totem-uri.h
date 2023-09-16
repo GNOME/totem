@@ -25,7 +25,7 @@ void		totem_setup_file_monitoring	(Totem *totem);
 void		totem_setup_file_filters	(void);
 void		totem_destroy_file_filters	(void);
 char *		totem_uri_escape_for_display	(const char *uri);
-GSList *	totem_add_files			(GtkWindow *parent,
+GtkWidget *	totem_add_files			(GtkWindow *parent,
 						 const char *path);
 GtkWidget *	totem_add_subtitle		(GtkWindow *parent,
 						 const char *uri);
