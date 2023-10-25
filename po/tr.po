@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2023-07-28 18:35+0000\n"
-"PO-Revision-Date: 2023-01-27 23:29+0300\n"
+"POT-Creation-Date: 2023-09-02 22:06+0000\n"
+"PO-Revision-Date: 2023-10-24 02:54+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -26,9 +26,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2012-08-31 06:01+0000\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.4\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:491
 #: src/totem.c:34 src/totem-grilo.c:1907
 msgid "Videos"
 msgstr "Videolar"
@@ -206,6 +206,10 @@ msgstr ""
 "Donanım çözücüleri devre dışı bırak ve yalnızca yazılım çözücüleri kullan. "
 "Yalnızca hata ayıklama amaçları için."
 
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+msgid "Back"
+msgstr "Geri"
+
 #: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5001
 msgid "Stereo"
 msgstr "Çiftli"
@@ -377,7 +381,7 @@ msgstr "Özellikler"
 #: data/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Make Available Offline"
-msgstr "Çevirim Dışı Kullanıma Hazırla"
+msgstr "Çevrim Dışı Kullanıma Hazırla"
 
 #: data/shortcuts.ui:63
 msgctxt "shortcut window"
@@ -549,11 +553,11 @@ msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Alt yazıları aç/kapat"
 
-#: data/totem.ui:19 data/totem.ui:98
+#: data/totem.ui:19 data/totem.ui:83
 msgid "Prefere_nces"
 msgstr "_Tercihler"
 
-#: data/totem.ui:23 data/totem.ui:102
+#: data/totem.ui:23 data/totem.ui:87
 msgid "_Keyboard Shortcuts"
 msgstr "_Klavye Kısayolları"
 
@@ -561,105 +565,97 @@ msgstr "_Klavye Kısayolları"
 msgid "_Help"
 msgstr "_Yardım"
 
-#: data/totem.ui:37
-msgid "Add _Local Video…"
-msgstr "_Yerel Video Ekle…"
-
-#: data/totem.ui:42
-msgid "Add _Web Video…"
-msgstr "_Web Videosu Ekle…"
-
-#: data/totem.ui:59
+#: data/totem.ui:44
 msgid "_Aspect Ratio"
 msgstr "_Görüntü Oranı"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:62
+#: data/totem.ui:47
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Kendiliğinden"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:67
+#: data/totem.ui:52
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Kare"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:72
+#: data/totem.ui:57
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:77
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Geniş Ekran)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:82
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.ui:90
+#: data/totem.ui:75
 msgid "Switch An_gles"
 msgstr "_Açı değiştir"
 
-#: data/totem.ui:111
+#: data/totem.ui:96
 msgid "_Eject"
 msgstr "Çı_kar"
 
-#: data/totem.ui:122
+#: data/totem.ui:107
 msgid "Languages"
 msgstr "Diller"
 
-#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
+#: data/totem.ui:111 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "Alt Yazılar"
 
-#: data/totem.ui:129
+#: data/totem.ui:114
 msgid "_Select Text Subtitles…"
 msgstr "Metin Alt Yazılarını _Seç…"
 
-#: data/totem.ui:140
+#: data/totem.ui:125
 msgid "_Repeat"
 msgstr "_Yinele"
 
-#: data/totem.ui:146
+#: data/totem.ui:131
 msgid "_DVD Menu"
 msgstr "_DVD Menüsü"
 
-#: data/totem.ui:152
+#: data/totem.ui:137
 msgid "_Title Menu"
 msgstr "_Başlık Menüsü"
 
-#: data/totem.ui:157
+#: data/totem.ui:142
 msgid "A_udio Menu"
 msgstr "_Ses Menüsü"
 
-#: data/totem.ui:162
+#: data/totem.ui:147
 msgid "_Angle Menu"
 msgstr "_Açı Menüsü"
 
-#: data/totem.ui:167
+#: data/totem.ui:152
 msgid "_Chapter Menu"
 msgstr "Bölüm _Menüsü"
 
-#: data/totem.ui:173
+#: data/totem.ui:158
 msgid "Speed"
 msgstr "Hız"
 
-#: data/totem.ui:432 data/totem.ui:435
+#: data/totem.ui:280 data/totem.ui:283
 msgid "Previous Chapter/Movie"
 msgstr "Önceki Bölüm/Film"
 
-#: data/totem.ui:456 data/totem.ui:459
+#: data/totem.ui:304 data/totem.ui:307
 msgid "Play / Pause"
 msgstr "Oynat / Beklet"
 
-#: data/totem.ui:472 data/totem.ui:475
+#: data/totem.ui:320 data/totem.ui:323
 msgid "Next Chapter/Movie"
 msgstr "Sonraki Bölüm/Film"
 
@@ -972,34 +968,38 @@ msgstr "Yerel"
 msgid "Channels"
 msgstr "Kanallar"
 
-#: src/totem-main-toolbar.c:118 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
 msgid "Click on items to select them"
 msgstr "Seçmek için ögelere tıkla"
 
-#: src/totem-main-toolbar.c:124
+#: src/totem-main-toolbar.c:131
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d seçildi"
 
-#: src/totem-main-toolbar.c:145
+#: src/totem-main-toolbar.c:152
 #, c-format
 msgid "Results for “%s”"
 msgstr "“%s” için sonuçlar"
 
-#: src/totemmaintoolbar.ui:18
-msgid "Back"
-msgstr "Geri"
+#: src/totemmaintoolbar.ui:7
+msgid "Add _Local Video…"
+msgstr "_Yerel Video Ekle…"
 
-#: src/totemmaintoolbar.ui:44
+#: src/totemmaintoolbar.ui:12
+msgid "Add _Web Video…"
+msgstr "_Web Videosu Ekle…"
+
+#: src/totemmaintoolbar.ui:104
 msgid "Select"
 msgstr "Seç"
 
-#: src/totemmaintoolbar.ui:69 src/totemmaintoolbar.ui:72
+#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/totemmaintoolbar.ui:90
+#: src/totemmaintoolbar.ui:150
 msgid "Search"
 msgstr "Ara"
 
@@ -1022,33 +1022,33 @@ msgstr "Kendiliğinden"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: src/totem-object.c:1450 src/totem-options.c:38
+#: src/totem-object.c:1412 src/totem-options.c:38
 msgid "Pause"
 msgstr "Beklet"
 
-#: src/totem-object.c:1456 src/totem-object.c:1464 src/totem-options.c:37
+#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "Oynat"
 
-#: src/totem-object.c:1533 src/totem-object.c:1559 src/totem-object.c:2135
+#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videolar “%s”i oynatamadı."
 
-#: src/totem-object.c:2304
+#: src/totem-object.c:2261
 msgid "Videos could not display the help contents."
 msgstr "Videolar yardım içeriğini gösteremiyor."
 
-#: src/totem-object.c:2551
+#: src/totem-object.c:2508
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: src/totem-object.c:4006
+#: src/totem-object.c:3965
 msgid "Videos could not startup."
 msgstr "Videolar başlatılamadı."
 
-#: src/totem-object.c:4007 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
 msgid "No reason."
 msgstr "Neden yok."
 
@@ -1741,7 +1741,7 @@ msgstr "Film"
 
 #: src/plugins/save-file/totem-save-file.c:442
 msgid "Make Available Offline"
-msgstr "Çevirim Dışı Kullanıma Hazırla"
+msgstr "Çevrim Dışı Kullanıma Hazırla"
 
 #: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Screen Saver"
