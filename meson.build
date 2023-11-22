@@ -136,7 +136,7 @@ gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
 gmodule_dep = dependency('gmodule-2.0', version: glib_req_version)
 gio_dep = dependency('gio-2.0', version: '>= 2.43.4')
 gtk_dep = dependency('gtk+-3.0', version: gtk_req_version)
-targets = gtk_dep.get_pkgconfig_variable('targets')
+targets = gtk_dep.get_variable(pkgconfig : 'targets')
 if targets.split(' ').contains('x11')
   x11_dep = dependency('x11', version: '>= 1.8')
 else
