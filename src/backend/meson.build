@@ -2,7 +2,7 @@ backend_inc = include_directories('.')
 
 gst_inspect = find_program(
   'gst-inspect-1.0',
-  join_paths(gst_dep.get_pkgconfig_variable('toolsdir'), 'gst-inspect-1.0'),
+  join_paths(gst_dep.get_variable(pkgconfig : 'toolsdir'), 'gst-inspect-1.0'),
   required: false
 )
 
