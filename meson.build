@@ -235,21 +235,21 @@ is_stable = (totem_minor_version != 'alpha' and
   totem_minor_version != 'rc')
 if is_stable
   meson.add_dist_script(
-    find_program('check-news.sh').path(),
+    find_program('check-news.sh').full_path(),
     '@0@'.format(meson.project_version()),
     'NEWS',
     'data/appdata/org.gnome.Totem.appdata.xml.in.in'
   )
 else
   meson.add_dist_script(
-    find_program('check-news.sh').path(),
+    find_program('check-news.sh').full_path(),
     '@0@'.format(meson.project_version()),
     'NEWS',
   )
 endif
 
 meson.add_dist_script(
-  find_program('remove-flatpak-dist.sh').path()
+  find_program('remove-flatpak-dist.sh').full_path()
 )
 
 message('Totem was configured with the following options:')
