@@ -1,11 +1,11 @@
 # translation of totem_help.po to Basque
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2021.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2021, 2023.
 #
 msgid ""
 msgstr "Project-Id-Version: totem_help\n"
-"POT-Creation-Date: 2020-07-31 10:39+0000\n"
-"PO-Revision-Date: 2021-09-09 10:00+0100\n"
+"POT-Creation-Date: 2023-08-07 11:43+0000\n"
+"PO-Revision-Date: 2023-12-07 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -22,13 +22,12 @@ msgstr "translator-credits"
 
 #. (itstool) path: license/p
 #: C/adjust-speed.page:16 C/channels.page:20 C/file-open.page:25
-#: C/index.page:23 C/navigation.page:14 C/playing-DVD.page:19
+#: C/index.page:27 C/navigation.page:14 C/playing-DVD.page:19
 #: C/preferences.page:20 C/properties.page:23 C/screenshot-gallery.page:19
 #: C/screenshot.page:19 C/sound-language.page:24 C/sound-volume.page:24
 #: C/subtitles.page:20 C/supported-formats.page:19
 #: C/troubleshooting-Audio-CD.page:19 C/troubleshooting-debug.page:15
-#: C/troubleshooting-DVD.page:20 C/troubleshooting-subtitles.page:21
-#: C/view-zoom.page:25
+#: C/troubleshooting-subtitles.page:21 C/view-zoom.page:25
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
@@ -104,7 +103,7 @@ msgid ""
 "The channels section of the interface will show a number of network video "
 "resources, whether from the Internet, or local, such as UPnP/DLNA shares, "
 "movie trailers, news stories and other online sources."
-msgstr ""
+msgstr "Interfazearen kanalen atalak sareko bideo-baliabideak erakutsiko ditu, bai Internetekoak bai lokalekoak, adibidez UPnp/DLNA partekatzeak, filmen trailerrak, albisteetako istorioak eta lineako beste baliabide batzuk."
 
 #. (itstool) path: page/p
 #: C/channels.page:34
@@ -113,7 +112,7 @@ msgid ""
 "Projects/Grilo\">grilo</link> media discovery system. Developers and power "
 "users interested in extending <app>Videos</app> should visit the "
 "aforementioned website for documentation."
-msgstr ""
+msgstr "Iturburuak multimediak aurkitzeko <link href=\"https://wiki.gnome.org/Projects/Grilo\">grilo</link> sistemaren bidez inplementatuko dira. <app>Bideoak</app> aplikazioa hedatzeko interesa duten garatzaile eta erabiltzaile aurreratuek goiko webgunea bisitatu dezakete dokumentazio gehiagorako."
 
 #. (itstool) path: info/desc
 #: C/file-open.page:28
@@ -141,7 +140,7 @@ msgstr "Hautatu jadanik leiho nagusian bistaratzen ari den zerrendako bideo bat.
 msgid ""
 "Select <app>Videos</app> as the application to open a video file with in the "
 "<app>Files</app> file manager."
-msgstr ""
+msgstr "Hautatu <app>Bideoak</app> bideo-fitxategiak irekitzeko aplikazio gisa <app>Fitxategiak</app> fitxategi-kudeatzailean."
 
 #. (itstool) path: item/p
 #: C/file-open.page:45
@@ -151,48 +150,66 @@ msgid ""
 "video(s) that you want to open. Press <gui style=\"button\">Add</gui>. The "
 "video will be added to the list in the main window and you can select it "
 "from there."
-msgstr ""
+msgstr "Sakatu leihoaren goiko ezkerreko izkinako <gui style=\"button\">+</gui> botoia eta hautatu <gui style=\"menuitem\">Gehitu bideo lokala…</gui>. Hautatu ireki nahi duzun bideoa. Sakatu <gui style=\"button\">Gehitu</gui>. Bideoa leiho nagusiaren zerrendan gehituko da eta handik hautatu ahal izango da."
 
 #. (itstool) path: item/p
 #: C/file-open.page:52
 msgid ""
 "Press the <gui style=\"button\">+</gui> button in the top-left corner of the "
 "window and select <gui style=\"menuitem\">Add Web Video…</gui>. Type or "
-"paste the address of the video that you want to open. Press <gui style="
-"\"button\">Add</gui>. The video will be added to the list in the main window "
-"and you can select it from there."
-msgstr ""
+"paste the address of the video that you want to open. Press <gui "
+"style=\"button\">Add</gui>. The video will be added to the list in the main "
+"window and you can select it from there."
+msgstr "Sakatu leihoaren goiko ezkerreko izkinako <gui style=\"button\">+</gui> botoia eta hautatu <gui style=\"menuitem\">Gehitu webeko bideoa…</gui>. Idatzi edo itsatsi ireki nahi duzun bideoaren helbidea. Sakatu <gui style=\"button\">Gehitu</gui>. Bideoa leiho nagusiaren zerrendan gehituko da eta handik hautatu ahal izango da."
+
+#. (itstool) path: info/title
+#: C/index.page:7
+msgctxt "link:trail"
+msgid "Videos"
+msgstr "Bideoak"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+msgctxt "link"
+msgid "Videos"
+msgstr "Bideoak"
+
+#. (itstool) path: info/title
+#: C/index.page:9
+msgctxt "text"
+msgid "Videos"
+msgstr "Bideoak"
 
 #. (itstool) path: info/desc
-#: C/index.page:26
+#: C/index.page:30
 msgid "Index"
 msgstr "Indizea"
 
 #. (itstool) path: page/title
-#: C/index.page:29
+#: C/index.page:33
 msgid "<_:media-1/><span> Videos</span>"
 msgstr "<_:media-1/><span> Bideoak</span>"
 
 #. (itstool) path: page/p
-#: C/index.page:32
+#: C/index.page:36
 msgid ""
 "<app>Videos</app>, also known as <app>Totem</app>, is an application for "
 "playing videos. You can use it to watch movies or stream media from the "
 "Internet."
-msgstr ""
+msgstr "<app>Bideoak</app> aplikazioa, <app>Totem</app> izenarekin ere ezaguna dena, bideoak erreproduzitzeko aplikazio bat da. Filmak ikusteko edo bideoak internetetik streaming bidez ikusteko erabili daiteke."
 
 #. (itstool) path: section/title
-#: C/index.page:36
+#: C/index.page:40
 msgid "Playing media"
 msgstr "Multimedia erreproduzitzea"
 
 #. (itstool) path: section/title
-#: C/index.page:40
+#: C/index.page:44
 msgid "Advanced options"
 msgstr "Aukera aurreratuak"
 
 #. (itstool) path: section/title
-#: C/index.page:44
+#: C/index.page:48
 msgid "Troubleshooting"
 msgstr "Arazoen ebazpena"
 
@@ -211,21 +228,21 @@ msgstr "Nabigazioa"
 msgid ""
 "You may navigate <app>Videos</app> via control buttons, menu items or "
 "keyboard-shortcuts."
-msgstr ""
+msgstr "<app>Bideoak</app> aplikazioan mugitzeko, erabili kontrol-botoiak, menu-elementuak edo lasterbideak."
 
 #. (itstool) path: page/p
 #: C/navigation.page:23
 msgid ""
 "To display the control buttons at the bottom while watching a video, move "
 "your mouse pointer. Here you can:"
-msgstr ""
+msgstr "Bideo bat ikustean pantailaren beheko aldean kontrol-botoiak bistaratzeko, mugitu saguaren erakuslea. Botoi horiekin honakoak egin daitezke:"
 
 #. (itstool) path: item/p
 #: C/navigation.page:28
 msgid ""
-"Play media or pause them: Use the keyboard shortcut <key>Space</key> or "
-"press the <gui style=\"button\">Play/Pause</gui> button."
-msgstr ""
+"Play media or pause them: Use the keyboard shortcut <key>P</key> or press "
+"the <gui style=\"button\">Play/Pause</gui> button."
+msgstr "Multimedia-fitxategiak erreproduzitu edo pausatu: Erabili <key>P</key> laster-tekla edo sakatu <gui style=\"button\">Erreproduzitu/Pausarazi</gui> botoia."
 
 #. (itstool) path: item/p
 #: C/navigation.page:32
@@ -245,14 +262,32 @@ msgstr "Doitu bolumena. Informazio gehiagorako, ikusi <link xref=\"sound-volume\
 msgid ""
 "To change to another video, press the <gui style=\"button\">Arrow back</gui> "
 "button in the upper left corner."
-msgstr ""
+msgstr "Beste bideo batera joateko, sakatu goiko ezkerreko izkinako <gui style=\"button\">Atzerako gezia</gui> botoia."
 
 #. (itstool) path: item/p
 #: C/navigation.page:44
 msgid ""
 "To change to a different chapter of a DVD or to go back to the main screen, "
 "see <link xref=\"playing-DVD\"/>."
-msgstr ""
+msgstr "DVD baten beste kapitulu batera joateko edo pantaila nagusian atzera egiteko, ikus <link xref=\"playing-DVD\"/>."
+
+#. (itstool) path: page/p
+#: C/navigation.page:49
+msgid ""
+"The full list of keyboard shortcuts is available by typing <key>?</key> "
+"while playing a movie, or <keyseq><key>Ctrl</key><key>?</key></keyseq> in "
+"the movies view."
+msgstr "Laster-tekla guztien zerrenda osoa ikusteko, idatzi <key>?</key> film bat erreproduzitzen ari denean edo <keyseq><key>Ctrl</key><key>?</key></keyseq> filmen ikuspegian."
+
+#. (itstool) path: note/p
+#: C/navigation.page:52
+msgid ""
+"Seeking with the keyboard keys (<key>Left</key> and <key>Right</key> arrows) "
+"does not seek the same amount of time in either direction. This is as "
+"designed as it makes it easier to find a particular place in a film, seeking "
+"forward until we do find a part of the film we do not recognise, or know to "
+"be further than what we're looking for, and seek back more finely."
+msgstr "Teklatuko <key>←</key> eta <key>→</key> teklekin bilatzeak ez du denbora-tarte bera aldatzen bi norabidetan. Hori horrela dago diseinatuta errazago bihurtzeko film batean une jakin bat aurrerantz bilatzeko, ez baitugu ezagutzen aurrerantz zer dagoen, eta noraino ikusi dugun aurkitzeko, eta gero atzerantz modu xeheagoan bilatzeko."
 
 #. (itstool) path: info/desc
 #: C/playing-DVD.page:9
@@ -268,16 +303,16 @@ msgstr "Ikusi DVD edo VCD bat"
 #: C/playing-DVD.page:27
 msgid ""
 "To play a DVD disc that you just inserted into your drive, move the mouse "
-"pointer over the <link xref=\"help:gnome-help/shell-notifications\" href="
-"\"https://help.gnome.org/users/gnome-help/stable/shell-notifications"
-"\">notification</link> and press <gui style=\"button\">Open with Videos</"
-"gui>."
-msgstr ""
+"pointer over the <link xref=\"help:gnome-help/shell-notifications\" "
+"href=\"https://help.gnome.org/users/gnome-help/stable/shell-"
+"notifications\">notification</link> and press <gui style=\"button\">Open "
+"with Videos</gui>."
+msgstr "DVD unitatean sartu den DVD disko bat erreproduzitzeko, mugitu saguaren erakuslea <link xref=\"help:gnome-help/shell-notifications\" href=\"https://help.gnome.org/users/gnome-help/stable/shell-notifications\">jakinarazpenera</link> eta sakatu <gui style=\"button\">Ireki honekin: Bideoak</gui>."
 
 #. (itstool) path: figure/title
 #: C/playing-DVD.page:32
 msgid "GNOME notification, offering to open the disc with <app>Videos</app>"
-msgstr ""
+msgstr "GNOME jakinarazpena, diskoa <app>Bideoak</app> aplikazioarekin irekitzeko eskaintzen"
 
 #. (itstool) path: figure/media
 #. This is a reference to an external file such as an image or video. When
@@ -289,7 +324,7 @@ msgctxt "_"
 msgid ""
 "external ref='figures/dvd-gnome-notification.png' "
 "md5='2fc4c31e27879f427f3183e80b17d977'"
-msgstr ""
+msgstr "external ref='figures/dvd-gnome-notification.png' md5='2fc4c31e27879f427f3183e80b17d977'"
 
 #. (itstool) path: media/p
 #: C/playing-DVD.page:34
@@ -302,12 +337,12 @@ msgid ""
 "To play a DVD disc in your drive, open <app>Files</app>, select to the disc "
 "in the side bar, and press <gui style=\"button\">Videos</gui> in the "
 "<gui>Video DVD</gui> bar."
-msgstr ""
+msgstr "DVD unitateko disko bat erreproduzitzeko, ireki <app>Fitxategiak</app>, hautatu diskoa alboko barran eta sakatu <gui style=\"button\">Bideoak</gui> aukera <gui>Video DVD</gui> barran."
 
 #. (itstool) path: figure/title
 #: C/playing-DVD.page:43
 msgid "<app>Files</app>, offering to open the disc with <app>Videos</app>"
-msgstr ""
+msgstr "<app>Fitxategiak</app> aplikazioa diskoa <app>Bideoak</app> aplikazioarekin irekitzeko eskaintzen"
 
 #. (itstool) path: figure/media
 #. This is a reference to an external file such as an image or video. When
@@ -319,7 +354,7 @@ msgctxt "_"
 msgid ""
 "external ref='figures/dvd-nautilus.png' "
 "md5='8a5a1d69e7d41a3b4b200192b7baefb2'"
-msgstr ""
+msgstr "external ref='figures/dvd-nautilus.png' md5='8a5a1d69e7d41a3b4b200192b7baefb2'"
 
 #. (itstool) path: media/p
 #: C/playing-DVD.page:45
@@ -331,12 +366,12 @@ msgstr "<app>Fitxategiak</app> aplikazioaren pantaila-argazkia."
 msgid ""
 "To play a DVD disc in your drive, open <app>Videos</app>, and select the DVD "
 "disc in the grid of <gui>Videos</gui>."
-msgstr ""
+msgstr "DVD unitateko disko bat erreproduzitzeko, ireki <app>Bideoak</app> aplikazioa eta hautatu DVD diskoa <gui>Bideoak</gui> saretan."
 
 #. (itstool) path: page/p
 #: C/playing-DVD.page:55
 msgid "You can navigate while watching the movie:"
-msgstr ""
+msgstr "Filma ikusi bitartean ere nabigatu daiteke fitxategien artean:"
 
 #. (itstool) path: item/p
 #: C/playing-DVD.page:61
@@ -348,34 +383,34 @@ msgstr "Aukerako honako aukeretako bat:"
 msgid ""
 "Select <gui style=\"menuitem\">DVD Menu</gui> to view main menu of a DVD. "
 "Customize language and subtitles or view scene index or special features."
-msgstr ""
+msgstr "Hautatu <gui style=\"menuitem\">DVD menua</gui> DVD baten menu nagusia ikusteko. Pertsonalizatu hizkuntza edo azpitituluak edo ikusi eszenen aurkibidea edo eginbide bereziak."
 
 #. (itstool) path: item/p
 #: C/playing-DVD.page:69
 msgid ""
 "Select <gui style=\"menuitem\">Title Menu</gui> to choose the language of "
 "the DVD interface."
-msgstr ""
+msgstr "Hautatu <gui style=\"menuitem\">Titulu-menua</gui> DVD interfazearen hizkuntza aukeratzeko."
 
 #. (itstool) path: item/p
 #: C/playing-DVD.page:73
 msgid ""
 "Select <gui style=\"menuitem\">Audio Menu</gui> and choose the language "
 "spoken in the movie."
-msgstr ""
+msgstr "Hautatu <gui style=\"menuitem\">Audio-menua</gui> eta aukeratu filman erabilitako hizkuntza."
 
 #. (itstool) path: item/p
 #: C/playing-DVD.page:77
 msgid ""
 "Select <gui style=\"menuitem\">Angle Menu</gui> to choose a different camera "
 "perspective."
-msgstr ""
+msgstr "Hautatu <gui style=\"menuitem\">Angelu-menua</gui> kameraren beste ikuspuntu bat aukeratzeko."
 
 #. (itstool) path: item/p
 #: C/playing-DVD.page:81
 msgid ""
 "Select <gui style=\"menuitem\">Chapter Menu</gui> to view the scene index."
-msgstr ""
+msgstr "Hautatu <gui style=\"menuitem\">Kapitulu-menua</gui> eszenen aurkibidea ikusteko."
 
 #. (itstool) path: note/p
 #: C/playing-DVD.page:84
@@ -399,7 +434,7 @@ msgid ""
 "according to your preferences. View the <gui>Preferences</gui> window by "
 "opening the menu button in the top-right corner of the window and select "
 "<gui style=\"menuitem\">Preferences</gui>."
-msgstr ""
+msgstr "<app>Bideoak</app> aplikazioak aukera gehiago ere eskaintzen ditu. Konfiguratu aplikazioa nahieran. Ikusi <gui>Hobespenak</gui> leihoa leihoaren goiko eskuineko menu-botoia sakatuz eta <gui style=\"menuitem\">Hobespenak</gui> hautatuz."
 
 #. (itstool) path: section/title
 #: C/preferences.page:34
@@ -416,7 +451,7 @@ msgstr "<gui>Kanpoko azpitituluak</gui>"
 msgid ""
 "Tick the option <gui>Load subtitle files when movie is loaded</gui> if you "
 "want subtitles to be loaded automatically."
-msgstr ""
+msgstr "Markatu <gui>Kargatu azpitituluen fitxategiak filma kargatzean</gui> aukera azpitituluak automatikoki kargatu daitezen nahi baduzu."
 
 #. (itstool) path: item/p
 #: C/preferences.page:45
@@ -424,7 +459,7 @@ msgid ""
 "Adjust font type and size, by clicking its name. Choose font type from the "
 "drop-down list. Click on the slider and change the font size. When ready "
 "click <gui>Select</gui>."
-msgstr ""
+msgstr "Doitu letra-tipoa eta -tamaina bere izenean klik eginez. Aukeratu letra-tipoa goitibeherako zerrendan. Egin klik graduatzailean eta aldat letra-tipoa. Dena prest duzunean, sakatu <gui>Hautatu</gui>."
 
 #. (itstool) path: item/p
 #: C/preferences.page:50
@@ -442,7 +477,7 @@ msgid ""
 "Plugins offer extra featured and extend functionality. You can view the list "
 "of plugins by pressing <gui style=\"button\">Plugins…</gui>. Select the "
 "wanted one and press <gui style=\"button\">Preferences</gui> if available."
-msgstr ""
+msgstr "Pluginek funtzionaltasun gehigarriak ematen dituzte. Pluginen zerrenda ikusteko, sakatu <gui style=\"button\">Pluginak…</gui>. Hautatu nahi duzun plugina eta sakatu <gui style=\"button\">Hobespenak</gui>, pluginak halakorik badu."
 
 #. (itstool) path: section/title
 #: C/preferences.page:65
@@ -459,7 +494,7 @@ msgstr "<gui>Bideoa</gui>"
 msgid ""
 "<app>Videos</app> allows you to specify, whether you want to <gui>Disable "
 "deinterlacing of interlaced videos</gui>. Do it by ticking this option."
-msgstr ""
+msgstr "<app>Bideoak</app> aplikazioan <gui>Desgaitu bideo gurutzelarkatuen gurutzelarkatuak bereiztea</gui> zehaztu daiteke. Horretarako, markatu aukera hau."
 
 #. (itstool) path: item/title
 #: C/preferences.page:74
@@ -472,14 +507,14 @@ msgid ""
 "This option allows you to adjust <gui>Brightness</gui>, <gui>Contrast</gui>, "
 "<gui>Saturation</gui> or <gui>Hue</gui> of viewed videos. Do it by clicking "
 "and dragging along sliders."
-msgstr ""
+msgstr "Aukera honen bidez, bideoen <gui>Distira</gui>, <gui>Kontrastea</gui>, <gui>Saturazioa</gui> eta <gui>Ñabardura</gui> doitu daitezke. Horretarako, egin klik eta arrastatu graduatzaileak."
 
 #. (itstool) path: note/p
 #: C/preferences.page:79
 msgid ""
-"You may go back to previous settings by pressing the <gui style=\"button"
-"\">Reset to Defaults</gui> button."
-msgstr ""
+"You may go back to previous settings by pressing the <gui "
+"style=\"button\">Reset to Defaults</gui> button."
+msgstr "Aurreko ezarpenetara itzultzeko, sakatu <gui style=\"button\">Berrezarri lehenetsietara</gui> botoia."
 
 #. (itstool) path: section/title
 #: C/preferences.page:87
@@ -498,8 +533,8 @@ msgstr "Aukeratu <gui>Audioaren irteeraren</gui> mota goitibeherako zerrendan."
 
 #. (itstool) path: info/desc
 #: C/properties.page:9
-msgid "View the properties of a played audio or video file."
-msgstr "Bistaratu erreproduzitzen ari den audio- edo bideo-fitxategi baten propietateak."
+msgid "View the properties of a played video file."
+msgstr "Ikusi erreproduzitutako bideo-fitxategiaren propietateak."
 
 #. (itstool) path: page/title
 #: C/properties.page:27
@@ -513,7 +548,7 @@ msgid ""
 "right corner of the window and selecting <gui style=\"menuitem\">Properties</"
 "gui> or <keyseq><key>Ctrl</key><key>P</key></keyseq>. It will display three "
 "sections:"
-msgstr ""
+msgstr "Erreproduzitzen ari den multimediaren propietateak ikusteko, sakatu leihoaren goiko eskuineko izkinako menu-botoia eta hautatu <gui style=\"menuitem\">Propietateak</gui> edo <keyseq><key>Ctrl</key><key>P</key></keyseq>. Hiru atal bistaratuko dira:"
 
 #. (itstool) path: item/title
 #: C/properties.page:36
@@ -555,24 +590,24 @@ msgstr "Pantaila-argazkien galeria"
 #. (itstool) path: page/p
 #: C/screenshot-gallery.page:25
 msgid "To create a gallery of screenshots in a single image file:"
-msgstr ""
+msgstr "Pantaila-argazkien galeria bat irudi-fitxategi bakarrean sortzeko:"
 
 #. (itstool) path: item/p
 #: C/screenshot-gallery.page:29
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Create Screenshot Gallery…</gui>."
-msgstr ""
+msgstr "Sakatu leihoaren goiko eskuineko izkinako menu-botoia eta hautatu <gui style=\"menuitem\">Sortu pantaila-argazkien galeria…</gui>."
 
 #. (itstool) path: item/p
 #: C/screenshot-gallery.page:33
 msgid "In the dialog, enter a name for the gallery file to be created."
-msgstr ""
+msgstr "Elkarrizketa-koadroan, sartu sortuko den galeria-fitxategiaren izena."
 
 #. (itstool) path: item/p
 #: C/screenshot-gallery.page:36
 msgid "Optionally, change the folder into which the gallery will be saved."
-msgstr ""
+msgstr "Aukeran, aldatu galeria gordetzeko erabiliko den karpeta."
 
 #. (itstool) path: item/p
 #: C/screenshot-gallery.page:39
@@ -584,7 +619,7 @@ msgstr "Egin klik <gui>Gorde</gui> aukeran prest dagoenean."
 msgid ""
 "A progress bar will be shown while the screenshots are taken. The gallery "
 "will be saved as a <file>.jpg</file> file."
-msgstr ""
+msgstr "Aurrerapen-barra bat erakutsiko dira pantaila-argazkiak egiten ari diren bitartean. Galeria <file>.jpg</file> fitxategi gisa gordeko da."
 
 #. (itstool) path: note/p
 #: C/screenshot-gallery.page:48
@@ -593,7 +628,7 @@ msgid ""
 "pixels. You may also set the number of screenshots that the gallery will "
 "include or tick option <gui>Calculate the number of screenshots</gui> and "
 "<app>Videos</app> will set it automatically."
-msgstr ""
+msgstr "Elkarrizketa-koadroaren beheko aldean pantaila-argazkien zabalera, pixeletan, zehaztu daiteke. Galeriak izango duen pantaila-argazkien kopurua ere ezarri daiteke, edo bestela, markatu <gui>Kalkulatu pantaila-argazkien kopurua</gui> <app>Bideoak</app> aplikazioak automatikoki ezar ditzan."
 
 #. (itstool) path: info/desc
 #: C/screenshot.page:9
@@ -615,14 +650,14 @@ msgstr "Film bat ikusi bitartean pantaila-argazki bat egiteko, jarraitu honako u
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Take Screenshot</gui>."
-msgstr ""
+msgstr "Sakatu goiko eskuineko izkinako menu-botoia eta hautatu <gui style=\"menuitem\">Egin pantaila-argazkia</gui>."
 
 #. (itstool) path: note/p
 #: C/screenshot.page:37
 msgid ""
-"Your screenshot will be saved in your <gui>Pictures</gui> folder under the "
-"name <file>Screenshot from Name-of-the-Video.png</file>."
-msgstr ""
+"Your screenshot will be saved in your <gui>Screenshots</gui> folder under "
+"the name <file>Screenshot from Name-of-the-Video.png</file>."
+msgstr "Pantaila-argazkia <gui>Pantaila-argazkiak</gui> karpetan gordeko da, <file>Bideoaren-izenaren pantaila-argazkiak.png</file> izenarekin."
 
 #. (itstool) path: info/desc
 #: C/sound-language.page:27
@@ -639,7 +674,7 @@ msgstr "Hautatu hizkuntza"
 msgid ""
 "Press the menu button in the top-right corner of the window, select <gui "
 "style=\"menuitem\">Languages</gui>, and select the language."
-msgstr ""
+msgstr "Sakatu goiko eskuineko izkinako menu-botoia, hautatu <gui style=\"menuitem\">Hizkuntzak</gui> eta aukeratu hizkuntza."
 
 #. (itstool) path: info/desc
 #: C/sound-volume.page:27
@@ -661,19 +696,19 @@ msgstr "Bolumena beheko eskuineko izkinan doitu daiteke."
 msgid ""
 "Press the <gui>Volume button</gui> which is below the video area and drag "
 "the slider to change volume."
-msgstr ""
+msgstr "Sakatu bideo-arearen azpian dagoen <gui>bolumen-botoia</gui> eta arrastatu graduatzailea bolumena aldatzeko."
 
 #. (itstool) path: item/p
 #: C/sound-volume.page:40
 msgid ""
 "You can also use the <key>Up</key> key to increase the volume and the "
 "<key>Down</key> key to decrease the volume."
-msgstr ""
+msgstr "<key>↑</key> tekla ere erabili daiteke bolumena igotzeko eta <key>↓</key> tekla jaisteko."
 
 #. (itstool) path: figure/title
 #: C/sound-volume.page:46
 msgid "Volume button and slider"
-msgstr ""
+msgstr "Bolumen-botoia eta graduatzailea"
 
 #. (itstool) path: info/desc
 #: C/subtitles.page:10
@@ -698,15 +733,15 @@ msgid ""
 "To select which subtitle to use when the video file, or disc, contains "
 "subtitles, press the menu button in the top-right corner of the window and "
 "select <gui style=\"menuitem\">Subtitles</gui>."
-msgstr ""
+msgstr "Bideo-fitxategiak edo diskoak azpitituluak dituenean zein azpititulu erabiliko den hautatzeko, sakatu leihoaren goiko eskuineko izkinako menu-botoia eta hautatu <gui style=\"menuitem\">Azpitituluak</gui>."
 
 #. (itstool) path: page/p
 #: C/subtitles.page:37
 msgid ""
 "<app>Videos</app> loads external subtitles automatically if <gui>Load "
-"subtitle files when movie is loaded</gui> is enabled in the <link xref="
-"\"preferences\">Preferences</link>."
-msgstr ""
+"subtitle files when movie is loaded</gui> is enabled in the <link "
+"xref=\"preferences\">Preferences</link>."
+msgstr "<app>Bideoak</app> aplikazioak kanpoko azpitituluak automatikoki kargatzen ditu <gui>Kargatu azpitituluen fitxategiak filma kargatzean</gui> gaituta badago <link xref=\"preferences\">Hobespenak</link> atalean."
 
 #. (itstool) path: page/p
 #: C/subtitles.page:42
@@ -719,7 +754,7 @@ msgid ""
 "Press the menu button in the top-right corner of the window and select "
 "<guiseq><gui style=\"menuitem\">Subtitles</gui> <gui>Select Text Subtitles…</"
 "gui></guiseq>."
-msgstr ""
+msgstr "Sakatu leihoaren goiko eskuineko izkinako menu-botoia eta hautatu <guiseq><gui style=\"menuitem\">Azpitituluak</gui><gui style=\"tab\">Hautatu testuaren azpitituluak…</gui></guiseq>."
 
 #. (itstool) path: item/p
 #: C/subtitles.page:50
@@ -735,9 +770,9 @@ msgstr "Hautatu azpitituluak eta sakatu <gui>Ireki</gui>."
 #: C/subtitles.page:58
 msgid ""
 "Adjust size and font of subtitles to your needs. See <guiseq><gui>General</"
-"gui><gui>External Subtitles</gui></guiseq> section on <link xref="
-"\"preferences\"/> page."
-msgstr ""
+"gui><gui>External Subtitles</gui></guiseq> section on <link "
+"xref=\"preferences\"/> page."
+msgstr "Doitu azpitituluen letra-tipoa eta tamaina nahieran. Ikusi <guiseq><gui>Orokorra</gui><gui>Kanpoko azpitituluak</gui></guiseq> atala <link xref=\"preferences\"/> orrian."
 
 #. (itstool) path: info/desc
 #: C/supported-formats.page:9
@@ -753,17 +788,20 @@ msgstr "Ezin da erreproduzitu fitxategi-formatu jakin bat"
 #: C/supported-formats.page:25
 msgid ""
 "File formats displayed by <app>Videos</app> depend on <sys>GStreamer</sys> "
-"plugins. If certain file formats are not supported, please refer to a "
-"support forum of your distribution to find out which package to install."
-msgstr ""
+"plugins. The only supported version of <app>Videos</app>, <link "
+"href=\"https://flathub.org/apps/org.gnome.Totem\"> available on Flathub</"
+"link>, should have support for all the more common, and some niche, video "
+"and audio formats."
+msgstr "<app>Bideoak</app> aplikazioak bistaratuko dituen fitxategi-formatuak <sys>GStreamer</sys> pluginen araberakoak izango dira. Euskarria duen <app>Bideoak</app> aplikazioaren bertsio bakarrak, <link href=\"https://flathub.org/apps/org.gnome.Totem\">Flathub bidez eskuragarri dagoenak</link>, bideo- eta audio-formatu arruntenak eta berezienetako batzuk onartzen ditu."
 
 #. (itstool) path: note/p
-#: C/supported-formats.page:29
+#: C/supported-formats.page:30
 msgid ""
-"If you try to open a format which is not supported, on many distributions "
-"<app>Videos</app> will display a dialog which will allow you to search for "
-"missing plugins (codecs) and install them."
-msgstr ""
+"If you run into any video files that cannot be played in the supported "
+"version of <app>Videos</app> available on Flathub, then <link href=\"https://"
+"github.com/flathub/org.gnome.Totem/issues\"> file a bug against the "
+"application</link>, so support for the necessary formats can be added."
+msgstr "Euskarria duen <app>Bideoak</app> bertsioak erreproduzitu ezin duen bideo-fitxategi bat aurkitzen baduzu, <link href=\"https://github.com/flathub/org.gnome.Totem/issues\">ireki akats-jakinarazpen bat</link>, beharrezkoa duzun formatu berriaren euskarria gehitu dadin."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-Audio-CD.page:9
@@ -780,7 +818,7 @@ msgstr "Ezin dira audioko CDak erreproduzitu"
 msgid ""
 "<app>Videos</app> does not support playback of Audio CDs. You may use a "
 "music player such as <app>Music</app> or <app>Rhythmbox</app>."
-msgstr ""
+msgstr "<app>Bideoak</app> aplikazioak ez du onartzen audioen CDen erreprodukzioa. <app>Musika</app> edo <app>Rhythmbox</app> erabili ditzakezu horretarako."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-debug.page:9
@@ -790,57 +828,25 @@ msgstr "Nola eskuratu arazketa-informazioa akats bat jakinarazteko."
 #. (itstool) path: page/title
 #: C/troubleshooting-debug.page:19
 msgid "Track down other video problems"
-msgstr ""
+msgstr "Begiratu beste arazo batzuk"
 
 #. (itstool) path: page/p
 #: C/troubleshooting-debug.page:21
 msgid ""
-"If you have already followed <link xref=\"supported-formats\"/> and <link "
-"xref=\"troubleshooting-DVD\"/> and a video still cannot be played, open a "
-"terminal window and enter the command <cmd>totem --help-gst</cmd>. This will "
-"show a list of available options you can use to get debug output. Often the "
-"problem is in an underlying plugin, for example in <sys>GStreamer</sys> and "
-"not in <app>Videos</app> itself."
-msgstr ""
+"If you have already followed <link xref=\"supported-formats\"/> and a video "
+"still cannot be played, open a terminal window and enter the command "
+"<cmd>totem --help-gst</cmd>. This will show a list of available options you "
+"can use to get debug output. Often the problem is in an underlying plugin, "
+"for example in <sys>GStreamer</sys> and not in <app>Videos</app> itself."
+msgstr "Jadanik <link xref=\"supported-formats\"/> jarraitu baduzu eta hala ere bideoa ezin bada erreproduzitu, ireki terminal bat eta sartu <cmd>totem --help-gst</cmd> komandoa. Horrela, irteera arazteko erabili daitezkeen aukeren zerrenda erakutsiko da. Sarritan arazoa plugin bat da, adibidez <sys>GStreamer</sys>, eta ez <app>Bideoak</app> bera."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-debug.page:28
 msgid ""
-"Software bugs in <sys>GStreamer</sys> can be reported in the <link href="
-"\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> issue "
+"Software bugs in <sys>GStreamer</sys> can be reported in the <link "
+"href=\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> issue "
 "tracker</link>."
-msgstr ""
-
-#. (itstool) path: info/desc
-#: C/troubleshooting-DVD.page:10
-msgid "I cannot play my DVD."
-msgstr "Ezin dut nire DVDa erreproduzitu."
-
-#. (itstool) path: page/title
-#: C/troubleshooting-DVD.page:24
-msgid "Problem with playing movies from a DVD"
-msgstr "Arazoa DVD bateko filmak erreproduzitzean"
-
-#. (itstool) path: page/p
-#: C/troubleshooting-DVD.page:26
-msgid ""
-"It may happen that after putting a DVD into your CD/DVD drive, <app>Videos</"
-"app> shows the error message <gui>An error occurred ‒ The movie could not be "
-"read.</gui> This may be because your <link xref=\"supported-formats\">a "
-"required <sys>GStreamer</sys> plugin to read the format of the movie is not "
-"installed on your system</link>, or because DVD is encrypted and a DVD "
-"decryption package is not installed on your system."
-msgstr ""
-
-#. (itstool) path: note/p
-#: C/troubleshooting-DVD.page:36
-msgid ""
-"To open encrypted DVDs, consider installing the <sys>libdvdcss</sys> "
-"package. However, note that using this package is not legal in all "
-"countries. For further information if or where the package might be "
-"available for your distribution, please ask in a support forum of your "
-"distribution."
-msgstr ""
+msgstr "<sys>GStreamer</sys> liburutegiak izan ditzakeen akatsak <link href=\"https://gitlab.freedesktop.org/gstreamer\"><sys>GStreamer</sys> aztarnarian</link> jakinarazi daitezke."
 
 #. (itstool) path: info/desc
 #: C/troubleshooting-subtitles.page:11
@@ -858,42 +864,42 @@ msgid ""
 "It may happen that, even though you follow instructions concerning subtitles "
 "from <link xref=\"subtitles\"/> page or <link xref=\"preferences\"/> page, "
 "<app>Videos</app> still does not load subtitles. The reason for that may be:"
-msgstr ""
+msgstr "Gerta daiteke, hala ere, nahiz eta <link xref=\"subtitles\"/> orriko edo <link xref=\"preferences\"/> orriko argibideak jarraitu azpitituluei dagokienez, <app>Bideoak</app> aplikazioak azpitituluak ez kargatzea. Horren arrazoia hauetako bat izan daiteke:"
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:35
 msgid ""
 "Wrong name of the subtitles file - open the file chooser and check if the "
 "name of the subtitles file is the same as the name of the movie file."
-msgstr ""
+msgstr "Azpitituluen fitxategiaren izen okerra - ireki fitxategi-aukeratzailea eta egiaztatu azpitituluaren izena eta filmaren izena berdinak direla."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:40
 msgid ""
 "Lack of the subtitles file - open the file chooser and check if there is "
 "also a file with the subtitles in the directory with the movie."
-msgstr ""
+msgstr "Ez dagoel azpitituluen fitxategirik - ireki fitxategi-aukeratzailea eta egiaztatu azpitituluen fitxategia dagoela filma dagoen direktorioan."
 
 #. (itstool) path: page/p
 #: C/troubleshooting-subtitles.page:45
 msgid ""
 "If you do not have a subtitles file for your movie, you can search for it "
 "via <app>Videos</app>:"
-msgstr ""
+msgstr "Zure filmak ez badu azpititulurik, <app>Bideoak</app> aplikazioaren bidez bilatu ditzakezu:"
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:48
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Preferences</gui>."
-msgstr ""
+msgstr "Sakatu goiko eskuineko izkinan dagoen menu-botoia eta hautatu <gui style=\"menuitem\">Hobespenak</gui>."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:52
 msgid ""
-"In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui style="
-"\"button\">Plugins…</gui>."
-msgstr ""
+"In the <gui>General</gui> tab under <gui>Plugins</gui>, press <gui "
+"style=\"button\">Plugins…</gui>."
+msgstr "<gui>Orokorra</gui> fitxan, <gui>Pluginak</gui> atalean, sakatu <gui style=\"button\">Pluginak…</gui>."
 
 #. (itstool) path: item/p
 #: C/troubleshooting-subtitles.page:56
@@ -901,19 +907,19 @@ msgid ""
 "In the <gui>Configure Plugins</gui> window, enable the <gui>Subtitle "
 "Downloader</gui> plugin. It will try to find and download subtitles for the "
 "currently played movie."
-msgstr ""
+msgstr "<gui>Konfiguratu pluginak</gui> leihoan, gaitu <gui>Azpitituluen deskargatzailea</gui> plugina. Unean erreproduzitzen ari den filmaren azpitituluak aurkitu eta deskargatzen saiatuko da."
 
 #. (itstool) path: note/p
 #: C/troubleshooting-subtitles.page:63
 msgid ""
 "Please notice that to search for subtitles you need to be connected to the "
 "Internet."
-msgstr ""
+msgstr "Kontuan izan azpitituluak bilatzeko internetera konektatuta egon behar duzula."
 
 #. (itstool) path: info/desc
 #: C/view-zoom.page:28
-msgid "Make the video bigger and make it keep the correct proportions."
-msgstr "Handiagotu bideoa eta lortu propietate zuzenak eduki ditzan."
+msgid "Adjust the aspect ratio to correct its proportions."
+msgstr "Doitu aspektu-erlazioa proportzioak zuzentzeko."
 
 #. (itstool) path: page/title
 #: C/view-zoom.page:31
@@ -922,70 +928,70 @@ msgstr "Aldatu bideoaren tamaina eta aspektu-erlazioa"
 
 #. (itstool) path: page/p
 #: C/view-zoom.page:33
-msgid "You can make the video larger or correct its ratio."
-msgstr "Bideoa handiagotu daiteke edo bere aspekatu-erlazioa zuzendu daiteke."
+msgid "You can correct its ratio."
+msgstr "Bere aspektu-erlazioa zuzendu dezakezu."
 
 #. (itstool) path: item/title
 #: C/view-zoom.page:37
-msgid "Zoom in"
-msgstr "Handiagotu"
+msgid "Setting aspect ratio"
+msgstr "Aspektu-erlazioa ezartzea"
 
 #. (itstool) path: item/p
 #: C/view-zoom.page:38
 msgid ""
 "Press the menu button in the top-right corner of the window and select <gui "
-"style=\"menuitem\">Zoom In</gui> or press <key>R</key>. To zoom out, disable "
-"<gui style=\"menuitem\">Zoom In</gui> again or press <key>T</key>."
-msgstr ""
-
-#. (itstool) path: item/title
-#: C/view-zoom.page:43
-msgid "Setting aspect ratio"
-msgstr "Aspektu-erlazioa ezartzea"
-
-#. (itstool) path: item/p
-#: C/view-zoom.page:44
-msgid ""
-"Press the menu button in the top-right corner of the window and select <gui "
 "style=\"menuitem\">Aspect Ratio</gui>."
-msgstr ""
+msgstr "Sakatu goiko eskuineko izkinako menu-botoia eta hautatu <gui style=\"menuitem\">Aspektu-erlazioa</gui>."
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:46
+#: C/view-zoom.page:40
 msgid "Select among:"
 msgstr "Hautatu honakoetako bat:"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:48
+#: C/view-zoom.page:42
 msgid "<gui>Auto</gui>"
 msgstr "<gui>Auto</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:49
+#: C/view-zoom.page:43
 msgid "<gui>Square</gui>"
 msgstr "<gui>Karratua</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:50
+#: C/view-zoom.page:44
 msgid "<gui>4∶3 (TV)</gui>"
 msgstr "<gui>4∶3 (TB)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:51
+#: C/view-zoom.page:45
 msgid "<gui>16∶9 (Widescreen)</gui>"
 msgstr "<gui>16∶9 (panoramikoa)</gui>"
 
 #. (itstool) path: item/p
-#: C/view-zoom.page:52
+#: C/view-zoom.page:46
 msgid "<gui>2.11∶1 (DVB)</gui>"
 msgstr "<gui>2.11∶1 (DVB)</gui>"
 
 #. (itstool) path: note/p
-#: C/view-zoom.page:58
+#: C/view-zoom.page:52
 msgid ""
 "Aspect ratio is the proportion between width and height. This option allows "
-"you to force different aspect ratio to be used for displaying movie."
-msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Aukera hau erabilita, aspektu-erlazio desberdinak erabili daitezke filma bistaratzeko."
+"you to correct the video display if the movie appears squished or stretched. "
+"The aspect ratio of your monitor does not come into account."
+msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Aukera honen bidez, bideoaren bistaratzea zuzendu daiteke filma estututa edo luzatuta ageri bada. Pantailaren aspektu-erlazioa ez da kontuan hartzen."
+
+#~ msgid "I cannot play my DVD."
+#~ msgstr "Ezin dut nire DVDa erreproduzitu."
+
+#~ msgid "Problem with playing movies from a DVD"
+#~ msgstr "Arazoa DVD bateko filmak erreproduzitzean"
+
+#~ msgid "Make the video bigger and make it keep the correct proportions."
+#~ msgstr "Handiagotu bideoa eta lortu propietate zuzenak eduki ditzan."
+
+#~ msgid "Zoom in"
+#~ msgstr "Handiagotu"
 
 #~ msgid ""
 #~ "@@image: 'figures/totem_start_window.png'; "
@@ -1052,8 +1058,9 @@ msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Auker
 #~ "under the terms of the GNU Free Documentation License (GFDL), Version 1.1 "
 #~ "or any later version published by the Free Software Foundation with no "
 #~ "Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You "
-#~ "can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl"
-#~ "\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
+#~ "can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:"
+#~ "fdl\">link</ulink> or in the file COPYING-DOCS distributed with this "
+#~ "manual."
 #~ msgstr ""
 #~ "Baimena ematen da dokumentu hau kopiatu, banatu eta/edo aldatzeko, Free "
 #~ "Software Foundation-ek argitaratutako GNU Dokumentazio Librearen "
@@ -1193,12 +1200,13 @@ msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Auker
 
 #~ msgid ""
 #~ "To report a bug or make a suggestion regarding the Totem Movie Player "
-#~ "application or this manual, follow the directions in the <ulink url="
-#~ "\"ghelp:user-guide#feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+#~ "application or this manual, follow the directions in the <ulink "
+#~ "url=\"ghelp:user-guide#feedback\" type=\"help\">GNOME Feedback Page</"
+#~ "ulink>."
 #~ msgstr ""
 #~ "Totem film-erreproduzitzailea aplikazioari buruzko akatsen berri emateko "
-#~ "edo oharrak bidaltzeko, <ulink url=\"ghelp:user-guide#feedback\" type="
-#~ "\"help\">GNOMEra oharrak bidaltzeko orria</ulink>n aurkituko dituzu "
+#~ "edo oharrak bidaltzeko, <ulink url=\"ghelp:user-guide#feedback\" "
+#~ "type=\"help\">GNOMEra oharrak bidaltzeko orria</ulink>n aurkituko dituzu "
 #~ "argibideak."
 
 #~ msgid "Totem Movie Player"
@@ -1436,15 +1444,16 @@ msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Auker
 #~ "application> does not recognize, the application displays an error "
 #~ "message. This error is most often encountered if you do not have the "
 #~ "correct codecs installed. Information on getting codecs working can be "
-#~ "found on the <ulink url=\"http://www.gnome.org/projects/totem/#codecs"
-#~ "\">Totem Movie Player website</ulink>."
+#~ "found on the <ulink url=\"http://www.gnome.org/projects/totem/"
+#~ "#codecs\">Totem Movie Player website</ulink>."
 #~ msgstr ""
 #~ "<application>Totem film-erreproduzitzailea</application>k ezagutzen ez "
 #~ "duen fitxategi-formatua irekitzen saiatzen bazara, aplikazioak errore-"
 #~ "mezua bistaratuko du. Normalean, errore hau kodek egokia instalatu gabe "
 #~ "dagoenean gertatzen da. Funtzionatzen duten kodekak eskuratzeko "
-#~ "informazioa <ulink url=\"http://www.gnome.org/projects/totem/#codecs"
-#~ "\">Totem  film-erreproduzitzailearen webgunean</ulink> aurki dezakezu."
+#~ "informazioa <ulink url=\"http://www.gnome.org/projects/totem/"
+#~ "#codecs\">Totem  film-erreproduzitzailearen webgunean</ulink> aurki "
+#~ "dezakezu."
 
 #~ msgid ""
 #~ "You can double-click on a video or an audio file in the "
@@ -1559,9 +1568,6 @@ msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Auker
 #~ msgstr ""
 #~ "Film edo abesti baten izenburua, artista, urtea eta iraupena. Gainera "
 #~ "filmak edo abestiak kapsulatua eduki dezakeen edonolako iruzkin ere."
-
-#~ msgid "Video"
-#~ msgstr "Bideoa"
 
 #~ msgid "The dialog contains the following information: <placeholder-1/>"
 #~ msgstr "Elkarrizketa-koadroak informazio hau ematen du: <placeholder-1/>"
@@ -2153,8 +2159,9 @@ msgstr "Aspektu-erlazioa zabaleraren eta altueraren arteko proportzioa da. Auker
 #~ "(<email>julien@moutte.net</email>) for GStreamer backend, and Guenter "
 #~ "Bartsch (<email>guenter@users.sourceforge.net</email>). To find more "
 #~ "information about <application>Totem Movie Player</application>, please "
-#~ "visit the <ulink url=\"http://www.gnome.org/projects/totem/\" type=\"http"
-#~ "\"><application>Totem Movie Player</application> Home Page</ulink>."
+#~ "visit the <ulink url=\"http://www.gnome.org/projects/totem/\" "
+#~ "type=\"http\"><application>Totem Movie Player</application> Home Page</"
+#~ "ulink>."
 #~ msgstr ""
 #~ "<application>Totem film-erreproduzitzailea</application> idatzi zuten "
 #~ "Bastien Nocera-k (<email>hadess@hadess.net</email>) eta Julien Moutte-k "
