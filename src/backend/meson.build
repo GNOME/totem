@@ -23,6 +23,7 @@ endforeach
 gst_good_plugins = [
   'autoaudiosink',
   'scaletempo',
+  'gtksink',
   'gtkglsink',
   'glsinkbin'
 ]
@@ -73,6 +74,7 @@ libbacon_video_widget_deps = [
   libtotem_time_helpers_dep,
   gtk_dep,
   gmodule_dep,
+  dependency('epoxy'),
 ]
 
 libbacon_video_widget_cflags = common_flags + warn_flags + [

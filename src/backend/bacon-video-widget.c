@@ -63,6 +63,9 @@
 /* for the cover metadata info */
 #include <gst/tag/tag.h>
 
+/* for detecting GL vendor/renderer */
+#include <epoxy/gl.h>
+
 /* system */
 #include <unistd.h>
 #include <time.h>
@@ -192,6 +195,7 @@ struct _BaconVideoWidget
   gint64                       current_time;
   gdouble                      current_position;
   gboolean                     is_live;
+  gboolean                     use_gl;
 
   GstTagList                  *tagcache;
   GstTagList                  *audiotags;
@@ -282,6 +286,7 @@ static void bacon_video_widget_get_property (GObject * object,
 
 static void bacon_video_widget_finalize (GObject * object);
 
+static void bvw_init_video_sink (BaconVideoWidget *bvw);
 static void bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
@@ -432,6 +437,8 @@ bacon_video_widget_realize (GtkWidget * widget)
   GdkDisplay *display;
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  bvw_init_video_sink (bvw);
 
   window = gtk_widget_get_window (widget);
   display = gdk_window_get_display (window);
@@ -5492,12 +5499,7 @@ is_feature_enabled (const char *env)
 static void
 bacon_video_widget_init (BaconVideoWidget *bvw)
 {
-  GstElement *audio_sink = NULL;
   gchar *version_str;
-  GstPlayFlags flags;
-  GstElement *glsinkbin, *audio_bin;
-  GstPad *audio_pad;
-  char *template;
 
   gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
 
@@ -5538,19 +5540,84 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_KEY_PRESS_MASK);
   gtk_widget_init_template (GTK_WIDGET (bvw));
+}
+
+static inline gboolean
+bvw_gl_check (GtkWidget *widget)
+{
+  static gsize gl_works = 0;
+
+  if (is_feature_enabled ("TOTEM_USE_GST_GTKSINK")) {
+    return FALSE;
+  }
+
+  if (g_once_init_enter (&gl_works)) {
+    GError *error = NULL;
+    gsize works = 1;
+    GdkGLContext *context;
+    GdkWindow *window;
+
+    if ((window = gtk_widget_get_window (widget)) &&
+        (context = gdk_window_create_gl_context (window, &error))) {
+      const gchar *vendor, *renderer;
+
+      gdk_gl_context_make_current (context);
+
+      vendor = (const gchar *) glGetString (GL_VENDOR);
+      renderer = (const gchar *) glGetString (GL_RENDERER);
+
+      GST_INFO ("GL Vendor: %s, renderer: %s", vendor, renderer);
+
+      if (g_str_has_prefix (renderer, "llvmpipe") ||
+          g_str_has_prefix (renderer, "softpipe"))
+        GST_INFO ("Detected software GL rasterizer, falling back to gtksink");
+      else
+        works = 2;
+
+      gdk_gl_context_clear_current ();
+    }
+
+    if (error) {
+      GST_WARNING ("Could not window to create GL context, %s", error->message);
+      g_error_free (error);
+    }
+
+    g_once_init_leave (&gl_works, works);
+  }
+
+  return (gl_works > 1);
+}
+
+static void
+bvw_init_video_sink (BaconVideoWidget *bvw)
+{
+  GstElement *audio_sink = NULL;
+  GstPlayFlags flags;
+  GstElement *glsinkbin = NULL;
+  GstElement *audio_bin;
+  GstPad *audio_pad;
+  char *template;
+
+  bvw->use_gl = bvw_gl_check (GTK_WIDGET (bvw));
 
   /* Instantiate all the fallible plugins */
   bvw->play = element_make_or_warn ("playbin", "play");
   bvw->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
-  bvw->video_sink = element_make_or_warn ("gtkglsink", "video-sink");
-  glsinkbin = element_make_or_warn ("glsinkbin", "glsinkbin");
+
+  if (bvw->use_gl) {
+    bvw->video_sink = element_make_or_warn ("gtkglsink", "video-sink");
+    glsinkbin = element_make_or_warn ("glsinkbin", "glsinkbin");
+  } else {
+    bvw->video_sink = element_make_or_warn ("gtksink", "video-sink");
+  }
+
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->play ||
       !bvw->audio_pitchcontrol ||
       !bvw->video_sink ||
       !audio_sink ||
-      !glsinkbin) {
+      (bvw->use_gl && !glsinkbin)) {
     if (bvw->video_sink)
       g_object_ref_sink (bvw->video_sink);
     if (audio_sink)
@@ -5595,11 +5662,20 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
   if (is_feature_enabled ("FPS_DISPLAY")) {
     GstElement *fps;
     fps = gst_element_factory_make ("fpsdisplaysink", "fpsdisplaysink");
-    g_object_set (glsinkbin, "sink", fps, NULL);
+
+    if (bvw->use_gl)
+      g_object_set (glsinkbin, "sink", fps, NULL);
+    else
+      g_object_set (bvw->play, "video-sink", fps, NULL);
+
     g_object_set (fps, "video-sink", bvw->video_sink, NULL);
   } else {
-    g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
+    if (bvw->use_gl)
+      g_object_set (glsinkbin, "sink", bvw->video_sink, NULL);
+    else
+      g_object_set (bvw->play, "video-sink", bvw->video_sink, NULL);
   }
+
   g_object_get (bvw->video_sink, "widget", &bvw->video_widget, NULL);
   gtk_widget_show (bvw->video_widget);
   gtk_stack_add_named (GTK_STACK (bvw->stack), bvw->video_widget, "video");
@@ -5611,7 +5687,8 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
                 NULL);
 
   /* And tell playbin */
-  g_object_set (bvw->play, "video-sink", glsinkbin, NULL);
+  if (bvw->use_gl)
+    g_object_set (bvw->play, "video-sink", glsinkbin, NULL);
 
   /* Link the audiopitch element */
   bvw->audio_capsfilter =
