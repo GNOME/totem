@@ -8,15 +8,15 @@
 # Aigars <akols@inbox.lv>, 2007.
 # Raivis Dejus <orvils@gmail.com>, 2006, 2007, 2009.
 # Peteris Krisjanis <pecisk@gmail.com>, 2010.
-# Rudolfs <rudolfs.mazurs@gmail.com>, 2011.
+# SPDX-FileCopyrightText: 2011, 2024 Rudolfs <rudolfs.mazurs@gmail.com>
 # Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2022, 2023.
 # Vika Leimane <vika.leimane@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2023-09-02 22:06+0000\n"
-"PO-Revision-Date: 2023-09-17 13:49+0300\n"
+"POT-Creation-Date: 2023-10-25 13:49+0000\n"
+"PO-Revision-Date: 2024-03-08 23:23+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -25,9 +25,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2009-01-04 12:56+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:491
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1907
 msgid "Videos"
 msgstr "Video"
@@ -57,7 +57,7 @@ msgstr ""
 "“Video” ir ar papildu funkcionalitāti — lejupielādēt subtitrus, iespēju "
 "mainīt atskaņošanas ātrumu, izveidot ekrānattēlu galeriju un ierakstīt DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:37
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:38
 msgid "The GNOME developers"
 msgstr "GNOME izstrādātāji"
 
@@ -138,8 +138,8 @@ msgstr "Dialoglodziņu “Atvērt…” noklusējuma atrašanās vieta"
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
-"Dialoglodziņu “Atvērt…” noklusējuma atrašanās vieta, šobrīd noklusējuma mape "
-"ir pašreizējā mape."
+"Dialoglodziņu “Atvērt…” noklusējuma atrašanās vieta, šobrīd tā ir"
+" pašreizējais direktorijs."
 
 #: data/org.gnome.totem.gschema.xml.in:60
 msgid "Default location for the “Take Screenshot” dialogs"
@@ -151,7 +151,7 @@ msgid ""
 "Screenshots directory."
 msgstr ""
 "Dialoglodziņu “Uzņemt ekrānattēlu” noklusējuma atrašanās vieta. Šobrīd "
-"noklusējuma mape ir “Ekrānattēli”."
+"noklusējuma direktorijs ir “Ekrānattēli”."
 
 #: data/org.gnome.totem.gschema.xml.in:65
 msgid "Whether to disable the plugins in the user’s home directory"
@@ -177,11 +177,11 @@ msgstr "Saraksts ar spraudņiem, kuri tagad ir aktīvi (ielādēt un palaisti)."
 
 #: data/org.gnome.totem.gschema.xml.in:82
 msgid "Directories to show"
-msgstr "Direktorijas, kuras rādīt"
+msgstr "Direktoriji, kurus rādīt"
 
 #: data/org.gnome.totem.gschema.xml.in:83
 msgid "Directories to show in the browse interface, none by default"
-msgstr "Direktorijas, kuras rādīt pārlūka saskarnē, pēc noklusējuma nevienu"
+msgstr "Direktoriji, kurus rādīt pārlūka saskarnē, pēc noklusējuma nevienu"
 
 #: data/org.gnome.totem.gschema.xml.in:87
 msgid "Disable hardware decoders"
@@ -240,12 +240,10 @@ msgid "_Load subtitle files when movie is loaded"
 msgstr "Ie_lādēt subtitrus, kad filma ir ielādējusies"
 
 #: data/totem-preferences-dialog.ui:117
-#| msgid "_Font:"
 msgid "_Font"
 msgstr "_Fonts"
 
 #: data/totem-preferences-dialog.ui:140
-#| msgid "_Encoding:"
 msgid "_Encoding"
 msgstr "Kodē_jums"
 
@@ -270,11 +268,10 @@ msgid ""
 "Disable deinterlacing if you encounter graphical artifacts such as combing."
 msgstr ""
 "Video tiek automātiski novērsta rindpārlēce.\n"
-"Atslēdziet rindpārlēces novēršanu, ja jums gadās grafiskie artefakti,"
-" piemēram, ķemme."
+"Atslēdziet rindpārlēces novēršanu, ja jums gadās grafiskie artefakti, "
+"piemēram, ķemme."
 
 #: data/totem-preferences-dialog.ui:196
-#| msgid "Disable hardware decoders"
 msgid "Disable hardware acceleration"
 msgstr "Izslēgt aparatūras paātrinātājus"
 
@@ -291,22 +288,18 @@ msgid "Color Balance"
 msgstr "Krāsu līdzsvars"
 
 #: data/totem-preferences-dialog.ui:239
-#| msgid "_Brightness:"
 msgid "_Brightness"
 msgstr "Spil_gtums"
 
 #: data/totem-preferences-dialog.ui:287
-#| msgid "Co_ntrast:"
 msgid "Co_ntrast"
 msgstr "Ko_ntrasts"
 
 #: data/totem-preferences-dialog.ui:335
-#| msgid "Sat_uration:"
 msgid "Sat_uration"
 msgstr "Piesātināj_ums"
 
 #: data/totem-preferences-dialog.ui:383
-#| msgid "_Hue:"
 msgid "_Hue"
 msgstr "_Nokrāsa"
 
@@ -324,7 +317,6 @@ msgid "Audio Output"
 msgstr "Audio izvade"
 
 #: data/totem-preferences-dialog.ui:453
-#| msgid "_Audio output type:"
 msgid "_Audio output type"
 msgstr "_Audio izvades tips"
 
@@ -337,7 +329,6 @@ msgid "Authors"
 msgstr "Veidotāji"
 
 #: data/totem-preferences-plugin-row.ui:71
-#| msgid "Persian"
 msgid "Version"
 msgstr "Versija"
 
@@ -644,15 +635,15 @@ msgstr "_Nodaļu izvēlne"
 msgid "Speed"
 msgstr "Ātrums"
 
-#: data/totem.ui:280 data/totem.ui:283
+#: data/totem.ui:269 data/totem.ui:272
 msgid "Previous Chapter/Movie"
 msgstr "Iepriekšējā nodaļa / filma"
 
-#: data/totem.ui:304 data/totem.ui:307
+#: data/totem.ui:293 data/totem.ui:296
 msgid "Play / Pause"
 msgstr "Atskaņot / pauzēt"
 
-#: data/totem.ui:320 data/totem.ui:323
+#: data/totem.ui:309 data/totem.ui:312
 msgid "Next Chapter/Movie"
 msgstr "Nākošā nodaļa / filma"
 
@@ -679,7 +670,6 @@ msgid "Password requested for RTSP server"
 msgstr "RTSP serveris pieprasa paroli"
 
 #: src/backend/bacon-video-widget.c:3262
-#| msgid "Could not initialise OpenGL support"
 msgid "Could not initialise OpenGL support."
 msgstr "Nevarēja inicializēt OpenGL atbalstu."
 
@@ -787,7 +777,6 @@ msgstr ""
 "diska."
 
 #: src/backend/bacon-video-widget.c:3579
-#| msgid "This file is encrypted and cannot be played back."
 msgid "This file could not be played. Try restarting playback."
 msgstr "Šī datni nevarēja atskaņot. Mēģiniet pārstartēt atskaņošanu."
 
@@ -1355,7 +1344,7 @@ msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
-"Sūtīt paziņojumus par pašlaik atskaņotajiem video un atļaut attālināto "
+"Sūtīt paziņojumus par pašlaik atskaņotajiem video un atļaut attālo "
 "vadību ar MPRIS."
 
 #: src/plugins/open-directory/open-directory.plugin.desktop.in:6
@@ -1492,59 +1481,48 @@ msgid "Properties"
 msgstr "Īpašības"
 
 #: src/plugins/properties/properties.ui:84
-#| msgid "Title:"
 msgid "Title"
 msgstr "Nosaukums"
 
 #: src/plugins/properties/properties.ui:130
-#| msgid "Artist:"
 msgid "Artist"
 msgstr "Izpildītājs"
 
 #: src/plugins/properties/properties.ui:177
-#| msgid "Album:"
 msgid "Album"
 msgstr "Albums"
 
 #: src/plugins/properties/properties.ui:224
-#| msgid "Year:"
 msgid "Year"
 msgstr "Gads"
 
 #: src/plugins/properties/properties.ui:316
-#| msgid "Comment:"
 msgid "Comment"
 msgstr "Komentārs"
 
 #: src/plugins/properties/properties.ui:364
-#| msgid "Container:"
 msgid "Container"
 msgstr "Konteineris"
 
 #: src/plugins/properties/properties.ui:453
-#| msgid "Dimensions:"
 msgid "Dimensions"
 msgstr "Izmēri"
 
 #: src/plugins/properties/properties.ui:498
 #: src/plugins/properties/properties.ui:677
-#| msgid "Codec:"
 msgid "Codec"
 msgstr "Kodeks"
 
 #: src/plugins/properties/properties.ui:543
-#| msgid "Framerate:"
 msgid "Framerate"
 msgstr "Kadru ātrums"
 
 #: src/plugins/properties/properties.ui:588
 #: src/plugins/properties/properties.ui:812
-#| msgid "Bitrate:"
 msgid "Bitrate"
 msgstr "Bitātrums"
 
 #: src/plugins/properties/properties.ui:767
-#| msgid "Sample rate:"
 msgid "Sample rate"
 msgstr "Nolases biežums"
 
@@ -2155,3 +2133,4 @@ msgstr "Iestatīt lietotāja aģentu Video vietnei"
 
 #~ msgid "%d x %d"
 #~ msgstr "%d x %d"
+
