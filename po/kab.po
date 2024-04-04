@@ -2,25 +2,31 @@
 # Copyright (C) 2020 totem's COPYRIGHT HOLDER
 # This file is distributed under the same license as the totem package.
 # Yacine Bouklif <yacinebouklif@gmail.com>, 2020.
+# ButterflyOfFire <ButterflyOfFire@protonmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2023-07-11 12:50+0000\n"
-"PO-Revision-Date: 2024-03-24 20:57+0100\n"
-"Last-Translator: sa\n"
-"Language-Team: Kabyle <kab@li.org>\n"
+"POT-Creation-Date: 2024-03-24 21:45+0000\n"
+"PO-Revision-Date: 2024-04-04 13:49+0100\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
+"Language-Team: Kabyle <>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=n>1\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Gtranslator 41.0\n"
+"X-DL-Team: kab\n"
+"X-DL-Module: totem\n"
+"X-DL-Branch: master\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:205
-#: src/totem.c:34 src/totem-grilo.c:1905
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: src/totem.c:34 src/totem-grilo.c:1907
 msgid "Videos"
 msgstr "Tividyutin"
 
@@ -51,13 +57,13 @@ msgstr ""
 "useckeḍ  neɣ asenɣes deg tɣuri, timerna teskanin n tuṭṭfiwin n ugdil, akked "
 "usefrek i usekles DVDs."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:37
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:39
 msgid "The GNOME developers"
 msgstr "Isneflayen n GNOME"
 
 #: data/org.gnome.Totem.desktop.in.in:3
 msgid "@APPLICATION_NAME@"
-msgstr "@ASNAS_ISEM@"
+msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
@@ -180,13 +186,28 @@ msgstr "Ikaramen ara yettwabeqqeḍen"
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Ikaramen ara yettwabeqqeḍen deg ugrudem n yiminig, mačč s lexṣas"
 
+#: data/org.gnome.totem.gschema.xml.in:87
+#| msgid "Disable hardware acceleration"
+msgid "Disable hardware decoders"
+msgstr "Sens aseckeḍ agatwan"
+
+#: data/org.gnome.totem.gschema.xml.in:88
+msgid ""
+"Disable hardware decoders and use only software decoders. For debugging "
+"purposes only."
+msgstr ""
+
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+msgid "Back"
+msgstr "Ɣer deffir"
+
 #: data/totem-preferences-dialog.ui:13 src/backend/bacon-video-widget.c:5001
 msgid "Stereo"
 msgstr "Stiryu"
 
 #: data/totem-preferences-dialog.ui:16
 msgid "4-channel"
-msgstr "4-َabadu"
+msgstr "4-abadu"
 
 #: data/totem-preferences-dialog.ui:19
 msgid "4.1-channel"
@@ -222,7 +243,7 @@ msgstr "Sali-d ifuyla n iduzewlen ticki tuli-d tvidyut"
 
 #: data/totem-preferences-dialog.ui:117
 msgid "_Font"
-msgstr "_Tasefsit"
+msgstr "Tase_fsit"
 
 #: data/totem-preferences-dialog.ui:140
 msgid "_Encoding"
@@ -240,7 +261,7 @@ msgstr "Tavidyut"
 
 #: data/totem-preferences-dialog.ui:176
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Sens_Acebbek i tvidyutin ittwacebken"
+msgstr "Sens acebbek i tvi_dyutin ittwacebken"
 
 #. Translators comment: https://en.wikipedia.org/wiki/Deinterlacing
 #: data/totem-preferences-dialog.ui:177
@@ -273,11 +294,11 @@ msgstr "Tifawit (_B)"
 
 #: data/totem-preferences-dialog.ui:287
 msgid "Co_ntrast"
-msgstr "Agnil (_n)"
+msgstr "Agnil (_N)"
 
 #: data/totem-preferences-dialog.ui:335
 msgid "Sat_uration"
-msgstr "Taččart (_u)"
+msgstr "Taččart (_U)"
 
 #: data/totem-preferences-dialog.ui:383
 msgid "_Hue"
@@ -285,7 +306,7 @@ msgstr "Tiɣmi (_H)"
 
 #: data/totem-preferences-dialog.ui:425
 msgid "Reset to _Defaults"
-msgstr "Wennez tikelt-nniḍen ɣer _lexṣas"
+msgstr "Wennez tikelt-nniḍen ɣer lexṣas (_D)"
 
 #: data/totem-preferences-dialog.ui:443
 #: src/plugins/properties/properties.ui:645
@@ -359,7 +380,7 @@ msgstr "Eg tuṭṭfa n ugdil"
 #: data/shortcuts.ui:70
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Ffeγ"
+msgstr "Ffeɣ"
 
 #: data/shortcuts.ui:78
 msgctxt "shortcut window"
@@ -399,12 +420,12 @@ msgstr "Ffeɣ seg ugdil aččuran"
 #: data/shortcuts.ui:124
 msgctxt "shortcut window"
 msgid "Rotate ↷"
-msgstr "Zzi"
+msgstr "Zzi ↷"
 
 #: data/shortcuts.ui:131
 msgctxt "shortcut window"
 msgid "Rotate ↶"
-msgstr "Zzi"
+msgstr "Zzi ↶"
 
 #: data/shortcuts.ui:140
 msgctxt "shortcut window"
@@ -521,117 +542,109 @@ msgctxt "shortcut window"
 msgid "Toggle subtitles"
 msgstr "Rmed/Sens iduzwilen"
 
-#: data/totem.ui:19 data/totem.ui:98
+#: data/totem.ui:19 data/totem.ui:83
 msgid "Prefere_nces"
 msgstr "Is_menyifen"
 
-#: data/totem.ui:23 data/totem.ui:102
+#: data/totem.ui:23 data/totem.ui:87
 msgid "_Keyboard Shortcuts"
-msgstr "_Inegzumen n unasiw"
+msgstr "Inegzumen n unasiw (_K)"
 
 #: data/totem.ui:27
 msgid "_Help"
-msgstr "Tallelt"
+msgstr "Tallelt (_H)"
 
-#: data/totem.ui:37
-msgid "Add _Local Video…"
-msgstr "Rnu tavidyut tadigant…"
-
-#: data/totem.ui:42
-msgid "Add _Web Video…"
-msgstr "Rnu tavidyut n web…"
-
-#: data/totem.ui:59
+#: data/totem.ui:44
 msgid "_Aspect Ratio"
-msgstr "A_ssaɣ n tmeẓriwt"
+msgstr "_Assaɣ n tmeẓriwt"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:62
+#: data/totem.ui:47
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Awurman"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:67
+#: data/totem.ui:52
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Amkuẓ"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:72
+#: data/totem.ui:57
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4∶3 (TV)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:77
+#: data/totem.ui:62
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16: 9 (Agdil aččuran)"
 
 #. Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video
-#: data/totem.ui:82
+#: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: data/totem.ui:90
+#: data/totem.ui:75
 msgid "Switch An_gles"
 msgstr "Beddel ti_ɣemmar"
 
-#: data/totem.ui:111
+#: data/totem.ui:96
 msgid "_Eject"
-msgstr "_Ḍeqqer"
+msgstr "Ḍeqq_er"
 
-#: data/totem.ui:122
+#: data/totem.ui:107
 msgid "Languages"
 msgstr "Tutlayin"
 
-#: data/totem.ui:126 src/plugins/opensubtitles/opensubtitles.ui:103
+#: data/totem.ui:111 src/plugins/opensubtitles/opensubtitles.ui:103
 msgid "Subtitles"
 msgstr "Iduzewlen"
 
-#: data/totem.ui:129
+#: data/totem.ui:114
 msgid "_Select Text Subtitles…"
-msgstr "Fren iduzewlen n uḍris… (_S)"
+msgstr "Fren iduzewlen n uḍri_s…"
 
-#: data/totem.ui:140
+#: data/totem.ui:125
 msgid "_Repeat"
-msgstr "Ales"
+msgstr "Ales (_R)"
 
-#: data/totem.ui:146
+#: data/totem.ui:131
 msgid "_DVD Menu"
-msgstr "_Umuɣ DVD"
+msgstr "Umuɣ _DVD"
+
+#: data/totem.ui:137
+msgid "_Title Menu"
+msgstr "Azwel n wumuɣ (_T)"
+
+#: data/totem.ui:142
+msgid "A_udio Menu"
+msgstr "_Umuɣ n umeslaw"
+
+#: data/totem.ui:147
+msgid "_Angle Menu"
+msgstr "Umuɣ n teɣmert (_A)"
 
 #: data/totem.ui:152
-msgid "_Title Menu"
-msgstr "_Azwel n wumuɣ"
-
-#: data/totem.ui:157
-msgid "A_udio Menu"
-msgstr "Umuɣ n u_meslaw"
-
-#: data/totem.ui:162
-msgid "_Angle Menu"
-msgstr "_Umuɣ n teɣmert"
-
-#: data/totem.ui:167
 msgid "_Chapter Menu"
-msgstr "Umuɣ y_ixef"
+msgstr "Umuɣ yixef (_C)"
 
-#: data/totem.ui:173
+#: data/totem.ui:158
 msgid "Speed"
 msgstr "Arured"
 
-#: data/totem.ui:432 data/totem.ui:435
+#: data/totem.ui:269 data/totem.ui:272
 msgid "Previous Chapter/Movie"
 msgstr "Ixef uzwir/Tavidyut"
 
-#: data/totem.ui:456 data/totem.ui:459
+#: data/totem.ui:293 data/totem.ui:296
 msgid "Play / Pause"
 msgstr "Urar/Bedd"
 
-#: data/totem.ui:472 data/totem.ui:475
+#: data/totem.ui:309 data/totem.ui:312
 msgid "Next Chapter/Movie"
 msgstr "Ixef uḍfir/Tavidyut"
 
@@ -647,11 +660,11 @@ msgstr "Sekcem t_ansa n ufaylu i tebɣiḍ ad teldiḍ:"
 #: src/plugins/screenshot/totem-gallery.c:73
 #: src/plugins/screenshot/totem-gallery-progress.c:82
 msgid "_Cancel"
-msgstr "Sefsex"
+msgstr "Sefsex (_C)"
 
 #: data/uri.ui:54 src/totem-uri.c:446
 msgid "_Add"
-msgstr "Rnu"
+msgstr "Rnu (_A)"
 
 #: src/backend/bacon-video-widget.c:1391
 msgid "Password requested for RTSP server"
@@ -882,7 +895,7 @@ msgstr "%d:%02d"
 
 #: src/grilo.ui:7
 msgid "Select All"
-msgstr "Fren akk"
+msgstr "Fren-iten akk"
 
 #: src/grilo.ui:12
 msgid "Select None"
@@ -934,47 +947,51 @@ msgstr "%s (Aḥris %d Taẓunt %d)"
 msgid "Browse Error"
 msgstr "Tuccḍa n usnirem"
 
-#: src/totem-grilo.c:819
+#: src/totem-grilo.c:820
 msgid "Search Error"
 msgstr "Tuccḍa n unadi"
 
-#: src/totem-grilo.c:1311
+#: src/totem-grilo.c:1313
 msgid "Local"
 msgstr "Adigan"
 
-#: src/totem-grilo.c:1914 src/plugins/properties/properties.ui:722
+#: src/totem-grilo.c:1916 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Ibuda"
 
-#: src/totem-main-toolbar.c:118 src/totemmaintoolbar.ui:121
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
 msgid "Click on items to select them"
 msgstr "Ssit ɣef yiferdisen akken ad ttwafernen"
 
-#: src/totem-main-toolbar.c:124
+#: src/totem-main-toolbar.c:131
 #, c-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d i yettwafernen"
 msgstr[1] "%d i yettwafernen"
 
-#: src/totem-main-toolbar.c:145
+#: src/totem-main-toolbar.c:152
 #, c-format
 msgid "Results for “%s”"
 msgstr "Igmaḍ i “%s”"
 
-#: src/totemmaintoolbar.ui:18
-msgid "Back"
-msgstr "Ɣer deffir"
+#: src/totemmaintoolbar.ui:7
+msgid "Add _Local Video…"
+msgstr "Rnu tavidyut tadigant…"
 
-#: src/totemmaintoolbar.ui:44
+#: src/totemmaintoolbar.ui:12
+msgid "Add _Web Video…"
+msgstr "Rnu tavidyut n web…"
+
+#: src/totemmaintoolbar.ui:104
 msgid "Select"
 msgstr "Fren"
 
-#: src/totemmaintoolbar.ui:69 src/totemmaintoolbar.ui:72
+#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
 msgid "Cancel"
 msgstr "Sefex"
 
-#: src/totemmaintoolbar.ui:90
+#: src/totemmaintoolbar.ui:150
 msgid "Search"
 msgstr "Anadi"
 
@@ -997,33 +1014,33 @@ msgstr "Awurman"
 msgid "None"
 msgstr "Ulac"
 
-#: src/totem-object.c:1450 src/totem-options.c:38
+#: src/totem-object.c:1412 src/totem-options.c:38
 msgid "Pause"
 msgstr "Bedd"
 
-#: src/totem-object.c:1456 src/totem-object.c:1464 src/totem-options.c:37
+#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:46
 msgid "Play"
 msgstr "Urar"
 
-#: src/totem-object.c:1533 src/totem-object.c:1559 src/totem-object.c:2135
+#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Tavidyut ur tezmir ara ad tɣeṛ “%s”."
 
-#: src/totem-object.c:2304
+#: src/totem-object.c:2261
 msgid "Videos could not display the help contents."
 msgstr "Totem ur yezmir ara ad yesken igburen n tallalt."
 
-#: src/totem-object.c:2551
+#: src/totem-object.c:2508
 msgid "An error occurred"
 msgstr "Taera-d tuccḍa"
 
-#: src/totem-object.c:4006
+#: src/totem-object.c:3965
 msgid "Videos could not startup."
 msgstr "Tividyutin ggumant ad kkrent."
 
-#: src/totem-object.c:4007 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
 msgid "No reason."
 msgstr "Ulac sebba."
 
@@ -1065,7 +1082,7 @@ msgstr "Qluqel ɣer ugdil aččuran"
 
 #: src/totem-options.c:47
 msgid "Quit"
-msgstr "Ffeγ"
+msgstr "Ffeɣ"
 
 #: src/totem-options.c:48
 msgid "Enqueue"
@@ -1279,7 +1296,7 @@ msgstr "Fren iduzewlen"
 
 #: src/totem-uri.c:385
 msgid "_Open"
-msgstr "Ldi"
+msgstr "Ldi (_O)"
 
 #: src/totem-uri.c:442
 msgid "Add Videos"
@@ -1373,7 +1390,7 @@ msgstr "Ulac igmaḍ yettwafen."
 #. pylint: disable=no-member
 #: src/plugins/opensubtitles/opensubtitles.py:534
 msgid "_Download Movie Subtitles…"
-msgstr "_Sider iduzewlen n tvidyut…"
+msgstr "Si_der iduzewlen n tvidyut…"
 
 #: src/plugins/opensubtitles/opensubtitles.py:573
 msgid "Searching subtitles…"
@@ -1385,7 +1402,7 @@ msgstr "Sider iduzewlen n tvidyut"
 
 #: src/plugins/opensubtitles/opensubtitles.ui:46
 msgid "Subtitle _language:"
-msgstr "Tu_tlayt n iduzewlen:"
+msgstr "Tut_layt n iduzewlen:"
 
 #. This is the file-type of the subtitle file detected
 #: src/plugins/opensubtitles/opensubtitles.ui:119
@@ -1399,11 +1416,11 @@ msgstr "Tazmilt"
 
 #: src/plugins/opensubtitles/opensubtitles.ui:175
 msgid "_Play with Subtitle"
-msgstr "_Urar s iduzewlen"
+msgstr "Urar s iduzewlen (_P)"
 
 #: src/plugins/opensubtitles/opensubtitles.ui:189
 msgid "_Close"
-msgstr "_Mdel"
+msgstr "Mdel (_C)"
 
 #: src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in:6
 msgid "Subtitle language"
@@ -1450,7 +1467,7 @@ msgstr "N/A"
 
 #: src/plugins/properties/totem-movie-properties.c:274
 msgid "_Properties"
-msgstr "_Iraten"
+msgstr "Iraten (_P)"
 
 #: src/plugins/properties/properties.ui:17
 msgid "Properties"
@@ -1625,6 +1642,12 @@ msgstr[1] "%0.2f n yikataren i tasint"
 msgid "rpdb2 password"
 msgstr "awal n uɛeddi rpdb2"
 
+#: src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in:7
+msgid ""
+"A password to protect the rpdb2 server for debugging Totem from unauthorized "
+"remote access. If this is empty, a default of “totem” will be used."
+msgstr ""
+
 #: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Python Console"
 msgstr "Tadiwent n Python"
@@ -1776,7 +1799,7 @@ msgstr "Asekles n tgennarit"
 
 #: src/plugins/screenshot/totem-gallery.c:74
 msgid "_Save"
-msgstr "Sek_les"
+msgstr "_Sekles"
 
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
