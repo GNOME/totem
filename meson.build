@@ -130,6 +130,7 @@ gst_req_version = '>= 1.6.0'
 grilo_req_version = '>= 0.3.0'
 peas_req_version = '>= 1.1.0'
 totem_plparser_req_version = '>= 3.26.5'
+libportal_req_version = '>= 0.7'
 
 glib_dep =  dependency('glib-2.0', version: glib_req_version)
 gobject_dep =  dependency('gobject-2.0', version: glib_req_version)
@@ -208,7 +209,7 @@ if python_option != 'no'
 endif
 
 # libportal support
-libportal_dep = dependency('libportal-gtk3', required: get_option('libportal'))
+libportal_dep = dependency('libportal-gtk3', version: libportal_req_version, required: get_option('libportal'))
 have_libportal = libportal_dep.found()
 
 configure_file(

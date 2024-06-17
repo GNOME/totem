@@ -135,10 +135,16 @@ impl_activate (PeasActivatable *plugin)
 	GMenu *menu;
 	GMenuItem *item;
 	char *mrl;
+	g_autoptr(GError) error = NULL;
 
 	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->portal = xdp_portal_new ();
+	pi->portal = xdp_portal_initable_new (&error);
 	pi->cancellable = g_cancellable_new ();
+
+	if (error) {
+		g_warning ("Failed to create XdpPortal instance: %s", error->message);
+		return;
+	}
 
 	g_signal_connect (pi->totem,
 			  "file-opened",
