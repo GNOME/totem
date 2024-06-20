@@ -80,7 +80,7 @@ recent_info_cb (GFile *file,
 	}
 
 	data.app_name = g_strdup (g_get_application_name ());
-	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
+	data.app_exec = g_strdup ("totem %u");
 	data.groups = groups;
 	if (gtk_recent_manager_add_full (pi->recent_manager,
 					 uri, &data) == FALSE) {
