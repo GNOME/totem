@@ -282,6 +282,8 @@ BvwZoomMode bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_rotation		 (BaconVideoWidget *bvw,
 						  BvwRotation       rotation);
 BvwRotation bacon_video_widget_get_rotation	 (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_use_gl	         (BaconVideoWidget *bvw);
+
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
 						  BvwVideoProperty type);

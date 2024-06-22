@@ -219,6 +219,11 @@ impl_activate (PeasActivatable *plugin)
 
 	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	pi->bvw = totem_object_get_video_widget (pi->totem);
+
+	/* rotate-method is not supported by gtksink */
+	if (!bacon_video_widget_use_gl (BACON_VIDEO_WIDGET (pi->bvw)))
+		return;
+
 	pi->cancellable = g_cancellable_new ();
 
 	g_signal_connect (pi->totem,

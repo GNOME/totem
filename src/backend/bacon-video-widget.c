@@ -3889,9 +3889,12 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->buffering_left = -1;
   bvw_reconfigure_fill_timeout (bvw, 0);
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, 100.0);
-  g_object_set (bvw->video_sink,
-                "rotate-method", GST_VIDEO_ORIENTATION_AUTO,
-                NULL);
+
+  if (bvw->use_gl)
+    g_object_set (bvw->video_sink,
+                  "rotate-method", GST_VIDEO_ORIENTATION_AUTO,
+                  NULL);
+
   GST_DEBUG ("stopped");
 }
 
@@ -4500,6 +4503,9 @@ bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+  if (!bvw->use_gl)
+    return;
+
   GST_DEBUG ("Rotating to %s (%f degrees) from %s",
 	     g_enum_to_string (BVW_TYPE_ROTATION, rotation),
 	     rotation * 90.0,
@@ -4523,6 +4529,22 @@ bacon_video_widget_get_rotation (BaconVideoWidget *bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_ROTATION_R_ZERO);
 
   return bvw->rotation;
+}
+
+/**
+ * bacon_video_widget_use_gl:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether gl is used.
+ *
+ * Return value: %TRUE if gl is used, %FALSE otherwise
+ **/
+gboolean
+bacon_video_widget_use_gl (BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  return bvw->use_gl;
 }
 
 /* Search for the color balance channel corresponding to type and return it. */
@@ -5682,9 +5704,10 @@ bvw_init_video_sink (BaconVideoWidget *bvw)
   g_object_unref (bvw->video_widget);
   gtk_stack_set_visible_child_name (GTK_STACK (bvw->stack), "video");
 
-  g_object_set (bvw->video_sink,
-                "rotate-method", GST_VIDEO_ORIENTATION_AUTO,
-                NULL);
+  if (bvw->use_gl)
+    g_object_set (bvw->video_sink,
+                  "rotate-method", GST_VIDEO_ORIENTATION_AUTO,
+                  NULL);
 
   /* And tell playbin */
   if (bvw->use_gl)
