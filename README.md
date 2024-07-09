@@ -3,7 +3,7 @@
 # Videos
 Videos is movie player for the GNOME desktop based on [GStreamer](https://gstreamer.freedesktop.org/).
 
-[![Download on Flathub](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Flathub-badge-en.svg/240px-Flathub-badge-en.svg.png)](https://flathub.org/apps/details/org.gnome.Totem)
+[![Download on Flathub](https://flathub.org/api/badge?svg&locale=en)](https://flathub.org/apps/details/org.gnome.Totem)
 
 ## Support
 
