@@ -194,6 +194,7 @@
                 "-Dsystemd_user_services=false",
                 "-Dwriteback=false",
                 "-Dbattery_detection=none",
+                "-Dlandlock=disabled",
                 "-Ddomain_prefix=org.gnome.Totem.Devel",
                 "-Dminer_fs_cache_location=$XDG_CACHE_HOME/totem/miner/files",
                 "-Ddefault_index_recursive_dirs=['&VIDEOS']",
@@ -202,7 +203,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/tracker-miners.git"
+                    "url": "https://gitlab.gnome.org/GNOME/tracker-miners.git",
+                    "commit": "831adb2b78ce460aebc54432a6885b4fd32a77e2"
                 }
             ]
         },
