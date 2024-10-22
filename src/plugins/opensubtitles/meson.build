@@ -52,5 +52,6 @@ if pylint.found()
        pylint,
        args: pylint_flags + files([ plugin_name + '.py', 'hash.py' ]),
        env: nomalloc,
+       suite: ['lint'],
        timeout: 120)
 endif

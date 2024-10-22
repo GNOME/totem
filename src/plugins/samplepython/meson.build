@@ -18,5 +18,9 @@ if plugin_install
 endif
 
 if pylint.found()
-  test('pylint-' + plugin_name, pylint, args: pylint_flags + files([ plugin_name + '.py' ]))
+  test('pylint-' + plugin_name,
+    pylint,
+    args: pylint_flags + files([ plugin_name + '.py' ]),
+    suite: ['lint'],
+  )
 endif

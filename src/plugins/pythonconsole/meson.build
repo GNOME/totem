@@ -43,5 +43,6 @@ if pylint.found()
        pylint,
        args: pylint_flags + files([ plugin_name + '.py', 'console.py' ]),
        env: nomalloc,
+       suite: ['lint'],
        timeout: 120)
 endif
