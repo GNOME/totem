@@ -182,31 +182,6 @@
             ]
         },
         {
-            "name": "localsearch",
-            "cleanup": [ "/bin", "/etc" ],
-            "buildsystem": "meson",
-            "config-opts" : [
-                "-Dman=false",
-                "-Dminer_fs=true",
-                "-Dminer_rss=false",
-                "-Dsystemd_user_services=false",
-                "-Dwriteback=false",
-                "-Dbattery_detection=none",
-                "-Dlandlock=disabled",
-                "-Ddomain_prefix=org.gnome.Totem.Devel",
-                "-Dminer_fs_cache_location=$XDG_CACHE_HOME/totem/miner/files",
-                "-Ddefault_index_recursive_dirs=['&VIDEOS']",
-                "-Ddefault_index_single_dirs=['&DOWNLOAD']"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/localsearch.git",
-                    "commit": "69471d118d88ae47e950e1bc04b0488fe7c77145"
-                }
-            ]
-        },
-        {
             "name": "libmediaart",
             "cleanup": [ "/bin", "/etc", "/libexec" ],
             "buildsystem": "meson",
@@ -255,7 +230,7 @@
                 "-Denable-lua-factory=yes",
                 "-Denable-metadata-store=yes",
                 "-Denable-tracker=no",
-                "-Denable-tracker3=yes",
+                "-Denable-tracker3=no",
                 "-Denable-local-metadata=yes",
                 "-Denable-dleyna=yes",
                 "-Denable-thetvdb=yes",
