@@ -51,7 +51,7 @@ struct _TotemGrilo {
 
 	gboolean plugins_activated;
 
-	GrlSource *tracker_src;
+	GrlSource *filesystem_src;
 	GrlSource *local_metadata_src;
 	GrlSource *title_parsing_src;
 	GrlSource *metadata_store_src;
@@ -185,6 +185,8 @@ source_is_blocked (GrlSource *source)
 		"grl-flickr",
 		"grl-podcasts",
 		"grl-dmap",
+		"grl-tracker-source",
+		"grl-tracker3-source",
 		NULL
 	};
 
@@ -230,10 +232,9 @@ source_is_recent (GrlSource *source)
 {
 	const char *id;
 	const char * const sources[] = {
-		"grl-tracker-source",
-		"grl-tracker3-source",
 		"grl-optical-media",
 		"grl-bookmarks",
+		"grl-filesystem-videos",
 		NULL
 	};
 
@@ -603,8 +604,7 @@ get_source_priority (GrlSource *source)
 		return 100;
 	if (g_str_equal (id, "grl-bookmarks"))
 		return 75;
-	if (g_str_equal (id, "grl-tracker-source") ||
-	    g_str_equal (id, "grl-tracker3-source"))
+	if (g_str_equal (id, "grl-filesystem-videos"))
 		return 50;
 	if (g_str_has_prefix (id, "grl-upnp-") ||
 	    g_str_has_prefix (id, "grl-dleyna-"))
@@ -1275,9 +1275,8 @@ source_added_cb (GrlRegistry *registry,
 		self->metadata_store_src = source;
 	else if (g_str_equal (id, "grl-bookmarks"))
 		self->bookmarks_src = source;
-	else if (g_str_equal (id, "grl-tracker-source") ||
-		 g_str_equal (id, "grl-tracker3-source"))
-		self->tracker_src = source;
+	else if (g_str_equal (id, "grl-filesystem-videos"))
+		self->filesystem_src = source;
 
 	if (self->plugins_activated == FALSE)
 		return;
@@ -1298,8 +1297,7 @@ source_added_cb (GrlRegistry *registry,
 	}
 
 	/* The local search source */
-	if (g_str_equal (id, "grl-tracker-source") ||
-	    g_str_equal (id, "grl-tracker3-source"))
+	if (g_str_equal (id, "grl-filesystem-videos"))
 		name = _("Local");
 	else
 		name = grl_source_get_name (source);
@@ -1311,9 +1309,7 @@ source_added_cb (GrlRegistry *registry,
 		if (source_is_recent (source)) {
 			browse (self, self->recent_model,
 				NULL, source, NULL, -1);
-			/* https://gitlab.gnome.org/GNOME/grilo-plugins/merge_requests/29 */
-			if (g_str_equal (id, "grl-tracker-source") == FALSE)
-				monitor = TRUE;
+			monitor = TRUE;
 		} else if (!source_is_browse_blocked (source)) {
 			const GdkPixbuf *icon;
 
@@ -1329,8 +1325,7 @@ source_added_cb (GrlRegistry *registry,
 							   MODEL_RESULTS_CAN_REMOVE, can_remove (source, NULL),
 							   -1);
 
-			if (g_str_equal (id, "grl-filesystem") == FALSE)
-				monitor = TRUE;
+			monitor = TRUE;
 		}
 
 		if (monitor && (ops & GRL_OP_NOTIFY_CHANGE)) {
@@ -1439,6 +1434,9 @@ load_grilo_plugins (TotemGrilo *self)
 		"grl-metadata-store",
 		"grl-bookmarks"
 	};
+	const char *videos_dir = NULL;
+	g_autofree char *videos_uri = NULL;
+	g_autofree char *videos_name = NULL;
 
 	registry = grl_registry_get_default ();
 
@@ -1447,8 +1445,18 @@ load_grilo_plugins (TotemGrilo *self)
 	configs = g_settings_get_strv (settings, "filesystem-paths");
 	g_object_unref (settings);
 
-	for (i = 0; configs[i] != NULL; i++) {
+	/* Add Videos folder */
+	config = grl_config_new ("grl-filesystem", NULL);
+	videos_dir = g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS);
+	videos_uri = g_filename_to_uri (videos_dir, NULL, NULL);
+	grl_config_set_string (config, "base-uri", videos_uri);
+	grl_config_set_boolean (config, "separate-src", TRUE);
+	grl_config_set_string (config, "source-id-suffix", "videos");
+	videos_name = g_path_get_basename (videos_dir);
+	grl_config_set_string (config, "source-name", videos_name);
+	grl_registry_add_config (registry, config, NULL);
 
+	for (i = 0; configs[i] != NULL; i++) {
 		config = grl_config_new ("grl-filesystem", NULL);
 		grl_config_set_string (config, "base-uri", configs[i]);
 		grl_registry_add_config (registry, config, NULL);
@@ -1949,7 +1957,7 @@ search_mode_changed (GObject          *gobject,
 		/* Try to guess which source should be used for search */
 		model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
 		if (model == self->recent_sort_model) {
-			id = grl_source_get_id (self->tracker_src);
+			id = grl_source_get_id (self->filesystem_src);
 			self->last_page = g_strdup ("recent");
 		} else {
 			GtkTreeIter iter;
