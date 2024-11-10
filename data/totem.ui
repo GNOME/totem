@@ -474,6 +474,7 @@ audio-volume-medium-symbolic</property>
                 <signal name="back-clicked" handler="back_button_clicked_cb"/>
                 <signal name="notify::search-mode" handler="update_add_button_visibility"/>
                 <signal name="notify::select-mode" handler="update_add_button_visibility"/>
+                <signal name="notify::show-back-button" handler="update_add_button_visibility"/>
               </object>
             </child>
           </object>
