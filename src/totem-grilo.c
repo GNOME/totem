@@ -2619,6 +2619,14 @@ totem_grilo_get_current_page (TotemGrilo *self)
 }
 
 gboolean
+totem_grilo_can_add_item_to_recent (TotemGrilo *self)
+{
+	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
+
+	return (self->current_page == TOTEM_GRILO_PAGE_RECENT)
+}
+
+gboolean
 totem_grilo_add_item_to_recent (TotemGrilo *self,
 				const char *uri,
 				const char *title,

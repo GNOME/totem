@@ -3814,8 +3814,10 @@ update_add_button_visibility (GObject     *gobject,
 	    totem_main_toolbar_get_select_mode (bar)) {
 		gtk_widget_hide (totem->add_button);
 	} else {
+		if (totem->grilo == NULL)
+			return;
 		gtk_widget_set_visible (totem->add_button,
-					totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo))  == TOTEM_GRILO_PAGE_RECENT);
+					totem_grilo_can_add_item_to_recent (TOTEM_GRILO (totem->grilo)));
 	}
 }
 
