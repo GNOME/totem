@@ -2408,6 +2408,7 @@ back_button_clicked_cb (GtkButton   *button,
 		totem_object_set_main_page (totem, "grilo");
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
+		update_add_button_visibility (G_OBJECT (totem->header), NULL, totem);
 	} else {
 		totem_grilo_back_button_clicked (TOTEM_GRILO (totem->grilo));
 	}
