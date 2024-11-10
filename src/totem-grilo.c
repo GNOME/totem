@@ -88,9 +88,8 @@ struct _TotemGrilo {
 	GtkWidget *browser;
 	guint dnd_handler_id;
 	GtkTreeModel *recent_model;
-	GtkTreeModel *recent_sort_model;
 	GtkTreeModel *browser_model;
-	GtkTreeModel *browser_filter_model;
+	GtkTreeModel *filter_model;
 	gboolean in_search;
 	GList *metadata_keys;
 	guint thumbnail_update_id;
@@ -457,8 +456,6 @@ update_search_thumbnails_idle (TotemGrilo *self)
 	view_model = gtk_icon_view_get_model (icon_view);
 	if (GTK_IS_TREE_MODEL_FILTER (view_model))
 		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
-	else if (GTK_IS_TREE_MODEL_SORT (view_model))
-		model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
 	else
 		model = view_model;
 
@@ -472,9 +469,6 @@ update_search_thumbnails_idle (TotemGrilo *self)
 		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 			path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (view_model),
 										 start_path);
-		} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
-			path = gtk_tree_model_sort_convert_path_to_child_path (GTK_TREE_MODEL_SORT (view_model),
-									       start_path);
 		} else {
 			path = gtk_tree_path_copy (start_path);
 		}
@@ -751,7 +745,7 @@ browse (TotemGrilo   *self,
 
 	bud = g_slice_new0 (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
-	bud->ignore_boxes = source_is_recent (source);
+	//bud->ignore_boxes = source_is_recent (source);
 	if (path)
 		bud->ref_parent = gtk_tree_row_reference_new (model, path);
 	bud->model = g_object_ref (model);
@@ -910,7 +904,7 @@ search (TotemGrilo  *self,
 	self->search_page = 0;
 	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
 				self->search_results_model);
-	self->browser_filter_model = NULL;
+	g_clear_object (&self->filter_model);
 	search_more (self);
 }
 
@@ -941,21 +935,22 @@ search_entry_activate_cb (GtkEntry   *entry,
 }
 
 static void
-set_browser_filter_model_for_path (TotemGrilo    *self,
-				   GtkTreePath   *path)
+set_filter_model_for_path (TotemGrilo    *self,
+			   GtkTreeModel  *model,
+			   GtkTreePath   *path)
 {
 	GtkTreeIter iter;
 	int can_remove = CAN_REMOVE_FALSE;
 	char *text = NULL;
 
-	g_clear_object (&self->browser_filter_model);
-	self->browser_filter_model = gtk_tree_model_filter_new (self->browser_model, path);
+	g_clear_object (&self->filter_model);
+	self->filter_model = gtk_tree_model_filter_new (model, path);
 
 	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
-				self->browser_filter_model);
+				self->filter_model);
 
-	if (path != NULL && gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
-		gtk_tree_model_get (self->browser_model, &iter,
+	if (path != NULL && gtk_tree_model_get_iter (model, &iter, path)) {
+		gtk_tree_model_get (model, &iter,
 				    GD_MAIN_COLUMN_PRIMARY_TEXT, &text,
 				    MODEL_RESULTS_CAN_REMOVE, &can_remove,
 				    -1);
@@ -982,11 +977,12 @@ browser_activated_cb (GdMainView  *view,
 	guint remaining;
 	gint page;
 	GtkTreeModel *model;
+	GtkTreeModel *parent_model;
 	GtkTreeIter iter;
 	GrlMedia *content;
 	GrlSource *source;
 	TotemGrilo *self = TOTEM_GRILO (user_data);
-	GtkTreeIter real_model_iter;
+	GtkTreeIter parent_model_iter;
 	GtkTreePath *treepath;
 
 	model = gd_main_view_get_model (GD_MAIN_VIEW (view));
@@ -1006,18 +1002,19 @@ browser_activated_cb (GdMainView  *view,
 
 	/* Clicked on a container */
 	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model),
-							  &real_model_iter, &iter);
+							  &parent_model_iter, &iter);
 
-	treepath = gtk_tree_model_get_path (self->browser_model, &real_model_iter);
-	set_browser_filter_model_for_path (self, treepath);
+	parent_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
+	treepath = gtk_tree_model_get_path (parent_model, &parent_model_iter);
+	set_filter_model_for_path (self, parent_model, treepath);
 
 	/* We need to fill the model with browse data */
 	if (remaining == 0) {
-		gtk_tree_store_set (GTK_TREE_STORE (self->browser_model), &real_model_iter,
+		gtk_tree_store_set (GTK_TREE_STORE (parent_model), &parent_model_iter,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, self->browser_model, treepath, source, content, page);
+		browse (self, parent_model, treepath, source, content, page);
 	}
 	gtk_tree_path_free (treepath);
 
@@ -1209,8 +1206,8 @@ content_added (TotemGrilo   *self,
 
 	model = get_tree_model_for_source (self, source);
 	/* We're missing a container for the new media */
-	if (model != self->recent_model)
-		return;
+/*	if (model != self->recent_model)
+		return;*/ //FIXME
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
@@ -1380,11 +1377,12 @@ source_removed_cb (GrlRegistry *registry,
 	/* Remove source and content from browse results */
 	if (ops & GRL_OP_BROWSE) {
 		/* Inside the removed browse source? */
-		if (self->browser_filter_model) {
+		if (self->filter_model) {
 			GtkTreePath *path;
 			GtkTreeIter iter;
 
-			g_object_get (G_OBJECT (self->browser_filter_model), "virtual-root", &path, NULL);
+			g_object_get (G_OBJECT (self->filter_model), "virtual-root", &path, NULL);
+			/* FIXME
 			if (path != NULL &&
 			    gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
 				GrlSource *current_source;
@@ -1393,9 +1391,10 @@ source_removed_cb (GrlRegistry *registry,
 						    MODEL_RESULTS_SOURCE, &current_source,
 						    -1);
 				if (current_source == source)
-					set_browser_filter_model_for_path (self, NULL);
+					set_filter_model_for_path (self, NULL);
 				g_clear_object (&current_source);
 			}
+			*/
 			g_clear_pointer (&path, gtk_tree_path_free);
 		}
 
@@ -1512,6 +1511,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
                             TotemGrilo    *self)
 {
 	GtkTreeModel *model;
+	GtkTreeModel *parent_model;
 	GtkIconView *icon_view;
 	GtkTreePath *start_path;
 	GtkTreePath *end_path;
@@ -1532,16 +1532,15 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		return;
 
 	model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
-	if (model == self->recent_sort_model)
+	parent_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
+	if (parent_model == self->recent_model)
 		return;
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
 	while (gtk_tree_path_compare (start_path, end_path) <= 0 &&
 	       stop_processing == FALSE) {
-		GtkTreeModel *real_model;
 		GtkTreePath *path = NULL;
 
-		real_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
 		path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (model), end_path);
 
 		if (gtk_tree_path_get_depth (path) <= 1) {
@@ -1550,12 +1549,12 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 
 		parent_path = gtk_tree_path_copy (path);
 		if (gtk_tree_path_up (parent_path) == FALSE ||
-		    gtk_tree_model_get_iter (real_model, &iter, parent_path) == FALSE) {
+		    gtk_tree_model_get_iter (parent_model, &iter, parent_path) == FALSE) {
 			gtk_tree_path_free (parent_path);
 			goto continue_next;
 		}
 
-		gtk_tree_model_get (real_model,
+		gtk_tree_model_get (parent_model,
 		                    &iter,
 		                    MODEL_RESULTS_SOURCE, &source,
 		                    MODEL_RESULTS_CONTENT, &container,
@@ -1624,32 +1623,34 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 {
 	GtkTreePath *path;
 	GtkTreeIter iter;
+	GtkTreeModel *parent_model;
 
 	g_return_if_fail (TOTEM_IS_GRILO (self));
 
 	g_assert (self->show_back_button);
-	g_assert (self->browser_filter_model);
-	g_object_get (G_OBJECT (self->browser_filter_model), "virtual-root", &path, NULL);
+	g_assert (self->filter_model);
+	g_object_get (G_OBJECT (self->filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
 
 	/* We don't call set_browser_filter_model_for_path() to avoid
 	 * the back button getting hidden and re-shown */
-	g_clear_object (&self->browser_filter_model);
+	parent_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (self->filter_model));
+	g_clear_object (&self->filter_model);
 	gd_main_view_set_model (GD_MAIN_VIEW (self->browser), NULL);
 
 	totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->header), FALSE);
 	gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->browser), FALSE);
 
 	/* Remove all the items at that level */
-	if (gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
+	if (gtk_tree_model_get_iter (parent_model, &iter, path)) {
 		GtkTreeIter child;
 
-		if (gtk_tree_model_iter_children (self->browser_model, &child, &iter)) {
-			while (gtk_tree_store_remove (GTK_TREE_STORE (self->browser_model), &child))
+		if (gtk_tree_model_iter_children (parent_model, &child, &iter)) {
+			while (gtk_tree_store_remove (GTK_TREE_STORE (parent_model), &child))
 				;
 		}
 
-		gtk_tree_store_set (GTK_TREE_STORE (self->browser_model), &iter,
+		gtk_tree_store_set (GTK_TREE_STORE (parent_model), &iter,
 		                    MODEL_RESULTS_PAGE, 0,
 		                    MODEL_RESULTS_REMAINING, 0,
 		                    -1);
@@ -1657,9 +1658,9 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 
 	gtk_tree_path_up (path);
 	if (path != NULL && gtk_tree_path_get_depth (path) > 0)
-		set_browser_filter_model_for_path (self, path);
+		set_filter_model_for_path (self, parent_model, path);
 	else
-		set_browser_filter_model_for_path (self, NULL);
+		set_filter_model_for_path (self, parent_model, NULL);
 	gtk_tree_path_free (path);
 }
 
@@ -1705,8 +1706,8 @@ selection_mode_requested (GdMainView  *view,
 	/* Don't allow selections when at the root of the
 	 * "Channels" view */
 	if (self->current_page == TOTEM_GRILO_PAGE_CHANNELS &&
-	    self->browser_filter_model != NULL) {
-		g_object_get (self->browser_filter_model,
+	    self->filter_model != NULL) {
+		g_object_get (self->filter_model,
 			      "virtual-root", &root,
 			      NULL);
 		if (root == NULL)
@@ -1852,16 +1853,11 @@ source_switched (GtkToggleButton  *button,
 
 	id = g_object_get_data (G_OBJECT (button), "name");
 	if (g_str_equal (id, "recent")) {
-		gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
-					self->recent_sort_model);
+		set_filter_model_for_path (self, self->recent_model, NULL);
 		self->current_page = TOTEM_GRILO_PAGE_RECENT;
 		totem_grilo_set_drop_enabled (self, TRUE);
 	} else if (g_str_equal (id, "channels")) {
-		if (self->browser_filter_model != NULL)
-			gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
-						self->browser_filter_model);
-		else
-			set_browser_filter_model_for_path (self, NULL);
+		set_filter_model_for_path (self, self->browser_model, NULL);
 		self->current_page = TOTEM_GRILO_PAGE_CHANNELS;
 		totem_grilo_set_drop_enabled (self, FALSE);
 	} else if (g_str_equal (id, "search")) {
@@ -1951,18 +1947,18 @@ search_mode_changed (GObject          *gobject,
 
 		self->in_search = search_mode;
 	} else {
-		GtkTreeModel *model;
 		const char *id = NULL;
 
 		/* Try to guess which source should be used for search */
-		model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
-		if (model == self->recent_sort_model) {
+		if (self->current_page == TOTEM_GRILO_PAGE_RECENT) {
 			id = grl_source_get_id (self->filesystem_src);
 			self->last_page = g_strdup ("recent");
 		} else {
+			GtkTreeModel *model;
 			GtkTreeIter iter;
 			GtkTreePath *path;
 
+			model = gd_main_view_get_model (GD_MAIN_VIEW (self->browser));
 			g_object_get (G_OBJECT (model), "virtual-root", &path, NULL);
 			if (path != NULL &&
 			    gtk_tree_model_get_iter (self->browser_model, &iter, path)) {
@@ -2130,7 +2126,7 @@ delete_foreach (gpointer data,
 	GError *error = NULL;
 
 	GtkTreeModel *model;
-	GtkTreeIter real_model_iter;
+	GtkTreeIter parent_model_iter;
 
 	path = gtk_tree_row_reference_get_path (ref);
 	if (!path || !gtk_tree_model_get_iter (view_model, &iter, path)) {
@@ -2187,16 +2183,12 @@ delete_foreach (gpointer data,
 	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
 		gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (view_model),
-								  &real_model_iter, &iter);
-	} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
-		model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
-		gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (view_model),
-								&real_model_iter, &iter);
+								  &parent_model_iter, &iter);
 	} else {
 		g_assert_not_reached ();
 	}
 
-	gtk_tree_store_remove (GTK_TREE_STORE (model), &real_model_iter);
+	gtk_tree_store_remove (GTK_TREE_STORE (model), &parent_model_iter);
 
 end:
 	g_clear_object (&media);
@@ -2281,12 +2273,6 @@ setup_browse (TotemGrilo *self)
 			  G_CALLBACK (search_mode_changed), self);
 
 	/* Main view */
-	self->recent_sort_model = gtk_tree_model_sort_new_with_model (self->recent_model);
-	/* FIXME: Sorting is disabled for now
-	 * https://bugzilla.gnome.org/show_bug.cgi?id=722781
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->recent_sort_model),
-					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING); */
-
 	g_object_bind_property (self->header, "select-mode",
 				self->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
@@ -2327,8 +2313,7 @@ setup_browse (TotemGrilo *self)
 	g_signal_connect (adj, "changed",
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
-	gd_main_view_set_model (GD_MAIN_VIEW (self->browser),
-				self->recent_sort_model);
+	set_filter_model_for_path (self, self->recent_model, NULL);
 }
 
 static void
@@ -2629,9 +2614,18 @@ totem_grilo_get_current_page (TotemGrilo *self)
 gboolean
 totem_grilo_can_add_item_to_recent (TotemGrilo *self)
 {
+	g_autoptr(GtkTreePath) path = NULL;
+
 	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
 
-	return (self->current_page == TOTEM_GRILO_PAGE_RECENT)
+	if (self->current_page != TOTEM_GRILO_PAGE_RECENT ||
+	    self->filter_model == NULL)
+		return FALSE;
+
+	g_object_get (G_OBJECT (self->filter_model), "virtual-root", &path, NULL);
+	if (path != NULL && gtk_tree_path_get_depth (path) != 0)
+		return FALSE;
+	return TRUE;
 }
 
 gboolean
