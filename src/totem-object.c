@@ -178,7 +178,7 @@ G_DEFINE_TYPE(TotemObject, totem_object, GTK_TYPE_APPLICATION)
  * totem_object_plugins_init:
  * @totem: a #TotemObject
  *
- * Initialises the plugin engine and activates all the
+ * Initializes the plugin engine and activates all the
  * enabled plugins.
  **/
 static void
@@ -296,7 +296,7 @@ totem_object_app_activate (GApplication *app)
 	totem->prefs = totem_preferences_dialog_new (totem);
 	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
 
-	/* Initialise all the plugins, and set the default page, in case
+	/* Initialize all the plugins, and set the default page, in case
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
 
