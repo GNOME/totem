@@ -621,7 +621,7 @@ int main (int argc, char *argv[])
 	input = filenames[0];
 	output = filenames[1];
 
-	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
+	PROGRESS_DEBUG("Initialized libraries, about to create video widget");
 	PRINT_PROGRESS (2.0);
 
 	app.input = input;
