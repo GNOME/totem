@@ -71,7 +71,7 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	/* Create the gallery */
 	self = g_object_new (TOTEM_TYPE_GALLERY_PROGRESS, NULL);
 
-	/* Create the widget and initialise class variables */
+	/* Create the widget and initialize class variables */
 	self->progress_bar = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
 	self->child_pid = child_pid;
 	self->output_filename = g_strdup (output_filename);
