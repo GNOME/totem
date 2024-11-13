@@ -88,7 +88,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemFoobarPluginPrivate *priv = self->priv;
 	TotemObject *totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	/* Initialise resources, connect to events, create menu items and UI, etc., here.
+	/* Initialize resources, connect to events, create menu items and UI, etc., here.
 	 * Note that impl_activate() and impl_deactivate() can be called multiple times in one
 	 * Totem instance, though impl_activate() will always be followed by impl_deactivate() before
 	 * it is called again. Similarly, impl_deactivate() cannot be called twice in succession. */
