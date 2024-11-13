@@ -3259,7 +3259,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       is_error (e, RESOURCE, NOT_FOUND)) {
     bvw->media_has_unsupported_video = TRUE;
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
-			       _("Could not initialise OpenGL support."));
+			       _("Could not initialize OpenGL support."));
     set_current_actor (bvw);
     goto done;
   }
@@ -5430,7 +5430,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 #endif
 
   version_str = gst_version_string ();
-  GST_DEBUG ("Initialised %s", version_str);
+  GST_DEBUG ("Initialized %s", version_str);
   g_free (version_str);
 
   gst_pb_utils_init ();
