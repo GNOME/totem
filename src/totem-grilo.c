@@ -882,23 +882,13 @@ search_more (TotemGrilo *self)
 
 	g_application_mark_busy (g_application_get_default ());
 
-	if (self->search_source != NULL) {
-		self->search_id =
-			grl_source_search (self->search_source,
-			                   self->search_text,
-			                   self->metadata_keys,
-			                   search_options,
-			                   search_cb,
-			                   self);
-	} else {
-		self->search_id =
-			grl_multiple_search (NULL,
-			                     self->search_text,
-			                     self->metadata_keys,
-			                     search_options,
-			                     search_cb,
-			                     self);
-	}
+	self->search_id =
+		grl_source_search (self->search_source,
+				   self->search_text,
+				   self->metadata_keys,
+				   search_options,
+				   search_cb,
+				   self);
 	g_object_unref (search_options);
 
 	if (self->search_id == 0)
