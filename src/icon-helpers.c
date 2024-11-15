@@ -174,9 +174,7 @@ thumbnail_media_async_thread (GTask    *task,
 	const char *uri;
 	GDateTime *mtime;
 	gint64 unix_date;
-#if defined(GNOME_DESKTOP_PLATFORM_VERSION) && GNOME_DESKTOP_PLATFORM_VERSION >= 43
 	GError *error = NULL;
-#endif
 
 	if (g_task_return_error_if_cancelled (task)) {
 		g_object_unref (task);
@@ -203,7 +201,6 @@ thumbnail_media_async_thread (GTask    *task,
 		return;
 	}
 
-#if defined(GNOME_DESKTOP_PLATFORM_VERSION) && GNOME_DESKTOP_PLATFORM_VERSION >= 43
 	tmp_pixbuf = gnome_desktop_thumbnail_factory_generate_thumbnail (factory, uri, "video/x-totem-stream", NULL, &error);
 
 	if (!tmp_pixbuf) {
@@ -220,17 +217,6 @@ thumbnail_media_async_thread (GTask    *task,
 		g_error_free (error);
 		return;
 	}
-#else
-	tmp_pixbuf = gnome_desktop_thumbnail_factory_generate_thumbnail (factory, uri, "video/x-totem-stream");
-
-	if (!tmp_pixbuf) {
-		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "Thumbnailing failed");
-		g_object_unref (task);
-		return;
-	}
-
-	gnome_desktop_thumbnail_factory_save_thumbnail (factory, tmp_pixbuf, uri, unix_date);
-#endif
 
 	/* Save the thumbnail URL for the bookmarks source */
 	save_bookmark_thumbnail (media, uri);

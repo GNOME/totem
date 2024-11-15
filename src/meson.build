@@ -57,7 +57,7 @@ totem_common_deps = libbacon_video_widget_deps + python_deps + [
   peas_dep,
   dependency('grilo-0.3', version: grilo_req_version),
   dependency('grilo-pls-0.3', version: grilo_req_version),
-  dependency('gnome-desktop-3.0')
+  dependency('gnome-desktop-3.0', version: gnome_desktop_req_version)
 ]
 
 totem_common_cflags = common_flags + warn_flags + [

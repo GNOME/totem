@@ -129,6 +129,7 @@ hdy_req_version = '>= 1.5.0'
 gst_req_version = '>= 1.21.1'
 grilo_req_version = '>= 0.3.0'
 peas_req_version = '>= 1.1.0'
+gnome_desktop_req_version = '>= 43'
 totem_plparser_req_version = '>= 3.26.5'
 
 glib_dep =  dependency('glib-2.0', version: glib_req_version)
