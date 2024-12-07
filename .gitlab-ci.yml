@@ -29,8 +29,8 @@ variables:
       libappstream-glib
       liberation-sans-fonts
       libhandy-devel
-      libpeas-devel
-      pygobject3-devel
+      libpeas1-devel
+      python3-gobject-devel
       pylint
       python3-devel
       totem-pl-parser-devel
@@ -38,7 +38,7 @@ variables:
       xorg-x11-server-Xvfb
 
 build-fedora:
-  image: fedora:38
+  image: fedora:40
   stage: test
   tags:
     - crun
