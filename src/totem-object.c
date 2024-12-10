@@ -1318,7 +1318,7 @@ totem_object_save_state (TotemObject *totem)
 		return;
 
 	g_settings_set (totem->settings, "window-size", "(ii)", totem->window_w, totem->window_h);
-	g_settings_set_boolean (totem->settings, "window-maximized", totem->maximised);
+	g_settings_set_boolean (totem->settings, "window-maximized", totem->maximized);
 }
 
 /**
@@ -1616,7 +1616,7 @@ window_state_event_cb (GtkWidget           *window,
 	GAction *action;
 	gboolean is_fullscreen;
 
-	totem->maximised = !!(event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED);
+	totem->maximized = !!(event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED);
 
 	if ((event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN) == 0)
 		return FALSE;
@@ -3728,8 +3728,8 @@ totem_setup_window (TotemObject *totem)
 {
 	GtkWidget *menu_button;
 
-	totem->maximised = g_settings_get_boolean (totem->settings, "window-maximized");
-	if (totem->maximised == FALSE) {
+	totem->maximized = g_settings_get_boolean (totem->settings, "window-maximized");
+	if (totem->maximized == FALSE) {
 		g_settings_get (totem->settings, "window-size", "(ii)", &totem->window_w, &totem->window_h);
 
 		gtk_window_set_default_size (GTK_WINDOW (totem->win), totem->window_w, totem->window_h);

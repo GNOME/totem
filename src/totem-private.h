@@ -88,7 +88,7 @@ struct _TotemObject {
 
 	/* Window State */
 	int window_w, window_h;
-	gboolean maximised;
+	gboolean maximized;
 
 	/* Toolbar state */
 	char *title;
