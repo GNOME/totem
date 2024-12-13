@@ -11,7 +11,6 @@
 #include <glib.h>
 
 #include "totem.h"
-#include <libpeas.h>
 
 char *totem_screenshot_plugin_filename_for_current_video (TotemObject *totem, const char *format);
 void totem_screenshot_plugin_set_file_chooser_folder (GtkFileChooser *chooser);
