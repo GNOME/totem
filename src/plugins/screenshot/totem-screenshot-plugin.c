@@ -152,51 +152,6 @@ screenshot_name_ready_cb (GObject *source,
 	g_object_unref (save_file);
 }
 
-static void
-flash_area_done_cb (GObject *source_object,
-		    GAsyncResult *res,
-		    gpointer user_data)
-{
-	GVariant *variant;
-
-	variant = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object), res, NULL);
-	if (variant != NULL)
-		g_variant_unref (variant);
-}
-
-static void
-flash_area (GtkWidget *widget)
-{
-	GDBusProxy *proxy;
-	GdkWindow *window;
-	int x, y, w, h;
-
-	window = gtk_widget_get_window (widget);
-	gdk_window_get_origin (window, &x, &y);
-	w = gdk_window_get_width (window);
-	h = gdk_window_get_height (window);
-
-	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
-					       G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS |
-					       G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
-					       NULL,
-					       "org.gnome.Shell",
-					       "/org/gnome/Shell/Screenshot",
-					       "org.gnome.Shell.Screenshot",
-					       NULL, NULL);
-	if (proxy == NULL)
-		g_warning ("no proxy");
-
-	g_dbus_proxy_call (proxy, "org.gnome.Shell.Screenshot.FlashArea",
-			   g_variant_new ("(iiii)", x, y, w, h),
-			   G_DBUS_CALL_FLAGS_NO_AUTO_START,
-			   -1,
-			   NULL,
-			   flash_area_done_cb,
-			   NULL);
-}
-
 static char *
 escape_video_name (const char *orig)
 {
@@ -223,8 +178,6 @@ take_screenshot_action_cb (GSimpleAction         *action,
 		g_error_free (err);
 		return;
 	}
-
-	flash_area (GTK_WIDGET (pi->bvw));
 
 	pixbuf = bacon_video_widget_get_current_frame (pi->bvw);
 	if (pixbuf == NULL) {
