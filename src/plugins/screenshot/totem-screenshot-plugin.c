@@ -72,15 +72,15 @@ save_pixbuf_ready_cb (GObject *source,
 }
 
 static void
-save_file_create_ready_cb (GObject *source,
-			   GAsyncResult *res,
-			   gpointer user_data)
+save_file_replace_ready_cb (GObject *source,
+			    GAsyncResult *res,
+			    gpointer user_data)
 {
 	GFileOutputStream *stream;
 	GError *error = NULL;
 	ScreenshotSaveJob *job = (ScreenshotSaveJob *) user_data;
 
-	stream = g_file_create_finish (G_FILE (source), res, &error);
+	stream = g_file_replace_finish (G_FILE (source), res, &error);
 	if (stream == NULL) {
 		char *path;
 
@@ -104,33 +104,27 @@ save_file_create_ready_cb (GObject *source,
 }
 
 static void
-screenshot_name_ready_cb (GObject *source,
-			  GAsyncResult *res,
-			  gpointer user_data)
+filechooser_response_callback (GtkDialog *file_chooser,
+			       gint response_id,
+			       ScreenshotSaveJob *job)
 {
-	GFile *save_file;
-	char *save_path;
-	GError *error = NULL;
-	ScreenshotSaveJob *job = (ScreenshotSaveJob *) user_data;
+	g_autoptr(GFile) filename = NULL;
 
-	save_path = screenshot_build_filename_finish (res, &error);
-	if (save_path == NULL) {
-		g_warning ("Could not find a valid location to save the screenshot: %s", error->message);
-		g_error_free (error);
-		screenshot_save_job_free (job);
-		return;
+	if (response_id != GTK_RESPONSE_CANCEL) {
+		filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_chooser));
+
+		totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (file_chooser)));
+
+		g_file_replace_async (filename,
+				      NULL,
+				      FALSE,
+				      G_FILE_CREATE_REPLACE_DESTINATION,
+				      G_PRIORITY_DEFAULT,
+				      NULL,
+				      save_file_replace_ready_cb, job);
 	}
 
-	save_file = g_file_new_for_path (save_path);
-	g_free (save_path);
-
-	g_file_create_async (save_file,
-			     G_FILE_CREATE_NONE,
-			     G_PRIORITY_DEFAULT,
-			     NULL,
-			     save_file_create_ready_cb, job);
-
-	g_object_unref (save_file);
+	gtk_widget_destroy (GTK_WIDGET (file_chooser));
 }
 
 static char *
@@ -160,11 +154,11 @@ take_screenshot_action_cb (GSimpleAction         *action,
 			   GVariant              *parameter,
 			   TotemScreenshotPlugin *pi)
 {
+	GtkWidget *file_chooser;
 	GdkPixbuf *pixbuf;
 	GError *err = NULL;
 	ScreenshotSaveJob *job;
-	g_autofree char *video_name = NULL;
-	g_autofree char *escaped_video_name = NULL;
+	g_autofree char *video_filename = NULL;
 
 	if (bacon_video_widget_can_get_frames (pi->bvw, &err) == FALSE) {
 		totem_object_show_error (pi->totem, _("Videos could not get a screenshot of the video."), err->message ?: _("No reason."));
@@ -178,14 +172,28 @@ take_screenshot_action_cb (GSimpleAction         *action,
 		return;
 	}
 
-	video_name = totem_object_get_short_title (pi->totem);
-	escaped_video_name = escape_video_name (video_name);
+	video_filename = totem_screenshot_plugin_filename_for_current_video (pi->totem, N_("Screenshot from %s.png"));
+
+	file_chooser = gtk_file_chooser_dialog_new (_("Save Gallery"),
+	                                            GTK_WINDOW (totem_object_get_main_window(pi->totem)),
+	                                            GTK_FILE_CHOOSER_ACTION_SAVE,
+	                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+	                                            _("_Save"), GTK_RESPONSE_OK,
+	                                            NULL);
+	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_chooser), video_filename);
+	totem_screenshot_plugin_set_file_chooser_folder (GTK_FILE_CHOOSER (file_chooser));
+	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_chooser), TRUE);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (file_chooser), GTK_RESPONSE_OK);
 
 	job = g_slice_new (ScreenshotSaveJob);
 	job->plugin = pi;
 	job->pixbuf = pixbuf;
 
-	screenshot_build_filename_async (NULL, escaped_video_name, screenshot_name_ready_cb, job);
+	g_signal_connect (file_chooser, "response",
+			  G_CALLBACK (filechooser_response_callback), job);
+
+	gtk_widget_show (GTK_WIDGET (file_chooser));
 }
 
 static void
