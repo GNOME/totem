@@ -304,31 +304,6 @@ impl_deactivate (TotemPluginActivatable *plugin)
 	g_object_unref (pi->bvw);
 }
 
-static char *make_filename_for_dir (const char *directory, const char *format, const char *movie_title) G_GNUC_FORMAT (2);
-
-static char *
-make_filename_for_dir (const char *directory, const char *format, const char *movie_title)
-{
-	char *fullpath, *filename;
-	guint i = 1;
-
-	filename = g_strdup_printf (_(format), movie_title, i);
-	fullpath = g_build_filename (directory, filename, NULL);
-
-	while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE && i < G_MAXINT) {
-		i++;
-		g_free (filename);
-		g_free (fullpath);
-
-		filename = g_strdup_printf (_(format), movie_title, i);
-		fullpath = g_build_filename (directory, filename, NULL);
-	}
-
-	g_free (fullpath);
-
-	return filename;
-}
-
 void
 totem_screenshot_plugin_set_file_chooser_folder (GtkFileChooser *chooser)
 {
@@ -342,42 +317,6 @@ totem_screenshot_plugin_set_file_chooser_folder (GtkFileChooser *chooser)
 	/* Default to the Screenshots directory */
 	if (*path != '\0')
 		gtk_file_chooser_set_current_folder (chooser, path);
-}
-
-gchar *
-totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_title)
-{
-	GSettings *settings;
-	char *path, *filename, *full, *uri;
-	GFile *file;
-
-	/* Set the default path */
-	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-	path = g_settings_get_string (settings, "screenshot-save-uri");
-	g_object_unref (settings);
-
-	/* Default to the Screenshots directory */
-	if (*path == '\0') {
-		g_free (path);
-		path = get_default_screenshot_dir ();
-		/* No Screenshots dir, then it's the home dir */
-		if (path == NULL)
-			path = get_fallback_screenshot_dir ();
-	}
-
-	filename = make_filename_for_dir (path, filename_format, movie_title);
-
-	/* Build the URI */
-	full = g_build_filename (path, filename, NULL);
-	g_free (path);
-	g_free (filename);
-
-	file = g_file_new_for_path (full);
-	uri = g_file_get_uri (file);
-	g_free (full);
-	g_object_unref (file);
-
-	return uri;
 }
 
 void
