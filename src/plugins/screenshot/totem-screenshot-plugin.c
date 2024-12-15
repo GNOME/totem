@@ -143,6 +143,18 @@ escape_video_name (const char *orig)
 	return g_strjoinv ("–", elems);
 }
 
+char *
+totem_screenshot_plugin_filename_for_current_video (TotemObject *totem,
+						    const char *format)
+{
+	g_autofree char *video_name = NULL;
+	g_autofree char *escaped_video_name = NULL;
+
+	video_name = totem_object_get_short_title (totem);
+	escaped_video_name = escape_video_name (video_name);
+	return g_strdup_printf (_(format), escaped_video_name);
+}
+
 static void
 take_screenshot_action_cb (GSimpleAction         *action,
 			   GVariant              *parameter,
@@ -307,6 +319,21 @@ make_filename_for_dir (const char *directory, const char *format, const char *mo
 	g_free (fullpath);
 
 	return filename;
+}
+
+void
+totem_screenshot_plugin_set_file_chooser_folder (GtkFileChooser *chooser)
+{
+	g_autoptr(GSettings) settings = NULL;
+	g_autofree char *path = NULL;
+
+	/* Set the default path */
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	path = g_settings_get_string (settings, "screenshot-save-uri");
+
+	/* Default to the Screenshots directory */
+	if (*path != '\0')
+		gtk_file_chooser_set_current_folder (chooser, path);
 }
 
 gchar *
