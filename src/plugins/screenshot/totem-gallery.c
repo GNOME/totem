@@ -92,8 +92,6 @@ save_gallery_file (TotemGallery *self)
 	GtkWidget *file_chooser;
 	g_autofree gchar *suggested_name = NULL;
 	g_autofree gchar *movie_title = NULL;
-	g_autofree gchar *uri = NULL;
-	g_autoptr(GFile) file = NULL;
 
 	gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
 
@@ -103,13 +101,7 @@ save_gallery_file (TotemGallery *self)
 	 * argument is a number which is used to prevent overwriting files.
 	 * Just translate "Gallery", and not the ".jpg". Example:
 	 * "Galerie-%s-%d.jpg". */
-	uri = totem_screenshot_plugin_setup_file_chooser (N_("Gallery-%s-%d.jpg"), movie_title);
-
-	file = g_file_new_for_uri (uri);
-
-	/* We can use g_file_get_basename here and be sure that it's UTF-8
-	 * because we provided the name. */
-	suggested_name = g_file_get_basename (file);
+	suggested_name = totem_screenshot_plugin_filename_for_current_video (self->totem, N_("Gallery-%s-%d.jpg"));
 
 	file_chooser = gtk_file_chooser_dialog_new (_("Save Gallery"),
 	                                            GTK_WINDOW (totem_object_get_main_window(self->totem)),
@@ -118,7 +110,7 @@ save_gallery_file (TotemGallery *self)
 	                                            _("_Save"), GTK_RESPONSE_OK,
 	                                            NULL);
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_chooser), suggested_name);
-	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (file_chooser), uri);
+	totem_screenshot_plugin_set_file_chooser_folder (GTK_FILE_CHOOSER (file_chooser));
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_chooser), TRUE);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (file_chooser), GTK_RESPONSE_OK);
