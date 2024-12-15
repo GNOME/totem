@@ -16,7 +16,6 @@
 
 #include "totem-plugin.h"
 #include "totem-screenshot-plugin.h"
-#include "screenshot-filename-builder.h"
 #include "totem-gallery.h"
 #include "totem-uri.h"
 #include "backend/bacon-video-widget.h"

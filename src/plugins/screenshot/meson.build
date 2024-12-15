@@ -4,7 +4,6 @@ plugin_dir = join_paths(totem_pluginsdir, plugin_name)
 
 plugin_files = files(
   'totem-' + plugin_name + '-plugin.c',
-  'screenshot-filename-builder.c',
   'totem-gallery.c',
   'totem-gallery-progress.c'
 )
