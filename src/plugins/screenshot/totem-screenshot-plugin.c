@@ -103,13 +103,13 @@ save_file_replace_ready_cb (GObject *source,
 }
 
 static void
-filechooser_response_callback (GtkDialog *file_chooser,
+filechooser_response_callback (GtkNativeDialog *file_chooser,
 			       gint response_id,
 			       ScreenshotSaveJob *job)
 {
 	g_autoptr(GFile) filename = NULL;
 
-	if (response_id != GTK_RESPONSE_CANCEL) {
+	if (response_id == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_chooser));
 
 		totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (file_chooser)));
@@ -123,7 +123,7 @@ filechooser_response_callback (GtkDialog *file_chooser,
 				      save_file_replace_ready_cb, job);
 	}
 
-	gtk_widget_destroy (GTK_WIDGET (file_chooser));
+	gtk_native_dialog_destroy (file_chooser);
 }
 
 static char *
@@ -153,7 +153,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 			   GVariant              *parameter,
 			   TotemScreenshotPlugin *pi)
 {
-	GtkWidget *file_chooser;
+	GtkFileChooserNative *file_chooser;
 	GdkPixbuf *pixbuf;
 	GError *err = NULL;
 	ScreenshotSaveJob *job;
@@ -173,17 +173,13 @@ take_screenshot_action_cb (GSimpleAction         *action,
 
 	video_filename = totem_screenshot_plugin_filename_for_current_video (pi->totem, N_("Screenshot from %s.png"));
 
-	file_chooser = gtk_file_chooser_dialog_new (_("Save Gallery"),
-	                                            GTK_WINDOW (totem_object_get_main_window(pi->totem)),
-	                                            GTK_FILE_CHOOSER_ACTION_SAVE,
-	                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-	                                            _("_Save"), GTK_RESPONSE_OK,
-	                                            NULL);
+	file_chooser = gtk_file_chooser_native_new (_("Save Gallery"),
+						    GTK_WINDOW (totem_object_get_main_window(pi->totem)),
+						    GTK_FILE_CHOOSER_ACTION_SAVE,
+						    _("_Save"), _("_Cancel"));
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_chooser), video_filename);
 	totem_screenshot_plugin_set_file_chooser_folder (GTK_FILE_CHOOSER (file_chooser));
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_chooser), TRUE);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (file_chooser), GTK_RESPONSE_OK);
 
 	job = g_slice_new (ScreenshotSaveJob);
 	job->plugin = pi;
@@ -192,7 +188,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	g_signal_connect (file_chooser, "response",
 			  G_CALLBACK (filechooser_response_callback), job);
 
-	gtk_widget_show (GTK_WIDGET (file_chooser));
+	gtk_native_dialog_show (GTK_NATIVE_DIALOG (file_chooser));
 }
 
 static void

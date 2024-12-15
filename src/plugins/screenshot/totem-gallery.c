@@ -17,7 +17,7 @@
 #include "totem-gallery-progress.h"
 #include "totem-screenshot-plugin.h"
 
-static void filechooser_response_callback (GtkDialog *file_chooser, gint response_id, TotemGallery *self);
+static void filechooser_response_callback (GtkNativeDialog *file_chooser, gint response_id, TotemGallery *self);
 
 static void create_gallery_cb (GtkButton *button, TotemGallery *self);
 
@@ -89,7 +89,7 @@ totem_gallery_new (Totem *totem)
 static void
 save_gallery_file (TotemGallery *self)
 {
-	GtkWidget *file_chooser;
+	GtkFileChooserNative *file_chooser;
 	g_autofree gchar *suggested_name = NULL;
 	g_autofree gchar *movie_title = NULL;
 
@@ -103,22 +103,18 @@ save_gallery_file (TotemGallery *self)
 	 * "Galerie-%s-%d.jpg". */
 	suggested_name = totem_screenshot_plugin_filename_for_current_video (self->totem, N_("Gallery-%s-%d.jpg"));
 
-	file_chooser = gtk_file_chooser_dialog_new (_("Save Gallery"),
-	                                            GTK_WINDOW (totem_object_get_main_window(self->totem)),
-	                                            GTK_FILE_CHOOSER_ACTION_SAVE,
-	                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-	                                            _("_Save"), GTK_RESPONSE_OK,
-	                                            NULL);
+	file_chooser = gtk_file_chooser_native_new (_("Save Gallery"),
+						    GTK_WINDOW (totem_object_get_main_window(self->totem)),
+						    GTK_FILE_CHOOSER_ACTION_SAVE,
+						    _("_Save"), _("_Cancel"));
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_chooser), suggested_name);
 	totem_screenshot_plugin_set_file_chooser_folder (GTK_FILE_CHOOSER (file_chooser));
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_chooser), TRUE);
 
-	gtk_dialog_set_default_response (GTK_DIALOG (file_chooser), GTK_RESPONSE_OK);
-
 	g_signal_connect (file_chooser, "response",
 			  G_CALLBACK (filechooser_response_callback), self);
 
-	gtk_widget_show (GTK_WIDGET (file_chooser));
+	gtk_native_dialog_show (GTK_NATIVE_DIALOG (file_chooser));
 }
 
 static void
@@ -191,11 +187,11 @@ create_gallery_cb (GtkButton *button, TotemGallery *self)
 }
 
 static void
-filechooser_response_callback (GtkDialog *file_chooser, gint response_id, TotemGallery *self)
+filechooser_response_callback (GtkNativeDialog *file_chooser, gint response_id, TotemGallery *self)
 {
 	g_autoptr(GFile) filename = NULL;
 
-	if (response_id != GTK_RESPONSE_CANCEL) {
+	if (response_id == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (file_chooser));
 
 		totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (file_chooser)));
@@ -206,7 +202,7 @@ filechooser_response_callback (GtkDialog *file_chooser, gint response_id, TotemG
 		             NULL, NULL, NULL, NULL);
 	}
 
-	gtk_widget_destroy (GTK_WIDGET (file_chooser));
+	gtk_native_dialog_destroy (file_chooser);
 
 	gtk_window_close (GTK_WINDOW (self));
 }
