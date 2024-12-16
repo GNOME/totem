@@ -149,7 +149,7 @@ get_valid_iter_for_mode (TotemPlaylist             *playlist,
 }
 
 static void
-on_open_subtitle_dialog_cb (GtkDialog *dialog,
+on_open_subtitle_dialog_cb (GObject   *dialog,
 			    int        response_id,
 			    gpointer   user_data)
 {
@@ -184,7 +184,7 @@ on_open_subtitle_dialog_cb (GtkDialog *dialog,
 				       NULL);
 		}
 	}
-	gtk_widget_destroy (GTK_WIDGET (dialog));
+	gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (dialog));
 }
 
 /* Helper functions */
@@ -192,7 +192,7 @@ void
 totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
 				       TotemPlaylistSelectDialog mode)
 {
-	GtkWidget *subtitle_dialog;
+	GObject *subtitle_dialog;
 	char *current, *uri;
 	GFile *file, *dir;
 	GtkTreeIter iter;
@@ -222,7 +222,7 @@ totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
 	g_free (uri);
 
 	g_signal_connect (subtitle_dialog, "response", G_CALLBACK (on_open_subtitle_dialog_cb), playlist);
-	gtk_window_present (GTK_WINDOW (subtitle_dialog));
+	gtk_native_dialog_show (GTK_NATIVE_DIALOG (subtitle_dialog));
 }
 
 void
@@ -543,7 +543,7 @@ update_current_from_playlist (TotemPlaylist *playlist)
 }
 
 static void
-on_open_dialog_cb (GtkDialog *dialog,
+on_open_dialog_cb (GObject   *dialog,
                    int        response_id,
                    gpointer   user_data)
 {
@@ -568,18 +568,18 @@ on_open_dialog_cb (GtkDialog *dialog,
 	if (mrl_list != NULL)
 		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
 
-	gtk_widget_destroy (GTK_WIDGET (dialog));
+	gtk_native_dialog_destroy (GTK_NATIVE_DIALOG(dialog));
 }
 
 void
 totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
-	GtkWidget *open_dialog;
+	GObject *open_dialog;
 
 	open_dialog = totem_add_files (NULL, NULL);
 	g_signal_connect (open_dialog, "response", G_CALLBACK (on_open_dialog_cb), playlist);
 
-	gtk_window_present (GTK_WINDOW (open_dialog));
+	gtk_native_dialog_show (GTK_NATIVE_DIALOG(open_dialog));
 }
 
 static void

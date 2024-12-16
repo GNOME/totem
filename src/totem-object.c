@@ -1517,7 +1517,7 @@ totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *
 }
 
 static void
-on_open_dialog_cb (GtkDialog *dialog,
+on_open_dialog_cb (GObject   *dialog,
                    int        response_id,
                    gpointer   user_data)
 {
@@ -1537,18 +1537,18 @@ on_open_dialog_cb (GtkDialog *dialog,
 			g_slist_free (filenames);
 		}
 	}
-	gtk_widget_destroy (GTK_WIDGET (dialog));
+	gtk_native_dialog_destroy (GTK_NATIVE_DIALOG (dialog));
 }
 
 static gboolean
 totem_object_open_dialog (TotemObject *totem, const char *path)
 {
-	GtkWidget *open_dialog;
+	GObject *open_dialog;
 
 	open_dialog = totem_add_files (GTK_WINDOW (totem->win), path);
 	g_signal_connect (open_dialog, "response", G_CALLBACK (on_open_dialog_cb), totem);
 
-	gtk_window_present (GTK_WINDOW (open_dialog));
+	gtk_native_dialog_show (GTK_NATIVE_DIALOG (open_dialog));
 
 	return TRUE;
 }

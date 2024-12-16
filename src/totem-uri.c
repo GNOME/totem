@@ -369,21 +369,18 @@ totem_add_default_dirs (GtkFileChooser *dialog)
 	}
 }
 
-GtkWidget *
+GObject *
 totem_add_subtitle (GtkWindow *parent, const char *uri)
 {
-	GtkWidget *fs;
+	GtkFileChooserNative *fs;
 	g_autoptr(GSettings) settings = NULL;
 	char *new_path;
 	gboolean folder_set;
 
-	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
+	fs = gtk_file_chooser_native_new (_("Select Text Subtitles"),
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Open"), GTK_RESPONSE_ACCEPT,
-					  NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
+					  _("_Open"), _("_Cancel"));
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 
@@ -418,11 +415,11 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	}
 	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
 
-	return fs;
+	return G_OBJECT(fs);
 }
 
 static void
-update_open_uri_settings_cb (GtkDialog *dialog,
+update_open_uri_settings_cb (GObject   *dialog,
                              int        response_id,
                              gpointer   user_data)
 {
@@ -440,22 +437,19 @@ update_open_uri_settings_cb (GtkDialog *dialog,
 	g_clear_object (&settings);
 }
 
-GtkWidget *
+GObject *
 totem_add_files (GtkWindow *parent, const char *path)
 {
-	GtkWidget *fs;
+	GtkFileChooserNative *fs;
 	char *new_path;
 	GSettings *settings;
 	gboolean set_folder;
 
-	fs = gtk_file_chooser_dialog_new (_("Add Videos"),
+	fs = gtk_file_chooser_native_new (_("Add Videos"),
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Add"), GTK_RESPONSE_ACCEPT,
-					  NULL);
+					  _("_Add"), _("_Cancel"));
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_video);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 
@@ -482,5 +476,5 @@ totem_add_files (GtkWindow *parent, const char *path)
 
 	g_signal_connect (fs, "response", G_CALLBACK (update_open_uri_settings_cb), settings);
 
-	return fs;
+	return G_OBJECT (fs);
 }
