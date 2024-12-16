@@ -76,6 +76,23 @@ totem_interface_error (const char *title, const char *reason,
 	gtk_window_present (GTK_WINDOW (error_dialog));
 }
 
+static void
+dialog_response_cb (GtkWidget *dialog,
+		    int response_id,
+		    gpointer data)
+{
+	gboolean *done = data;
+	*done = TRUE;
+}
+
+static void
+dialog_destroy_cb (GtkDialog *dialog,
+		   gpointer data)
+{
+	gboolean *destroyed = data;
+	*destroyed = TRUE;
+}
+
 /**
  * totem_interface_error_blocking:
  * @title: the error title
@@ -90,9 +107,17 @@ totem_interface_error_blocking (const char *title, const char *reason,
 		GtkWindow *parent)
 {
 	GtkWidget *error_dialog;
+	gboolean done = FALSE;
+	gboolean destroyed = FALSE;
 
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
-
-	gtk_dialog_run (GTK_DIALOG (error_dialog));
-	gtk_widget_destroy (error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response",
+			  G_CALLBACK(dialog_response_cb), &done);
+	g_signal_connect (G_OBJECT (error_dialog), "destroy",
+			  G_CALLBACK(dialog_destroy_cb), &destroyed);
+	gtk_window_present (GTK_WINDOW (error_dialog));
+	while (!done)
+		g_main_context_iteration (NULL, TRUE);
+	if (!destroyed)
+		gtk_widget_destroy (error_dialog);
 }
