@@ -70,8 +70,8 @@ totem_interface_error (const char *title, const char *reason,
 
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
 
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response",
+			  G_CALLBACK(gtk_widget_destroy), error_dialog);
 
 	gtk_window_present (GTK_WINDOW (error_dialog));
 }
