@@ -13,7 +13,6 @@ plugins_conf = configuration_data()
 plugins_conf.set('GETTEXT_PACKAGE', meson.project_name())
 
 allowed_plugins = [
-  'apple-trailers',
   'autoload-subtitles',
   'im-status',
   'mpris',
@@ -37,7 +36,6 @@ plugins = []
 plugins_option = get_option('with-plugins')
 if plugins_option != 'none'
   plugins += [
-    'apple-trailers',
     'autoload-subtitles',
     'im-status',
     'mpris',
