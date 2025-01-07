@@ -465,7 +465,7 @@ impl_deactivate (TotemPluginActivatable *plugin)
 	}
 
 	pi->totem = NULL;
-	pi->bvw = NULL;
+	g_clear_object (&pi->bvw);
 
 	g_clear_pointer (&pi->mrl, g_free);
 	g_clear_pointer (&pi->cache_mrl, g_free);
