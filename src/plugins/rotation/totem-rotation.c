@@ -278,5 +278,5 @@ impl_deactivate (TotemPluginActivatable *plugin)
 	g_action_map_remove_action (G_ACTION_MAP (pi->totem), "rotate-right");
 
 	pi->totem = NULL;
-	pi->bvw = NULL;
+	g_clear_object (&pi->bvw);
 }
