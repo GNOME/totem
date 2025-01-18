@@ -14,7 +14,7 @@ enum_headers = files(
   'totem-menu.h',
   'totem-open-location.h',
   'totem-options.h',
-  'totem-player-toolbar.c',
+  'totem-player-toolbar.h',
   'totem-playlist.h',
   'totem-preferences-dialog.h',
   'totem-private.h',
