@@ -1342,8 +1342,11 @@ totem_object_exit (TotemObject *totem)
 	if (totem == NULL)
 		exit (0);
 
-	if (totem->bvw)
+	if (totem->bvw) {
 		totem_object_save_size (totem);
+		bacon_video_widget_close (totem->bvw);
+		g_clear_object (&totem->bvw);
+	}
 
 	if (totem->win != NULL) {
 		gtk_widget_hide (totem->win);
