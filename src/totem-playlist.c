@@ -1788,7 +1788,7 @@ totem_playlist_steal_current_starttime (TotemPlaylist *playlist)
 	 * hence the "steal" in the API name */
 	gtk_list_store_set (GTK_LIST_STORE (playlist->model),
 			    &iter,
-			    STARTTIME_COL, 0,
+			    STARTTIME_COL, (gint64) 0,
 			    -1);
 
 	return starttime;
