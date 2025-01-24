@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2024-11-25 05:05+0000\n"
-"PO-Revision-Date: 2025-01-11 23:06+0100\n"
+"POT-Creation-Date: 2025-01-19 12:03+0000\n"
+"PO-Revision-Date: 2025-01-24 15:52+0100\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -63,7 +63,7 @@ msgstr ""
 "Přináší i rozšiřující funkce, jako je stahování titulků, zrychlování a "
 "zpomalování přehrávání, vytváření galerií snímků a podpora nahrávání DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:39
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
 msgid "The GNOME developers"
 msgstr "Vývojáři GNOME"
 
@@ -77,38 +77,54 @@ msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "video;film;klip;seriál;přehrávač;DVD;TV;disk;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
+msgid "Window maximized"
+msgstr "Maximalizované okno"
+
+#: data/org.gnome.totem.gschema.xml.in:7
+msgid "Window maximized state"
+msgstr "Stav maximalizovaného okna"
+
+#: data/org.gnome.totem.gschema.xml.in:11
+msgid "Window size"
+msgstr "Velikost okna"
+
+#: data/org.gnome.totem.gschema.xml.in:12
+msgid "Window size (width and height)."
+msgstr "Velikost okna (šířka a výška)."
+
+#: data/org.gnome.totem.gschema.xml.in:16
 msgid "The brightness of the video"
 msgstr "Jas videa"
 
-#: data/org.gnome.totem.gschema.xml.in:10
+#: data/org.gnome.totem.gschema.xml.in:20
 msgid "The contrast of the video"
 msgstr "Kontrast videa"
 
-#: data/org.gnome.totem.gschema.xml.in:14
+#: data/org.gnome.totem.gschema.xml.in:24
 msgid "The hue of the video"
 msgstr "Odstín videa"
 
-#: data/org.gnome.totem.gschema.xml.in:18
+#: data/org.gnome.totem.gschema.xml.in:28
 msgid "The saturation of the video"
 msgstr "Sytost videa"
 
-#: data/org.gnome.totem.gschema.xml.in:22
+#: data/org.gnome.totem.gschema.xml.in:32
 msgid "Repeat mode"
 msgstr "Režim opakování"
 
-#: data/org.gnome.totem.gschema.xml.in:26
+#: data/org.gnome.totem.gschema.xml.in:36
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Zda zakázat o_dstranění prokládání u prokládaného videa"
 
-#: data/org.gnome.totem.gschema.xml.in:30
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Type of audio output to use"
 msgstr "Typ zvukového výstupu, který se má používat"
 
-#: data/org.gnome.totem.gschema.xml.in:34
+#: data/org.gnome.totem.gschema.xml.in:44
 msgid "Network buffering threshold"
 msgstr "Práh ukládání do vyrovnávací paměti ze sítě"
 
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.totem.gschema.xml.in:45
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -116,42 +132,42 @@ msgstr ""
 "Objem dat, který se má ukládat do vyrovnávací paměti pro síťové vysílání "
 "před započetím zobrazování vysílání (v sekundách)"
 
-#: data/org.gnome.totem.gschema.xml.in:39
+#: data/org.gnome.totem.gschema.xml.in:49
 msgid "Subtitle font"
 msgstr "Písmo titulků"
 
-#: data/org.gnome.totem.gschema.xml.in:40
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Pango font description for subtitle rendering."
 msgstr "Popis písma Pango pro vykreslování titulků."
 
-#: data/org.gnome.totem.gschema.xml.in:43
+#: data/org.gnome.totem.gschema.xml.in:53
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
 
-#: data/org.gnome.totem.gschema.xml.in:50
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Subtitle encoding"
 msgstr "Kódování titulků"
 
-#: data/org.gnome.totem.gschema.xml.in:51
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid "Encoding character set for subtitle."
 msgstr "Kódování znakové sady pro titulky."
 
-#: data/org.gnome.totem.gschema.xml.in:55
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Default location for the “Open…” dialogs"
 msgstr "Výchozí umístění v dialogových oknech „Otevřít…“"
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.totem.gschema.xml.in:66
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
 "Výchozí umístění v dialogových oknech „Otevřít…“. Výchozí je aktuální složka."
 
-#: data/org.gnome.totem.gschema.xml.in:60
+#: data/org.gnome.totem.gschema.xml.in:70
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Výchozí umístění v dialogových oknech „Pořídit snímek záběru“"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.totem.gschema.xml.in:71
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -159,23 +175,23 @@ msgstr ""
 "Výchozí umístění v dialogových oknech „Pořídit snímek záběru“. Výchozí je "
 "složka „Snímky obrazovky“"
 
-#: data/org.gnome.totem.gschema.xml.in:65
+#: data/org.gnome.totem.gschema.xml.in:75
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "Zda zakázat zásuvné moduly v uživatelově domovské složce"
 
-#: data/org.gnome.totem.gschema.xml.in:69
+#: data/org.gnome.totem.gschema.xml.in:79
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Zda zakázat klávesové zkratky"
 
-#: data/org.gnome.totem.gschema.xml.in:73
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Zda automaticky nahrávat soubory s titulky, když je nahrán film"
 
-#: data/org.gnome.totem.gschema.xml.in:77
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Active plugins list"
 msgstr "Seznam aktivních zásuvných modulů"
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -183,20 +199,20 @@ msgstr ""
 "Seznam názvů zásuvných modulů, které jsou v současnosti aktivované (načtené "
 "a běží)."
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:92
 msgid "Directories to show"
 msgstr "Složky k zobrazení"
 
-#: data/org.gnome.totem.gschema.xml.in:83
+#: data/org.gnome.totem.gschema.xml.in:93
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Složky, které se mají zobrazit v rozhraní prohlížeče; výchozí není žádná"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:97
 msgid "Disable hardware decoders"
 msgstr "Zakázat hardwarové dekodéry"
 
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/org.gnome.totem.gschema.xml.in:98
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
@@ -204,7 +220,7 @@ msgstr ""
 "Zakázat hardwarové dekodéry a používat jen softwarové. Určeno výhradně pro "
 "ladicí účely."
 
-#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:56
 msgid "Back"
 msgstr "Zpět"
 
@@ -671,13 +687,14 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Vložte _adresu souboru, který chcete otevřít:"
 
 # TEST
-#: data/uri.ui:45 src/totem-uri.c:384 src/totem-uri.c:445
-#: src/plugins/screenshot/totem-gallery.c:73
-#: src/plugins/screenshot/totem-gallery-progress.c:82
+#: data/uri.ui:45 src/totem-uri.c:383 src/totem-uri.c:451
+#: src/plugins/screenshot/gallery.ui:37
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
 msgid "_Cancel"
 msgstr "_Zrušit"
 
-#: data/uri.ui:54 src/totem-uri.c:446
+#: data/uri.ui:54 src/totem-uri.c:451
 msgid "_Add"
 msgstr "Přid_at"
 
@@ -999,7 +1016,7 @@ msgstr "Místní"
 msgid "Channels"
 msgstr "Kanály"
 
-#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:180
 msgid "Click on items to select them"
 msgstr "Kliknutím položky vyberete"
 
@@ -1024,16 +1041,16 @@ msgstr "Přidat u_ložené video…"
 msgid "Add _Web Video…"
 msgstr "Přidat _webové video…"
 
-#: src/totemmaintoolbar.ui:104
+#: src/totemmaintoolbar.ui:103
 msgid "Select"
 msgstr "Vybrat"
 
 # TEST
-#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
+#: src/totemmaintoolbar.ui:128 src/totemmaintoolbar.ui:131
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/totemmaintoolbar.ui:150
+#: src/totemmaintoolbar.ui:149
 msgid "Search"
 msgstr "Hledat"
 
@@ -1057,34 +1074,34 @@ msgstr "Automaticky"
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem-object.c:1412 src/totem-options.c:38
+#: src/totem-object.c:1395 src/totem-options.c:38
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
-#: src/totemselectiontoolbar.ui:46
+#: src/totem-object.c:1401 src/totem-object.c:1409 src/totem-options.c:37
+#: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Přehrát"
 
-#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
+#: src/totem-object.c:1478 src/totem-object.c:1504 src/totem-object.c:2091
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Aplikaci Videa se nezdařilo přehrát „%s“."
 
-#: src/totem-object.c:2261
+#: src/totem-object.c:2260
 msgid "Videos could not display the help contents."
 msgstr "Aplikaci Videa se nezdařilo zobrazit obsah nápovědy."
 
-#: src/totem-object.c:2508
+#: src/totem-object.c:2507
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
-#: src/totem-object.c:3965
+#: src/totem-object.c:3935
 msgid "Videos could not startup."
 msgstr "Aplikaci Videa se nezdařilo spustit."
 
 # :-)
-#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3936 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Žádný důvod."
 
@@ -1155,30 +1172,30 @@ msgstr "Nelze v tu samou chvíli zařazovat do fronty a přejmenovávat"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:220
+#: src/totem-playlist.c:259
 #, c-format
 msgid "Title %d"
 msgstr "Titul %d"
 
-#: src/totem-playlist.c:1017
+#: src/totem-playlist.c:1074
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "Seznam k přehrání „%s“ nelze zpracovat. Možná je poškozen."
 
-#: src/totemselectiontoolbar.ui:18
+#: src/totemselectiontoolbar.ui:19
 msgid "Add to Favourites"
 msgstr "Přidat do oblíbených"
 
-#: src/totemselectiontoolbar.ui:43
+#: src/totemselectiontoolbar.ui:44
 msgctxt "button"
 msgid "Play"
 msgstr "Přehrát"
 
-#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
+#: src/totemselectiontoolbar.ui:65 src/totemselectiontoolbar.ui:69
 msgid "Shuffle"
 msgstr "Náhodně"
 
-#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
+#: src/totemselectiontoolbar.ui:86 src/totemselectiontoolbar.ui:90
 msgid "Delete"
 msgstr "Smazat"
 
@@ -1337,25 +1354,17 @@ msgid "Subtitle files"
 msgstr "Soubory s titulky"
 
 # TEST
-#: src/totem-uri.c:381
+#: src/totem-uri.c:380
 msgid "Select Text Subtitles"
 msgstr "Zvolte titulky"
 
-#: src/totem-uri.c:385
+#: src/totem-uri.c:383
 msgid "_Open"
 msgstr "_Otevřít"
 
-#: src/totem-uri.c:442
+#: src/totem-uri.c:448
 msgid "Add Videos"
 msgstr "Přidání videí"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Upoutávky Apple"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Nastaví uživatelského agenta pro server upoutávek Apple"
 
 # TEST
 #: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
@@ -1396,7 +1405,7 @@ msgstr "Otevřít složku"
 msgid "Open the directory of the currently playing movie"
 msgstr "Otevřít složku s právě přehráváným filmem"
 
-#: src/plugins/open-directory/totem-open-directory.c:149
+#: src/plugins/open-directory/totem-open-directory.c:154
 msgid "Open Containing Folder"
 msgstr "Otevřít nadřazenou složku"
 
@@ -1411,46 +1420,46 @@ msgid "Look for subtitles for the currently playing movie"
 msgstr "Vyhledává titulky k právě přehrávanému filmu"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:49
+#: src/plugins/opensubtitles/opensubtitles.py:48
 msgid "Brazilian Portuguese"
 msgstr "Brazilská portugalština"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:191
+#: src/plugins/opensubtitles/opensubtitles.py:190
 msgid "Searching for subtitles…"
 msgstr "Vyhledávají se titulky…"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:616
+#: src/plugins/opensubtitles/opensubtitles.py:234
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "Stahují se titulky…"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:298
+#: src/plugins/opensubtitles/opensubtitles.py:297
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nepodařilo se spojit s webovou stránkou OpenSubtitles"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:330
-#: src/plugins/opensubtitles/opensubtitles.py:343
-#: src/plugins/opensubtitles/opensubtitles.py:361
+#: src/plugins/opensubtitles/opensubtitles.py:329
+#: src/plugins/opensubtitles/opensubtitles.py:342
+#: src/plugins/opensubtitles/opensubtitles.py:360
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nepodařilo se spojit s webovou stránkou OpenSubtitles."
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:349
+#: src/plugins/opensubtitles/opensubtitles.py:348
 msgid "No results found."
 msgstr "Nenalezeny žádné výsledky."
 
 # TEST
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:534
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "Sta_hnout titulky k filmům…"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.py:573
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "Vyhledávají se titulky…"
 
@@ -1502,34 +1511,34 @@ msgstr "Vlastnosti filmu"
 msgid "Adds movie properties menu item"
 msgstr "Přidá do nabídky položku pro vlastnosti filmu"
 
-#: src/plugins/properties/totem-movie-properties.c:130
+#: src/plugins/properties/totem-movie-properties.c:129
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "---"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "---"
 
-#: src/plugins/properties/totem-movie-properties.c:274
+#: src/plugins/properties/totem-movie-properties.c:273
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1730,27 +1739,27 @@ msgstr "Interaktivní konzola jazyka Python"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:61
+#: src/plugins/pythonconsole/pythonconsole.py:60
 msgid "_Python Console"
 msgstr "Konzola _python"
 
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:67
+#: src/plugins/pythonconsole/pythonconsole.py:66
 msgid "Python Debugger"
 msgstr "Ladicí program pro jazyk Python"
 
 #. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:78
+#: src/plugins/pythonconsole/pythonconsole.py:77
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "K objektu Totem.Object můžete přistupovat pomocí „totem_object“ :\\n%s"
 
-#: src/plugins/pythonconsole/pythonconsole.py:82
+#: src/plugins/pythonconsole/pythonconsole.py:81
 msgid "Videos Python Console"
 msgstr "Konzola Python aplikace Videa"
 
 #. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:92
+#: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1776,11 +1785,11 @@ msgstr "Otočení"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Umožňuje video otočit v případě, že je otočeno nesprávně"
 
-#: src/plugins/rotation/totem-rotation.c:243
+#: src/plugins/rotation/totem-rotation.c:242
 msgid "_Rotate ↷"
 msgstr "_Otočit ↷"
 
-#: src/plugins/rotation/totem-rotation.c:247
+#: src/plugins/rotation/totem-rotation.c:246
 msgid "Rotate ↶"
 msgstr "Otočit ↶"
 
@@ -1795,22 +1804,22 @@ msgid "Save a copy of the currently playing movie"
 msgstr "Uložit kopii právě přehráváného filmu"
 
 # TEST
-#: src/plugins/save-file/totem-save-file.c:76
+#: src/plugins/save-file/totem-save-file.c:75
 msgid "The video could not be made available offline."
 msgstr "Nelze zařídit, aby video bylo dostupné bez připojení."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:78
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "“Files” is not available."
 msgstr "„Soubory“ nejsou k dispozici."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:159
+#: src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Film"
 
-#: src/plugins/save-file/totem-save-file.c:442
+#: src/plugins/save-file/totem-save-file.c:441
 msgid "Make Available Offline"
 msgstr "Zpřístupnit bez připojení"
 
@@ -1822,46 +1831,33 @@ msgstr "Šetřič obrazovky"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Vypne šetřič obrazovky, když se přehrává film"
 
-#: src/plugins/screensaver/totem-screensaver.c:58
+#: src/plugins/screensaver/totem-screensaver.c:57
 msgid "Playing a movie"
 msgstr "Přehrávání videa"
 
 # TEST
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "Šířka snímku (v pixelech):"
+#: src/plugins/screenshot/gallery.ui:32
+msgid "Create Gallery"
+msgstr "Vytvořit galerii"
+
+#: src/plugins/screenshot/gallery.ui:47
+msgid "Create"
+msgstr "Vytvořit"
 
 # TEST
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "Vypočítat počet snímků"
+#: src/plugins/screenshot/gallery.ui:79
+msgid "Screenshot width (in pixels)"
+msgstr "Šířka snímku (v pixelech)"
 
 # TEST
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "Počet snímků:"
+#: src/plugins/screenshot/gallery.ui:92
+msgid "Add number of screenshots"
+msgstr "Přidat počet snímků"
 
-#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-#. * same as used in GNOME Shell:
-#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
-#: src/plugins/screenshot/screenshot-filename-builder.c:86
-msgid "Screenshots"
-msgstr "Snímky obrazovky"
-
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "Snímek z %s.png"
-
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:146
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "Snímek z %s – %d.png"
+# TEST
+#: src/plugins/screenshot/gallery.ui:98
+msgid "Number of screenshots"
+msgstr "Počet snímků"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1871,53 +1867,47 @@ msgstr "Snímek záběru"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Umožňuje vytvářet snímky a galerie z přehrávaných videí"
 
-# TEST
-#: src/plugins/screenshot/totem-gallery.c:67
-msgid "Save Gallery"
-msgstr "Uložit galerii"
-
-#: src/plugins/screenshot/totem-gallery.c:74
-msgid "_Save"
-msgstr "_Uložit"
-
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:91
+#: src/plugins/screenshot/totem-gallery.c:104
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galerie - %s (%d).jpg"
 
 # TEST
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:80
-msgid "Creating Gallery…"
-msgstr "Vytváří se galerie…"
+#: src/plugins/screenshot/totem-gallery.c:106
+#: src/plugins/screenshot/totem-screenshot-plugin.c:176
+msgid "Save Gallery"
+msgstr "Uložit galerii"
+
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
+msgid "_Save"
+msgstr "_Uložit"
 
 # TEST
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:86
-#, c-format
-msgid "Saving gallery as “%s”"
-msgstr "Galerie se ukládá jako „%s“"
-
-# TEST
-#: src/plugins/screenshot/totem-screenshot-plugin.c:203
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "Videos could not get a screenshot of the video."
 msgstr "Aplikaci Videa se nepodařilo pořídit snímek z tohoto videa."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Tato situace by neměla nikdy nastat; ohlaste chybu vývojářům programu."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:302
+#: src/plugins/screenshot/totem-screenshot-plugin.c:174
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "Snímek z %s.png"
+
+#: src/plugins/screenshot/totem-screenshot-plugin.c:259
 msgid "Take _Screenshot"
 msgstr "Pořídit _snímek záběru"
 
 # TEST
-#: src/plugins/screenshot/totem-screenshot-plugin.c:308
+#: src/plugins/screenshot/totem-screenshot-plugin.c:265
 msgid "Create Screenshot _Gallery…"
 msgstr "Vytvořit _galerii snímků…"
 
@@ -1972,6 +1962,28 @@ msgstr "Vimeo"
 #: src/plugins/vimeo/vimeo.plugin.desktop.in:7
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Nastaví uživatelského agenta pro server Vimeo"
+
+#~ msgid "Apple Trailers"
+#~ msgstr "Upoutávky Apple"
+
+#~ msgid "Sets the user agent for the Apple Trailers site"
+#~ msgstr "Nastaví uživatelského agenta pro server upoutávek Apple"
+
+# TEST
+#~ msgid "Calculate the number of screenshots"
+#~ msgstr "Vypočítat počet snímků"
+
+#~ msgid "Screenshots"
+#~ msgstr "Snímky obrazovky"
+
+#, c-format
+#~ msgid "Screenshot from %s - %d.png"
+#~ msgstr "Snímek z %s – %d.png"
+
+# TEST
+#, c-format
+#~ msgid "Saving gallery as “%s”"
+#~ msgstr "Galerie se ukládá jako „%s“"
 
 #~ msgid "Unable to play the file"
 #~ msgstr "Nelze přehrát soubor"
