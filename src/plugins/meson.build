@@ -27,7 +27,6 @@ allowed_plugins = [
   'screensaver',
   'screenshot',
   'variable-rate',
-  'vimeo',
 ]
 
 plugins = []
@@ -45,7 +44,6 @@ if plugins_option != 'none'
     'screensaver',
     'screenshot',
     'variable-rate',
-    'vimeo'
   ]
 
   plugin_error = (plugins_option == 'all')
