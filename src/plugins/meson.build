@@ -28,7 +28,6 @@ allowed_plugins = [
   'screenshot',
   'skipto',
   'variable-rate',
-  'vimeo',
 ]
 
 plugins = []
@@ -47,7 +46,6 @@ if plugins_option != 'none'
     'screenshot',
     'skipto',
     'variable-rate',
-    'vimeo'
   ]
 
   plugin_error = (plugins_option == 'all')
