@@ -291,7 +291,7 @@ totem_save_file_file_opened (TotemObject *totem,
 
 		/* Check whether it's in the Videos dir */
 		videos_dir = get_videos_dir_uri ();
-		videos_dir_file = g_file_new_for_path (videos_dir);
+		videos_dir_file = g_file_new_for_uri (videos_dir);
 		if (file_has_ancestor (file, videos_dir_file)) {
 			g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, videos_dir);
 			g_object_unref (videos_dir_file);
