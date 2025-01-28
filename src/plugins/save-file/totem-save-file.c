@@ -228,38 +228,6 @@ totem_save_file_file_closed (TotemObject *totem,
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), FALSE);
 }
 
-static gboolean
-file_has_ancestor (GFile *file,
-		   GFile *ancestor)
-{
-	GFile *cursor;
-	gboolean retval = FALSE;
-
-	if (g_file_has_parent (file, ancestor))
-		    return TRUE;
-
-	cursor = g_object_ref (file);
-
-	while (1) {
-		GFile *tmp;
-
-		tmp = g_file_get_parent (cursor);
-		g_object_unref (cursor);
-		cursor = tmp;
-
-		if (cursor == NULL)
-			break;
-
-		if (g_file_has_parent (cursor, ancestor)) {
-			g_object_unref (cursor);
-			retval = TRUE;
-			break;
-		}
-	}
-
-	return retval;
-}
-
 static void
 totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
@@ -292,7 +260,7 @@ totem_save_file_file_opened (TotemObject *totem,
 		/* Check whether it's in the Videos dir */
 		videos_dir = get_videos_dir_uri ();
 		videos_dir_file = g_file_new_for_uri (videos_dir);
-		if (file_has_ancestor (file, videos_dir_file)) {
+		if (g_file_has_prefix (file, videos_dir_file)) {
 			g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, videos_dir);
 			g_object_unref (videos_dir_file);
 			g_free (videos_dir);
