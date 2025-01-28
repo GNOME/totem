@@ -111,16 +111,6 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 }
 
 static char *
-get_cache_path (void)
-{
-	char *path;
-
-	path = g_build_filename (g_get_user_cache_dir (), "totem", "media", NULL);
-	g_mkdir_with_parents (path, 0755);
-	return path;
-}
-
-static char *
 get_videos_dir_uri (void)
 {
 	const char *videos_dir;
@@ -159,20 +149,6 @@ totem_save_file_get_filename (TotemSaveFilePlugin *pi)
 	}
 
 	return filename;
-}
-
-static char *
-checksum_path_for_mrl (const char *mrl)
-{
-	char *dest_dir, *dest_name, *dest_path;
-
-	dest_dir = get_cache_path ();
-	dest_name = g_compute_checksum_for_string (G_CHECKSUM_SHA256, mrl, -1);
-	dest_path = g_build_filename (dest_dir, dest_name, NULL);
-	g_free (dest_name);
-	g_free (dest_dir);
-
-	return dest_path;
 }
 
 static void
@@ -233,8 +209,7 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
-	GFile *cache_dir = NULL;
-	char *cache_path, *videos_dir;
+	char *videos_dir;
 	GFile *file;
 
 	g_clear_pointer (&pi->mrl, g_free);
@@ -282,54 +257,12 @@ totem_save_file_file_opened (TotemObject *totem,
 		g_free (path);
 	}
 
-	/* Already cached? */
-	cache_path = get_cache_path ();
-	cache_dir = g_file_new_for_path (cache_path);
-	g_free (cache_path);
-	if (g_file_has_parent (file, cache_dir)) {
-		g_debug ("Not enabling offline save, as '%s' already cached", mrl);
-		goto out;
-	}
-
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), TRUE);
 	pi->name = totem_object_get_short_title (pi->totem);
 	pi->is_tmp = FALSE;
 
 out:
-	g_clear_object (&cache_dir);
 	g_clear_object (&file);
-}
-
-static void
-cache_file_exists_cb (GObject      *source_object,
-		      GAsyncResult *res,
-		      gpointer      user_data)
-{
-	TotemSaveFilePlugin *pi;
-	GFileInfo *info;
-	GError *error = NULL;
-	char *path;
-
-	path = g_file_get_path (G_FILE (source_object));
-	info = g_file_query_info_finish (G_FILE (source_object), res, &error);
-	if (!info) {
-		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-			pi = user_data;
-			g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), TRUE);
-
-			g_debug ("Enabling offline save, as '%s' for '%s'",
-				 path, pi->mrl);
-		}
-		g_free (path);
-		g_error_free (error);
-		return;
-	}
-	g_object_unref (info);
-
-	pi = user_data;
-	g_debug ("Not enabling offline save, as '%s' already exists for '%s'",
-		 path, pi->mrl);
-	g_free (path);
 }
 
 static void
@@ -337,8 +270,7 @@ totem_save_file_download_filename (GObject    *gobject,
 				   GParamSpec *pspec,
 				   TotemSaveFilePlugin *pi)
 {
-	char *filename, *cache_path;
-	GFile *file;
+	char *filename;
 
 	/* We're already ready to copy it */
 	if (pi->cache_mrl != NULL)
@@ -358,14 +290,8 @@ totem_save_file_download_filename (GObject    *gobject,
 
 	g_debug ("Cache MRL: '%s', name: '%s'", pi->cache_mrl, pi->name);
 
-	cache_path = checksum_path_for_mrl (pi->mrl);
-	file = g_file_new_for_path (cache_path);
-	g_free (cache_path);
-
-	g_file_query_info_async (file, G_FILE_ATTRIBUTE_STANDARD_TYPE,
-				 G_FILE_QUERY_INFO_NONE, 0, pi->cancellable,
-				 cache_file_exists_cb, pi);
-	g_object_unref (file);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->action), TRUE);
+	g_debug ("Enabling offline save for '%s'", pi->cache_mrl);
 }
 
 static void
