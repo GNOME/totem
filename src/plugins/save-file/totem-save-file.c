@@ -66,8 +66,8 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 					       flags,
 					       NULL, /* GDBusInterfaceInfo */
 					       "org.gnome.Nautilus",
-					       "/org/gnome/Nautilus",
-					       "org.gnome.Nautilus.FileOperations",
+					       "/org/gnome/Nautilus/FileOperations2",
+					       "org.gnome.Nautilus.FileOperations2",
 					       NULL, /* GCancellable */
 					       &error);
 	if (proxy == NULL) {
@@ -85,7 +85,7 @@ copy_uris_with_nautilus (TotemSaveFilePlugin *pi,
 	}
 
 	ret = g_dbus_proxy_call_sync (proxy,
-				      "CopyURIs", g_variant_new ("(^ass)", sources, dest_dir),
+				      "CopyURIs", g_variant_new ("(^assa{sv})", sources, dest_dir, NULL),
 				      G_DBUS_CALL_FLAGS_NONE,
 				      -1, NULL, &error);
 
