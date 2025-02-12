@@ -1071,7 +1071,7 @@ totem_object_set_main_page (TotemObject *totem,
 
 	if (g_strcmp0 (page_id, "player") == 0) {
 		totem_grilo_pause (TOTEM_GRILO (totem->grilo));
-
+		gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
 		show_popup (totem);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
