@@ -287,8 +287,6 @@ totem_object_app_activate (GApplication *app)
 
 	totem_callback_connect (totem);
 
-	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-
 	/* The prefs after the video widget is connected */
 	totem->prefs = totem_preferences_dialog_new (totem);
 	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
