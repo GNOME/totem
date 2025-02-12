@@ -276,7 +276,14 @@
         {
             "name": "gnome-desktop",
             "buildsystem": "meson",
-            "config-opts": ["-Ddebug_tools=false", "-Dudev=disabled"],
+            "config-opts": [
+                "-Ddesktop_docs=false",
+                "-Ddebug_tools=false",
+                "-Dintrospection=false",
+                "-Dudev=disabled",
+                "-Dsystemd=disabled",
+                "-Dbuild_gtk4=false"
+            ],
             "sources": [
                 {
                     "type": "git",
