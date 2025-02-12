@@ -1075,6 +1075,8 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_show (totem->subtitles_button);
 		gtk_widget_hide (totem->add_button);
 		gtk_widget_hide (totem->main_menu_button);
+
+		gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
 		show_popup (totem);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		totem_grilo_start (TOTEM_GRILO (totem->grilo));
