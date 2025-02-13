@@ -606,6 +606,10 @@ int main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/* Limit the number of OpenBLAS threads to avoid reaching our RLIMIT_DATA
+	 * address space max size safeguard for the thumbnailer. */
+	g_setenv("OMP_NUM_THREADS", "1", TRUE);
+
 	/* Call before the global thread pool is setup */
 	errno = 0;
 	if (nice (20) != 20 && errno != 0)
