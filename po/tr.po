@@ -1,5 +1,5 @@
 # Turkish translation of totem.
-# Copyright (C) 2003-2024 totem's COPYRIGHT HOLDER
+# Copyright (C) 2003-2025 totem's COPYRIGHT HOLDER
 # This file is distributed under the same license as the totem package.
 #
 # Caner Baydemir <caner.baydemir@gelecek.com.tr>, 2003.
@@ -9,26 +9,26 @@
 # Yaşar Şentürk <yasarix@gmail.com>, 2015.
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015.
 # Çağatay Yiğit Şahin <cyigitsahin@outlook.com>, 2019.
-# Sabri Ünal <yakushabb@gmail.com>, 2022-2024.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2016-2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2022-2025.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2016-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2024-07-19 15:19+0000\n"
-"PO-Revision-Date: 2024-05-07 11:51+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-02-12 14:59+0000\n"
+"PO-Revision-Date: 2025-02-14 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1907
+#: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Videolar"
 
@@ -58,7 +58,7 @@ msgstr ""
 "ekran görüntüsü galerileri oluşturma ve DVD kaydetme desteği gibi ek "
 "işlevselliklerle gelir."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:39
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
 msgid "The GNOME developers"
 msgstr "GNOME Geliştiricileri"
 
@@ -75,40 +75,56 @@ msgstr ""
 "Oynatıcı;Yürütücü;DVD;TV;Disk;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
+msgid "Window maximized"
+msgstr "Pencere ekranı kapladı"
+
+#: data/org.gnome.totem.gschema.xml.in:7
+msgid "Window maximized state"
+msgstr "Pencerenin ekranı kaplama durumu"
+
+#: data/org.gnome.totem.gschema.xml.in:11
+msgid "Window size"
+msgstr "Pencere boyutu"
+
+#: data/org.gnome.totem.gschema.xml.in:12
+msgid "Window size (width and height)."
+msgstr "Pencere boyutu (genişlik ve yükseklik)."
+
+#: data/org.gnome.totem.gschema.xml.in:16
 msgid "The brightness of the video"
 msgstr "Videonun parlaklığı"
 
-#: data/org.gnome.totem.gschema.xml.in:10
+#: data/org.gnome.totem.gschema.xml.in:20
 msgid "The contrast of the video"
 msgstr "Videonun karşıtlığı"
 
-#: data/org.gnome.totem.gschema.xml.in:14
+#: data/org.gnome.totem.gschema.xml.in:24
 msgid "The hue of the video"
 msgstr "Videonun rengi"
 
-#: data/org.gnome.totem.gschema.xml.in:18
+#: data/org.gnome.totem.gschema.xml.in:28
 msgid "The saturation of the video"
 msgstr "Videonun renk doygunluğu"
 
-#: data/org.gnome.totem.gschema.xml.in:22
+#: data/org.gnome.totem.gschema.xml.in:32
 msgid "Repeat mode"
 msgstr "Yineleme kipi"
 
-#: data/org.gnome.totem.gschema.xml.in:26
+#: data/org.gnome.totem.gschema.xml.in:36
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 "Örgülü taranmış (interlaced) filmlerin netleştirilmesinin devre dışı "
 "bırakılması"
 
-#: data/org.gnome.totem.gschema.xml.in:30
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Type of audio output to use"
 msgstr "Kullanılacak ses çıkış türü"
 
-#: data/org.gnome.totem.gschema.xml.in:34
+#: data/org.gnome.totem.gschema.xml.in:44
 msgid "Network buffering threshold"
 msgstr "Ağ önbellek eşiği"
 
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.totem.gschema.xml.in:45
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -116,43 +132,43 @@ msgstr ""
 "Ağ akışlarını göstermeden önce ara belleğe alınacak veri miktarı (saniye "
 "cinsinden)."
 
-#: data/org.gnome.totem.gschema.xml.in:39
+#: data/org.gnome.totem.gschema.xml.in:49
 msgid "Subtitle font"
 msgstr "Alt yazı yazı tipi"
 
-#: data/org.gnome.totem.gschema.xml.in:40
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Pango font description for subtitle rendering."
 msgstr "Alt yazı çizimi için Pango yazı tipi tanımlaması."
 
-#: data/org.gnome.totem.gschema.xml.in:43
+#: data/org.gnome.totem.gschema.xml.in:53
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
 
-#: data/org.gnome.totem.gschema.xml.in:50
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Subtitle encoding"
 msgstr "Alt yazı kodlaması"
 
-#: data/org.gnome.totem.gschema.xml.in:51
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid "Encoding character set for subtitle."
 msgstr "Alt yazı için karakter kodlaması."
 
-#: data/org.gnome.totem.gschema.xml.in:55
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Default location for the “Open…” dialogs"
 msgstr "“Aç…” iletişim pencereleri için öntanımlı konum"
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.totem.gschema.xml.in:66
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
 "“Aç…” iletişim pencereleri için öntanımlı konum. Öntanımlı konum geçerli "
 "dizindir."
 
-#: data/org.gnome.totem.gschema.xml.in:60
+#: data/org.gnome.totem.gschema.xml.in:70
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "“Ekran Görüntüsü Al” iletişim pencereleri için öntanımlı konum"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.totem.gschema.xml.in:71
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -160,47 +176,47 @@ msgstr ""
 "“Ekran Görüntüsü Al” iletişim pencereleri için öntanımlı konum. Öntanımlı "
 "konum Ekran Görüntüleri dizinidir."
 
-#: data/org.gnome.totem.gschema.xml.in:65
+#: data/org.gnome.totem.gschema.xml.in:75
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr ""
 "Kulanıcının ev dizinindeki eklentilerin etkisizleştirilip "
 "etkisizleştirilmeyeceği"
 
-#: data/org.gnome.totem.gschema.xml.in:69
+#: data/org.gnome.totem.gschema.xml.in:79
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Klavye kısayollarının devre dışı bırakılması"
 
-#: data/org.gnome.totem.gschema.xml.in:73
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Bir film yüklendiğinde metin alt yazıların kendiliğinden yüklenip "
 "yüklenmeyeceği"
 
-#: data/org.gnome.totem.gschema.xml.in:77
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Active plugins list"
 msgstr "Etkin eklentiler listesi"
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "Şu anda etkin (kurulu ve çalışır) olan eklentilerin ad listesi."
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:92
 msgid "Directories to show"
 msgstr "Gösterilecek dizinler"
 
-#: data/org.gnome.totem.gschema.xml.in:83
+#: data/org.gnome.totem.gschema.xml.in:93
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Göz atma arayüzünde gösterilecek dizinler (öntanımlı olarak hiçbiri "
 "gösterilmez)"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:97
 msgid "Disable hardware decoders"
 msgstr "Donanım çözücüleri devre dışı bırak"
 
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/org.gnome.totem.gschema.xml.in:98
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
@@ -208,7 +224,7 @@ msgstr ""
 "Donanım çözücüleri devre dışı bırak ve yalnızca yazılım çözücüleri kullan. "
 "Yalnızca hata ayıklama amaçları için."
 
-#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:56
 msgid "Back"
 msgstr "Geri"
 
@@ -669,13 +685,14 @@ msgstr "Web Videosu Ekle"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Açmak istediğiniz dosyanın _adresini giriniz:"
 
-#: data/uri.ui:45 src/totem-uri.c:384 src/totem-uri.c:445
-#: src/plugins/screenshot/totem-gallery.c:73
-#: src/plugins/screenshot/totem-gallery-progress.c:82
+#: data/uri.ui:45 src/totem-uri.c:383 src/totem-uri.c:451
+#: src/plugins/screenshot/gallery.ui:37
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: data/uri.ui:54 src/totem-uri.c:446
+#: data/uri.ui:54 src/totem-uri.c:451
 msgid "_Add"
 msgstr "_Ekle"
 
@@ -684,7 +701,7 @@ msgid "Password requested for RTSP server"
 msgstr "RTSP sunucusu için parola isteniyor"
 
 #: src/backend/bacon-video-widget.c:3262
-msgid "Could not initialise OpenGL support."
+msgid "Could not initialize OpenGL support."
 msgstr "OpenGL desteği başlatılamadı."
 
 #: src/backend/bacon-video-widget.c:3272
@@ -962,15 +979,15 @@ msgstr "Göz Atma Hatası"
 msgid "Search Error"
 msgstr "Arama Hatası"
 
-#: src/totem-grilo.c:1313
+#: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Yerel"
 
-#: src/totem-grilo.c:1916 src/plugins/properties/properties.ui:722
+#: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Kanallar"
 
-#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:180
 msgid "Click on items to select them"
 msgstr "Seçmek için ögelere tıkla"
 
@@ -993,15 +1010,15 @@ msgstr "_Yerel Video Ekle…"
 msgid "Add _Web Video…"
 msgstr "_Web Videosu Ekle…"
 
-#: src/totemmaintoolbar.ui:104
+#: src/totemmaintoolbar.ui:103
 msgid "Select"
 msgstr "Seç"
 
-#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
+#: src/totemmaintoolbar.ui:128 src/totemmaintoolbar.ui:131
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/totemmaintoolbar.ui:150
+#: src/totemmaintoolbar.ui:149
 msgid "Search"
 msgstr "Ara"
 
@@ -1024,16 +1041,16 @@ msgstr "Kendiliğinden"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: src/totem-object.c:1412 src/totem-options.c:38
+#: src/totem-object.c:1396 src/totem-options.c:38
 msgid "Pause"
 msgstr "Beklet"
 
-#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
-#: src/totemselectiontoolbar.ui:46
+#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Oynat"
 
-#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
+#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videolar “%s”i oynatamadı."
@@ -1046,11 +1063,11 @@ msgstr "Videolar yardım içeriğini gösteremiyor."
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: src/totem-object.c:3965
+#: src/totem-object.c:3936
 msgid "Videos could not startup."
 msgstr "Videolar başlatılamadı."
 
-#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Neden yok."
 
@@ -1120,30 +1137,30 @@ msgstr "Kuyruğa ekleme ve yer değiştirme aynı anda yapılamaz"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:220
+#: src/totem-playlist.c:259
 #, c-format
 msgid "Title %d"
 msgstr "Başlık %d"
 
-#: src/totem-playlist.c:1017
+#: src/totem-playlist.c:1074
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr "“%s” çalma listesi ayrıştırılamıyor, hasarlı olabilir."
 
-#: src/totemselectiontoolbar.ui:18
+#: src/totemselectiontoolbar.ui:19
 msgid "Add to Favourites"
 msgstr "Sık Kullanılanlara Ekle"
 
-#: src/totemselectiontoolbar.ui:43
+#: src/totemselectiontoolbar.ui:44
 msgctxt "button"
 msgid "Play"
 msgstr "Oynat"
 
-#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
+#: src/totemselectiontoolbar.ui:65 src/totemselectiontoolbar.ui:69
 msgid "Shuffle"
 msgstr "Karıştır"
 
-#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
+#: src/totemselectiontoolbar.ui:86 src/totemselectiontoolbar.ui:90
 msgid "Delete"
 msgstr "Sil"
 
@@ -1300,25 +1317,17 @@ msgstr "Video dosyaları"
 msgid "Subtitle files"
 msgstr "Alt yazı dosyaları"
 
-#: src/totem-uri.c:381
+#: src/totem-uri.c:380
 msgid "Select Text Subtitles"
 msgstr "Metin Alt Yazılarını Seç"
 
-#: src/totem-uri.c:385
+#: src/totem-uri.c:383
 msgid "_Open"
 msgstr "_Aç"
 
-#: src/totem-uri.c:442
+#: src/totem-uri.c:448
 msgid "Add Videos"
 msgstr "Video Ekle"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Apple Trailers"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Apple Trailers sitesi için tarayıcı kimliğini ayarlar"
 
 #: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoload Subtitles"
@@ -1357,7 +1366,7 @@ msgstr "Dizin aç"
 msgid "Open the directory of the currently playing movie"
 msgstr "Şu anda oynatılan filmin klasörünü aç"
 
-#: src/plugins/open-directory/totem-open-directory.c:149
+#: src/plugins/open-directory/totem-open-directory.c:154
 msgid "Open Containing Folder"
 msgstr "İçeren Klasörü Aç"
 
@@ -1369,39 +1378,39 @@ msgstr "Alt Yazı İndirici"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Şu anda oynatılan filme alt yazı ara"
 
-#: src/plugins/opensubtitles/opensubtitles.py:49
+#: src/plugins/opensubtitles/opensubtitles.py:48
 msgid "Brazilian Portuguese"
 msgstr "Brezilya Portekizcesi"
 
-#: src/plugins/opensubtitles/opensubtitles.py:191
+#: src/plugins/opensubtitles/opensubtitles.py:190
 msgid "Searching for subtitles…"
 msgstr "Alt yazılar aranıyor…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:616
+#: src/plugins/opensubtitles/opensubtitles.py:234
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "Alt yazılar indiriliyor…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:298
+#: src/plugins/opensubtitles/opensubtitles.py:297
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles web sitesine bağlanılamadı"
 
-#: src/plugins/opensubtitles/opensubtitles.py:330
-#: src/plugins/opensubtitles/opensubtitles.py:343
-#: src/plugins/opensubtitles/opensubtitles.py:361
+#: src/plugins/opensubtitles/opensubtitles.py:329
+#: src/plugins/opensubtitles/opensubtitles.py:342
+#: src/plugins/opensubtitles/opensubtitles.py:360
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles web sitesine ulaşılamadı."
 
-#: src/plugins/opensubtitles/opensubtitles.py:349
+#: src/plugins/opensubtitles/opensubtitles.py:348
 msgid "No results found."
 msgstr "Sonuç bulunamadı."
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:534
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "Film Alt Yazılarını İn_dir…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:573
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "Alt yazılar aranıyor…"
 
@@ -1447,34 +1456,34 @@ msgstr "Film Özellikleri"
 msgid "Adds movie properties menu item"
 msgstr "Film özellikleri menü ögesini ekler"
 
-#: src/plugins/properties/totem-movie-properties.c:130
+#: src/plugins/properties/totem-movie-properties.c:129
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:274
+#: src/plugins/properties/totem-movie-properties.c:273
 msgid "_Properties"
 msgstr "Ö_zellikler"
 
@@ -1664,27 +1673,27 @@ msgstr "Etkileşimli Python uçbirimi"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:61
+#: src/plugins/pythonconsole/pythonconsole.py:60
 msgid "_Python Console"
 msgstr "_Python Uçbirimi"
 
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:67
+#: src/plugins/pythonconsole/pythonconsole.py:66
 msgid "Python Debugger"
 msgstr "Python Hata Ayıklayıcı"
 
 #. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:78
+#: src/plugins/pythonconsole/pythonconsole.py:77
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Totem.Object’e, “totem_object” üzerinden erişebilirsiniz :\\n%s"
 
-#: src/plugins/pythonconsole/pythonconsole.py:82
+#: src/plugins/pythonconsole/pythonconsole.py:81
 msgid "Videos Python Console"
 msgstr "Videolar Python Uçbirimi"
 
 #. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:92
+#: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1710,11 +1719,11 @@ msgstr "Döndürme Eklentisi"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Eğer yanlış yönelimdeyseler videoları döndürmeyi sağlar"
 
-#: src/plugins/rotation/totem-rotation.c:243
+#: src/plugins/rotation/totem-rotation.c:242
 msgid "_Rotate ↷"
 msgstr "_Döndür ↷"
 
-#: src/plugins/rotation/totem-rotation.c:247
+#: src/plugins/rotation/totem-rotation.c:246
 msgid "Rotate ↶"
 msgstr "Döndür ↶"
 
@@ -1726,22 +1735,22 @@ msgstr "Kopya Kaydet"
 msgid "Save a copy of the currently playing movie"
 msgstr "Şu anda oynatılan filmin kopyasını kaydet"
 
-#: src/plugins/save-file/totem-save-file.c:76
+#: src/plugins/save-file/totem-save-file.c:75
 msgid "The video could not be made available offline."
 msgstr "Video çevrim dışı kullanılamaz."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:78
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "“Files” is not available."
 msgstr "“Dosyalar” kullanılamaz."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:159
+#: src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Film"
 
-#: src/plugins/save-file/totem-save-file.c:442
+#: src/plugins/save-file/totem-save-file.c:441
 msgid "Make Available Offline"
 msgstr "Çevrim Dışı Kullanıma Hazırla"
 
@@ -1753,43 +1762,29 @@ msgstr "Ekran Koruyucu"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Film oynatılırken ekran koruyucuyu devre dışı bırakır"
 
-#: src/plugins/screensaver/totem-screensaver.c:58
+#: src/plugins/screensaver/totem-screensaver.c:57
 msgid "Playing a movie"
 msgstr "Film oynatılıyor"
 
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "Ekran görüntüsü genişliği (piksel olarak):"
+#: src/plugins/screenshot/gallery.ui:32
+msgid "Create Gallery"
+msgstr "Galeri Oluştur"
 
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "Ekran görüntülerinin sayısını hesapla"
+#: src/plugins/screenshot/gallery.ui:47
+msgid "Create"
+msgstr "Oluştur"
 
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "Ekran görüntüleri sayısı:"
+#: src/plugins/screenshot/gallery.ui:79
+msgid "Screenshot width (in pixels)"
+msgstr "Ekran görüntüsü genişliği (piksel olarak)"
 
-#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-#. * same as used in GNOME Shell:
-#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
-#: src/plugins/screenshot/screenshot-filename-builder.c:86
-msgid "Screenshots"
-msgstr "Ekran Görüntüleri"
+#: src/plugins/screenshot/gallery.ui:92
+msgid "Add number of screenshots"
+msgstr "Ekran görüntüsü sayısı ekle"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "Ekran Görüntüsü - %s.png"
-
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:146
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "Ekran Görüntüsü - %s - %d.png"
+#: src/plugins/screenshot/gallery.ui:98
+msgid "Number of screenshots"
+msgstr "Ekran görüntüsü sayısı"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1799,48 +1794,44 @@ msgstr "Ekran Görüntüsü"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Videoların ekran görüntülerinin alınmasını sağlar"
 
-#: src/plugins/screenshot/totem-gallery.c:67
-msgid "Save Gallery"
-msgstr "Galeriyi Kaydet"
-
-#: src/plugins/screenshot/totem-gallery.c:74
-msgid "_Save"
-msgstr "_Kaydet"
-
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:91
+#: src/plugins/screenshot/totem-gallery.c:104
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galeri-%s-%d.jpg"
 
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:80
-msgid "Creating Gallery…"
-msgstr "Galeri Oluşturuluyor…"
+#: src/plugins/screenshot/totem-gallery.c:106
+#: src/plugins/screenshot/totem-screenshot-plugin.c:176
+msgid "Save Gallery"
+msgstr "Galeriyi Kaydet"
 
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:86
-#, c-format
-msgid "Saving gallery as “%s”"
-msgstr "Galeri, “%s” olarak kaydediliyor"
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
+msgid "_Save"
+msgstr "_Kaydet"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:203
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "Videos could not get a screenshot of the video."
 msgstr "Videolar, video için ekran görüntüsü alamadı."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Bu olmamalıydı, lütfen hata raporu oluşturun."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:302
+#: src/plugins/screenshot/totem-screenshot-plugin.c:174
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "Ekran Görüntüsü - %s.png"
+
+#: src/plugins/screenshot/totem-screenshot-plugin.c:259
 msgid "Take _Screenshot"
 msgstr "Ekran _Görüntüsü Al"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:308
+#: src/plugins/screenshot/totem-screenshot-plugin.c:265
 msgid "Create Screenshot _Gallery…"
 msgstr "Ekran _Görüntüsü Galerisi Oluştur…"
 
@@ -1886,11 +1877,3 @@ msgstr "Değişken Oran"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
 msgid "Provides the variable rate menu item"
 msgstr "Değişken oran menü ögesini sağlar"
-
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
-
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Vimeo sitesi için tarayıcı kimliğini ayarlar"
