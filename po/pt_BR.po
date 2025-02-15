@@ -1,6 +1,6 @@
 # Brazilian Portuguese translation for totem.
 # This file is distributed under the same license as the totem package.
-# Copyright (C) 2022 Free Software Foundation, Inc.
+# Copyright (C) 2025 Free Software Foundation, Inc.
 # Raphael Higino <In memoriam>, 2007.
 # Irapuan Pascoal <irapuan.menezes@gmail.com>, 2007.
 # Leonardo Ferreira Fontenelle <leonardof@gnome.org>, 2008.
@@ -12,25 +12,25 @@
 # Fernando Paladini <fnpaladini@gmail.com>, 2013.
 # Fábio Nogueira <deb-user-ba@ubuntu.com>, 2014.
 # Enrico Nicoletto <liverig@gmail.com>, 2013-2016.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2012-2022.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2022.
 # Alex Jr <alexalencarjr@outlook.com>, 2023.
 # Juliano de Souza Camargo <julianosc@pm.me>, 2023.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2012-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2023-11-23 13:16+0000\n"
-"PO-Revision-Date: 2023-12-02 13:55-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
+"POT-Creation-Date: 2025-02-13 05:46+0000\n"
+"PO-Revision-Date: 2025-02-14 23:11-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 45.3\n"
+"X-Generator: Gtranslator 47.1\n"
 "X-Project-Style: gnome\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: totem\n"
@@ -39,7 +39,7 @@ msgstr ""
 "X-DL-State: Translating\n"
 
 #: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1907
+#: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -70,7 +70,7 @@ msgstr ""
 "capacidade de aumentar e diminuir a velocidade de reprodução, criar galerias "
 "de capturas de tela, e suporte à gravação de DVDs."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:38
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
 msgid "The GNOME developers"
 msgstr "Os desenvolvedores do GNOME"
 
@@ -81,43 +81,57 @@ msgstr "@APPLICATION_NAME@"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
-msgstr ""
-"Vídeo;Filme;Movie;Clipe;Série;Séries;Player;Reprodutor;DVD;VCD;TV;Disco;"
-"Totem;"
+msgstr "Vídeo;Filme;Movie;Clipe;Série;Séries;Player;Reprodutor;DVD;VCD;TV;Disco;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
+msgid "Window maximized"
+msgstr "Janela maximizada"
+
+#: data/org.gnome.totem.gschema.xml.in:7
+msgid "Window maximized state"
+msgstr "Estado de janela maximizada"
+
+#: data/org.gnome.totem.gschema.xml.in:11
+msgid "Window size"
+msgstr "Tamanho da janela"
+
+#: data/org.gnome.totem.gschema.xml.in:12
+msgid "Window size (width and height)."
+msgstr "Tamanho da janela (largura e altura)."
+
+#: data/org.gnome.totem.gschema.xml.in:16
 msgid "The brightness of the video"
 msgstr "O brilho do vídeo"
 
-#: data/org.gnome.totem.gschema.xml.in:10
+#: data/org.gnome.totem.gschema.xml.in:20
 msgid "The contrast of the video"
 msgstr "O contraste do vídeo"
 
-#: data/org.gnome.totem.gschema.xml.in:14
+#: data/org.gnome.totem.gschema.xml.in:24
 msgid "The hue of the video"
 msgstr "A tonalidade do vídeo"
 
-#: data/org.gnome.totem.gschema.xml.in:18
+#: data/org.gnome.totem.gschema.xml.in:28
 msgid "The saturation of the video"
 msgstr "A saturação do vídeo"
 
-#: data/org.gnome.totem.gschema.xml.in:22
+#: data/org.gnome.totem.gschema.xml.in:32
 msgid "Repeat mode"
 msgstr "Modo de repetição"
 
-#: data/org.gnome.totem.gschema.xml.in:26
+#: data/org.gnome.totem.gschema.xml.in:36
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Desativar o desentrelaçamento para filmes entrelaçados"
 
-#: data/org.gnome.totem.gschema.xml.in:30
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Type of audio output to use"
 msgstr "Tipo de saída de áudio para usar"
 
-#: data/org.gnome.totem.gschema.xml.in:34
+#: data/org.gnome.totem.gschema.xml.in:44
 msgid "Network buffering threshold"
 msgstr "Limite de armazenamento em buffer de rede"
 
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.totem.gschema.xml.in:45
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -125,41 +139,41 @@ msgstr ""
 "Quantidade de dados em buffer para os fluxos de rede antes de iniciar a "
 "exibição da transmissão (em segundos)."
 
-#: data/org.gnome.totem.gschema.xml.in:39
+#: data/org.gnome.totem.gschema.xml.in:49
 msgid "Subtitle font"
 msgstr "Fonte das legendas"
 
-#: data/org.gnome.totem.gschema.xml.in:40
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Pango font description for subtitle rendering."
 msgstr "Descrição da fonte Pango para renderização das legendas."
 
-#: data/org.gnome.totem.gschema.xml.in:43
+#: data/org.gnome.totem.gschema.xml.in:53
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
 
-#: data/org.gnome.totem.gschema.xml.in:50
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Subtitle encoding"
 msgstr "Codificação das legendas"
 
-#: data/org.gnome.totem.gschema.xml.in:51
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid "Encoding character set for subtitle."
 msgstr "Codificação de caractere definido para legendas."
 
-#: data/org.gnome.totem.gschema.xml.in:55
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Default location for the “Open…” dialogs"
 msgstr "Local padrão para os diálogos “Abrir…”"
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.totem.gschema.xml.in:66
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr "Local padrão para os diálogos “Abrir…”. O padrão é o diretório atual."
 
-#: data/org.gnome.totem.gschema.xml.in:60
+#: data/org.gnome.totem.gschema.xml.in:70
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Local padrão para os diálogos “Capturar tela”"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.totem.gschema.xml.in:71
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -167,24 +181,24 @@ msgstr ""
 "Local padrão para os diálogos “Capturar tela”. O padrão é o diretório "
 "“Capturas de tela”."
 
-#: data/org.gnome.totem.gschema.xml.in:65
+#: data/org.gnome.totem.gschema.xml.in:75
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "Desativar os plug-ins na pasta pessoal (home) do usuário"
 
-#: data/org.gnome.totem.gschema.xml.in:69
+#: data/org.gnome.totem.gschema.xml.in:79
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Desativar os atalhos de teclado"
 
-#: data/org.gnome.totem.gschema.xml.in:73
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Carregar automaticamente os arquivos de legenda quando um filme for carregado"
 
-#: data/org.gnome.totem.gschema.xml.in:77
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Active plugins list"
 msgstr "Lista de plug-ins ativos"
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -192,19 +206,19 @@ msgstr ""
 "Uma lista dos nomes dos plug-ins que estão atualmente ativos (carregados e "
 "em execução)."
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:92
 msgid "Directories to show"
 msgstr "Diretórios para mostrar"
 
-#: data/org.gnome.totem.gschema.xml.in:83
+#: data/org.gnome.totem.gschema.xml.in:93
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Diretórios para mostrar na interface do navegador; nenhum por padrão"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:97
 msgid "Disable hardware decoders"
 msgstr "Desabilitar decodificadores de hardware"
 
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/org.gnome.totem.gschema.xml.in:98
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
@@ -212,7 +226,7 @@ msgstr ""
 "Desabilita os decodificadores de hardware e usa apenas decodificadores de "
 "software. Apenas para fins de depuração."
 
-#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:56
 msgid "Back"
 msgstr "Voltar"
 
@@ -672,13 +686,14 @@ msgstr "Adicionar vídeo da web"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Insira o _endereço do arquivo que você gostaria de abrir:"
 
-#: data/uri.ui:45 src/totem-uri.c:384 src/totem-uri.c:445
-#: src/plugins/screenshot/totem-gallery.c:73
-#: src/plugins/screenshot/totem-gallery-progress.c:82
+#: data/uri.ui:45 src/totem-uri.c:383 src/totem-uri.c:451
+#: src/plugins/screenshot/gallery.ui:37
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: data/uri.ui:54 src/totem-uri.c:446
+#: data/uri.ui:54 src/totem-uri.c:451
 msgid "_Add"
 msgstr "_Adicionar"
 
@@ -687,8 +702,8 @@ msgid "Password requested for RTSP server"
 msgstr "Requisição de senha para servidor RTSP"
 
 #: src/backend/bacon-video-widget.c:3262
-msgid "Could not initialise OpenGL support."
-msgstr "Não foi possível inicializar o suporte a OpenGL"
+msgid "Could not initialize OpenGL support."
+msgstr "Não foi possível inicializar o suporte a OpenGL."
 
 #: src/backend/bacon-video-widget.c:3272
 msgid "The DVD device you specified seems to be invalid."
@@ -974,15 +989,15 @@ msgstr "Erro do navegador"
 msgid "Search Error"
 msgstr "Erro de busca"
 
-#: src/totem-grilo.c:1313
+#: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Local"
 
-#: src/totem-grilo.c:1916 src/plugins/properties/properties.ui:722
+#: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "Canais"
 
-#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:180
 msgid "Click on items to select them"
 msgstr "Clique nos itens para selecioná-los"
 
@@ -1006,15 +1021,15 @@ msgstr "Adicionar vídeo _local…"
 msgid "Add _Web Video…"
 msgstr "Adicionar vídeo da _web…"
 
-#: src/totemmaintoolbar.ui:104
+#: src/totemmaintoolbar.ui:103
 msgid "Select"
 msgstr "Selecionar"
 
-#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
+#: src/totemmaintoolbar.ui:128 src/totemmaintoolbar.ui:131
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/totemmaintoolbar.ui:150
+#: src/totemmaintoolbar.ui:149
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -1037,16 +1052,16 @@ msgstr "Automático"
 msgid "None"
 msgstr "Nenhum"
 
-#: src/totem-object.c:1412 src/totem-options.c:38
+#: src/totem-object.c:1396 src/totem-options.c:38
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
-#: src/totemselectiontoolbar.ui:46
+#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Reproduzir"
 
-#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
+#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "O aplicativo Vídeos não conseguiu reproduzir “%s”."
@@ -1059,11 +1074,11 @@ msgstr "O aplicativo Videos não conseguiu exibir o conteúdo da ajuda."
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
-#: src/totem-object.c:3965
+#: src/totem-object.c:3936
 msgid "Videos could not startup."
 msgstr "O aplicativo Vídeos não conseguiu ser iniciado."
 
-#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Sem motivo."
 
@@ -1133,31 +1148,31 @@ msgstr "Não é possível enfileirar e substituir ao mesmo tempo"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:220
+#: src/totem-playlist.c:259
 #, c-format
 msgid "Title %d"
 msgstr "Título %d"
 
-#: src/totem-playlist.c:1017
+#: src/totem-playlist.c:1074
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "A lista de reprodução “%s” não pôde ser analisada. Ela pode estar danificada."
 
-#: src/totemselectiontoolbar.ui:18
+#: src/totemselectiontoolbar.ui:19
 msgid "Add to Favourites"
 msgstr "Adicionar a favoritos"
 
-#: src/totemselectiontoolbar.ui:43
+#: src/totemselectiontoolbar.ui:44
 msgctxt "button"
 msgid "Play"
 msgstr "Reproduzir"
 
-#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
+#: src/totemselectiontoolbar.ui:65 src/totemselectiontoolbar.ui:69
 msgid "Shuffle"
 msgstr "Aleatório"
 
-#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
+#: src/totemselectiontoolbar.ui:86 src/totemselectiontoolbar.ui:90
 msgid "Delete"
 msgstr "Excluir"
 
@@ -1314,25 +1329,17 @@ msgstr "Arquivos de vídeo"
 msgid "Subtitle files"
 msgstr "Arquivos de legendas"
 
-#: src/totem-uri.c:381
+#: src/totem-uri.c:380
 msgid "Select Text Subtitles"
 msgstr "Selecionar legendas de texto"
 
-#: src/totem-uri.c:385
+#: src/totem-uri.c:383
 msgid "_Open"
 msgstr "_Abrir"
 
-#: src/totem-uri.c:442
+#: src/totem-uri.c:448
 msgid "Add Videos"
 msgstr "Adicionar vídeos"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Trailers da Apple"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Define o agente do usuário para o site de trailers da Apple"
 
 #: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoload Subtitles"
@@ -1372,7 +1379,7 @@ msgstr "Abrir diretório"
 msgid "Open the directory of the currently playing movie"
 msgstr "Abre o diretório do filme que está em reprodução"
 
-#: src/plugins/open-directory/totem-open-directory.c:149
+#: src/plugins/open-directory/totem-open-directory.c:154
 msgid "Open Containing Folder"
 msgstr "Abrir pastas recipiente"
 
@@ -1384,39 +1391,39 @@ msgstr "Buscador de legendas"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Procura por legendas para o filme atual"
 
-#: src/plugins/opensubtitles/opensubtitles.py:49
+#: src/plugins/opensubtitles/opensubtitles.py:48
 msgid "Brazilian Portuguese"
 msgstr "Português do Brasil"
 
-#: src/plugins/opensubtitles/opensubtitles.py:191
+#: src/plugins/opensubtitles/opensubtitles.py:190
 msgid "Searching for subtitles…"
 msgstr "Procurando legendas…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:616
+#: src/plugins/opensubtitles/opensubtitles.py:234
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "Baixando legendas…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:298
+#: src/plugins/opensubtitles/opensubtitles.py:297
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Não foi possível contactar o site OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:330
-#: src/plugins/opensubtitles/opensubtitles.py:343
-#: src/plugins/opensubtitles/opensubtitles.py:361
+#: src/plugins/opensubtitles/opensubtitles.py:329
+#: src/plugins/opensubtitles/opensubtitles.py:342
+#: src/plugins/opensubtitles/opensubtitles.py:360
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Não foi possível contactar o site OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:349
+#: src/plugins/opensubtitles/opensubtitles.py:348
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:534
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "Bai_xar legendas de filmes…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:573
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "Procurando legendas…"
 
@@ -1462,34 +1469,34 @@ msgstr "Propriedades do filme"
 msgid "Adds movie properties menu item"
 msgstr "Adiciona item de menu de propriedades do filme"
 
-#: src/plugins/properties/totem-movie-properties.c:130
+#: src/plugins/properties/totem-movie-properties.c:129
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:274
+#: src/plugins/properties/totem-movie-properties.c:273
 msgid "_Properties"
 msgstr "_Propriedades"
 
@@ -1699,27 +1706,27 @@ msgstr "Console interativo do Python"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:61
+#: src/plugins/pythonconsole/pythonconsole.py:60
 msgid "_Python Console"
 msgstr "Console do _Python"
 
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:67
+#: src/plugins/pythonconsole/pythonconsole.py:66
 msgid "Python Debugger"
 msgstr "Depurador do Python"
 
 #. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:78
+#: src/plugins/pythonconsole/pythonconsole.py:77
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Você pode acessar o Totem.Object através do “totem_object” :\\n%s"
 
-#: src/plugins/pythonconsole/pythonconsole.py:82
+#: src/plugins/pythonconsole/pythonconsole.py:81
 msgid "Videos Python Console"
 msgstr "Console Python do Vídeos"
 
 #. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:92
+#: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1746,11 +1753,11 @@ msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr ""
 "Permite que os vídeos sejam girados se eles estiverem o orientação errada"
 
-#: src/plugins/rotation/totem-rotation.c:243
+#: src/plugins/rotation/totem-rotation.c:242
 msgid "_Rotate ↷"
 msgstr "Gi_rar ↷"
 
-#: src/plugins/rotation/totem-rotation.c:247
+#: src/plugins/rotation/totem-rotation.c:246
 msgid "Rotate ↶"
 msgstr "Girar ↶"
 
@@ -1762,22 +1769,22 @@ msgstr "Salvar cópia"
 msgid "Save a copy of the currently playing movie"
 msgstr "Salvar uma cópia do filme que está em reprodução"
 
-#: src/plugins/save-file/totem-save-file.c:76
+#: src/plugins/save-file/totem-save-file.c:75
 msgid "The video could not be made available offline."
 msgstr "O vídeo não pôde ser disponibilizado desconectado."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:78
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "“Files” is not available."
 msgstr "O “Arquivos” não está disponível."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:159
+#: src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Filme"
 
-#: src/plugins/save-file/totem-save-file.c:442
+#: src/plugins/save-file/totem-save-file.c:441
 msgid "Make Available Offline"
 msgstr "Deixar disponível quando desconectado"
 
@@ -1789,43 +1796,29 @@ msgstr "Protetor de tela"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Desativa a proteção de tela quando estiver reproduzindo um filme"
 
-#: src/plugins/screensaver/totem-screensaver.c:58
+#: src/plugins/screensaver/totem-screensaver.c:57
 msgid "Playing a movie"
 msgstr "Reproduzindo um filme"
 
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "Largura da captura de tela (em pixels):"
+#: src/plugins/screenshot/gallery.ui:32
+msgid "Create Gallery"
+msgstr "Criar galeria"
 
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "Calcular o número de capturas de tela"
+#: src/plugins/screenshot/gallery.ui:47
+msgid "Create"
+msgstr "Criar"
 
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "Número de capturas de tela:"
+#: src/plugins/screenshot/gallery.ui:79
+msgid "Screenshot width (in pixels)"
+msgstr "Largura da captura de tela (em pixels)"
 
-#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-#. * same as used in GNOME Shell:
-#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
-#: src/plugins/screenshot/screenshot-filename-builder.c:86
-msgid "Screenshots"
-msgstr "Capturas de tela"
+#: src/plugins/screenshot/gallery.ui:92
+msgid "Add number of screenshots"
+msgstr "Adicionar número de capturas de tela"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "Captura de tela de %s.png"
-
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:146
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "Captura de tela de %s - %d.png"
+#: src/plugins/screenshot/gallery.ui:98
+msgid "Number of screenshots"
+msgstr "Número de capturas de tela"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1835,48 +1828,44 @@ msgstr "Captura de tela"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Permite que capturas de telas e galerias sejam tiradas de vídeos"
 
-#: src/plugins/screenshot/totem-gallery.c:67
-msgid "Save Gallery"
-msgstr "Salvar galeria"
-
-#: src/plugins/screenshot/totem-gallery.c:74
-msgid "_Save"
-msgstr "_Salvar"
-
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:91
+#: src/plugins/screenshot/totem-gallery.c:104
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galeria-%s-%d.jpg"
 
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:80
-msgid "Creating Gallery…"
-msgstr "Criando galeria…"
+#: src/plugins/screenshot/totem-gallery.c:106
+#: src/plugins/screenshot/totem-screenshot-plugin.c:176
+msgid "Save Gallery"
+msgstr "Salvar galeria"
 
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:86
-#, c-format
-msgid "Saving gallery as “%s”"
-msgstr "Salvando galeria como “%s”"
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
+msgid "_Save"
+msgstr "_Salvar"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:203
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "Videos could not get a screenshot of the video."
 msgstr "Vídeos não conseguiu obter uma captura de tela do vídeo."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Isso não deveria acontecer; por favor, relate o erro."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:302
+#: src/plugins/screenshot/totem-screenshot-plugin.c:174
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "Captura de tela de %s.png"
+
+#: src/plugins/screenshot/totem-screenshot-plugin.c:259
 msgid "Take _Screenshot"
 msgstr "Obter cap_tura de tela"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:308
+#: src/plugins/screenshot/totem-screenshot-plugin.c:265
 msgid "Create Screenshot _Gallery…"
 msgstr "Criar uma _galeria de capturas de tela…"
 
@@ -1923,13 +1912,31 @@ msgstr "Taxa variável"
 msgid "Provides the variable rate menu item"
 msgstr "Fornece o item de menu de taxa variável"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#~ msgid "Apple Trailers"
+#~ msgstr "Trailers da Apple"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Define o agente do usuário para o site Vimeo"
+#~ msgid "Sets the user agent for the Apple Trailers site"
+#~ msgstr "Define o agente do usuário para o site de trailers da Apple"
+
+#~ msgid "Calculate the number of screenshots"
+#~ msgstr "Calcular o número de capturas de tela"
+
+#~ msgid "Screenshots"
+#~ msgstr "Capturas de tela"
+
+#, c-format
+#~ msgid "Screenshot from %s - %d.png"
+#~ msgstr "Captura de tela de %s - %d.png"
+
+#, c-format
+#~ msgid "Saving gallery as “%s”"
+#~ msgstr "Salvando galeria como “%s”"
+
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
+
+#~ msgid "Sets the user agent for the Vimeo site"
+#~ msgstr "Define o agente do usuário para o site Vimeo"
 
 #~ msgid "Select Subtitle Font"
 #~ msgstr "Selecionar fonte da legenda"
