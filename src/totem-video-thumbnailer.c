@@ -638,7 +638,7 @@ int main (int argc, char *argv[])
 	PRINT_PROGRESS (6.0);
 
 	if (time_limit != FALSE)
-		totem_resources_monitor_start (input, 0);
+		totem_resources_monitor_start (input, 0, verbose);
 
 	PROGRESS_DEBUG("About to open video file");
 

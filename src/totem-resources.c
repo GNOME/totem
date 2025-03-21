@@ -29,7 +29,7 @@ static guint sleep_time = DEFAULT_SLEEP_TIME;
 static gboolean finished = TRUE;
 
 static void
-set_resource_limits (const char *input)
+set_resource_limits (const char *input, gboolean verbose)
 {
 #ifdef G_OS_UNIX
 	struct rlimit limit;
@@ -88,9 +88,9 @@ time_monitor (gpointer data)
 }
 
 void
-totem_resources_monitor_start (const char *input, gint wall_clock_time)
+totem_resources_monitor_start (const char *input, gint wall_clock_time, gboolean verbose)
 {
-	set_resource_limits (input);
+	set_resource_limits (input, verbose);
 
 	if (wall_clock_time < 0)
 		return;
