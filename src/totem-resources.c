@@ -61,6 +61,10 @@ set_resource_limits (const char *input, gboolean verbose)
 	limit.rlim_cur = MAX_HELPER_SECONDS;
 	limit.rlim_max = MAX_HELPER_SECONDS;
 	setrlimit (RLIMIT_CPU, &limit);
+
+	if (verbose)
+		g_message ("Setting limit to %lu MB RAM usage and %d seconds CPU time",
+			   max / 1024 / 1024, MAX_HELPER_SECONDS);
 #else
 #warning unimplemented
 #endif
