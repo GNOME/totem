@@ -17,7 +17,7 @@ Development version which can be installed with this command:
 flatpak install --user https://flathub.org/beta-repo/appstream/org.gnome.Totem.Devel.flatpakref
 ```
 
-See below for details about how to file bugs.
+See [DEBUGGING.md](DEBUGGING.md) for details on how to file bugs.
 
 ## Dependencies
 
@@ -42,13 +42,6 @@ are listed in the table below.
 - Nifty media player icon by [Jakub Steiner](https://gitlab.gnome.org/jimmac)
 - UI help by Seth Nickell and William Jon McCann
 - For code copyright, see the [COPYING file](COPYING)
-
-## Bugs
-
-Bugs should be filed in the [GNOME GitLab](https://gitlab.gnome.org/GNOME/totem/issues/).
-
-If the problem happens with a single video, please make sure to share it either
-through the issue tracker, or through a third-party service if the file is too big.
 
 ## Thanks
 
