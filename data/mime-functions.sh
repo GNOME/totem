@@ -8,7 +8,7 @@ get_audio_mimetypes ()
 
 get_video_mimetypes ()
 {
-	MIMETYPES=`grep -v '^#' $1 | grep -v x-content/ | grep -v audio | grep -v "application/x-flac" | grep -v "text/google-video-pointer" | grep -v "application/x-quicktime-media-link" | grep -v -E 'application/*smil*' | grep -v "application/xspf+xml" | grep -v "mpegurl" | grep -v -E 'application/[a-z-]*ogg'`
+	MIMETYPES=`grep -v '^#' $1 | grep -v x-content/ | grep -v audio | grep -v "application/x-flac" | grep -v "text/google-video-pointer" | grep -v "application/x-quicktime-media-link" | grep -v -E 'application/.*smil.*' | grep -v "application/xspf+xml" | grep -v "mpegurl" | grep -v -E 'application/[a-z-]*ogg'`
 	MIMETYPES="$MIMETYPES audio/x-pn-realaudio"
 }
 
