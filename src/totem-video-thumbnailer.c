@@ -357,6 +357,38 @@ thumb_app_start (ThumbApp *app)
 	return async_received;
 }
 
+/* Manually set number of worker threads for decoders in order to reduce memory
+ * usage on setups with many cores, see
+ * https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/4423 */
+static void
+element_setup_cb (GstElement * playbin, GstElement * element, gpointer udata)
+{
+	gchar *name;
+
+	name = gst_element_get_name (element);
+	if (g_str_has_prefix (name, "avdec_")) {
+		GObjectClass *gobject_class;
+		GParamSpec *pspec;
+
+		gobject_class = G_OBJECT_GET_CLASS (element);
+		pspec = g_object_class_find_property (gobject_class, "max-threads");
+
+		if (pspec) {
+			PROGRESS_DEBUG("Setting max-threads to 1 for %s", name);
+			g_object_set (element, "max-threads", 1, NULL);
+		}
+	} else if (g_str_has_prefix (name, "dav1ddec")) {
+		PROGRESS_DEBUG("Setting n-threads to 1 for %s", name);
+		g_object_set (element, "n-threads", 1, NULL);
+	} else if (g_str_has_prefix (name, "vp8dec") ||
+		   g_str_has_prefix (name, "vp9dec")) {
+		PROGRESS_DEBUG("Setting threads to 1 for %s", name);
+		g_object_set (element, "threads", 1, NULL);
+	}
+
+	g_free (name);
+}
+
 static void
 thumb_app_setup_play (ThumbApp *app)
 {
@@ -373,6 +405,8 @@ thumb_app_setup_play (ThumbApp *app)
 		      "video-sink", video_sink,
 		      "flags", GST_PLAY_FLAG_VIDEO | GST_PLAY_FLAG_AUDIO,
 		      NULL);
+
+	g_signal_connect (play, "element-setup", G_CALLBACK (element_setup_cb), NULL);
 
 	app->play = play;
 
