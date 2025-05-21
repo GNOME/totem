@@ -1,5 +1,21 @@
 New features and significant updates in version...
 
+Major changes in 43.2:
+- Implement a gtksink video output fallback if native OpenGL support is
+  not available.
+- Fix a lot of thumbnailing failures caused by memory hungry video decoders
+- Hide the rotate menu items if rotation is not supported
+- Fix some AVI files not being associated correctly
+- Fix widget focus when starting video playback
+- Fix left-over files when streaming a video and the player is closed
+- Fix window not being matched to the application under Wayland
+- Stop using gnome-shell to flash the screenshot area, that stopped
+  working a long time ago
+- Stop thumbnailing m3u playlists
+- Remove obsolete plugins (apple-trailers, vimeo)
+- Fix a number of possible crashers
+- Translation updates
+
 Major changes in 43.1:
 - Fix scroll-by-page GTK setting breaking slider
 - Fix a number of MPRIS playback controls not working correctly
