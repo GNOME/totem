@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2024-11-25 05:05+0000\n"
-"PO-Revision-Date: 2024-12-29 00:57+0300\n"
+"POT-Creation-Date: 2025-05-10 22:47+0000\n"
+"PO-Revision-Date: 2025-05-29 00:36+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -51,7 +51,7 @@ msgstr ""
 "субцітраў, змяненне хуткасці прайгравання, стварэнне галерэі здымкаў экрана, "
 "запіс DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:39
+#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
 msgid "The GNOME developers"
 msgstr "Распрацоўшчыкі GNOME"
 
@@ -63,41 +63,58 @@ msgstr "@НАЗВА_ПРАГРАМЫ@"
 #: data/org.gnome.Totem.desktop.in.in:6
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr ""
-"Відэа;Фільм;Кіно;Кліп;Серыял;Прайгравальнік;Плэер;DVD;TV;ТВ;тб;Дыск;Татэм;"
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;Відэа;Фільм;Кіно;Кліп;"
+"Серыял;Прайгравальнік;Плэер;DVD;TV;ТВ;тб;Дыск;Татэм;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
+msgid "Window maximized"
+msgstr "Разгортванне акна"
+
+#: data/org.gnome.totem.gschema.xml.in:7
+msgid "Window maximized state"
+msgstr "Стан акна – разгорнута"
+
+#: data/org.gnome.totem.gschema.xml.in:11
+msgid "Window size"
+msgstr "Памер акна"
+
+#: data/org.gnome.totem.gschema.xml.in:12
+msgid "Window size (width and height)."
+msgstr "Памер акна (шырыня і вышыня)."
+
+#: data/org.gnome.totem.gschema.xml.in:16
 msgid "The brightness of the video"
 msgstr "Яркасць відэа"
 
-#: data/org.gnome.totem.gschema.xml.in:10
+#: data/org.gnome.totem.gschema.xml.in:20
 msgid "The contrast of the video"
 msgstr "Кантраснасць відэа"
 
-#: data/org.gnome.totem.gschema.xml.in:14
+#: data/org.gnome.totem.gschema.xml.in:24
 msgid "The hue of the video"
 msgstr "Тон відэа"
 
-#: data/org.gnome.totem.gschema.xml.in:18
+#: data/org.gnome.totem.gschema.xml.in:28
 msgid "The saturation of the video"
 msgstr "Насычанасць відэа"
 
-#: data/org.gnome.totem.gschema.xml.in:22
+#: data/org.gnome.totem.gschema.xml.in:32
 msgid "Repeat mode"
 msgstr "Рэжым паўтору"
 
-#: data/org.gnome.totem.gschema.xml.in:26
+#: data/org.gnome.totem.gschema.xml.in:36
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Ці трэба адключыць дэінтэрлэйсінг для празрадковага відэа"
 
-#: data/org.gnome.totem.gschema.xml.in:30
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Type of audio output to use"
 msgstr "Тып аўдыявываду"
 
-#: data/org.gnome.totem.gschema.xml.in:34
+#: data/org.gnome.totem.gschema.xml.in:44
 msgid "Network buffering threshold"
 msgstr "Парог сеткавага буферавання"
 
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.totem.gschema.xml.in:45
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -105,43 +122,43 @@ msgstr ""
 "Колькасць сеткавых даных для буферавання, патрэбная для пачатку паказу (у "
 "секундах)."
 
-#: data/org.gnome.totem.gschema.xml.in:39
+#: data/org.gnome.totem.gschema.xml.in:49
 msgid "Subtitle font"
 msgstr "Шрыфт субцітраў"
 
-#: data/org.gnome.totem.gschema.xml.in:40
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Pango font description for subtitle rendering."
 msgstr "Апісанне шрыфту Pango для паказу субцітраў."
 
-#: data/org.gnome.totem.gschema.xml.in:43
+#: data/org.gnome.totem.gschema.xml.in:53
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "'UTF-8'"
 
-#: data/org.gnome.totem.gschema.xml.in:50
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Subtitle encoding"
 msgstr "Кадаванне субцітраў"
 
-#: data/org.gnome.totem.gschema.xml.in:51
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid "Encoding character set for subtitle."
 msgstr "Набор сімвалаў для кадавання субцітраў."
 
-#: data/org.gnome.totem.gschema.xml.in:55
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Default location for the “Open…” dialogs"
 msgstr "Прадвызначанае размяшчэнне для акна «Адкрыць...»"
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.totem.gschema.xml.in:66
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
 "Прадвызначанае размяшчэнне для акна «Адкрыць...». Прадвызначана гэта бягучы "
 "каталог."
 
-#: data/org.gnome.totem.gschema.xml.in:60
+#: data/org.gnome.totem.gschema.xml.in:70
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "Прадвызначанае размяшчэнне для акна «Зрабіць здымак экрана»"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.totem.gschema.xml.in:71
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -149,42 +166,42 @@ msgstr ""
 "Прадвызначанае размяшчэнне для акна «Зрабіць здымак экрана». Прадвызначана "
 "гэта каталог Здымкі экрана."
 
-#: data/org.gnome.totem.gschema.xml.in:65
+#: data/org.gnome.totem.gschema.xml.in:75
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "Ці трэба адключыць плагіны ў хатняй папцы карыстальніка"
 
-#: data/org.gnome.totem.gschema.xml.in:69
+#: data/org.gnome.totem.gschema.xml.in:79
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Ці трэба адключыць спалучэнні клавіш"
 
-#: data/org.gnome.totem.gschema.xml.in:73
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Ці трэба аўтаматычна загружаць субцітры пры адкрыцці фільма"
 
-#: data/org.gnome.totem.gschema.xml.in:77
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Active plugins list"
 msgstr "Спіс актыўных плагінаў"
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "Спіс назваў актыўных плагінаў (загружаных і дзейных)."
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:92
 msgid "Directories to show"
 msgstr "Каталогі, якія трэба паказаць"
 
-#: data/org.gnome.totem.gschema.xml.in:83
+#: data/org.gnome.totem.gschema.xml.in:93
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
 "Каталогі, якія трэба паказваць у аглядальніку, прадвызначанае значэнне пустое"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:97
 msgid "Disable hardware decoders"
 msgstr "Адключыць апаратныя сродкі дэкадавання"
 
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/org.gnome.totem.gschema.xml.in:98
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
@@ -192,7 +209,7 @@ msgstr ""
 "Адключыць апаратныя сродкі дэкадавання і выкарыстоўваць толькі праграмныя. "
 "Толькі дзеля адладкі."
 
-#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:56
 msgid "Back"
 msgstr "Назад"
 
@@ -652,13 +669,14 @@ msgstr "Новае сеціўнае відэа"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Увядзіце _адрас файла, які вы хочаце адкрыць:"
 
-#: data/uri.ui:45 src/totem-uri.c:384 src/totem-uri.c:445
-#: src/plugins/screenshot/totem-gallery.c:73
-#: src/plugins/screenshot/totem-gallery-progress.c:82
+#: data/uri.ui:45 src/totem-uri.c:383 src/totem-uri.c:451
+#: src/plugins/screenshot/gallery.ui:37
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
 msgid "_Cancel"
 msgstr "_Скасаваць"
 
-#: data/uri.ui:54 src/totem-uri.c:446
+#: data/uri.ui:54 src/totem-uri.c:451
 msgid "_Add"
 msgstr "_Дадаць"
 
@@ -970,7 +988,7 @@ msgstr "На камп'ютары"
 msgid "Channels"
 msgstr "Каналы"
 
-#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:180
 msgid "Click on items to select them"
 msgstr "Націсніце, каб вылучыць"
 
@@ -995,15 +1013,15 @@ msgstr "Дадаць відэа з _камп'ютара…"
 msgid "Add _Web Video…"
 msgstr "Дадаць відэа з _сеткі…"
 
-#: src/totemmaintoolbar.ui:104
+#: src/totemmaintoolbar.ui:103
 msgid "Select"
 msgstr "Вылучыць"
 
-#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
+#: src/totemmaintoolbar.ui:128 src/totemmaintoolbar.ui:131
 msgid "Cancel"
 msgstr "Скасаваць"
 
-#: src/totemmaintoolbar.ui:150
+#: src/totemmaintoolbar.ui:149
 msgid "Search"
 msgstr "Пошук"
 
@@ -1026,16 +1044,16 @@ msgstr "Аўтаматычна"
 msgid "None"
 msgstr "Няма"
 
-#: src/totem-object.c:1412 src/totem-options.c:38
+#: src/totem-object.c:1396 src/totem-options.c:38
 msgid "Pause"
 msgstr "Прыпыніць"
 
-#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
-#: src/totemselectiontoolbar.ui:46
+#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Прайграваць"
 
-#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
+#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Не ўдалося прайграць «%s»."
@@ -1048,11 +1066,11 @@ msgstr "Не ўдалося паказаць змест даведкі."
 msgid "An error occurred"
 msgstr "Узнікла памылка"
 
-#: src/totem-object.c:3965
+#: src/totem-object.c:3936
 msgid "Videos could not startup."
 msgstr "Не ўдалося запусціць Відэа."
 
-#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Без прычыны."
 
@@ -1122,32 +1140,32 @@ msgstr "Немагчыма адначасова дадаць у чаргу і з
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:220
+#: src/totem-playlist.c:259
 #, c-format
 msgid "Title %d"
 msgstr "Загаловак %d"
 
-#: src/totem-playlist.c:1017
+#: src/totem-playlist.c:1074
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "Не ўдалося разабраць структуру спіса прайгравання «%s». Магчыма, ён "
 "пашкоджаны."
 
-#: src/totemselectiontoolbar.ui:18
+#: src/totemselectiontoolbar.ui:19
 msgid "Add to Favourites"
 msgstr "Дадаць у абранае"
 
-#: src/totemselectiontoolbar.ui:43
+#: src/totemselectiontoolbar.ui:44
 msgctxt "button"
 msgid "Play"
 msgstr "Прайграць"
 
-#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
+#: src/totemselectiontoolbar.ui:65 src/totemselectiontoolbar.ui:69
 msgid "Shuffle"
 msgstr "Выпадковы парадак"
 
-#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
+#: src/totemselectiontoolbar.ui:86 src/totemselectiontoolbar.ui:90
 msgid "Delete"
 msgstr "Выдаліць"
 
@@ -1304,25 +1322,17 @@ msgstr "Відэафайлы"
 msgid "Subtitle files"
 msgstr "Файлы субцітраў"
 
-#: src/totem-uri.c:381
+#: src/totem-uri.c:380
 msgid "Select Text Subtitles"
 msgstr "Выбар субцітраў"
 
-#: src/totem-uri.c:385
+#: src/totem-uri.c:383
 msgid "_Open"
 msgstr "_Адкрыць"
 
-#: src/totem-uri.c:442
+#: src/totem-uri.c:448
 msgid "Add Videos"
 msgstr "Новыя відэа"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Трэйлеры Apple"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Прызначае кліенцкага агента карыстальніка для сайта трэйлераў Apple"
 
 #: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoload Subtitles"
@@ -1362,7 +1372,7 @@ msgstr "Адкрыць каталог"
 msgid "Open the directory of the currently playing movie"
 msgstr "Адкрыць каталог размяшчэння адкрытага відэа"
 
-#: src/plugins/open-directory/totem-open-directory.c:149
+#: src/plugins/open-directory/totem-open-directory.c:154
 msgid "Open Containing Folder"
 msgstr "Адкрыць папку, якая змяшчае файл"
 
@@ -1374,39 +1384,39 @@ msgstr "Спампоўванне субцітраў"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Пошук субцітраў да адкрытага фільма"
 
-#: src/plugins/opensubtitles/opensubtitles.py:49
+#: src/plugins/opensubtitles/opensubtitles.py:48
 msgid "Brazilian Portuguese"
 msgstr "Бразільская партугальская"
 
-#: src/plugins/opensubtitles/opensubtitles.py:191
+#: src/plugins/opensubtitles/opensubtitles.py:190
 msgid "Searching for subtitles…"
 msgstr "Пошук субцітраў…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:616
+#: src/plugins/opensubtitles/opensubtitles.py:234
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "Спампоўванне субцітраў…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:298
+#: src/plugins/opensubtitles/opensubtitles.py:297
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Не ўдалося звязацца з сайтам OpenSubtitles"
 
-#: src/plugins/opensubtitles/opensubtitles.py:330
-#: src/plugins/opensubtitles/opensubtitles.py:343
-#: src/plugins/opensubtitles/opensubtitles.py:361
+#: src/plugins/opensubtitles/opensubtitles.py:329
+#: src/plugins/opensubtitles/opensubtitles.py:342
+#: src/plugins/opensubtitles/opensubtitles.py:360
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Не ўдалося звязацца з сайтам OpenSubtitles."
 
-#: src/plugins/opensubtitles/opensubtitles.py:349
+#: src/plugins/opensubtitles/opensubtitles.py:348
 msgid "No results found."
 msgstr "Нічога не знойдзена."
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:534
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "_Спампаваць субцітры да фільма…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:573
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "Пошук субцітраў…"
 
@@ -1452,34 +1462,34 @@ msgstr "Уласцівасці фільма"
 msgid "Adds movie properties menu item"
 msgstr "Дадае элемент меню для ўласцівасцей фільма"
 
-#: src/plugins/properties/totem-movie-properties.c:130
+#: src/plugins/properties/totem-movie-properties.c:129
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 #, c-format
 msgid "%d kbps"
 msgstr "%d кбіт/с"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Невядомы"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 #, c-format
 msgid "%d Hz"
 msgstr "%d Гц"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Невядомая"
 
-#: src/plugins/properties/totem-movie-properties.c:274
+#: src/plugins/properties/totem-movie-properties.c:273
 msgid "_Properties"
 msgstr "_Уласцівасці"
 
@@ -1680,27 +1690,27 @@ msgstr "Інтэрактыўная кансоль Python"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:61
+#: src/plugins/pythonconsole/pythonconsole.py:60
 msgid "_Python Console"
 msgstr "_Кансоль Python"
 
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:67
+#: src/plugins/pythonconsole/pythonconsole.py:66
 msgid "Python Debugger"
 msgstr "Адладчык Python"
 
 #. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:78
+#: src/plugins/pythonconsole/pythonconsole.py:77
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Атрымаць доступ да Totem.Object можна праз \"totem_object\" :\\n%s"
 
-#: src/plugins/pythonconsole/pythonconsole.py:82
+#: src/plugins/pythonconsole/pythonconsole.py:81
 msgid "Videos Python Console"
 msgstr "Кансоль Python для Відэа"
 
 #. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:92
+#: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1726,11 +1736,11 @@ msgstr "Плагін павароту"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Дазваляе паварочваць відэа з няправільнай арыентацыяй"
 
-#: src/plugins/rotation/totem-rotation.c:243
+#: src/plugins/rotation/totem-rotation.c:242
 msgid "_Rotate ↷"
 msgstr "Па_вярнуць ↷"
 
-#: src/plugins/rotation/totem-rotation.c:247
+#: src/plugins/rotation/totem-rotation.c:246
 msgid "Rotate ↶"
 msgstr "Павярнуць ↶"
 
@@ -1742,22 +1752,22 @@ msgstr "Захаванне копіі"
 msgid "Save a copy of the currently playing movie"
 msgstr "Захаванне копіі адкрытага фільма"
 
-#: src/plugins/save-file/totem-save-file.c:76
+#: src/plugins/save-file/totem-save-file.c:75
 msgid "The video could not be made available offline."
 msgstr "Немагчыма зрабіць відэа даступным у аўтаномным рэжыме."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:78
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "“Files” is not available."
 msgstr "«Файлы» недаступны."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:159
+#: src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Фільм"
 
-#: src/plugins/save-file/totem-save-file.c:442
+#: src/plugins/save-file/totem-save-file.c:441
 msgid "Make Available Offline"
 msgstr "Зрабіць даступным без сеткі"
 
@@ -1769,43 +1779,29 @@ msgstr "Ахоўнік экрана"
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Выключэнне ахоўніка экрана пры прайграванні фільма"
 
-#: src/plugins/screensaver/totem-screensaver.c:58
+#: src/plugins/screensaver/totem-screensaver.c:57
 msgid "Playing a movie"
 msgstr "Прайграванне фільма"
 
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "Шырыня здымка экрана (пікселяў):"
+#: src/plugins/screenshot/gallery.ui:32
+msgid "Create Gallery"
+msgstr "Стварыць галерэю"
 
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "Лічыць колькасць здымкаў экрана"
+#: src/plugins/screenshot/gallery.ui:47
+msgid "Create"
+msgstr "Стварыць"
 
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "Колькасць здымкаў экрана:"
+#: src/plugins/screenshot/gallery.ui:79
+msgid "Screenshot width (in pixels)"
+msgstr "Шырыня здымка экрана (пікселяў)"
 
-#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-#. * same as used in GNOME Shell:
-#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
-#: src/plugins/screenshot/screenshot-filename-builder.c:86
-msgid "Screenshots"
-msgstr "Здымкі экрана"
+#: src/plugins/screenshot/gallery.ui:92
+msgid "Add number of screenshots"
+msgstr "Дадаць колькасць здымкаў экрана"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "Здымак экрана з %s.png"
-
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:146
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "Здымак экрана з %s - %d.png"
+#: src/plugins/screenshot/gallery.ui:98
+msgid "Number of screenshots"
+msgstr "Колькасць здымкаў экрана"
 
 #: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Screenshot"
@@ -1815,48 +1811,44 @@ msgstr "Здымак экрана"
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Дазваляе ствараць здымкі экрана і іх галерэі з кадраў відэа"
 
-#: src/plugins/screenshot/totem-gallery.c:67
-msgid "Save Gallery"
-msgstr "Захаваць галерэю"
-
-#: src/plugins/screenshot/totem-gallery.c:74
-msgid "_Save"
-msgstr "_Захаваць"
-
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:91
+#: src/plugins/screenshot/totem-gallery.c:104
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Галерэя-%s-%d.jpg"
 
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:80
-msgid "Creating Gallery…"
-msgstr "Стварэнне галерэі…"
+#: src/plugins/screenshot/totem-gallery.c:106
+#: src/plugins/screenshot/totem-screenshot-plugin.c:176
+msgid "Save Gallery"
+msgstr "Захаваць галерэю"
 
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:86
-#, c-format
-msgid "Saving gallery as “%s”"
-msgstr "Захаванне галерэі «%s»"
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
+msgid "_Save"
+msgstr "_Захаваць"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:203
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "Videos could not get a screenshot of the video."
 msgstr "Не ўдалося зрабіць здымак гэтага відэа."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Гэта не павінна было здарыцца. Адпраўце справаздачу пра памылку."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:302
+#: src/plugins/screenshot/totem-screenshot-plugin.c:174
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "Здымак экрана з %s.png"
+
+#: src/plugins/screenshot/totem-screenshot-plugin.c:259
 msgid "Take _Screenshot"
 msgstr "Зрабіць _здымак экрана"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:308
+#: src/plugins/screenshot/totem-screenshot-plugin.c:265
 msgid "Create Screenshot _Gallery…"
 msgstr "Стварыць _галерэю здымкаў экрана…"
 
@@ -1903,13 +1895,31 @@ msgstr "Пераменная хуткасць"
 msgid "Provides the variable rate menu item"
 msgstr "Дадае пункт меню «Пераменная хуткасць»"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#~ msgid "Apple Trailers"
+#~ msgstr "Трэйлеры Apple"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Прызначае агента карыстальніка для сайта Vimeo"
+#~ msgid "Sets the user agent for the Apple Trailers site"
+#~ msgstr "Прызначае кліенцкага агента карыстальніка для сайта трэйлераў Apple"
+
+#~ msgid "Calculate the number of screenshots"
+#~ msgstr "Лічыць колькасць здымкаў экрана"
+
+#~ msgid "Screenshots"
+#~ msgstr "Здымкі экрана"
+
+#, c-format
+#~ msgid "Screenshot from %s - %d.png"
+#~ msgstr "Здымак экрана з %s - %d.png"
+
+#, c-format
+#~ msgid "Saving gallery as “%s”"
+#~ msgstr "Захаванне галерэі «%s»"
+
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
+
+#~ msgid "Sets the user agent for the Vimeo site"
+#~ msgstr "Прызначае агента карыстальніка для сайта Vimeo"
 
 #~ msgid "Unable to play the file"
 #~ msgstr "Не ўдалося прайграць файл"
