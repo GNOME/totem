@@ -129,29 +129,6 @@
             ]
         },
         {
-            "name": "gnome-online-accounts",
-            "buildsystem": "meson",
-            "config-opts": [ "-Dgtk_doc=false", "-Dgoabackend=false", "-Dman=false" ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gnome-online-accounts.git"
-                }
-            ]
-        },
-        {
-            "name": "liboauth",
-            "config-opts": [ "--enable-nss" ],
-            "cleanup": [ "/bin/*oauth*", "share/man/man1/*oauth*" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://freefr.dl.sourceforge.net/project/liboauth/liboauth-1.0.3.tar.gz",
-                    "sha256": "0df60157b052f0e774ade8a8bac59d6e8d4b464058cc55f9208d72e41156811f"
-                }
-            ]
-        },
-        {
             "name": "libgdata",
             "buildsystem": "meson",
             "config-opts": [
@@ -160,7 +137,8 @@
                  "-Dgtk_doc=false",
                  "-Dinstalled_tests=false",
                  "-Dintrospection=false",
-                 "-Dvapi=false"
+                 "-Dvapi=false",
+                 "-Dgoa=disabled"
             ],
             "sources": [
                 {
