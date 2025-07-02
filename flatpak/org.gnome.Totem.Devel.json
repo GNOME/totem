@@ -41,24 +41,6 @@
     "modules": [
         "shared-modules/lua5.4/lua-5.4.json",
         {
-            "name": "libsoup-2.4",
-            "buildsystem": "meson",
-            "config-opts": [
-                "-Dvapi=disabled",
-                "-Dtests=false",
-                "-Dtls_check=false",
-                "-Dntlm=disabled",
-                "-Dsysprof=enabled"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/libsoup.git",
-                    "branch": "libsoup-2-74"
-                }
-            ]
-        },
-        {
             "name": "gnome-common",
             "sources": [
                 {
@@ -106,7 +88,7 @@
             "buildsystem": "meson",
             "config-opts": [
                 "-Denable-grl-net=true",
-                "-Dsoup3=false",
+                "-Dsoup3=true",
                 "-Denable-grl-pls=true"
             ],
             "sources": [
@@ -125,26 +107,6 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/librest.git"
-                }
-            ]
-        },
-        {
-            "name": "libgdata",
-            "buildsystem": "meson",
-            "config-opts": [
-                 "-Dalways_build_tests=false",
-                 "-Dgtk=disabled",
-                 "-Dgtk_doc=false",
-                 "-Dinstalled_tests=false",
-                 "-Dintrospection=false",
-                 "-Dvapi=false",
-                 "-Dgoa=disabled"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/libgdata.git",
-                    "branch": "main"
                 }
             ]
         },
@@ -228,7 +190,7 @@
             "config-opts": [
                 "-Denable-filesystem=yes",
                 "-Denable-optical-media=yes",
-                "-Denable-youtube=yes",
+                "-Denable-youtube=no",
                 "-Denable-bookmarks=yes",
                 "-Denable-lua-factory=yes",
                 "-Denable-metadata-store=yes",
