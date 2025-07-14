@@ -240,7 +240,7 @@ if is_stable
     find_program('check-news.sh').full_path(),
     '@0@'.format(meson.project_version()),
     'NEWS',
-    'data/appdata/org.gnome.Totem.appdata.xml.in.in'
+    'data/metainfo/org.gnome.Totem.metainfo.xml.in.in'
   )
 else
   meson.add_dist_script(

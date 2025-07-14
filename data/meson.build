@@ -173,5 +173,5 @@ install_data(
   install_dir: join_paths(totem_datadir, 'GConf', 'gsettings')
 )
 
-subdir('appdata')
+subdir('metainfo')
 subdir('icons')
