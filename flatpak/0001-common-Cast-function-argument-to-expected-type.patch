@@ -1,0 +1,27 @@
+From c9d3679d9060b9afd8ab54d3c3cda462e5b0d49b Mon Sep 17 00:00:00 2001
+From: Carlos Garnacho <carlosg@gnome.org>
+Date: Fri, 17 Jan 2025 08:54:39 +0100
+Subject: [PATCH] common: Cast function argument to expected type
+
+Somehow, gcc >=15 now expects the exact signature for a GThreadFunc
+in g_once().
+---
+ src/libtracker-miners-common/tracker-debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/libtracker-miners-common/tracker-debug.c b/src/libtracker-miners-common/tracker-debug.c
+index 1e911f171810..58d0e3fb9ba1 100644
+--- a/src/libtracker-miners-common/tracker-debug.c
++++ b/src/libtracker-miners-common/tracker-debug.c
+@@ -60,7 +60,7 @@ tracker_miners_get_debug_flags (void)
+ {
+ 	static GOnce once = G_ONCE_INIT;
+ 
+-	g_once (&once, parse_debug_flags, NULL);
++	g_once (&once, (GThreadFunc) parse_debug_flags, NULL);
+ 
+ 	return GPOINTER_TO_INT (once.retval);
+ }
+-- 
+2.50.0
+

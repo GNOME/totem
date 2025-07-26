@@ -136,13 +136,19 @@
                 "-Ddomain_prefix=org.gnome.Totem.Devel",
                 "-Dminer_fs_cache_location=$XDG_CACHE_HOME/totem/miner/files",
                 "-Ddefault_index_recursive_dirs=['&VIDEOS']",
-                "-Ddefault_index_single_dirs=['&DOWNLOAD']"
+                "-Ddefault_index_single_dirs=['&DOWNLOAD']",
+                "-Dfunctional_tests=false",
+                "-Dsandbox_tests=false"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/localsearch.git",
                     "commit": "69471d118d88ae47e950e1bc04b0488fe7c77145"
+                },
+                {
+                    "type": "patch",
+                    "path": "0001-common-Cast-function-argument-to-expected-type.patch"
                 }
             ]
         },
