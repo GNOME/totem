@@ -194,8 +194,6 @@ totem_object_app_open (GApplication  *application,
 	optionstate.had_filenames = (n_files > 0);
 
 	g_application_activate (application);
-	gtk_window_present_with_time (GTK_WINDOW (totem->win),
-				      gtk_get_current_event_time ());
 
 	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
 
@@ -216,8 +214,11 @@ totem_object_app_activate (GApplication *app)
 	totem = TOTEM_OBJECT (app);
 
 	/* Already init'ed? */
-	if (totem->xml != NULL)
+	if (totem->xml != NULL) {
+		gtk_window_present_with_time (GTK_WINDOW (totem->win),
+					      gtk_get_current_event_time ());
 		return;
+	}
 
 	/* Main window */
 	totem->xml = gtk_builder_new_from_resource ("/org/gnome/totem/ui/totem.ui");
