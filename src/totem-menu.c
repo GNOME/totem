@@ -287,7 +287,8 @@ remote_command_cb (GSimpleAction *action,
 
 	totem = TOTEM_OBJECT (user_data);
 
-	g_application_activate (G_APPLICATION (totem));
+	if (totem->xml == NULL)
+		g_application_activate (G_APPLICATION (totem));
 
 	g_variant_get (parameter, "(i&s)", &cmd, &url);
 
