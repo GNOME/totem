@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-02-13 05:46+0000\n"
+"POT-Creation-Date: 2025-08-14 15:27+0000\n"
 "PO-Revision-Date: 2025-02-22 13:45+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
@@ -26,17 +26,17 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Filmy"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "Odtwarzanie filmów"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -48,7 +48,7 @@ msgstr ""
 "filmów udostępnianych w sieci (za pomocą UPnP/DLNA) i filmów z wielu stron "
 "WWW."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -58,20 +58,18 @@ msgstr ""
 "możliwość przyspieszania i spowalniania odtwarzania, tworzenie galerii "
 "zrzutów ekranu i obsługa nagrywania płyt DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
-msgid "The GNOME developers"
-msgstr "Programiści GNOME"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
-msgstr ""
-"Wideo;Video;Nagranie;Film;Klip;Serial;Odtwarzacz;DVD;VCD;SVCD;TV;HDTV;DVB;"
-"Telewizja;Telewizor;Płyta;Multimedia;Media;Napisy;Podpisy;Totem;"
+msgstr "Wideo;Video;Nagranie;Film;Klip;Serial;Odtwarzacz;DVD;VCD;SVCD;TV;HDTV;DVB;Telewizja;Telewizor;Płyta;Multimedia;Media;Napisy;Podpisy;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
 msgid "Window maximized"
@@ -1030,52 +1028,52 @@ msgstr "Anuluj"
 msgid "Search"
 msgstr "Wyszukaj"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "Ścieżka dźwiękowa"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "Napisy"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatyczny"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "Brak"
 
-#: src/totem-object.c:1396 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "Wstrzymuje"
 
-#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Odtwarza"
 
-#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Nie można odtworzyć „%s”."
 
-#: src/totem-object.c:2261
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "Nie można wyświetlić spisu treści pomocy."
 
-#: src/totem-object.c:2508
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: src/totem-object.c:3936
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "Nie można uruchomić programu."
 
-#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Brak powodu."
 
@@ -1337,27 +1335,27 @@ msgstr "_Otwórz"
 msgid "Add Videos"
 msgstr "Dodanie filmów"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "Automatyczne wczytywanie napisów"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "Automatycznie wczytuje napisy tekstowe"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "Stan komunikatora"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Ustawia stan komunikatora na „Zajęty” podczas odtwarzania filmu"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "Interfejs MPRIS usługi D-Bus"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1365,11 +1363,11 @@ msgstr ""
 "Wysyłanie powiadomień o obecnie odtwarzanych filmach i umożliwienie zdalnego "
 "sterowania za pomocą MPRIS."
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "Otwieranie katalogu z filmem"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "Otwiera katalog zawierający obecnie odtwarzany film"
 
@@ -1377,11 +1375,11 @@ msgstr "Otwiera katalog zawierający obecnie odtwarzany film"
 msgid "Open Containing Folder"
 msgstr "Otwórz katalog z filmem"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "Pobieranie napisów"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Wyszukuje napisy do obecnie odtwarzanego filmu"
 
@@ -1455,11 +1453,11 @@ msgstr "Język napisów"
 msgid "The language to search for subtitles for movies in."
 msgstr "Język wyszukiwanych napisów."
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "Właściwości filmu"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "Dodaje menu z właściwościami filmu"
 
@@ -1681,11 +1679,11 @@ msgstr ""
 "programu Totem. W przypadku opuszczenia pola użyte zostanie hasło domyślne "
 "„totem”."
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Konsola języka Python"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "Interaktywna konsola języka Python"
 
@@ -1722,19 +1720,19 @@ msgstr ""
 "lub rpdb2. Jeśli hasło debugowania nie zostało ustawione w DConf, to "
 "zostanie użyte domyślne hasło („totem”)."
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "Ostatnie pliki"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "Dodaje odtworzone filmy do listy ostatnich plików"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "Wtyczka obracania"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Umożliwia obracanie filmów, jeśli mają błędną orientację"
 
@@ -1746,11 +1744,11 @@ msgstr "_Obróć ↷"
 msgid "Rotate ↶"
 msgstr "Obróć ↶"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "Zapis kopii"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "Zapisuje kopię obecnie odtwarzanego filmu"
 
@@ -1773,11 +1771,11 @@ msgstr "Film"
 msgid "Make Available Offline"
 msgstr "Zapisz do oglądania w trybie offline"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "Wygaszacz ekranu"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Wyłącza wygaszacz ekranu podczas odtwarzania filmu"
 
@@ -1805,11 +1803,11 @@ msgstr "Dodanie liczby zrzutów ekranu"
 msgid "Number of screenshots"
 msgstr "Liczba zrzutów ekranu"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Umożliwia wykonywanie zrzutów ekranu i galerii filmów"
 
@@ -1889,10 +1887,10 @@ msgstr "×1,75"
 msgid "Speed: %s"
 msgstr "Prędkość odtwarzania: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "Zmienna prędkość odtwarzania"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Dodaje menu zmiennej prędkości odtwarzania"
