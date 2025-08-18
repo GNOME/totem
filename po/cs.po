@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-01-19 12:03+0000\n"
-"PO-Revision-Date: 2025-01-24 15:52+0100\n"
+"POT-Creation-Date: 2025-08-17 15:20+0000\n"
+"PO-Revision-Date: 2025-08-18 23:28+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -30,19 +30,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Videa"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "Přehrávání filmů"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -54,7 +54,7 @@ msgstr ""
 "sdílených přes místní síť (pomocí UPnP/DLNA) a v hlavních videích z "
 "některých webů."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -63,16 +63,16 @@ msgstr ""
 "Přináší i rozšiřující funkce, jako je stahování titulků, zrychlování a "
 "zpomalování přehrávání, vytváření galerií snímků a podpora nahrávání DVD."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
-msgid "The GNOME developers"
-msgstr "Vývojáři GNOME"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "video;film;klip;seriál;přehrávač;DVD;TV;disk;Totem;"
 
@@ -1054,54 +1054,54 @@ msgstr "Zrušit"
 msgid "Search"
 msgstr "Hledat"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "Zvuková stopa"
 
 # TEST
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "Titulky"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automaticky"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem-object.c:1395 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: src/totem-object.c:1401 src/totem-object.c:1409 src/totem-options.c:37
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Přehrát"
 
-#: src/totem-object.c:1478 src/totem-object.c:1504 src/totem-object.c:2091
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Aplikaci Videa se nezdařilo přehrát „%s“."
 
-#: src/totem-object.c:2260
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "Aplikaci Videa se nezdařilo zobrazit obsah nápovědy."
 
-#: src/totem-object.c:2507
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
-#: src/totem-object.c:3935
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "Aplikaci Videa se nezdařilo spustit."
 
 # :-)
-#: src/totem-object.c:3936 src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Žádný důvod."
 
@@ -1367,28 +1367,28 @@ msgid "Add Videos"
 msgstr "Přidání videí"
 
 # TEST
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "Načítat titulky"
 
 # TEST
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "Automaticky načítá titulky"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "Status komunikátoru"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Při přehrávání filmu nastavuje stav ve vašem komunikátoru na „pryč“"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "Rozhraní MPRIS D-Bus"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1396,12 +1396,12 @@ msgstr ""
 "Zasílá oznámení o právě přehrávaných videích a umožňuje vzdálené ovládání "
 "pomocí MPRIS"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "Otevřít složku"
 
 # TEST
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "Otevřít složku s právě přehráváným filmem"
 
@@ -1410,12 +1410,12 @@ msgid "Open Containing Folder"
 msgstr "Otevřít nadřazenou složku"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "Stahování titulků"
 
 # TEST
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Vyhledává titulky k právě přehrávanému filmu"
 
@@ -1503,11 +1503,11 @@ msgstr "Jazyk titulků"
 msgid "The language to search for subtitles for movies in."
 msgstr "Jazyk, pro který se mají ve filmu hledat titulky."
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "Vlastnosti filmu"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "Přidá do nabídky položku pro vlastnosti filmu"
 
@@ -1729,11 +1729,11 @@ msgstr ""
 "Totem, při neautorizovaném vzdáleném přístupu. Pokud je prázdné, platí "
 "výchozí heslo „totem“."
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Konzola python"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "Interaktivní konzola jazyka Python"
 
@@ -1769,19 +1769,19 @@ msgstr ""
 "nebo rpdb2. Pokud jste nenastavili heslo ladění v GConf, tak se použije "
 "výchozí heslo („totem“)."
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "Nedávné soubory"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "Přidává přehrané soubory do nedávných souborů"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "Otočení"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Umožňuje video otočit v případě, že je otočeno nesprávně"
 
@@ -1794,12 +1794,12 @@ msgid "Rotate ↶"
 msgstr "Otočit ↶"
 
 # TEST
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "Uložit kopii"
 
 # TEST
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "Uložit kopii právě přehráváného filmu"
 
@@ -1823,11 +1823,11 @@ msgstr "Film"
 msgid "Make Available Offline"
 msgstr "Zpřístupnit bez připojení"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "Šetřič obrazovky"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Vypne šetřič obrazovky, když se přehrává film"
 
@@ -1859,11 +1859,11 @@ msgstr "Přidat počet snímků"
 msgid "Number of screenshots"
 msgstr "Počet snímků"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "Snímek záběru"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Umožňuje vytvářet snímky a galerie z přehrávaných videí"
 
@@ -1947,21 +1947,19 @@ msgstr "× 1,75"
 msgid "Speed: %s"
 msgstr "Rychlost: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "Proměnná rychlost"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Poskytuje položku nabídky pro proměnnou rychlost"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Nastaví uživatelského agenta pro server Vimeo"
+#~ msgid "Sets the user agent for the Vimeo site"
+#~ msgstr "Nastaví uživatelského agenta pro server Vimeo"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "Upoutávky Apple"
