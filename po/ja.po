@@ -1,6 +1,6 @@
 # totem ja.po.
 # This file is distributed under the same license as the totem package.
-# Copyright (C) 2002-2010, 2012-2013, 2015, 2018, 2019-2020, 2022 Free Software Foundation, Inc.
+# Copyright (C) 2002-2010, 2012-2013, 2015, 2018, 2019-2020, 2022, 2025 Free Software Foundation, Inc.
 # James Hashida <khashida@redhat.com>, 2002.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2003-2009.
@@ -14,32 +14,34 @@
 # Aefgh39622 <aefgh39622@gmail.com>, 2018.
 # sicklylife <translation@sicklylife.jp>, 2019-2020, 2022.
 # Yuki Okushi <yokushi@gnome.org>, 2023.
+# 小山田 純 <oyamadajun@outlook.jp>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-05-28 21:39+0000\n"
-"PO-Revision-Date: 2025-06-07 22:47+0900\n"
-"Last-Translator: Kusano Takayuki <https://bsky.app/profile/tkusano.jp>\n"
-"Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
+"POT-Creation-Date: 2025-08-30 19:01+0000\n"
+"PO-Revision-Date: 2025-08-31 13:57+0900\n"
+"Last-Translator: 小山田 純 <oyamadajun@outlook.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 48.0\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "ビデオ"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "動画を再生します"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -51,7 +53,7 @@ msgstr ""
 "きます (UPnP/DLNA を使用)。また、様々なウェブサイトのビデオハイライトを楽しむ"
 "こともできます。"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -60,16 +62,16 @@ msgstr ""
 "“ビデオ”では、字幕ダウンローダー、再生速度の変更、スクリーンショットギャラ"
 "リーの作成、DVD の作成といった追加機能が利用できます。"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
-msgid "The GNOME developers"
-msgstr "The GNOME developers"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+msgid "The GNOME Project"
+msgstr "The GNOME Project"
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr ""
 "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;ビデオ;映像;動画;フィル"
@@ -1023,52 +1025,52 @@ msgstr "キャンセル"
 msgid "Search"
 msgstr "検索"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "音声トラック"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "字幕"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "自動"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "なし"
 
-#: src/totem-object.c:1396 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "一時停止"
 
-#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "再生"
 
-#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "“ビデオ”は“%s”を再生できませんでした。"
 
-#: src/totem-object.c:2261
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "“ビデオ”はヘルプの目次を表示できませんでした。"
 
-#: src/totem-object.c:2508
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: src/totem-object.c:3936
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "“ビデオ”を起動できませんでした。"
 
-#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "原因は不明です。"
 
@@ -1330,28 +1332,28 @@ msgstr "開く(_O)"
 msgid "Add Videos"
 msgstr "ビデオを追加"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "字幕の自動読み込み"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "テキスト字幕を自動的に読み込みます"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "インスタントメッセンジャーのステータス"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "動画を再生しているときにインスタントメッセンジャーを離席状態にセットします"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus インターフェース"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1359,11 +1361,11 @@ msgstr ""
 "MPRIS を使用して、現在再生中のビデオの通知を送信し、リモートコントロールを可"
 "能にします。"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "ディレクトリを開く"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "現在再生中の動画のディレクトリを開きます"
 
@@ -1371,11 +1373,11 @@ msgstr "現在再生中の動画のディレクトリを開きます"
 msgid "Open Containing Folder"
 msgstr "これを含むフォルダーを開く"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "字幕ダウンローダー"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "再生中の動画の字幕を探します"
 
@@ -1449,11 +1451,11 @@ msgstr "字幕の言語"
 msgid "The language to search for subtitles for movies in."
 msgstr "動画にある字幕を検索するための言語です。"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "動画のプロパティ"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "動画のプロパティのメニューアイテムを追加します"
 
@@ -1664,11 +1666,11 @@ msgstr ""
 "権限のないリモートアクセスから Totem をデバッグ用 rpdb2 サーバーを保護するた"
 "めのパスワード。空の場合は、デフォルトで“totem”を使用します。"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Python 端末"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "対話式 Python 端末"
 
@@ -1704,19 +1706,19 @@ msgstr ""
 "ります。DConf の設定でデバッガーのパスワードを指定していない場合、デフォルト"
 "のパスワード (“totem”) を使用してください。"
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "最近使用したファイル"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "最近使用したファイルに再生したファイルを追加します"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "回転プラグイン"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "動画の向きが誤っている場合に回転することができます"
 
@@ -1728,11 +1730,11 @@ msgstr "回転 ↷(_R)"
 msgid "Rotate ↶"
 msgstr "回転 ↶"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "コピーを保存する"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "現在再生中の動画を複製します"
 
@@ -1755,11 +1757,11 @@ msgstr "動画"
 msgid "Make Available Offline"
 msgstr "オフラインでも試聴可能にする"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "スクリーンセーバー"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "動画の再生中にスクリーンセーバーを無効にします"
 
@@ -1787,11 +1789,11 @@ msgstr "スクリーンショットの数を追加する"
 msgid "Number of screenshots"
 msgstr "スクリーンショットの総数"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "スクリーンショット"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "ビデオのスクリーンショットやギャラリーを撮ることができます"
 
@@ -1872,11 +1874,11 @@ msgstr "× 1.75"
 msgid "Speed: %s"
 msgstr "速度: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "可変速度"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "速度変更のメニュー項目を提供します"
 
