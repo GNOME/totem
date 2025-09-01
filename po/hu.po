@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-02-22 12:48+0000\n"
-"PO-Revision-Date: 2025-03-06 00:58+0100\n"
+"POT-Creation-Date: 2025-08-31 19:11+0000\n"
+"PO-Revision-Date: 2025-09-01 14:20+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Videók"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "Filmek lejátszása"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -44,7 +44,7 @@ msgstr ""
 "videomegosztásokat (UPnP/DLNA használatával) és videokiemeléseket számos "
 "weboldalról."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -54,16 +54,17 @@ msgstr ""
 "feliratletöltő, a lejátszás gyorsításának vagy lassításának képessége, "
 "képernyőkép-galériák létrehozása és DVD-felvételek támogatása."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
-msgid "The GNOME developers"
-msgstr "A GNOME fejlesztői"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+#| msgid "The GNOME developers"
+msgid "The GNOME Project"
+msgstr "A GNOME projekt"
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "Videó;Mozi;Film;Klip;Sorozat;Lejátszó;Lejátszás;DVD;TV;Lemez;Totem;"
 
@@ -685,7 +686,6 @@ msgid "Password requested for RTSP server"
 msgstr "Az RTSP-kiszolgáló jelszót kér"
 
 #: src/backend/bacon-video-widget.c:3262
-#| msgid "Could not initialise OpenGL support."
 msgid "Could not initialize OpenGL support."
 msgstr "Nem sikerült előkészíteni az OpenGL-támogatást."
 
@@ -1016,52 +1016,52 @@ msgstr "Mégse"
 msgid "Search"
 msgstr "Keresés"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "Hangsáv"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "Felirat"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatikus"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "Nincs"
 
-#: src/totem-object.c:1396 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/totem-object.c:1402 src/totem-object.c:1410 src/totem-options.c:37
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Lejátszás"
 
-#: src/totem-object.c:1479 src/totem-object.c:1505 src/totem-object.c:2092
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "A Videók nem tudta lejátszani a következőt: „%s”."
 
-#: src/totem-object.c:2261
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "A Videók nem tudta megjeleníteni a súgótartalmat."
 
-#: src/totem-object.c:2508
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Hiba történt"
 
-#: src/totem-object.c:3936
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "A Videók nem tudott elindulni."
 
-#: src/totem-object.c:3937 src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Nincs ok."
 
@@ -1323,27 +1323,27 @@ msgstr "_Megnyitás"
 msgid "Add Videos"
 msgstr "Videók hozzáadása"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "Feliratok automatikus betöltése"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "Szöveges feliratok automatikus betöltése"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "Azonnali üzenő állapota"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Az azonnali üzenő állapotának beállítása „távolra” film lejátszásakor"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus felület"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1351,11 +1351,11 @@ msgstr ""
 "Értesítések küldése a jelenleg lejátszott filmekről és távirányítás lehetővé "
 "tétele az MPRIS használatával."
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "Könyvtár megnyitása"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "A jelenleg lejátszott film könyvtárának megnyitása"
 
@@ -1363,11 +1363,11 @@ msgstr "A jelenleg lejátszott film könyvtárának megnyitása"
 msgid "Open Containing Folder"
 msgstr "Tartalmazó mappa megnyitása"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "Feliratletöltő"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Feliratok keresése a jelenleg lejátszott filmhez"
 
@@ -1441,11 +1441,11 @@ msgstr "Felirat nyelve"
 msgid "The language to search for subtitles for movies in."
 msgstr "Filmek feliratának keresése ezen a nyelven."
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "Videotulajdonságok"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "Videotulajdonságok menüpont hozzáadása"
 
@@ -1662,11 +1662,11 @@ msgstr ""
 "jogosultság nélküli távoli hozzáférés ellen. Ha üres, akkor a „totem” kerül "
 "felhasználásra."
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Python konzol"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "Interaktív Python konzol"
 
@@ -1702,19 +1702,19 @@ msgstr ""
 "segítségével csatlakozik hozzá. Ha nem állított be hibakeresési jelszót a "
 "DConf-ban, akkor az alapértelmezett („totem”) kerül használatra."
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "Legutóbbi fájlok"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "A lejátszott fájlok hozzáadása a legutóbbi fájlokhoz"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "Forgatás bővítmény"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Lehetővé teszi a videók forgatását, ha tájolásuk nem megfelelő"
 
@@ -1726,11 +1726,11 @@ msgstr "_Forgatás ↷"
 msgid "Rotate ↶"
 msgstr "Forgatás ↶"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "Másolat mentése"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "A jelenleg lejátszott videó másolása"
 
@@ -1753,11 +1753,11 @@ msgstr "Film"
 msgid "Make Available Offline"
 msgstr "Elérhetővé tétel kapcsolat nélkül"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "Képernyővédő"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Képernyővédő letiltása videó lejátszásakor"
 
@@ -1766,7 +1766,6 @@ msgid "Playing a movie"
 msgstr "Film lejátszása"
 
 #: src/plugins/screenshot/gallery.ui:32
-#| msgid "Creating Gallery…"
 msgid "Create Gallery"
 msgstr "Galéria létrehozása"
 
@@ -1775,25 +1774,22 @@ msgid "Create"
 msgstr "Létrehozás"
 
 #: src/plugins/screenshot/gallery.ui:79
-#| msgid "Screenshot width (in pixels):"
 msgid "Screenshot width (in pixels)"
 msgstr "Képernyőkép szélessége (képpontban)"
 
 #: src/plugins/screenshot/gallery.ui:92
-#| msgid "Number of screenshots:"
 msgid "Add number of screenshots"
 msgstr "Képernyőképek számának hozzáadása"
 
 #: src/plugins/screenshot/gallery.ui:98
-#| msgid "Number of screenshots:"
 msgid "Number of screenshots"
 msgstr "Képernyőképek száma"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "Képernyőkép"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Képernyőképek és galériák készítése videókról"
 
@@ -1875,10 +1871,10 @@ msgstr "× 1,75"
 msgid "Speed: %s"
 msgstr "Sebesség: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "Változó sebesség"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "A változó sebesség menüpontot biztosítja"
