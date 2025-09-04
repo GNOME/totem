@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-01-19 22:58+0000\n"
-"PO-Revision-Date: 2025-01-20 22:10+0100\n"
+"POT-Creation-Date: 2025-08-19 14:14+0000\n"
+"PO-Revision-Date: 2025-08-21 01:28+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "Videoklipp"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "Spela upp filmer"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -43,7 +43,7 @@ msgstr ""
 "video på det lokala nätverket (genom UPnP/DLNA) och videohöjdpunkter från "
 "ett antal webbplatser."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -53,16 +53,16 @@ msgstr ""
 "förmågan att snabba upp eller sakta ner uppspelning, att skapa "
 "skärmbildsgallerier och stöd för dvd-inspelning."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:44
-msgid "The GNOME developers"
-msgstr "GNOME-utvecklarna"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+msgid "The GNOME Project"
+msgstr "GNOME-projektet"
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "Video;Film;Klipp;Serie;Spelare;Uppspelare;DVD;TV;Skiva;Totem;"
 
@@ -1016,52 +1016,52 @@ msgstr "Avbryt"
 msgid "Search"
 msgstr "Sök"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "Ljudspår"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "Undertext"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "Inget"
 
-#: src/totem-object.c:1398 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "Gör paus"
 
-#: src/totem-object.c:1404 src/totem-object.c:1412 src/totem-options.c:37
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
 #: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "Spela upp"
 
-#: src/totem-object.c:1481 src/totem-object.c:1507 src/totem-object.c:2094
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videoklipp kunde inte spela upp ”%s”."
 
-#: src/totem-object.c:2263
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "Videoklipp kunde inte visa hjälpinnehållet."
 
-#: src/totem-object.c:2510
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: src/totem-object.c:3938
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "Videoklipp kunde inte starta."
 
-#: src/totem-object.c:3939 src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "Ingen orsak."
 
@@ -1323,29 +1323,29 @@ msgstr "_Öppna"
 msgid "Add Videos"
 msgstr "Lägg till videoklipp"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "Läs automatiskt in undertexter"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "Läser automatiskt in undertexter"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "Status för snabbmeddelanden"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "Ställ in status för din snabbmeddelandeklient till frånvarande under tiden "
 "en film spelas upp"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "D-Bus-gränssnitt för MPRIS"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1353,11 +1353,11 @@ msgstr ""
 "Skicka aviseringar för videor som spelas och tillåt fjärrstyrning med hjälp "
 "av MPRIS."
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "Öppna katalog"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "Öppna katalogen för den uppspelade filmen"
 
@@ -1365,11 +1365,11 @@ msgstr "Öppna katalogen för den uppspelade filmen"
 msgid "Open Containing Folder"
 msgstr "Öppna innehållande mapp"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "Hämta undertexter"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Leta efter undertexter för den uppspelade filmen"
 
@@ -1443,11 +1443,11 @@ msgstr "Undertextspråk"
 msgid "The language to search for subtitles for movies in."
 msgstr "Språket att söka efter filmundertexter på."
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "Filmegenskaper"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "Lägger till menyobjekt för filmegenskaper"
 
@@ -1664,11 +1664,11 @@ msgstr ""
 "oauktoriserad fjärråtkomst. Om denna är tom så kommer standardvärdet ”totem” "
 "att användas."
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Python-konsol"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "Interaktiv Python-konsol"
 
@@ -1707,19 +1707,19 @@ msgstr ""
 "felsökningslösenord i DConf så kommer det att använda standardlösenordet "
 "(”totem”)."
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "Senaste filer"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "Lägger till filer som har spelats upp till senaste filer"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "Instick för rotering"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Tillåter att videor roteras om de är i fel orientering"
 
@@ -1731,11 +1731,11 @@ msgstr "_Rotera ↷"
 msgid "Rotate ↶"
 msgstr "Rotera ↶"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "Spara kopia"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "Spara en kopia av den uppspelade filmen"
 
@@ -1758,11 +1758,11 @@ msgstr "Film"
 msgid "Make Available Offline"
 msgstr "Gör tillgänglig i frånkopplat läge"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "Skärmsläckare"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Inaktiverar skärmsläckaren när en film spelas upp"
 
@@ -1790,11 +1790,11 @@ msgstr "Lägg till antal skärmbilder"
 msgid "Number of screenshots"
 msgstr "Antal skärmbilder"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "Skärmbild"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "Tillåter att skärmbilder och gallerier tas från videor"
 
@@ -1874,21 +1874,19 @@ msgstr "× 1,75"
 msgid "Speed: %s"
 msgstr "Hastighet: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "Variabel hastighet"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Tillhandahåller menyposten för variabel hastighet"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "Ställer in User-Agent för webbplatsen Vimeo"
+#~ msgid "Sets the user agent for the Vimeo site"
+#~ msgstr "Ställer in User-Agent för webbplatsen Vimeo"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "Apple-trailers"
