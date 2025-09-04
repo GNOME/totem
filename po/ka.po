@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023.
+# Georgian translation for totem.
+# Copyright (C) 2023 THE totem'S authors
+# This file is distributed under the same license as the totem package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2023-10-25 13:49+0000\n"
-"PO-Revision-Date: 2023-11-18 23:35+0100\n"
+"POT-Creation-Date: 2025-09-01 18:43+0000\n"
+"PO-Revision-Date: 2025-09-04 10:43+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.7\n"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1907
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
+#: src/totem.c:34 src/totem-grilo.c:1897
 msgid "Videos"
 msgstr "ვიდეო"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:7
-#: data/org.gnome.Totem.desktop.in.in:4
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
+#: data/org.gnome.Totem.desktop.in.in:3
 msgid "Play movies"
 msgstr "ფილმების დაკვრა"
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:11
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
 "Videos is the official movie player of the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
@@ -39,7 +39,7 @@ msgstr ""
 "და DVD-ების ძებნადი სიების მხარდაჭერა, ისევე, როგორც ლოკალურ ქსელში "
 "გაზიარებული ვიდეოებს (UPnP/DLNA) და ვიდეოები ცნობილი ვებგვერდებიდან."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
 msgid ""
 "Videos comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, create screenshot galleries, and "
@@ -49,94 +49,110 @@ msgstr ""
 "აჩქარება ან შენელება, ეკრანის ანაბეჭდის გალერეების შექმნა და DVD-ების "
 "ჩაწერის მხარდაჭერა."
 
-#: data/appdata/org.gnome.Totem.appdata.xml.in.in:38
-msgid "The GNOME developers"
-msgstr "GNOME-ის პროგრამისტები"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+msgid "The GNOME Project"
+msgstr "პროექტი \"GNOME\""
 
-#: data/org.gnome.Totem.desktop.in.in:3
+#: data/org.gnome.Totem.desktop.in.in:2
 msgid "@APPLICATION_NAME@"
 msgstr "@APPLICATION_NAME@"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon! Do NOT translate or remove the application name from the list! It is used for search.
-#: data/org.gnome.Totem.desktop.in.in:6
+#: data/org.gnome.Totem.desktop.in.in:5
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 msgstr "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Totem;"
 
 #: data/org.gnome.totem.gschema.xml.in:6
+msgid "Window maximized"
+msgstr "გადიდებული ფანჯარა"
+
+#: data/org.gnome.totem.gschema.xml.in:7
+msgid "Window maximized state"
+msgstr "ფანჯრის სრულად გაშლილი მდგომარეობა"
+
+#: data/org.gnome.totem.gschema.xml.in:11
+msgid "Window size"
+msgstr "ფანჯრის ზომა"
+
+#: data/org.gnome.totem.gschema.xml.in:12
+msgid "Window size (width and height)."
+msgstr "ფანჯრის ზომა (სიგანე, სიმაღლე)"
+
+#: data/org.gnome.totem.gschema.xml.in:16
 msgid "The brightness of the video"
 msgstr "ვიდეოს სიკაშკაშე"
 
-#: data/org.gnome.totem.gschema.xml.in:10
+#: data/org.gnome.totem.gschema.xml.in:20
 msgid "The contrast of the video"
 msgstr "ვიდეოს კონტრასტი"
 
-#: data/org.gnome.totem.gschema.xml.in:14
+#: data/org.gnome.totem.gschema.xml.in:24
 msgid "The hue of the video"
 msgstr "ვიდეოს ტონი"
 
-#: data/org.gnome.totem.gschema.xml.in:18
+#: data/org.gnome.totem.gschema.xml.in:28
 msgid "The saturation of the video"
 msgstr "ვიდეოს გაჯერებულობა"
 
-#: data/org.gnome.totem.gschema.xml.in:22
+#: data/org.gnome.totem.gschema.xml.in:32
 msgid "Repeat mode"
 msgstr "გამეორების რეჟიმი"
 
-#: data/org.gnome.totem.gschema.xml.in:26
+#: data/org.gnome.totem.gschema.xml.in:36
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "გავთიშო თუ არა ხაზგამოტოვების გაუქმება გაზგამოტოვებულ ფილმებში"
 
-#: data/org.gnome.totem.gschema.xml.in:30
+#: data/org.gnome.totem.gschema.xml.in:40
 msgid "Type of audio output to use"
 msgstr "გამოსაყენებელი აუდიოს გამოტნის ტიპი"
 
-#: data/org.gnome.totem.gschema.xml.in:34
+#: data/org.gnome.totem.gschema.xml.in:44
 msgid "Network buffering threshold"
 msgstr "ქსელის ბუფერის ზღვარი"
 
-#: data/org.gnome.totem.gschema.xml.in:35
+#: data/org.gnome.totem.gschema.xml.in:45
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
 msgstr "ნაკადის ჩვენების დაწყებამდე დაკეშილი ბუფერის რაოდენობა (წამებში)."
 
-#: data/org.gnome.totem.gschema.xml.in:39
+#: data/org.gnome.totem.gschema.xml.in:49
 msgid "Subtitle font"
 msgstr "სუბტიტრების ფონტი"
 
-#: data/org.gnome.totem.gschema.xml.in:40
+#: data/org.gnome.totem.gschema.xml.in:50
 msgid "Pango font description for subtitle rendering."
 msgstr "Pango-ის ფონტის აღწერა სუბტიტრის რენდერისთვის."
 
-#: data/org.gnome.totem.gschema.xml.in:43
+#: data/org.gnome.totem.gschema.xml.in:53
 msgctxt "subtitle-encoding"
 msgid "'UTF-8'"
 msgstr "%d წუთი"
 
-#: data/org.gnome.totem.gschema.xml.in:50
+#: data/org.gnome.totem.gschema.xml.in:60
 msgid "Subtitle encoding"
 msgstr "სუბტიტრების კოდირება"
 
-#: data/org.gnome.totem.gschema.xml.in:51
+#: data/org.gnome.totem.gschema.xml.in:61
 msgid "Encoding character set for subtitle."
 msgstr "სუბტიტრების სიმბოლოების კოდირება."
 
-#: data/org.gnome.totem.gschema.xml.in:55
+#: data/org.gnome.totem.gschema.xml.in:65
 msgid "Default location for the “Open…” dialogs"
 msgstr "ნაგულისხმევი მდებარეობა \"გახსნა...\" დიალოგებისთვის"
 
-#: data/org.gnome.totem.gschema.xml.in:56
+#: data/org.gnome.totem.gschema.xml.in:66
 msgid ""
 "Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
 "ნაგულისხმევი მდებარეობა \"გახსნა...\" დიალოგებისთვის.. ნაგულისხმევია "
 "მიმდინარე საქაღალდე."
 
-#: data/org.gnome.totem.gschema.xml.in:60
+#: data/org.gnome.totem.gschema.xml.in:70
 msgid "Default location for the “Take Screenshot” dialogs"
 msgstr "ნაგულისხმევი მდებარეობა \"სწრაფი ასლის აღების\" დიალოგებისთვის"
 
-#: data/org.gnome.totem.gschema.xml.in:61
+#: data/org.gnome.totem.gschema.xml.in:71
 msgid ""
 "Default location for the “Take Screenshot” dialogs. Default is the "
 "Screenshots directory."
@@ -144,41 +160,41 @@ msgstr ""
 "ნაგულისხმევი მდებარეობა \"სწრაფი ასლის აღების\" დიალოგებისთვის. "
 "ნაგულისხმევად - საქაღალდე Screenshots."
 
-#: data/org.gnome.totem.gschema.xml.in:65
+#: data/org.gnome.totem.gschema.xml.in:75
 msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "გამოვრთო თუა რა დამატებები მომხმარებლის საწყის საქაღალდეში"
 
-#: data/org.gnome.totem.gschema.xml.in:69
+#: data/org.gnome.totem.gschema.xml.in:79
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "გამოვრთო თუ არა კლავიატურის მალსახმობები"
 
-#: data/org.gnome.totem.gschema.xml.in:73
+#: data/org.gnome.totem.gschema.xml.in:83
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "ჩაიტვირთება თუ არა ავტომატურად სუბტიტრები ფილმის ჩატვირთვის შემდეგ"
 
-#: data/org.gnome.totem.gschema.xml.in:77
+#: data/org.gnome.totem.gschema.xml.in:87
 msgid "Active plugins list"
 msgstr "აქტიური დამატებების სია"
 
-#: data/org.gnome.totem.gschema.xml.in:78
+#: data/org.gnome.totem.gschema.xml.in:88
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "ამჟამად აქტიური დამატებების სახელების სია (ჩატვირთული და გაშვებული)."
 
-#: data/org.gnome.totem.gschema.xml.in:82
+#: data/org.gnome.totem.gschema.xml.in:92
 msgid "Directories to show"
 msgstr "საჩვენებელი საქაღალდეები"
 
-#: data/org.gnome.totem.gschema.xml.in:83
+#: data/org.gnome.totem.gschema.xml.in:93
 msgid "Directories to show in the browse interface, none by default"
 msgstr "ძებნის ინტერფეისში ნაჩვენები საქაღალდეები. ნაგულისხმევად - არც ერთი"
 
-#: data/org.gnome.totem.gschema.xml.in:87
+#: data/org.gnome.totem.gschema.xml.in:97
 msgid "Disable hardware decoders"
 msgstr "აპრატურული დეკოდერების გამორთვა"
 
-#: data/org.gnome.totem.gschema.xml.in:88
+#: data/org.gnome.totem.gschema.xml.in:98
 msgid ""
 "Disable hardware decoders and use only software decoders. For debugging "
 "purposes only."
@@ -186,7 +202,7 @@ msgstr ""
 "აპარატურული დეკოდერების გათიშვა და, მხოლოდ, პროგრამული დეკოდერების "
 "გამოყენება. მხოლოდ გამართვისთვის."
 
-#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:57
+#: data/totem-player-toolbar.ui:20 src/totemmaintoolbar.ui:56
 msgid "Back"
 msgstr "უკან"
 
@@ -646,13 +662,14 @@ msgstr "ვებ ვიდეოს დამატება"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "შეიყვანეთ ფაილის _მისამართი, რომელიც გნებავთ, გახსნათ:"
 
-#: data/uri.ui:45 src/totem-uri.c:384 src/totem-uri.c:445
-#: src/plugins/screenshot/totem-gallery.c:73
-#: src/plugins/screenshot/totem-gallery-progress.c:82
+#: data/uri.ui:45 src/totem-uri.c:383 src/totem-uri.c:451
+#: src/plugins/screenshot/gallery.ui:37
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
-#: data/uri.ui:54 src/totem-uri.c:446
+#: data/uri.ui:54 src/totem-uri.c:451
 msgid "_Add"
 msgstr "_დამატება"
 
@@ -661,7 +678,7 @@ msgid "Password requested for RTSP server"
 msgstr "RTSP სერვერისთვის მოთხოვნილი პაროლი"
 
 #: src/backend/bacon-video-widget.c:3262
-msgid "Could not initialise OpenGL support."
+msgid "Could not initialize OpenGL support."
 msgstr "OpenGL-ის მხარდაჭერის ინიციალიზაციის შეცდომა."
 
 #: src/backend/bacon-video-widget.c:3272
@@ -938,15 +955,15 @@ msgstr "ბრაუზერის შეცდომა"
 msgid "Search Error"
 msgstr "ძებნის შეცდომა"
 
-#: src/totem-grilo.c:1313
+#: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "ლოკალური"
 
-#: src/totem-grilo.c:1916 src/plugins/properties/properties.ui:722
+#: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
 msgstr "არხები"
 
-#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:181
+#: src/totem-main-toolbar.c:125 src/totemmaintoolbar.ui:180
 msgid "Click on items to select them"
 msgstr "მოსანიშნად დააწკაპუნეთ ელემენტებზე"
 
@@ -969,64 +986,64 @@ msgstr "_ლოკალური ვიდეოს დამატება…
 msgid "Add _Web Video…"
 msgstr "_ვებ ვიდეოს დამატება…"
 
-#: src/totemmaintoolbar.ui:104
+#: src/totemmaintoolbar.ui:103
 msgid "Select"
 msgstr "აირჩიეთ"
 
-#: src/totemmaintoolbar.ui:129 src/totemmaintoolbar.ui:132
+#: src/totemmaintoolbar.ui:128 src/totemmaintoolbar.ui:131
 msgid "Cancel"
 msgstr "გაუქმენა"
 
-#: src/totemmaintoolbar.ui:150
+#: src/totemmaintoolbar.ui:149
 msgid "Search"
 msgstr "ძებნა"
 
-#: src/totem-menu.c:422
+#: src/totem-menu.c:423
 msgid "Audio Track"
 msgstr "აუდიობილიკი"
 
-#: src/totem-menu.c:425
+#: src/totem-menu.c:426
 msgid "Subtitle"
 msgstr "სუბტიტრები"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: src/totem-menu.c:461
+#: src/totem-menu.c:462
 msgctxt "Language"
 msgid "Auto"
 msgstr "ავტომატური"
 
 #. Translators: an entry in the "Subtitles" menu, used to choose the subtitle language of a DVD
-#: src/totem-menu.c:464
+#: src/totem-menu.c:465
 msgid "None"
 msgstr "არაფერი"
 
-#: src/totem-object.c:1412 src/totem-options.c:38
+#: src/totem-object.c:1397 src/totem-options.c:38
 msgid "Pause"
 msgstr "შეჩერება"
 
-#: src/totem-object.c:1418 src/totem-object.c:1426 src/totem-options.c:37
-#: src/totemselectiontoolbar.ui:46
+#: src/totem-object.c:1403 src/totem-object.c:1411 src/totem-options.c:37
+#: src/totemselectiontoolbar.ui:48
 msgid "Play"
 msgstr "დაკვრა"
 
-#: src/totem-object.c:1495 src/totem-object.c:1521 src/totem-object.c:2092
+#: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
 msgid "Videos could not play “%s”."
 msgstr "Videos “%s”-ს ვერ დაუკრავს."
 
-#: src/totem-object.c:2261
+#: src/totem-object.c:2262
 msgid "Videos could not display the help contents."
 msgstr "Videos დახმარების შემცველობას ვერ გაჩვენებთ."
 
-#: src/totem-object.c:2508
+#: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: src/totem-object.c:3965
+#: src/totem-object.c:3937
 msgid "Videos could not startup."
 msgstr "Videos ვერ გაეშვა."
 
-#: src/totem-object.c:3966 src/plugins/screenshot/totem-screenshot-plugin.c:203
+#: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
 msgstr "მიზეზის გარეშე."
 
@@ -1096,31 +1113,31 @@ msgstr "ერთდროულად რიგში ჩასმა და �
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: src/totem-playlist.c:220
+#: src/totem-playlist.c:259
 #, c-format
 msgid "Title %d"
 msgstr "სათაური %d"
 
-#: src/totem-playlist.c:1017
+#: src/totem-playlist.c:1074
 #, c-format
 msgid "The playlist “%s” could not be parsed. It might be damaged."
 msgstr ""
 "დასაკრავი სიის \"%s\" დამუშავება შეუძლებელია. შეიძლება, ის დაზიანებულია."
 
-#: src/totemselectiontoolbar.ui:18
+#: src/totemselectiontoolbar.ui:19
 msgid "Add to Favourites"
 msgstr "რჩეულებში ჩამატება"
 
-#: src/totemselectiontoolbar.ui:43
+#: src/totemselectiontoolbar.ui:44
 msgctxt "button"
 msgid "Play"
 msgstr "დაკვრა"
 
-#: src/totemselectiontoolbar.ui:63 src/totemselectiontoolbar.ui:66
+#: src/totemselectiontoolbar.ui:65 src/totemselectiontoolbar.ui:69
 msgid "Shuffle"
 msgstr "შემთხვევით"
 
-#: src/totemselectiontoolbar.ui:83 src/totemselectiontoolbar.ui:86
+#: src/totemselectiontoolbar.ui:86 src/totemselectiontoolbar.ui:90
 msgid "Delete"
 msgstr "წაშლა"
 
@@ -1277,47 +1294,39 @@ msgstr "ვიდეო ფაილები"
 msgid "Subtitle files"
 msgstr "სუბტიტრების ფაილები"
 
-#: src/totem-uri.c:381
+#: src/totem-uri.c:380
 msgid "Select Text Subtitles"
 msgstr "აირჩიეთ ტექსტის სუბტიტრები"
 
-#: src/totem-uri.c:385
+#: src/totem-uri.c:383
 msgid "_Open"
 msgstr "_გახსნა"
 
-#: src/totem-uri.c:442
+#: src/totem-uri.c:448
 msgid "Add Videos"
 msgstr "ვიდეოების დამატება"
 
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:6
-msgid "Apple Trailers"
-msgstr "Apple Trailers"
-
-#: src/plugins/apple-trailers/apple-trailers.plugin.desktop.in:7
-msgid "Sets the user agent for the Apple Trailers site"
-msgstr "დააყენებს მომხმარებლის აგენტს საიტისთვის Apple Trailers"
-
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:5
 msgid "Autoload Subtitles"
 msgstr "სუბტიტრების ავტომატური ჩატვირთვა"
 
-#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:7
+#: src/plugins/autoload-subtitles/autoload-subtitles.plugin.desktop.in:6
 msgid "Autoloads text subtitles"
 msgstr "ტექსტური სუბტიტრების ავტომატური ჩატვირთვა"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:5
 msgid "Instant Messenger Status"
 msgstr "მყისიერი შეტყობინებების სტატუსი"
 
-#: src/plugins/im-status/totem-im-status.plugin.desktop.in:7
+#: src/plugins/im-status/totem-im-status.plugin.desktop.in:6
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "ფილმის ყურებისას თქვენი ჩატის პროგრამის სტატუსის გასულობაზე დაყენება"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:5
+#: src/plugins/mpris/mpris.plugin.desktop.in:4
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus ინტერფეისი"
 
-#: src/plugins/mpris/mpris.plugin.desktop.in:6
+#: src/plugins/mpris/mpris.plugin.desktop.in:5
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
@@ -1325,59 +1334,59 @@ msgstr ""
 "ამჟამად დაკრულივი ვიდეოების გაფრთხილებების გაგზავნა და დაშორებული კონტროლის "
 "დაშვება MPRIS-ით."
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:5
 msgid "Open directory"
 msgstr "საქაღალდის გახსნა"
 
-#: src/plugins/open-directory/open-directory.plugin.desktop.in:7
+#: src/plugins/open-directory/open-directory.plugin.desktop.in:6
 msgid "Open the directory of the currently playing movie"
 msgstr "ფილმის, რომლის დაკვრაც ახლა მიმდინარეობს, საქაღალდის გახსნა"
 
-#: src/plugins/open-directory/totem-open-directory.c:149
+#: src/plugins/open-directory/totem-open-directory.c:154
 msgid "Open Containing Folder"
 msgstr "შემცველი საქაღალდის გახსნა"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:5
 msgid "Subtitle Downloader"
 msgstr "სუბტიტრების გადმოწერა"
 
-#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:7
+#: src/plugins/opensubtitles/opensubtitles.plugin.desktop.in:6
 msgid "Look for subtitles for the currently playing movie"
 msgstr "ფილმისთვის, რომლის დაკვრაც ახლა მიმდინარეობს, სუბტიტრების მოძებნა"
 
-#: src/plugins/opensubtitles/opensubtitles.py:49
+#: src/plugins/opensubtitles/opensubtitles.py:48
 msgid "Brazilian Portuguese"
 msgstr "ბრაზილიის პორტუგალიური"
 
-#: src/plugins/opensubtitles/opensubtitles.py:191
+#: src/plugins/opensubtitles/opensubtitles.py:190
 msgid "Searching for subtitles…"
 msgstr "სუბტიტრების ძებნა…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:235
-#: src/plugins/opensubtitles/opensubtitles.py:616
+#: src/plugins/opensubtitles/opensubtitles.py:234
+#: src/plugins/opensubtitles/opensubtitles.py:615
 msgid "Downloading the subtitles…"
 msgstr "სუბტიტრების გადმოწერა…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:298
+#: src/plugins/opensubtitles/opensubtitles.py:297
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles-ს ვებგვერდთან მიერთების შეცდომა"
 
-#: src/plugins/opensubtitles/opensubtitles.py:330
-#: src/plugins/opensubtitles/opensubtitles.py:343
-#: src/plugins/opensubtitles/opensubtitles.py:361
+#: src/plugins/opensubtitles/opensubtitles.py:329
+#: src/plugins/opensubtitles/opensubtitles.py:342
+#: src/plugins/opensubtitles/opensubtitles.py:360
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles-ს ვებგვერდთან მიერთების შეცდომა."
 
-#: src/plugins/opensubtitles/opensubtitles.py:349
+#: src/plugins/opensubtitles/opensubtitles.py:348
 msgid "No results found."
 msgstr "შედეგების გარეშე."
 
 #. pylint: disable=no-member
-#: src/plugins/opensubtitles/opensubtitles.py:534
+#: src/plugins/opensubtitles/opensubtitles.py:533
 msgid "_Download Movie Subtitles…"
 msgstr "_ფილმის სუბტიტრების გადმოწერა…"
 
-#: src/plugins/opensubtitles/opensubtitles.py:573
+#: src/plugins/opensubtitles/opensubtitles.py:572
 msgid "Searching subtitles…"
 msgstr "სუბტიტრების ძებნა…"
 
@@ -1415,42 +1424,42 @@ msgstr "სუბტიტრების ენა"
 msgid "The language to search for subtitles for movies in."
 msgstr "ფილმებისთვის მოსაძებნი სუბტიტრების ენა."
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:6
+#: src/plugins/properties/movie-properties.plugin.desktop.in:5
 msgid "Movie Properties"
 msgstr "ფილმის თვისებები"
 
-#: src/plugins/properties/movie-properties.plugin.desktop.in:7
+#: src/plugins/properties/movie-properties.plugin.desktop.in:6
 msgid "Adds movie properties menu item"
 msgstr "მენიუში ფილმის თვისებების პუნქტის დამატება"
 
-#: src/plugins/properties/totem-movie-properties.c:130
+#: src/plugins/properties/totem-movie-properties.c:129
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 #, c-format
 msgid "%d kbps"
 msgstr "%d კბ/წმ"
 
-#: src/plugins/properties/totem-movie-properties.c:133
-#: src/plugins/properties/totem-movie-properties.c:144
+#: src/plugins/properties/totem-movie-properties.c:132
+#: src/plugins/properties/totem-movie-properties.c:143
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 #, c-format
 msgid "%d Hz"
 msgstr "%d ჰც"
 
-#: src/plugins/properties/totem-movie-properties.c:147
+#: src/plugins/properties/totem-movie-properties.c:146
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/plugins/properties/totem-movie-properties.c:274
+#: src/plugins/properties/totem-movie-properties.c:273
 msgid "_Properties"
 msgstr "_პარამეტრები"
 
@@ -1630,37 +1639,37 @@ msgstr ""
 "პაროლი rpdb2 სერვერის დასაცავად, Totem-ის გამართვისას არაავტორიზებული "
 "დაშორებული წვდომისგან. თუ ეს ცარიელია, გამოყენებული იქნება \"totem\"."
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:5
 msgid "Python Console"
 msgstr "Python-ის კონსოლი"
 
-#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:7
+#: src/plugins/pythonconsole/pythonconsole.plugin.desktop.in:6
 msgid "Interactive Python console"
 msgstr "Python-ის ინტერაქტიური კონსოლი"
 
 #. pylint: disable=no-member
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:61
+#: src/plugins/pythonconsole/pythonconsole.py:60
 msgid "_Python Console"
 msgstr "_Python-ის კონსოლი"
 
 #. pylint: disable=no-member
-#: src/plugins/pythonconsole/pythonconsole.py:67
+#: src/plugins/pythonconsole/pythonconsole.py:66
 msgid "Python Debugger"
 msgstr "Python-ს გამმართველი"
 
 #. pylint: disable=E1101
-#: src/plugins/pythonconsole/pythonconsole.py:78
+#: src/plugins/pythonconsole/pythonconsole.py:77
 #, python-format
 msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Totem.Object-თან წვდომა \"totem_object\"-ით შეგიძლიათ:\\n%s"
 
-#: src/plugins/pythonconsole/pythonconsole.py:82
+#: src/plugins/pythonconsole/pythonconsole.py:81
 msgid "Videos Python Console"
 msgstr "Videos-ის Python-ის კონსოლი"
 
 #. pylint: disable=W0613
-#: src/plugins/pythonconsole/pythonconsole.py:92
+#: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
 "After you press OK, Videos will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1670,153 +1679,135 @@ msgstr ""
 "rpdb2-ს მიუერთებთ. თუ გამმართველის პაროლი DConf-ში მითითებული არ გაქვთ, ის "
 "ნაგულისხმევს (\"totem\") გამოიყენებს."
 
-#: src/plugins/recent/recent.plugin.desktop.in:6
+#: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
 msgstr "უკანასკნელი ფაილების სია"
 
-#: src/plugins/recent/recent.plugin.desktop.in:7
+#: src/plugins/recent/recent.plugin.desktop.in:6
 msgid "Adds files that have been played to recent files"
 msgstr "ფაილებს ახლახანს დაკრული ფაილების სიას დაამატებს"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:6
+#: src/plugins/rotation/rotation.plugin.desktop.in:5
 msgid "Rotation Plugin"
 msgstr "დამატება შებრუნებისთვის"
 
-#: src/plugins/rotation/rotation.plugin.desktop.in:7
+#: src/plugins/rotation/rotation.plugin.desktop.in:6
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "არასწორი ორიენტაციის მქონე ვიდეოების მობრუნების დაშვება"
 
-#: src/plugins/rotation/totem-rotation.c:243
+#: src/plugins/rotation/totem-rotation.c:242
 msgid "_Rotate ↷"
 msgstr "_შებრუნება ↷"
 
-#: src/plugins/rotation/totem-rotation.c:247
+#: src/plugins/rotation/totem-rotation.c:246
 msgid "Rotate ↶"
 msgstr "შემობრუნება ↶"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:6
+#: src/plugins/save-file/save-file.plugin.desktop.in:5
 msgid "Save Copy"
 msgstr "ასლის შენახვა"
 
-#: src/plugins/save-file/save-file.plugin.desktop.in:7
+#: src/plugins/save-file/save-file.plugin.desktop.in:6
 msgid "Save a copy of the currently playing movie"
 msgstr "ამჟამად დაკრული ფილმის ასლის შენახვა"
 
-#: src/plugins/save-file/totem-save-file.c:76
+#: src/plugins/save-file/totem-save-file.c:75
 msgid "The video could not be made available offline."
 msgstr "ამ ვიდეოს ხაზგარეშე ვერ უყურებთ."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:78
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "“Files” is not available."
 msgstr "“Files” ხელმისაწვდომი არაა."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:159
+#: src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "ფილმი"
 
-#: src/plugins/save-file/totem-save-file.c:442
+#: src/plugins/save-file/totem-save-file.c:441
 msgid "Make Available Offline"
 msgstr "ინტერნეტის გარეშე წვდომის დაშვება"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:5
 msgid "Screen Saver"
 msgstr "ეკრანის დაცვა"
 
-#: src/plugins/screensaver/screensaver.plugin.desktop.in:7
+#: src/plugins/screensaver/screensaver.plugin.desktop.in:6
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "ფილმის დაკვრისას ეკრანის შემნახველის დეაქტივაცია"
 
-#: src/plugins/screensaver/totem-screensaver.c:58
+#: src/plugins/screensaver/totem-screensaver.c:57
 msgid "Playing a movie"
 msgstr "მიმდინარეობს ფილმის დაკვრა"
 
-#: src/plugins/screenshot/gallery.ui:41
-msgid "Screenshot width (in pixels):"
-msgstr "ეკრანის ანაბეჭდის სიგანე (პიქსელებში):"
+#: src/plugins/screenshot/gallery.ui:32
+msgid "Create Gallery"
+msgstr "გალერეის შექმნა"
 
-#: src/plugins/screenshot/gallery.ui:50
-msgid "Calculate the number of screenshots"
-msgstr "ეკრანის ანაბეჭდების რაოდენობის გამოთვლა"
+#: src/plugins/screenshot/gallery.ui:47
+msgid "Create"
+msgstr "შექმნა"
 
-#: src/plugins/screenshot/gallery.ui:73
-msgid "Number of screenshots:"
-msgstr "ეკრანის ანაბეჭდების რაოდენობა:"
+#: src/plugins/screenshot/gallery.ui:79
+msgid "Screenshot width (in pixels)"
+msgstr "ეკრანის ანაბეჭდის სიგანე (პიქსელებში)"
 
-#. Translators: "Screenshots" is the name of the folder under ~/Pictures for screenshots,
-#. * same as used in GNOME Shell:
-#. * https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/gnome-42/js/ui/screenshot.js#L2072
-#: src/plugins/screenshot/screenshot-filename-builder.c:86
-msgid "Screenshots"
-msgstr "ეკრანის ანაბეჭდები"
+#: src/plugins/screenshot/gallery.ui:92
+msgid "Add number of screenshots"
+msgstr "დაამატეთ ეკრანის ანაბეჭდების რაოდენობა"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:139
-#, c-format
-msgid "Screenshot from %s.png"
-msgstr "ეკრანის ანაბეჭდი %s-დან.png"
+#: src/plugins/screenshot/gallery.ui:98
+msgid "Number of screenshots"
+msgstr "ეკრანის ანაბეჭდების რაოდენობა"
 
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
-#: src/plugins/screenshot/screenshot-filename-builder.c:146
-#, c-format
-msgid "Screenshot from %s - %d.png"
-msgstr "ეკრანის ანაბეჭდი %s - %d.png"
-
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:5
 msgid "Screenshot"
 msgstr "ეკრანის ანაბეჭდი"
 
-#: src/plugins/screenshot/screenshot.plugin.desktop.in:7
+#: src/plugins/screenshot/screenshot.plugin.desktop.in:6
 msgid "Allows screenshots and galleries to be taken of videos"
 msgstr "ვიდეოს ეკრანის ანაბეჭდებისა და გალერეების დაშვება"
-
-#: src/plugins/screenshot/totem-gallery.c:67
-msgid "Save Gallery"
-msgstr "გალერეის შენახვა"
-
-#: src/plugins/screenshot/totem-gallery.c:74
-msgid "_Save"
-msgstr "_შენახვა"
 
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: src/plugins/screenshot/totem-gallery.c:91
+#: src/plugins/screenshot/totem-gallery.c:104
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "გალერეა-%s-%d.jpg"
 
-#. Set up the window
-#: src/plugins/screenshot/totem-gallery-progress.c:80
-msgid "Creating Gallery…"
-msgstr "გალაერეის შექმნა…"
+#: src/plugins/screenshot/totem-gallery.c:106
+#: src/plugins/screenshot/totem-screenshot-plugin.c:176
+msgid "Save Gallery"
+msgstr "გალერეის შენახვა"
 
-#. Set the progress label
-#: src/plugins/screenshot/totem-gallery-progress.c:86
-#, c-format
-msgid "Saving gallery as “%s”"
-msgstr "გალერეის შენახვა სახელით \"%s\""
+#: src/plugins/screenshot/totem-gallery.c:109
+#: src/plugins/screenshot/totem-screenshot-plugin.c:179
+msgid "_Save"
+msgstr "_შენახვა"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:203
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:163
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "Videos could not get a screenshot of the video."
 msgstr "Videos-მა ვიდეოს ეკრანის ანაბეჭდი ვერ გადაიღო."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "ეს არ უნდა მომხდარიყო. გამოგვიგზავნეთ ანგარიში შეცდომის შესახებ."
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:302
+#: src/plugins/screenshot/totem-screenshot-plugin.c:174
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "ეკრანის ანაბეჭდი %s-დან.png"
+
+#: src/plugins/screenshot/totem-screenshot-plugin.c:259
 msgid "Take _Screenshot"
 msgstr "ეკრანის ანაბეჭდის გადაღება"
 
-#: src/plugins/screenshot/totem-screenshot-plugin.c:308
+#: src/plugins/screenshot/totem-screenshot-plugin.c:265
 msgid "Create Screenshot _Gallery…"
 msgstr "ეკრანის ანაბეჭდების _გალერეის შექმნა…"
 
@@ -1855,21 +1846,39 @@ msgstr "× 1.75"
 msgid "Speed: %s"
 msgstr "სიჩქარე: %s"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:5
 msgid "Variable Rate"
 msgstr "ცვლადი სიჩქარე"
 
-#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:7
+#: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "მოგაწვდით ცვლადი სიჩქარის მენიუს პუნქტს"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:6
-msgid "Vimeo"
-msgstr "Vimeo"
+#~ msgid "Apple Trailers"
+#~ msgstr "Apple Trailers"
 
-#: src/plugins/vimeo/vimeo.plugin.desktop.in:7
-msgid "Sets the user agent for the Vimeo site"
-msgstr "დააყენებს მომხმარებლის აგენტს საიტისთვის Vimeo"
+#~ msgid "Sets the user agent for the Apple Trailers site"
+#~ msgstr "დააყენებს მომხმარებლის აგენტს საიტისთვის Apple Trailers"
+
+#~ msgid "Calculate the number of screenshots"
+#~ msgstr "ეკრანის ანაბეჭდების რაოდენობის გამოთვლა"
+
+#~ msgid "Screenshots"
+#~ msgstr "ეკრანის ანაბეჭდები"
+
+#, c-format
+#~ msgid "Screenshot from %s - %d.png"
+#~ msgstr "ეკრანის ანაბეჭდი %s - %d.png"
+
+#, c-format
+#~ msgid "Saving gallery as “%s”"
+#~ msgstr "გალერეის შენახვა სახელით \"%s\""
+
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
+
+#~ msgid "Sets the user agent for the Vimeo site"
+#~ msgstr "დააყენებს მომხმარებლის აგენტს საიტისთვის Vimeo"
 
 #~ msgid "Unable to play the file"
 #~ msgstr "ფაილის დაკვრის შეცდომა"
