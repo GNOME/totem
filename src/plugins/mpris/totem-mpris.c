@@ -204,7 +204,7 @@ get_root_property (GDBusConnection *connection,
 	} else if (g_strcmp0 (property_name, "HasTrackList") == 0) {
 		return g_variant_new_boolean (FALSE);
 	} else if (g_strcmp0 (property_name, "Identity") == 0) {
-		return g_variant_new_string ("Videos");
+		return g_variant_new_string ("Totem");
 	} else if (g_strcmp0 (property_name, "DesktopEntry") == 0) {
 		return g_variant_new_string ("org.gnome.Totem");
 	} else if (g_strcmp0 (property_name, "SupportedUriSchemes") == 0) {

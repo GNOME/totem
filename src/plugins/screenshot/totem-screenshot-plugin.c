@@ -160,14 +160,14 @@ take_screenshot_action_cb (GSimpleAction         *action,
 	g_autofree char *video_filename = NULL;
 
 	if (bacon_video_widget_can_get_frames (pi->bvw, &err) == FALSE) {
-		totem_object_show_error (pi->totem, _("Videos could not get a screenshot of the video."), err->message ?: _("No reason."));
+		totem_object_show_error (pi->totem, _("Totem could not get a screenshot of the video."), err->message ?: _("No reason."));
 		g_error_free (err);
 		return;
 	}
 
 	pixbuf = bacon_video_widget_get_current_frame (pi->bvw);
 	if (pixbuf == NULL) {
-		totem_object_show_error (pi->totem, _("Videos could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
+		totem_object_show_error (pi->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 
