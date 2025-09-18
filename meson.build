@@ -42,10 +42,10 @@ cc = meson.get_compiler('c')
 # The app_name needs to match src/totem.c
 if get_option('profile') == 'development'
   profile = '.Devel'
-  application_name = 'Videos Preview'
+  application_name = 'Totem Preview'
 else
   profile = ''
-  application_name = 'Videos'
+  application_name = 'Totem'
 endif
 
 application_id = 'org.gnome.Totem@0@'.format(profile)

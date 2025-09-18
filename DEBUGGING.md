@@ -1,4 +1,4 @@
-# Debugging Videos
+# Debugging Totem
 
 As mentioned in the [README](README.md), we only support the application as
 distributed from [Flathub](https://flathub.org/apps/details/org.gnome.Totem).
@@ -16,7 +16,7 @@ It's available on Flathub, and can be installed by running:
 flatpak install --user https://flathub.org/beta-repo/appstream/org.gnome.Totem.Devel.flatpakref
 ```
 
-If the problem still happens in the "Videos Preview" application, then
+If the problem still happens in the "Totem Preview" application, then
 feel free to file an issue, and mention that you tested this version of
 the application.
 
@@ -36,7 +36,7 @@ running:
 ```
 totem-video-thumbnailer -v /path/to/video-file.mp4 /tmp/foo.png
 ```
-or if the problem happens in the Videos app, run this first to enter
+or if the problem happens in the Totem app, run this first to enter
 the Flatpak sandbox:
 ```
 flatpak run --command=bash org.gnome.Totem.Devel

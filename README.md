@@ -1,7 +1,7 @@
 ![icon](data/icons/scalable/org.gnome.Totem.svg)
 
-# Videos
-Videos is movie player for the GNOME desktop based on [GStreamer](https://gstreamer.freedesktop.org/).
+# Totem
+Totem is movie player for the GNOME desktop based on [GStreamer](https://gstreamer.freedesktop.org/).
 
 [![Download on Flathub](https://flathub.org/api/badge?svg&locale=en)](https://flathub.org/apps/details/org.gnome.Totem)
 

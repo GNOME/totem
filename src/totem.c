@@ -29,9 +29,9 @@ main (int argc, char **argv)
 
 	g_set_prgname (APPLICATION_ID);
 #if DEVELOPMENT_VERSION
-	g_set_application_name (_("Videos Preview"));
+	g_set_application_name (_("Totem Preview"));
 #else
-	g_set_application_name (_("Videos"));
+	g_set_application_name (_("Totem"));
 #endif
 	gtk_window_set_default_icon_name (APPLICATION_ID);
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);

@@ -62,7 +62,7 @@
 #include "bacon-video-widget-enums.h"
 #include "bacon-video-widget-resources.h"
 
-#define DEFAULT_USER_AGENT "Videos/"VERSION
+#define DEFAULT_USER_AGENT "Totem/"VERSION
 
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 64                           /* Maximum size of the logo */
