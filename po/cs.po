@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-08-17 15:20+0000\n"
-"PO-Revision-Date: 2025-08-18 23:28+0200\n"
+"POT-Creation-Date: 2026-01-14 23:45+0000\n"
+"PO-Revision-Date: 2026-01-15 02:28+0100\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -30,12 +30,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Videa"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -44,26 +44,23 @@ msgstr "Přehrávání filmů"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Aplikace Videa je oficiální přehrávač filmů v uživatelském prostředí GNOME. "
-"Můžete vyhledávat v seznamech místních videí a DVD, stejně jako ve videích "
-"sdílených přes místní síť (pomocí UPnP/DLNA) a v hlavních videích z "
-"některých webů."
+"Aplikace Totem je historický přehrávač filmů pro uživatelské prostředí "
+"GNOME. Můžete vyhledávat v seznamech místních videí a DVD, stejně jako ve "
+"videích sdílených přes místní síť (pomocí UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
 "Přináší i rozšiřující funkce, jako je stahování titulků, zrychlování a "
-"zpomalování přehrávání, vytváření galerií snímků a podpora nahrávání DVD."
+"zpomalování přehrávání a vytváření galerií snímků."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
@@ -955,8 +952,9 @@ msgid "Select None"
 msgstr "Zrušit výběr"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Videa (vývojová verze)"
+#| msgid "Videos Preview"
+msgid "Totem Preview"
+msgstr "Totem (vývojová verze)"
 
 # TEST
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
@@ -1011,6 +1009,10 @@ msgstr "Chyba při hledání"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Místní"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Videa"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1085,20 +1087,20 @@ msgstr "Přehrát"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Aplikaci Videa se nezdařilo přehrát „%s“."
+msgid "Totem could not play “%s”."
+msgstr "Aplikaci Totem se nezdařilo přehrát „%s“."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Aplikaci Videa se nezdařilo zobrazit obsah nápovědy."
+msgid "Totem could not display the help contents."
+msgstr "Aplikaci Totem se nezdařilo zobrazit obsah nápovědy."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Aplikaci Videa se nezdařilo spustit."
+msgid "Totem could not startup."
+msgstr "Aplikaci Totem se nezdařilo spustit."
 
 # :-)
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
@@ -1755,17 +1757,17 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "K objektu Totem.Object můžete přistupovat pomocí „totem_object“ :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Konzola Python aplikace Videa"
+msgid "Totem Python Console"
+msgstr "Konzola python Totemu"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Po zmáčknutí Budiž aplikace Videa počká, než se k ní připojíte pomocí winpdb "
+"Po zmáčknutí Budiž aplikace Totem počká, než se k ní připojíte pomocí winpdb "
 "nebo rpdb2. Pokud jste nenastavili heslo ladění v GConf, tak se použije "
 "výchozí heslo („totem“)."
 
@@ -1890,8 +1892,8 @@ msgstr "_Uložit"
 # TEST
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Aplikaci Videa se nepodařilo pořídit snímek z tohoto videa."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Aplikaci Totem se nepodařilo pořídit snímek z tohoto videa."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1954,6 +1956,9 @@ msgstr "Proměnná rychlost"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Poskytuje položku nabídky pro proměnnou rychlost"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Konzola Python aplikace Videa"
 
 #~ msgid "Vimeo"
 #~ msgstr "Vimeo"
