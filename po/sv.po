@@ -1,8 +1,8 @@
 # Swedish messages for totem.
-# Copyright © 2002-2025 Free Software Foundation, Inc.
+# Copyright © 2002-2026 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023, 2025.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023, 2025, 2026.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016.
 # Luna Jernberg <droidbittin@gmail.com>, 2022.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-08-19 14:14+0000\n"
-"PO-Revision-Date: 2025-08-21 01:28+0200\n"
+"POT-Creation-Date: 2026-01-14 23:45+0000\n"
+"PO-Revision-Date: 2026-01-15 19:52+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Videoklipp"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -33,27 +33,24 @@ msgstr "Spela upp filmer"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Videoklipp är den officiella filmspelaren för skrivbordsmiljön GNOME. Den "
+"Totem är den historiska filmspelaren för skrivbordsmiljön GNOME. Den "
 "erbjuder en sökbar lista över lokala videor och dvd-skivor, såväl som delad "
-"video på det lokala nätverket (genom UPnP/DLNA) och videohöjdpunkter från "
-"ett antal webbplatser."
+"video på det lokala nätverket (genom UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"Videoklipp kommer med extra funktionalitet såsom en hämtare för undertexter, "
-"förmågan att snabba upp eller sakta ner uppspelning, att skapa "
-"skärmbildsgallerier och stöd för dvd-inspelning."
+"Totem kommer med extra funktionalitet såsom en hämtare för undertexter, "
+"förmågan att snabba upp eller sakta ner uppspelning och att skapa "
+"skärmbildsgallerier."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
 msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
@@ -597,7 +594,7 @@ msgstr "16∶9 (bredbild)"
 #: data/totem.ui:67
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
-msgstr "2,11∶1 (Digital-tv)"
+msgstr "2,11∶1 (digital-tv)"
 
 #: data/totem.ui:75
 msgid "Switch An_gles"
@@ -923,8 +920,8 @@ msgid "Select None"
 msgstr "Markera ingen"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Videoförhandsvisning"
+msgid "Totem Preview"
+msgstr "Totemförhandsvisning"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -962,7 +959,7 @@ msgstr "Säsong %d Avsnitt %d"
 #: src/totem-grilo.c:308
 #, c-format
 msgid "%s (Season %d Episode %d)"
-msgstr "%s (Säsong %d Avsnitt %d)"
+msgstr "%s (säsong %d avsnitt %d)"
 
 #: src/totem-grilo.c:670
 msgid "Browse Error"
@@ -975,6 +972,10 @@ msgstr "Sökfel"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Lokalt"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Videoklipp"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1046,20 +1047,20 @@ msgstr "Spela upp"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Videoklipp kunde inte spela upp ”%s”."
+msgid "Totem could not play “%s”."
+msgstr "Totem kunde inte spela upp ”%s”."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Videoklipp kunde inte visa hjälpinnehållet."
+msgid "Totem could not display the help contents."
+msgstr "Totem kunde inte visa hjälpinnehållet."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Videoklipp kunde inte starta."
+msgid "Totem could not startup."
+msgstr "Totem kunde inte starta."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1692,18 +1693,18 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Du kan komma åt Totem.Object genom 'totem_object' :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Python-konsol för Videoklipp"
+msgid "Totem Python Console"
+msgstr "Totem Python-konsol"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Efter att du har tryckt på OK så kommer Videoklipp att vänta tills du "
-"ansluter till det med winpdb eller rpdb2. Om du inte har ställt in ett "
+"Efter att du har tryckt på OK så kommer Totem att vänta tills du ansluter "
+"till det med winpdb eller rpdb2. Om du inte har ställt in ett "
 "felsökningslösenord i DConf så kommer det att använda standardlösenordet "
 "(”totem”)."
 
@@ -1819,8 +1820,8 @@ msgstr "_Spara"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Videoklipp kunde inte ta en skärmbild av videon."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem kunde inte ta en skärmbild av videon."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1881,6 +1882,9 @@ msgstr "Variabel hastighet"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Tillhandahåller menyposten för variabel hastighet"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Python-konsol för Videoklipp"
 
 #~ msgid "Vimeo"
 #~ msgstr "Vimeo"
@@ -1998,9 +2002,6 @@ msgstr "Tillhandahåller menyposten för variabel hastighet"
 
 #~ msgid "Make sure that Totem is properly installed."
 #~ msgstr "Försäkra dig om att Totem är korrekt installerat."
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Totem Python-konsol"
 
 #~ msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 #~ msgstr "MediaPlayer2-objektet implementerar inte gränssnittet ”%s”"
