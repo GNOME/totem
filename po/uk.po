@@ -5,13 +5,13 @@
 # Maxim Dzumanenko <dziumanenko@gmail.com>, 2003-2009.
 # Yury Bulka <yurkobb@gmail.com>, 2011.
 # Daniel Korostil <ted.korostiled@gmail.com>, 2013, 2014, 2015, 2016, 2017.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2022, 2023, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2022, 2023, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-09-04 16:33+0000\n"
-"PO-Revision-Date: 2025-09-04 19:58+0300\n"
+"POT-Creation-Date: 2026-01-14 23:45+0000\n"
+"PO-Revision-Date: 2026-01-16 05:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -24,9 +24,9 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Відео"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -34,28 +34,36 @@ msgid "Play movies"
 msgstr "Програти фільми"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
+#| msgid ""
+#| "Videos is the official movie player of the GNOME desktop environment. It "
+#| "features a searchable list of local videos, and DVDs, as well as local "
+#| "network video shares (using UPnP/DLNA) and video highlights from a number "
+#| "of web sites."
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"«Відео» — офіційний програвач відеозаписів у стільничному середовищі GNOME. "
-"Він надає список локальних відеозаписів, DVD, оприлюднення відеозаписів у "
-"мережі (через UPnP/DLNA) і показ відеозаписів з декількох сайтів."
+"Totem — давній програвач відеозаписів у стільничному середовищі GNOME. "
+"Він надає список локальних відеозаписів, DVD, а також оприлюднений"
+" відеозаписів у "
+"мережі (через UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
+#| msgid ""
+#| "Videos comes with added functionality such as a subtitle downloader, the "
+#| "ability to speed up or down playback, create screenshot galleries, and "
+#| "support for recording DVDs."
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"«Відео» набув нових можливостей, як-от: засіб отримання субтитрів, "
-"можливість пришвидшення і уповільнення відтворення, створювати галереї "
-"знімків з відео і підтримування запису DVD."
+"«Totem» набув нових можливостей, як-от: засіб отримання субтитрів, "
+"можливість пришвидшення і уповільнення відтворення, а також створювати"
+" галереї "
+"знімків з відео."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
-#| msgid "The GNOME developers"
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
 msgid "The GNOME Project"
 msgstr "Проєкт GNOME"
 
@@ -683,7 +691,6 @@ msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
 #: src/backend/bacon-video-widget.c:3262
-#| msgid "Could not initialise OpenGL support."
 msgid "Could not initialize OpenGL support."
 msgstr "Не вдалося ініціалізувати підтримку OpenGL."
 
@@ -927,8 +934,9 @@ msgid "Select None"
 msgstr "Скасувати вибір"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Попередній перегляд відео"
+#| msgid "Videos Preview"
+msgid "Totem Preview"
+msgstr "Попередній перегляд Totem"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -979,6 +987,10 @@ msgstr "Помилка пошуку"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Локальне"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Відео"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1052,20 +1064,23 @@ msgstr "Відтворення"
 # c-format
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "«Відео» не вдалося відтворити «%s»."
+#| msgid "Videos could not play “%s”."
+msgid "Totem could not play “%s”."
+msgstr "«Totem» не вдалося відтворити «%s»."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "«Відео» не вдалося показати вміст довідки."
+#| msgid "Videos could not display the help contents."
+msgid "Totem could not display the help contents."
+msgstr "«Totem» не вдалося показати вміст довідки."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Не вдалося запустити «Відео»."
+#| msgid "Videos could not startup."
+msgid "Totem could not startup."
+msgstr "Не вдалося запустити «Totem»."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1700,17 +1715,21 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Можна отримати доступ до Totem.Object через «totem_object» :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Консоль Python «Відео»"
+msgid "Totem Python Console"
+msgstr "Консоль Python програвача Totem"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
+#| msgid ""
+#| "After you press OK, Videos will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password (“totem”)."
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Після того, як ви натиснете «Гаразд», «Відео» чекатиме на з'єднання від "
+"Після того, як ви натиснете «Гаразд», «Totem» чекатиме на з'єднання від "
 "winpdb або rpdb2. Якщо пароль налагоджувача у GConf не вказано, буде "
 "використано типовий пароль («totem»)."
 
@@ -1779,7 +1798,6 @@ msgid "Playing a movie"
 msgstr "Відтворення відео"
 
 #: src/plugins/screenshot/gallery.ui:32
-#| msgid "Creating Gallery…"
 msgid "Create Gallery"
 msgstr "Створити галерею"
 
@@ -1788,17 +1806,14 @@ msgid "Create"
 msgstr "Створити"
 
 #: src/plugins/screenshot/gallery.ui:79
-#| msgid "Screenshot width (in pixels):"
 msgid "Screenshot width (in pixels)"
 msgstr "Ширина знімка екрана (в точках растра)"
 
 #: src/plugins/screenshot/gallery.ui:92
-#| msgid "Number of screenshots:"
 msgid "Add number of screenshots"
 msgstr "Додати кількість знімків екрана"
 
 #: src/plugins/screenshot/gallery.ui:98
-#| msgid "Number of screenshots:"
 msgid "Number of screenshots"
 msgstr "Кількість знімків екрана"
 
@@ -1831,8 +1846,9 @@ msgstr "З_берегти"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "«Відео» не вдалося отримати знімок з цього відео."
+#| msgid "Videos could not get a screenshot of the video."
+msgid "Totem could not get a screenshot of the video."
+msgstr "«Totem» не вдалося отримати знімок з цього відео."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1893,6 +1909,9 @@ msgstr "Змінна швидкість"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Надає змінну швидкість у меню"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Консоль Python «Відео»"
 
 #~ msgid "Unable to play the file"
 #~ msgstr "Неможливо програти файл"
@@ -2021,9 +2040,6 @@ msgstr "Надає змінну швидкість у меню"
 
 #~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 #~ msgstr "Невідома властивість «%s» потрібна для об'єкта MediaPlayer"
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Консоль Python програвача Totem"
 
 #~ msgid "S_ubtitles"
 #~ msgstr "С_убтитри"
