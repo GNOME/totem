@@ -16,14 +16,14 @@
 # YunQiang Su <wzssyqa@gmail.com>, 2015.
 # Jeff Bai <jeffbai@aosc.xyz>, 2015, 2016.
 # Dingzhong Chen <wsxy162@gmail.com>, 2017-2019.
-# lumingzh <lumingzh@qq.com>, 2022-2025.
+# lumingzh <lumingzh@qq.com>, 2022-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-08-19 14:14+0000\n"
-"PO-Revision-Date: 2025-08-25 08:32+0800\n"
+"POT-Creation-Date: 2026-01-14 23:45+0000\n"
+"PO-Revision-Date: 2026-01-16 10:12+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -31,12 +31,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 49.0\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "视频"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -45,24 +45,21 @@ msgstr "播放影片"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"“视频”是GNOME桌面环境的官方视频播放器。它支持搜索本地视频，DVD以及本地网络共"
-"享（基于UPnP/DLNA），并支持大量网站上的精华视频。"
+"Totem 曾经是 GNOME 桌面环境的视频播放器。它支持搜索本地视频，DVD 以及本地网络"
+"共享（使用 UPnP/DLNA）。"
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"“视频”还有其他一些功能，比如字幕下载器，加快或放慢播放速度的功能，创建截图画"
-"册以及支持DVD录制。"
+"Totem 还有其它一些功能，比如字幕下载器，加快或放慢播放速度，创建截图画册等。"
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
 msgid "The GNOME Project"
 msgstr "GNOME 项目"
 
@@ -914,8 +911,8 @@ msgid "Select None"
 msgstr "全部不选"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "视频预览"
+msgid "Totem Preview"
+msgstr "Totem 预览"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -966,6 +963,10 @@ msgstr "搜索错误"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "本地"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "视频"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1036,20 +1037,20 @@ msgstr "播放"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "视频播放器无法播放“%s”。"
+msgid "Totem could not play “%s”."
+msgstr "Totem 无法播放“%s”。"
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "视频播放器无法显示帮助内容。"
+msgid "Totem could not display the help contents."
+msgstr "Totem 无法显示帮助内容。"
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "发生了一个错误"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "视频播放器无法启动。"
+msgid "Totem could not startup."
+msgstr "Totem 无法启动。"
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1670,17 +1671,17 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "您可以通过“totem_object”访问 totem 对象：\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "播放器 Python 控制台"
+msgid "Totem Python Console"
+msgstr "Totem 播放器 Python 控制台"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"在您点击确定之后，视频播放器将一直等到您连接到 winpdb 或 rpdb2。如果您没有在 "
+"在您点击确定之后，Totem 将一直等到您连接到 winpdb 或 rpdb2。如果您没有在 "
 "DConf 中设置调试器密码，将使用默认密码（“totem”）。"
 
 #: src/plugins/recent/recent.plugin.desktop.in:5
@@ -1796,8 +1797,8 @@ msgstr "保存(_S)"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "视频播放器无法获取该视频的屏幕截图。"
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem 无法获取该视频的截图。"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1858,6 +1859,12 @@ msgstr "可变速率"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "提供可变速率菜单项"
+
+#~ msgid "Videos Preview"
+#~ msgstr "视频预览"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "播放器 Python 控制台"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "苹果预告片"
@@ -1986,9 +1993,6 @@ msgstr "提供可变速率菜单项"
 #, python-format
 #~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 #~ msgstr "请求了 MediaPlayer2 对象的未知属性“%s”"
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Totem 播放器 Python 控制台"
 
 #~ msgid "S_ubtitles"
 #~ msgstr "字幕(_U)"
@@ -2337,9 +2341,6 @@ msgstr "提供可变速率菜单项"
 
 #~ msgid "Remove"
 #~ msgstr "移除"
-
-#~ msgid "Totem Preferences"
-#~ msgstr "Totem 首选项"
 
 #~ msgid "Disable screensaver when playing"
 #~ msgstr "播放时禁用屏幕保护"
@@ -2725,9 +2726,6 @@ msgstr "提供可变速率菜单项"
 #~ "arccos <boyermoore@gmail.com>\n"
 #~ "tuhaihe <1132321739qq@gmail.com>, 2012\n"
 #~ "Tong Hui <tonghuix@gmail.com>, 2013, 2014"
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
 
 #~ msgid "No error message"
 #~ msgstr "无错误消息"
