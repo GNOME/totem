@@ -1,14 +1,14 @@
 # Georgian translation for totem.
 # Copyright (C) 2023 THE totem'S authors
 # This file is distributed under the same license as the totem package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023-2025.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-09-01 18:43+0000\n"
-"PO-Revision-Date: 2025-09-04 10:43+0200\n"
+"POT-Creation-Date: 2026-01-14 23:45+0000\n"
+"PO-Revision-Date: 2026-01-18 03:10+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "ვიდეო"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -30,26 +30,23 @@ msgstr "ფილმების დაკვრა"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Videos GNOME-ის ოფიციალური ფილმების დამკვრელია. მას აქვს ლოკალური ვიდეოების "
+"Totem GNOME-ის ოფიციალური ფილმების დამკვრელია. მას აქვს ლოკალური ვიდეოების "
 "და DVD-ების ძებნადი სიების მხარდაჭერა, ისევე, როგორც ლოკალურ ქსელში "
-"გაზიარებული ვიდეოებს (UPnP/DLNA) და ვიდეოები ცნობილი ვებგვერდებიდან."
+"გაზიარებული ვიდეოებს (UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"Videos-ს აქვს ფუნქციები, როგორიცაა სუბტიტრების გადმოწერა, დაკვრის სიჩქარის "
-"აჩქარება ან შენელება, ეკრანის ანაბეჭდის გალერეების შექმნა და DVD-ების "
-"ჩაწერის მხარდაჭერა."
+"Totem-ს აქვს ფუნქციები, როგორიცაა სუბტიტრების გადმოწერა, დაკვრის სიჩქარის "
+"აჩქარება ან შენელება და ეკრანის ანაბეჭდის გალერეების შექმნა."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
 msgid "The GNOME Project"
 msgstr "პროექტი \"GNOME\""
 
@@ -906,8 +903,9 @@ msgid "Select None"
 msgstr "მონიშვნის მოხსნა"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "ვიდეოს მინიატურები"
+#| msgid "Videos Preview"
+msgid "Totem Preview"
+msgstr "Totem-ის მინიატურა"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -958,6 +956,10 @@ msgstr "ძებნის შეცდომა"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "ლოკალური"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "ვიდეო"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1028,20 +1030,20 @@ msgstr "დაკვრა"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Videos “%s”-ს ვერ დაუკრავს."
+msgid "Totem could not play “%s”."
+msgstr "ToTem “%s”-ს ვერ დაუკრავს."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Videos დახმარების შემცველობას ვერ გაჩვენებთ."
+msgid "Totem could not display the help contents."
+msgstr "Totem დახმარების შემცველობას ვერ გაჩვენებთ."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "შეცდომა"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Videos ვერ გაეშვა."
+msgid "Totem could not startup."
+msgstr "Totem ვერ გაეშვა."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1665,18 +1667,18 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Totem.Object-თან წვდომა \"totem_object\"-ით შეგიძლიათ:\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Videos-ის Python-ის კონსოლი"
+msgid "Totem Python Console"
+msgstr "Totem-ის Python-ის კონსოლი"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"მას შემდეგ, რაც დიახ-ს დააწვებით, Videos მოიცდის, სანამ მას winpdb-ს ან "
-"rpdb2-ს მიუერთებთ. თუ გამმართველის პაროლი DConf-ში მითითებული არ გაქვთ, ის "
+"მას შემდეგ, რაც დიახ-ს დააწვებით, Totem მოიცდის, სანამ მას winpdb-ს ან rpdb2-"
+"ს მიუერთებთ. თუ გამმართველის პაროლი DConf-ში მითითებული არ გაქვთ, ის "
 "ნაგულისხმევს (\"totem\") გამოიყენებს."
 
 #: src/plugins/recent/recent.plugin.desktop.in:5
@@ -1791,8 +1793,8 @@ msgstr "_შენახვა"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Videos-მა ვიდეოს ეკრანის ანაბეჭდი ვერ გადაიღო."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem-მა ვიდეოს ეკრანის ანაბეჭდი ვერ გადაიღო."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1853,6 +1855,9 @@ msgstr "ცვლადი სიჩქარე"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "მოგაწვდით ცვლადი სიჩქარის მენიუს პუნქტს"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Videos-ის Python-ის კონსოლი"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "Apple Trailers"
