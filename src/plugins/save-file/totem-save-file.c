@@ -156,41 +156,30 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 			     GVariant            *parameter,
 			     TotemSaveFilePlugin *pi)
 {
-	char *filename;
+	g_autofree char *filename = NULL;
 
 	g_assert (pi->mrl != NULL);
 
 	filename = totem_save_file_get_filename (pi);
 
 	if (pi->is_tmp) {
-		char *src_path, *dest_path;
+		g_autofree char *src_path = NULL;
+		g_autofree char *dest_path = NULL;
+		int err;
 
 		src_path = g_filename_from_uri (pi->cache_mrl, NULL, NULL);
-		dest_path = checksum_path_for_mrl (pi->mrl);
+		dest_path = g_build_filename (get_videos_dir_uri(), filename, NULL);
 
-		if (link (src_path, dest_path) != 0) {
-			int err = errno;
-			g_warning ("Failed to link '%s' to '%s': %s",
-				   src_path, dest_path, g_strerror (err));
-		} else {
-			GFile *file;
+		if (link (src_path, dest_path) == 0)
+			return;
 
-			g_debug ("Successfully linked '%s' to '%s'",
-				 src_path, dest_path);
-
-			file = g_file_new_for_path (dest_path);
-			totem_object_add_to_view (pi->totem, file, filename);
-			g_object_unref (file);
-		}
-
-		g_free (src_path);
-		g_free (dest_path);
-	} else {
-		copy_uris_with_nautilus (pi, pi->mrl, get_videos_dir_uri(), filename);
-		/* We don't call Totem to bookmark it, as Tracker should pick it up */
+		err = errno;
+		g_debug ("Failed to link '%s' to '%s': %s",
+			 src_path, dest_path, g_strerror (err));
 	}
 
-	g_free (filename);
+	copy_uris_with_nautilus (pi, pi->mrl, get_videos_dir_uri(), filename);
+	/* We don't call Totem to bookmark it, as Tracker should pick it up */
 }
 
 static void
