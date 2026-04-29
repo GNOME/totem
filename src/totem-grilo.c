@@ -1144,6 +1144,8 @@ content_changed (TotemGrilo   *self,
 
 	model = get_tree_model_for_source (self, source);
 
+	g_message ("Got model");
+
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 		GtkTreeIter *iter;
@@ -1152,17 +1154,20 @@ content_changed (TotemGrilo   *self,
 		str = grl_media_serialize (media);
 		if (!grl_media_is_video (media) &&
 		    !grl_media_is_container (media)) {
-			g_debug ("Ignoring content changes for %s", str);
+			g_message ("Ignoring content changes for %s", str);
 			continue;
 		}
 
-		g_debug ("About to change %s in the store", str);
+		g_message ("About to change %s in the store", str);
 
 		if (find_media (model, media, &iter)) {
 			update_media (GTK_TREE_STORE (model), iter, source, media);
 			gtk_tree_iter_free (iter);
 		} else {
-			g_debug ("Could not find '%s' to change in the store",
+			add_local_metadata (self, source, media);
+			add_media_to_model (GTK_TREE_STORE (model), NULL, source, media); //FIXME wrong place
+
+			g_message ("Could not find '%s' to change in the store",
 				 grl_media_get_id (media));
 		}
 	}
@@ -1216,10 +1221,12 @@ content_added (TotemGrilo   *self,
 		str = grl_media_serialize (media);
 		if (!grl_media_is_video (media) &&
 		    !grl_media_is_container (media)) {
-			g_debug ("Ignoring content added for %s", str);
+			g_message ("Ignoring content added for %s (is video: %s, is container: %s)", str,
+				   grl_media_is_video (media) ? "true" : "false",
+				   grl_media_is_container (media) ? "true" : "false");
 			continue;
 		}
-		g_debug ("About to add %s to the store", str);
+		g_message ("About to add %s to the store", str);
 
 		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
