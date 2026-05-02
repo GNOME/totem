@@ -214,13 +214,13 @@ totem_object_app_open (GApplication  *application,
 
 	g_application_activate (application);
 
-	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
+	totem_object_set_main_page (totem, "player");
 
 	for (i = 0 ; i < n_files; i++)
 		slist = g_slist_prepend (slist, g_file_get_uri (files[i]));
 
 	slist = g_slist_reverse (slist);
-	totem_object_open_files_list (TOTEM_OBJECT (application), slist);
+	totem_object_open_files_list (totem, slist);
 	g_slist_free_full (slist, g_free);
 }
 
