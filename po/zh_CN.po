@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2026-01-14 23:45+0000\n"
-"PO-Revision-Date: 2026-01-16 10:12+0800\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-05-06 19:42+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34
@@ -59,7 +59,15 @@ msgid ""
 msgstr ""
 "Totem 还有其它一些功能，比如字幕下载器，加快或放慢播放速度，创建截图画册等。"
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+msgid "Playing a video"
+msgstr "正在播放视频"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "正在浏览视频"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
 msgstr "GNOME 项目"
 
@@ -1716,22 +1724,22 @@ msgstr "保存副本"
 msgid "Save a copy of the currently playing movie"
 msgstr "保存正在播放影片的一个副本"
 
-#: src/plugins/save-file/totem-save-file.c:75
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "The video could not be made available offline."
 msgstr "该视频无法离线保存。"
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:77
+#: src/plugins/save-file/totem-save-file.c:79
 msgid "“Files” is not available."
 msgstr "“文件”不可用。"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:137
 msgid "Movie"
 msgstr "影片"
 
-#: src/plugins/save-file/totem-save-file.c:441
+#: src/plugins/save-file/totem-save-file.c:313
 msgid "Make Available Offline"
 msgstr "离线缓存"
 
@@ -2704,9 +2712,6 @@ msgstr "提供可变速率菜单项"
 
 #~ msgid "Show session management options"
 #~ msgstr "显示会话管理选项"
-
-#~ msgid "Unknown video"
-#~ msgstr "未知视频"
 
 #~ msgid "No File"
 #~ msgstr "无文件"
