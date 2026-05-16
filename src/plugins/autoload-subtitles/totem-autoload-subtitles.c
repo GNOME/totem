@@ -92,14 +92,14 @@ totem_uri_get_subtitle_for_uri (const char *uri)
 	/* Search for any files with one of our known subtitle extensions */
 	for (i = 0; i < G_N_ELEMENTS (subtitle_ext) ; i++) {
 		char *subtitle_ext_upper;
-		memcpy (subtitle + suffix + 1, subtitle_ext[i], 3);
+		g_strlcpy (subtitle + suffix + 1, subtitle_ext[i], 4);
 
 		if (totem_uri_exists (subtitle))
 			return subtitle;
 
 		/* Check with upper-cased extension */
 		subtitle_ext_upper = g_ascii_strup (subtitle_ext[i], -1);
-		memcpy (subtitle + suffix + 1, subtitle_ext_upper, 3);
+		g_strlcpy (subtitle + suffix + 1, subtitle_ext_upper, 4);
 		g_free (subtitle_ext_upper);
 
 		if (totem_uri_exists (subtitle))
