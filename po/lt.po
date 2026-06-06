@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-09-01 14:33+0000\n"
-"PO-Revision-Date: 2025-09-01 21:42+0300\n"
-"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-06-06 22:17+0300\n"
+"Last-Translator: Aurimas Černius <aurimas.cernius@mailo.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -23,13 +23,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Project-Style: gnome\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Vaizdo įrašai"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -38,23 +38,29 @@ msgstr "Žiūrėti filmus"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Videoįrašai yra oficialus GNOME darbalaukio aplinkos filmų grotuvas. Jis "
-"turi ieškomą vietinių vaizdo įrašų bei DVD sąrašą, taip pat įrašų viešinius "
-"tinkle (naudojant UPnP/DLNA) bei daugelio tinklalapių santraukas."
+"Totem yra istorinis GNOME darbalaukio aplinkos filmų grotuvas. Jis turi "
+"ieškomą vietinių vaizdo įrašų bei DVD sąrašą, taip pat įrašų viešinius "
+"tinkle (naudojant UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"Videoįrašai taip pat turi papildomo funkcionalumo, tokio kaip subtitrų "
-"parsiuntimas, tiesioginės televizijos žiūrėjimas bei DVD įrašymas."
+"Totem taip pat turi papildomo funkcionalumo, tokio kaip subtitrų "
+"parsiuntimas, grojimo greičio keitimas bei ekrano nuotraukų galerijas."
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+msgid "Playing a video"
+msgstr "Groja filmas"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "Naršoma filmų"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
@@ -923,8 +929,8 @@ msgid "Select None"
 msgstr "Nepasirinkti nieko"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Vaizdo įrašų peržiūra"
+msgid "Totem Preview"
+msgstr "Totem peržiūra"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -975,6 +981,10 @@ msgstr "Paieškos klaida"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Vietinis"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Vaizdo įrašai"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1048,20 +1058,20 @@ msgstr "Groti"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Videoįrašams nepavyko paleisti „%s“."
+msgid "Totem could not play “%s”."
+msgstr "Totem nepavyko paleisti „%s“."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Videoįrašams nepavyko parodyti žinyno."
+msgid "Totem could not display the help contents."
+msgstr "Totem nepavyko parodyti žinyno."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Videoįrašų nepavyko paleisti."
+msgid "Totem could not startup."
+msgstr "Nepavyko paleisti Totem."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1718,17 +1728,17 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Galite pasiekti Totem.Objektą per „totem_object“ :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Videoįrašų Python konsolė"
+msgid "Totem Python Console"
+msgstr "Programos „Totem“ „Python“ kalbos konsolė"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Spustelėjus mygtuką „Gerai“, Videoįrašai lauks, kol prisijungsite prie jos "
+"Spustelėjus mygtuką „Gerai“, Totem lauks, kol prisijungsite prie jos "
 "naudodamiesi winpdb arba rpdb2. Jei nenustatėte derintuvės slaptažodžio "
 "DConf, bus naudojamas numatytasis slaptažodis („totem“)."
 
@@ -1764,22 +1774,22 @@ msgstr "Įrašyti kopiją"
 msgid "Save a copy of the currently playing movie"
 msgstr "Įrašyti šiuo metu grojamo filmo kopiją"
 
-#: src/plugins/save-file/totem-save-file.c:75
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "The video could not be made available offline."
 msgstr "Nepavyko vaizdo įrašo padaryti pasiekiamo atsijungus."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:77
+#: src/plugins/save-file/totem-save-file.c:79
 msgid "“Files” is not available."
 msgstr "Programa „Failai“ nepasiekiama."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:137
 msgid "Movie"
 msgstr "Filmas"
 
-#: src/plugins/save-file/totem-save-file.c:441
+#: src/plugins/save-file/totem-save-file.c:313
 msgid "Make Available Offline"
 msgstr "Padaryti pasiekiamais atsijungus"
 
@@ -1844,8 +1854,8 @@ msgstr "Į_rašyti"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Videoįrašams padaryti vaizdo įrašo ekranvaizdžio."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem nepavyko padaryti vaizdo įrašo ekranvaizdžio."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1906,6 +1916,9 @@ msgstr "Kintamas dažnis"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Pateikia kintamojo dažnio meniu elementą"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Videoįrašų Python konsolė"
 
 #~ msgid "Unable to play the file"
 #~ msgstr "Nepavyko pagroti failo"
@@ -2042,9 +2055,6 @@ msgstr "Pateikia kintamojo dažnio meniu elementą"
 
 #~ msgid "Make sure that Totem is properly installed."
 #~ msgstr "Įsitikinkite, jog programa „Totem“ įdiegta tinkamai."
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Programos „Totem“ „Python“ kalbos konsolė"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
