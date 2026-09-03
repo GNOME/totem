@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2026-02-06 12:47+0000\n"
-"PO-Revision-Date: 2026-02-22 09:54+0100\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-09-03 22:00+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
 #: src/totem.c:34
@@ -33,34 +33,34 @@ msgid "Play movies"
 msgstr "Filmek lejátszása"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
-#| msgid ""
-#| "Videos is the official movie player of the GNOME desktop environment. It "
-#| "features a searchable list of local videos, and DVDs, as well as local "
-#| "network video shares (using UPnP/DLNA) and video highlights from a number "
-#| "of web sites."
 msgid ""
 "Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
 "network video shares (using UPnP/DLNA)."
 msgstr ""
-"A Totem a GNOME asztali környezet régi időbeli videolejátszója. A helyi videók"
-" és DVD-k kereshető listáját tartalmazza, valamint a helyi hálózaton elérhető "
-"videomegosztásokat (UPnP/DLNA használatával)."
+"A Totem a GNOME asztali környezet régi időbeli videolejátszója. A helyi "
+"videók és DVD-k kereshető listáját tartalmazza, valamint a helyi hálózaton "
+"elérhető videomegosztásokat (UPnP/DLNA használatával)."
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
-#| msgid ""
-#| "Videos comes with added functionality such as a subtitle downloader, the "
-#| "ability to speed up or down playback, create screenshot galleries, and "
-#| "support for recording DVDs."
 msgid ""
 "Totem comes with added functionality such as a subtitle downloader, the "
 "ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"A Totem további hozzáadott funkciókat is tartalmaz, mint például feliratletölt"
-"ő, a lejátszás gyorsításának vagy lassításának képessége, valamint képernyőkép"
-"-galériák létrehozása."
+"A Totem további hozzáadott funkciókat is tartalmaz, mint például "
+"feliratletöltő, a lejátszás gyorsításának vagy lassításának képessége, "
+"valamint képernyőkép-galériák létrehozása."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:42
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+#| msgid "Playing a movie"
+msgid "Playing a video"
+msgstr "Videó lejátszása"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "Videók böngészése"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
@@ -928,7 +928,6 @@ msgid "Select None"
 msgstr "Kijelölés törlése"
 
 #: src/totem.c:32
-#| msgid "Videos Preview"
 msgid "Totem Preview"
 msgstr "Totem előnézete"
 
@@ -1056,12 +1055,10 @@ msgstr "Lejátszás"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-#| msgid "Videos could not play “%s”."
 msgid "Totem could not play “%s”."
 msgstr "A Totem nem tudta lejátszani a következőt: „%s”."
 
 #: src/totem-object.c:2262
-#| msgid "Videos could not display the help contents."
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudta megjeleníteni a súgótartalmat."
 
@@ -1070,7 +1067,6 @@ msgid "An error occurred"
 msgstr "Hiba történt"
 
 #: src/totem-object.c:3937
-#| msgid "Videos could not startup."
 msgid "Totem could not startup."
 msgstr "A Totem nem tudott elindulni."
 
@@ -1701,16 +1697,11 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "A Totem.Object a következő „totem_object” segítségével érhető el:\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-#| msgid "Python Console"
 msgid "Totem Python Console"
 msgstr "Totem Python konzol"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
-#| msgid ""
-#| "After you press OK, Videos will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
-#| "the default password (“totem”)."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -1832,7 +1823,6 @@ msgstr "_Mentés"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-#| msgid "Videos could not get a screenshot of the video."
 msgid "Totem could not get a screenshot of the video."
 msgstr "A Totem nem tud képernyőképet készíteni a videóról."
 
