@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-10-12 22:12+0000\n"
-"PO-Revision-Date: 2025-10-25 21:10+0200\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-09-04 14:36+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Launchpad-Export-Date: 2015-05-20 17:08+0000\n"
 "X-Project-Style: gnome\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Vidèos"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -33,24 +33,30 @@ msgstr "Lectura de filmes"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Vidèos es lo lector de vidèos oficial del burèu GNOME. Prepausa una lista de "
+"Totem es lo lector de vidèos istoric del burèu GNOME. Prepausa una lista de "
 "vidèos localas recercablas, de DVD, e tot autre partiment ret (en utilizant "
-"UPnP/DLNA) e las vidèos vedetas de mantun site Internet."
+"UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"Vidèos arriba amb de foncionalitats suplementàrias coma una aisina de "
+"Totem arriba amb de foncionalitats suplementàrias coma una aisina de "
 "telecargament de sostítols, la possibilitat d’accelerar o alentir la "
-"lectura, de crear de galariás de capturas d’ecran e d’enregistrar de DVD."
+"lectura, de crear de galariás de capturas d’ecran."
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+msgid "Playing a video"
+msgstr "Lectura d’una vidèo"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "Percórrer las vidèos"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
@@ -925,8 +931,8 @@ msgid "Select None"
 msgstr "Seleccionar pas res"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Apercebut vidèos"
+msgid "Totem Preview"
+msgstr "Apercebut de Totem"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -977,6 +983,10 @@ msgstr "Error al moment de la recèrca"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Local"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Vidèos"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1048,20 +1058,20 @@ msgstr "Legir"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Vidèos a pas pogut legir « %s »."
+msgid "Totem could not play “%s”."
+msgstr "Totem a pas pogut legir « %s »."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Vidèos a pas pogut afichar lo contengut de l'ajuda."
+msgid "Totem could not display the help contents."
+msgstr "Totem a pas pogut afichar lo contengut de l'ajuda."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "I a agut una error"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Vidèos a pas pogut aviar."
+msgid "Totem could not startup."
+msgstr "Totem a pas pogut aviar."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1691,19 +1701,19 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Podètz accedir a Totem.Object via « totem_object » :\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Consòla Python de Vidèos"
+msgid "Totem Python Console"
+msgstr "Consòla Python de Totem"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Aprèp aver validat, Vidèos espèra que vos connectetz a el amb winpdb o "
-"rpdb2. S'avètz pas definit cap de senhal de desbugatge dins GConf, utilizatz "
-"lo senhal per defaut (« totem »)."
+"Aprèp aver validat, Totem espèra que vos connectetz a el amb winpdb o rpdb2. "
+"S'avètz pas definit cap de senhal de desbugatge dins GConf, utilizatz lo "
+"senhal per defaut (« totem »)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
@@ -1737,22 +1747,22 @@ msgstr "Enregistrar la còpia"
 msgid "Save a copy of the currently playing movie"
 msgstr "Enregistrament d'una còpia de la vidèo en cors de lectura"
 
-#: src/plugins/save-file/totem-save-file.c:75
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "The video could not be made available offline."
 msgstr "Impossible de far venir disponibla fòra linha aquesta vidèo."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:77
+#: src/plugins/save-file/totem-save-file.c:79
 msgid "“Files” is not available."
 msgstr "« Fichièrs » es pas disponible."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:137
 msgid "Movie"
 msgstr "Filme"
 
-#: src/plugins/save-file/totem-save-file.c:441
+#: src/plugins/save-file/totem-save-file.c:313
 msgid "Make Available Offline"
 msgstr "Rendre disponible fòra linha"
 
@@ -1818,8 +1828,8 @@ msgstr "_Enregistrar"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Vidèos a pas pogut prendre una captura d'ecran d'aquesta vidèo."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem a pas pogut prendre una captura d'ecran d'aquesta vidèo."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1881,6 +1891,12 @@ msgstr "Debit variable"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Provesís un element de menú pel debit variable"
+
+#~ msgid "Videos Preview"
+#~ msgstr "Apercebut vidèos"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Consòla Python de Vidèos"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "Apple Trailers"
@@ -1997,9 +2013,6 @@ msgstr "Provesís un element de menú pel debit variable"
 
 #~ msgid "Make sure that Totem is properly installed."
 #~ msgstr "Verificatz que Totem es installat corrèctament."
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Consòla Python de Totem"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
@@ -2267,9 +2280,6 @@ msgstr "Provesís un element de menú pel debit variable"
 
 #~ msgid "Time:"
 #~ msgstr "Temps :"
-
-#~ msgid "Totem Preferences"
-#~ msgstr "Preferéncias de Totem"
 
 #~ msgid "Paused"
 #~ msgstr "En pausa"
@@ -2606,9 +2616,6 @@ msgstr "Provesís un element de menú pel debit variable"
 #~ "%s\n"
 #~ "Aviatz « %s --help » per veire la lista completa de las opcions en linha "
 #~ "de comanda disponiblas.\n"
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
 
 #~ msgid "Show/Hide Controls"
 #~ msgstr "Afichar/Amagar los contraròtles"
