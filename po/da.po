@@ -9,7 +9,7 @@
 # Kris Thomsen <mail@kristhomsen.dk>, 2014.
 # Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09, 10, 11, 12, 14, 15, 16, 18.
 # scootergrisen, 2015, 2016.
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2019-23, 25.
+# Alan Mortensen <over.tackiness223@passinbox.com>, 2019-23, 25, 26.
 #
 # Konventioner:
 #
@@ -19,10 +19,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-08-25 00:34+0000\n"
-"PO-Revision-Date: 2025-09-01 16:25+0200\n"
-"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
-"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-09-10 19:14+0200\n"
+"Last-Translator: Alan Mortensen <over.tackiness223@passinbox.com>\n"
+"Language-Team: Danish <danskgruppen@groups.io>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,9 +31,9 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472
-#: src/totem.c:34 src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "Videoer"
+#: src/totem.c:34
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -42,25 +42,29 @@ msgstr "Afspil film"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It "
+"Totem is the historical movie player for the GNOME desktop environment. It "
 "features a searchable list of local videos, and DVDs, as well as local "
-"network video shares (using UPnP/DLNA) and video highlights from a number of "
-"web sites."
+"network video shares (using UPnP/DLNA)."
 msgstr ""
-"Videoer er den officielle filmafspiller for GNOME-skrivebordsmiljøet. Den "
-"indeholder en søgbar liste af lokale videoer og dvd'er, samt lokale "
-"netværksdelinger (som bruger UPnP/DLNA) og video-højdepunkter fra en række "
-"websider."
+"Totem er den historiske filmafspiller til GNOME-skrivebordsmiljøet. Den "
+"indeholder en søgbar liste over lokale videoer og dvd'er samt lokale "
+"netværksdelinger (som bruger UPnP/DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the "
-"ability to speed up or down playback, create screenshot galleries, and "
-"support for recording DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the "
+"ability to speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"Videoer inkluderer yderligere funktionalitet såsom hentning af undertekster, "
-"langsom eller hurtig afspilning, oprettelse af skærmbilledgallerier og "
-"understøttelse af optagelse på dvd'er."
+"Totem inkluderer yderligere funktionalitet såsom hentning af undertekster, "
+"langsom eller hurtig afspilning og oprettelse af skærmbilledgallerier."
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+msgid "Playing a video"
+msgstr "Afspilning af en video"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "Gennemsyn af videoer"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
@@ -936,8 +940,8 @@ msgid "Select None"
 msgstr "Vælg ingen"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "Forhåndsvisning af videoer"
+msgid "Totem Preview"
+msgstr "Totem-forhåndsvisning"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -988,6 +992,10 @@ msgstr "Fejl ved søgning"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "Lokalt"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "Videoer"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1059,20 +1067,20 @@ msgstr "Afspil"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "Videoer kunne ikke afspille “%s”."
+msgid "Totem could not play “%s”."
+msgstr "Totem kunne ikke afspille “%s”."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "Videoer kunne ikke vise indholdet af hjælp."
+msgid "Totem could not display the help contents."
+msgstr "Totem kunne ikke vise indholdet af hjælp."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "Videoer kunne ikke starte."
+msgid "Totem could not startup."
+msgstr "Totem kunne ikke starte."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1702,17 +1710,17 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Du kan tilgå Totem.Objekt'et med “totem_object” : \\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "Pythonkonsol til videoer"
+msgid "Totem Python Console"
+msgstr "Python-konsol til Totem"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or "
+"After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password (“totem”)."
 msgstr ""
-"Efter du har trykket OK, ventes indtil du forbinder til Videoer med winpdb "
+"Efter du har trykket OK, ventes indtil du forbinder til Totem med winpdb "
 "eller rpdb2. Hvis du ikke har indstillet en fejlsøgeradgangskode i DConf, "
 "vil standardadgangskoden blive benyttet (“totem”)."
 
@@ -1748,22 +1756,22 @@ msgstr "Gem en kopi"
 msgid "Save a copy of the currently playing movie"
 msgstr "Gem en kopi af den film, der afspilles nu"
 
-#: src/plugins/save-file/totem-save-file.c:75
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "The video could not be made available offline."
 msgstr "Videoen kunne ikke gøres tilgængelig offline."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:77
+#: src/plugins/save-file/totem-save-file.c:79
 msgid "“Files” is not available."
 msgstr "“Filer” (Nautilus) er ikke tilgængelig."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:137
 msgid "Movie"
 msgstr "Film"
 
-#: src/plugins/save-file/totem-save-file.c:441
+#: src/plugins/save-file/totem-save-file.c:313
 msgid "Make Available Offline"
 msgstr "Gør tilgængelig offline"
 
@@ -1828,8 +1836,8 @@ msgstr "_Gem"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "Videoer kunne ikke tage et skærmbillede af videoen."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem kunne ikke tage et skærmbillede af videoen."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1890,6 +1898,9 @@ msgstr "Variabel hastighed"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "Giver menupunktet Variabel hastighed"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "Pythonkonsol til videoer"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "Apple-trailere"
@@ -2009,9 +2020,6 @@ msgstr "Giver menupunktet Variabel hastighed"
 
 #~ msgid "Make sure that Totem is properly installed."
 #~ msgstr "Sikr dig at Totem er korrekt installeret."
-
-#~ msgid "Totem Python Console"
-#~ msgstr "Python-konsol til Totem"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Zoom in"
