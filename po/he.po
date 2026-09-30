@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/totem/issues\n"
-"POT-Creation-Date: 2025-08-25 00:34+0000\n"
-"PO-Revision-Date: 2025-08-30 19:38+0300\n"
+"POT-Creation-Date: 2026-05-02 08:24+0000\n"
+"PO-Revision-Date: 2026-09-30 09:10+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:6 data/totem.ui:472 src/totem.c:34
-#: src/totem-grilo.c:1897
-msgid "Videos"
-msgstr "סרטים"
+#| msgid "Totem %s"
+msgid "Totem"
+msgstr "Totem"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:7
 #: data/org.gnome.Totem.desktop.in.in:3
@@ -32,22 +32,29 @@ msgstr "ניגון סרטים"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:11
 msgid ""
-"Videos is the official movie player of the GNOME desktop environment. It features a "
+"Totem is the historical movie player for the GNOME desktop environment. It features a "
 "searchable list of local videos, and DVDs, as well as local network video shares "
-"(using UPnP/DLNA) and video highlights from a number of web sites."
+"(using UPnP/DLNA)."
 msgstr ""
-"‏סרטים הוא נגן הסרטים הרשמי של סביבת שולחן העבודה GNOME. הוא כולל רשימה נתנת לחיפוש של "
-"סרטים מקומיים, תקליטורי DVD, כמו גם סרטי וידאו משותפים ברשת (באמצעות UPnP/DLNA) "
-"וכותרי סרטים ממספר אתרים ברשת."
+"Totem הוא נגן הסרטים ההיסטורי של סביבת שולחן העבודה GNOME. הוא כולל רשימה ניתנת "
+"לחיפוש של סרטים מקומיים, תקליטורי DVD, כמו גם סרטי וידאו משותפים ברשת (באמצעות UPnP/"
+"DLNA)."
 
-#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:17
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:16
 msgid ""
-"Videos comes with added functionality such as a subtitle downloader, the ability to "
-"speed up or down playback, create screenshot galleries, and support for recording "
-"DVDs."
+"Totem comes with added functionality such as a subtitle downloader, the ability to "
+"speed up or down playback, and creating screenshot galleries."
 msgstr ""
-"‏סרטים מגיע עם שימושיות נוספת כמו הורדת כתוביות, שליטה במהירות ההפעלה, יצירת גלריית "
-"צילומי מסך ותמיכה בהקלטת סרטי DVD."
+"Totem מגיע עם שימושיות נוספת כמו הורדת כתוביות, שליטה במהירות הנגינה ויצירת גלריות "
+"צילומי מסך."
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:36
+msgid "Playing a video"
+msgstr "מתנגן סרטון"
+
+#: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:40
+msgid "Browsing videos"
+msgstr "עיון בסרטונים"
 
 #: data/metainfo/org.gnome.Totem.metainfo.xml.in.in:44
 msgid "The GNOME Project"
@@ -894,8 +901,8 @@ msgid "Select None"
 msgstr "ביטול הבחירה"
 
 #: src/totem.c:32
-msgid "Videos Preview"
-msgstr "תצוגה מקדימה לסרטים"
+msgid "Totem Preview"
+msgstr "תצוגה מקדימה עם Totem"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -946,6 +953,10 @@ msgstr "שגיאה בחיפוש"
 #: src/totem-grilo.c:1303
 msgid "Local"
 msgstr "מקומי"
+
+#: src/totem-grilo.c:1897
+msgid "Videos"
+msgstr "סרטים"
 
 #: src/totem-grilo.c:1906 src/plugins/properties/properties.ui:722
 msgid "Channels"
@@ -1017,20 +1028,20 @@ msgstr "ניגון"
 
 #: src/totem-object.c:1480 src/totem-object.c:1506 src/totem-object.c:2093
 #, c-format
-msgid "Videos could not play “%s”."
-msgstr "‏סרטים לא יכול לנגן את „%s”."
+msgid "Totem could not play “%s”."
+msgstr "Totem לא יכול לנגן את „%s”."
 
 #: src/totem-object.c:2262
-msgid "Videos could not display the help contents."
-msgstr "סרטים אינו יכול להציג את תוכן העזרה."
+msgid "Totem could not display the help contents."
+msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
 #: src/totem-object.c:2509
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
 #: src/totem-object.c:3937
-msgid "Videos could not startup."
-msgstr "סרטים לא יכול לעלות."
+msgid "Totem could not startup."
+msgstr "Totem לא יכול לעלות."
 
 #: src/totem-object.c:3938 src/plugins/screenshot/totem-screenshot-plugin.c:163
 msgid "No reason."
@@ -1653,18 +1664,18 @@ msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "נתן לגשת ל־Totem.Object דרך ‏„totem_object”: ‏\\n%s"
 
 #: src/plugins/pythonconsole/pythonconsole.py:81
-msgid "Videos Python Console"
-msgstr "מסוף Python של סרטים"
+msgid "Totem Python Console"
+msgstr "מסוף Python של Totem"
 
 #. pylint: disable=W0613
 #: src/plugins/pythonconsole/pythonconsole.py:91
 msgid ""
-"After you press OK, Videos will wait until you connect to it with winpdb or rpdb2. If "
+"After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If "
 "you have not set a debugger password in DConf, it will use the default password "
 "(“totem”)."
 msgstr ""
-"לאחר לחיצה על אישור, סרטים ימתין עד להתחברות שלך עם winpdb או rpdb2. אם לא הגדרת ססמת "
-"מנפה ב־DConf, יעשה שימוש בססמת בררת המחדל („totem”)."
+"לאחר לחיצה על אישור, Totem ימתין עד להתחברות שלך עם winpdb או rpdb2. אם לא הגדרת ססמת "
+"מנפה ב־DConf, יעשה שימוש בססמת ברירת המחדל („totem”)."
 
 #: src/plugins/recent/recent.plugin.desktop.in:5
 msgid "Recent files"
@@ -1698,22 +1709,22 @@ msgstr "שמירת עותק"
 msgid "Save a copy of the currently playing movie"
 msgstr "שמירת עותק של הסרט המתנגן כעת"
 
-#: src/plugins/save-file/totem-save-file.c:75
+#: src/plugins/save-file/totem-save-file.c:77
 msgid "The video could not be made available offline."
 msgstr "לא נתן להפוך את הסרט לזמין במצב לא מקוון."
 
 #. translators: “Files” refers to nautilus' name
-#: src/plugins/save-file/totem-save-file.c:77
+#: src/plugins/save-file/totem-save-file.c:79
 msgid "“Files” is not available."
 msgstr "„קבצים” אינו זמין."
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: src/plugins/save-file/totem-save-file.c:158
+#: src/plugins/save-file/totem-save-file.c:137
 msgid "Movie"
 msgstr "סרט"
 
-#: src/plugins/save-file/totem-save-file.c:441
+#: src/plugins/save-file/totem-save-file.c:313
 msgid "Make Available Offline"
 msgstr "הפיכה לזמין כאשר לא מקוון"
 
@@ -1778,8 +1789,8 @@ msgstr "_שמירה"
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:163
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
-msgid "Videos could not get a screenshot of the video."
-msgstr "סרטים לא הצליח לקבל צילום מסך של הסרט."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem לא הצליח לקבל צילום מסך של הסרט."
 
 #: src/plugins/screenshot/totem-screenshot-plugin.c:170
 msgid "This is not supposed to happen; please file a bug report."
@@ -1840,6 +1851,12 @@ msgstr "שינוי קצב"
 #: src/plugins/variable-rate/variable-rate.plugin.desktop.in:6
 msgid "Provides the variable rate menu item"
 msgstr "מספק את התפריט לשינוי הקצב"
+
+#~ msgid "Videos Preview"
+#~ msgstr "תצוגה מקדימה לסרטים"
+
+#~ msgid "Videos Python Console"
+#~ msgstr "מסוף Python של סרטים"
 
 #~ msgid "Apple Trailers"
 #~ msgstr "קדימונים של Apple"
@@ -1970,9 +1987,6 @@ msgstr "מספק את התפריט לשינוי הקצב"
 #, python-format
 #~ msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 #~ msgstr "התבקש מאפיין בלתי ידוע ‘%s’ מרכיב מסוג MediaPlayer 2"
-
-#~ msgid "Totem Python Console"
-#~ msgstr "מסוף Python של Totem"
 
 #~ msgid "S_ubtitles"
 #~ msgstr "_כתוביות"
@@ -2316,9 +2330,6 @@ msgstr "מספק את התפריט לשינוי הקצב"
 #~ msgid "Remove"
 #~ msgstr "הסרה"
 
-#~ msgid "Totem Preferences"
-#~ msgstr "העדפות Totem"
-
 #~ msgid "Add Web Video..."
 #~ msgstr "הוספת סרטון מהרשת…"
 
@@ -2526,9 +2537,6 @@ msgstr "מספק את התפריט לשינוי הקצב"
 
 #~ msgid "Show or hide the sidebar"
 #~ msgstr "הצגה או הסתרה של סרגל הצד"
-
-#~ msgid "Totem %s"
-#~ msgstr "Totem %s"
 
 #~ msgid "Stopped"
 #~ msgstr "בעצירה"
@@ -2794,9 +2802,6 @@ msgstr "מספק את התפריט לשינוי הקצב"
 
 #~ msgid "Add the video to the playlist"
 #~ msgstr "הוספת הווידאו לרשימת ההשמעה"
-
-#~ msgid "Unknown video"
-#~ msgstr "וידאו לא ידוע"
 
 #~ msgid "No video URI"
 #~ msgstr "אין כתובת לווידאו"
